@@ -1,4 +1,4 @@
-package com.ganesha.accounting.minimarket.model;
+package com.ganesha.model;
 
 import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
@@ -11,4 +11,12 @@ public class UserRoleLink extends Trackable {
 
 	@EmbeddedId
 	private UserRoleLinkPK primaryKey;
+
+	public UserRoleLinkPK getPrimaryKey() {
+		return primaryKey;
+	}
+
+	public void setPrimaryKey(UserRoleLinkPK primaryKey) {
+		this.primaryKey = primaryKey;
+	}
 }

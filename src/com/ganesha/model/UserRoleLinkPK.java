@@ -1,11 +1,9 @@
-package com.ganesha.accounting.minimarket.model;
-
-import java.io.Serializable;
+package com.ganesha.model;
 
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 
-public class UserRoleLinkPK implements Serializable {
+public class UserRoleLinkPK implements TableEntity {
 	private static final long serialVersionUID = 274018399212050879L;
 
 	@ManyToOne

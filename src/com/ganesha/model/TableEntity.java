@@ -1,4 +1,4 @@
-package com.ganesha.accounting.minimarket.model;
+package com.ganesha.model;
 
 import java.io.Serializable;
 

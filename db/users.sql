@@ -1,0 +1,1 @@
+INSERT INTO `users` (`ID`, `DELETED`, `DISABLED`, `LAST_UPDATED_BY`, `LAST_UPDATED_TIMESTAMP`, `LOGIN`, `NAME`, `PASSWORD`) VALUES (1,'\0','\0','0','2014-01-01 01:51:09','admin','Administrator','admin');

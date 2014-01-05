@@ -1,4 +1,4 @@
-package com.ganesha.accounting.minimarket.model;
+package com.ganesha.model;
 
 import java.util.List;
 
@@ -24,7 +24,7 @@ public class User extends Trackable {
 	@Column(name = "NAME", nullable = false)
 	private String name;
 
-	@Column(name = "LOGIN", nullable = false)
+	@Column(name = "LOGIN", nullable = false, unique = true)
 	private String login;
 
 	@Column(name = "PASSWORD", nullable = false)
@@ -34,4 +34,43 @@ public class User extends Trackable {
 	@JoinColumn(name = "USER_ID", nullable = false)
 	private List<UserRoleLink> userRoleLinks;
 
+	public int getId() {
+		return id;
+	}
+
+	public String getLogin() {
+		return login;
+	}
+
+	public String getName() {
+		return name;
+	}
+
+	public String getPassword() {
+		return password;
+	}
+
+	public List<UserRoleLink> getUserRoleLinks() {
+		return userRoleLinks;
+	}
+
+	public void setId(int id) {
+		this.id = id;
+	}
+
+	public void setLogin(String login) {
+		this.login = login;
+	}
+
+	public void setName(String name) {
+		this.name = name;
+	}
+
+	public void setPassword(String password) {
+		this.password = password;
+	}
+
+	public void setUserRoleLinks(List<UserRoleLink> userRoleLinks) {
+		this.userRoleLinks = userRoleLinks;
+	}
 }

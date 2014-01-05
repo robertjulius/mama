@@ -7,9 +7,11 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
+import com.ganesha.model.Trackable;
+
 @Entity
-@Table(name = "PERMISSIONS")
-public class Permission extends Trackable {
+@Table(name = "GOOD_GROUPS")
+public class GoodGroup extends Trackable {
 	private static final long serialVersionUID = -7780389008755790841L;
 
 	@Id
@@ -17,10 +19,22 @@ public class Permission extends Trackable {
 	@Column(name = "ID", nullable = false)
 	private int id;
 
-	@Column(name = "NAME", nullable = false)
+	@Column(name = "NAME", nullable = false, unique = true)
 	private String name;
 
-	@Column(name = "DESCRIPTION", nullable = false)
-	private String description;
+	public int getId() {
+		return id;
+	}
 
+	public String getName() {
+		return name;
+	}
+
+	public void setId(int id) {
+		this.id = id;
+	}
+
+	public void setName(String name) {
+		this.name = name;
+	}
 }

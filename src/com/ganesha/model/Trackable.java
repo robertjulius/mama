@@ -1,4 +1,4 @@
-package com.ganesha.accounting.minimarket.model;
+package com.ganesha.model;
 
 import java.sql.Timestamp;
 
@@ -11,16 +11,16 @@ public abstract class Trackable implements TableEntity {
 	private static final long serialVersionUID = -490441473844263342L;
 
 	@Column(name = "LAST_UPDATED_BY", nullable = false)
-	private String lastUpdatedBy;
+	private Integer lastUpdatedBy;
 
 	@Column(name = "LAST_UPDATED_TIMESTAMP", nullable = false)
 	private Timestamp lastUpdatedTimestamp;
 
 	@Column(name = "DISABLED", nullable = false)
-	private Boolean disabled;
+	private Boolean disabled = false;
 
 	@Column(name = "DELETED", nullable = false)
-	private Boolean deleted;
+	private Boolean deleted = false;
 
 	public Boolean getDeleted() {
 		return deleted;
@@ -30,7 +30,7 @@ public abstract class Trackable implements TableEntity {
 		return disabled;
 	}
 
-	public String getLastUpdatedBy() {
+	public Integer getLastUpdatedBy() {
 		return lastUpdatedBy;
 	}
 
@@ -46,7 +46,7 @@ public abstract class Trackable implements TableEntity {
 		this.disabled = disabled;
 	}
 
-	public void setLastUpdatedBy(String lastUpdatedBy) {
+	public void setLastUpdatedBy(Integer lastUpdatedBy) {
 		this.lastUpdatedBy = lastUpdatedBy;
 	}
 
