@@ -23,7 +23,7 @@ public class LoginFacade {
 	}
 
 	public boolean login(String loginId) {
-		Session session = HibernateUtil.getSession();
+		Session session = HibernateUtil.openSession();
 		try {
 
 			Criteria criteria = session.createCriteria(User.class);

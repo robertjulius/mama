@@ -63,7 +63,7 @@ public class CoaConsistencyChecker {
 	}
 
 	private void loadListFromDB() {
-		Session session = HibernateUtil.getSession();
+		Session session = HibernateUtil.openSession();
 		try {
 			Query query = session.createQuery("from Coa");
 

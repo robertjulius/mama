@@ -17,7 +17,7 @@ public class CompanyConsistencyChecker {
 	}
 
 	public void check() throws AppException {
-		Session session = HibernateUtil.getSession();
+		Session session = HibernateUtil.openSession();
 		try {
 			Query query = session.createQuery("from Company");
 

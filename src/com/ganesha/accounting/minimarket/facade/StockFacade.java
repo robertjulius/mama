@@ -11,7 +11,6 @@ import com.ganesha.accounting.minimarket.Main;
 import com.ganesha.accounting.minimarket.model.Good;
 import com.ganesha.accounting.minimarket.model.GoodStock;
 import com.ganesha.core.utils.CommonUtils;
-import com.ganesha.hibernate.HibernateUtil;
 
 public class StockFacade {
 
@@ -29,29 +28,11 @@ public class StockFacade {
 
 	public void addNewGood(String code, String name, String barcode,
 			String unit, BigDecimal buyPrice, BigDecimal hpp,
-			BigDecimal sellPrice, int stock, int minimumStock) {
+			BigDecimal sellPrice, int stock, int minimumStock, Session session) {
 
-		Session session = HibernateUtil.getSession();
-		try {
-			session.beginTransaction();
-
-			saveGood(code, name, barcode, session);
-			saveGoodStock(code, unit, buyPrice, hpp, sellPrice, stock,
-					minimumStock, session);
-
-			session.getTransaction().commit();
-		} finally {
-			session.close();
-		}
-	}
-
-	public GoodStock getDetail(String code) {
-		Session session = HibernateUtil.getSession();
-		try {
-			return getDetail(code, session);
-		} finally {
-			session.close();
-		}
+		saveGood(code, name, barcode, session);
+		saveGoodStock(code, unit, buyPrice, hpp, sellPrice, stock,
+				minimumStock, session);
 	}
 
 	public GoodStock getDetail(String code, Session session) {
@@ -63,63 +44,51 @@ public class StockFacade {
 		return goodStock;
 	}
 
-	public List<GoodStock> search(String code, String name, boolean disabled) {
-		Session session = HibernateUtil.getSession();
-		try {
-			Criteria criteria = session.createCriteria(GoodStock.class);
-			criteria.createAlias("good", "good");
+	public List<GoodStock> search(String code, String name, boolean disabled,
+			Session session) {
+		Criteria criteria = session.createCriteria(GoodStock.class);
+		criteria.createAlias("good", "good");
 
-			if (code != null && !code.trim().isEmpty()) {
-				criteria.add(Restrictions.like("good.code", "%" + code + "%"));
-			}
-
-			if (name != null && !name.trim().isEmpty()) {
-				criteria.add(Restrictions.like("good.name", "%" + name + "%"));
-			}
-
-			criteria.add(Restrictions.eq("disabled", disabled));
-			criteria.add(Restrictions.eq("deleted", false));
-
-			@SuppressWarnings("unchecked")
-			List<GoodStock> goodStocks = criteria.list();
-
-			return goodStocks;
-		} finally {
-			session.close();
+		if (code != null && !code.trim().isEmpty()) {
+			criteria.add(Restrictions.like("good.code", "%" + code + "%")
+					.ignoreCase());
 		}
+
+		if (name != null && !name.trim().isEmpty()) {
+			criteria.add(Restrictions.like("good.name", "%" + name + "%")
+					.ignoreCase());
+		}
+
+		criteria.add(Restrictions.eq("disabled", disabled));
+		criteria.add(Restrictions.eq("deleted", false));
+
+		@SuppressWarnings("unchecked")
+		List<GoodStock> goodStocks = criteria.list();
+
+		return goodStocks;
 	}
 
 	public void updateExistingGood(String code, String name, String barcode,
 			String unit, BigDecimal buyPrice, BigDecimal hpp,
-			BigDecimal sellPrice, int stock, int minimumStock) {
+			BigDecimal sellPrice, int stock, int minimumStock, Session session) {
 
-		Session session = HibernateUtil.getSession();
-		try {
-			session.beginTransaction();
+		GoodStock goodStock = getDetail(code, session);
+		goodStock.setUnit(unit);
+		goodStock.setBuyPrice(buyPrice);
+		goodStock.setHpp(hpp);
+		goodStock.setSellPrice(sellPrice);
+		goodStock.setStock(stock);
+		goodStock.setMinimumStock(minimumStock);
+		goodStock.setLastUpdatedBy(Main.getUserLogin().getId());
+		goodStock.setLastUpdatedTimestamp(CommonUtils.getCurrentTimestamp());
 
-			GoodStock goodStock = getDetail(code, session);
-			goodStock.setUnit(unit);
-			goodStock.setBuyPrice(buyPrice);
-			goodStock.setHpp(hpp);
-			goodStock.setSellPrice(sellPrice);
-			goodStock.setStock(stock);
-			goodStock.setMinimumStock(minimumStock);
-			goodStock.setLastUpdatedBy(Main.getUserLogin().getId());
-			goodStock
-					.setLastUpdatedTimestamp(CommonUtils.getCurrentTimestamp());
+		Good good = goodStock.getGood();
+		good.setName(name);
+		good.setBarcode(barcode);
+		good.setLastUpdatedBy(Main.getUserLogin().getId());
+		good.setLastUpdatedTimestamp(CommonUtils.getCurrentTimestamp());
 
-			Good good = goodStock.getGood();
-			good.setName(name);
-			good.setBarcode(barcode);
-			good.setLastUpdatedBy(Main.getUserLogin().getId());
-			good.setLastUpdatedTimestamp(CommonUtils.getCurrentTimestamp());
-
-			session.saveOrUpdate(goodStock);
-			session.getTransaction().commit();
-
-		} finally {
-			session.close();
-		}
+		session.saveOrUpdate(goodStock);
 	}
 
 	private void saveGood(String code, String name, String barcode,

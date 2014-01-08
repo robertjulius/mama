@@ -1,4 +1,4 @@
-package com.ganesha.accounting.minimarket.ui.forms.forms.stock;
+package com.ganesha.accounting.minimarket.ui.forms.forms.supplier;
 
 import java.awt.Window;
 import java.awt.event.ActionEvent;
@@ -15,10 +15,8 @@ import net.miginfocom.swing.MigLayout;
 
 import org.hibernate.Session;
 
-import com.ganesha.accounting.formatter.Formatter;
-import com.ganesha.accounting.minimarket.facade.StockFacade;
-import com.ganesha.accounting.minimarket.model.Good;
-import com.ganesha.accounting.minimarket.model.GoodStock;
+import com.ganesha.accounting.minimarket.facade.SupplierFacade;
+import com.ganesha.accounting.minimarket.model.Supplier;
 import com.ganesha.accounting.minimarket.ui.commons.MyTableModel;
 import com.ganesha.core.exception.AppException;
 import com.ganesha.core.utils.GeneralConstants.ActionType;
@@ -30,7 +28,7 @@ import com.ganesha.desktop.component.XJTable;
 import com.ganesha.desktop.component.XJTextField;
 import com.ganesha.hibernate.HibernateUtil;
 
-public class StockListDialog extends XJDialog {
+public class SupplierListDialog extends XJDialog {
 	private static final long serialVersionUID = 1452286313727721700L;
 	private XJTextField txtKode;
 	private XJTextField txtNama;
@@ -42,11 +40,12 @@ public class StockListDialog extends XJDialog {
 	private final ButtonGroup btnGroup = new ButtonGroup();
 	private XJButton btnTambah;
 	private XJButton btnDetail;
+	private XJTextField txtKontakPerson;
 
-	public StockListDialog(Window parent) {
+	public SupplierListDialog(Window parent) {
 		super(parent);
 
-		setTitle("Master Barang");
+		setTitle("Master Supplier");
 		getContentPane().setLayout(
 				new MigLayout("", "[1000,grow]", "[][300,grow][]"));
 
@@ -55,7 +54,7 @@ public class StockListDialog extends XJDialog {
 
 		JPanel pnlFilter = new JPanel();
 		getContentPane().add(pnlFilter, "cell 0 0,grow");
-		pnlFilter.setLayout(new MigLayout("", "[100][grow][]", "[][][grow]"));
+		pnlFilter.setLayout(new MigLayout("", "[100][grow][]", "[][][][grow]"));
 
 		XJLabel lblKode = new XJLabel();
 		lblKode.setText("Kode");
@@ -80,7 +79,7 @@ public class StockListDialog extends XJDialog {
 		txtKode.setColumns(10);
 
 		XJLabel lblNama = new XJLabel();
-		lblNama.setText("Name");
+		lblNama.setText("Nama");
 		pnlFilter.add(lblNama, "cell 0 1,alignx trailing");
 
 		txtNama = new XJTextField();
@@ -97,20 +96,37 @@ public class StockListDialog extends XJDialog {
 		pnlFilter.add(txtNama, "cell 1 1 2 1,growx");
 		txtNama.setColumns(10);
 
+		XJLabel lblKontakPerson = new XJLabel();
+		lblKontakPerson.setText("Kontak Person");
+		pnlFilter.add(lblKontakPerson, "cell 0 2,alignx trailing");
+
+		txtKontakPerson = new XJTextField();
+		txtKontakPerson.addKeyListener(new KeyAdapter() {
+			@Override
+			public void keyReleased(KeyEvent e) {
+				try {
+					loadData();
+				} catch (AppException ex) {
+					ex.printStackTrace();
+				}
+			}
+		});
+		pnlFilter.add(txtKontakPerson, "cell 1 2,growx");
+
 		JPanel pnlRadioButton = new JPanel();
-		pnlFilter.add(pnlRadioButton, "cell 1 2,grow");
+		pnlFilter.add(pnlRadioButton, "cell 1 3,grow");
 		pnlRadioButton.setLayout(new MigLayout("", "[]", "[][]"));
 
-		XJRadioButton rdbtnBarangAktif = new XJRadioButton();
-		rdbtnBarangAktif.setText("Barang Aktif");
-		pnlRadioButton.add(rdbtnBarangAktif, "cell 0 0");
-		rdbtnBarangAktif.setSelected(true);
-		btnGroup.add(rdbtnBarangAktif);
+		XJRadioButton rdbtnSupplierAktif = new XJRadioButton();
+		rdbtnSupplierAktif.setText("Supplier Aktif");
+		pnlRadioButton.add(rdbtnSupplierAktif, "cell 0 0");
+		rdbtnSupplierAktif.setSelected(true);
+		btnGroup.add(rdbtnSupplierAktif);
 
-		XJRadioButton rdbtnBarangTidakAktif = new XJRadioButton();
-		rdbtnBarangTidakAktif.setText("Barang Tidak Aktif");
-		pnlRadioButton.add(rdbtnBarangTidakAktif, "cell 0 1");
-		btnGroup.add(rdbtnBarangTidakAktif);
+		XJRadioButton rdbtnSupplierTidakAktif = new XJRadioButton();
+		rdbtnSupplierTidakAktif.setText("Supplier Tidak Aktif");
+		pnlRadioButton.add(rdbtnSupplierTidakAktif, "cell 0 1");
+		btnGroup.add(rdbtnSupplierTidakAktif);
 
 		XJButton btnRefresh = new XJButton();
 		btnRefresh.addActionListener(new ActionListener() {
@@ -125,7 +141,7 @@ public class StockListDialog extends XJDialog {
 		});
 		btnRefresh.setMnemonic('R');
 		btnRefresh.setText("<html><center>Refresh<br/>[Alt+R]</center></html>");
-		pnlFilter.add(btnRefresh, "cell 2 2,grow");
+		pnlFilter.add(btnRefresh, "cell 2 3,grow");
 
 		JScrollPane scrollPane = new JScrollPane(table);
 		getContentPane().add(scrollPane, "cell 0 1,grow");
@@ -138,13 +154,13 @@ public class StockListDialog extends XJDialog {
 		btnTambah.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				new StockForm(StockListDialog.this, ActionType.CREATE)
+				new SupplierForm(SupplierListDialog.this, ActionType.CREATE)
 						.setVisible(true);
 			}
 		});
 		panel.add(btnTambah, "cell 0 0");
 		btnTambah
-				.setText("<html><center>Tambah Barang Baru<br/>[F1]</center><html>");
+				.setText("<html><center>Tambah Supplier Baru<br/>[F1]</center><html>");
 
 		btnDetail = new XJButton();
 		btnDetail.addActionListener(new ActionListener() {
@@ -179,8 +195,8 @@ public class StockListDialog extends XJDialog {
 
 	private void initTable() {
 		MyTableModel tableModel = new MyTableModel();
-		tableModel.setColumnIdentifiers(new String[] { "Kode", "Name", "Stock",
-				"Satuan", "Harga Beli", "Harga Jual" });
+		tableModel.setColumnIdentifiers(new String[] { "Kode", "Name",
+				"Deskripsi", "Kontak Person 1", "Kontak Person 2", "Phone" });
 		tableModel.setColumnEditable(new boolean[] { false, false, false,
 				false, false, false });
 		table.setModel(tableModel);
@@ -191,28 +207,25 @@ public class StockListDialog extends XJDialog {
 		try {
 			String code = txtKode.getText();
 			String name = txtNama.getText();
+			String kontakPerson = txtKontakPerson.getText();
 			boolean disabled = false;
 
-			StockFacade facade = StockFacade.getInstance();
-			List<GoodStock> goodStocks = facade.search(code, name, disabled,
-					session);
+			SupplierFacade facade = SupplierFacade.getInstance();
+
+			List<Supplier> suppliers = facade.search(code, name, kontakPerson,
+					disabled, session);
 
 			MyTableModel tableModel = (MyTableModel) table.getModel();
-			tableModel.setRowCount(goodStocks.size());
+			tableModel.setRowCount(suppliers.size());
 
-			for (int i = 0; i < goodStocks.size(); ++i) {
-				GoodStock goodStock = goodStocks.get(i);
-				Good good = goodStock.getGood();
-				tableModel.setValueAt(good.getCode(), i, 0);
-				tableModel.setValueAt(good.getName(), i, 1);
-				tableModel.setValueAt(goodStock.getStock(), i, 2);
-				tableModel.setValueAt(goodStock.getUnit(), i, 3);
-				tableModel.setValueAt(
-						Formatter.formatPriceBigDecimalToString(goodStock
-								.getSellPrice()), i, 4);
-				tableModel.setValueAt(
-						Formatter.formatPriceBigDecimalToString(goodStock
-								.getSellPrice()), i, 5);
+			for (int i = 0; i < suppliers.size(); ++i) {
+				Supplier supplier = suppliers.get(i);
+				tableModel.setValueAt(supplier.getCode(), i, 0);
+				tableModel.setValueAt(supplier.getName(), i, 1);
+				tableModel.setValueAt(supplier.getDescription(), i, 2);
+				tableModel.setValueAt(supplier.getContactPerson1(), i, 3);
+				tableModel.setValueAt(supplier.getContactPerson2(), i, 4);
+				tableModel.setValueAt(supplier.getPhone1(), i, 5);
 			}
 		} finally {
 			session.close();
@@ -228,11 +241,11 @@ public class StockListDialog extends XJDialog {
 			}
 			String code = (String) table.getModel().getValueAt(selectedRow, 0);
 
-			StockFacade facade = StockFacade.getInstance();
-			GoodStock goodStock = facade.getDetail(code, session);
+			SupplierFacade facade = SupplierFacade.getInstance();
+			Supplier supplier = facade.getDetail(code, session);
 
-			StockForm stockForm = new StockForm(this, ActionType.UPDATE);
-			stockForm.setFormDetailValue(goodStock);
+			SupplierForm stockForm = new SupplierForm(this, ActionType.UPDATE);
+			stockForm.setFormDetailValue(supplier);
 			stockForm.setVisible(true);
 		} finally {
 			session.close();

@@ -12,7 +12,6 @@ import org.slf4j.LoggerFactory;
 public class HibernateUtil {
 
 	private static SessionFactory sessionFactory;
-	private static Session session;
 
 	static {
 		try {
@@ -33,14 +32,7 @@ public class HibernateUtil {
 		}
 	}
 
-	public static Session forceCreateNewSession() throws HibernateException {
+	public static Session openSession() throws HibernateException {
 		return sessionFactory.openSession();
-	}
-
-	public static Session getSession() throws HibernateException {
-		if (session == null || !session.isOpen()) {
-			session = sessionFactory.openSession();
-		}
-		return session;
 	}
 }

@@ -9,7 +9,9 @@ import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 
 import com.ganesha.accounting.minimarket.Main;
+import com.ganesha.accounting.minimarket.ui.forms.forms.purchase.PembelianForm;
 import com.ganesha.accounting.minimarket.ui.forms.forms.stock.StockListDialog;
+import com.ganesha.accounting.minimarket.ui.forms.forms.supplier.SupplierListDialog;
 import com.ganesha.desktop.component.XJFrame;
 
 public class MainFrame extends XJFrame {
@@ -38,8 +40,26 @@ public class MainFrame extends XJFrame {
 		});
 		mnMasterData.add(mntmPersediaan);
 
+		JMenuItem mntmSupplier = new JMenuItem("Supplier");
+		mntmSupplier.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				new SupplierListDialog(MainFrame.this).setVisible(true);
+			}
+		});
+		mnMasterData.add(mntmSupplier);
+
 		JMenu mnTransaksi = new JMenu("Transaksi");
 		menuBar.add(mnTransaksi);
+
+		JMenuItem mntmPembelian = new JMenuItem("Pembelian");
+		mntmPembelian.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				new PembelianForm(MainFrame.this).setVisible(true);
+			}
+		});
+		mnTransaksi.add(mntmPembelian);
 
 		JMenu mnBackOffice = new JMenu("Back Office");
 		menuBar.add(mnBackOffice);

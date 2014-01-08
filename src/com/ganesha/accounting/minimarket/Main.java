@@ -56,7 +56,7 @@ public class Main {
 	}
 
 	public static void testHibernate() {
-		Criteria criteria = HibernateUtil.getSession().createCriteria(
+		Criteria criteria = HibernateUtil.openSession().createCriteria(
 				GoodStock.class);
 
 		Object o = criteria.list();

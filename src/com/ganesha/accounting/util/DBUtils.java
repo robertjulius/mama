@@ -22,7 +22,7 @@ public class DBUtils {
 	public <E> E getLastValue(String tableName, String columnName,
 			Class<E> clazz) {
 
-		Session session = HibernateUtil.getSession();
+		Session session = HibernateUtil.openSession();
 		try {
 
 			String query = " SELECT " + columnName + " FROM " + tableName

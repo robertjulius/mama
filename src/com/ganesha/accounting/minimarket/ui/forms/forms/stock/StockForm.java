@@ -3,29 +3,34 @@ package com.ganesha.accounting.minimarket.ui.forms.forms.stock;
 import java.awt.Window;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.KeyEvent;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.math.BigDecimal;
 
 import javax.swing.JPanel;
+import javax.swing.JSeparator;
+import javax.swing.border.EtchedBorder;
 
 import net.miginfocom.swing.MigLayout;
+
+import org.hibernate.Session;
 
 import com.ganesha.accounting.minimarket.facade.StockFacade;
 import com.ganesha.accounting.minimarket.model.Good;
 import com.ganesha.accounting.minimarket.model.GoodStock;
 import com.ganesha.accounting.util.DBUtils;
 import com.ganesha.core.desktop.ExceptionHandler;
+import com.ganesha.core.exception.ActionTypeNotSupported;
+import com.ganesha.core.utils.GeneralConstants.ActionType;
 import com.ganesha.desktop.component.XJButton;
 import com.ganesha.desktop.component.XJDialog;
 import com.ganesha.desktop.component.XJLabel;
 import com.ganesha.desktop.component.XJTextField;
+import com.ganesha.hibernate.HibernateUtil;
 
 public class StockForm extends XJDialog {
 
 	private static final long serialVersionUID = 1401014426195840845L;
-	private static final String BUTTON_SAVE_LABEL_UPDATE = "Simpan Perubahan";
 
 	private XJButton btnSimpan;
 	private XJTextField txtSatuan;
@@ -35,9 +40,12 @@ public class StockForm extends XJDialog {
 	private XJLabel lblBarcode;
 	private XJTextField txtBarcode;
 	private XJLabel lblKodeTerakhir;
+	private ActionType actionType;
+	private JSeparator separator;
 
-	public StockForm(Window parent) {
+	public StockForm(Window parent, ActionType actionType) {
 		super(parent);
+		this.actionType = actionType;
 		addWindowListener(new WindowAdapter() {
 			@Override
 			public void windowOpened(WindowEvent e) {
@@ -49,9 +57,12 @@ public class StockForm extends XJDialog {
 			}
 		});
 		setTitle("Form Barang");
-		getContentPane().setLayout(new MigLayout("", "[grow]", "[grow][grow]"));
+		getContentPane().setLayout(
+				new MigLayout("", "[grow]", "[grow][][grow]"));
 
 		JPanel pnlKodeBarang = new JPanel();
+		pnlKodeBarang.setBorder(new EtchedBorder(EtchedBorder.LOWERED, null,
+				null));
 		getContentPane().add(pnlKodeBarang, "cell 0 0,grow");
 		pnlKodeBarang.setLayout(new MigLayout("",
 				"[100][200:n,grow][200,grow][50:n]", "[][][][]"));
@@ -93,9 +104,12 @@ public class StockForm extends XJDialog {
 		txtSatuan = new XJTextField();
 		pnlKodeBarang.add(txtSatuan, "cell 1 3,growx");
 
+		separator = new JSeparator();
+		getContentPane().add(separator, "cell 0 1,grow");
+
 		JPanel pnlButton = new JPanel();
-		getContentPane().add(pnlButton, "cell 0 1,alignx center,growy");
-		pnlButton.setLayout(new MigLayout("", "[]", "[][]"));
+		getContentPane().add(pnlButton, "cell 0 2,alignx center,growy");
+		pnlButton.setLayout(new MigLayout("", "[]", "[]"));
 
 		btnSimpan = new XJButton();
 		btnSimpan.addActionListener(new ActionListener() {
@@ -127,15 +141,13 @@ public class StockForm extends XJDialog {
 		txtBarcode.setText(good.getBarcode());
 		txtSatuan.setText(goodStock.getUnit());
 
-		btnSimpan.setText(BUTTON_SAVE_LABEL_UPDATE);
+		btnSimpan
+				.setText("<html><center>Simpan Perubahan<br/>[Alt+S]</center></html>");
 	}
 
 	@Override
 	protected void keyEventListener(int keyCode) {
 		switch (keyCode) {
-		case KeyEvent.VK_ENTER:
-			btnSimpan.doClick();
-			break;
 		default:
 			break;
 		}
@@ -147,22 +159,30 @@ public class StockForm extends XJDialog {
 		lblKodeTerakhirValue.setText(String.valueOf(kodeTerakhir));
 	}
 
-	private void save() {
-		StockFacade facade = StockFacade.getInstance();
+	private void save() throws ActionTypeNotSupported {
+		Session session = HibernateUtil.openSession();
+		try {
+			session.beginTransaction();
+			StockFacade facade = StockFacade.getInstance();
 
-		if (btnSimpan.getText().equals(BUTTON_SAVE_LABEL_UPDATE)) {
-			BigDecimal zeroValue = new BigDecimal(0);
-			facade.updateExistingGood(txtKode.getText(), txtNama.getText(),
-					txtBarcode.getText(), txtSatuan.getText(), zeroValue,
-					zeroValue, zeroValue, 0, 0);
-
-			dispose();
-		} else {
-			BigDecimal zeroValue = new BigDecimal(0);
-			facade.addNewGood(txtKode.getText(), txtNama.getText(),
-					txtBarcode.getText(), txtSatuan.getText(), zeroValue,
-					zeroValue, zeroValue, 0, 0);
+			if (actionType == ActionType.CREATE) {
+				BigDecimal zeroValue = new BigDecimal(0);
+				facade.addNewGood(txtKode.getText(), txtNama.getText(),
+						txtBarcode.getText(), txtSatuan.getText(), zeroValue,
+						zeroValue, zeroValue, 0, 0, session);
+				dispose();
+			} else if (actionType == ActionType.UPDATE) {
+				BigDecimal zeroValue = new BigDecimal(0);
+				facade.updateExistingGood(txtKode.getText(), txtNama.getText(),
+						txtBarcode.getText(), txtSatuan.getText(), zeroValue,
+						zeroValue, zeroValue, 0, 0, session);
+				dispose();
+			} else {
+				throw new ActionTypeNotSupported(actionType);
+			}
+			session.getTransaction().commit();
+		} finally {
+			session.close();
 		}
-		dispose();
 	}
 }

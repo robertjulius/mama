@@ -24,5 +24,6 @@
 		<mapping class="com.ganesha.accounting.minimarket.model.Good" />
 		<mapping class="com.ganesha.accounting.minimarket.model.GoodGroup" />
 		<mapping class="com.ganesha.accounting.minimarket.model.GoodStock" />
+		<mapping class="com.ganesha.accounting.minimarket.model.Supplier" />
 	</session-factory>
 </hibernate-configuration>
