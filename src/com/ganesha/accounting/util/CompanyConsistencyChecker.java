@@ -7,7 +7,7 @@ import org.hibernate.Session;
 
 import com.ganesha.accounting.minimarket.model.Company;
 import com.ganesha.core.exception.AppException;
-import com.ganesha.hibernate.HibernateUtil;
+import com.ganesha.hibernate.HibernateUtils;
 
 public class CompanyConsistencyChecker {
 
@@ -17,7 +17,7 @@ public class CompanyConsistencyChecker {
 	}
 
 	public void check() throws AppException {
-		Session session = HibernateUtil.openSession();
+		Session session = HibernateUtils.openSession();
 		try {
 			Query query = session.createQuery("from Company");
 

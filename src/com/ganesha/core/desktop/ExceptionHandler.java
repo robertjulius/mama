@@ -1,9 +1,18 @@
 package com.ganesha.core.desktop;
 
+import com.ganesha.core.exception.UserException;
+
 public class ExceptionHandler {
 
 	public static void handleException(Exception ex) {
-		// Session session = HibernateUtil.getCurrentSession();
-		ex.printStackTrace();
+
+		if (ex instanceof UserException) {
+			UserExceptionHandler.handleException(ex);
+		} else {
+			/*
+			 * TODO
+			 */
+			ex.printStackTrace();
+		}
 	}
 }

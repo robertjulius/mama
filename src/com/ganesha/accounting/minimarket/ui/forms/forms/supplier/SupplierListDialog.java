@@ -10,6 +10,7 @@ import java.util.List;
 import javax.swing.ButtonGroup;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
+import javax.swing.table.TableColumnModel;
 
 import net.miginfocom.swing.MigLayout;
 
@@ -17,7 +18,6 @@ import org.hibernate.Session;
 
 import com.ganesha.accounting.minimarket.facade.SupplierFacade;
 import com.ganesha.accounting.minimarket.model.Supplier;
-import com.ganesha.accounting.minimarket.ui.commons.MyTableModel;
 import com.ganesha.core.exception.AppException;
 import com.ganesha.core.utils.GeneralConstants.ActionType;
 import com.ganesha.desktop.component.XJButton;
@@ -26,7 +26,8 @@ import com.ganesha.desktop.component.XJLabel;
 import com.ganesha.desktop.component.XJRadioButton;
 import com.ganesha.desktop.component.XJTable;
 import com.ganesha.desktop.component.XJTextField;
-import com.ganesha.hibernate.HibernateUtil;
+import com.ganesha.desktop.component.xtableutils.XTableModel;
+import com.ganesha.hibernate.HibernateUtils;
 
 public class SupplierListDialog extends XJDialog {
 	private static final long serialVersionUID = 1452286313727721700L;
@@ -41,6 +42,7 @@ public class SupplierListDialog extends XJDialog {
 	private XJButton btnTambah;
 	private XJButton btnDetail;
 	private XJTextField txtKontakPerson;
+	private XJButton btnRefresh;
 
 	public SupplierListDialog(Window parent) {
 		super(parent);
@@ -111,7 +113,7 @@ public class SupplierListDialog extends XJDialog {
 				}
 			}
 		});
-		pnlFilter.add(txtKontakPerson, "cell 1 2,growx");
+		pnlFilter.add(txtKontakPerson, "cell 1 2 2 1,growx");
 
 		JPanel pnlRadioButton = new JPanel();
 		pnlFilter.add(pnlRadioButton, "cell 1 3,grow");
@@ -128,7 +130,7 @@ public class SupplierListDialog extends XJDialog {
 		pnlRadioButton.add(rdbtnSupplierTidakAktif, "cell 0 1");
 		btnGroup.add(rdbtnSupplierTidakAktif);
 
-		XJButton btnRefresh = new XJButton();
+		btnRefresh = new XJButton();
 		btnRefresh.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
@@ -148,19 +150,28 @@ public class SupplierListDialog extends XJDialog {
 
 		JPanel panel = new JPanel();
 		getContentPane().add(panel, "cell 0 2,alignx center,growy");
-		panel.setLayout(new MigLayout("", "[][]", "[]"));
+		panel.setLayout(new MigLayout("", "[][][]", "[]"));
 
 		btnTambah = new XJButton();
 		btnTambah.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				new SupplierForm(SupplierListDialog.this, ActionType.CREATE)
-						.setVisible(true);
+				tambah();
 			}
 		});
-		panel.add(btnTambah, "cell 0 0");
+
+		XJButton btnKeluar = new XJButton();
+		btnKeluar.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				dispose();
+			}
+		});
+		btnKeluar.setText("<html><center>Keluar<br/>[ESC]</center></html>");
+		panel.add(btnKeluar, "cell 0 0");
+		panel.add(btnTambah, "cell 1 0");
 		btnTambah
-				.setText("<html><center>Tambah Supplier Baru<br/>[F1]</center><html>");
+				.setText("<html><center>Tambah Supplier Baru<br/>[F5]</center><html>");
 
 		btnDetail = new XJButton();
 		btnDetail.addActionListener(new ActionListener() {
@@ -170,8 +181,8 @@ public class SupplierListDialog extends XJDialog {
 			}
 		});
 		btnDetail
-				.setText("<html><center>Lihat Detail<br/>[F2]</center></html>");
-		panel.add(btnDetail, "cell 1 0");
+				.setText("<html><center>Lihat Detail<br/>[ENTER]</center></html>");
+		panel.add(btnDetail, "cell 2 0");
 
 		btnRefresh.doClick();
 
@@ -182,10 +193,10 @@ public class SupplierListDialog extends XJDialog {
 	@Override
 	protected void keyEventListener(int keyCode) {
 		switch (keyCode) {
-		case KeyEvent.VK_F1:
+		case KeyEvent.VK_F5:
 			btnTambah.doClick();
 			break;
-		case KeyEvent.VK_F2:
+		case KeyEvent.VK_ENTER:
 			btnDetail.doClick();
 			break;
 		default:
@@ -194,16 +205,23 @@ public class SupplierListDialog extends XJDialog {
 	}
 
 	private void initTable() {
-		MyTableModel tableModel = new MyTableModel();
+		XTableModel tableModel = new XTableModel();
 		tableModel.setColumnIdentifiers(new String[] { "Kode", "Name",
-				"Deskripsi", "Kontak Person 1", "Kontak Person 2", "Phone" });
+				"Kontak Person 1", "Kontak Person 2", "Telepon" });
 		tableModel.setColumnEditable(new boolean[] { false, false, false,
-				false, false, false });
+				false, false });
 		table.setModel(tableModel);
+
+		TableColumnModel columnModel = table.getColumnModel();
+		columnModel.getColumn(0).setPreferredWidth(25);
+		columnModel.getColumn(1).setPreferredWidth(300);
+		columnModel.getColumn(2).setPreferredWidth(75);
+		columnModel.getColumn(3).setPreferredWidth(75);
+		columnModel.getColumn(4).setPreferredWidth(25);
 	}
 
 	private void loadData() throws AppException {
-		Session session = HibernateUtil.openSession();
+		Session session = HibernateUtils.openSession();
 		try {
 			String code = txtKode.getText();
 			String name = txtNama.getText();
@@ -215,17 +233,16 @@ public class SupplierListDialog extends XJDialog {
 			List<Supplier> suppliers = facade.search(code, name, kontakPerson,
 					disabled, session);
 
-			MyTableModel tableModel = (MyTableModel) table.getModel();
+			XTableModel tableModel = (XTableModel) table.getModel();
 			tableModel.setRowCount(suppliers.size());
 
 			for (int i = 0; i < suppliers.size(); ++i) {
 				Supplier supplier = suppliers.get(i);
 				tableModel.setValueAt(supplier.getCode(), i, 0);
 				tableModel.setValueAt(supplier.getName(), i, 1);
-				tableModel.setValueAt(supplier.getDescription(), i, 2);
-				tableModel.setValueAt(supplier.getContactPerson1(), i, 3);
-				tableModel.setValueAt(supplier.getContactPerson2(), i, 4);
-				tableModel.setValueAt(supplier.getPhone1(), i, 5);
+				tableModel.setValueAt(supplier.getContactPerson1(), i, 2);
+				tableModel.setValueAt(supplier.getContactPerson2(), i, 3);
+				tableModel.setValueAt(supplier.getPhone1(), i, 4);
 			}
 		} finally {
 			session.close();
@@ -233,7 +250,7 @@ public class SupplierListDialog extends XJDialog {
 	}
 
 	private void showDetail() {
-		Session session = HibernateUtil.openSession();
+		Session session = HibernateUtils.openSession();
 		try {
 			int selectedRow = table.getSelectedRow();
 			if (selectedRow < 0) {
@@ -247,8 +264,21 @@ public class SupplierListDialog extends XJDialog {
 			SupplierForm stockForm = new SupplierForm(this, ActionType.UPDATE);
 			stockForm.setFormDetailValue(supplier);
 			stockForm.setVisible(true);
+
+			btnRefresh.doClick();
 		} finally {
 			session.close();
 		}
+	}
+
+	private void tambah() {
+		new SupplierForm(SupplierListDialog.this, ActionType.CREATE)
+				.setVisible(true);
+		btnRefresh.doClick();
+
+		int row = table.getRowCount() - 1;
+		int column = table.getSelectedColumn();
+		table.requestFocus();
+		table.changeSelection(row, column, false, false);
 	}
 }

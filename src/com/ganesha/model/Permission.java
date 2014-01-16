@@ -15,7 +15,7 @@ public class Permission extends Trackable {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "ID", nullable = false)
-	private int id;
+	private Integer id;
 
 	@Column(name = "NAME", nullable = false, unique = true)
 	private String name;

@@ -10,14 +10,14 @@ import javax.persistence.Table;
 import com.ganesha.model.Trackable;
 
 @Entity
-@Table(name = "GOODS")
-public class Good extends Trackable {
+@Table(name = "ITEMS")
+public class Item extends Trackable {
 	private static final long serialVersionUID = -7780389008755790841L;
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "ID", nullable = false)
-	private int id;
+	private Integer id;
 
 	@Column(name = "NAME", nullable = false, unique = true)
 	private String name;

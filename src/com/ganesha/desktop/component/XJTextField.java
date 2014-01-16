@@ -4,9 +4,9 @@ import java.awt.Font;
 import java.awt.event.FocusAdapter;
 import java.awt.event.FocusEvent;
 
-import javax.swing.JTextField;
+import javax.swing.JFormattedTextField;
 
-public class XJTextField extends JTextField {
+public class XJTextField extends JFormattedTextField {
 	private static final long serialVersionUID = 8731044804764016513L;
 
 	public XJTextField() {

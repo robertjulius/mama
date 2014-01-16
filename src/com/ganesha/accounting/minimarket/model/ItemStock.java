@@ -14,8 +14,8 @@ import javax.persistence.Table;
 import com.ganesha.model.Trackable;
 
 @Entity
-@Table(name = "GOOD_STOCKS")
-public class GoodStock extends Trackable {
+@Table(name = "ITEM_STOCKS")
+public class ItemStock extends Trackable {
 	private static final long serialVersionUID = -7780389008755790841L;
 
 	@Id
@@ -24,8 +24,8 @@ public class GoodStock extends Trackable {
 	private Integer id;
 
 	@ManyToOne
-	@JoinColumn(name = "GOOD_ID", nullable = false)
-	private Good good;
+	@JoinColumn(name = "ITEM_ID", nullable = false)
+	private Item item;
 
 	@Column(name = "BUY_PRICE", nullable = false)
 	private BigDecimal buyPrice;
@@ -49,8 +49,8 @@ public class GoodStock extends Trackable {
 		return buyPrice;
 	}
 
-	public Good getGood() {
-		return good;
+	public Item getItem() {
+		return item;
 	}
 
 	public BigDecimal getHpp() {
@@ -81,8 +81,8 @@ public class GoodStock extends Trackable {
 		this.buyPrice = buyPrice;
 	}
 
-	public void setGood(Good good) {
-		this.good = good;
+	public void setItem(Item item) {
+		this.item = item;
 	}
 
 	public void setHpp(BigDecimal hpp) {

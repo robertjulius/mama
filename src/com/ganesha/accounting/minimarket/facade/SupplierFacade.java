@@ -10,6 +10,7 @@ import org.hibernate.criterion.Restrictions;
 
 import com.ganesha.accounting.minimarket.Main;
 import com.ganesha.accounting.minimarket.model.Supplier;
+import com.ganesha.core.exception.UserException;
 import com.ganesha.core.utils.CommonUtils;
 
 public class SupplierFacade {
@@ -31,7 +32,19 @@ public class SupplierFacade {
 			String contackPerson1Phone, String contackPerson2,
 			String contackPerson2Email, String contackPerson2Phone,
 			String description, String email1, String email2, String name,
-			String phone1, String phone2, Session session) {
+			String phone1, String phone2, Session session) throws UserException {
+
+		if (GlobalFacade.getInstance().isExists("code", code, Supplier.class,
+				session)) {
+			throw new UserException("Supplier dengan ID " + code
+					+ " sudah pernah didaftarkan");
+		}
+
+		if (GlobalFacade.getInstance().isExists("name", name, Supplier.class,
+				session)) {
+			throw new UserException("Supplier dengan Nama " + name
+					+ " sudah pernah didaftarkan");
+		}
 
 		Supplier supplier = new Supplier();
 		supplier.setAddress1(address1);
@@ -105,7 +118,7 @@ public class SupplierFacade {
 			String contackPerson1Phone, String contackPerson2,
 			String contackPerson2Email, String contackPerson2Phone,
 			String description, String email1, String email2, String name,
-			String phone1, String phone2, Session session) {
+			String phone1, String phone2, Session session) throws UserException {
 
 		Supplier supplier = getDetail(code, session);
 		supplier.setAddress1(address1);
@@ -120,6 +133,15 @@ public class SupplierFacade {
 		supplier.setDescription(description);
 		supplier.setEmail1(email1);
 		supplier.setEmail2(email2);
+		if (!supplier.getName().equals(name)) {
+			if (GlobalFacade.getInstance().isExists("name", name,
+					Supplier.class, session)) {
+				throw new UserException("Supplier dengan Nama " + name
+						+ " sudah pernah didaftarkan");
+			} else {
+				supplier.setName(name);
+			}
+		}
 		supplier.setName(name);
 		supplier.setPhone1(phone1);
 		supplier.setPhone2(phone2);

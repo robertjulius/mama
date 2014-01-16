@@ -10,6 +10,7 @@ import java.util.List;
 import javax.swing.ButtonGroup;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
+import javax.swing.table.TableColumnModel;
 
 import net.miginfocom.swing.MigLayout;
 
@@ -17,9 +18,8 @@ import org.hibernate.Session;
 
 import com.ganesha.accounting.formatter.Formatter;
 import com.ganesha.accounting.minimarket.facade.StockFacade;
-import com.ganesha.accounting.minimarket.model.Good;
-import com.ganesha.accounting.minimarket.model.GoodStock;
-import com.ganesha.accounting.minimarket.ui.commons.MyTableModel;
+import com.ganesha.accounting.minimarket.model.Item;
+import com.ganesha.accounting.minimarket.model.ItemStock;
 import com.ganesha.core.exception.AppException;
 import com.ganesha.core.utils.GeneralConstants.ActionType;
 import com.ganesha.desktop.component.XJButton;
@@ -28,7 +28,9 @@ import com.ganesha.desktop.component.XJLabel;
 import com.ganesha.desktop.component.XJRadioButton;
 import com.ganesha.desktop.component.XJTable;
 import com.ganesha.desktop.component.XJTextField;
-import com.ganesha.hibernate.HibernateUtil;
+import com.ganesha.desktop.component.xtableutils.XTableConstants;
+import com.ganesha.desktop.component.xtableutils.XTableModel;
+import com.ganesha.hibernate.HibernateUtils;
 
 public class StockListDialog extends XJDialog {
 	private static final long serialVersionUID = 1452286313727721700L;
@@ -40,8 +42,9 @@ public class StockListDialog extends XJDialog {
 	 * @wbp.nonvisual location=238,101
 	 */
 	private final ButtonGroup btnGroup = new ButtonGroup();
-	private XJButton btnTambah;
+	private XJButton btnRegistrasi;
 	private XJButton btnDetail;
+	private XJButton btnRefresh;
 
 	public StockListDialog(Window parent) {
 		super(parent);
@@ -112,7 +115,7 @@ public class StockListDialog extends XJDialog {
 		pnlRadioButton.add(rdbtnBarangTidakAktif, "cell 0 1");
 		btnGroup.add(rdbtnBarangTidakAktif);
 
-		XJButton btnRefresh = new XJButton();
+		btnRefresh = new XJButton();
 		btnRefresh.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
@@ -132,19 +135,28 @@ public class StockListDialog extends XJDialog {
 
 		JPanel panel = new JPanel();
 		getContentPane().add(panel, "cell 0 2,alignx center,growy");
-		panel.setLayout(new MigLayout("", "[][]", "[]"));
+		panel.setLayout(new MigLayout("", "[][][]", "[]"));
 
-		btnTambah = new XJButton();
-		btnTambah.addActionListener(new ActionListener() {
+		btnRegistrasi = new XJButton();
+		btnRegistrasi.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				new StockForm(StockListDialog.this, ActionType.CREATE)
-						.setVisible(true);
+				tambah();
 			}
 		});
-		panel.add(btnTambah, "cell 0 0");
-		btnTambah
-				.setText("<html><center>Tambah Barang Baru<br/>[F1]</center><html>");
+
+		XJButton btnKeluar = new XJButton();
+		btnKeluar.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				dispose();
+			}
+		});
+		btnKeluar.setText("<html></center>Keluar<br/>[ESC]</center></html>");
+		panel.add(btnKeluar, "cell 0 0");
+		panel.add(btnRegistrasi, "cell 1 0");
+		btnRegistrasi
+				.setText("<html><center>Registrasi Barang Baru<br/>[F5]</center><html>");
 
 		btnDetail = new XJButton();
 		btnDetail.addActionListener(new ActionListener() {
@@ -154,8 +166,8 @@ public class StockListDialog extends XJDialog {
 			}
 		});
 		btnDetail
-				.setText("<html><center>Lihat Detail<br/>[F2]</center></html>");
-		panel.add(btnDetail, "cell 1 0");
+				.setText("<html><center>Lihat Detail<br/>[Enter]</center></html>");
+		panel.add(btnDetail, "cell 2 0");
 
 		btnRefresh.doClick();
 
@@ -166,10 +178,10 @@ public class StockListDialog extends XJDialog {
 	@Override
 	protected void keyEventListener(int keyCode) {
 		switch (keyCode) {
-		case KeyEvent.VK_F1:
-			btnTambah.doClick();
+		case KeyEvent.VK_F5:
+			btnRegistrasi.doClick();
 			break;
-		case KeyEvent.VK_F2:
+		case KeyEvent.VK_ENTER:
 			btnDetail.doClick();
 			break;
 		default:
@@ -178,41 +190,61 @@ public class StockListDialog extends XJDialog {
 	}
 
 	private void initTable() {
-		MyTableModel tableModel = new MyTableModel();
-		tableModel.setColumnIdentifiers(new String[] { "Kode", "Name", "Stock",
-				"Satuan", "Harga Beli", "Harga Jual" });
+		XTableModel tableModel = new XTableModel();
+		tableModel.setColumnIdentifiers(new String[] { "Kode", "Nama", "Stock",
+				"Satuan", "Harga Beli", "HPP", "Harga Jual" });
 		tableModel.setColumnEditable(new boolean[] { false, false, false,
-				false, false, false });
+				false, false, false, false });
 		table.setModel(tableModel);
+
+		TableColumnModel columnModel = table.getColumnModel();
+		columnModel.getColumn(0).setPreferredWidth(25);
+		columnModel.getColumn(1).setPreferredWidth(300);
+		columnModel.getColumn(2).setPreferredWidth(25);
+		columnModel.getColumn(3).setPreferredWidth(50);
+		columnModel.getColumn(4).setPreferredWidth(75);
+		columnModel.getColumn(5).setPreferredWidth(25);
+		columnModel.getColumn(6).setPreferredWidth(75);
+
+		columnModel.getColumn(2).setCellRenderer(
+				XTableConstants.CELL_RENDERER_RIGHT);
+		columnModel.getColumn(4).setCellRenderer(
+				XTableConstants.CELL_RENDERER_RIGHT);
+		columnModel.getColumn(5).setCellRenderer(
+				XTableConstants.CELL_RENDERER_RIGHT);
+		columnModel.getColumn(6).setCellRenderer(
+				XTableConstants.CELL_RENDERER_RIGHT);
 	}
 
 	private void loadData() throws AppException {
-		Session session = HibernateUtil.openSession();
+		Session session = HibernateUtils.openSession();
 		try {
 			String code = txtKode.getText();
 			String name = txtNama.getText();
 			boolean disabled = false;
 
 			StockFacade facade = StockFacade.getInstance();
-			List<GoodStock> goodStocks = facade.search(code, name, disabled,
+			List<ItemStock> itemStocks = facade.search(code, name, disabled,
 					session);
 
-			MyTableModel tableModel = (MyTableModel) table.getModel();
-			tableModel.setRowCount(goodStocks.size());
+			XTableModel tableModel = (XTableModel) table.getModel();
+			tableModel.setRowCount(itemStocks.size());
 
-			for (int i = 0; i < goodStocks.size(); ++i) {
-				GoodStock goodStock = goodStocks.get(i);
-				Good good = goodStock.getGood();
-				tableModel.setValueAt(good.getCode(), i, 0);
-				tableModel.setValueAt(good.getName(), i, 1);
-				tableModel.setValueAt(goodStock.getStock(), i, 2);
-				tableModel.setValueAt(goodStock.getUnit(), i, 3);
+			for (int i = 0; i < itemStocks.size(); ++i) {
+				ItemStock itemStock = itemStocks.get(i);
+				Item item = itemStock.getItem();
+				tableModel.setValueAt(item.getCode(), i, 0);
+				tableModel.setValueAt(item.getName(), i, 1);
+				tableModel.setValueAt(itemStock.getStock(), i, 2);
+				tableModel.setValueAt(itemStock.getUnit(), i, 3);
+				tableModel
+						.setValueAt(Formatter.formatNumberToString(itemStock
+								.getBuyPrice()), i, 4);
 				tableModel.setValueAt(
-						Formatter.formatPriceBigDecimalToString(goodStock
-								.getSellPrice()), i, 4);
-				tableModel.setValueAt(
-						Formatter.formatPriceBigDecimalToString(goodStock
-								.getSellPrice()), i, 5);
+						Formatter.formatNumberToString(itemStock.getHpp()), i,
+						5);
+				tableModel.setValueAt(Formatter.formatNumberToString(itemStock
+						.getSellPrice()), i, 6);
 			}
 		} finally {
 			session.close();
@@ -220,7 +252,7 @@ public class StockListDialog extends XJDialog {
 	}
 
 	private void showDetail() {
-		Session session = HibernateUtil.openSession();
+		Session session = HibernateUtils.openSession();
 		try {
 			int selectedRow = table.getSelectedRow();
 			if (selectedRow < 0) {
@@ -229,13 +261,25 @@ public class StockListDialog extends XJDialog {
 			String code = (String) table.getModel().getValueAt(selectedRow, 0);
 
 			StockFacade facade = StockFacade.getInstance();
-			GoodStock goodStock = facade.getDetail(code, session);
+			ItemStock itemStock = facade.getDetail(code, session);
 
 			StockForm stockForm = new StockForm(this, ActionType.UPDATE);
-			stockForm.setFormDetailValue(goodStock);
+			stockForm.setFormDetailValue(itemStock);
 			stockForm.setVisible(true);
+
+			btnRefresh.doClick();
 		} finally {
 			session.close();
 		}
+	}
+
+	private void tambah() {
+		new StockForm(StockListDialog.this, ActionType.CREATE).setVisible(true);
+		btnRefresh.doClick();
+
+		int row = table.getRowCount() - 1;
+		int column = table.getSelectedColumn();
+		table.requestFocus();
+		table.changeSelection(row, column, false, false);
 	}
 }

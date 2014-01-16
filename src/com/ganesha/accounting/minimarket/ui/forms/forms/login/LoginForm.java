@@ -72,6 +72,7 @@ public class LoginForm extends XJFrame {
 		pnlInput.add(lblLoginId, "cell 0 0,alignx right");
 
 		txtLoginId = new XJTextField();
+		txtLoginId.setText("ADMIN");
 		pnlInput.add(txtLoginId, "cell 1 0,growx");
 		txtLoginId.setColumns(10);
 

@@ -16,9 +16,11 @@ public abstract class XJDialog extends JDialog {
 			.getCurrentKeyboardFocusManager();
 	private MyDispatcher dispatcher = new MyDispatcher();
 
+	private boolean closeOnEsc = true;
+
 	public XJDialog(Window parent) {
 		super(parent, ModalityType.APPLICATION_MODAL);
-		setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
+		setDefaultCloseOperation(JDialog.DO_NOTHING_ON_CLOSE);
 
 		addWindowFocusListener(new WindowFocusListener() {
 			@Override
@@ -31,7 +33,10 @@ public abstract class XJDialog extends JDialog {
 				keyboardFocusManager.removeKeyEventDispatcher(dispatcher);
 			}
 		});
+	}
 
+	public void setCloseOnEsc(boolean closeOnEsc) {
+		this.closeOnEsc = closeOnEsc;
 	}
 
 	protected abstract void keyEventListener(int keyCode);
@@ -43,7 +48,11 @@ public abstract class XJDialog extends JDialog {
 				int keyCode = e.getKeyCode();
 				switch (keyCode) {
 				case KeyEvent.VK_ESCAPE:
-					dispose();
+					if (closeOnEsc) {
+						dispose();
+					} else {
+						keyEventListener(keyCode);
+					}
 					break;
 				default:
 					keyEventListener(keyCode);

@@ -1,19 +1,25 @@
 package com.ganesha.accounting.formatter;
 
-import java.math.BigDecimal;
 import java.text.DecimalFormat;
 import java.text.NumberFormat;
+import java.text.ParseException;
 
 public class Formatter {
 
-	public static String formatPriceBigDecimalToString(BigDecimal bigDecimal) {
-		String string = formatPriceDoubleToString(bigDecimal.doubleValue());
+	public static String formatNumberToString(Number number) {
+		NumberFormat numberFormat = new DecimalFormat("#,##0.##");
+		String string = numberFormat.format(number);
 		return string;
 	}
 
-	public static String formatPriceDoubleToString(double d) {
+	public static Number formatStringToNumber(String string) {
+		Number number = null;
 		NumberFormat numberFormat = new DecimalFormat("#,##0.##");
-		String string = numberFormat.format(d);
-		return string;
+		try {
+			number = numberFormat.parse(string);
+		} catch (ParseException e) {
+			number = 0;
+		}
+		return number;
 	}
 }

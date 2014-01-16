@@ -8,8 +8,9 @@ import org.hibernate.Session;
 import org.hibernate.criterion.Restrictions;
 
 import com.ganesha.accounting.minimarket.Main;
-import com.ganesha.accounting.minimarket.model.Good;
-import com.ganesha.accounting.minimarket.model.GoodStock;
+import com.ganesha.accounting.minimarket.model.Item;
+import com.ganesha.accounting.minimarket.model.ItemStock;
+import com.ganesha.core.exception.UserException;
 import com.ganesha.core.utils.CommonUtils;
 
 public class StockFacade {
@@ -26,36 +27,49 @@ public class StockFacade {
 	private StockFacade() {
 	}
 
-	public void addNewGood(String code, String name, String barcode,
+	public void addNewItem(String code, String name, String barcode,
 			String unit, BigDecimal buyPrice, BigDecimal hpp,
-			BigDecimal sellPrice, int stock, int minimumStock, Session session) {
+			BigDecimal sellPrice, int minimumStock, Session session)
+			throws UserException {
 
-		saveGood(code, name, barcode, session);
-		saveGoodStock(code, unit, buyPrice, hpp, sellPrice, stock,
-				minimumStock, session);
+		if (GlobalFacade.getInstance().isExists("code", code, Item.class,
+				session)) {
+			throw new UserException("Barang dengan ID " + code
+					+ " sudah pernah didaftarkan");
+		}
+
+		if (GlobalFacade.getInstance().isExists("name", name, Item.class,
+				session)) {
+			throw new UserException("Barang dengan Nama " + name
+					+ " sudah pernah didaftarkan");
+		}
+
+		saveItem(code, name, barcode, session);
+		saveItemStock(code, unit, buyPrice, hpp, sellPrice, minimumStock,
+				session);
 	}
 
-	public GoodStock getDetail(String code, Session session) {
-		Criteria criteria = session.createCriteria(GoodStock.class);
-		criteria.createAlias("good", "good");
-		criteria.add(Restrictions.eq("good.code", code));
+	public ItemStock getDetail(String code, Session session) {
+		Criteria criteria = session.createCriteria(ItemStock.class);
+		criteria.createAlias("item", "item");
+		criteria.add(Restrictions.eq("item.code", code));
 
-		GoodStock goodStock = (GoodStock) criteria.uniqueResult();
-		return goodStock;
+		ItemStock itemStock = (ItemStock) criteria.uniqueResult();
+		return itemStock;
 	}
 
-	public List<GoodStock> search(String code, String name, boolean disabled,
+	public List<ItemStock> search(String code, String name, boolean disabled,
 			Session session) {
-		Criteria criteria = session.createCriteria(GoodStock.class);
-		criteria.createAlias("good", "good");
+		Criteria criteria = session.createCriteria(ItemStock.class);
+		criteria.createAlias("item", "item");
 
 		if (code != null && !code.trim().isEmpty()) {
-			criteria.add(Restrictions.like("good.code", "%" + code + "%")
+			criteria.add(Restrictions.like("item.code", "%" + code + "%")
 					.ignoreCase());
 		}
 
 		if (name != null && !name.trim().isEmpty()) {
-			criteria.add(Restrictions.like("good.name", "%" + name + "%")
+			criteria.add(Restrictions.like("item.name", "%" + name + "%")
 					.ignoreCase());
 		}
 
@@ -63,68 +77,76 @@ public class StockFacade {
 		criteria.add(Restrictions.eq("deleted", false));
 
 		@SuppressWarnings("unchecked")
-		List<GoodStock> goodStocks = criteria.list();
+		List<ItemStock> itemStocks = criteria.list();
 
-		return goodStocks;
+		return itemStocks;
 	}
 
-	public void updateExistingGood(String code, String name, String barcode,
+	public void updateExistingItem(String code, String name, String barcode,
 			String unit, BigDecimal buyPrice, BigDecimal hpp,
-			BigDecimal sellPrice, int stock, int minimumStock, Session session) {
+			BigDecimal sellPrice, int minimumStock, Session session)
+			throws UserException {
 
-		GoodStock goodStock = getDetail(code, session);
-		goodStock.setUnit(unit);
-		goodStock.setBuyPrice(buyPrice);
-		goodStock.setHpp(hpp);
-		goodStock.setSellPrice(sellPrice);
-		goodStock.setStock(stock);
-		goodStock.setMinimumStock(minimumStock);
-		goodStock.setLastUpdatedBy(Main.getUserLogin().getId());
-		goodStock.setLastUpdatedTimestamp(CommonUtils.getCurrentTimestamp());
+		ItemStock itemStock = getDetail(code, session);
+		itemStock.setUnit(unit);
+		itemStock.setBuyPrice(buyPrice);
+		itemStock.setHpp(hpp);
+		itemStock.setSellPrice(sellPrice);
+		itemStock.setMinimumStock(minimumStock);
+		itemStock.setLastUpdatedBy(Main.getUserLogin().getId());
+		itemStock.setLastUpdatedTimestamp(CommonUtils.getCurrentTimestamp());
 
-		Good good = goodStock.getGood();
-		good.setName(name);
-		good.setBarcode(barcode);
-		good.setLastUpdatedBy(Main.getUserLogin().getId());
-		good.setLastUpdatedTimestamp(CommonUtils.getCurrentTimestamp());
+		Item item = itemStock.getItem();
+		if (!item.getName().equals(name)) {
+			if (GlobalFacade.getInstance().isExists("name", name, Item.class,
+					session)) {
+				throw new UserException("Barang dengan Nama " + name
+						+ " sudah pernah didaftarkan");
+			} else {
+				item.setName(name);
+			}
+		}
+		item.setBarcode(barcode);
+		item.setLastUpdatedBy(Main.getUserLogin().getId());
+		item.setLastUpdatedTimestamp(CommonUtils.getCurrentTimestamp());
 
-		session.saveOrUpdate(goodStock);
+		session.saveOrUpdate(itemStock);
 	}
 
-	private void saveGood(String code, String name, String barcode,
+	private void saveItem(String code, String name, String barcode,
 			Session session) {
 
-		Good good = new Good();
-		good.setCode(code);
-		good.setName(name);
-		good.setBarcode(barcode);
-		good.setLastUpdatedBy(Main.getUserLogin().getId());
-		good.setLastUpdatedTimestamp(CommonUtils.getCurrentTimestamp());
+		Item item = new Item();
+		item.setCode(code);
+		item.setName(name);
+		item.setBarcode(barcode);
+		item.setLastUpdatedBy(Main.getUserLogin().getId());
+		item.setLastUpdatedTimestamp(CommonUtils.getCurrentTimestamp());
 
-		session.saveOrUpdate(good);
+		session.saveOrUpdate(item);
 	}
 
-	private void saveGoodStock(String code, String unit, BigDecimal buyPrice,
-			BigDecimal hpp, BigDecimal sellPrice, int stock, int minimumStock,
+	private void saveItemStock(String code, String unit, BigDecimal buyPrice,
+			BigDecimal hpp, BigDecimal sellPrice, int minimumStock,
 			Session session) {
 
-		GoodStock goodStock = new GoodStock();
-		goodStock.setBuyPrice(buyPrice);
+		ItemStock itemStock = new ItemStock();
+		itemStock.setBuyPrice(buyPrice);
 
-		Criteria criteria = session.createCriteria(Good.class);
+		Criteria criteria = session.createCriteria(Item.class);
 		criteria.add(Restrictions.eq("code", code));
-		Good good = (Good) criteria.uniqueResult();
+		Item item = (Item) criteria.uniqueResult();
 
-		goodStock.setGood(good);
-		goodStock.setUnit(unit);
-		goodStock.setBuyPrice(buyPrice);
-		goodStock.setHpp(hpp);
-		goodStock.setSellPrice(sellPrice);
-		goodStock.setStock(stock);
-		goodStock.setMinimumStock(minimumStock);
-		goodStock.setLastUpdatedBy(Main.getUserLogin().getId());
-		goodStock.setLastUpdatedTimestamp(CommonUtils.getCurrentTimestamp());
+		itemStock.setItem(item);
+		itemStock.setUnit(unit);
+		itemStock.setBuyPrice(buyPrice);
+		itemStock.setHpp(hpp);
+		itemStock.setSellPrice(sellPrice);
+		itemStock.setStock(0);
+		itemStock.setMinimumStock(minimumStock);
+		itemStock.setLastUpdatedBy(Main.getUserLogin().getId());
+		itemStock.setLastUpdatedTimestamp(CommonUtils.getCurrentTimestamp());
 
-		session.saveOrUpdate(goodStock);
+		session.saveOrUpdate(itemStock);
 	}
 }

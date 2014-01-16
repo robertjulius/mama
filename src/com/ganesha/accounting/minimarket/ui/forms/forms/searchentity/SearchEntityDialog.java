@@ -11,6 +11,7 @@ import java.util.List;
 
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
+import javax.swing.table.TableColumnModel;
 
 import net.miginfocom.swing.MigLayout;
 
@@ -18,7 +19,6 @@ import org.hibernate.Criteria;
 import org.hibernate.Session;
 import org.hibernate.criterion.Restrictions;
 
-import com.ganesha.accounting.minimarket.ui.commons.MyTableModel;
 import com.ganesha.core.desktop.ExceptionHandler;
 import com.ganesha.core.exception.AppException;
 import com.ganesha.desktop.component.XJButton;
@@ -26,7 +26,8 @@ import com.ganesha.desktop.component.XJDialog;
 import com.ganesha.desktop.component.XJLabel;
 import com.ganesha.desktop.component.XJTable;
 import com.ganesha.desktop.component.XJTextField;
-import com.ganesha.hibernate.HibernateUtil;
+import com.ganesha.desktop.component.xtableutils.XTableModel;
+import com.ganesha.hibernate.HibernateUtils;
 import com.ganesha.model.TableEntity;
 
 public class SearchEntityDialog extends XJDialog {
@@ -37,19 +38,20 @@ public class SearchEntityDialog extends XJDialog {
 
 	private Class<?> entityClass;
 	private String selectedCode;
+	private String selectedName;
 
 	/**
 	 * @wbp.nonvisual location=238,101
 	 */
 	private XJButton btnPilih;
 
-	public SearchEntityDialog(Window parent, Class<?> entityClass) {
+	public SearchEntityDialog(String title, Window parent, Class<?> entityClass) {
 		super(parent);
 		this.entityClass = entityClass;
 
-		setTitle("Cari Entitas");
+		setTitle(title);
 		getContentPane().setLayout(
-				new MigLayout("", "[300, grow]", "[][300,grow][]"));
+				new MigLayout("", "[500,grow]", "[][300,grow][]"));
 
 		table = new XJTable();
 		initTable();
@@ -117,7 +119,7 @@ public class SearchEntityDialog extends XJDialog {
 			}
 		});
 		panel.add(btnPilih, "cell 0 0");
-		btnPilih.setText("<html><center>Pilih<br/>[F1]</center><html>");
+		btnPilih.setText("<html><center>Pilih<br/>[ENTER]</center><html>");
 
 		pack();
 		setLocationRelativeTo(null);
@@ -133,10 +135,14 @@ public class SearchEntityDialog extends XJDialog {
 		return selectedCode;
 	}
 
+	public String getSelectedName() {
+		return selectedName;
+	}
+
 	@Override
 	protected void keyEventListener(int keyCode) {
 		switch (keyCode) {
-		case KeyEvent.VK_F1:
+		case KeyEvent.VK_ENTER:
 			btnPilih.doClick();
 			break;
 		default:
@@ -145,14 +151,18 @@ public class SearchEntityDialog extends XJDialog {
 	}
 
 	private void initTable() {
-		MyTableModel tableModel = new MyTableModel();
+		XTableModel tableModel = new XTableModel();
 		tableModel.setColumnIdentifiers(new String[] { "Kode", "Name" });
 		tableModel.setColumnEditable(new boolean[] { false, false });
 		table.setModel(tableModel);
+
+		TableColumnModel columnModel = table.getColumnModel();
+		columnModel.getColumn(0).setPreferredWidth(50);
+		columnModel.getColumn(1).setPreferredWidth(300);
 	}
 
 	private void loadData() throws AppException {
-		Session session = HibernateUtil.openSession();
+		Session session = HibernateUtils.openSession();
 		try {
 			String code = txtKode.getText();
 			String name = txtNama.getText();
@@ -167,7 +177,7 @@ public class SearchEntityDialog extends XJDialog {
 
 			List<?> searchResults = criteria.list();
 
-			MyTableModel tableModel = (MyTableModel) table.getModel();
+			XTableModel tableModel = (XTableModel) table.getModel();
 			tableModel.setRowCount(searchResults.size());
 
 			for (int i = 0; i < searchResults.size(); ++i) {
@@ -202,6 +212,7 @@ public class SearchEntityDialog extends XJDialog {
 			return;
 		}
 		selectedCode = (String) table.getModel().getValueAt(selectedRow, 0);
+		selectedName = (String) table.getModel().getValueAt(selectedRow, 1);
 		dispose();
 	}
 }

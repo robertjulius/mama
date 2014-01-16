@@ -3,7 +3,7 @@ package com.ganesha.accounting.util;
 import org.hibernate.SQLQuery;
 import org.hibernate.Session;
 
-import com.ganesha.hibernate.HibernateUtil;
+import com.ganesha.hibernate.HibernateUtils;
 
 public class DBUtils {
 
@@ -22,7 +22,7 @@ public class DBUtils {
 	public <E> E getLastValue(String tableName, String columnName,
 			Class<E> clazz) {
 
-		Session session = HibernateUtil.openSession();
+		Session session = HibernateUtils.openSession();
 		try {
 
 			String query = " SELECT " + columnName + " FROM " + tableName

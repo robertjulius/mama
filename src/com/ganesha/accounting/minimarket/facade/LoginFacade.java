@@ -5,7 +5,7 @@ import org.hibernate.Session;
 import org.hibernate.criterion.Restrictions;
 
 import com.ganesha.accounting.minimarket.Main;
-import com.ganesha.hibernate.HibernateUtil;
+import com.ganesha.hibernate.HibernateUtils;
 import com.ganesha.model.User;
 
 public class LoginFacade {
@@ -23,7 +23,7 @@ public class LoginFacade {
 	}
 
 	public boolean login(String loginId) {
-		Session session = HibernateUtil.openSession();
+		Session session = HibernateUtils.openSession();
 		try {
 
 			Criteria criteria = session.createCriteria(User.class);

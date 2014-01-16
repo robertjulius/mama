@@ -21,9 +21,11 @@
 		<mapping class="com.ganesha.accounting.model.CoaContribution" />
 		<mapping class="com.ganesha.accounting.model.CoaGroup" />
 		<mapping class="com.ganesha.accounting.minimarket.model.Company" />
-		<mapping class="com.ganesha.accounting.minimarket.model.Good" />
-		<mapping class="com.ganesha.accounting.minimarket.model.GoodGroup" />
-		<mapping class="com.ganesha.accounting.minimarket.model.GoodStock" />
+		<mapping class="com.ganesha.accounting.minimarket.model.Item" />
+		<mapping class="com.ganesha.accounting.minimarket.model.ItemGroup" />
+		<mapping class="com.ganesha.accounting.minimarket.model.ItemStock" />
 		<mapping class="com.ganesha.accounting.minimarket.model.Supplier" />
+		<mapping class="com.ganesha.accounting.minimarket.model.PurchaseHeader" />
+		<mapping class="com.ganesha.accounting.minimarket.model.PurchaseDetail" />
 	</session-factory>
 </hibernate-configuration>

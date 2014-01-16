@@ -1,8 +1,10 @@
 package com.ganesha.accounting.minimarket.ui.forms.forms.supplier;
 
+import java.awt.Font;
 import java.awt.Window;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.KeyEvent;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 
@@ -20,13 +22,14 @@ import com.ganesha.accounting.minimarket.model.Supplier;
 import com.ganesha.accounting.util.DBUtils;
 import com.ganesha.core.desktop.ExceptionHandler;
 import com.ganesha.core.exception.ActionTypeNotSupported;
+import com.ganesha.core.exception.UserException;
 import com.ganesha.core.utils.GeneralConstants.ActionType;
 import com.ganesha.desktop.component.XJButton;
 import com.ganesha.desktop.component.XJDialog;
 import com.ganesha.desktop.component.XJLabel;
 import com.ganesha.desktop.component.XJTextArea;
 import com.ganesha.desktop.component.XJTextField;
-import com.ganesha.hibernate.HibernateUtil;
+import com.ganesha.hibernate.HibernateUtils;
 
 public class SupplierForm extends XJDialog {
 
@@ -73,6 +76,7 @@ public class SupplierForm extends XJDialog {
 	private XJTextField txtKontakPerson2Email;
 	private XJLabel lblKontakPerson2Phone;
 	private XJLabel lblEmail;
+	private XJButton btnBatal;
 
 	public SupplierForm(Window parent, ActionType actionType) {
 		super(parent);
@@ -88,55 +92,58 @@ public class SupplierForm extends XJDialog {
 			}
 		});
 		setTitle("Form Supplier");
+		setCloseOnEsc(false);
+
 		getContentPane().setLayout(
 				new MigLayout("", "[grow][grow]", "[grow][][grow]"));
 
 		pnlKiri = new JPanel();
 		getContentPane().add(pnlKiri, "cell 0 0,grow");
-		pnlKiri.setLayout(new MigLayout("", "[grow]", "[][][]"));
+		pnlKiri.setLayout(new MigLayout("", "[400,grow]", "[][][]"));
 
 		JPanel pnlKodeSupplier = new JPanel();
 		pnlKodeSupplier.setBorder(new EtchedBorder(EtchedBorder.LOWERED, null,
 				null));
-		pnlKiri.add(pnlKodeSupplier, "cell 0 0");
-		pnlKodeSupplier.setLayout(new MigLayout("",
-				"[150][150:n,grow][200,grow][50:n]", "[][][]"));
+		pnlKiri.add(pnlKodeSupplier, "cell 0 0,growx");
+		pnlKodeSupplier
+				.setLayout(new MigLayout("", "[150][][grow]", "[][][][]"));
 
 		XJLabel lblKode = new XJLabel();
 		pnlKodeSupplier.add(lblKode, "cell 0 0,alignx right");
 		lblKode.setText("Kode");
 
 		txtKode = new XJTextField();
-		pnlKodeSupplier.add(txtKode, "cell 1 0,growx");
+		pnlKodeSupplier.add(txtKode, "cell 1 0 2 1,growx");
 
 		lblKodeTerakhir = new XJLabel();
+		lblKodeTerakhir.setFont(new Font("Tahoma", Font.BOLD, 12));
 		lblKodeTerakhir.setText("Kode Terakhir:");
-		pnlKodeSupplier.add(lblKodeTerakhir, "cell 2 0,alignx right");
+		pnlKodeSupplier.add(lblKodeTerakhir, "cell 1 1");
 
 		lblKodeTerakhirValue = new XJLabel();
+		lblKodeTerakhirValue.setFont(new Font("Tahoma", Font.BOLD, 12));
 		lblKodeTerakhirValue.setText("");
-		pnlKodeSupplier.add(lblKodeTerakhirValue, "cell 3 0");
+		pnlKodeSupplier.add(lblKodeTerakhirValue, "cell 2 1");
 
 		XJLabel lblNama = new XJLabel();
-		pnlKodeSupplier.add(lblNama, "cell 0 1,alignx trailing");
+		pnlKodeSupplier.add(lblNama, "cell 0 2,alignx trailing");
 		lblNama.setText("Nama");
 
 		txtNama = new XJTextField();
-		pnlKodeSupplier.add(txtNama, "cell 1 1 3 1,growx");
+		pnlKodeSupplier.add(txtNama, "cell 1 2 2 1,growx");
 
 		lblDeskripsi = new XJLabel();
 		lblDeskripsi.setText("Deskripsi");
-		pnlKodeSupplier.add(lblDeskripsi, "cell 0 2,alignx trailing");
+		pnlKodeSupplier.add(lblDeskripsi, "cell 0 3,alignx trailing");
 
 		txtDeskripsi = new XJTextField();
-		pnlKodeSupplier.add(txtDeskripsi, "cell 1 2 3 1,growx");
+		pnlKodeSupplier.add(txtDeskripsi, "cell 1 3 2 1,growx");
 
 		pnlKontakPerson1 = new JPanel();
 		pnlKontakPerson1.setBorder(new EtchedBorder(EtchedBorder.LOWERED, null,
 				null));
 		pnlKiri.add(pnlKontakPerson1, "cell 0 1,growx");
-		pnlKontakPerson1.setLayout(new MigLayout("", "[150][200:n,grow]",
-				"[][][]"));
+		pnlKontakPerson1.setLayout(new MigLayout("", "[150][grow]", "[][][]"));
 
 		lblKontakPerson1 = new XJLabel();
 		pnlKontakPerson1.add(lblKontakPerson1, "cell 0 0,alignx trailing");
@@ -163,7 +170,7 @@ public class SupplierForm extends XJDialog {
 		lblKontakPerson2Email.setBorder(new EtchedBorder(EtchedBorder.LOWERED,
 				null, null));
 		pnlKiri.add(lblKontakPerson2Email, "cell 0 2,grow");
-		lblKontakPerson2Email.setLayout(new MigLayout("", "[150][200,grow]",
+		lblKontakPerson2Email.setLayout(new MigLayout("", "[150][grow]",
 				"[][][]"));
 
 		lblKontakPerson2 = new XJLabel();
@@ -196,7 +203,7 @@ public class SupplierForm extends XJDialog {
 		pnlAlamat1
 				.setBorder(new EtchedBorder(EtchedBorder.LOWERED, null, null));
 		pnlKanan.add(pnlAlamat1, "cell 0 0,grow");
-		pnlAlamat1.setLayout(new MigLayout("", "[100][250:n,grow]",
+		pnlAlamat1.setLayout(new MigLayout("", "[100][300:n,grow]",
 				"[100,grow][][]"));
 
 		lblAlamat1 = new XJLabel();
@@ -206,7 +213,6 @@ public class SupplierForm extends XJDialog {
 		pnlAlamat1.add(scrollPaneAlamat1, "cell 1 0,grow");
 
 		txtAlamat1 = new XJTextArea();
-		txtAlamat1.setText("Alamat1");
 		scrollPaneAlamat1.setViewportView(txtAlamat1);
 
 		lblPhone1 = new XJLabel();
@@ -227,7 +233,7 @@ public class SupplierForm extends XJDialog {
 		pnlAlamat2
 				.setBorder(new EtchedBorder(EtchedBorder.LOWERED, null, null));
 		pnlKanan.add(pnlAlamat2, "cell 0 1,grow");
-		pnlAlamat2.setLayout(new MigLayout("", "[100][250:n,grow]",
+		pnlAlamat2.setLayout(new MigLayout("", "[100][300:n,grow]",
 				"[100,grow][][]"));
 
 		lblAlamat2 = new XJLabel();
@@ -257,7 +263,7 @@ public class SupplierForm extends XJDialog {
 
 		JPanel pnlButton = new JPanel();
 		getContentPane().add(pnlButton, "cell 0 2 2 1,alignx center,growy");
-		pnlButton.setLayout(new MigLayout("", "[]", "[]"));
+		pnlButton.setLayout(new MigLayout("", "[][]", "[]"));
 
 		btnSimpan = new XJButton();
 		btnSimpan.addActionListener(new ActionListener() {
@@ -270,9 +276,19 @@ public class SupplierForm extends XJDialog {
 				}
 			}
 		});
-		btnSimpan.setMnemonic('S');
-		btnSimpan.setText("<html><center>Simpan<br/>[Alt+S]</center></html>");
-		pnlButton.add(btnSimpan, "cell 0 0");
+
+		btnBatal = new XJButton();
+		btnBatal.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				batal();
+			}
+		});
+		btnBatal.setMnemonic('Q');
+		btnBatal.setText("<html><center>Batal<br/>[Alt+Q]</center></html>");
+		pnlButton.add(btnBatal, "cell 0 0");
+		btnSimpan.setText("<html><center>Simpan<br/>[F12]</center></html>");
+		pnlButton.add(btnSimpan, "cell 1 0");
 
 		pack();
 		setLocationRelativeTo(null);
@@ -299,15 +315,22 @@ public class SupplierForm extends XJDialog {
 		txtEmail2.setText(supplier.getEmail2());
 
 		btnSimpan
-				.setText("<html><center>Simpan Perubahan<br/>[Alt+S]</center></html>");
+				.setText("<html><center>Simpan Perubahan<br/>[F12]</center></html>");
 	}
 
 	@Override
 	protected void keyEventListener(int keyCode) {
 		switch (keyCode) {
+		case KeyEvent.VK_F12:
+			btnSimpan.doClick();
+			break;
 		default:
 			break;
 		}
+	}
+
+	private void batal() {
+		dispose();
 	}
 
 	private void initForm() {
@@ -316,8 +339,10 @@ public class SupplierForm extends XJDialog {
 		lblKodeTerakhirValue.setText(String.valueOf(kodeTerakhir));
 	}
 
-	private void save() throws ActionTypeNotSupported {
-		Session session = HibernateUtil.openSession();
+	private void save() throws ActionTypeNotSupported, UserException {
+		validateForm();
+
+		Session session = HibernateUtils.openSession();
 		try {
 			session.beginTransaction();
 			SupplierFacade facade = SupplierFacade.getInstance();
@@ -354,6 +379,16 @@ public class SupplierForm extends XJDialog {
 			session.getTransaction().commit();
 		} finally {
 			session.close();
+		}
+	}
+
+	private void validateForm() throws UserException {
+		if (txtKode.getText().trim().equals("")) {
+			throw new UserException("Kode Supplier harus diisi");
+		}
+
+		if (txtNama.getText().trim().equals("")) {
+			throw new UserException("Nama Supplier harus diisi");
 		}
 	}
 }

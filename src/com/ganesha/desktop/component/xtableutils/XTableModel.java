@@ -1,13 +1,13 @@
-package com.ganesha.accounting.minimarket.ui.commons;
+package com.ganesha.desktop.component.xtableutils;
 
 import javax.swing.table.DefaultTableModel;
 
-public class MyTableModel extends DefaultTableModel {
+public class XTableModel extends DefaultTableModel {
 	private static final long serialVersionUID = 6724468683822462856L;
 
 	boolean[] columnEditables;
 
-	public MyTableModel() {
+	public XTableModel() {
 	}
 
 	@Override

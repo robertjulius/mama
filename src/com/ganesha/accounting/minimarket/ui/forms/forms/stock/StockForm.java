@@ -1,8 +1,10 @@
 package com.ganesha.accounting.minimarket.ui.forms.forms.stock;
 
+import java.awt.Font;
 import java.awt.Window;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.KeyEvent;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.math.BigDecimal;
@@ -15,18 +17,21 @@ import net.miginfocom.swing.MigLayout;
 
 import org.hibernate.Session;
 
+import com.ganesha.accounting.formatter.Formatter;
 import com.ganesha.accounting.minimarket.facade.StockFacade;
-import com.ganesha.accounting.minimarket.model.Good;
-import com.ganesha.accounting.minimarket.model.GoodStock;
+import com.ganesha.accounting.minimarket.model.Item;
+import com.ganesha.accounting.minimarket.model.ItemStock;
 import com.ganesha.accounting.util.DBUtils;
 import com.ganesha.core.desktop.ExceptionHandler;
 import com.ganesha.core.exception.ActionTypeNotSupported;
+import com.ganesha.core.exception.UserException;
 import com.ganesha.core.utils.GeneralConstants.ActionType;
+import com.ganesha.desktop.component.XComponentConstants;
 import com.ganesha.desktop.component.XJButton;
 import com.ganesha.desktop.component.XJDialog;
 import com.ganesha.desktop.component.XJLabel;
 import com.ganesha.desktop.component.XJTextField;
-import com.ganesha.hibernate.HibernateUtil;
+import com.ganesha.hibernate.HibernateUtils;
 
 public class StockForm extends XJDialog {
 
@@ -42,10 +47,25 @@ public class StockForm extends XJDialog {
 	private XJLabel lblKodeTerakhir;
 	private ActionType actionType;
 	private JSeparator separator;
+	private JPanel pnlKanan;
+	private XJLabel lblJumlahSaatIni;
+	private XJTextField txtJumlahSaatIni;
+	private XJLabel lblHargaBeli;
+	private XJTextField txtHargaBeli;
+	private JPanel pnlKode;
+	private XJLabel lblHpp;
+	private XJTextField txtHpp;
+	private XJLabel lblHargaJual;
+	private XJTextField txtHargaJual;
+	private XJButton btnBatal;
+	private XJLabel lblStokMinimum;
+	private XJTextField txtStokMinimum;
 
 	public StockForm(Window parent, ActionType actionType) {
 		super(parent);
 		this.actionType = actionType;
+		setCloseOnEsc(false);
+
 		addWindowListener(new WindowAdapter() {
 			@Override
 			public void windowOpened(WindowEvent e) {
@@ -58,58 +78,112 @@ public class StockForm extends XJDialog {
 		});
 		setTitle("Form Barang");
 		getContentPane().setLayout(
-				new MigLayout("", "[grow]", "[grow][][grow]"));
+				new MigLayout("", "[grow][]", "[grow][grow][grow][][grow]"));
 
-		JPanel pnlKodeBarang = new JPanel();
-		pnlKodeBarang.setBorder(new EtchedBorder(EtchedBorder.LOWERED, null,
-				null));
-		getContentPane().add(pnlKodeBarang, "cell 0 0,grow");
-		pnlKodeBarang.setLayout(new MigLayout("",
-				"[100][200:n,grow][200,grow][50:n]", "[][][][]"));
+		pnlKode = new JPanel();
+		pnlKode.setBorder(new EtchedBorder(EtchedBorder.LOWERED, null, null));
+		getContentPane().add(pnlKode, "cell 0 0 2 1,grow");
+		pnlKode.setLayout(new MigLayout("", "[100][200:n][200][50:n]", "[][][]"));
 
 		XJLabel lblKode = new XJLabel();
-		pnlKodeBarang.add(lblKode, "cell 0 0,alignx right");
+		pnlKode.add(lblKode, "cell 0 0,alignx trailing");
 		lblKode.setText("Kode");
 
 		txtKode = new XJTextField();
-		pnlKodeBarang.add(txtKode, "cell 1 0,growx");
+		pnlKode.add(txtKode, "cell 1 0,growx");
 
 		lblKodeTerakhir = new XJLabel();
+		lblKodeTerakhir.setFont(new Font("Tahoma", Font.BOLD, 12));
+		pnlKode.add(lblKodeTerakhir, "cell 2 0,alignx right");
 		lblKodeTerakhir.setText("Kode Terakhir:");
-		pnlKodeBarang.add(lblKodeTerakhir, "cell 2 0,alignx right");
 
 		lblKodeTerakhirValue = new XJLabel();
+		lblKodeTerakhirValue.setFont(new Font("Tahoma", Font.BOLD, 12));
+		pnlKode.add(lblKodeTerakhirValue, "cell 3 0");
 		lblKodeTerakhirValue.setText("");
-		pnlKodeBarang.add(lblKodeTerakhirValue, "cell 3 0");
+
+		lblBarcode = new XJLabel();
+		pnlKode.add(lblBarcode, "cell 0 1,alignx trailing");
+		lblBarcode.setText("Barcode");
+
+		txtBarcode = new XJTextField();
+		pnlKode.add(txtBarcode, "cell 1 1,growx");
+		txtBarcode.setEditable(false);
+
+		JPanel pnlKiri = new JPanel();
+		pnlKiri.setBorder(new EtchedBorder(EtchedBorder.LOWERED, null, null));
+		getContentPane().add(pnlKiri, "cell 0 1,grow");
+		pnlKiri.setLayout(new MigLayout("", "[100][200:n,grow]", "[][][][]"));
 
 		XJLabel lblNama = new XJLabel();
-		pnlKodeBarang.add(lblNama, "cell 0 1,alignx trailing");
+		pnlKiri.add(lblNama, "cell 0 0,alignx trailing");
 		lblNama.setText("Nama");
 
 		txtNama = new XJTextField();
-		pnlKodeBarang.add(txtNama, "cell 1 1 3 1,growx");
-
-		lblBarcode = new XJLabel();
-		lblBarcode.setText("Barcode");
-		pnlKodeBarang.add(lblBarcode, "cell 0 2,alignx trailing");
-
-		txtBarcode = new XJTextField();
-		txtBarcode.setEditable(false);
-		pnlKodeBarang.add(txtBarcode, "cell 1 2 3 1,growx");
+		pnlKiri.add(txtNama, "cell 1 0,growx");
 
 		XJLabel lblSatuan = new XJLabel();
-		pnlKodeBarang.add(lblSatuan, "cell 0 3,alignx right");
+		pnlKiri.add(lblSatuan, "cell 0 1,alignx right");
 		lblSatuan.setText("Satuan");
 
 		txtSatuan = new XJTextField();
-		pnlKodeBarang.add(txtSatuan, "cell 1 3,growx");
+		pnlKiri.add(txtSatuan, "cell 1 1,growx");
+
+		lblJumlahSaatIni = new XJLabel();
+		pnlKiri.add(lblJumlahSaatIni, "cell 0 2");
+		lblJumlahSaatIni.setText("Jumlah Saat Ini");
+
+		txtJumlahSaatIni = new XJTextField();
+		txtJumlahSaatIni.setEditable(false);
+		pnlKiri.add(txtJumlahSaatIni, "cell 1 2,growx");
+
+		lblStokMinimum = new XJLabel();
+		lblStokMinimum.setText("Stok Minimum");
+		pnlKiri.add(lblStokMinimum, "cell 0 3,alignx trailing");
+
+		txtStokMinimum = new XJTextField();
+		txtStokMinimum
+				.setFormatterFactory(XComponentConstants.FORMATTER_FACTORY_NUMBER);
+		txtStokMinimum.setText("0");
+		pnlKiri.add(txtStokMinimum, "cell 1 3,growx");
+
+		pnlKanan = new JPanel();
+		pnlKanan.setBorder(new EtchedBorder(EtchedBorder.LOWERED, null, null));
+		getContentPane().add(pnlKanan, "cell 1 1,grow");
+		pnlKanan.setLayout(new MigLayout("", "[100][200:n,grow]", "[][][]"));
+
+		lblHargaBeli = new XJLabel();
+		lblHargaBeli.setText("Harga Beli");
+		pnlKanan.add(lblHargaBeli, "cell 0 0,alignx trailing");
+
+		txtHargaBeli = new XJTextField();
+		txtHargaBeli.setEditable(false);
+		pnlKanan.add(txtHargaBeli, "cell 1 0,growx");
+
+		lblHpp = new XJLabel();
+		lblHpp.setText("HPP");
+		pnlKanan.add(lblHpp, "cell 0 1,alignx trailing");
+
+		txtHpp = new XJTextField();
+		txtHpp.setEditable(false);
+		pnlKanan.add(txtHpp, "cell 1 1,growx");
+
+		lblHargaJual = new XJLabel();
+		lblHargaJual.setText("Harga Jual");
+		pnlKanan.add(lblHargaJual, "cell 0 2,alignx trailing");
+
+		txtHargaJual = new XJTextField();
+		txtHargaJual
+				.setFormatterFactory(XComponentConstants.FORMATTER_FACTORY_NUMBER);
+		txtHargaJual.setText("0");
+		pnlKanan.add(txtHargaJual, "cell 1 2,growx");
 
 		separator = new JSeparator();
-		getContentPane().add(separator, "cell 0 1,grow");
+		getContentPane().add(separator, "cell 0 3 2 1,grow");
 
 		JPanel pnlButton = new JPanel();
-		getContentPane().add(pnlButton, "cell 0 2,alignx center,growy");
-		pnlButton.setLayout(new MigLayout("", "[]", "[]"));
+		getContentPane().add(pnlButton, "cell 0 4 2 1,alignx center,growy");
+		pnlButton.setLayout(new MigLayout("", "[][]", "[]"));
 
 		btnSimpan = new XJButton();
 		btnSimpan.addActionListener(new ActionListener() {
@@ -122,60 +196,121 @@ public class StockForm extends XJDialog {
 				}
 			}
 		});
-		btnSimpan.setMnemonic('S');
-		btnSimpan.setText("<html><center>Simpan<br/>[Alt+S]</center></html>");
-		pnlButton.add(btnSimpan, "cell 0 0");
+
+		btnBatal = new XJButton();
+		btnBatal.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				batal();
+			}
+		});
+		btnBatal.setMnemonic('Q');
+		btnBatal.setText("<html><center>Batal<br/>[Alt+Q]</center></html>");
+		pnlButton.add(btnBatal, "cell 0 0");
+		btnSimpan.setText("<html><center>Simpan<br/>[F12]</center></html>");
+		pnlButton.add(btnSimpan, "cell 1 0");
 
 		pack();
 		setLocationRelativeTo(null);
 	}
 
-	public void setFormDetailValue(GoodStock goodStock) {
-		lblKodeTerakhir.setVisible(false);
-		lblKodeTerakhirValue.setVisible(false);
-		txtKode.setEditable(false);
+	public String getKodeBarang() {
+		return txtKode.getText();
+	}
 
-		Good good = goodStock.getGood();
-		txtKode.setText(good.getCode());
-		txtNama.setText(good.getName());
-		txtBarcode.setText(good.getBarcode());
-		txtSatuan.setText(goodStock.getUnit());
+	public void setFormDetailValue(ItemStock itemStock) {
+		Item item = itemStock.getItem();
+		txtKode.setText(item.getCode());
+		txtNama.setText(item.getName());
+		txtBarcode.setText(item.getBarcode());
+		txtSatuan.setText(itemStock.getUnit());
+		txtJumlahSaatIni.setText(Formatter.formatNumberToString(itemStock
+				.getStock()));
+		txtStokMinimum.setText(Formatter.formatNumberToString(itemStock
+				.getMinimumStock()));
+		txtHargaBeli.setText(Formatter.formatNumberToString(itemStock
+				.getBuyPrice()));
+		txtHpp.setText(Formatter.formatNumberToString(itemStock.getHpp()));
+		txtHargaJual.setText(Formatter.formatNumberToString(itemStock
+				.getSellPrice()));
 
 		btnSimpan
-				.setText("<html><center>Simpan Perubahan<br/>[Alt+S]</center></html>");
+				.setText("<html><center>Simpan Perubahan<br/>[F12]</center></html>");
 	}
 
 	@Override
 	protected void keyEventListener(int keyCode) {
 		switch (keyCode) {
+		case KeyEvent.VK_F12:
+			btnSimpan.doClick();
+			break;
 		default:
 			break;
 		}
 	}
 
-	private void initForm() {
-		String kodeTerakhir = DBUtils.getInstance().getLastValue("goods",
-				"code", String.class);
-		lblKodeTerakhirValue.setText(String.valueOf(kodeTerakhir));
+	private void batal() {
+		dispose();
 	}
 
-	private void save() throws ActionTypeNotSupported {
-		Session session = HibernateUtil.openSession();
+	private void initForm() throws ActionTypeNotSupported {
+		String kodeTerakhir = DBUtils.getInstance().getLastValue("items",
+				"code", String.class);
+		lblKodeTerakhirValue.setText(String.valueOf(kodeTerakhir));
+
+		if (actionType == ActionType.CREATE) {
+			txtJumlahSaatIni.setText("0");
+			txtHargaBeli.setText("0");
+			txtHpp.setText("0");
+			txtHargaJual.setText("0");
+		} else if (actionType == ActionType.UPDATE) {
+			lblKodeTerakhir.setVisible(false);
+			lblKodeTerakhirValue.setVisible(false);
+			txtKode.setEditable(false);
+			txtSatuan.setEditable(false);
+		} else if (actionType == ActionType.READ) {
+			lblKodeTerakhir.setVisible(false);
+			lblKodeTerakhirValue.setVisible(false);
+			txtKode.setEditable(false);
+			txtNama.setEditable(false);
+			txtSatuan.setEditable(false);
+			txtStokMinimum.setEditable(false);
+			txtHargaJual.setEditable(false);
+		} else {
+			throw new ActionTypeNotSupported(actionType);
+		}
+	}
+
+	private void save() throws ActionTypeNotSupported, UserException {
+		validateForm();
+
+		Session session = HibernateUtils.openSession();
 		try {
 			session.beginTransaction();
 			StockFacade facade = StockFacade.getInstance();
 
+			String code = txtKode.getText();
+			String name = txtNama.getText();
+			String barcode = txtBarcode.getText();
+			String unit = txtSatuan.getText();
+			BigDecimal buyPrice = BigDecimal
+					.valueOf(Formatter.formatStringToNumber(
+							txtHargaBeli.getText()).doubleValue());
+			BigDecimal hpp = BigDecimal.valueOf(Formatter.formatStringToNumber(
+					txtHpp.getText()).doubleValue());
+			BigDecimal sellPrice = BigDecimal
+					.valueOf(Formatter.formatStringToNumber(
+							txtHargaJual.getText()).doubleValue());
+			int minimumStock = Formatter.formatStringToNumber(
+					txtStokMinimum.getText()).intValue();
+
 			if (actionType == ActionType.CREATE) {
-				BigDecimal zeroValue = new BigDecimal(0);
-				facade.addNewGood(txtKode.getText(), txtNama.getText(),
-						txtBarcode.getText(), txtSatuan.getText(), zeroValue,
-						zeroValue, zeroValue, 0, 0, session);
+				facade.addNewItem(code, name, barcode, unit, buyPrice, hpp,
+						sellPrice, minimumStock, session);
 				dispose();
 			} else if (actionType == ActionType.UPDATE) {
-				BigDecimal zeroValue = new BigDecimal(0);
-				facade.updateExistingGood(txtKode.getText(), txtNama.getText(),
-						txtBarcode.getText(), txtSatuan.getText(), zeroValue,
-						zeroValue, zeroValue, 0, 0, session);
+				facade.updateExistingItem(code, name, barcode, unit, buyPrice,
+						hpp, sellPrice, minimumStock, session);
 				dispose();
 			} else {
 				throw new ActionTypeNotSupported(actionType);
@@ -183,6 +318,20 @@ public class StockForm extends XJDialog {
 			session.getTransaction().commit();
 		} finally {
 			session.close();
+		}
+	}
+
+	private void validateForm() throws UserException {
+		if (txtKode.getText().trim().equals("")) {
+			throw new UserException("Kode Barang harus diisi");
+		}
+
+		if (txtNama.getText().trim().equals("")) {
+			throw new UserException("Nama Barang harus diisi");
+		}
+
+		if (txtSatuan.getText().trim().equals("")) {
+			throw new UserException("Satuan harus diisi");
 		}
 	}
 }

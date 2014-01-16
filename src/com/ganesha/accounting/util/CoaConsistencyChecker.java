@@ -11,7 +11,7 @@ import org.hibernate.Session;
 import com.ganesha.accounting.constants.CoaCodeConstants;
 import com.ganesha.accounting.model.Coa;
 import com.ganesha.core.exception.AppException;
-import com.ganesha.hibernate.HibernateUtil;
+import com.ganesha.hibernate.HibernateUtils;
 
 public class CoaConsistencyChecker {
 
@@ -63,7 +63,7 @@ public class CoaConsistencyChecker {
 	}
 
 	private void loadListFromDB() {
-		Session session = HibernateUtil.openSession();
+		Session session = HibernateUtils.openSession();
 		try {
 			Query query = session.createQuery("from Coa");
 

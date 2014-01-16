@@ -9,23 +9,23 @@ import org.hibernate.SessionFactory;
 import org.hibernate.cfg.AnnotationConfiguration;
 import org.slf4j.LoggerFactory;
 
-public class HibernateUtil {
+public class HibernateUtils {
 
 	private static SessionFactory sessionFactory;
 
 	static {
 		try {
-			File file = new File(HibernateUtil.class.getResource(
+			File file = new File(HibernateUtils.class.getResource(
 					"/configurations/hibernate.cfg.xml").toURI());
 			sessionFactory = new AnnotationConfiguration().configure(file)
 					.buildSessionFactory();
 		} catch (RuntimeException e) {
-			LoggerFactory.getLogger(HibernateUtil.class).error(
+			LoggerFactory.getLogger(HibernateUtils.class).error(
 					"Initial SessionFactory creation failed:" + e.getMessage(),
 					e);
 			throw e;
 		} catch (URISyntaxException e) {
-			LoggerFactory.getLogger(HibernateUtil.class).error(
+			LoggerFactory.getLogger(HibernateUtils.class).error(
 					"Initial SessionFactory creation failed:" + e.getMessage(),
 					e);
 			System.exit(1);
