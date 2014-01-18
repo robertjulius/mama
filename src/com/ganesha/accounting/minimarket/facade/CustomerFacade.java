@@ -54,6 +54,10 @@ public class CustomerFacade {
 		session.saveOrUpdate(customer);
 	}
 
+	public Customer getDefaultCustomer(Session session) {
+		return getDetail(0, session);
+	}
+
 	public Customer getDetail(int id, Session session) {
 		Criteria criteria = session.createCriteria(Customer.class);
 		criteria.add(Restrictions.eq("id", id));

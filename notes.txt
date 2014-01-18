@@ -1,5 +1,5 @@
 [DONE] Customer
-Penjualan
+[DONE] Penjualan
 Retur Penjualan
 Pembayaran Hutang
 Pembayaran Piutang
@@ -14,3 +14,4 @@ Scan Barcode
 Generate Barcode
 Cetak Barcode
 Delete Master Data (Customer, Barang, Supplier)
+Master Diskon

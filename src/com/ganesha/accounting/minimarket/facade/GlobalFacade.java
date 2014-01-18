@@ -20,6 +20,13 @@ public class GlobalFacade {
 	private GlobalFacade() {
 	}
 
+	public double getTaxPercent(Session session) {
+		/*
+		 * TODO
+		 */
+		return 10;
+	}
+
 	public boolean isExists(String columName, Object columnValue,
 			Class<?> entityClass, Session session) {
 

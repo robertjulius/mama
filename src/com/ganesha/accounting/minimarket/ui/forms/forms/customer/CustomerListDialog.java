@@ -265,9 +265,9 @@ public class CustomerListDialog extends XJDialog {
 		btnRefresh.doClick();
 
 		int row = table.getRowCount() - 1;
-		int column = table.getSelectedColumn();
 		table.requestFocus();
-		table.changeSelection(row, column, false, false);
+		table.changeSelection(row, tableParameters.get(ColumnEnum.CODE)
+				.getColumnIndex(), false, false);
 	}
 
 	private enum ColumnEnum {

@@ -28,6 +28,8 @@
 		<mapping class="com.ganesha.accounting.minimarket.model.Customer" />
 		<mapping class="com.ganesha.accounting.minimarket.model.PurchaseHeader" />
 		<mapping class="com.ganesha.accounting.minimarket.model.PurchaseDetail" />
+		<mapping class="com.ganesha.accounting.minimarket.model.SaleHeader" />
+		<mapping class="com.ganesha.accounting.minimarket.model.SaleDetail" />
 		<mapping class="com.ganesha.accounting.minimarket.model.PurchaseReturnHeader" />
 		<mapping class="com.ganesha.accounting.minimarket.model.PurchaseReturnDetail" />
 		<mapping class="com.ganesha.accounting.minimarket.model.PayableSummary" />

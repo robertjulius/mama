@@ -127,10 +127,10 @@ public class ReturPembelianForm extends XJDialog {
 					int column = table.getEditingColumn();
 					if (column == tableParameters.get(ColumnEnum.QUANTITY)
 							.getColumnIndex()) {
-						setTotalPerColumn(row);
+						setTotalPerRow(row);
 					} else if (column == tableParameters.get(ColumnEnum.PRICE)
 							.getColumnIndex()) {
-						setTotalPerColumn(row);
+						setTotalPerRow(row);
 					}
 				}
 			}
@@ -619,7 +619,7 @@ public class ReturPembelianForm extends XJDialog {
 		setTotalTerimaDanPiutang();
 	}
 
-	private void setTotalPerColumn(int row) {
+	private void setTotalPerRow(int row) {
 		if (row < 0) {
 			return;
 		}
@@ -691,10 +691,10 @@ public class ReturPembelianForm extends XJDialog {
 				lblLunas.setText("PIUTANG");
 				lblLunas.setForeground(COLOR_WARNING);
 			} else {
-				lblSisa.setForeground(lblUangDiterima.getForeground());
-				txtSisa.setForeground(txtUangDiterima.getForeground());
+				lblSisa.setForeground(COLOR_NORMAL_FOREGROUND);
+				txtSisa.setForeground(COLOR_NORMAL_FOREGROUND);
 				lblLunas.setText("LUNAS");
-				lblLunas.setForeground(COLOR_NORMAL_FOREGROUND);
+				lblLunas.setForeground(COLOR_GOOD);
 			}
 		}
 	};
@@ -746,9 +746,9 @@ public class ReturPembelianForm extends XJDialog {
 			reorderRowNumber();
 
 			int row = table.getRowCount() - 1;
-			int column = table.getSelectedColumn();
 			table.requestFocus();
-			table.changeSelection(row, column, false, false);
+			table.changeSelection(row, tableParameters.get(ColumnEnum.QUANTITY)
+					.getColumnIndex(), false, false);
 
 			setTotalRetur();
 

@@ -14,7 +14,7 @@ public interface XComponentConstants {
 
 	public static final Color COLOR_GOOD = Color.BLUE;
 	public static final Color COLOR_WARNING = Color.RED;
-	public static final Color COLOR_TRASACTIONABLE = Color.BLUE;
+	public static final Color COLOR_TRASACTIONABLE = new Color(0, 150, 0);
 	public static final Color COLOR_NORMAL_FOREGROUND = Color.BLACK;
 
 }

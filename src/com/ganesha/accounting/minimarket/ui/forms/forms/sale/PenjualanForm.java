@@ -1,6 +1,5 @@
-package com.ganesha.accounting.minimarket.ui.forms.forms.purchase;
+package com.ganesha.accounting.minimarket.ui.forms.forms.sale;
 
-import java.awt.Font;
 import java.awt.Window;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -28,19 +27,18 @@ import org.hibernate.Session;
 
 import com.ganesha.accounting.formatter.Formatter;
 import com.ganesha.accounting.minimarket.Main;
-import com.ganesha.accounting.minimarket.facade.PurchaseFacade;
+import com.ganesha.accounting.minimarket.facade.CustomerFacade;
+import com.ganesha.accounting.minimarket.facade.SaleFacade;
 import com.ganesha.accounting.minimarket.facade.StockFacade;
+import com.ganesha.accounting.minimarket.model.Customer;
 import com.ganesha.accounting.minimarket.model.Item;
 import com.ganesha.accounting.minimarket.model.ItemStock;
-import com.ganesha.accounting.minimarket.model.PurchaseDetail;
-import com.ganesha.accounting.minimarket.model.PurchaseHeader;
-import com.ganesha.accounting.minimarket.model.Supplier;
+import com.ganesha.accounting.minimarket.model.SaleDetail;
+import com.ganesha.accounting.minimarket.model.SaleHeader;
 import com.ganesha.accounting.minimarket.ui.forms.forms.searchentity.SearchEntityDialog;
-import com.ganesha.accounting.minimarket.ui.forms.forms.stock.StockForm;
 import com.ganesha.core.desktop.ExceptionHandler;
 import com.ganesha.core.utils.CommonUtils;
 import com.ganesha.core.utils.GeneralConstants;
-import com.ganesha.core.utils.GeneralConstants.ActionType;
 import com.ganesha.desktop.component.XJButton;
 import com.ganesha.desktop.component.XJDateChooser;
 import com.ganesha.desktop.component.XJDialog;
@@ -53,33 +51,30 @@ import com.ganesha.desktop.component.xtableutils.XTableParameter;
 import com.ganesha.desktop.component.xtableutils.XTableUtils;
 import com.ganesha.hibernate.HibernateUtils;
 
-public class PembelianForm extends XJDialog {
+public class PenjualanForm extends XJDialog {
 
 	private XJTable table;
 
 	private static final long serialVersionUID = 1401014426195840845L;
 	private XJTextField txtNoTransaksi;
 	private XJDateChooser dateChooser;
-	private XJTextField txtKodeSupplier;
+	private XJTextField txtKodeCustomer;
 	private XJButton btnTambah;
-	private XJButton btnCariSupplier;
+	private XJButton btnCariCustomer;
 	private XJButton btnHapus;
-	private XJTextField txtBebanLain;
-	private XJTextField txtDiskon;
-	private XJTextField txtTotalPembelian;
+	private XJTextField txtTaxPercent;
+	private XJTextField txtTotalPenjualan;
 	private XJTextField txtBayar;
-	private XJTextField txtSisa;
-	private XJLabel lblLunas;
+	private XJTextField txtKembalian;
 	private XJTextField txtTotal;
 	private XJButton btnBatal;
 	private XJButton btnSelesai;
-	private XJLabel lblSisa;
-	private XJTextField txtNamaSupplier;
-	private XJButton btnRegistrasi;
-	private XJButton btnDetail;
+	private XJLabel lblKembalian;
+	private XJTextField txtNamaCustomer;
 
 	private final Map<ColumnEnum, XTableParameter> tableParameters = new HashMap<>();
 	private XJLabel lblBayar;
+	private XJLabel lblTaxAmount;
 	{
 		tableParameters.put(ColumnEnum.NUM, new XTableParameter(0, 5, false,
 				"No", XTableConstants.CELL_RENDERER_CENTER));
@@ -96,33 +91,26 @@ public class PembelianForm extends XJDialog {
 		tableParameters.put(ColumnEnum.UNIT, new XTableParameter(4, 50, false,
 				"Satuan", XTableConstants.CELL_RENDERER_LEFT));
 
-		tableParameters.put(ColumnEnum.PRICE, new XTableParameter(5, 75, true,
-				"Harga Satuan", XTableConstants.CELL_RENDERER_RIGHT));
+		tableParameters.put(ColumnEnum.PRICE, new XTableParameter(5, 50, false,
+				"Harga", XTableConstants.CELL_RENDERER_RIGHT));
 
-		tableParameters.put(ColumnEnum.LAST_PRICE, new XTableParameter(6, 75,
-				false, "Harga Terakhir", XTableConstants.CELL_RENDERER_RIGHT));
+		tableParameters.put(ColumnEnum.DISCOUNT, new XTableParameter(6, 30,
+				false, "Diskon (%)", XTableConstants.CELL_RENDERER_RIGHT));
 
 		tableParameters.put(ColumnEnum.TOTAL, new XTableParameter(7, 75, false,
 				"Total", XTableConstants.CELL_RENDERER_RIGHT));
 	}
 
-	public PembelianForm(Window parent) {
+	public PenjualanForm(Window parent) {
 		super(parent);
-		setTitle("Transaksi Pembelian");
+		setTitle("Transaksi Penjualan");
 		setCloseOnEsc(false);
 
 		getContentPane().setLayout(
 				new MigLayout("", "[1200,grow]",
 						"[grow][grow][grow][grow][][grow]"));
 
-		table = new XJTable() {
-			private static final long serialVersionUID = 1L;
-
-			@Override
-			public void rowSelected() {
-				btnDetail.doClick();
-			}
-		};
+		table = new XJTable();
 		XTableUtils.initTable(table, tableParameters);
 		table.addPropertyChangeListener(new PropertyChangeListener() {
 			@Override
@@ -131,9 +119,6 @@ public class PembelianForm extends XJDialog {
 					int row = table.getEditingRow();
 					int column = table.getEditingColumn();
 					if (column == tableParameters.get(ColumnEnum.QUANTITY)
-							.getColumnIndex()) {
-						setTotalPerRow(row);
-					} else if (column == tableParameters.get(ColumnEnum.PRICE)
 							.getColumnIndex()) {
 						setTotalPerRow(row);
 					}
@@ -147,7 +132,7 @@ public class PembelianForm extends XJDialog {
 		pnlHeader.setLayout(new MigLayout("", "[150][100][200][]", "[][][]"));
 
 		XJLabel lblNoTransaksi = new XJLabel();
-		lblNoTransaksi.setText("No. Transaksi Pembelian");
+		lblNoTransaksi.setText("No. Transaksi Penjualan");
 		pnlHeader.add(lblNoTransaksi, "cell 0 0,alignx trailing");
 
 		txtNoTransaksi = new XJTextField();
@@ -157,7 +142,7 @@ public class PembelianForm extends XJDialog {
 		pnlHeader.add(txtNoTransaksi, "cell 1 0 2 1,growx");
 
 		XJLabel lblTanggal = new XJLabel();
-		lblTanggal.setText("Tanggal Pembelian");
+		lblTanggal.setText("Tanggal Penjualan");
 		pnlHeader.add(lblTanggal, "cell 0 1,alignx trailing");
 
 		dateChooser = new XJDateChooser();
@@ -165,36 +150,46 @@ public class PembelianForm extends XJDialog {
 		dateChooser.getCalendarButton().setMnemonic('T');
 		pnlHeader.add(dateChooser, "cell 1 1 2 1,grow");
 
-		XJLabel lblSupplier = new XJLabel();
-		lblSupplier.setText("Supplier");
-		pnlHeader.add(lblSupplier, "cell 0 2,alignx trailing");
+		XJLabel lblCustomer = new XJLabel();
+		lblCustomer.setText("Customer");
+		pnlHeader.add(lblCustomer, "cell 0 2,alignx trailing");
 
-		txtKodeSupplier = new XJTextField();
-		txtKodeSupplier.setEditable(false);
-		pnlHeader.add(txtKodeSupplier, "cell 1 2,growx");
+		Customer defaultCustomer = null;
+		Session session = HibernateUtils.openSession();
+		try {
+			defaultCustomer = CustomerFacade.getInstance().getDefaultCustomer(
+					session);
+		} finally {
+			session.close();
+		}
+		txtKodeCustomer = new XJTextField();
+		txtKodeCustomer.setText(defaultCustomer.getCode());
+		txtKodeCustomer.setEditable(false);
+		pnlHeader.add(txtKodeCustomer, "cell 1 2,growx");
 
-		txtNamaSupplier = new XJTextField();
-		txtNamaSupplier.setEditable(false);
-		pnlHeader.add(txtNamaSupplier, "flowx,cell 2 2,growx");
+		txtNamaCustomer = new XJTextField();
+		txtNamaCustomer.setText(defaultCustomer.getName());
+		txtNamaCustomer.setEditable(false);
+		pnlHeader.add(txtNamaCustomer, "flowx,cell 2 2,growx");
 
-		btnCariSupplier = new XJButton();
-		btnCariSupplier.addActionListener(new ActionListener() {
+		btnCariCustomer = new XJButton();
+		btnCariCustomer.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				cariSupplier();
+				cariCustomer();
 			}
 		});
-		btnCariSupplier.setText("Cari Supplier [F5]");
-		pnlHeader.add(btnCariSupplier, "cell 3 2");
+		btnCariCustomer.setText("Cari Customer [F5]");
+		pnlHeader.add(btnCariCustomer, "cell 3 2");
 
-		JPanel pnlPembelian = new JPanel();
-		getContentPane().add(pnlPembelian, "cell 0 1,grow");
-		pnlPembelian.setLayout(new MigLayout("", "[612px,grow]",
+		JPanel pnlPenjualan = new JPanel();
+		getContentPane().add(pnlPenjualan, "cell 0 1,grow");
+		pnlPenjualan.setLayout(new MigLayout("", "[612px,grow]",
 				"[grow][::200,baseline]"));
 
 		JPanel pnlSearchItem = new JPanel();
-		pnlPembelian.add(pnlSearchItem, "cell 0 0,grow");
-		pnlSearchItem.setLayout(new MigLayout("", "[][][grow][]", "[]"));
+		pnlPenjualan.add(pnlSearchItem, "cell 0 0,grow");
+		pnlSearchItem.setLayout(new MigLayout("", "[][grow][]", "[]"));
 
 		btnTambah = new XJButton();
 		btnTambah.addActionListener(new ActionListener() {
@@ -214,47 +209,25 @@ public class PembelianForm extends XJDialog {
 				hapus();
 			}
 		});
-
-		btnRegistrasi = new XJButton();
-		btnRegistrasi.addActionListener(new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				registrasiBarangBaru();
-			}
-		});
-		btnRegistrasi
-				.setText("<html><center>Registrasi Barang Baru<br/>[F7]</center></html>");
-		pnlSearchItem.add(btnRegistrasi, "cell 1 0");
 		btnHapus.setText("<html><center>Hapus<br/>[Delete]</center></html>");
-		pnlSearchItem.add(btnHapus, "cell 3 0");
+		pnlSearchItem.add(btnHapus, "cell 2 0");
 
 		JScrollPane scrollPane = new JScrollPane(table);
-		pnlPembelian.add(scrollPane, "cell 0 1,growx");
+		pnlPenjualan.add(scrollPane, "cell 0 1,growx");
 
 		JPanel pnlSubTotal = new JPanel();
 		getContentPane().add(pnlSubTotal, "cell 0 2,grow");
-		pnlSubTotal.setLayout(new MigLayout("", "[][grow][][200]", "[]"));
+		pnlSubTotal.setLayout(new MigLayout("", "[grow][][200]", "[]"));
 
-		btnDetail = new XJButton();
-		btnDetail.addActionListener(new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				showDetail();
-			}
-		});
-		btnDetail
-				.setText("<html><center>Lihat Detail<br/>[Enter]</center></html>");
-		pnlSubTotal.add(btnDetail, "cell 0 0");
+		XJLabel lblTotalPenjualan = new XJLabel();
+		pnlSubTotal.add(lblTotalPenjualan, "cell 1 0");
+		lblTotalPenjualan.setText("Total Penjualan");
 
-		XJLabel lblTotalPembelian = new XJLabel();
-		pnlSubTotal.add(lblTotalPembelian, "cell 2 0");
-		lblTotalPembelian.setText("Total Pembelian");
-
-		txtTotalPembelian = new XJTextField();
-		txtTotalPembelian.setText("0");
-		txtTotalPembelian.setHorizontalAlignment(SwingConstants.TRAILING);
-		pnlSubTotal.add(txtTotalPembelian, "cell 3 0,growx");
-		txtTotalPembelian.setEditable(false);
+		txtTotalPenjualan = new XJTextField();
+		txtTotalPenjualan.setText("0");
+		txtTotalPenjualan.setHorizontalAlignment(SwingConstants.TRAILING);
+		pnlSubTotal.add(txtTotalPenjualan, "cell 2 0,growx");
+		txtTotalPenjualan.setEditable(false);
 
 		JPanel pnlPerhitungan = new JPanel();
 		getContentPane().add(pnlPerhitungan, "cell 0 3,alignx center,growy");
@@ -265,35 +238,26 @@ public class PembelianForm extends XJDialog {
 		pnlPerhitungan.add(pnlBeban, "cell 0 0,grow");
 		pnlBeban.setLayout(new MigLayout("", "[][grow]", "[][][10][]"));
 
-		XJLabel lblBiaya = new XJLabel();
-		lblBiaya.setText("Biaya Lain-Lain (+)");
-		pnlBeban.add(lblBiaya, "cell 0 0");
+		XJLabel lblTaxPercent = new XJLabel();
+		lblTaxPercent.setText("Pajak (%)");
+		pnlBeban.add(lblTaxPercent, "cell 0 0");
 
-		txtBebanLain = new XJTextField();
-		txtBebanLain.addKeyListener(new KeyAdapter() {
+		txtTaxPercent = new XJTextField();
+		txtTaxPercent.setEditable(false);
+		txtTaxPercent.addKeyListener(new KeyAdapter() {
 			@Override
 			public void keyReleased(KeyEvent e) {
 				setTotalBiayaDanDiskon();
 			}
 		});
-		txtBebanLain.setHorizontalAlignment(SwingConstants.TRAILING);
-		txtBebanLain.setText("0");
-		pnlBeban.add(txtBebanLain, "cell 1 0,growx");
+		txtTaxPercent.setHorizontalAlignment(SwingConstants.TRAILING);
+		txtTaxPercent.setText(Formatter
+				.formatNumberToString(GeneralConstants.TAX_PERCENT));
+		pnlBeban.add(txtTaxPercent, "cell 1 0,growx");
 
-		XJLabel lblDiskon = new XJLabel();
-		lblDiskon.setText("Diskon (-)");
-		pnlBeban.add(lblDiskon, "cell 0 1");
-
-		txtDiskon = new XJTextField();
-		txtDiskon.addKeyListener(new KeyAdapter() {
-			@Override
-			public void keyReleased(KeyEvent e) {
-				setTotalBiayaDanDiskon();
-			}
-		});
-		txtDiskon.setHorizontalAlignment(SwingConstants.TRAILING);
-		txtDiskon.setText("0");
-		pnlBeban.add(txtDiskon, "cell 1 1,growx");
+		lblTaxAmount = new XJLabel();
+		lblTaxAmount.setText("0");
+		pnlBeban.add(lblTaxAmount, "cell 1 1,alignx right");
 
 		JSeparator separator = new JSeparator();
 		pnlBeban.add(separator, "cell 0 2 2 1,growx,aligny center");
@@ -323,30 +287,23 @@ public class PembelianForm extends XJDialog {
 		txtBayar.addKeyListener(new KeyAdapter() {
 			@Override
 			public void keyReleased(KeyEvent e) {
-				setTotalBayarDanHutang();
+				setTotalBayarDanKembalian();
 			}
 		});
 		txtBayar.setHorizontalAlignment(SwingConstants.TRAILING);
 		txtBayar.setText("0");
 		pnlUangMuka.add(txtBayar, "cell 1 0,growx,aligny top");
 
-		lblSisa = new XJLabel();
-		lblSisa.setText("Sisa");
-		pnlUangMuka.add(lblSisa, "cell 0 1");
+		lblKembalian = new XJLabel();
+		lblKembalian.setText("Kembalian");
+		pnlUangMuka.add(lblKembalian, "cell 0 1");
 
-		txtSisa = new XJTextField();
-		txtSisa.setHorizontalAlignment(SwingConstants.TRAILING);
-		txtSisa.setText("0");
-		txtSisa.setEditable(false);
-		pnlUangMuka.add(txtSisa, "cell 1 1,growx,aligny top");
-
-		lblLunas = new XJLabel();
-		pnlUangMuka.add(lblLunas, "cell 0 2 2 1,alignx center");
-
-		lblLunas.setForeground(COLOR_GOOD);
-		lblLunas.setFont(new Font("Tahoma", Font.BOLD, 30));
-		lblLunas.setText("LUNAS");
-		lblLunas.setVisible(false);
+		txtKembalian = new XJTextField();
+		txtKembalian.setHorizontalAlignment(SwingConstants.TRAILING);
+		txtKembalian.setText("0");
+		txtKembalian.setEditable(false);
+		txtKembalian.setForeground(COLOR_WARNING);
+		pnlUangMuka.add(txtKembalian, "cell 1 1,growx,aligny top");
 
 		JSeparator separator_1 = new JSeparator();
 		getContentPane().add(separator_1, "cell 0 4,grow");
@@ -389,13 +346,10 @@ public class PembelianForm extends XJDialog {
 	protected void keyEventListener(int keyCode) {
 		switch (keyCode) {
 		case KeyEvent.VK_F5:
-			btnCariSupplier.doClick();
+			btnCariCustomer.doClick();
 			break;
 		case KeyEvent.VK_F6:
 			btnTambah.doClick();
-			break;
-		case KeyEvent.VK_F7:
-			btnRegistrasi.doClick();
 			break;
 		case KeyEvent.VK_F12:
 			btnSelesai.doClick();
@@ -411,9 +365,9 @@ public class PembelianForm extends XJDialog {
 	}
 
 	private void batal() {
-		String message = "Apakah Anda yakin ingin membatalkan transaksi pembelian ini?";
+		String message = "Apakah Anda yakin ingin membatalkan transaksi penjualan ini?";
 		int selectedOption = JOptionPane.showConfirmDialog(this, message,
-				"Membatalkan Transaksi Pembelian", JOptionPane.YES_NO_OPTION);
+				"Membatalkan Transaksi Penjualan", JOptionPane.YES_NO_OPTION);
 		if (selectedOption == JOptionPane.YES_OPTION) {
 			dispose();
 		}
@@ -430,16 +384,16 @@ public class PembelianForm extends XJDialog {
 		}
 	}
 
-	private void cariSupplier() {
+	private void cariCustomer() {
 		SearchEntityDialog searchEntityDialog = new SearchEntityDialog(
-				"Cari Supplier", this, Supplier.class);
+				"Cari Customer", this, Customer.class);
 		searchEntityDialog.setVisible(true);
 
-		String kodeSupplier = searchEntityDialog.getSelectedCode();
-		if (kodeSupplier != null) {
-			String namaSupplier = searchEntityDialog.getSelectedName();
-			txtKodeSupplier.setText(kodeSupplier);
-			txtNamaSupplier.setText(namaSupplier);
+		String kodeCustomer = searchEntityDialog.getSelectedCode();
+		if (kodeCustomer != null) {
+			String namaCustomer = searchEntityDialog.getSelectedName();
+			txtKodeCustomer.setText(kodeCustomer);
+			txtNamaCustomer.setText(namaCustomer);
 		}
 	}
 
@@ -458,15 +412,8 @@ public class PembelianForm extends XJDialog {
 			--row;
 		}
 		table.changeSelection(row, column, false, false);
-		setTotalPembelian();
+		setTotalPenjualan();
 		reorderRowNumber();
-	}
-
-	private void registrasiBarangBaru() {
-		StockForm stockForm = new StockForm(this, ActionType.CREATE);
-		stockForm.setVisible(true);
-		String kodeBarang = stockForm.getKodeBarang();
-		tambah(kodeBarang);
 	}
 
 	private void reorderRowNumber() {
@@ -482,72 +429,70 @@ public class PembelianForm extends XJDialog {
 		try {
 			session.beginTransaction();
 
-			PurchaseFacade facade = PurchaseFacade.getInstance();
+			SaleFacade facade = SaleFacade.getInstance();
 
 			String transactionNumber = txtNoTransaksi.getText();
 
 			Timestamp transactionTimestamp = CommonUtils
 					.castDateToTimestamp(dateChooser.getDate());
 
-			String supplierCode = txtKodeSupplier.getText();
+			String customerCode = txtKodeCustomer.getText();
 
 			double subTotalAmount = Formatter.formatStringToNumber(
-					txtTotalPembelian.getText()).doubleValue();
+					txtTotalPenjualan.getText()).doubleValue();
 
-			double expenses = Formatter.formatStringToNumber(
-					txtBebanLain.getText()).doubleValue();
+			double taxPercent = Formatter.formatStringToNumber(
+					txtTaxPercent.getText()).doubleValue();
 
-			double discount = Formatter.formatStringToNumber(
-					txtDiskon.getText()).doubleValue();
+			double taxAmount = Formatter.formatStringToNumber(
+					lblTaxAmount.getText()).doubleValue();
 
 			double totalAmount = Formatter.formatStringToNumber(
 					txtTotal.getText()).doubleValue();
 
-			double advancePayment = Formatter.formatStringToNumber(
-					txtBayar.getText()).doubleValue();
+			double pay = Formatter.formatStringToNumber(txtBayar.getText())
+					.doubleValue();
 
-			double remainingPayment = Formatter.formatStringToNumber(
-					txtSisa.getText()).doubleValue();
+			double moneyChange = Formatter.formatStringToNumber(
+					txtKembalian.getText()).doubleValue();
 
-			boolean paidInFullFlag = !(remainingPayment > 0);
+			SaleHeader saleHeader = facade.validateForm(transactionNumber,
+					transactionTimestamp, customerCode, subTotalAmount,
+					taxPercent, taxAmount, totalAmount, pay, moneyChange,
+					session);
 
-			PurchaseHeader purchaseHeader = facade.validateForm(
-					transactionNumber, transactionTimestamp, supplierCode,
-					subTotalAmount, expenses, discount, totalAmount,
-					advancePayment, remainingPayment, paidInFullFlag, session);
-
-			List<PurchaseDetail> purchaseDetails = new ArrayList<>();
+			List<SaleDetail> saleDetails = new ArrayList<>();
 			int rowCount = table.getRowCount();
 			for (int i = 0; i < rowCount; i++) {
-				PurchaseDetail purchaseDetail = new PurchaseDetail();
+				SaleDetail saleDetail = new SaleDetail();
 
-				purchaseDetail.setOrderNum(Formatter.formatStringToNumber(
+				saleDetail.setOrderNum(Formatter.formatStringToNumber(
 						table.getValueAt(
 								i,
 								tableParameters.get(ColumnEnum.NUM)
 										.getColumnIndex()).toString())
 						.intValue());
 
-				purchaseDetail.setItemCode(table.getValueAt(i,
+				saleDetail.setItemCode(table.getValueAt(i,
 						tableParameters.get(ColumnEnum.CODE).getColumnIndex())
 						.toString());
 
-				purchaseDetail.setItemName(table.getValueAt(i,
+				saleDetail.setItemName(table.getValueAt(i,
 						tableParameters.get(ColumnEnum.NAME).getColumnIndex())
 						.toString());
 
-				purchaseDetail.setQuantity(Formatter.formatStringToNumber(
+				saleDetail.setQuantity(Formatter.formatStringToNumber(
 						table.getValueAt(
 								i,
 								tableParameters.get(ColumnEnum.QUANTITY)
 										.getColumnIndex()).toString())
 						.intValue());
 
-				purchaseDetail.setUnit(table.getValueAt(i,
+				saleDetail.setUnit(table.getValueAt(i,
 						tableParameters.get(ColumnEnum.UNIT).getColumnIndex())
 						.toString());
 
-				purchaseDetail.setPricePerUnit(BigDecimal.valueOf(Formatter
+				saleDetail.setPricePerUnit(BigDecimal.valueOf(Formatter
 						.formatStringToNumber(
 								table.getValueAt(
 										i,
@@ -555,7 +500,16 @@ public class PembelianForm extends XJDialog {
 												.getColumnIndex()).toString())
 						.doubleValue()));
 
-				purchaseDetail.setTotalAmount(BigDecimal.valueOf(Formatter
+				saleDetail.setDiscountPercent(BigDecimal.valueOf(Formatter
+						.formatStringToNumber(
+								table.getValueAt(
+										i,
+										tableParameters
+												.get(ColumnEnum.DISCOUNT)
+												.getColumnIndex()).toString())
+						.doubleValue()));
+
+				saleDetail.setTotalAmount(BigDecimal.valueOf(Formatter
 						.formatStringToNumber(
 								table.getValueAt(
 										i,
@@ -563,16 +517,16 @@ public class PembelianForm extends XJDialog {
 												.getColumnIndex()).toString())
 						.doubleValue()));
 
-				purchaseDetail.setDisabled(false);
-				purchaseDetail.setDeleted(false);
-				purchaseDetail.setLastUpdatedBy(Main.getUserLogin().getId());
-				purchaseDetail.setLastUpdatedTimestamp(CommonUtils
+				saleDetail.setDisabled(false);
+				saleDetail.setDeleted(false);
+				saleDetail.setLastUpdatedBy(Main.getUserLogin().getId());
+				saleDetail.setLastUpdatedTimestamp(CommonUtils
 						.getCurrentTimestamp());
 
-				purchaseDetails.add(purchaseDetail);
+				saleDetails.add(saleDetail);
 			}
 
-			facade.performPurchase(purchaseHeader, purchaseDetails, session);
+			facade.performSale(saleHeader, saleDetails, session);
 
 			session.getTransaction().commit();
 			dispose();
@@ -585,68 +539,53 @@ public class PembelianForm extends XJDialog {
 		}
 	}
 
-	private void setTotalBayarDanHutang() {
+	private void setTotalBayarDanKembalian() {
 		double total = Formatter.formatStringToNumber(txtTotal.getText())
 				.doubleValue();
 
-		double uangMuka = Formatter.formatStringToNumber(txtBayar.getText())
+		double bayar = Formatter.formatStringToNumber(txtBayar.getText())
 				.doubleValue();
-		txtBayar.setText(Formatter.formatNumberToString(uangMuka));
+		txtBayar.setText(Formatter.formatNumberToString(bayar));
 
-		double sisa = total - uangMuka;
-		txtSisa.setText(Formatter.formatNumberToString(sisa));
-
-		if (uangMuka > total) {
-			btnSelesai.setEnabled(false);
-			lblLunas.setVisible(false);
-		} else {
-			btnSelesai.setEnabled(true);
-			lblLunas.setVisible(true);
-			if (uangMuka < total) {
-				lblSisa.setForeground(COLOR_WARNING);
-				txtSisa.setForeground(COLOR_WARNING);
-				lblLunas.setText("HUTANG");
-				lblLunas.setForeground(COLOR_WARNING);
-			} else {
-				lblSisa.setForeground(COLOR_NORMAL_FOREGROUND);
-				txtSisa.setForeground(COLOR_NORMAL_FOREGROUND);
-				lblLunas.setText("LUNAS");
-				lblLunas.setForeground(COLOR_GOOD);
-			}
-		}
+		double kembalian = bayar - total;
+		kembalian = kembalian < 0 ? 0 : kembalian;
+		txtKembalian.setText(Formatter.formatNumberToString(kembalian));
 	}
 
 	private void setTotalBiayaDanDiskon() {
-		double totalPembelian = Formatter.formatStringToNumber(
-				txtTotalPembelian.getText()).doubleValue();
+		double totalPenjualan = Formatter.formatStringToNumber(
+				txtTotalPenjualan.getText()).doubleValue();
 
-		double biaya = Formatter.formatStringToNumber(txtBebanLain.getText())
+		double biaya = Formatter.formatStringToNumber(lblTaxAmount.getText())
 				.doubleValue();
-		txtBebanLain.setText(Formatter.formatNumberToString(biaya));
+		lblTaxAmount.setText(Formatter.formatNumberToString(biaya));
 
-		double diskon = Formatter.formatStringToNumber(txtDiskon.getText())
-				.doubleValue();
-		txtDiskon.setText(Formatter.formatNumberToString(diskon));
+		double taxPercent = Formatter.formatStringToNumber(
+				txtTaxPercent.getText()).doubleValue();
+		txtTaxPercent.setText(Formatter.formatNumberToString(taxPercent));
 
-		double total = totalPembelian + biaya - diskon;
+		double taxAmount = taxPercent / 100 * totalPenjualan;
+		lblTaxAmount.setText(Formatter.formatNumberToString(taxAmount));
+
+		double total = Math.floor(totalPenjualan + biaya + taxAmount);
 		txtTotal.setText(Formatter.formatNumberToString(total));
 
-		setTotalBayarDanHutang();
+		setTotalBayarDanKembalian();
 	}
 
-	private void setTotalPembelian() {
+	private void setTotalPenjualan() {
 		int rowCount = table.getRowCount();
-		double totalPembelian = 0;
+		double totalPenjualan = 0;
 		for (int i = 0; i < rowCount; ++i) {
 			String string = table.getValueAt(i,
 					tableParameters.get(ColumnEnum.TOTAL).getColumnIndex())
 					.toString();
 			double totalPerRow = Formatter.formatStringToNumber(string)
 					.doubleValue();
-			totalPembelian += totalPerRow;
+			totalPenjualan += totalPerRow;
 		}
-		txtTotalPembelian.setText(Formatter
-				.formatNumberToString(totalPembelian));
+		txtTotalPenjualan.setText(Formatter
+				.formatNumberToString(totalPenjualan));
 
 		setTotalBiayaDanDiskon();
 	}
@@ -671,32 +610,30 @@ public class PembelianForm extends XJDialog {
 		table.setValueAt(Formatter.formatNumberToString(hargaSatuan), row,
 				tableParameters.get(ColumnEnum.PRICE).getColumnIndex());
 
-		double total = jumlah * hargaSatuan;
-		table.setValueAt(Formatter.formatNumberToString(total), row,
-				tableParameters.get(ColumnEnum.TOTAL).getColumnIndex());
+		double totalBeforeDiscount = jumlah * hargaSatuan;
 
-		setTotalPembelian();
-	}
+		String itemCode = (String) table.getValueAt(row,
+				tableParameters.get(ColumnEnum.CODE).getColumnIndex());
 
-	private void showDetail() {
+		double diskonPercent = 0;
 		Session session = HibernateUtils.openSession();
 		try {
-			int selectedRow = table.getSelectedRow();
-			if (selectedRow < 0) {
-				return;
-			}
-			String code = (String) table.getModel().getValueAt(selectedRow, 1);
-
-			StockFacade facade = StockFacade.getInstance();
-			ItemStock itemStock = facade.getDetail(code, session);
-
-			StockForm stockForm = new StockForm(this, ActionType.READ);
-			stockForm.setFormDetailValue(itemStock);
-			stockForm.setVisible(true);
+			diskonPercent = SaleFacade.getInstance().getDiscountPercent(
+					itemCode, jumlah, session);
 		} finally {
 			session.close();
 		}
-	};
+		table.setValueAt(Formatter.formatNumberToString(diskonPercent), row,
+				tableParameters.get(ColumnEnum.DISCOUNT).getColumnIndex());
+
+		double diskonAmount = diskonPercent / 100 * totalBeforeDiscount;
+
+		double total = Math.floor(totalBeforeDiscount - diskonAmount);
+		table.setValueAt(Formatter.formatNumberToString(total), row,
+				tableParameters.get(ColumnEnum.TOTAL).getColumnIndex());
+
+		setTotalPenjualan();
+	}
 
 	private void tambah(String kodeBarang) {
 		if (kodeBarang.trim().equals("")) {
@@ -725,14 +662,12 @@ public class PembelianForm extends XJDialog {
 			tableModel.setValueAt(itemStock.getUnit(), rowIndex,
 					tableParameters.get(ColumnEnum.UNIT).getColumnIndex());
 
-			tableModel.setValueAt(0, rowIndex,
+			tableModel.setValueAt(Formatter.formatNumberToString(itemStock
+					.getSellPrice()), rowIndex,
 					tableParameters.get(ColumnEnum.PRICE).getColumnIndex());
 
-			tableModel
-					.setValueAt(Formatter.formatNumberToString(itemStock
-							.getBuyPrice()), rowIndex,
-							tableParameters.get(ColumnEnum.LAST_PRICE)
-									.getColumnIndex());
+			tableModel.setValueAt(0, rowIndex,
+					tableParameters.get(ColumnEnum.DISCOUNT).getColumnIndex());
 
 			tableModel.setValueAt(0, rowIndex,
 					tableParameters.get(ColumnEnum.TOTAL).getColumnIndex());
@@ -744,7 +679,7 @@ public class PembelianForm extends XJDialog {
 			table.changeSelection(row, tableParameters.get(ColumnEnum.QUANTITY)
 					.getColumnIndex(), false, false);
 
-			setTotalPembelian();
+			setTotalPenjualan();
 
 		} finally {
 			session.close();
@@ -752,6 +687,6 @@ public class PembelianForm extends XJDialog {
 	}
 
 	private enum ColumnEnum {
-		NUM, CODE, NAME, QUANTITY, UNIT, PRICE, LAST_PRICE, TOTAL
+		NUM, CODE, NAME, QUANTITY, UNIT, PRICE, DISCOUNT, TOTAL
 	}
 }

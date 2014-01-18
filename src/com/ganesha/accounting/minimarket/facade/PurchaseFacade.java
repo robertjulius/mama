@@ -71,8 +71,6 @@ public class PurchaseFacade implements TransactionFacade {
 			purchaseDetail.setPurchaseHeader(purchaseHeader);
 			session.save(purchaseDetail);
 			session.save(itemStock);
-
-			session.save(purchaseDetail);
 		}
 
 		if (!purchaseHeader.getPaidInFullFlag()) {

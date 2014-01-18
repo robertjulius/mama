@@ -13,6 +13,7 @@ import com.ganesha.accounting.minimarket.Main;
 import com.ganesha.accounting.minimarket.ui.forms.forms.customer.CustomerListDialog;
 import com.ganesha.accounting.minimarket.ui.forms.forms.purchase.PembelianForm;
 import com.ganesha.accounting.minimarket.ui.forms.forms.returns.ReturPembelianForm;
+import com.ganesha.accounting.minimarket.ui.forms.forms.sale.PenjualanForm;
 import com.ganesha.accounting.minimarket.ui.forms.forms.stock.StockListDialog;
 import com.ganesha.accounting.minimarket.ui.forms.forms.supplier.SupplierListDialog;
 import com.ganesha.desktop.component.XJFrame;
@@ -86,6 +87,12 @@ public class MainFrame extends XJFrame {
 		mnTransaksi.add(separator);
 
 		JMenuItem mntmPenjualan = new JMenuItem("Penjualan");
+		mntmPenjualan.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				new PenjualanForm(MainFrame.this).setVisible(true);
+			}
+		});
 		mnTransaksi.add(mntmPenjualan);
 
 		JMenuItem mntmReturPenjualan = new JMenuItem("Retur Penjualan");
