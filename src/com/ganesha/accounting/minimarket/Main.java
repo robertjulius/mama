@@ -46,7 +46,7 @@ public class Main {
 
 		new LoginForm().setVisible(true);
 
-		// testHibernate();
+		// testHibernate2();
 	}
 
 	public static void setLookAndFeel() {
@@ -112,6 +112,23 @@ public class Main {
 		} finally {
 			session.close();
 		}
+	}
 
+	public static void testHibernate2() {
+		Session session = HibernateUtils.openSession();
+		try {
+			String sqlString = "SELECT new Map("
+					+ "supplier.code AS code"
+					+ ", supplier.name AS name"
+					+ ", summary.remainingAmount AS remainingAmount"
+					+ ") FROM PayableSummary summary, Supplier supplier WHERE summary.clientId = supplier.id";
+
+			Query query = session.createQuery(sqlString);
+			List<?> map = query.list();
+
+			System.out.println(map);
+		} finally {
+			session.close();
+		}
 	}
 }

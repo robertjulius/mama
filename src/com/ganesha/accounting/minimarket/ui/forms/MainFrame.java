@@ -11,7 +11,9 @@ import javax.swing.JSeparator;
 
 import com.ganesha.accounting.minimarket.Main;
 import com.ganesha.accounting.minimarket.ui.forms.forms.customer.CustomerListDialog;
+import com.ganesha.accounting.minimarket.ui.forms.forms.payable.PayableListDialog;
 import com.ganesha.accounting.minimarket.ui.forms.forms.purchase.PembelianForm;
+import com.ganesha.accounting.minimarket.ui.forms.forms.receivable.ReceivableListDialog;
 import com.ganesha.accounting.minimarket.ui.forms.forms.returns.ReturPembelianForm;
 import com.ganesha.accounting.minimarket.ui.forms.forms.returns.ReturPenjualanForm;
 import com.ganesha.accounting.minimarket.ui.forms.forms.sale.PenjualanForm;
@@ -104,6 +106,27 @@ public class MainFrame extends XJFrame {
 			}
 		});
 		mnTransaksi.add(mntmReturPenjualan);
+
+		JSeparator separator_1 = new JSeparator();
+		mnTransaksi.add(separator_1);
+
+		JMenuItem mntmHutang = new JMenuItem("Hutang");
+		mntmHutang.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				new PayableListDialog(MainFrame.this).setVisible(true);
+			}
+		});
+		mnTransaksi.add(mntmHutang);
+
+		JMenuItem mntmPiutang = new JMenuItem("Piutang");
+		mntmPiutang.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				new ReceivableListDialog(MainFrame.this).setVisible(true);
+			}
+		});
+		mnTransaksi.add(mntmPiutang);
 
 		JMenu mnBackOffice = new JMenu("Back Office");
 		menuBar.add(mnBackOffice);

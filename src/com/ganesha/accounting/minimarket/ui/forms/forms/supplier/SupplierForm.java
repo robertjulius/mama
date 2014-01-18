@@ -109,7 +109,7 @@ public class SupplierForm extends XJDialog {
 				.setLayout(new MigLayout("", "[150][][grow]", "[][][][]"));
 
 		XJLabel lblKode = new XJLabel();
-		pnlKodeSupplier.add(lblKode, "cell 0 0,alignx right");
+		pnlKodeSupplier.add(lblKode, "cell 0 0");
 		lblKode.setText("Kode");
 
 		txtKode = new XJTextField();
@@ -126,7 +126,7 @@ public class SupplierForm extends XJDialog {
 		pnlKodeSupplier.add(lblKodeTerakhirValue, "cell 2 1");
 
 		XJLabel lblNama = new XJLabel();
-		pnlKodeSupplier.add(lblNama, "cell 0 2,alignx trailing");
+		pnlKodeSupplier.add(lblNama, "cell 0 2");
 		lblNama.setText("Nama");
 
 		txtNama = new XJTextField();
@@ -134,7 +134,7 @@ public class SupplierForm extends XJDialog {
 
 		lblDeskripsi = new XJLabel();
 		lblDeskripsi.setText("Deskripsi");
-		pnlKodeSupplier.add(lblDeskripsi, "cell 0 3,alignx trailing");
+		pnlKodeSupplier.add(lblDeskripsi, "cell 0 3");
 
 		txtDeskripsi = new XJTextField();
 		pnlKodeSupplier.add(txtDeskripsi, "cell 1 3 2 1,growx");
@@ -146,7 +146,7 @@ public class SupplierForm extends XJDialog {
 		pnlKontakPerson1.setLayout(new MigLayout("", "[150][grow]", "[][][]"));
 
 		lblKontakPerson1 = new XJLabel();
-		pnlKontakPerson1.add(lblKontakPerson1, "cell 0 0,alignx trailing");
+		pnlKontakPerson1.add(lblKontakPerson1, "cell 0 0");
 		lblKontakPerson1.setText("Kontak Person 1");
 
 		txtKontakPerson1 = new XJTextField();
@@ -154,14 +154,14 @@ public class SupplierForm extends XJDialog {
 
 		lblKontakPerson1Phone = new XJLabel();
 		lblKontakPerson1Phone.setText("Phone");
-		pnlKontakPerson1.add(lblKontakPerson1Phone, "cell 0 1,alignx trailing");
+		pnlKontakPerson1.add(lblKontakPerson1Phone, "cell 0 1");
 
 		txtKontakPerson1Phone = new XJTextField();
 		pnlKontakPerson1.add(txtKontakPerson1Phone, "cell 1 1,growx");
 
 		lblKontakPerson1Email = new XJLabel();
 		lblKontakPerson1Email.setText("Email");
-		pnlKontakPerson1.add(lblKontakPerson1Email, "cell 0 2,alignx trailing");
+		pnlKontakPerson1.add(lblKontakPerson1Email, "cell 0 2");
 
 		txtKontakPerson1Email = new XJTextField();
 		pnlKontakPerson1.add(txtKontakPerson1Email, "cell 1 2,growx");
@@ -174,7 +174,7 @@ public class SupplierForm extends XJDialog {
 				"[][][]"));
 
 		lblKontakPerson2 = new XJLabel();
-		lblKontakPerson2Email.add(lblKontakPerson2, "cell 0 0,alignx trailing");
+		lblKontakPerson2Email.add(lblKontakPerson2, "cell 0 0");
 		lblKontakPerson2.setText("Kontak Person 2");
 
 		txtKontakPerson2 = new XJTextField();
@@ -182,15 +182,14 @@ public class SupplierForm extends XJDialog {
 
 		lblKontakPerson2Phone = new XJLabel();
 		lblKontakPerson2Phone.setText("Phone");
-		lblKontakPerson2Email.add(lblKontakPerson2Phone,
-				"cell 0 1,alignx trailing");
+		lblKontakPerson2Email.add(lblKontakPerson2Phone, "cell 0 1");
 
 		txtKontakPerson2Phone = new XJTextField();
 		lblKontakPerson2Email.add(txtKontakPerson2Phone, "cell 1 1,growx");
 
 		lblEmail = new XJLabel();
 		lblEmail.setText("Email");
-		lblKontakPerson2Email.add(lblEmail, "cell 0 2,alignx trailing");
+		lblKontakPerson2Email.add(lblEmail, "cell 0 2");
 
 		txtKontakPerson2Email = new XJTextField();
 		lblKontakPerson2Email.add(txtKontakPerson2Email, "cell 1 2,growx");
@@ -208,7 +207,7 @@ public class SupplierForm extends XJDialog {
 
 		lblAlamat1 = new XJLabel();
 		lblAlamat1.setText("Alamat 1");
-		pnlAlamat1.add(lblAlamat1, "cell 0 0,alignx trailing");
+		pnlAlamat1.add(lblAlamat1, "cell 0 0");
 		scrollPaneAlamat1 = new JScrollPane();
 		pnlAlamat1.add(scrollPaneAlamat1, "cell 1 0,grow");
 
@@ -217,14 +216,14 @@ public class SupplierForm extends XJDialog {
 
 		lblPhone1 = new XJLabel();
 		lblPhone1.setText("Phone");
-		pnlAlamat1.add(lblPhone1, "cell 0 1,alignx trailing");
+		pnlAlamat1.add(lblPhone1, "cell 0 1");
 
 		txtPhone1 = new XJTextField();
 		pnlAlamat1.add(txtPhone1, "cell 1 1,growx");
 
 		lblEmail1 = new XJLabel();
 		lblEmail1.setText("Email");
-		pnlAlamat1.add(lblEmail1, "cell 0 2,alignx trailing");
+		pnlAlamat1.add(lblEmail1, "cell 0 2");
 
 		txtEmail1 = new XJTextField();
 		pnlAlamat1.add(txtEmail1, "cell 1 2,growx");
@@ -237,7 +236,7 @@ public class SupplierForm extends XJDialog {
 				"[100,grow][][]"));
 
 		lblAlamat2 = new XJLabel();
-		pnlAlamat2.add(lblAlamat2, "cell 0 0,alignx trailing");
+		pnlAlamat2.add(lblAlamat2, "cell 0 0");
 		lblAlamat2.setText("Alamat 2");
 
 		txtAlamat2 = new XJTextArea();
@@ -245,14 +244,14 @@ public class SupplierForm extends XJDialog {
 		pnlAlamat2.add(scrollPaneAlamat2, "cell 1 0,grow");
 
 		lblPhone2 = new XJLabel();
-		pnlAlamat2.add(lblPhone2, "cell 0 1,alignx trailing");
+		pnlAlamat2.add(lblPhone2, "cell 0 1");
 		lblPhone2.setText("Phone");
 
 		txtPhone2 = new XJTextField();
 		pnlAlamat2.add(txtPhone2, "cell 1 1,growx");
 
 		lblEmail2 = new XJLabel();
-		pnlAlamat2.add(lblEmail2, "cell 0 2,alignx trailing");
+		pnlAlamat2.add(lblEmail2, "cell 0 2");
 		lblEmail2.setText("Email");
 
 		txtEmail2 = new XJTextField();

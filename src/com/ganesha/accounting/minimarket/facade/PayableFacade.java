@@ -2,8 +2,11 @@ package com.ganesha.accounting.minimarket.facade;
 
 import java.math.BigDecimal;
 import java.util.Date;
+import java.util.List;
+import java.util.Map;
 
 import org.hibernate.Criteria;
+import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.criterion.Restrictions;
 
@@ -14,6 +17,7 @@ import com.ganesha.core.exception.AppException;
 import com.ganesha.core.utils.CommonUtils;
 import com.ganesha.core.utils.GeneralConstants;
 import com.ganesha.core.utils.GeneralConstants.AccountAction;
+import com.ganesha.hibernate.HqlParameter;
 
 public class PayableFacade {
 
@@ -94,6 +98,9 @@ public class PayableFacade {
 		}
 
 		payableSummary.setLastPayableTransactionId(payableTransaction.getId());
+		payableSummary.setLastUpdatedBy(Main.getUserLogin().getId());
+		payableSummary.setLastUpdatedTimestamp(CommonUtils
+				.getCurrentTimestamp());
 		session.save(payableSummary);
 	}
 
@@ -103,5 +110,34 @@ public class PayableFacade {
 		PayableSummary payableSummary = (PayableSummary) criteria
 				.uniqueResult();
 		return payableSummary;
+	}
+
+	public List<Map<String, Object>> search(String clientCode,
+			String clientName, Session session) {
+
+		String sqlString = "SELECT new Map("
+				+ "supplier.code AS code"
+				+ ", supplier.name AS name"
+				+ ", summary.remainingAmount AS remainingAmount"
+				+ ") FROM PayableSummary summary, Supplier supplier WHERE summary.clientId = supplier.id";
+
+		if (!clientCode.trim().equals("")) {
+			sqlString += " AND supplier.code LIKE :clientCode";
+		}
+
+		if (!clientName.trim().equals("")) {
+			sqlString += " AND supplier.name LIKE :clientName";
+		}
+
+		Query query = session.createQuery(sqlString);
+		HqlParameter parameter = new HqlParameter(query);
+		parameter.put("clientCode", "%" + clientCode + "%");
+		parameter.put("clientName", "%" + clientName + "%");
+		parameter.validate();
+
+		@SuppressWarnings("unchecked")
+		List<Map<String, Object>> list = query.list();
+
+		return list;
 	}
 }

@@ -1,8 +1,8 @@
 [DONE] Customer
 [DONE] Penjualan
-Retur Penjualan
-Pembayaran Hutang
-Pembayaran Piutang
+[DONE] Retur Penjualan
+[DONE] Pembayaran Hutang
+[DONE] Pembayaran Piutang
 Inquiry Transaksi Pembelian
 Inquiry Transaksi Penjualan
 Inquiry Retur Pembelian
@@ -15,7 +15,6 @@ Generate Barcode
 Cetak Barcode
 Delete Master Data (Customer, Barang, Supplier)
 Master Diskon
-
 
 Validasi kalo transaksi ga ada item sama sekali
 ->	Pembelian, Retur Pembelian, Penjualan, Retur Penjualan
