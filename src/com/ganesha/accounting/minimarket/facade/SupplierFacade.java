@@ -68,6 +68,14 @@ public class SupplierFacade {
 		session.saveOrUpdate(supplier);
 	}
 
+	public Supplier getDetail(int id, Session session) {
+		Criteria criteria = session.createCriteria(Supplier.class);
+		criteria.add(Restrictions.eq("id", id));
+
+		Supplier supplier = (Supplier) criteria.uniqueResult();
+		return supplier;
+	}
+
 	public Supplier getDetail(String code, Session session) {
 		Criteria criteria = session.createCriteria(Supplier.class);
 		criteria.add(Restrictions.eq("code", code));

@@ -29,5 +29,9 @@
 		<mapping class="com.ganesha.accounting.minimarket.model.PurchaseDetail" />
 		<mapping class="com.ganesha.accounting.minimarket.model.PurchaseReturnHeader" />
 		<mapping class="com.ganesha.accounting.minimarket.model.PurchaseReturnDetail" />
+		<mapping class="com.ganesha.accounting.minimarket.model.PayableSummary" />
+		<mapping class="com.ganesha.accounting.minimarket.model.PayableTransaction" />
+		<mapping class="com.ganesha.accounting.minimarket.model.ReceivableSummary" />
+		<mapping class="com.ganesha.accounting.minimarket.model.ReceivableTransaction" />
 	</session-factory>
 </hibernate-configuration>

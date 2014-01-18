@@ -23,6 +23,8 @@ public class GeneralConstants {
 	public static final String PREFIX_TRX_NUMBER_PURCHASE_RETURN = "PRT";
 	public static final String PREFIX_TRX_NUMBER_SALES = "SAL";
 	public static final String PREFIX_TRX_NUMBER_SALES_RETURN = "SRT";
+	public static final String PREFIX_TRX_NUMBER_RECEIVABLE = "REC";
+	public static final String PREFIX_TRX_NUMBER_PAYABLE = "PAY";
 
 	public static final ComboBoxObject[] CMB_BOX_TRX_TYPES;
 	static {
@@ -42,6 +44,14 @@ public class GeneralConstants {
 		NumberFormat format = new DecimalFormat("#,##0.##");
 		NumberFormatter formatter = new NumberFormatter(format);
 		FORMATTER_FACTORY_NUMBER = new DefaultFormatterFactory(formatter);
+	}
+
+	public static final String DECRIPTION_PAYABLE_PURCHASE = "Hutang untuk transaksi pembelian";
+	public static final String DECRIPTION_PAYABLE_PURCHASE_RETURN = "Pemotongan hutang untuk retur pembelian";
+	public static final String DECRIPTION_RECEIVABLE_PURCHASE_RETURN = "Piutang supplier untuk retur pembelian";
+
+	public static enum AccountAction {
+		INCREASE, DECREASE
 	}
 
 	public static enum ActionType {

@@ -38,7 +38,6 @@ import com.ganesha.accounting.minimarket.model.Supplier;
 import com.ganesha.accounting.minimarket.ui.forms.forms.searchentity.SearchEntityDialog;
 import com.ganesha.accounting.minimarket.ui.forms.forms.stock.StockForm;
 import com.ganesha.core.desktop.ExceptionHandler;
-import com.ganesha.core.exception.UserException;
 import com.ganesha.core.utils.CommonUtils;
 import com.ganesha.core.utils.GeneralConstants;
 import com.ganesha.core.utils.GeneralConstants.ActionType;
@@ -478,7 +477,7 @@ public class PembelianForm extends XJDialog {
 		}
 	}
 
-	private void selesaiDanSimpan() throws UserException {
+	private void selesaiDanSimpan() throws Exception {
 		Session session = HibernateUtils.openSession();
 		try {
 			session.beginTransaction();

@@ -37,7 +37,6 @@ import com.ganesha.accounting.minimarket.model.PurchaseReturnHeader;
 import com.ganesha.accounting.minimarket.model.Supplier;
 import com.ganesha.accounting.minimarket.ui.forms.forms.searchentity.SearchEntityDialog;
 import com.ganesha.core.desktop.ExceptionHandler;
-import com.ganesha.core.exception.UserException;
 import com.ganesha.core.utils.CommonUtils;
 import com.ganesha.core.utils.GeneralConstants;
 import com.ganesha.desktop.component.XJButton;
@@ -466,7 +465,7 @@ public class ReturPembelianForm extends XJDialog {
 		}
 	}
 
-	private void selesaiDanSimpan() throws UserException {
+	private void selesaiDanSimpan() throws Exception {
 		Session session = HibernateUtils.openSession();
 		try {
 			session.beginTransaction();

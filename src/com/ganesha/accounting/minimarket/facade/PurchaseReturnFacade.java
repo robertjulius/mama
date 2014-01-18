@@ -2,6 +2,7 @@ package com.ganesha.accounting.minimarket.facade;
 
 import java.math.BigDecimal;
 import java.sql.Timestamp;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
@@ -13,11 +14,15 @@ import org.hibernate.criterion.Restrictions;
 
 import com.ganesha.accounting.minimarket.Main;
 import com.ganesha.accounting.minimarket.model.ItemStock;
+import com.ganesha.accounting.minimarket.model.PayableSummary;
 import com.ganesha.accounting.minimarket.model.PurchaseReturnDetail;
 import com.ganesha.accounting.minimarket.model.PurchaseReturnHeader;
 import com.ganesha.accounting.minimarket.model.Supplier;
+import com.ganesha.core.exception.AppException;
 import com.ganesha.core.exception.UserException;
 import com.ganesha.core.utils.CommonUtils;
+import com.ganesha.core.utils.GeneralConstants;
+import com.ganesha.core.utils.GeneralConstants.AccountAction;
 import com.ganesha.hibernate.HqlParameter;
 
 public class PurchaseReturnFacade implements TransactionFacade {
@@ -48,7 +53,11 @@ public class PurchaseReturnFacade implements TransactionFacade {
 	}
 
 	public void performPurchase(PurchaseReturnHeader purchaseReturnHeader,
-			List<PurchaseReturnDetail> purchaseReturnDetails, Session session) {
+			List<PurchaseReturnDetail> purchaseReturnDetails, Session session)
+			throws UserException, AppException {
+
+		validatePayable(purchaseReturnHeader, session);
+		validateReceivable(purchaseReturnHeader, session);
 
 		StockFacade stockFacade = StockFacade.getInstance();
 		session.save(purchaseReturnHeader);
@@ -150,5 +159,74 @@ public class PurchaseReturnFacade implements TransactionFacade {
 		header.setLastUpdatedTimestamp(CommonUtils.getCurrentTimestamp());
 
 		return header;
+	}
+
+	private void addToPayable(PurchaseReturnHeader purchaseReturnHeader,
+			Session session) throws AppException {
+		int clientId = purchaseReturnHeader.getSupplierId();
+		Date maturityDate = CommonUtils.getNextDate(1, Calendar.YEAR,
+				CommonUtils.getCurrentDate());
+		BigDecimal amount = purchaseReturnHeader.getDebtCut();
+		String description = GeneralConstants.DECRIPTION_PAYABLE_PURCHASE_RETURN
+				+ ": " + purchaseReturnHeader.getTransactionNumber();
+
+		PayableFacade payableFacade = PayableFacade.getInstance();
+		payableFacade.addTransaction(clientId, AccountAction.DECREASE,
+				maturityDate, amount, description, session);
+	}
+
+	private void addToReceivable(PurchaseReturnHeader purchaseReturnHeader,
+			Session session) throws AppException {
+		int clientId = purchaseReturnHeader.getSupplierId();
+		Date maturityDate = CommonUtils.getNextDate(1, Calendar.YEAR,
+				CommonUtils.getCurrentDate());
+		BigDecimal amount = purchaseReturnHeader.getRemainingReturnAmount();
+		String description = GeneralConstants.DECRIPTION_RECEIVABLE_PURCHASE_RETURN
+				+ ": " + purchaseReturnHeader.getTransactionNumber();
+
+		ReceivableFacade receivableFacade = ReceivableFacade.getInstance();
+		receivableFacade.addTransaction(clientId, AccountAction.INCREASE,
+				maturityDate, amount, description, session);
+	}
+
+	private void validatePayable(PurchaseReturnHeader purchaseReturnHeader,
+			Session session) throws UserException, AppException {
+
+		double debtCut = purchaseReturnHeader.getDebtCut().doubleValue();
+		if (debtCut <= 0) {
+			return;
+		}
+
+		PayableSummary payableSummary = PayableFacade.getInstance().getSummary(
+				purchaseReturnHeader.getSupplierId(), session);
+
+		int supplierId = purchaseReturnHeader.getSupplierId();
+		Supplier supplier = SupplierFacade.getInstance().getDetail(supplierId,
+				session);
+
+		if (payableSummary == null) {
+			throw new UserException(
+					"Tidak dapat memotong dari daftar hutang. Kita tidak memiliki hutang ke supplier "
+							+ supplier.getName());
+		}
+
+		if (debtCut > payableSummary.getRemainingAmount().doubleValue()) {
+			throw new UserException(
+					"Tidak dapat memotong dari daftar hutang. Hutang kita ke supplier "
+							+ supplier.getName() + " lebih kecil dari "
+							+ debtCut);
+		}
+
+		addToPayable(purchaseReturnHeader, session);
+	}
+
+	private void validateReceivable(PurchaseReturnHeader purchaseReturnHeader,
+			Session session) throws UserException, AppException {
+		double remainingReturnAmount = purchaseReturnHeader
+				.getRemainingReturnAmount().doubleValue();
+		if (remainingReturnAmount <= 0) {
+			return;
+		}
+		addToReceivable(purchaseReturnHeader, session);
 	}
 }

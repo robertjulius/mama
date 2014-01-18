@@ -30,6 +30,15 @@ public class CommonUtils {
 		return timestamp;
 	}
 
+	public static Date getNextDate(int jump, int calendarUnit, Date date) {
+		if (date == null) {
+			return null;
+		}
+		calendar.setTime(date);
+		calendar.add(calendarUnit, jump);
+		return calendar.getTime();
+	}
+
 	public static String getTimestampInString() {
 		DateFormat formatter = new SimpleDateFormat("yyyyMMddHHmmss");
 		String timestampInString = formatter.format(getCurrentDate());

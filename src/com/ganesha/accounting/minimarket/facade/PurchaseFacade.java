@@ -2,6 +2,7 @@ package com.ganesha.accounting.minimarket.facade;
 
 import java.math.BigDecimal;
 import java.sql.Timestamp;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
@@ -16,8 +17,11 @@ import com.ganesha.accounting.minimarket.model.ItemStock;
 import com.ganesha.accounting.minimarket.model.PurchaseDetail;
 import com.ganesha.accounting.minimarket.model.PurchaseHeader;
 import com.ganesha.accounting.minimarket.model.Supplier;
+import com.ganesha.core.exception.AppException;
 import com.ganesha.core.exception.UserException;
 import com.ganesha.core.utils.CommonUtils;
+import com.ganesha.core.utils.GeneralConstants;
+import com.ganesha.core.utils.GeneralConstants.AccountAction;
 import com.ganesha.hibernate.HqlParameter;
 
 public class PurchaseFacade implements TransactionFacade {
@@ -48,7 +52,8 @@ public class PurchaseFacade implements TransactionFacade {
 	}
 
 	public void performPurchase(PurchaseHeader purchaseHeader,
-			List<PurchaseDetail> purchaseDetails, Session session) {
+			List<PurchaseDetail> purchaseDetails, Session session)
+			throws AppException {
 
 		StockFacade stockFacade = StockFacade.getInstance();
 		session.save(purchaseHeader);
@@ -68,6 +73,10 @@ public class PurchaseFacade implements TransactionFacade {
 			session.save(itemStock);
 
 			session.save(purchaseDetail);
+		}
+
+		if (!purchaseHeader.getPaidInFullFlag()) {
+			addToPayable(purchaseHeader, session);
 		}
 	}
 
@@ -146,5 +155,19 @@ public class PurchaseFacade implements TransactionFacade {
 		header.setLastUpdatedTimestamp(CommonUtils.getCurrentTimestamp());
 
 		return header;
+	}
+
+	private void addToPayable(PurchaseHeader purchaseHeader, Session session)
+			throws AppException {
+		int clientId = purchaseHeader.getSupplierId();
+		Date maturityDate = CommonUtils.getNextDate(1, Calendar.YEAR,
+				CommonUtils.getCurrentDate());
+		BigDecimal amount = purchaseHeader.getRemainingPayment();
+		String description = GeneralConstants.DECRIPTION_PAYABLE_PURCHASE
+				+ ": " + purchaseHeader.getTransactionNumber();
+
+		PayableFacade payableFacade = PayableFacade.getInstance();
+		payableFacade.addTransaction(clientId, AccountAction.INCREASE,
+				maturityDate, amount, description, session);
 	}
 }
