@@ -255,8 +255,8 @@ public class SearchTransactionDialog extends XJDialog {
 				String unitValue = (String) searchResult.get("unit");
 				BigDecimal pricePerUnitValue = (BigDecimal) searchResult
 						.get("pricePerUnit");
-				BigDecimal totalPriceValue = (BigDecimal) searchResult
-						.get("totalPrice");
+				BigDecimal totalAmountValue = (BigDecimal) searchResult
+						.get("totalAmount");
 
 				tableModel.setValueAt(transactionNumberValue, i,
 						tableParameters.get(ColumnEnum.TRANSACTION_NUM)
@@ -293,7 +293,7 @@ public class SearchTransactionDialog extends XJDialog {
 						tableParameters.get(ColumnEnum.PRICE).getColumnIndex());
 
 				tableModel.setValueAt(
-						Formatter.formatNumberToString(totalPriceValue), i,
+						Formatter.formatNumberToString(totalAmountValue), i,
 						tableParameters.get(ColumnEnum.TOTAL).getColumnIndex());
 			}
 		} finally {

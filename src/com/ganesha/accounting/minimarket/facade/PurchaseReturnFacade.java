@@ -52,7 +52,8 @@ public class PurchaseReturnFacade implements TransactionFacade {
 		return purchaseReturnDetail;
 	}
 
-	public void performPurchase(PurchaseReturnHeader purchaseReturnHeader,
+	public void performPurchaseReturn(
+			PurchaseReturnHeader purchaseReturnHeader,
 			List<PurchaseReturnDetail> purchaseReturnDetails, Session session)
 			throws UserException, AppException {
 
@@ -67,7 +68,7 @@ public class PurchaseReturnFacade implements TransactionFacade {
 					purchaseReturnDetail.getItemCode(), session);
 
 			int stock = itemStock.getStock()
-					+ purchaseReturnDetail.getQuantity();
+					- purchaseReturnDetail.getQuantity();
 			itemStock.setStock(stock);
 
 			BigDecimal lastPrice = purchaseReturnDetail.getPricePerUnit();
@@ -95,7 +96,7 @@ public class PurchaseReturnFacade implements TransactionFacade {
 				+ ", detail.quantity AS quantity"
 				+ ", detail.unit AS unit"
 				+ ", detail.pricePerUnit AS pricePerUnit"
-				+ ", detail.totalPrice AS totalPrice"
+				+ ", detail.totalAmount AS totalAmount"
 				+ ") FROM PurchaseReturnDetail detail INNER JOIN detail.purchaseReturnHeader header WHERE 1=1";
 
 		if (!transactionNumber.trim().equals("")) {

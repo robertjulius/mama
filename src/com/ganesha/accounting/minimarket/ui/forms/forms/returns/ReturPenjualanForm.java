@@ -1,9 +1,8 @@
-package com.ganesha.accounting.minimarket.ui.forms.forms.sale;
+package com.ganesha.accounting.minimarket.ui.forms.forms.returns;
 
 import java.awt.Window;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
@@ -17,7 +16,6 @@ import java.util.Map;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
-import javax.swing.JSeparator;
 import javax.swing.SwingConstants;
 import javax.swing.border.EtchedBorder;
 
@@ -29,12 +27,12 @@ import com.ganesha.accounting.formatter.Formatter;
 import com.ganesha.accounting.minimarket.Main;
 import com.ganesha.accounting.minimarket.facade.CustomerFacade;
 import com.ganesha.accounting.minimarket.facade.SaleFacade;
-import com.ganesha.accounting.minimarket.facade.StockFacade;
+import com.ganesha.accounting.minimarket.facade.SaleReturnFacade;
 import com.ganesha.accounting.minimarket.model.Customer;
-import com.ganesha.accounting.minimarket.model.Item;
-import com.ganesha.accounting.minimarket.model.ItemStock;
 import com.ganesha.accounting.minimarket.model.SaleDetail;
 import com.ganesha.accounting.minimarket.model.SaleHeader;
+import com.ganesha.accounting.minimarket.model.SaleReturnDetail;
+import com.ganesha.accounting.minimarket.model.SaleReturnHeader;
 import com.ganesha.accounting.minimarket.ui.forms.forms.searchentity.SearchEntityDialog;
 import com.ganesha.core.desktop.ExceptionHandler;
 import com.ganesha.core.utils.CommonUtils;
@@ -51,7 +49,7 @@ import com.ganesha.desktop.component.xtableutils.XTableParameter;
 import com.ganesha.desktop.component.xtableutils.XTableUtils;
 import com.ganesha.hibernate.HibernateUtils;
 
-public class PenjualanForm extends XJDialog {
+public class ReturPenjualanForm extends XJDialog {
 
 	private XJTable table;
 
@@ -62,53 +60,53 @@ public class PenjualanForm extends XJDialog {
 	private XJButton btnTambah;
 	private XJButton btnCariCustomer;
 	private XJButton btnHapus;
-	private XJTextField txtTaxPercent;
-	private XJTextField txtTotalPenjualan;
-	private XJTextField txtBayar;
-	private XJTextField txtKembalian;
-	private XJTextField txtTotal;
+	private XJTextField txtTotalRetur;
 	private XJButton btnBatal;
 	private XJButton btnSelesai;
-	private XJLabel lblKembalian;
 	private XJTextField txtNamaCustomer;
 
 	private final Map<ColumnEnum, XTableParameter> tableParameters = new HashMap<>();
-	private XJLabel lblBayar;
-	private XJLabel lblTaxAmount;
 	{
 		tableParameters.put(ColumnEnum.NUM, new XTableParameter(0, 5, false,
 				"No", XTableConstants.CELL_RENDERER_CENTER));
 
-		tableParameters.put(ColumnEnum.CODE, new XTableParameter(1, 50, false,
-				"Kode", XTableConstants.CELL_RENDERER_LEFT));
+		tableParameters.put(ColumnEnum.TRANSACTION_NUM,
+				new XTableParameter(1, 100, false, "No. Transaksi",
+						XTableConstants.CELL_RENDERER_LEFT));
 
-		tableParameters.put(ColumnEnum.NAME, new XTableParameter(2, 300, false,
-				"Nama Barang", XTableConstants.CELL_RENDERER_LEFT));
+		tableParameters.put(ColumnEnum.DATE, new XTableParameter(2, 75, false,
+				"Tanggal", XTableConstants.CELL_RENDERER_LEFT));
 
-		tableParameters.put(ColumnEnum.QUANTITY, new XTableParameter(3, 10,
-				true, "Qty", XTableConstants.CELL_RENDERER_RIGHT));
+		tableParameters.put(ColumnEnum.ITEM_CODE, new XTableParameter(3, 100,
+				false, "Kode Barang", XTableConstants.CELL_RENDERER_LEFT));
 
-		tableParameters.put(ColumnEnum.UNIT, new XTableParameter(4, 50, false,
+		tableParameters.put(ColumnEnum.ITEM_NAME, new XTableParameter(4, 300,
+				false, "Nama Barang", XTableConstants.CELL_RENDERER_LEFT));
+
+		tableParameters.put(ColumnEnum.QUANTITY, new XTableParameter(5, 10,
+				true, "Qty", XTableConstants.CELL_RENDERER_CENTER));
+
+		tableParameters.put(ColumnEnum.UNIT, new XTableParameter(6, 30, false,
 				"Satuan", XTableConstants.CELL_RENDERER_LEFT));
 
-		tableParameters.put(ColumnEnum.PRICE, new XTableParameter(5, 50, false,
+		tableParameters.put(ColumnEnum.PRICE, new XTableParameter(7, 50, false,
 				"Harga", XTableConstants.CELL_RENDERER_RIGHT));
 
-		tableParameters.put(ColumnEnum.DISCOUNT, new XTableParameter(6, 30,
-				false, "Diskon (%)", XTableConstants.CELL_RENDERER_CENTER));
+		tableParameters.put(ColumnEnum.DISCOUNT, new XTableParameter(8, 100,
+				false, "Discount (%)", XTableConstants.CELL_RENDERER_CENTER));
 
-		tableParameters.put(ColumnEnum.TOTAL, new XTableParameter(7, 75, false,
+		tableParameters.put(ColumnEnum.TOTAL, new XTableParameter(9, 50, false,
 				"Total", XTableConstants.CELL_RENDERER_RIGHT));
+
 	}
 
-	public PenjualanForm(Window parent) {
+	public ReturPenjualanForm(Window parent) {
 		super(parent);
-		setTitle("Transaksi Penjualan");
+		setTitle("Retur Penjualan");
 		setCloseOnEsc(false);
 
 		getContentPane().setLayout(
-				new MigLayout("", "[1200,grow]",
-						"[grow][grow][grow][grow][][grow]"));
+				new MigLayout("", "[1200,grow]", "[grow][grow][grow][grow]"));
 
 		table = new XJTable();
 		XTableUtils.initTable(table, tableParameters);
@@ -132,18 +130,19 @@ public class PenjualanForm extends XJDialog {
 		pnlHeader.setLayout(new MigLayout("", "[150][100][200][]", "[][][]"));
 
 		XJLabel lblNoTransaksi = new XJLabel();
-		lblNoTransaksi.setText("No. Transaksi Penjualan");
-		pnlHeader.add(lblNoTransaksi, "cell 0 0,alignx trailing");
+		lblNoTransaksi.setText("No. Retur Penjualan");
+		pnlHeader.add(lblNoTransaksi, "cell 0 0");
 
 		txtNoTransaksi = new XJTextField();
-		txtNoTransaksi.setText(GeneralConstants.PREFIX_TRX_NUMBER_PURCHASE
-				+ CommonUtils.getTimestampInString());
+		txtNoTransaksi
+				.setText(GeneralConstants.PREFIX_TRX_NUMBER_PURCHASE_RETURN
+						+ CommonUtils.getTimestampInString());
 		txtNoTransaksi.setEditable(false);
 		pnlHeader.add(txtNoTransaksi, "cell 1 0 2 1,growx");
 
 		XJLabel lblTanggal = new XJLabel();
-		lblTanggal.setText("Tanggal Penjualan");
-		pnlHeader.add(lblTanggal, "cell 0 1,alignx trailing");
+		lblTanggal.setText("Tanggal Retur");
+		pnlHeader.add(lblTanggal, "cell 0 1");
 
 		dateChooser = new XJDateChooser();
 		dateChooser.setDate(CommonUtils.getCurrentDate());
@@ -152,7 +151,7 @@ public class PenjualanForm extends XJDialog {
 
 		XJLabel lblCustomer = new XJLabel();
 		lblCustomer.setText("Customer");
-		pnlHeader.add(lblCustomer, "cell 0 2,alignx trailing");
+		pnlHeader.add(lblCustomer, "cell 0 2");
 
 		Customer defaultCustomer = null;
 		Session session = HibernateUtils.openSession();
@@ -195,7 +194,7 @@ public class PenjualanForm extends XJDialog {
 		btnTambah.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				cariBarang();
+				cariTransaksi();
 			}
 		});
 		pnlSearchItem.add(btnTambah, "cell 0 0,alignx left");
@@ -219,97 +218,18 @@ public class PenjualanForm extends XJDialog {
 		getContentPane().add(pnlSubTotal, "cell 0 2,grow");
 		pnlSubTotal.setLayout(new MigLayout("", "[grow][][200]", "[]"));
 
-		XJLabel lblTotalPenjualan = new XJLabel();
-		pnlSubTotal.add(lblTotalPenjualan, "cell 1 0");
-		lblTotalPenjualan.setText("Total Penjualan");
+		XJLabel lblTotalRetur = new XJLabel();
+		pnlSubTotal.add(lblTotalRetur, "cell 1 0");
+		lblTotalRetur.setText("Total Retur");
 
-		txtTotalPenjualan = new XJTextField();
-		txtTotalPenjualan.setText("0");
-		txtTotalPenjualan.setHorizontalAlignment(SwingConstants.TRAILING);
-		pnlSubTotal.add(txtTotalPenjualan, "cell 2 0,growx");
-		txtTotalPenjualan.setEditable(false);
-
-		JPanel pnlPerhitungan = new JPanel();
-		getContentPane().add(pnlPerhitungan, "cell 0 3,alignx center,growy");
-		pnlPerhitungan.setLayout(new MigLayout("", "[300][300]", "[grow]"));
-
-		JPanel pnlBeban = new JPanel();
-		pnlBeban.setBorder(new EtchedBorder(EtchedBorder.LOWERED, null, null));
-		pnlPerhitungan.add(pnlBeban, "cell 0 0,grow");
-		pnlBeban.setLayout(new MigLayout("", "[][grow]", "[][][10][]"));
-
-		XJLabel lblTaxPercent = new XJLabel();
-		lblTaxPercent.setText("Pajak (%)");
-		pnlBeban.add(lblTaxPercent, "cell 0 0");
-
-		txtTaxPercent = new XJTextField();
-		txtTaxPercent.setEditable(false);
-		txtTaxPercent.addKeyListener(new KeyAdapter() {
-			@Override
-			public void keyReleased(KeyEvent e) {
-				setTotalBiayaDanDiskon();
-			}
-		});
-		txtTaxPercent.setHorizontalAlignment(SwingConstants.TRAILING);
-		txtTaxPercent.setText(Formatter
-				.formatNumberToString(GeneralConstants.TAX_PERCENT));
-		pnlBeban.add(txtTaxPercent, "cell 1 0,growx");
-
-		lblTaxAmount = new XJLabel();
-		lblTaxAmount.setText("0");
-		pnlBeban.add(lblTaxAmount, "cell 1 1,alignx right");
-
-		JSeparator separator = new JSeparator();
-		pnlBeban.add(separator, "cell 0 2 2 1,growx,aligny center");
-
-		XJLabel lblTotal = new XJLabel();
-		lblTotal.setText("TOTAL");
-		pnlBeban.add(lblTotal, "cell 0 3");
-
-		txtTotal = new XJTextField();
-		txtTotal.setHorizontalAlignment(SwingConstants.TRAILING);
-		txtTotal.setText("0");
-		txtTotal.setEditable(false);
-		pnlBeban.add(txtTotal, "cell 1 3,growx");
-
-		JPanel pnlUangMuka = new JPanel();
-		pnlUangMuka
-				.setBorder(new EtchedBorder(EtchedBorder.LOWERED, null, null));
-		pnlPerhitungan.add(pnlUangMuka, "cell 1 0,grow");
-		pnlUangMuka.setLayout(new MigLayout("", "[150][grow]", "[][][]"));
-
-		lblBayar = new XJLabel();
-		lblBayar.setText("Bayar");
-		pnlUangMuka.add(lblBayar, "cell 0 0");
-
-		txtBayar = new XJTextField();
-		txtBayar.setForeground(COLOR_TRASACTIONABLE);
-		txtBayar.addKeyListener(new KeyAdapter() {
-			@Override
-			public void keyReleased(KeyEvent e) {
-				setTotalBayarDanKembalian();
-			}
-		});
-		txtBayar.setHorizontalAlignment(SwingConstants.TRAILING);
-		txtBayar.setText("0");
-		pnlUangMuka.add(txtBayar, "cell 1 0,growx,aligny top");
-
-		lblKembalian = new XJLabel();
-		lblKembalian.setText("Kembalian");
-		pnlUangMuka.add(lblKembalian, "cell 0 1");
-
-		txtKembalian = new XJTextField();
-		txtKembalian.setHorizontalAlignment(SwingConstants.TRAILING);
-		txtKembalian.setText("0");
-		txtKembalian.setEditable(false);
-		txtKembalian.setForeground(COLOR_WARNING);
-		pnlUangMuka.add(txtKembalian, "cell 1 1,growx,aligny top");
-
-		JSeparator separator_1 = new JSeparator();
-		getContentPane().add(separator_1, "cell 0 4,grow");
+		txtTotalRetur = new XJTextField();
+		txtTotalRetur.setText("0");
+		txtTotalRetur.setHorizontalAlignment(SwingConstants.TRAILING);
+		pnlSubTotal.add(txtTotalRetur, "cell 2 0,growx");
+		txtTotalRetur.setEditable(false);
 
 		JPanel pnlButton = new JPanel();
-		getContentPane().add(pnlButton, "cell 0 5,alignx center,growy");
+		getContentPane().add(pnlButton, "cell 0 3,alignx center,growy");
 		pnlButton.setLayout(new MigLayout("", "[][]", "[]"));
 
 		btnBatal = new XJButton();
@@ -365,22 +285,11 @@ public class PenjualanForm extends XJDialog {
 	}
 
 	private void batal() {
-		String message = "Apakah Anda yakin ingin membatalkan transaksi penjualan ini?";
+		String message = "Apakah Anda yakin ingin membatalkan retur penjualan ini?";
 		int selectedOption = JOptionPane.showConfirmDialog(this, message,
-				"Membatalkan Transaksi Penjualan", JOptionPane.YES_NO_OPTION);
+				"Membatalkan Retur Penjualan", JOptionPane.YES_NO_OPTION);
 		if (selectedOption == JOptionPane.YES_OPTION) {
 			dispose();
-		}
-	}
-
-	private void cariBarang() {
-		SearchEntityDialog searchEntityDialog = new SearchEntityDialog(
-				"Cari Barang", this, Item.class);
-		searchEntityDialog.setVisible(true);
-
-		String kodeBarang = searchEntityDialog.getSelectedCode();
-		if (kodeBarang != null) {
-			tambah(kodeBarang);
 		}
 	}
 
@@ -394,6 +303,18 @@ public class PenjualanForm extends XJDialog {
 			String namaCustomer = searchEntityDialog.getSelectedName();
 			txtKodeCustomer.setText(kodeCustomer);
 			txtNamaCustomer.setText(namaCustomer);
+		}
+	}
+
+	private void cariTransaksi() {
+		SearchTransactionDialog searchEntityDialog = new SearchTransactionDialog(
+				"Cari Daftar Transaksi Penjualan", this,
+				SaleFacade.getInstance());
+		searchEntityDialog.setVisible(true);
+		String noTransaksi = searchEntityDialog.getSelectedTransactionNumber();
+		Integer orderNumber = searchEntityDialog.getSelectedOrderNumber();
+		if (noTransaksi != null) {
+			tambah(noTransaksi, orderNumber);
 		}
 	}
 
@@ -412,7 +333,7 @@ public class PenjualanForm extends XJDialog {
 			--row;
 		}
 		table.changeSelection(row, column, false, false);
-		setTotalPenjualan();
+		setTotalRetur();
 		reorderRowNumber();
 	}
 
@@ -429,7 +350,7 @@ public class PenjualanForm extends XJDialog {
 		try {
 			session.beginTransaction();
 
-			SaleFacade facade = SaleFacade.getInstance();
+			SaleReturnFacade facade = SaleReturnFacade.getInstance();
 
 			String transactionNumber = txtNoTransaksi.getText();
 
@@ -439,60 +360,68 @@ public class PenjualanForm extends XJDialog {
 			String customerCode = txtKodeCustomer.getText();
 
 			double subTotalAmount = Formatter.formatStringToNumber(
-					txtTotalPenjualan.getText()).doubleValue();
+					txtTotalRetur.getText()).doubleValue();
 
-			double taxPercent = Formatter.formatStringToNumber(
-					txtTaxPercent.getText()).doubleValue();
+			double taxPercent = 0;
+			double taxAmount = 0;
 
-			double taxAmount = Formatter.formatStringToNumber(
-					lblTaxAmount.getText()).doubleValue();
+			double totalReturnAmount = Formatter.formatStringToNumber(
+					txtTotalRetur.getText()).doubleValue();
 
-			double totalAmount = Formatter.formatStringToNumber(
-					txtTotal.getText()).doubleValue();
-
-			double pay = Formatter.formatStringToNumber(txtBayar.getText())
-					.doubleValue();
-
-			double moneyChange = Formatter.formatStringToNumber(
-					txtKembalian.getText()).doubleValue();
-
-			SaleHeader saleHeader = facade.validateForm(transactionNumber,
-					transactionTimestamp, customerCode, subTotalAmount,
-					taxPercent, taxAmount, totalAmount, pay, moneyChange,
+			SaleReturnHeader saleReturnHeader = facade.validateForm(
+					transactionNumber, transactionTimestamp, customerCode,
+					subTotalAmount, taxPercent, taxAmount, totalReturnAmount,
 					session);
 
-			List<SaleDetail> saleDetails = new ArrayList<>();
+			List<SaleReturnDetail> saleReturnDetails = new ArrayList<>();
 			int rowCount = table.getRowCount();
 			for (int i = 0; i < rowCount; i++) {
-				SaleDetail saleDetail = new SaleDetail();
+				SaleReturnDetail saleReturnDetail = new SaleReturnDetail();
 
-				saleDetail.setOrderNum(Formatter.formatStringToNumber(
+				saleReturnDetail.setOrderNum(Formatter.formatStringToNumber(
 						table.getValueAt(
 								i,
 								tableParameters.get(ColumnEnum.NUM)
 										.getColumnIndex()).toString())
 						.intValue());
 
-				saleDetail.setItemCode(table.getValueAt(i,
-						tableParameters.get(ColumnEnum.CODE).getColumnIndex())
-						.toString());
+				saleReturnDetail.setSaleTransactionNumber(table.getValueAt(
+						i,
+						tableParameters.get(ColumnEnum.TRANSACTION_NUM)
+								.getColumnIndex()).toString());
 
-				saleDetail.setItemName(table.getValueAt(i,
-						tableParameters.get(ColumnEnum.NAME).getColumnIndex())
-						.toString());
+				saleReturnDetail
+						.setSaleTransactionTimestamp(CommonUtils
+								.castDateToTimestamp(Formatter
+										.formatStringToDate(table.getValueAt(
+												i,
+												tableParameters.get(
+														ColumnEnum.DATE)
+														.getColumnIndex())
+												.toString())));
 
-				saleDetail.setQuantity(Formatter.formatStringToNumber(
+				saleReturnDetail.setItemCode(table.getValueAt(
+						i,
+						tableParameters.get(ColumnEnum.ITEM_CODE)
+								.getColumnIndex()).toString());
+
+				saleReturnDetail.setItemName(table.getValueAt(
+						i,
+						tableParameters.get(ColumnEnum.ITEM_NAME)
+								.getColumnIndex()).toString());
+
+				saleReturnDetail.setQuantity(Formatter.formatStringToNumber(
 						table.getValueAt(
 								i,
 								tableParameters.get(ColumnEnum.QUANTITY)
 										.getColumnIndex()).toString())
 						.intValue());
 
-				saleDetail.setUnit(table.getValueAt(i,
+				saleReturnDetail.setUnit(table.getValueAt(i,
 						tableParameters.get(ColumnEnum.UNIT).getColumnIndex())
 						.toString());
 
-				saleDetail.setPricePerUnit(BigDecimal.valueOf(Formatter
+				saleReturnDetail.setPricePerUnit(BigDecimal.valueOf(Formatter
 						.formatStringToNumber(
 								table.getValueAt(
 										i,
@@ -500,16 +429,16 @@ public class PenjualanForm extends XJDialog {
 												.getColumnIndex()).toString())
 						.doubleValue()));
 
-				saleDetail.setDiscountPercent(BigDecimal.valueOf(Formatter
-						.formatStringToNumber(
+				saleReturnDetail.setDiscountPercent(BigDecimal
+						.valueOf(Formatter.formatStringToNumber(
 								table.getValueAt(
 										i,
 										tableParameters
 												.get(ColumnEnum.DISCOUNT)
 												.getColumnIndex()).toString())
-						.doubleValue()));
+								.doubleValue()));
 
-				saleDetail.setTotalAmount(BigDecimal.valueOf(Formatter
+				saleReturnDetail.setTotalAmount(BigDecimal.valueOf(Formatter
 						.formatStringToNumber(
 								table.getValueAt(
 										i,
@@ -517,16 +446,17 @@ public class PenjualanForm extends XJDialog {
 												.getColumnIndex()).toString())
 						.doubleValue()));
 
-				saleDetail.setDisabled(false);
-				saleDetail.setDeleted(false);
-				saleDetail.setLastUpdatedBy(Main.getUserLogin().getId());
-				saleDetail.setLastUpdatedTimestamp(CommonUtils
+				saleReturnDetail.setDisabled(false);
+				saleReturnDetail.setDeleted(false);
+				saleReturnDetail.setLastUpdatedBy(Main.getUserLogin().getId());
+				saleReturnDetail.setLastUpdatedTimestamp(CommonUtils
 						.getCurrentTimestamp());
 
-				saleDetails.add(saleDetail);
+				saleReturnDetails.add(saleReturnDetail);
 			}
 
-			facade.performSale(saleHeader, saleDetails, session);
+			facade.performSaleReturn(saleReturnHeader, saleReturnDetails,
+					session);
 
 			session.getTransaction().commit();
 			dispose();
@@ -537,57 +467,6 @@ public class PenjualanForm extends XJDialog {
 		} finally {
 			session.close();
 		}
-	}
-
-	private void setTotalBayarDanKembalian() {
-		double total = Formatter.formatStringToNumber(txtTotal.getText())
-				.doubleValue();
-
-		double bayar = Formatter.formatStringToNumber(txtBayar.getText())
-				.doubleValue();
-		txtBayar.setText(Formatter.formatNumberToString(bayar));
-
-		double kembalian = bayar - total;
-		kembalian = kembalian < 0 ? 0 : kembalian;
-		txtKembalian.setText(Formatter.formatNumberToString(kembalian));
-	}
-
-	private void setTotalBiayaDanDiskon() {
-		double totalPenjualan = Formatter.formatStringToNumber(
-				txtTotalPenjualan.getText()).doubleValue();
-
-		double biaya = Formatter.formatStringToNumber(lblTaxAmount.getText())
-				.doubleValue();
-		lblTaxAmount.setText(Formatter.formatNumberToString(biaya));
-
-		double taxPercent = Formatter.formatStringToNumber(
-				txtTaxPercent.getText()).doubleValue();
-		txtTaxPercent.setText(Formatter.formatNumberToString(taxPercent));
-
-		double taxAmount = taxPercent / 100 * totalPenjualan;
-		lblTaxAmount.setText(Formatter.formatNumberToString(taxAmount));
-
-		double total = Math.floor(totalPenjualan + biaya + taxAmount);
-		txtTotal.setText(Formatter.formatNumberToString(total));
-
-		setTotalBayarDanKembalian();
-	}
-
-	private void setTotalPenjualan() {
-		int rowCount = table.getRowCount();
-		double totalPenjualan = 0;
-		for (int i = 0; i < rowCount; ++i) {
-			String string = table.getValueAt(i,
-					tableParameters.get(ColumnEnum.TOTAL).getColumnIndex())
-					.toString();
-			double totalPerRow = Formatter.formatStringToNumber(string)
-					.doubleValue();
-			totalPenjualan += totalPerRow;
-		}
-		txtTotalPenjualan.setText(Formatter
-				.formatNumberToString(totalPenjualan));
-
-		setTotalBiayaDanDiskon();
 	}
 
 	private void setTotalPerRow(int row) {
@@ -612,65 +491,83 @@ public class PenjualanForm extends XJDialog {
 
 		double totalBeforeDiscount = jumlah * hargaSatuan;
 
-		String itemCode = (String) table.getValueAt(row,
-				tableParameters.get(ColumnEnum.CODE).getColumnIndex());
-
-		double discountPercent = 0;
-		Session session = HibernateUtils.openSession();
-		try {
-			discountPercent = SaleFacade.getInstance().getDiscountPercent(
-					itemCode, jumlah, session);
-		} finally {
-			session.close();
-		}
-		table.setValueAt(Formatter.formatNumberToString(discountPercent), row,
-				tableParameters.get(ColumnEnum.DISCOUNT).getColumnIndex());
-
+		double discountPercent = Formatter.formatStringToNumber(
+				table.getValueAt(
+						row,
+						tableParameters.get(ColumnEnum.DISCOUNT)
+								.getColumnIndex()).toString()).doubleValue();
 		double diskonAmount = discountPercent / 100 * totalBeforeDiscount;
 
 		double total = Math.floor(totalBeforeDiscount - diskonAmount);
 		table.setValueAt(Formatter.formatNumberToString(total), row,
 				tableParameters.get(ColumnEnum.TOTAL).getColumnIndex());
 
-		setTotalPenjualan();
+		setTotalRetur();
 	}
 
-	private void tambah(String kodeBarang) {
-		if (kodeBarang.trim().equals("")) {
+	private void setTotalRetur() {
+		int rowCount = table.getRowCount();
+		double totalRetur = 0;
+		for (int i = 0; i < rowCount; ++i) {
+			String string = table.getValueAt(i,
+					tableParameters.get(ColumnEnum.TOTAL).getColumnIndex())
+					.toString();
+			double totalPerRow = Formatter.formatStringToNumber(string)
+					.doubleValue();
+			totalRetur += totalPerRow;
+		}
+		txtTotalRetur.setText(Formatter.formatNumberToString(totalRetur));
+	}
+
+	private void tambah(String transactionNumber, Integer orderNum) {
+		if (transactionNumber.trim().equals("") || orderNum == null) {
 			return;
 		}
 
 		Session session = HibernateUtils.openSession();
 		try {
-			StockFacade facade = StockFacade.getInstance();
-			ItemStock itemStock = facade.getDetail(kodeBarang, session);
-			Item item = itemStock.getItem();
+			SaleFacade facade = SaleFacade.getInstance();
+			SaleDetail saleDetail = facade.getDetail(transactionNumber,
+					orderNum, session);
+			SaleHeader saleHeader = saleDetail.getSaleHeader();
 
 			XTableModel tableModel = (XTableModel) table.getModel();
 			tableModel.setRowCount(tableModel.getRowCount() + 1);
 			int rowIndex = tableModel.getRowCount() - 1;
 
-			tableModel.setValueAt(item.getCode(), rowIndex, tableParameters
-					.get(ColumnEnum.CODE).getColumnIndex());
+			tableModel.setValueAt(saleHeader.getTransactionNumber(), rowIndex,
+					tableParameters.get(ColumnEnum.TRANSACTION_NUM)
+							.getColumnIndex());
 
-			tableModel.setValueAt(item.getName(), rowIndex, tableParameters
-					.get(ColumnEnum.NAME).getColumnIndex());
+			tableModel.setValueAt(Formatter.formatDateToString(saleHeader
+					.getTransactionTimestamp()), rowIndex,
+					tableParameters.get(ColumnEnum.DATE).getColumnIndex());
 
-			tableModel.setValueAt(0, rowIndex,
+			tableModel.setValueAt(saleDetail.getItemCode(), rowIndex,
+					tableParameters.get(ColumnEnum.ITEM_CODE).getColumnIndex());
+
+			tableModel.setValueAt(saleDetail.getItemName(), rowIndex,
+					tableParameters.get(ColumnEnum.ITEM_NAME).getColumnIndex());
+
+			tableModel.setValueAt(saleDetail.getQuantity(), rowIndex,
 					tableParameters.get(ColumnEnum.QUANTITY).getColumnIndex());
 
-			tableModel.setValueAt(itemStock.getUnit(), rowIndex,
+			tableModel.setValueAt(saleDetail.getUnit(), rowIndex,
 					tableParameters.get(ColumnEnum.UNIT).getColumnIndex());
 
-			tableModel.setValueAt(Formatter.formatNumberToString(itemStock
-					.getSellPrice()), rowIndex,
-					tableParameters.get(ColumnEnum.PRICE).getColumnIndex());
-
-			tableModel.setValueAt(0, rowIndex,
+			tableModel.setValueAt(Formatter.formatNumberToString(saleDetail
+					.getDiscountPercent()), rowIndex,
 					tableParameters.get(ColumnEnum.DISCOUNT).getColumnIndex());
 
-			tableModel.setValueAt(0, rowIndex,
-					tableParameters.get(ColumnEnum.TOTAL).getColumnIndex());
+			tableModel.setValueAt(Formatter.formatNumberToString(saleDetail
+					.getPricePerUnit()), rowIndex,
+					tableParameters.get(ColumnEnum.PRICE).getColumnIndex());
+
+			tableModel
+					.setValueAt(Formatter.formatNumberToString(saleDetail
+							.getTotalAmount()), rowIndex,
+							tableParameters.get(ColumnEnum.TOTAL)
+									.getColumnIndex());
 
 			reorderRowNumber();
 
@@ -679,7 +576,7 @@ public class PenjualanForm extends XJDialog {
 			table.changeSelection(row, tableParameters.get(ColumnEnum.QUANTITY)
 					.getColumnIndex(), false, false);
 
-			setTotalPenjualan();
+			setTotalRetur();
 
 		} finally {
 			session.close();
@@ -687,6 +584,6 @@ public class PenjualanForm extends XJDialog {
 	}
 
 	private enum ColumnEnum {
-		NUM, CODE, NAME, QUANTITY, UNIT, PRICE, DISCOUNT, TOTAL
+		NUM, TRANSACTION_NUM, DATE, ITEM_CODE, ITEM_NAME, QUANTITY, UNIT, PRICE, DISCOUNT, TOTAL
 	}
 }

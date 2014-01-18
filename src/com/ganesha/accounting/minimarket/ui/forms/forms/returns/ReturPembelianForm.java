@@ -586,8 +586,8 @@ public class ReturPembelianForm extends XJDialog {
 				purchaseReturnDetails.add(purchaseReturnDetail);
 			}
 
-			facade.performPurchase(purchaseReturnHeader, purchaseReturnDetails,
-					session);
+			facade.performPurchaseReturn(purchaseReturnHeader,
+					purchaseReturnDetails, session);
 
 			session.getTransaction().commit();
 			dispose();
@@ -697,7 +697,7 @@ public class ReturPembelianForm extends XJDialog {
 				lblLunas.setForeground(COLOR_GOOD);
 			}
 		}
-	};
+	}
 
 	private void tambah(String transactionNumber, Integer orderNum) {
 		if (transactionNumber.trim().equals("") || orderNum == null) {
