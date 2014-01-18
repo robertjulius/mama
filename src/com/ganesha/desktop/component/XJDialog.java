@@ -9,7 +9,7 @@ import java.awt.event.WindowFocusListener;
 
 import javax.swing.JDialog;
 
-public abstract class XJDialog extends JDialog {
+public abstract class XJDialog extends JDialog implements XComponentConstants {
 	private static final long serialVersionUID = 8731044804764016513L;
 
 	private KeyboardFocusManager keyboardFocusManager = KeyboardFocusManager

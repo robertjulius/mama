@@ -3,9 +3,12 @@ package com.ganesha.core.utils;
 import java.sql.Timestamp;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
 
 public class CommonUtils {
+
+	private static Calendar calendar = Calendar.getInstance();
 
 	public static Timestamp castDateToTimestamp(Date date) {
 		Timestamp timestamp = null;
@@ -31,5 +34,29 @@ public class CommonUtils {
 		DateFormat formatter = new SimpleDateFormat("yyyyMMddHHmmss");
 		String timestampInString = formatter.format(getCurrentDate());
 		return timestampInString;
+	}
+
+	public static Date validateDateBegin(Date date) {
+		if (date == null) {
+			return null;
+		}
+		calendar.setTime(date);
+		calendar.set(Calendar.HOUR_OF_DAY, 0);
+		calendar.set(Calendar.MINUTE, 0);
+		calendar.set(Calendar.SECOND, 0);
+		calendar.set(Calendar.MILLISECOND, 0);
+		return calendar.getTime();
+	}
+
+	public static Date validateDateEnd(Date date) {
+		if (date == null) {
+			return null;
+		}
+		calendar.setTime(date);
+		calendar.set(Calendar.HOUR_OF_DAY, 23);
+		calendar.set(Calendar.MINUTE, 59);
+		calendar.set(Calendar.SECOND, 59);
+		calendar.set(Calendar.MILLISECOND, 999);
+		return calendar.getTime();
 	}
 }

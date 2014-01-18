@@ -6,12 +6,12 @@ import java.awt.event.FocusEvent;
 
 import javax.swing.JFormattedTextField;
 
-public class XJTextField extends JFormattedTextField {
+public class XJTextField extends JFormattedTextField implements
+		XComponentConstants {
 	private static final long serialVersionUID = 8731044804764016513L;
 
 	public XJTextField() {
-		setFont(new Font("Tahoma", Font.PLAIN,
-				XComponentConstants.FONT_SIZE_NORMAL));
+		setFont(new Font("Tahoma", Font.PLAIN, FONT_SIZE_NORMAL));
 
 		addFocusListener(new FocusAdapter() {
 			@Override

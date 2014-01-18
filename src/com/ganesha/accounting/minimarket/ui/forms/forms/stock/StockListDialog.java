@@ -53,7 +53,14 @@ public class StockListDialog extends XJDialog {
 		getContentPane().setLayout(
 				new MigLayout("", "[1000,grow]", "[][300,grow][]"));
 
-		table = new XJTable();
+		table = new XJTable() {
+			private static final long serialVersionUID = 1L;
+
+			@Override
+			public void rowSelected() {
+				btnDetail.doClick();
+			}
+		};
 		initTable();
 
 		JPanel pnlFilter = new JPanel();
@@ -180,9 +187,6 @@ public class StockListDialog extends XJDialog {
 		switch (keyCode) {
 		case KeyEvent.VK_F5:
 			btnRegistrasi.doClick();
-			break;
-		case KeyEvent.VK_ENTER:
-			btnDetail.doClick();
 			break;
 		default:
 			break;

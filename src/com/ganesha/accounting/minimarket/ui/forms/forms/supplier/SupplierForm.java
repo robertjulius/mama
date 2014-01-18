@@ -377,6 +377,9 @@ public class SupplierForm extends XJDialog {
 				throw new ActionTypeNotSupported(actionType);
 			}
 			session.getTransaction().commit();
+		} catch (Exception e) {
+			session.getTransaction().rollback();
+			throw e;
 		} finally {
 			session.close();
 		}

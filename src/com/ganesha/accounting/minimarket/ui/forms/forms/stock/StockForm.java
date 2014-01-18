@@ -25,8 +25,8 @@ import com.ganesha.accounting.util.DBUtils;
 import com.ganesha.core.desktop.ExceptionHandler;
 import com.ganesha.core.exception.ActionTypeNotSupported;
 import com.ganesha.core.exception.UserException;
+import com.ganesha.core.utils.GeneralConstants;
 import com.ganesha.core.utils.GeneralConstants.ActionType;
-import com.ganesha.desktop.component.XComponentConstants;
 import com.ganesha.desktop.component.XJButton;
 import com.ganesha.desktop.component.XJDialog;
 import com.ganesha.desktop.component.XJLabel;
@@ -143,7 +143,7 @@ public class StockForm extends XJDialog {
 
 		txtStokMinimum = new XJTextField();
 		txtStokMinimum
-				.setFormatterFactory(XComponentConstants.FORMATTER_FACTORY_NUMBER);
+				.setFormatterFactory(GeneralConstants.FORMATTER_FACTORY_NUMBER);
 		txtStokMinimum.setText("0");
 		pnlKiri.add(txtStokMinimum, "cell 1 3,growx");
 
@@ -174,7 +174,7 @@ public class StockForm extends XJDialog {
 
 		txtHargaJual = new XJTextField();
 		txtHargaJual
-				.setFormatterFactory(XComponentConstants.FORMATTER_FACTORY_NUMBER);
+				.setFormatterFactory(GeneralConstants.FORMATTER_FACTORY_NUMBER);
 		txtHargaJual.setText("0");
 		pnlKanan.add(txtHargaJual, "cell 1 2,growx");
 
@@ -276,6 +276,7 @@ public class StockForm extends XJDialog {
 			txtSatuan.setEditable(false);
 			txtStokMinimum.setEditable(false);
 			txtHargaJual.setEditable(false);
+			btnSimpan.setEnabled(false);
 		} else {
 			throw new ActionTypeNotSupported(actionType);
 		}
@@ -316,6 +317,9 @@ public class StockForm extends XJDialog {
 				throw new ActionTypeNotSupported(actionType);
 			}
 			session.getTransaction().commit();
+		} catch (Exception e) {
+			session.getTransaction().rollback();
+			throw e;
 		} finally {
 			session.close();
 		}

@@ -51,7 +51,14 @@ public class SupplierListDialog extends XJDialog {
 		getContentPane().setLayout(
 				new MigLayout("", "[1000,grow]", "[][300,grow][]"));
 
-		table = new XJTable();
+		table = new XJTable() {
+			private static final long serialVersionUID = 1L;
+
+			@Override
+			public void rowSelected() {
+				btnDetail.doClick();
+			}
+		};
 		initTable();
 
 		JPanel pnlFilter = new JPanel();
@@ -181,7 +188,7 @@ public class SupplierListDialog extends XJDialog {
 			}
 		});
 		btnDetail
-				.setText("<html><center>Lihat Detail<br/>[ENTER]</center></html>");
+				.setText("<html><center>Lihat Detail<br/>[Enter]</center></html>");
 		panel.add(btnDetail, "cell 2 0");
 
 		btnRefresh.doClick();
@@ -195,9 +202,6 @@ public class SupplierListDialog extends XJDialog {
 		switch (keyCode) {
 		case KeyEvent.VK_F5:
 			btnTambah.doClick();
-			break;
-		case KeyEvent.VK_ENTER:
-			btnDetail.doClick();
 			break;
 		default:
 			break;

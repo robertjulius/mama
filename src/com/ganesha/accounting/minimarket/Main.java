@@ -1,20 +1,24 @@
 package com.ganesha.accounting.minimarket;
 
 import java.awt.Color;
+import java.util.Date;
+import java.util.List;
 
 import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
 import javax.swing.plaf.nimbus.NimbusLookAndFeel;
 
-import org.hibernate.Criteria;
+import org.hibernate.Query;
+import org.hibernate.Session;
 
 import com.ganesha.accounting.minimarket.model.Company;
-import com.ganesha.accounting.minimarket.model.ItemStock;
 import com.ganesha.accounting.minimarket.ui.forms.forms.login.LoginForm;
 import com.ganesha.accounting.util.CoaConsistencyChecker;
 import com.ganesha.accounting.util.CompanyConsistencyChecker;
 import com.ganesha.core.exception.AppException;
+import com.ganesha.core.utils.CommonUtils;
 import com.ganesha.hibernate.HibernateUtils;
+import com.ganesha.hibernate.HqlParameter;
 import com.ganesha.model.User;
 
 public class Main {
@@ -79,11 +83,35 @@ public class Main {
 	}
 
 	public static void testHibernate() {
-		Criteria criteria = HibernateUtils.openSession().createCriteria(
-				ItemStock.class);
+		Session session = HibernateUtils.openSession();
 
-		Object o = criteria.list();
-		System.out.println(o);
+		try {
+			String sqlString = "SELECT new Map("
+					+ "header.transactionNumber AS transactionNumber"
+					+ ", detail.orderNum AS orderNum"
+					+ ", detail.itemCode AS itemCode"
+					+ ", detail.itemName AS itemName"
+					+ ", header.transactionTimestamp AS transactionTimestamp"
+					+ ") FROM PurchaseDetail detail INNER JOIN detail.purchaseHeader header WHERE 1=1";
+
+			sqlString += " AND header.transactionTimestamp >= :beginDate";
+
+			Date date = new Date(System.currentTimeMillis());
+			date = CommonUtils.validateDateBegin(date);
+
+			Query query = session.createQuery(sqlString);
+
+			HqlParameter hqlParameter = new HqlParameter(query);
+			hqlParameter.put("beginDate", date);
+			hqlParameter.put("endDate", date);
+			hqlParameter.validate();
+
+			List<?> map = query.list();
+
+			System.out.println(map);
+		} finally {
+			session.close();
+		}
 
 	}
 }

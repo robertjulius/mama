@@ -13,61 +13,62 @@ import org.hibernate.criterion.Restrictions;
 
 import com.ganesha.accounting.minimarket.Main;
 import com.ganesha.accounting.minimarket.model.ItemStock;
-import com.ganesha.accounting.minimarket.model.PurchaseDetail;
-import com.ganesha.accounting.minimarket.model.PurchaseHeader;
+import com.ganesha.accounting.minimarket.model.PurchaseReturnDetail;
+import com.ganesha.accounting.minimarket.model.PurchaseReturnHeader;
 import com.ganesha.accounting.minimarket.model.Supplier;
 import com.ganesha.core.exception.UserException;
 import com.ganesha.core.utils.CommonUtils;
 import com.ganesha.hibernate.HqlParameter;
 
-public class PurchaseFacade implements TransactionFacade {
+public class PurchaseReturnFacade implements TransactionFacade {
 
-	private static PurchaseFacade instance;
+	private static PurchaseReturnFacade instance;
 
-	public static PurchaseFacade getInstance() {
+	public static PurchaseReturnFacade getInstance() {
 		if (instance == null) {
-			instance = new PurchaseFacade();
+			instance = new PurchaseReturnFacade();
 		}
 		return instance;
 	}
 
-	private PurchaseFacade() {
+	private PurchaseReturnFacade() {
 	}
 
-	public PurchaseDetail getDetail(String transactionNumber, Integer orderNum,
-			Session session) {
-		Criteria criteria = session.createCriteria(PurchaseDetail.class);
-		criteria.createAlias("purchaseHeader", "purchaseHeader");
-		criteria.add(Restrictions.eq("purchaseHeader.transactionNumber",
+	public PurchaseReturnDetail getDetail(String transactionNumber,
+			Integer orderNum, Session session) {
+		Criteria criteria = session.createCriteria(PurchaseReturnDetail.class);
+		criteria.createAlias("purchaseReturnHeader", "purchaseReturnHeader");
+		criteria.add(Restrictions.eq("purchaseReturnHeader.transactionNumber",
 				transactionNumber));
 		criteria.add(Restrictions.eq("orderNum", orderNum));
 
-		PurchaseDetail purchaseDetail = (PurchaseDetail) criteria
+		PurchaseReturnDetail purchaseReturnDetail = (PurchaseReturnDetail) criteria
 				.uniqueResult();
-		return purchaseDetail;
+		return purchaseReturnDetail;
 	}
 
-	public void performPurchase(PurchaseHeader purchaseHeader,
-			List<PurchaseDetail> purchaseDetails, Session session) {
+	public void performPurchase(PurchaseReturnHeader purchaseReturnHeader,
+			List<PurchaseReturnDetail> purchaseReturnDetails, Session session) {
 
 		StockFacade stockFacade = StockFacade.getInstance();
-		session.save(purchaseHeader);
+		session.save(purchaseReturnHeader);
 
-		for (PurchaseDetail purchaseDetail : purchaseDetails) {
+		for (PurchaseReturnDetail purchaseReturnDetail : purchaseReturnDetails) {
 			ItemStock itemStock = stockFacade.getDetail(
-					purchaseDetail.getItemCode(), session);
+					purchaseReturnDetail.getItemCode(), session);
 
-			int stock = itemStock.getStock() + purchaseDetail.getQuantity();
+			int stock = itemStock.getStock()
+					+ purchaseReturnDetail.getQuantity();
 			itemStock.setStock(stock);
 
-			BigDecimal lastPrice = purchaseDetail.getPricePerUnit();
+			BigDecimal lastPrice = purchaseReturnDetail.getPricePerUnit();
 			itemStock.setBuyPrice(lastPrice);
 
-			purchaseDetail.setPurchaseHeader(purchaseHeader);
-			session.save(purchaseDetail);
+			purchaseReturnDetail.setPurchaseReturnHeader(purchaseReturnHeader);
+			session.save(purchaseReturnDetail);
 			session.save(itemStock);
 
-			session.save(purchaseDetail);
+			session.save(purchaseReturnDetail);
 		}
 	}
 
@@ -85,8 +86,8 @@ public class PurchaseFacade implements TransactionFacade {
 				+ ", detail.quantity AS quantity"
 				+ ", detail.unit AS unit"
 				+ ", detail.pricePerUnit AS pricePerUnit"
-				+ ", detail.totalAmount AS totalAmount"
-				+ ") FROM PurchaseDetail detail INNER JOIN detail.purchaseHeader header WHERE 1=1";
+				+ ", detail.totalPrice AS totalPrice"
+				+ ") FROM PurchaseReturnDetail detail INNER JOIN detail.purchaseReturnHeader header WHERE 1=1";
 
 		if (!transactionNumber.trim().equals("")) {
 			sqlString += " AND header.transactionNumber LIKE :transactionNumber";
@@ -114,17 +115,18 @@ public class PurchaseFacade implements TransactionFacade {
 
 	}
 
-	public PurchaseHeader validateForm(String transactionNumber,
+	public PurchaseReturnHeader validateForm(String transactionNumber,
 			Timestamp transactionTimestamp, String supplierCode,
-			Double subTotalAmount, Double expenses, Double discount,
-			Double totalAmount, Double advancePayment, Double remainingPayment,
-			Boolean paidInFullFlag, Session session) throws UserException {
+			Double subTotalAmount, Double expenses, Double discountReturned,
+			Double totalReturnAmount, Double amountReturned, Double debtCut,
+			Double remainingReturnAmount, Boolean returnedInFullFlag,
+			Session session) throws UserException {
 
 		if (supplierCode == null || supplierCode.equals("")) {
 			throw new UserException("Field Supplier dibutuhkan");
 		}
 
-		PurchaseHeader header = new PurchaseHeader();
+		PurchaseReturnHeader header = new PurchaseReturnHeader();
 
 		Supplier supplier = SupplierFacade.getInstance().getDetail(
 				supplierCode, session);
@@ -134,11 +136,13 @@ public class PurchaseFacade implements TransactionFacade {
 		header.setSupplierId(supplier.getId());
 		header.setSubTotalAmount(BigDecimal.valueOf(subTotalAmount));
 		header.setExpenses(BigDecimal.valueOf(expenses));
-		header.setDiscount(BigDecimal.valueOf(discount));
-		header.setTotalAmount(BigDecimal.valueOf(totalAmount));
-		header.setAdvancePayment(BigDecimal.valueOf(advancePayment));
-		header.setRemainingPayment(BigDecimal.valueOf(remainingPayment));
-		header.setPaidInFullFlag(paidInFullFlag);
+		header.setDiscountReturned(BigDecimal.valueOf(discountReturned));
+		header.setTotalReturnAmount(BigDecimal.valueOf(totalReturnAmount));
+		header.setAmountReturned(BigDecimal.valueOf(amountReturned));
+		header.setDebtCut(BigDecimal.valueOf(debtCut));
+		header.setRemainingReturnAmount(BigDecimal
+				.valueOf(remainingReturnAmount));
+		header.setReturnedInFullFlag(returnedInFullFlag);
 
 		header.setDisabled(false);
 		header.setDeleted(false);

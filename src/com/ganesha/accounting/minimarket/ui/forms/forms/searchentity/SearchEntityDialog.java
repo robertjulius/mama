@@ -40,9 +40,6 @@ public class SearchEntityDialog extends XJDialog {
 	private String selectedCode;
 	private String selectedName;
 
-	/**
-	 * @wbp.nonvisual location=238,101
-	 */
 	private XJButton btnPilih;
 
 	public SearchEntityDialog(String title, Window parent, Class<?> entityClass) {
@@ -53,7 +50,14 @@ public class SearchEntityDialog extends XJDialog {
 		getContentPane().setLayout(
 				new MigLayout("", "[500,grow]", "[][300,grow][]"));
 
-		table = new XJTable();
+		table = new XJTable() {
+			private static final long serialVersionUID = 1L;
+
+			@Override
+			public void rowSelected() {
+				btnPilih.doClick();
+			}
+		};
 		initTable();
 
 		JPanel pnlFilter = new JPanel();
@@ -62,7 +66,7 @@ public class SearchEntityDialog extends XJDialog {
 
 		XJLabel lblKode = new XJLabel();
 		lblKode.setText("Kode");
-		pnlFilter.add(lblKode, "cell 0 0,alignx trailing");
+		pnlFilter.add(lblKode, "cell 0 0");
 
 		txtKode = new XJTextField();
 		txtKode.addKeyListener(new KeyAdapter() {
@@ -84,7 +88,7 @@ public class SearchEntityDialog extends XJDialog {
 
 		XJLabel lblName = new XJLabel();
 		lblName.setText("Name");
-		pnlFilter.add(lblName, "cell 0 1,alignx trailing");
+		pnlFilter.add(lblName, "cell 0 1");
 
 		txtNama = new XJTextField();
 		txtNama.addKeyListener(new KeyAdapter() {
@@ -119,7 +123,7 @@ public class SearchEntityDialog extends XJDialog {
 			}
 		});
 		panel.add(btnPilih, "cell 0 0");
-		btnPilih.setText("<html><center>Pilih<br/>[ENTER]</center><html>");
+		btnPilih.setText("<html><center>Pilih<br/>[Enter]</center><html>");
 
 		pack();
 		setLocationRelativeTo(null);
@@ -142,9 +146,6 @@ public class SearchEntityDialog extends XJDialog {
 	@Override
 	protected void keyEventListener(int keyCode) {
 		switch (keyCode) {
-		case KeyEvent.VK_ENTER:
-			btnPilih.doClick();
-			break;
 		default:
 			break;
 		}

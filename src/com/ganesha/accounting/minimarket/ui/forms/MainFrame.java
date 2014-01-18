@@ -7,9 +7,11 @@ import javax.swing.JFrame;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
+import javax.swing.JSeparator;
 
 import com.ganesha.accounting.minimarket.Main;
 import com.ganesha.accounting.minimarket.ui.forms.forms.purchase.PembelianForm;
+import com.ganesha.accounting.minimarket.ui.forms.forms.returns.ReturPembelianForm;
 import com.ganesha.accounting.minimarket.ui.forms.forms.stock.StockListDialog;
 import com.ganesha.accounting.minimarket.ui.forms.forms.supplier.SupplierListDialog;
 import com.ganesha.desktop.component.XJFrame;
@@ -60,6 +62,24 @@ public class MainFrame extends XJFrame {
 			}
 		});
 		mnTransaksi.add(mntmPembelian);
+
+		JMenuItem mntmReturPembelian = new JMenuItem("Retur Pembelian");
+		mntmReturPembelian.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				new ReturPembelianForm(MainFrame.this).setVisible(true);
+			}
+		});
+		mnTransaksi.add(mntmReturPembelian);
+
+		JSeparator separator = new JSeparator();
+		mnTransaksi.add(separator);
+
+		JMenuItem mntmPenjualan = new JMenuItem("Penjualan");
+		mnTransaksi.add(mntmPenjualan);
+
+		JMenuItem mntmReturPenjualan = new JMenuItem("Retur Penjualan");
+		mnTransaksi.add(mntmReturPenjualan);
 
 		JMenu mnBackOffice = new JMenu("Back Office");
 		menuBar.add(mnBackOffice);

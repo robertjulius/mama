@@ -1,6 +1,7 @@
 package com.ganesha.accounting.minimarket.model;
 
 import java.math.BigDecimal;
+import java.sql.Timestamp;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -14,8 +15,8 @@ import javax.persistence.Table;
 import com.ganesha.model.Trackable;
 
 @Entity
-@Table(name = "PURCHASE_DETAILS")
-public class PurchaseDetail extends Trackable {
+@Table(name = "PURCHASE_RETURN_DETAILS")
+public class PurchaseReturnDetail extends Trackable {
 	private static final long serialVersionUID = -7780389008755790841L;
 
 	@Id
@@ -24,11 +25,17 @@ public class PurchaseDetail extends Trackable {
 	private Integer id;
 
 	@ManyToOne
-	@JoinColumn(name = "PURCHASE_HEADER_ID", nullable = false)
-	private PurchaseHeader purchaseHeader;
+	@JoinColumn(name = "PURCHASE_RETURN_HEADER_ID", nullable = false)
+	private PurchaseReturnHeader purchaseReturnHeader;
 
 	@Column(name = "ORDER_NUM", nullable = false)
 	private Integer orderNum;
+
+	@Column(name = "PURCHASE_TRANSACTION_NUMBER", nullable = false)
+	private String purchaseTransactionNumber;
+
+	@Column(name = "PURCHASE_TRANSACTION_TIMESTAMP", nullable = false)
+	private Timestamp purchaseTransactionTimestamp;
 
 	@Column(name = "ITEM_CODE", nullable = false)
 	private String itemCode;
@@ -68,8 +75,16 @@ public class PurchaseDetail extends Trackable {
 		return pricePerUnit;
 	}
 
-	public PurchaseHeader getPurchaseHeader() {
-		return purchaseHeader;
+	public PurchaseReturnHeader getPurchaseReturnHeader() {
+		return purchaseReturnHeader;
+	}
+
+	public String getPurchaseTransactionNumber() {
+		return purchaseTransactionNumber;
+	}
+
+	public Timestamp getPurchaseTransactionTimestamp() {
+		return purchaseTransactionTimestamp;
 	}
 
 	public Integer getQuantity() {
@@ -104,8 +119,18 @@ public class PurchaseDetail extends Trackable {
 		this.pricePerUnit = pricePerUnit;
 	}
 
-	public void setPurchaseHeader(PurchaseHeader purchaseHeader) {
-		this.purchaseHeader = purchaseHeader;
+	public void setPurchaseReturnHeader(
+			PurchaseReturnHeader purchaseReturnHeader) {
+		this.purchaseReturnHeader = purchaseReturnHeader;
+	}
+
+	public void setPurchaseTransactionNumber(String purchaseTransactionNumber) {
+		this.purchaseTransactionNumber = purchaseTransactionNumber;
+	}
+
+	public void setPurchaseTransactionTimestamp(
+			Timestamp purchaseTransactionTimestamp) {
+		this.purchaseTransactionTimestamp = purchaseTransactionTimestamp;
 	}
 
 	public void setQuantity(Integer quantity) {

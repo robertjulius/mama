@@ -19,13 +19,12 @@ import javax.swing.table.TableCellRenderer;
 import com.ganesha.desktop.component.xtableutils.XCellEditor;
 import com.ganesha.desktop.component.xtableutils.XTableConstants;
 
-public class XJTable extends JTable {
+public class XJTable extends JTable implements XComponentConstants {
 
 	private static final long serialVersionUID = 8731044804764016513L;
 
 	public XJTable() {
-		Font font = new Font("Tahoma", Font.PLAIN,
-				XComponentConstants.FONT_SIZE_NORMAL);
+		Font font = new Font("Tahoma", Font.PLAIN, FONT_SIZE_NORMAL);
 
 		setFont(font);
 		setRowHeight((int) Math.ceil(font.getSize() * 1.30));

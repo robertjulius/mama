@@ -27,5 +27,7 @@
 		<mapping class="com.ganesha.accounting.minimarket.model.Supplier" />
 		<mapping class="com.ganesha.accounting.minimarket.model.PurchaseHeader" />
 		<mapping class="com.ganesha.accounting.minimarket.model.PurchaseDetail" />
+		<mapping class="com.ganesha.accounting.minimarket.model.PurchaseReturnHeader" />
+		<mapping class="com.ganesha.accounting.minimarket.model.PurchaseReturnDetail" />
 	</session-factory>
 </hibernate-configuration>

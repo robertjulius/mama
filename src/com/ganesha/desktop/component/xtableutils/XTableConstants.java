@@ -13,7 +13,8 @@ public class XTableConstants {
 
 	public static final Color COLOR_BACKGROUND_NORMAL = Color.LIGHT_GRAY;
 	public static final Color COLOR_BACKGROUND_EDITABLE = Color.WHITE;
-	public static final Color COLOR_BACKGROUND_SELECTED_ROW = Color.BLUE;
+	public static final Color COLOR_BACKGROUND_SELECTED_ROW = new Color(0, 0,
+			150);
 	public static final Color COLOR_FOREGROUND_NORMAL = Color.BLACK;
 	public static final Color COLOR_FOREGROUND_EDITABLE = Color.BLACK;
 	public static final Color COLOR_FOREGROUND_SELECTED_ROW = Color.WHITE;
