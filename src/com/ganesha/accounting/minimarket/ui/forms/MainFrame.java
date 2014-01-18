@@ -10,6 +10,7 @@ import javax.swing.JMenuItem;
 import javax.swing.JSeparator;
 
 import com.ganesha.accounting.minimarket.Main;
+import com.ganesha.accounting.minimarket.ui.forms.forms.customer.CustomerListDialog;
 import com.ganesha.accounting.minimarket.ui.forms.forms.purchase.PembelianForm;
 import com.ganesha.accounting.minimarket.ui.forms.forms.returns.ReturPembelianForm;
 import com.ganesha.accounting.minimarket.ui.forms.forms.stock.StockListDialog;
@@ -50,6 +51,15 @@ public class MainFrame extends XJFrame {
 			}
 		});
 		mnMasterData.add(mntmSupplier);
+
+		JMenuItem mntmCustomer = new JMenuItem("Customer");
+		mntmCustomer.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				new CustomerListDialog(MainFrame.this).setVisible(true);
+			}
+		});
+		mnMasterData.add(mntmCustomer);
 
 		JMenu mnTransaksi = new JMenu("Transaksi");
 		menuBar.add(mnTransaksi);

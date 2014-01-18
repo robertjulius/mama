@@ -1,0 +1,16 @@
+[DONE] Customer
+Penjualan
+Retur Penjualan
+Pembayaran Hutang
+Pembayaran Piutang
+Inquiry Transaksi Pembelian
+Inquiry Transaksi Penjualan
+Inquiry Retur Pembelian
+Inquiry Retur Penjualan
+Daftar stok
+Stok Opname
+Cetak Struk
+Scan Barcode
+Generate Barcode
+Cetak Barcode
+Delete Master Data (Customer, Barang, Supplier)
