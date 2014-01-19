@@ -44,7 +44,7 @@ public class PayableFacade {
 		payableSummary.setLastUpdatedTimestamp(CommonUtils
 				.getCurrentTimestamp());
 
-		session.save(payableSummary);
+		session.saveOrUpdate(payableSummary);
 	}
 
 	public void addTransaction(int clientId, AccountAction accountAction,
@@ -75,7 +75,7 @@ public class PayableFacade {
 		payableTransaction.setLastUpdatedTimestamp(CommonUtils
 				.getCurrentTimestamp());
 
-		session.save(payableTransaction);
+		session.saveOrUpdate(payableTransaction);
 
 		if (accountAction == AccountAction.DECREASE) {
 
@@ -101,7 +101,7 @@ public class PayableFacade {
 		payableSummary.setLastUpdatedBy(Main.getUserLogin().getId());
 		payableSummary.setLastUpdatedTimestamp(CommonUtils
 				.getCurrentTimestamp());
-		session.save(payableSummary);
+		session.saveOrUpdate(payableSummary);
 	}
 
 	public PayableSummary getSummary(int clientId, Session session) {

@@ -46,7 +46,7 @@ import com.ganesha.desktop.component.xtableutils.XTableParameter;
 import com.ganesha.desktop.component.xtableutils.XTableUtils;
 import com.ganesha.hibernate.HibernateUtils;
 
-public class TransactionInquiryList extends XJDialog {
+public class TransactionInquiryListDialog extends XJDialog {
 	private static final long serialVersionUID = 1452286313727721700L;
 	private XJTextField txtNoTransaksi;
 	private XJTable table;
@@ -86,7 +86,7 @@ public class TransactionInquiryList extends XJDialog {
 				false, "Total", XTableConstants.CELL_RENDERER_RIGHT));
 	}
 
-	public TransactionInquiryList(Window parent) {
+	public TransactionInquiryListDialog(Window parent) {
 		super(parent);
 		getContentPane().setLayout(
 				new MigLayout("", "[1200,grow]", "[][300,grow][]"));

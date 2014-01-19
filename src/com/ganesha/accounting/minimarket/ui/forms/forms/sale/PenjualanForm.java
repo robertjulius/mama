@@ -28,6 +28,8 @@ import org.hibernate.Session;
 import com.ganesha.accounting.formatter.Formatter;
 import com.ganesha.accounting.minimarket.Main;
 import com.ganesha.accounting.minimarket.facade.CustomerFacade;
+import com.ganesha.accounting.minimarket.facade.DiscountFacade;
+import com.ganesha.accounting.minimarket.facade.GlobalFacade;
 import com.ganesha.accounting.minimarket.facade.SaleFacade;
 import com.ganesha.accounting.minimarket.facade.StockFacade;
 import com.ganesha.accounting.minimarket.model.Customer;
@@ -252,8 +254,8 @@ public class PenjualanForm extends XJDialog {
 			}
 		});
 		txtTaxPercent.setHorizontalAlignment(SwingConstants.TRAILING);
-		txtTaxPercent.setText(Formatter
-				.formatNumberToString(GeneralConstants.TAX_PERCENT));
+		txtTaxPercent.setText(Formatter.formatNumberToString(GlobalFacade
+				.getInstance().getTaxPercent()));
 		pnlBeban.add(txtTaxPercent, "cell 1 0,growx");
 
 		lblTaxAmount = new XJLabel();
@@ -625,7 +627,7 @@ public class PenjualanForm extends XJDialog {
 		double discountPercent = 0;
 		Session session = HibernateUtils.openSession();
 		try {
-			discountPercent = SaleFacade.getInstance().getDiscountPercent(
+			discountPercent = DiscountFacade.getInstance().getDiscountPercent(
 					itemCode, jumlah, session);
 		} finally {
 			session.close();

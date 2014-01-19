@@ -47,19 +47,11 @@ public class SaleFacade implements TransactionFacade {
 		return saleDetail;
 	}
 
-	public double getDiscountPercent(String itemCode, int quantity,
-			Session session) {
-		/*
-		 * TODO
-		 */
-		return 5;
-	}
-
 	public void performSale(SaleHeader saleHeader,
 			List<SaleDetail> saleDetails, Session session) throws AppException {
 
 		StockFacade stockFacade = StockFacade.getInstance();
-		session.save(saleHeader);
+		session.saveOrUpdate(saleHeader);
 
 		for (SaleDetail saleDetail : saleDetails) {
 			ItemStock itemStock = stockFacade.getDetail(
@@ -69,8 +61,8 @@ public class SaleFacade implements TransactionFacade {
 			itemStock.setStock(stock);
 
 			saleDetail.setSaleHeader(saleHeader);
-			session.save(saleDetail);
-			session.save(itemStock);
+			session.saveOrUpdate(saleDetail);
+			session.saveOrUpdate(itemStock);
 		}
 	}
 

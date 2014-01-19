@@ -44,7 +44,7 @@ public class ReceivableFacade {
 		receivableSummary.setLastUpdatedTimestamp(CommonUtils
 				.getCurrentTimestamp());
 
-		session.save(receivableSummary);
+		session.saveOrUpdate(receivableSummary);
 	}
 
 	public void addTransaction(int clientId, AccountAction accountAction,
@@ -75,7 +75,7 @@ public class ReceivableFacade {
 		receivableTransaction.setLastUpdatedTimestamp(CommonUtils
 				.getCurrentTimestamp());
 
-		session.save(receivableTransaction);
+		session.saveOrUpdate(receivableTransaction);
 
 		if (accountAction == AccountAction.DECREASE) {
 
@@ -102,7 +102,7 @@ public class ReceivableFacade {
 		receivableSummary.setLastUpdatedBy(Main.getUserLogin().getId());
 		receivableSummary.setLastUpdatedTimestamp(CommonUtils
 				.getCurrentTimestamp());
-		session.save(receivableTransaction);
+		session.saveOrUpdate(receivableTransaction);
 	}
 
 	public ReceivableSummary getSummary(int clientId, Session session) {

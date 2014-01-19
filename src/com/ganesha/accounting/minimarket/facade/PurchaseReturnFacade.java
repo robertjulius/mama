@@ -61,7 +61,7 @@ public class PurchaseReturnFacade implements TransactionFacade {
 		validateReceivable(purchaseReturnHeader, session);
 
 		StockFacade stockFacade = StockFacade.getInstance();
-		session.save(purchaseReturnHeader);
+		session.saveOrUpdate(purchaseReturnHeader);
 
 		for (PurchaseReturnDetail purchaseReturnDetail : purchaseReturnDetails) {
 			ItemStock itemStock = stockFacade.getDetail(
@@ -75,10 +75,10 @@ public class PurchaseReturnFacade implements TransactionFacade {
 			itemStock.setBuyPrice(lastPrice);
 
 			purchaseReturnDetail.setPurchaseReturnHeader(purchaseReturnHeader);
-			session.save(purchaseReturnDetail);
-			session.save(itemStock);
+			session.saveOrUpdate(purchaseReturnDetail);
+			session.saveOrUpdate(itemStock);
 
-			session.save(purchaseReturnDetail);
+			session.saveOrUpdate(purchaseReturnDetail);
 		}
 	}
 

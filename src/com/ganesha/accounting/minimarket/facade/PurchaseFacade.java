@@ -56,7 +56,7 @@ public class PurchaseFacade implements TransactionFacade {
 			throws AppException {
 
 		StockFacade stockFacade = StockFacade.getInstance();
-		session.save(purchaseHeader);
+		session.saveOrUpdate(purchaseHeader);
 
 		for (PurchaseDetail purchaseDetail : purchaseDetails) {
 			ItemStock itemStock = stockFacade.getDetail(
@@ -69,8 +69,8 @@ public class PurchaseFacade implements TransactionFacade {
 			itemStock.setBuyPrice(lastPrice);
 
 			purchaseDetail.setPurchaseHeader(purchaseHeader);
-			session.save(purchaseDetail);
-			session.save(itemStock);
+			session.saveOrUpdate(purchaseDetail);
+			session.saveOrUpdate(itemStock);
 		}
 
 		if (!purchaseHeader.getPaidInFullFlag()) {

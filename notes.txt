@@ -14,6 +14,6 @@ Scan Barcode
 Generate Barcode
 Cetak Barcode
 Delete Master Data (Customer, Barang, Supplier)
-Master Diskon
+[DONE] Master Diskon
 
 [DONE] Validasi kalo transaksi ga ada item sama sekali -> Pembelian, Retur Pembelian, Penjualan, Retur Penjualan

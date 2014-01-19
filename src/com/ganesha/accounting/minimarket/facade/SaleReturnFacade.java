@@ -53,7 +53,7 @@ public class SaleReturnFacade implements TransactionFacade {
 			throws UserException, AppException {
 
 		StockFacade stockFacade = StockFacade.getInstance();
-		session.save(saleReturnHeader);
+		session.saveOrUpdate(saleReturnHeader);
 
 		for (SaleReturnDetail saleReturnDetail : saleReturnDetails) {
 			ItemStock itemStock = stockFacade.getDetail(
@@ -66,10 +66,10 @@ public class SaleReturnFacade implements TransactionFacade {
 			itemStock.setBuyPrice(lastPrice);
 
 			saleReturnDetail.setSaleReturnHeader(saleReturnHeader);
-			session.save(saleReturnDetail);
-			session.save(itemStock);
+			session.saveOrUpdate(saleReturnDetail);
+			session.saveOrUpdate(itemStock);
 
-			session.save(saleReturnDetail);
+			session.saveOrUpdate(saleReturnDetail);
 		}
 	}
 

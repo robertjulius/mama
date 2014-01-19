@@ -11,7 +11,8 @@ import javax.swing.JSeparator;
 
 import com.ganesha.accounting.minimarket.Main;
 import com.ganesha.accounting.minimarket.ui.forms.forms.customer.CustomerListDialog;
-import com.ganesha.accounting.minimarket.ui.forms.forms.inquiry.TransactionInquiryList;
+import com.ganesha.accounting.minimarket.ui.forms.forms.discount.DiscountListDialog;
+import com.ganesha.accounting.minimarket.ui.forms.forms.inquiry.TransactionInquiryListDialog;
 import com.ganesha.accounting.minimarket.ui.forms.forms.payable.PayableListDialog;
 import com.ganesha.accounting.minimarket.ui.forms.forms.purchase.PembelianForm;
 import com.ganesha.accounting.minimarket.ui.forms.forms.receivable.ReceivableListDialog;
@@ -65,6 +66,15 @@ public class MainFrame extends XJFrame {
 			}
 		});
 		mnMasterData.add(mntmCustomer);
+
+		JMenuItem mntmDiskon = new JMenuItem("Diskon");
+		mntmDiskon.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				new DiscountListDialog(MainFrame.this).setVisible(true);
+			}
+		});
+		mnMasterData.add(mntmDiskon);
 
 		JMenu mnTransaksi = new JMenu("Transaksi");
 		menuBar.add(mnTransaksi);
@@ -139,7 +149,8 @@ public class MainFrame extends XJFrame {
 		mntmInquiryTransaksi.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				new TransactionInquiryList(MainFrame.this).setVisible(true);
+				new TransactionInquiryListDialog(MainFrame.this)
+						.setVisible(true);
 			}
 		});
 		mnInquiry.add(mntmInquiryTransaksi);
