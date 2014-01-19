@@ -38,6 +38,7 @@ import com.ganesha.accounting.minimarket.model.Supplier;
 import com.ganesha.accounting.minimarket.ui.forms.forms.searchentity.SearchEntityDialog;
 import com.ganesha.accounting.minimarket.ui.forms.forms.stock.StockForm;
 import com.ganesha.core.desktop.ExceptionHandler;
+import com.ganesha.core.exception.UserException;
 import com.ganesha.core.utils.CommonUtils;
 import com.ganesha.core.utils.GeneralConstants;
 import com.ganesha.core.utils.GeneralConstants.ActionType;
@@ -148,7 +149,7 @@ public class PembelianForm extends XJDialog {
 
 		XJLabel lblNoTransaksi = new XJLabel();
 		lblNoTransaksi.setText("No. Transaksi Pembelian");
-		pnlHeader.add(lblNoTransaksi, "cell 0 0,alignx trailing");
+		pnlHeader.add(lblNoTransaksi, "cell 0 0");
 
 		txtNoTransaksi = new XJTextField();
 		txtNoTransaksi.setText(GeneralConstants.PREFIX_TRX_NUMBER_PURCHASE
@@ -158,7 +159,7 @@ public class PembelianForm extends XJDialog {
 
 		XJLabel lblTanggal = new XJLabel();
 		lblTanggal.setText("Tanggal Pembelian");
-		pnlHeader.add(lblTanggal, "cell 0 1,alignx trailing");
+		pnlHeader.add(lblTanggal, "cell 0 1");
 
 		dateChooser = new XJDateChooser();
 		dateChooser.setDate(CommonUtils.getCurrentDate());
@@ -167,7 +168,7 @@ public class PembelianForm extends XJDialog {
 
 		XJLabel lblSupplier = new XJLabel();
 		lblSupplier.setText("Supplier");
-		pnlHeader.add(lblSupplier, "cell 0 2,alignx trailing");
+		pnlHeader.add(lblSupplier, "cell 0 2");
 
 		txtKodeSupplier = new XJTextField();
 		txtKodeSupplier.setEditable(false);
@@ -478,6 +479,12 @@ public class PembelianForm extends XJDialog {
 	}
 
 	private void selesaiDanSimpan() throws Exception {
+
+		if (!(table.getRowCount() > 0)) {
+			throw new UserException(
+					"Proses tidak dapat dilanjutkan. Anda belum memasukan item apapun untuk transaksi ini.");
+		}
+
 		Session session = HibernateUtils.openSession();
 		try {
 			session.beginTransaction();

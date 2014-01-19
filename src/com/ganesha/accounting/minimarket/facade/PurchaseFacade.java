@@ -118,7 +118,6 @@ public class PurchaseFacade implements TransactionFacade {
 		List<Map<String, Object>> list = query.list();
 
 		return list;
-
 	}
 
 	public PurchaseHeader validateForm(String transactionNumber,
@@ -138,7 +137,7 @@ public class PurchaseFacade implements TransactionFacade {
 
 		header.setTransactionNumber(transactionNumber);
 		header.setTransactionTimestamp(transactionTimestamp);
-		header.setSupplierId(supplier.getId());
+		header.setSupplier(supplier);
 		header.setSubTotalAmount(BigDecimal.valueOf(subTotalAmount));
 		header.setExpenses(BigDecimal.valueOf(expenses));
 		header.setDiscount(BigDecimal.valueOf(discount));
@@ -157,7 +156,7 @@ public class PurchaseFacade implements TransactionFacade {
 
 	private void addToPayable(PurchaseHeader purchaseHeader, Session session)
 			throws AppException {
-		int clientId = purchaseHeader.getSupplierId();
+		int clientId = purchaseHeader.getSupplier().getId();
 		Date maturityDate = CommonUtils.getNextDate(1, Calendar.YEAR,
 				CommonUtils.getCurrentDate());
 		BigDecimal amount = purchaseHeader.getRemainingPayment();

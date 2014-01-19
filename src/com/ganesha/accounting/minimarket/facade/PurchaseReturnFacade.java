@@ -122,7 +122,6 @@ public class PurchaseReturnFacade implements TransactionFacade {
 		List<Map<String, Object>> list = query.list();
 
 		return list;
-
 	}
 
 	public PurchaseReturnHeader validateForm(String transactionNumber,
@@ -143,7 +142,7 @@ public class PurchaseReturnFacade implements TransactionFacade {
 
 		header.setTransactionNumber(transactionNumber);
 		header.setTransactionTimestamp(transactionTimestamp);
-		header.setSupplierId(supplier.getId());
+		header.setSupplier(supplier);
 		header.setSubTotalAmount(BigDecimal.valueOf(subTotalAmount));
 		header.setExpenses(BigDecimal.valueOf(expenses));
 		header.setDiscountReturned(BigDecimal.valueOf(discountReturned));
@@ -164,7 +163,7 @@ public class PurchaseReturnFacade implements TransactionFacade {
 
 	private void addToPayable(PurchaseReturnHeader purchaseReturnHeader,
 			Session session) throws AppException {
-		int clientId = purchaseReturnHeader.getSupplierId();
+		int clientId = purchaseReturnHeader.getSupplier().getId();
 		Date maturityDate = CommonUtils.getNextDate(1, Calendar.YEAR,
 				CommonUtils.getCurrentDate());
 		BigDecimal amount = purchaseReturnHeader.getDebtCut();
@@ -178,7 +177,7 @@ public class PurchaseReturnFacade implements TransactionFacade {
 
 	private void addToReceivable(PurchaseReturnHeader purchaseReturnHeader,
 			Session session) throws AppException {
-		int clientId = purchaseReturnHeader.getSupplierId();
+		int clientId = purchaseReturnHeader.getSupplier().getId();
 		Date maturityDate = CommonUtils.getNextDate(1, Calendar.YEAR,
 				CommonUtils.getCurrentDate());
 		BigDecimal amount = purchaseReturnHeader.getRemainingReturnAmount();
@@ -199,11 +198,9 @@ public class PurchaseReturnFacade implements TransactionFacade {
 		}
 
 		PayableSummary payableSummary = PayableFacade.getInstance().getSummary(
-				purchaseReturnHeader.getSupplierId(), session);
+				purchaseReturnHeader.getSupplier().getId(), session);
 
-		int supplierId = purchaseReturnHeader.getSupplierId();
-		Supplier supplier = SupplierFacade.getInstance().getDetail(supplierId,
-				session);
+		Supplier supplier = purchaseReturnHeader.getSupplier();
 
 		if (payableSummary == null) {
 			throw new UserException(

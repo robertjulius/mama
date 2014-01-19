@@ -8,6 +8,8 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 import com.ganesha.model.Trackable;
@@ -28,8 +30,9 @@ public class SaleReturnHeader extends Trackable {
 	@Column(name = "TRANSACTION_TIMESTAMP", nullable = false)
 	private Timestamp transactionTimestamp;
 
-	@Column(name = "CUSTOMER_ID", nullable = false)
-	private Integer customerId;
+	@ManyToOne
+	@JoinColumn(name = "CUSTOMER_ID", nullable = false)
+	private Customer customer;
 
 	@Column(name = "SUB_TOTAL_AMOUNT", nullable = false)
 	private BigDecimal subTotalAmount;
@@ -43,8 +46,8 @@ public class SaleReturnHeader extends Trackable {
 	@Column(name = "TOTAL_RETURN_AMOUNT", nullable = false)
 	private BigDecimal totalReturnAmount;
 
-	public Integer getCustomerId() {
-		return customerId;
+	public Customer getCustomer() {
+		return customer;
 	}
 
 	public Integer getId() {
@@ -75,8 +78,8 @@ public class SaleReturnHeader extends Trackable {
 		return transactionTimestamp;
 	}
 
-	public void setCustomerId(Integer customerId) {
-		this.customerId = customerId;
+	public void setCustomer(Customer customer) {
+		this.customer = customer;
 	}
 
 	public void setId(Integer id) {

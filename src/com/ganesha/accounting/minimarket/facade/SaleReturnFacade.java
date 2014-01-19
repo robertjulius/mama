@@ -113,7 +113,6 @@ public class SaleReturnFacade implements TransactionFacade {
 		List<Map<String, Object>> list = query.list();
 
 		return list;
-
 	}
 
 	public SaleReturnHeader validateForm(String transactionNumber,
@@ -132,7 +131,7 @@ public class SaleReturnFacade implements TransactionFacade {
 
 		header.setTransactionNumber(transactionNumber);
 		header.setTransactionTimestamp(transactionTimestamp);
-		header.setCustomerId(customer.getId());
+		header.setCustomer(customer);
 		header.setSubTotalAmount(BigDecimal.valueOf(subTotalAmount));
 		header.setTaxPercent(BigDecimal.valueOf(taxPercent));
 		header.setTaxAmount(BigDecimal.valueOf(taxAmount));

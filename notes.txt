@@ -7,7 +7,7 @@ Inquiry Transaksi Pembelian
 Inquiry Transaksi Penjualan
 Inquiry Retur Pembelian
 Inquiry Retur Penjualan
-Daftar stok
+Inquiry stok barang
 Stok Opname
 Cetak Struk
 Scan Barcode
@@ -16,5 +16,4 @@ Cetak Barcode
 Delete Master Data (Customer, Barang, Supplier)
 Master Diskon
 
-Validasi kalo transaksi ga ada item sama sekali
-->	Pembelian, Retur Pembelian, Penjualan, Retur Penjualan
+[DONE] Validasi kalo transaksi ga ada item sama sekali -> Pembelian, Retur Pembelian, Penjualan, Retur Penjualan

@@ -9,10 +9,7 @@ public class ExceptionHandler {
 		if (ex instanceof UserException) {
 			UserExceptionHandler.handleException(ex);
 		} else {
-			/*
-			 * TODO
-			 */
-			ex.printStackTrace();
+			AppExceptionHandler.handleException(ex);
 		}
 	}
 }

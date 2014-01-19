@@ -35,6 +35,7 @@ import com.ganesha.accounting.minimarket.model.SaleReturnDetail;
 import com.ganesha.accounting.minimarket.model.SaleReturnHeader;
 import com.ganesha.accounting.minimarket.ui.forms.forms.searchentity.SearchEntityDialog;
 import com.ganesha.core.desktop.ExceptionHandler;
+import com.ganesha.core.exception.UserException;
 import com.ganesha.core.utils.CommonUtils;
 import com.ganesha.core.utils.GeneralConstants;
 import com.ganesha.desktop.component.XJButton;
@@ -346,6 +347,12 @@ public class ReturPenjualanForm extends XJDialog {
 	}
 
 	private void selesaiDanSimpan() throws Exception {
+
+		if (!(table.getRowCount() > 0)) {
+			throw new UserException(
+					"Proses tidak dapat dilanjutkan. Anda belum memasukan item apapun untuk transaksi ini.");
+		}
+
 		Session session = HibernateUtils.openSession();
 		try {
 			session.beginTransaction();

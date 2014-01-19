@@ -11,6 +11,7 @@ import javax.swing.JSeparator;
 
 import com.ganesha.accounting.minimarket.Main;
 import com.ganesha.accounting.minimarket.ui.forms.forms.customer.CustomerListDialog;
+import com.ganesha.accounting.minimarket.ui.forms.forms.inquiry.TransactionInquiryList;
 import com.ganesha.accounting.minimarket.ui.forms.forms.payable.PayableListDialog;
 import com.ganesha.accounting.minimarket.ui.forms.forms.purchase.PembelianForm;
 import com.ganesha.accounting.minimarket.ui.forms.forms.receivable.ReceivableListDialog;
@@ -130,6 +131,18 @@ public class MainFrame extends XJFrame {
 
 		JMenu mnBackOffice = new JMenu("Back Office");
 		menuBar.add(mnBackOffice);
+
+		JMenu mnInquiry = new JMenu("Inquiry");
+		mnBackOffice.add(mnInquiry);
+
+		JMenuItem mntmInquiryTransaksi = new JMenuItem("Inquiry Transaksi");
+		mntmInquiryTransaksi.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				new TransactionInquiryList(MainFrame.this).setVisible(true);
+			}
+		});
+		mnInquiry.add(mntmInquiryTransaksi);
 
 		JMenu mnLaporan = new JMenu("Laporan");
 		menuBar.add(mnLaporan);
