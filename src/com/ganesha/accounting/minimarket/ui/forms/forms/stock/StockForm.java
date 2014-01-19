@@ -60,6 +60,7 @@ public class StockForm extends XJDialog {
 	private XJButton btnBatal;
 	private XJLabel lblStokMinimum;
 	private XJTextField txtStokMinimum;
+	private XJButton btnGenerateBarcode;
 
 	public StockForm(Window parent, ActionType actionType) {
 		super(parent);
@@ -78,52 +79,62 @@ public class StockForm extends XJDialog {
 		});
 		setTitle("Form Barang");
 		getContentPane().setLayout(
-				new MigLayout("", "[grow][]", "[grow][grow][grow][][grow]"));
+				new MigLayout("", "[400][400]", "[grow][grow][grow][][grow]"));
 
 		pnlKode = new JPanel();
 		pnlKode.setBorder(new EtchedBorder(EtchedBorder.LOWERED, null, null));
 		getContentPane().add(pnlKode, "cell 0 0 2 1,grow");
-		pnlKode.setLayout(new MigLayout("", "[100][200:n][200][50:n]", "[][][]"));
+		pnlKode.setLayout(new MigLayout("", "[150][][100][]", "[][][][]"));
 
 		XJLabel lblKode = new XJLabel();
-		pnlKode.add(lblKode, "cell 0 0,alignx trailing");
+		pnlKode.add(lblKode, "cell 0 0");
 		lblKode.setText("Kode");
 
 		txtKode = new XJTextField();
-		pnlKode.add(txtKode, "cell 1 0,growx");
+		pnlKode.add(txtKode, "cell 1 0 2 1,growx");
 
 		lblKodeTerakhir = new XJLabel();
 		lblKodeTerakhir.setFont(new Font("Tahoma", Font.BOLD, 12));
-		pnlKode.add(lblKodeTerakhir, "cell 2 0,alignx right");
+		pnlKode.add(lblKodeTerakhir, "cell 1 1");
 		lblKodeTerakhir.setText("Kode Terakhir:");
 
 		lblKodeTerakhirValue = new XJLabel();
 		lblKodeTerakhirValue.setFont(new Font("Tahoma", Font.BOLD, 12));
-		pnlKode.add(lblKodeTerakhirValue, "cell 3 0");
+		pnlKode.add(lblKodeTerakhirValue, "cell 2 1");
 		lblKodeTerakhirValue.setText("");
 
 		lblBarcode = new XJLabel();
-		pnlKode.add(lblBarcode, "cell 0 1,alignx trailing");
+		pnlKode.add(lblBarcode, "cell 0 2");
 		lblBarcode.setText("Barcode");
 
 		txtBarcode = new XJTextField();
-		pnlKode.add(txtBarcode, "cell 1 1,growx");
+		pnlKode.add(txtBarcode, "cell 1 2 2 1,growx");
 		txtBarcode.setEditable(false);
+
+		btnGenerateBarcode = new XJButton();
+		btnGenerateBarcode.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				setBarcode(System.currentTimeMillis());
+			}
+		});
+		btnGenerateBarcode.setText("Generate Barcode");
+		pnlKode.add(btnGenerateBarcode, "cell 3 2");
 
 		JPanel pnlKiri = new JPanel();
 		pnlKiri.setBorder(new EtchedBorder(EtchedBorder.LOWERED, null, null));
 		getContentPane().add(pnlKiri, "cell 0 1,grow");
-		pnlKiri.setLayout(new MigLayout("", "[100][200:n,grow]", "[][][][]"));
+		pnlKiri.setLayout(new MigLayout("", "[150][grow]", "[][][][]"));
 
 		XJLabel lblNama = new XJLabel();
-		pnlKiri.add(lblNama, "cell 0 0,alignx trailing");
+		pnlKiri.add(lblNama, "cell 0 0");
 		lblNama.setText("Nama");
 
 		txtNama = new XJTextField();
 		pnlKiri.add(txtNama, "cell 1 0,growx");
 
 		XJLabel lblSatuan = new XJLabel();
-		pnlKiri.add(lblSatuan, "cell 0 1,alignx right");
+		pnlKiri.add(lblSatuan, "cell 0 1");
 		lblSatuan.setText("Satuan");
 
 		txtSatuan = new XJTextField();
@@ -139,7 +150,7 @@ public class StockForm extends XJDialog {
 
 		lblStokMinimum = new XJLabel();
 		lblStokMinimum.setText("Stok Minimum");
-		pnlKiri.add(lblStokMinimum, "cell 0 3,alignx trailing");
+		pnlKiri.add(lblStokMinimum, "cell 0 3");
 
 		txtStokMinimum = new XJTextField();
 		txtStokMinimum
@@ -150,11 +161,11 @@ public class StockForm extends XJDialog {
 		pnlKanan = new JPanel();
 		pnlKanan.setBorder(new EtchedBorder(EtchedBorder.LOWERED, null, null));
 		getContentPane().add(pnlKanan, "cell 1 1,grow");
-		pnlKanan.setLayout(new MigLayout("", "[100][200:n,grow]", "[][][]"));
+		pnlKanan.setLayout(new MigLayout("", "[150][grow]", "[][][]"));
 
 		lblHargaBeli = new XJLabel();
 		lblHargaBeli.setText("Harga Beli");
-		pnlKanan.add(lblHargaBeli, "cell 0 0,alignx trailing");
+		pnlKanan.add(lblHargaBeli, "cell 0 0");
 
 		txtHargaBeli = new XJTextField();
 		txtHargaBeli.setEditable(false);
@@ -162,7 +173,7 @@ public class StockForm extends XJDialog {
 
 		lblHpp = new XJLabel();
 		lblHpp.setText("HPP");
-		pnlKanan.add(lblHpp, "cell 0 1,alignx trailing");
+		pnlKanan.add(lblHpp, "cell 0 1");
 
 		txtHpp = new XJTextField();
 		txtHpp.setEditable(false);
@@ -170,7 +181,7 @@ public class StockForm extends XJDialog {
 
 		lblHargaJual = new XJLabel();
 		lblHargaJual.setText("Harga Jual");
-		pnlKanan.add(lblHargaJual, "cell 0 2,alignx trailing");
+		pnlKanan.add(lblHargaJual, "cell 0 2");
 
 		txtHargaJual = new XJTextField();
 		txtHargaJual
@@ -263,11 +274,17 @@ public class StockForm extends XJDialog {
 			txtHargaBeli.setText("0");
 			txtHpp.setText("0");
 			txtHargaJual.setText("0");
+			btnGenerateBarcode.setVisible(true);
 		} else if (actionType == ActionType.UPDATE) {
 			lblKodeTerakhir.setVisible(false);
 			lblKodeTerakhirValue.setVisible(false);
 			txtKode.setEditable(false);
 			txtSatuan.setEditable(false);
+			if (txtBarcode.getText().trim().equals("")) {
+				btnGenerateBarcode.setVisible(true);
+			} else {
+				btnGenerateBarcode.setVisible(false);
+			}
 		} else if (actionType == ActionType.READ) {
 			lblKodeTerakhir.setVisible(false);
 			lblKodeTerakhirValue.setVisible(false);
@@ -277,6 +294,7 @@ public class StockForm extends XJDialog {
 			txtStokMinimum.setEditable(false);
 			txtHargaJual.setEditable(false);
 			btnSimpan.setEnabled(false);
+			btnGenerateBarcode.setVisible(false);
 		} else {
 			throw new ActionTypeNotSupported(actionType);
 		}
@@ -323,6 +341,10 @@ public class StockForm extends XJDialog {
 		} finally {
 			session.close();
 		}
+	}
+
+	private void setBarcode(Object barcode) {
+		txtBarcode.setText(barcode.toString());
 	}
 
 	private void validateForm() throws UserException {

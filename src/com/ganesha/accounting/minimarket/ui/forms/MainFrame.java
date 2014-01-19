@@ -20,6 +20,7 @@ import com.ganesha.accounting.minimarket.ui.forms.forms.returns.ReturPembelianFo
 import com.ganesha.accounting.minimarket.ui.forms.forms.returns.ReturPenjualanForm;
 import com.ganesha.accounting.minimarket.ui.forms.forms.sale.PenjualanForm;
 import com.ganesha.accounting.minimarket.ui.forms.forms.stock.StockListDialog;
+import com.ganesha.accounting.minimarket.ui.forms.forms.stockopname.StockOpnameListDialog;
 import com.ganesha.accounting.minimarket.ui.forms.forms.supplier.SupplierListDialog;
 import com.ganesha.desktop.component.XJFrame;
 
@@ -154,6 +155,15 @@ public class MainFrame extends XJFrame {
 			}
 		});
 		mnInquiry.add(mntmInquiryTransaksi);
+
+		JMenuItem mntmStockOpname = new JMenuItem("Stock Opname");
+		mntmStockOpname.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				new StockOpnameListDialog(MainFrame.this).setVisible(true);
+			}
+		});
+		mnBackOffice.add(mntmStockOpname);
 
 		JMenu mnLaporan = new JMenu("Laporan");
 		menuBar.add(mnLaporan);

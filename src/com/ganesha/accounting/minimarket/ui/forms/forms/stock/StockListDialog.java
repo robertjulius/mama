@@ -5,12 +5,13 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.swing.ButtonGroup;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
-import javax.swing.table.TableColumnModel;
 
 import net.miginfocom.swing.MigLayout;
 
@@ -30,6 +31,8 @@ import com.ganesha.desktop.component.XJTable;
 import com.ganesha.desktop.component.XJTextField;
 import com.ganesha.desktop.component.xtableutils.XTableConstants;
 import com.ganesha.desktop.component.xtableutils.XTableModel;
+import com.ganesha.desktop.component.xtableutils.XTableParameter;
+import com.ganesha.desktop.component.xtableutils.XTableUtils;
 import com.ganesha.hibernate.HibernateUtils;
 
 public class StockListDialog extends XJDialog {
@@ -46,6 +49,30 @@ public class StockListDialog extends XJDialog {
 	private XJButton btnDetail;
 	private XJButton btnRefresh;
 
+	private final Map<ColumnEnum, XTableParameter> tableParameters = new HashMap<>();
+	{
+		tableParameters.put(ColumnEnum.CODE, new XTableParameter(0, 25, false,
+				"Kode", XTableConstants.CELL_RENDERER_LEFT));
+
+		tableParameters.put(ColumnEnum.NAME, new XTableParameter(1, 300, false,
+				"Nama Barang", XTableConstants.CELL_RENDERER_LEFT));
+
+		tableParameters.put(ColumnEnum.STOCK, new XTableParameter(2, 25, false,
+				"Stok", XTableConstants.CELL_RENDERER_RIGHT));
+
+		tableParameters.put(ColumnEnum.UNIT, new XTableParameter(3, 50, false,
+				"Satuan", XTableConstants.CELL_RENDERER_CENTER));
+
+		tableParameters.put(ColumnEnum.BUY_PRICE, new XTableParameter(4, 75,
+				false, "Harga Beli", XTableConstants.CELL_RENDERER_RIGHT));
+
+		tableParameters.put(ColumnEnum.HPP, new XTableParameter(5, 25, false,
+				"HPP", XTableConstants.CELL_RENDERER_RIGHT));
+
+		tableParameters.put(ColumnEnum.SELL_PRICE, new XTableParameter(6, 75,
+				false, "Harga Jual", XTableConstants.CELL_RENDERER_RIGHT));
+	}
+
 	public StockListDialog(Window parent) {
 		super(parent);
 
@@ -61,15 +88,15 @@ public class StockListDialog extends XJDialog {
 				btnDetail.doClick();
 			}
 		};
-		initTable();
+		XTableUtils.initTable(table, tableParameters);
 
 		JPanel pnlFilter = new JPanel();
 		getContentPane().add(pnlFilter, "cell 0 0,grow");
-		pnlFilter.setLayout(new MigLayout("", "[100][grow][]", "[][][grow]"));
+		pnlFilter.setLayout(new MigLayout("", "[][grow][]", "[][][grow]"));
 
 		XJLabel lblKode = new XJLabel();
-		lblKode.setText("Kode");
-		pnlFilter.add(lblKode, "cell 0 0,alignx trailing");
+		lblKode.setText("Kode Barang");
+		pnlFilter.add(lblKode, "cell 0 0");
 
 		txtKode = new XJTextField();
 		txtKode.addKeyListener(new KeyAdapter() {
@@ -90,8 +117,8 @@ public class StockListDialog extends XJDialog {
 		txtKode.setColumns(10);
 
 		XJLabel lblNama = new XJLabel();
-		lblNama.setText("Name");
-		pnlFilter.add(lblNama, "cell 0 1,alignx trailing");
+		lblNama.setText("Nama Barang");
+		pnlFilter.add(lblNama, "cell 0 1");
 
 		txtNama = new XJTextField();
 		txtNama.addKeyListener(new KeyAdapter() {
@@ -159,7 +186,7 @@ public class StockListDialog extends XJDialog {
 				dispose();
 			}
 		});
-		btnKeluar.setText("<html></center>Keluar<br/>[ESC]</center></html>");
+		btnKeluar.setText("<html><center>Keluar<br/>[ESC]</center></html>");
 		panel.add(btnKeluar, "cell 0 0");
 		panel.add(btnRegistrasi, "cell 1 0");
 		btnRegistrasi
@@ -193,33 +220,6 @@ public class StockListDialog extends XJDialog {
 		}
 	}
 
-	private void initTable() {
-		XTableModel tableModel = new XTableModel();
-		tableModel.setColumnIdentifiers(new String[] { "Kode", "Nama", "Stock",
-				"Satuan", "Harga Beli", "HPP", "Harga Jual" });
-		tableModel.setColumnEditable(new boolean[] { false, false, false,
-				false, false, false, false });
-		table.setModel(tableModel);
-
-		TableColumnModel columnModel = table.getColumnModel();
-		columnModel.getColumn(0).setPreferredWidth(25);
-		columnModel.getColumn(1).setPreferredWidth(300);
-		columnModel.getColumn(2).setPreferredWidth(25);
-		columnModel.getColumn(3).setPreferredWidth(50);
-		columnModel.getColumn(4).setPreferredWidth(75);
-		columnModel.getColumn(5).setPreferredWidth(25);
-		columnModel.getColumn(6).setPreferredWidth(75);
-
-		columnModel.getColumn(2).setCellRenderer(
-				XTableConstants.CELL_RENDERER_RIGHT);
-		columnModel.getColumn(4).setCellRenderer(
-				XTableConstants.CELL_RENDERER_RIGHT);
-		columnModel.getColumn(5).setCellRenderer(
-				XTableConstants.CELL_RENDERER_RIGHT);
-		columnModel.getColumn(6).setCellRenderer(
-				XTableConstants.CELL_RENDERER_RIGHT);
-	}
-
 	private void loadData() throws AppException {
 		Session session = HibernateUtils.openSession();
 		try {
@@ -237,18 +237,33 @@ public class StockListDialog extends XJDialog {
 			for (int i = 0; i < itemStocks.size(); ++i) {
 				ItemStock itemStock = itemStocks.get(i);
 				Item item = itemStock.getItem();
-				tableModel.setValueAt(item.getCode(), i, 0);
-				tableModel.setValueAt(item.getName(), i, 1);
-				tableModel.setValueAt(itemStock.getStock(), i, 2);
-				tableModel.setValueAt(itemStock.getUnit(), i, 3);
+
+				tableModel.setValueAt(item.getCode(), i,
+						tableParameters.get(ColumnEnum.CODE).getColumnIndex());
+
+				tableModel.setValueAt(item.getName(), i,
+						tableParameters.get(ColumnEnum.NAME).getColumnIndex());
+
+				tableModel.setValueAt(Formatter.formatNumberToString(itemStock
+						.getStock()), i, tableParameters.get(ColumnEnum.STOCK)
+						.getColumnIndex());
+
+				tableModel.setValueAt(itemStock.getUnit(), i, tableParameters
+						.get(ColumnEnum.UNIT).getColumnIndex());
 				tableModel
 						.setValueAt(Formatter.formatNumberToString(itemStock
-								.getBuyPrice()), i, 4);
+								.getBuyPrice()), i,
+								tableParameters.get(ColumnEnum.BUY_PRICE)
+										.getColumnIndex());
+
 				tableModel.setValueAt(
 						Formatter.formatNumberToString(itemStock.getHpp()), i,
-						5);
+						tableParameters.get(ColumnEnum.HPP).getColumnIndex());
+
 				tableModel.setValueAt(Formatter.formatNumberToString(itemStock
-						.getSellPrice()), i, 6);
+						.getSellPrice()), i,
+						tableParameters.get(ColumnEnum.SELL_PRICE)
+								.getColumnIndex());
 			}
 		} finally {
 			session.close();
@@ -262,7 +277,8 @@ public class StockListDialog extends XJDialog {
 			if (selectedRow < 0) {
 				return;
 			}
-			String code = (String) table.getModel().getValueAt(selectedRow, 0);
+			String code = (String) table.getModel().getValueAt(selectedRow,
+					tableParameters.get(ColumnEnum.CODE).getColumnIndex());
 
 			StockFacade facade = StockFacade.getInstance();
 			ItemStock itemStock = facade.getDetail(code, session);
@@ -285,5 +301,9 @@ public class StockListDialog extends XJDialog {
 		int column = table.getSelectedColumn();
 		table.requestFocus();
 		table.changeSelection(row, column, false, false);
+	}
+
+	private enum ColumnEnum {
+		CODE, NAME, STOCK, UNIT, BUY_PRICE, HPP, SELL_PRICE
 	}
 }

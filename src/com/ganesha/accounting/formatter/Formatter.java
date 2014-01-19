@@ -13,6 +13,8 @@ public class Formatter {
 			"#,##0.##");
 	private static final DateFormat dateFormat = new SimpleDateFormat(
 			"dd MMM yyyy");
+	private static final DateFormat timestampFormat = new SimpleDateFormat(
+			"dd MMM yyyy HH:mm:ss");
 
 	public static String formatDateToString(Date date) {
 		String string = null;
@@ -52,5 +54,25 @@ public class Formatter {
 			number = 0;
 		}
 		return number;
+	}
+
+	public static Date formatStringToTimestamp(String string) {
+		Date date = null;
+		try {
+			date = timestampFormat.parse(string);
+		} catch (ParseException e) {
+			date = null;
+		}
+		return date;
+	}
+
+	public static String formatTimestampToString(Date date) {
+		String string = null;
+		try {
+			string = timestampFormat.format(date);
+		} catch (Exception e) {
+			string = null;
+		}
+		return string;
 	}
 }

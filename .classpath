@@ -16,5 +16,10 @@
 	<classpathentry kind="lib" path="lib/miglayout15-swing.jar" sourcepath="miglayout-src.zip"/>
 	<classpathentry kind="lib" path="lib/antlr-2.7.6.jar"/>
 	<classpathentry kind="lib" path="lib/jcalendar-1.4.jar"/>
+	<classpathentry kind="lib" path="lib/jasperreports-5.5.0.jar"/>
+	<classpathentry kind="lib" path="lib/jasperreports-applet-5.5.0.jar"/>
+	<classpathentry kind="lib" path="lib/jasperreports-fonts-5.5.0.jar"/>
+	<classpathentry kind="lib" path="lib/jasperreports-javaflow-5.5.0.jar"/>
+	<classpathentry kind="lib" path="lib/itextpdf-5.4.5.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

@@ -35,6 +35,11 @@ public class Main {
 	}
 
 	public static void main(String[] args) throws AppException {
+		runApp();
+		// testHibernate2();
+	}
+
+	public static void runApp() throws AppException {
 		setLookAndFeel();
 
 		CoaConsistencyChecker coaChecker = new CoaConsistencyChecker();
@@ -45,8 +50,6 @@ public class Main {
 		company = companyChecker.getCompany();
 
 		new LoginForm().setVisible(true);
-
-		// testHibernate2();
 	}
 
 	public static void setLookAndFeel() {
