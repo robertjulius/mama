@@ -17,9 +17,11 @@
 	<classpathentry kind="lib" path="lib/antlr-2.7.6.jar"/>
 	<classpathentry kind="lib" path="lib/jcalendar-1.4.jar"/>
 	<classpathentry kind="lib" path="lib/jasperreports-5.5.0.jar"/>
-	<classpathentry kind="lib" path="lib/jasperreports-applet-5.5.0.jar"/>
-	<classpathentry kind="lib" path="lib/jasperreports-fonts-5.5.0.jar"/>
-	<classpathentry kind="lib" path="lib/jasperreports-javaflow-5.5.0.jar"/>
 	<classpathentry kind="lib" path="lib/itextpdf-5.4.5.jar"/>
+	<classpathentry kind="lib" path="lib/commons-logging-1.1.1.jar"/>
+	<classpathentry kind="lib" path="lib/commons-digester-2.1.jar"/>
+	<classpathentry kind="lib" path="lib/servlet-api-2.5.jar"/>
+	<classpathentry kind="lib" path="lib/commons-beanutils-1.8.3.jar"/>
+	<classpathentry kind="lib" path="lib/groovy-all-2.0.1.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

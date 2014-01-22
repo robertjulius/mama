@@ -37,7 +37,7 @@ public class PayableForm extends XJDialog {
 
 	private static final long serialVersionUID = 1401014426195840845L;
 
-	private XJButton btnSimpan;
+	private XJButton btnSelesai;
 	private XJTextField txtKode;
 	private XJTextField txtNama;
 	private XJLabel lblLastRemainingPayment;
@@ -140,8 +140,8 @@ public class PayableForm extends XJDialog {
 		getContentPane().add(pnlButton, "cell 0 1 2 1,alignx center,growy");
 		pnlButton.setLayout(new MigLayout("", "[][]", "[]"));
 
-		btnSimpan = new XJButton();
-		btnSimpan.addActionListener(new ActionListener() {
+		btnSelesai = new XJButton();
+		btnSelesai.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				try {
@@ -162,8 +162,9 @@ public class PayableForm extends XJDialog {
 		btnBatal.setMnemonic('Q');
 		btnBatal.setText("<html><center>Batal<br/>[Alt+Q]</center></html>");
 		pnlButton.add(btnBatal, "cell 0 0");
-		btnSimpan.setText("<html><center>Simpan<br/>[F12]</center></html>");
-		pnlButton.add(btnSimpan, "cell 1 0");
+		btnSelesai
+				.setText("<html><center>Selesai & Simpan<br/>[F12]</center></html>");
+		pnlButton.add(btnSelesai, "cell 1 0");
 
 		pack();
 		setLocationRelativeTo(null);
@@ -182,8 +183,6 @@ public class PayableForm extends XJDialog {
 							.doubleValue()));
 			txtAmount.setText("0");
 			txtRemainingPayment.setText(txtLastRemainingPayment.getText());
-			btnSimpan
-					.setText("<html><center>Simpan Perubahan<br/>[F12]</center></html>");
 		} finally {
 			session.close();
 		}
@@ -193,7 +192,7 @@ public class PayableForm extends XJDialog {
 	protected void keyEventListener(int keyCode) {
 		switch (keyCode) {
 		case KeyEvent.VK_F12:
-			btnSimpan.doClick();
+			btnSelesai.doClick();
 			break;
 		default:
 			break;
@@ -246,9 +245,9 @@ public class PayableForm extends XJDialog {
 				.setText(Formatter.formatNumberToString(sisaSaatIni));
 
 		if (sisaSaatIni < 0) {
-			btnSimpan.setEnabled(false);
+			btnSelesai.setEnabled(false);
 		} else {
-			btnSimpan.setEnabled(true);
+			btnSelesai.setEnabled(true);
 		}
 	}
 

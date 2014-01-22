@@ -162,7 +162,8 @@ public class ReceivableForm extends XJDialog {
 		btnBatal.setMnemonic('Q');
 		btnBatal.setText("<html><center>Batal<br/>[Alt+Q]</center></html>");
 		pnlButton.add(btnBatal, "cell 0 0");
-		btnSimpan.setText("<html><center>Simpan<br/>[F12]</center></html>");
+		btnSimpan
+				.setText("<html><center>Selesai & Simpan<br/>[F12]</center></html>");
 		pnlButton.add(btnSimpan, "cell 1 0");
 
 		pack();
@@ -182,8 +183,6 @@ public class ReceivableForm extends XJDialog {
 							.getRemainingAmount().doubleValue()));
 			txtAmount.setText("0");
 			txtRemainingPayment.setText(txtLastRemainingPayment.getText());
-			btnSimpan
-					.setText("<html><center>Simpan Perubahan<br/>[F12]</center></html>");
 		} finally {
 			session.close();
 		}

@@ -12,10 +12,10 @@ import javax.swing.JSeparator;
 import com.ganesha.accounting.minimarket.Main;
 import com.ganesha.accounting.minimarket.ui.forms.forms.customer.CustomerListDialog;
 import com.ganesha.accounting.minimarket.ui.forms.forms.discount.DiscountListDialog;
-import com.ganesha.accounting.minimarket.ui.forms.forms.inquiry.TransactionInquiryListDialog;
 import com.ganesha.accounting.minimarket.ui.forms.forms.payable.PayableListDialog;
 import com.ganesha.accounting.minimarket.ui.forms.forms.purchase.PembelianForm;
 import com.ganesha.accounting.minimarket.ui.forms.forms.receivable.ReceivableListDialog;
+import com.ganesha.accounting.minimarket.ui.forms.forms.reports.TransactionReportListDialog;
 import com.ganesha.accounting.minimarket.ui.forms.forms.returns.ReturPembelianForm;
 import com.ganesha.accounting.minimarket.ui.forms.forms.returns.ReturPenjualanForm;
 import com.ganesha.accounting.minimarket.ui.forms.forms.sale.PenjualanForm;
@@ -143,18 +143,18 @@ public class MainFrame extends XJFrame {
 		JMenu mnBackOffice = new JMenu("Back Office");
 		menuBar.add(mnBackOffice);
 
-		JMenu mnInquiry = new JMenu("Inquiry");
-		mnBackOffice.add(mnInquiry);
+		JMenu mnReport = new JMenu("Laporan");
+		mnBackOffice.add(mnReport);
 
-		JMenuItem mntmInquiryTransaksi = new JMenuItem("Inquiry Transaksi");
-		mntmInquiryTransaksi.addActionListener(new ActionListener() {
+		JMenuItem mntmReportTransaksi = new JMenuItem("Laporan Transaksi");
+		mntmReportTransaksi.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				new TransactionInquiryListDialog(MainFrame.this)
+				new TransactionReportListDialog(MainFrame.this)
 						.setVisible(true);
 			}
 		});
-		mnInquiry.add(mntmInquiryTransaksi);
+		mnReport.add(mntmReportTransaksi);
 
 		JMenuItem mntmStockOpname = new JMenuItem("Stock Opname");
 		mntmStockOpname.addActionListener(new ActionListener() {

@@ -13,7 +13,7 @@ Cetak Struk
 Scan Barcode
 [DONE] Generate Barcode
 Cetak Barcode
-Delete Master Data (Customer, Barang, Supplier)
+[DONE] Delete Master Data (Customer, Barang, Supplier)
 [DONE] Master Diskon
 
 [DONE] Validasi kalo transaksi ga ada item sama sekali -> Pembelian, Retur Pembelian, Penjualan, Retur Penjualan
