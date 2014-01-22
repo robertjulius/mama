@@ -3,6 +3,8 @@ package com.ganesha.accounting.minimarket.ui.forms.forms.supplier;
 import java.awt.Window;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.ItemEvent;
+import java.awt.event.ItemListener;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.util.List;
@@ -18,6 +20,7 @@ import org.hibernate.Session;
 
 import com.ganesha.accounting.minimarket.facade.SupplierFacade;
 import com.ganesha.accounting.minimarket.model.Supplier;
+import com.ganesha.core.desktop.ExceptionHandler;
 import com.ganesha.core.exception.AppException;
 import com.ganesha.core.utils.GeneralConstants.ActionType;
 import com.ganesha.desktop.component.XJButton;
@@ -43,6 +46,8 @@ public class SupplierListDialog extends XJDialog {
 	private XJButton btnDetail;
 	private XJTextField txtKontakPerson;
 	private XJButton btnRefresh;
+	private XJRadioButton rdSupplierAktif;
+	private XJRadioButton rdSupplierTidakAktif;
 
 	public SupplierListDialog(Window parent) {
 		super(parent);
@@ -126,16 +131,26 @@ public class SupplierListDialog extends XJDialog {
 		pnlFilter.add(pnlRadioButton, "cell 1 3,grow");
 		pnlRadioButton.setLayout(new MigLayout("", "[]", "[][]"));
 
-		XJRadioButton rdbtnSupplierAktif = new XJRadioButton();
-		rdbtnSupplierAktif.setText("Supplier Aktif");
-		pnlRadioButton.add(rdbtnSupplierAktif, "cell 0 0");
-		rdbtnSupplierAktif.setSelected(true);
-		btnGroup.add(rdbtnSupplierAktif);
+		rdSupplierAktif = new XJRadioButton();
+		rdSupplierAktif.setText("Supplier Aktif");
+		pnlRadioButton.add(rdSupplierAktif, "cell 0 0");
+		rdSupplierAktif.setSelected(true);
+		btnGroup.add(rdSupplierAktif);
 
-		XJRadioButton rdbtnSupplierTidakAktif = new XJRadioButton();
-		rdbtnSupplierTidakAktif.setText("Supplier Tidak Aktif");
-		pnlRadioButton.add(rdbtnSupplierTidakAktif, "cell 0 1");
-		btnGroup.add(rdbtnSupplierTidakAktif);
+		rdSupplierTidakAktif = new XJRadioButton();
+		rdSupplierTidakAktif.addItemListener(new ItemListener() {
+			@Override
+			public void itemStateChanged(ItemEvent e) {
+				try {
+					loadData();
+				} catch (Exception ex) {
+					ExceptionHandler.handleException(ex);
+				}
+			}
+		});
+		rdSupplierTidakAktif.setText("Supplier Tidak Aktif");
+		pnlRadioButton.add(rdSupplierTidakAktif, "cell 0 1");
+		btnGroup.add(rdSupplierTidakAktif);
 
 		btnRefresh = new XJButton();
 		btnRefresh.addActionListener(new ActionListener() {
@@ -230,7 +245,7 @@ public class SupplierListDialog extends XJDialog {
 			String code = txtKode.getText();
 			String name = txtNama.getText();
 			String kontakPerson = txtKontakPerson.getText();
-			boolean disabled = false;
+			boolean disabled = rdSupplierTidakAktif.isSelected();
 
 			SupplierFacade facade = SupplierFacade.getInstance();
 

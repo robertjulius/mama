@@ -26,8 +26,8 @@ public class CustomerFacade {
 	}
 
 	public void addNewCustomer(String address, String code, String description,
-			String email, String name, String phone, Session session)
-			throws UserException {
+			String email, String name, String phone, boolean disabled,
+			boolean deleted, Session session) throws UserException {
 
 		if (GlobalFacade.getInstance().isExists("code", code, Customer.class,
 				session)) {
@@ -35,11 +35,11 @@ public class CustomerFacade {
 					+ " sudah pernah didaftarkan");
 		}
 
-		if (GlobalFacade.getInstance().isExists("name", name, Customer.class,
-				session)) {
-			throw new UserException("Customer dengan Nama " + name
-					+ " sudah pernah didaftarkan");
-		}
+		// if (GlobalFacade.getInstance().isExists("name", name, Customer.class,
+		// session)) {
+		// throw new UserException("Customer dengan Nama " + name
+		// + " sudah pernah didaftarkan");
+		// }
 
 		Customer customer = new Customer();
 		customer.setAddress(address);
@@ -48,6 +48,8 @@ public class CustomerFacade {
 		customer.setEmail(email);
 		customer.setName(name);
 		customer.setPhone(phone);
+		customer.setDisabled(disabled);
+		customer.setDeleted(deleted);
 		customer.setLastUpdatedBy(Main.getUserLogin().getId());
 		customer.setLastUpdatedTimestamp(CommonUtils.getCurrentTimestamp());
 
@@ -99,7 +101,8 @@ public class CustomerFacade {
 
 	public void updateExistingCustomer(String address, String code,
 			String description, String email, String name, String phone,
-			Session session) throws UserException {
+			boolean disabled, boolean deleted, Session session)
+			throws UserException {
 
 		Customer customer = getDetail(code, session);
 		customer.setAddress(address);
@@ -117,6 +120,8 @@ public class CustomerFacade {
 		}
 		customer.setName(name);
 		customer.setPhone(phone);
+		customer.setDisabled(disabled);
+		customer.setDeleted(deleted);
 		customer.setLastUpdatedBy(Main.getUserLogin().getId());
 		customer.setLastUpdatedTimestamp(CommonUtils.getCurrentTimestamp());
 

@@ -40,14 +40,15 @@ public class DiscountFacade {
 			Session session) {
 		double discountPercent = 0;
 		Discount discount = getDetail(itemCode, quantity, session);
-		if (discount != null) {
+		if (discount != null && !discount.getDisabled()) {
 			discountPercent = discount.getDiscountPercent().doubleValue();
 		}
 		return discountPercent;
 	}
 
 	public void saveOrUpdate(String code, Integer quantity,
-			BigDecimal discountPercent, Session session) throws UserException {
+			BigDecimal discountPercent, boolean disabled, Session session)
+			throws UserException {
 
 		Discount discount = getDetail(code, quantity, session);
 		if (discount == null) {
@@ -58,13 +59,15 @@ public class DiscountFacade {
 		}
 		discount.setQuantity(quantity);
 		discount.setDiscountPercent(discountPercent);
+		discount.setDisabled(disabled);
 		discount.setLastUpdatedBy(Main.getUserLogin().getId());
 		discount.setLastUpdatedTimestamp(CommonUtils.getCurrentTimestamp());
 
 		session.saveOrUpdate(discount);
 	}
 
-	public List<Discount> search(String code, String name, Session session) {
+	public List<Discount> search(String code, String name, boolean disabled,
+			Session session) {
 		Criteria criteria = session.createCriteria(Discount.class);
 		criteria.createAlias("item", "item");
 
@@ -78,7 +81,7 @@ public class DiscountFacade {
 					.ignoreCase());
 		}
 
-		criteria.add(Restrictions.eq("disabled", false));
+		criteria.add(Restrictions.eq("disabled", disabled));
 		criteria.add(Restrictions.eq("deleted", false));
 
 		@SuppressWarnings("unchecked")

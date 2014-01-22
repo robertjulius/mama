@@ -32,7 +32,8 @@ public class SupplierFacade {
 			String contackPerson1Phone, String contackPerson2,
 			String contackPerson2Email, String contackPerson2Phone,
 			String description, String email1, String email2, String name,
-			String phone1, String phone2, Session session) throws UserException {
+			String phone1, String phone2, boolean disabled, boolean deleted,
+			Session session) throws UserException {
 
 		if (GlobalFacade.getInstance().isExists("code", code, Supplier.class,
 				session)) {
@@ -62,6 +63,8 @@ public class SupplierFacade {
 		supplier.setName(name);
 		supplier.setPhone1(phone1);
 		supplier.setPhone2(phone2);
+		supplier.setDisabled(disabled);
+		supplier.setDeleted(deleted);
 		supplier.setLastUpdatedBy(Main.getUserLogin().getId());
 		supplier.setLastUpdatedTimestamp(CommonUtils.getCurrentTimestamp());
 
@@ -126,7 +129,8 @@ public class SupplierFacade {
 			String contackPerson1Phone, String contackPerson2,
 			String contackPerson2Email, String contackPerson2Phone,
 			String description, String email1, String email2, String name,
-			String phone1, String phone2, Session session) throws UserException {
+			String phone1, String phone2, boolean disabled, boolean deleted,
+			Session session) throws UserException {
 
 		Supplier supplier = getDetail(code, session);
 		supplier.setAddress1(address1);
@@ -153,6 +157,8 @@ public class SupplierFacade {
 		supplier.setName(name);
 		supplier.setPhone1(phone1);
 		supplier.setPhone2(phone2);
+		supplier.setDisabled(disabled);
+		supplier.setDeleted(deleted);
 		supplier.setLastUpdatedBy(Main.getUserLogin().getId());
 		supplier.setLastUpdatedTimestamp(CommonUtils.getCurrentTimestamp());
 

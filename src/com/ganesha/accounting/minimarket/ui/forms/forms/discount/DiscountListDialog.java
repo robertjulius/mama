@@ -3,6 +3,8 @@ package com.ganesha.accounting.minimarket.ui.forms.forms.discount;
 import java.awt.Window;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.ItemEvent;
+import java.awt.event.ItemListener;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.util.HashMap;
@@ -27,6 +29,7 @@ import com.ganesha.core.exception.UserException;
 import com.ganesha.desktop.component.XJButton;
 import com.ganesha.desktop.component.XJDialog;
 import com.ganesha.desktop.component.XJLabel;
+import com.ganesha.desktop.component.XJRadioButton;
 import com.ganesha.desktop.component.XJTable;
 import com.ganesha.desktop.component.XJTextField;
 import com.ganesha.desktop.component.xtableutils.XTableConstants;
@@ -43,6 +46,8 @@ public class DiscountListDialog extends XJDialog {
 
 	private final Map<ColumnEnum, XTableParameter> tableParameters = new HashMap<>();
 	private XJTextField txtNamaBarang;
+	private XJRadioButton rdPromoTidakAktif;
+	private XJRadioButton rdPromoAktif;
 	{
 		tableParameters.put(ColumnEnum.ITEM_CODE, new XTableParameter(0, 100,
 				false, "Kode Barang", XTableConstants.CELL_RENDERER_LEFT));
@@ -59,6 +64,7 @@ public class DiscountListDialog extends XJDialog {
 
 	public DiscountListDialog(Window parent) {
 		super(parent);
+		setTitle("Master Diskon");
 		getContentPane().setLayout(
 				new MigLayout("", "[600,grow]", "[][300,grow][]"));
 
@@ -80,7 +86,7 @@ public class DiscountListDialog extends XJDialog {
 		pnlKriteria
 				.setBorder(new EtchedBorder(EtchedBorder.LOWERED, null, null));
 		pnlFilter.add(pnlKriteria, "cell 0 0,grow");
-		pnlKriteria.setLayout(new MigLayout("", "[][300,grow]", "[][]"));
+		pnlKriteria.setLayout(new MigLayout("", "[][300,grow]", "[][][grow]"));
 
 		XJLabel lblKode = new XJLabel();
 		pnlKriteria.add(lblKode, "flowx,cell 0 0");
@@ -110,6 +116,29 @@ public class DiscountListDialog extends XJDialog {
 
 		txtNamaBarang = new XJTextField();
 		pnlKriteria.add(txtNamaBarang, "cell 1 1,growx");
+
+		JPanel pnlRadioButton = new JPanel();
+		pnlKriteria.add(pnlRadioButton, "cell 1 2,grow");
+		pnlRadioButton.setLayout(new MigLayout("", "[]", "[][][]"));
+
+		rdPromoAktif = new XJRadioButton();
+		rdPromoAktif.setSelected(true);
+		rdPromoAktif.setText("Promo Aktif");
+		pnlRadioButton.add(rdPromoAktif, "cell 0 0");
+
+		rdPromoTidakAktif = new XJRadioButton();
+		rdPromoTidakAktif.addItemListener(new ItemListener() {
+			@Override
+			public void itemStateChanged(ItemEvent e) {
+				try {
+					loadData();
+				} catch (Exception ex) {
+					ExceptionHandler.handleException(ex);
+				}
+			}
+		});
+		rdPromoTidakAktif.setText("Promo Tidak Aktif");
+		pnlRadioButton.add(rdPromoTidakAktif, "cell 0 1");
 
 		JScrollPane scrollPane = new JScrollPane(table);
 		getContentPane().add(scrollPane, "cell 0 1,grow");
@@ -181,9 +210,10 @@ public class DiscountListDialog extends XJDialog {
 		try {
 			String itemCode = txtKodeBarang.getText();
 			String itemName = txtNamaBarang.getText();
+			boolean disabled = rdPromoTidakAktif.isSelected();
 
 			List<Discount> discounts = DiscountFacade.getInstance().search(
-					itemCode, itemName, session);
+					itemCode, itemName, disabled, session);
 
 			XTableModel tableModel = (XTableModel) table.getModel();
 			tableModel.setRowCount(discounts.size());

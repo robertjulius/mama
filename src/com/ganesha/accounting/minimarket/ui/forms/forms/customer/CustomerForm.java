@@ -10,6 +10,7 @@ import java.awt.event.WindowEvent;
 
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
+import javax.swing.JSeparator;
 import javax.swing.border.EtchedBorder;
 
 import net.miginfocom.swing.MigLayout;
@@ -24,6 +25,7 @@ import com.ganesha.core.exception.ActionTypeNotSupported;
 import com.ganesha.core.exception.UserException;
 import com.ganesha.core.utils.GeneralConstants.ActionType;
 import com.ganesha.desktop.component.XJButton;
+import com.ganesha.desktop.component.XJCheckBox;
 import com.ganesha.desktop.component.XJDialog;
 import com.ganesha.desktop.component.XJLabel;
 import com.ganesha.desktop.component.XJTextArea;
@@ -51,6 +53,12 @@ public class CustomerForm extends XJDialog {
 	private JScrollPane scrollPane;
 	private XJTextArea txtAlamat;
 	private XJLabel lblKodeTerakhirValue;
+	private XJCheckBox chkDisabled;
+	private JPanel pnlDisabled;
+	private JSeparator separator;
+	private XJButton btnhapuscustomer;
+
+	private boolean deleted;
 
 	public CustomerForm(Window parent, ActionType actionType) {
 		super(parent);
@@ -68,7 +76,8 @@ public class CustomerForm extends XJDialog {
 		setTitle("Form Customer");
 		setCloseOnEsc(false);
 
-		getContentPane().setLayout(new MigLayout("", "[400][]", "[][]"));
+		getContentPane().setLayout(
+				new MigLayout("", "[400][grow]", "[][][10][]"));
 
 		JPanel pnlKodeCustomer = new JPanel();
 		getContentPane().add(pnlKodeCustomer, "cell 0 0,grow");
@@ -138,9 +147,21 @@ public class CustomerForm extends XJDialog {
 		txtAlamat = new XJTextArea();
 		scrollPane.setViewportView(txtAlamat);
 
+		pnlDisabled = new JPanel();
+		getContentPane().add(pnlDisabled, "cell 0 1 2 1,alignx right,growy");
+		pnlDisabled.setLayout(new MigLayout("", "[]", "[][]"));
+
+		chkDisabled = new XJCheckBox();
+		pnlDisabled.add(chkDisabled, "cell 0 0");
+		chkDisabled.setFont(new Font("Tahoma", Font.BOLD, 12));
+		chkDisabled.setText("Customer ini sudah tidak aktif");
+
+		separator = new JSeparator();
+		getContentPane().add(separator, "cell 0 2 2 1,growx,aligny center");
+
 		JPanel pnlButton = new JPanel();
-		getContentPane().add(pnlButton, "cell 0 1 2 1,alignx center,growy");
-		pnlButton.setLayout(new MigLayout("", "[][]", "[]"));
+		getContentPane().add(pnlButton, "cell 0 3 2 1,grow");
+		pnlButton.setLayout(new MigLayout("", "[][grow][][]", "[]"));
 
 		btnSimpan = new XJButton();
 		btnSimpan.addActionListener(new ActionListener() {
@@ -164,8 +185,24 @@ public class CustomerForm extends XJDialog {
 		btnBatal.setMnemonic('Q');
 		btnBatal.setText("<html><center>Batal<br/>[Alt+Q]</center></html>");
 		pnlButton.add(btnBatal, "cell 0 0");
+
+		btnhapuscustomer = new XJButton();
+		btnhapuscustomer.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				try {
+					deleted = true;
+					save();
+				} catch (Exception ex) {
+					ExceptionHandler.handleException(ex);
+				}
+			}
+		});
+		btnhapuscustomer
+				.setText("<html><center>Hapus<br/>Customer</center></html>");
+		pnlButton.add(btnhapuscustomer, "cell 2 0");
 		btnSimpan.setText("<html><center>Simpan<br/>[F12]</center></html>");
-		pnlButton.add(btnSimpan, "cell 1 0");
+		pnlButton.add(btnSimpan, "cell 3 0");
 
 		pack();
 		setLocationRelativeTo(null);
@@ -181,6 +218,7 @@ public class CustomerForm extends XJDialog {
 		txtPhone.setText(customer.getPhone());
 		txtEmail.setText(customer.getEmail());
 		txtAlamat.setText(customer.getAddress());
+		chkDisabled.setSelected(customer.getDisabled());
 
 		btnSimpan
 				.setText("<html><center>Simpan Perubahan<br/>[F12]</center></html>");
@@ -218,13 +256,15 @@ public class CustomerForm extends XJDialog {
 			if (actionType == ActionType.CREATE) {
 				facade.addNewCustomer(txtAlamat.getText(), txtKode.getText(),
 						txtDeskripsi.getText(), txtEmail.getText(),
-						txtNama.getText(), txtPhone.getText(), session);
+						txtNama.getText(), txtPhone.getText(),
+						chkDisabled.isSelected(), deleted, session);
 				dispose();
 			} else if (actionType == ActionType.UPDATE) {
 				facade.updateExistingCustomer(txtAlamat.getText(),
 						txtKode.getText(), txtDeskripsi.getText(),
 						txtEmail.getText(), txtNama.getText(),
-						txtPhone.getText(), session);
+						txtPhone.getText(), chkDisabled.isSelected(), deleted,
+						session);
 				dispose();
 			} else {
 				throw new ActionTypeNotSupported(actionType);

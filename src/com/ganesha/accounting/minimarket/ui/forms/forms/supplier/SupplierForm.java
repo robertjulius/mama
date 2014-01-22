@@ -25,6 +25,7 @@ import com.ganesha.core.exception.ActionTypeNotSupported;
 import com.ganesha.core.exception.UserException;
 import com.ganesha.core.utils.GeneralConstants.ActionType;
 import com.ganesha.desktop.component.XJButton;
+import com.ganesha.desktop.component.XJCheckBox;
 import com.ganesha.desktop.component.XJDialog;
 import com.ganesha.desktop.component.XJLabel;
 import com.ganesha.desktop.component.XJTextArea;
@@ -77,6 +78,11 @@ public class SupplierForm extends XJDialog {
 	private XJLabel lblKontakPerson2Phone;
 	private XJLabel lblEmail;
 	private XJButton btnBatal;
+	private JPanel pnlDisable;
+	private XJCheckBox chkDisabled;
+	private XJButton btnhapussupplier;
+
+	private boolean deleted;
 
 	public SupplierForm(Window parent, ActionType actionType) {
 		super(parent);
@@ -95,11 +101,11 @@ public class SupplierForm extends XJDialog {
 		setCloseOnEsc(false);
 
 		getContentPane().setLayout(
-				new MigLayout("", "[grow][grow]", "[grow][][grow]"));
+				new MigLayout("", "[grow][grow]", "[grow][grow][][grow]"));
 
 		pnlKiri = new JPanel();
 		getContentPane().add(pnlKiri, "cell 0 0,grow");
-		pnlKiri.setLayout(new MigLayout("", "[400,grow]", "[][][]"));
+		pnlKiri.setLayout(new MigLayout("", "[400,grow]", "[][][grow]"));
 
 		JPanel pnlKodeSupplier = new JPanel();
 		pnlKodeSupplier.setBorder(new EtchedBorder(EtchedBorder.LOWERED, null,
@@ -257,12 +263,21 @@ public class SupplierForm extends XJDialog {
 		txtEmail2 = new XJTextField();
 		pnlAlamat2.add(txtEmail2, "cell 1 2,growx");
 
+		pnlDisable = new JPanel();
+		getContentPane().add(pnlDisable, "cell 0 1 2 1,alignx right,growy");
+		pnlDisable.setLayout(new MigLayout("", "[]", "[]"));
+
+		chkDisabled = new XJCheckBox();
+		chkDisabled.setFont(new Font("Tahoma", Font.BOLD, 12));
+		chkDisabled.setText("Supplier ini sudah tidak aktif lagi");
+		pnlDisable.add(chkDisabled, "cell 0 0");
+
 		separator = new JSeparator();
-		getContentPane().add(separator, "cell 0 1 2 1,grow");
+		getContentPane().add(separator, "cell 0 2 2 1,grow");
 
 		JPanel pnlButton = new JPanel();
-		getContentPane().add(pnlButton, "cell 0 2 2 1,alignx center,growy");
-		pnlButton.setLayout(new MigLayout("", "[][]", "[]"));
+		getContentPane().add(pnlButton, "cell 0 3 2 1,grow");
+		pnlButton.setLayout(new MigLayout("", "[][grow][][]", "[]"));
 
 		btnSimpan = new XJButton();
 		btnSimpan.addActionListener(new ActionListener() {
@@ -286,8 +301,24 @@ public class SupplierForm extends XJDialog {
 		btnBatal.setMnemonic('Q');
 		btnBatal.setText("<html><center>Batal<br/>[Alt+Q]</center></html>");
 		pnlButton.add(btnBatal, "cell 0 0");
+
+		btnhapussupplier = new XJButton();
+		btnhapussupplier.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				try {
+					deleted = true;
+					save();
+				} catch (Exception ex) {
+					ExceptionHandler.handleException(ex);
+				}
+			}
+		});
+		btnhapussupplier
+				.setText("<html><center>Hapus<br/>Supplier</center></html>");
+		pnlButton.add(btnhapussupplier, "cell 2 0");
 		btnSimpan.setText("<html><center>Simpan<br/>[F12]</center></html>");
-		pnlButton.add(btnSimpan, "cell 1 0");
+		pnlButton.add(btnSimpan, "cell 3 0");
 
 		pack();
 		setLocationRelativeTo(null);
@@ -312,6 +343,7 @@ public class SupplierForm extends XJDialog {
 		txtAlamat2.setText(supplier.getAddress2());
 		txtPhone2.setText(supplier.getPhone2());
 		txtEmail2.setText(supplier.getEmail2());
+		chkDisabled.setSelected(supplier.getDisabled());
 
 		btnSimpan
 				.setText("<html><center>Simpan Perubahan<br/>[F12]</center></html>");
@@ -357,7 +389,8 @@ public class SupplierForm extends XJDialog {
 						txtKontakPerson2Phone.getText(),
 						txtDeskripsi.getText(), txtEmail1.getText(),
 						txtEmail2.getText(), txtNama.getText(),
-						txtPhone1.getText(), txtPhone2.getText(), session);
+						txtPhone1.getText(), txtPhone2.getText(),
+						chkDisabled.isSelected(), deleted, session);
 				dispose();
 			} else if (actionType == ActionType.UPDATE) {
 				facade.updateExistingSupplier(txtAlamat1.getText(),
@@ -370,7 +403,8 @@ public class SupplierForm extends XJDialog {
 						txtKontakPerson2Phone.getText(),
 						txtDeskripsi.getText(), txtEmail1.getText(),
 						txtEmail2.getText(), txtNama.getText(),
-						txtPhone1.getText(), txtPhone2.getText(), session);
+						txtPhone1.getText(), txtPhone2.getText(),
+						chkDisabled.isSelected(), deleted, session);
 				dispose();
 			} else {
 				throw new ActionTypeNotSupported(actionType);

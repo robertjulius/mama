@@ -11,7 +11,7 @@ Inquiry stok barang
 Stok Opname
 Cetak Struk
 Scan Barcode
-Generate Barcode
+[DONE] Generate Barcode
 Cetak Barcode
 Delete Master Data (Customer, Barang, Supplier)
 [DONE] Master Diskon

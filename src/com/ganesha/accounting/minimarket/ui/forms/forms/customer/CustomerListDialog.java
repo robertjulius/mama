@@ -3,6 +3,8 @@ package com.ganesha.accounting.minimarket.ui.forms.forms.customer;
 import java.awt.Window;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.ItemEvent;
+import java.awt.event.ItemListener;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.util.HashMap;
@@ -19,6 +21,7 @@ import org.hibernate.Session;
 
 import com.ganesha.accounting.minimarket.facade.CustomerFacade;
 import com.ganesha.accounting.minimarket.model.Customer;
+import com.ganesha.core.desktop.ExceptionHandler;
 import com.ganesha.core.exception.AppException;
 import com.ganesha.core.utils.GeneralConstants.ActionType;
 import com.ganesha.desktop.component.XJButton;
@@ -48,6 +51,8 @@ public class CustomerListDialog extends XJDialog {
 	private XJButton btnRefresh;
 
 	private final Map<ColumnEnum, XTableParameter> tableParameters = new HashMap<>();
+	private XJRadioButton rdCustomerAktif;
+	private XJRadioButton rdCustomerTidakAktif;
 	{
 		tableParameters.put(ColumnEnum.CODE, new XTableParameter(0, 30, false,
 				"Kode", XTableConstants.CELL_RENDERER_LEFT));
@@ -124,16 +129,26 @@ public class CustomerListDialog extends XJDialog {
 		pnlFilter.add(pnlRadioButton, "cell 1 2,grow");
 		pnlRadioButton.setLayout(new MigLayout("", "[]", "[][]"));
 
-		XJRadioButton rdbtnCustomerAktif = new XJRadioButton();
-		rdbtnCustomerAktif.setText("Customer Aktif");
-		pnlRadioButton.add(rdbtnCustomerAktif, "cell 0 0");
-		rdbtnCustomerAktif.setSelected(true);
-		btnGroup.add(rdbtnCustomerAktif);
+		rdCustomerAktif = new XJRadioButton();
+		rdCustomerAktif.setText("Customer Aktif");
+		pnlRadioButton.add(rdCustomerAktif, "cell 0 0");
+		rdCustomerAktif.setSelected(true);
+		btnGroup.add(rdCustomerAktif);
 
-		XJRadioButton rdbtnCustomerTidakAktif = new XJRadioButton();
-		rdbtnCustomerTidakAktif.setText("Customer Tidak Aktif");
-		pnlRadioButton.add(rdbtnCustomerTidakAktif, "cell 0 1");
-		btnGroup.add(rdbtnCustomerTidakAktif);
+		rdCustomerTidakAktif = new XJRadioButton();
+		rdCustomerTidakAktif.addItemListener(new ItemListener() {
+			@Override
+			public void itemStateChanged(ItemEvent e) {
+				try {
+					loadData();
+				} catch (Exception ex) {
+					ExceptionHandler.handleException(ex);
+				}
+			}
+		});
+		rdCustomerTidakAktif.setText("Customer Tidak Aktif");
+		pnlRadioButton.add(rdCustomerTidakAktif, "cell 0 1");
+		btnGroup.add(rdCustomerTidakAktif);
 
 		btnRefresh = new XJButton();
 		btnRefresh.addActionListener(new ActionListener() {
@@ -211,7 +226,7 @@ public class CustomerListDialog extends XJDialog {
 		try {
 			String code = txtKode.getText();
 			String name = txtNama.getText();
-			boolean disabled = false;
+			boolean disabled = rdCustomerTidakAktif.isSelected();
 
 			CustomerFacade facade = CustomerFacade.getInstance();
 

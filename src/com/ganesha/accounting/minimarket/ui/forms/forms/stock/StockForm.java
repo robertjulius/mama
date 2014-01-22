@@ -28,6 +28,7 @@ import com.ganesha.core.exception.UserException;
 import com.ganesha.core.utils.GeneralConstants;
 import com.ganesha.core.utils.GeneralConstants.ActionType;
 import com.ganesha.desktop.component.XJButton;
+import com.ganesha.desktop.component.XJCheckBox;
 import com.ganesha.desktop.component.XJDialog;
 import com.ganesha.desktop.component.XJLabel;
 import com.ganesha.desktop.component.XJTextField;
@@ -61,6 +62,11 @@ public class StockForm extends XJDialog {
 	private XJLabel lblStokMinimum;
 	private XJTextField txtStokMinimum;
 	private XJButton btnGenerateBarcode;
+	private XJButton btnHapusBarang;
+	private JPanel pnlDisable;
+	private XJCheckBox chkDisabled;
+
+	private boolean deleted;
 
 	public StockForm(Window parent, ActionType actionType) {
 		super(parent);
@@ -79,7 +85,8 @@ public class StockForm extends XJDialog {
 		});
 		setTitle("Form Barang");
 		getContentPane().setLayout(
-				new MigLayout("", "[400][400]", "[grow][grow][grow][][grow]"));
+				new MigLayout("", "[400,grow][400]",
+						"[grow][grow][grow][10][grow]"));
 
 		pnlKode = new JPanel();
 		pnlKode.setBorder(new EtchedBorder(EtchedBorder.LOWERED, null, null));
@@ -189,12 +196,21 @@ public class StockForm extends XJDialog {
 		txtHargaJual.setText("0");
 		pnlKanan.add(txtHargaJual, "cell 1 2,growx");
 
+		pnlDisable = new JPanel();
+		getContentPane().add(pnlDisable, "cell 0 2 2 1,alignx right,growy");
+		pnlDisable.setLayout(new MigLayout("", "[]", "[]"));
+
+		chkDisabled = new XJCheckBox();
+		chkDisabled.setFont(new Font("Tahoma", Font.BOLD, 12));
+		chkDisabled.setText("Item ini sudah tidak aktif lagi");
+		pnlDisable.add(chkDisabled, "cell 0 0");
+
 		separator = new JSeparator();
 		getContentPane().add(separator, "cell 0 3 2 1,grow");
 
 		JPanel pnlButton = new JPanel();
-		getContentPane().add(pnlButton, "cell 0 4 2 1,alignx center,growy");
-		pnlButton.setLayout(new MigLayout("", "[][]", "[]"));
+		getContentPane().add(pnlButton, "cell 0 4 2 1,grow");
+		pnlButton.setLayout(new MigLayout("", "[][grow][][]", "[grow]"));
 
 		btnSimpan = new XJButton();
 		btnSimpan.addActionListener(new ActionListener() {
@@ -218,8 +234,24 @@ public class StockForm extends XJDialog {
 		btnBatal.setMnemonic('Q');
 		btnBatal.setText("<html><center>Batal<br/>[Alt+Q]</center></html>");
 		pnlButton.add(btnBatal, "cell 0 0");
+
+		btnHapusBarang = new XJButton();
+		btnHapusBarang.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				try {
+					deleted = true;
+					save();
+				} catch (Exception ex) {
+					ExceptionHandler.handleException(ex);
+				}
+			}
+		});
+		btnHapusBarang
+				.setText("<html><center>Hapus<br/>Barang</center></html>");
+		pnlButton.add(btnHapusBarang, "cell 2 0");
 		btnSimpan.setText("<html><center>Simpan<br/>[F12]</center></html>");
-		pnlButton.add(btnSimpan, "cell 1 0");
+		pnlButton.add(btnSimpan, "cell 3 0");
 
 		pack();
 		setLocationRelativeTo(null);
@@ -244,6 +276,7 @@ public class StockForm extends XJDialog {
 		txtHpp.setText(Formatter.formatNumberToString(itemStock.getHpp()));
 		txtHargaJual.setText(Formatter.formatNumberToString(itemStock
 				.getSellPrice()));
+		chkDisabled.setSelected(itemStock.getDisabled());
 
 		btnSimpan
 				.setText("<html><center>Simpan Perubahan<br/>[F12]</center></html>");
@@ -323,13 +356,16 @@ public class StockForm extends XJDialog {
 			int minimumStock = Formatter.formatStringToNumber(
 					txtStokMinimum.getText()).intValue();
 
+			boolean disabled = chkDisabled.isSelected();
+
 			if (actionType == ActionType.CREATE) {
 				facade.addNewItem(code, name, barcode, unit, buyPrice, hpp,
-						sellPrice, minimumStock, session);
+						sellPrice, minimumStock, disabled, deleted, session);
 				dispose();
 			} else if (actionType == ActionType.UPDATE) {
 				facade.updateExistingItem(code, name, barcode, unit, buyPrice,
-						hpp, sellPrice, minimumStock, session);
+						hpp, sellPrice, minimumStock, disabled, deleted,
+						session);
 				dispose();
 			} else {
 				throw new ActionTypeNotSupported(actionType);

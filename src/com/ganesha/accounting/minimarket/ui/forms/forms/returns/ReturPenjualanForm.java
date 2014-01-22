@@ -25,7 +25,6 @@ import org.hibernate.Session;
 
 import com.ganesha.accounting.formatter.Formatter;
 import com.ganesha.accounting.minimarket.Main;
-import com.ganesha.accounting.minimarket.facade.CustomerFacade;
 import com.ganesha.accounting.minimarket.facade.SaleFacade;
 import com.ganesha.accounting.minimarket.facade.SaleReturnFacade;
 import com.ganesha.accounting.minimarket.model.Customer;
@@ -154,21 +153,11 @@ public class ReturPenjualanForm extends XJDialog {
 		lblCustomer.setText("Customer");
 		pnlHeader.add(lblCustomer, "cell 0 2");
 
-		Customer defaultCustomer = null;
-		Session session = HibernateUtils.openSession();
-		try {
-			defaultCustomer = CustomerFacade.getInstance().getDefaultCustomer(
-					session);
-		} finally {
-			session.close();
-		}
 		txtKodeCustomer = new XJTextField();
-		txtKodeCustomer.setText(defaultCustomer.getCode());
 		txtKodeCustomer.setEditable(false);
 		pnlHeader.add(txtKodeCustomer, "cell 1 2,growx");
 
 		txtNamaCustomer = new XJTextField();
-		txtNamaCustomer.setText(defaultCustomer.getName());
 		txtNamaCustomer.setEditable(false);
 		pnlHeader.add(txtNamaCustomer, "flowx,cell 2 2,growx");
 

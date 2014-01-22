@@ -3,6 +3,8 @@ package com.ganesha.accounting.minimarket.ui.forms.forms.stock;
 import java.awt.Window;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.ItemEvent;
+import java.awt.event.ItemListener;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.util.HashMap;
@@ -21,6 +23,7 @@ import com.ganesha.accounting.formatter.Formatter;
 import com.ganesha.accounting.minimarket.facade.StockFacade;
 import com.ganesha.accounting.minimarket.model.Item;
 import com.ganesha.accounting.minimarket.model.ItemStock;
+import com.ganesha.core.desktop.ExceptionHandler;
 import com.ganesha.core.exception.AppException;
 import com.ganesha.core.utils.GeneralConstants.ActionType;
 import com.ganesha.desktop.component.XJButton;
@@ -50,6 +53,8 @@ public class StockListDialog extends XJDialog {
 	private XJButton btnRefresh;
 
 	private final Map<ColumnEnum, XTableParameter> tableParameters = new HashMap<>();
+	private XJRadioButton rdBarangAktif;
+	private XJRadioButton rdBarangTidakAktif;
 	{
 		tableParameters.put(ColumnEnum.CODE, new XTableParameter(0, 25, false,
 				"Kode", XTableConstants.CELL_RENDERER_LEFT));
@@ -138,16 +143,26 @@ public class StockListDialog extends XJDialog {
 		pnlFilter.add(pnlRadioButton, "cell 1 2,grow");
 		pnlRadioButton.setLayout(new MigLayout("", "[]", "[][]"));
 
-		XJRadioButton rdbtnBarangAktif = new XJRadioButton();
-		rdbtnBarangAktif.setText("Barang Aktif");
-		pnlRadioButton.add(rdbtnBarangAktif, "cell 0 0");
-		rdbtnBarangAktif.setSelected(true);
-		btnGroup.add(rdbtnBarangAktif);
+		rdBarangAktif = new XJRadioButton();
+		rdBarangAktif.setText("Barang Aktif");
+		pnlRadioButton.add(rdBarangAktif, "cell 0 0");
+		rdBarangAktif.setSelected(true);
+		btnGroup.add(rdBarangAktif);
 
-		XJRadioButton rdbtnBarangTidakAktif = new XJRadioButton();
-		rdbtnBarangTidakAktif.setText("Barang Tidak Aktif");
-		pnlRadioButton.add(rdbtnBarangTidakAktif, "cell 0 1");
-		btnGroup.add(rdbtnBarangTidakAktif);
+		rdBarangTidakAktif = new XJRadioButton();
+		rdBarangTidakAktif.addItemListener(new ItemListener() {
+			@Override
+			public void itemStateChanged(ItemEvent e) {
+				try {
+					loadData();
+				} catch (Exception ex) {
+					ExceptionHandler.handleException(ex);
+				}
+			}
+		});
+		rdBarangTidakAktif.setText("Barang Tidak Aktif");
+		pnlRadioButton.add(rdBarangTidakAktif, "cell 0 1");
+		btnGroup.add(rdBarangTidakAktif);
 
 		btnRefresh = new XJButton();
 		btnRefresh.addActionListener(new ActionListener() {
@@ -225,7 +240,7 @@ public class StockListDialog extends XJDialog {
 		try {
 			String code = txtKode.getText();
 			String name = txtNama.getText();
-			boolean disabled = false;
+			boolean disabled = rdBarangTidakAktif.isSelected();
 
 			StockFacade facade = StockFacade.getInstance();
 			List<ItemStock> itemStocks = facade.search(code, name, disabled,

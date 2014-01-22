@@ -1,5 +1,6 @@
 package com.ganesha.accounting.minimarket.ui.forms.forms.discount;
 
+import java.awt.Font;
 import java.awt.Window;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -23,6 +24,7 @@ import com.ganesha.core.exception.ActionTypeNotSupported;
 import com.ganesha.core.exception.UserException;
 import com.ganesha.core.utils.GeneralConstants;
 import com.ganesha.desktop.component.XJButton;
+import com.ganesha.desktop.component.XJCheckBox;
 import com.ganesha.desktop.component.XJDialog;
 import com.ganesha.desktop.component.XJLabel;
 import com.ganesha.desktop.component.XJTextField;
@@ -42,12 +44,15 @@ public class DiscountForm extends XJDialog {
 	private XJTextField txtDiscount;
 	private XJButton btnBatal;
 	private XJButton btnCariBarang;
+	private JPanel pnlDisabled;
+	private XJCheckBox chkDisabled;
 
 	public DiscountForm(Window parent) {
 		super(parent);
 		setCloseOnEsc(false);
 		setTitle("Diskon");
-		getContentPane().setLayout(new MigLayout("", "[grow]", "[grow][grow]"));
+		getContentPane().setLayout(
+				new MigLayout("", "[grow]", "[grow][grow][grow]"));
 
 		pnlKode = new JPanel();
 		pnlKode.setBorder(new EtchedBorder(EtchedBorder.LOWERED, null, null));
@@ -94,8 +99,17 @@ public class DiscountForm extends XJDialog {
 				.setFormatterFactory(GeneralConstants.FORMATTER_FACTORY_NUMBER);
 		txtDiscount.setText("0");
 
+		pnlDisabled = new JPanel();
+		getContentPane().add(pnlDisabled, "cell 0 1,alignx right,growy");
+		pnlDisabled.setLayout(new MigLayout("", "[]", "[][]"));
+
+		chkDisabled = new XJCheckBox();
+		chkDisabled.setFont(new Font("Tahoma", Font.BOLD, 12));
+		chkDisabled.setText("Promo ini sudah tidak aktif");
+		pnlDisabled.add(chkDisabled, "cell 0 0");
+
 		JPanel pnlButton = new JPanel();
-		getContentPane().add(pnlButton, "cell 0 1,alignx center,growy");
+		getContentPane().add(pnlButton, "cell 0 2,alignx center,growy");
 		pnlButton.setLayout(new MigLayout("", "[][]", "[]"));
 
 		btnSimpan = new XJButton();
@@ -140,6 +154,7 @@ public class DiscountForm extends XJDialog {
 				.getQuantity()));
 		txtDiscount.setText(Formatter.formatNumberToString(discount
 				.getDiscountPercent()));
+		chkDisabled.setSelected(discount.getDisabled());
 
 		btnSimpan
 				.setText("<html><center>Simpan Perubahan<br/>[F12]</center></html>");
@@ -185,8 +200,10 @@ public class DiscountForm extends XJDialog {
 					.formatStringToNumber(txtQuantity.getText()).intValue();
 			BigDecimal discountPercent = BigDecimal.valueOf(Formatter
 					.formatStringToNumber(txtDiscount.getText()).doubleValue());
+			boolean disabled = chkDisabled.isSelected();
 
-			facade.saveOrUpdate(code, quantity, discountPercent, session);
+			facade.saveOrUpdate(code, quantity, discountPercent, disabled,
+					session);
 			dispose();
 
 			session.getTransaction().commit();
