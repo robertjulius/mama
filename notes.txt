@@ -3,10 +3,10 @@
 [DONE] Retur Penjualan
 [DONE] Pembayaran Hutang
 [DONE] Pembayaran Piutang
-Inquiry Transaksi Pembelian
-Inquiry Transaksi Penjualan
-Inquiry Retur Pembelian
-Inquiry Retur Penjualan
+[DONE] Inquiry Transaksi Pembelian
+[DONE] Inquiry Transaksi Penjualan
+[DONE] Inquiry Retur Pembelian
+[DONE] Inquiry Retur Penjualan
 Inquiry stok barang
 Stok Opname
 Cetak Struk

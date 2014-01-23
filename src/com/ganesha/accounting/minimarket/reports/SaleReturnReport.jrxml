@@ -9,13 +9,10 @@
 	<parameter name="reportPeriodEnd" class="java.util.Date"/>
 	<parameter name="reportBy" class="java.lang.String"/>
 	<parameter name="reportDate" class="java.util.Date"/>
-	<field name="saleHeader.customer.code" class="java.lang.String"/>
-	<field name="saleHeader.customer.name" class="java.lang.String"/>
-	<field name="saleHeader.transactionNumber" class="java.lang.String"/>
-	<field name="saleHeader.transactionTimestamp" class="java.sql.Timestamp"/>
-	<field name="saleHeader.taxPercent" class="java.math.BigDecimal"/>
-	<field name="saleHeader.taxAmount" class="java.math.BigDecimal"/>
-	<field name="saleHeader.totalAmount" class="java.math.BigDecimal"/>
+	<field name="saleReturnHeader.customer.code" class="java.lang.String"/>
+	<field name="saleReturnHeader.customer.name" class="java.lang.String"/>
+	<field name="saleReturnHeader.transactionNumber" class="java.lang.String"/>
+	<field name="saleReturnHeader.transactionTimestamp" class="java.sql.Timestamp"/>
 	<field name="orderNum" class="java.lang.Integer"/>
 	<field name="itemCode" class="java.lang.String"/>
 	<field name="itemName" class="java.lang.String"/>
@@ -24,18 +21,12 @@
 	<field name="pricePerUnit" class="java.math.BigDecimal"/>
 	<field name="discountPercent" class="java.math.BigDecimal"/>
 	<field name="totalAmount" class="java.math.BigDecimal"/>
-	<variable name="totalPenjualan" class="java.lang.Double" calculation="Sum">
+	<variable name="grandTotalReturPembelian" class="java.lang.Double" calculation="Sum">
 		<variableExpression><![CDATA[$F{totalAmount}]]></variableExpression>
 		<initialValueExpression><![CDATA[0]]></initialValueExpression>
 	</variable>
-	<variable name="totalPajak" class="java.lang.Double" incrementType="Group" incrementGroup="Transaction" calculation="Sum">
-		<variableExpression><![CDATA[$F{saleHeader.taxAmount}]]></variableExpression>
-	</variable>
-	<variable name="grandTotal" class="java.lang.Double">
-		<variableExpression><![CDATA[$V{totalPenjualan} + $V{totalPajak}]]></variableExpression>
-	</variable>
 	<group name="Transaction">
-		<groupExpression><![CDATA[$F{saleHeader.transactionNumber}]]></groupExpression>
+		<groupExpression><![CDATA[$F{saleReturnHeader.transactionNumber}]]></groupExpression>
 		<groupHeader>
 			<band height="60">
 				<textField pattern="dd MMM yyyy HH:mm:ss">
@@ -43,7 +34,7 @@
 					<textElement>
 						<font fontName="Tahoma"/>
 					</textElement>
-					<textFieldExpression><![CDATA[$F{saleHeader.transactionTimestamp}]]></textFieldExpression>
+					<textFieldExpression><![CDATA[$F{saleReturnHeader.transactionTimestamp}]]></textFieldExpression>
 				</textField>
 				<staticText>
 					<reportElement x="22" y="45" width="88" height="15" uuid="d7726ac3-580b-4ad7-9f82-3c05f86e1c19"/>
@@ -127,7 +118,7 @@
 					<textElement>
 						<font fontName="Tahoma"/>
 					</textElement>
-					<text><![CDATA[No Transaksi]]></text>
+					<text><![CDATA[No Retur]]></text>
 				</staticText>
 				<staticText>
 					<reportElement x="80" y="15" width="10" height="15" uuid="772cc7c1-6e55-429c-abe8-10c312332063"/>
@@ -141,7 +132,7 @@
 					<textElement>
 						<font fontName="Tahoma"/>
 					</textElement>
-					<text><![CDATA[Tgl Transaksi]]></text>
+					<text><![CDATA[Tgl Retur]]></text>
 				</staticText>
 				<staticText>
 					<reportElement x="80" y="30" width="10" height="15" uuid="c0ad09aa-b804-43a8-8cfd-c3e409522476"/>
@@ -169,14 +160,14 @@
 					<textElement>
 						<font fontName="Tahoma"/>
 					</textElement>
-					<textFieldExpression><![CDATA[$F{saleHeader.customer.name} + " (" + $F{saleHeader.customer.code} + ")"]]></textFieldExpression>
+					<textFieldExpression><![CDATA[$F{saleReturnHeader.customer.name} + " (" + $F{saleReturnHeader.customer.code} + ")"]]></textFieldExpression>
 				</textField>
 				<textField pattern="dd/MM/yyyy">
 					<reportElement x="90" y="15" width="465" height="15" uuid="2b775190-d5d8-4b69-b63c-00573512c4f9"/>
 					<textElement>
 						<font fontName="Tahoma"/>
 					</textElement>
-					<textFieldExpression><![CDATA[$F{saleHeader.transactionNumber}]]></textFieldExpression>
+					<textFieldExpression><![CDATA[$F{saleReturnHeader.transactionNumber}]]></textFieldExpression>
 				</textField>
 				<staticText>
 					<reportElement x="449" y="45" width="46" height="15" uuid="4dc05f5e-7e18-48d6-9bf3-aa88c39b39f6"/>
@@ -192,50 +183,7 @@
 			</band>
 		</groupHeader>
 		<groupFooter>
-			<band height="45">
-				<staticText>
-					<reportElement x="400" y="0" width="95" height="15" uuid="23490526-8a44-42b5-8494-aa9cae45d72c"/>
-					<textElement textAlignment="Right">
-						<font fontName="Tahoma"/>
-					</textElement>
-					<text><![CDATA[(+) Pajak :]]></text>
-				</staticText>
-				<textField pattern="#,##0">
-					<reportElement x="495" y="0" width="50" height="15" uuid="70ec302f-2a16-4c3b-8f74-aec06bd5e1af"/>
-					<textElement textAlignment="Right">
-						<font fontName="Tahoma"/>
-					</textElement>
-					<textFieldExpression><![CDATA[$F{saleHeader.taxPercent}]]></textFieldExpression>
-				</textField>
-				<textField pattern="#,##0">
-					<reportElement x="495" y="15" width="60" height="15" uuid="84d77bfa-9eac-44f7-bbde-3050e040f43c"/>
-					<textElement textAlignment="Right">
-						<font fontName="Tahoma"/>
-					</textElement>
-					<textFieldExpression><![CDATA[$F{saleHeader.taxAmount}]]></textFieldExpression>
-				</textField>
-				<staticText>
-					<reportElement x="400" y="30" width="95" height="15" uuid="4971cbfe-560d-44eb-9138-9859f8250758"/>
-					<textElement textAlignment="Right">
-						<font fontName="Tahoma"/>
-					</textElement>
-					<text><![CDATA[TOTAL :]]></text>
-				</staticText>
-				<textField pattern="#,##0">
-					<reportElement x="495" y="30" width="60" height="15" uuid="5c93a5e8-975a-4f39-8a22-b834627d7c17"/>
-					<textElement textAlignment="Right">
-						<font fontName="Tahoma"/>
-					</textElement>
-					<textFieldExpression><![CDATA[$F{saleHeader.totalAmount}]]></textFieldExpression>
-				</textField>
-				<staticText>
-					<reportElement x="545" y="0" width="10" height="15" uuid="02323f2b-6ad6-4055-8bc4-e870cf0ef4ca"/>
-					<textElement textAlignment="Right">
-						<font fontName="Tahoma"/>
-					</textElement>
-					<text><![CDATA[%]]></text>
-				</staticText>
-			</band>
+			<band height="25"/>
 		</groupFooter>
 	</group>
 	<background>
@@ -416,75 +364,34 @@
 		<band splitType="Stretch"/>
 	</pageFooter>
 	<summary>
-		<band height="70" splitType="Stretch">
+		<band height="40" splitType="Stretch">
 			<staticText>
-				<reportElement x="120" y="51" width="10" height="15" uuid="43202188-9d39-46f0-a48f-5427af29a734"/>
+				<reportElement x="120" y="20" width="10" height="15" uuid="43202188-9d39-46f0-a48f-5427af29a734"/>
 				<textElement>
 					<font fontName="Tahoma" isBold="true"/>
 				</textElement>
 				<text><![CDATA[:]]></text>
 			</staticText>
 			<textField pattern="#,##0">
-				<reportElement x="130" y="35" width="100" height="15" uuid="1df59240-c4c2-483e-9a7c-0c32f06a24b6"/>
-				<textElement textAlignment="Right"/>
-				<textFieldExpression><![CDATA[$V{totalPajak}]]></textFieldExpression>
-			</textField>
-			<textField pattern="#,##0">
 				<reportElement x="130" y="20" width="100" height="15" uuid="a2b449cb-592c-436b-9f5d-983385e8259e"/>
-				<textElement textAlignment="Right"/>
-				<textFieldExpression><![CDATA[$V{totalPenjualan}]]></textFieldExpression>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$V{grandTotalReturPembelian}]]></textFieldExpression>
 			</textField>
 			<staticText>
-				<reportElement x="0" y="51" width="120" height="15" uuid="bcc0391c-d041-40ac-8beb-668753f6e854"/>
+				<reportElement x="0" y="20" width="120" height="15" uuid="bcc0391c-d041-40ac-8beb-668753f6e854"/>
 				<textElement>
 					<font fontName="Tahoma" isBold="true"/>
 				</textElement>
-				<text><![CDATA[GRAND TOTAL]]></text>
+				<text><![CDATA[Grand Total Retur Penjualan]]></text>
 			</staticText>
-			<line>
-				<reportElement x="0" y="51" width="230" height="1" uuid="cdf46668-14cb-44f7-a80c-95dde5f73362"/>
-			</line>
 			<staticText>
 				<reportElement x="0" y="0" width="95" height="20" uuid="bb9c78b5-2c83-4459-9167-71cd2652ebef"/>
 				<textElement>
 					<font fontName="Tahoma" size="14" isBold="true"/>
 				</textElement>
 				<text><![CDATA[Summary]]></text>
-			</staticText>
-			<staticText>
-				<reportElement x="120" y="20" width="10" height="15" uuid="62acc9d7-37b6-4ccb-ac23-752368453d87"/>
-				<textElement>
-					<font fontName="Tahoma"/>
-				</textElement>
-				<text><![CDATA[:]]></text>
-			</staticText>
-			<textField pattern="#,##0">
-				<reportElement x="130" y="51" width="100" height="15" uuid="ea0ded34-2691-4054-9449-22a563284555"/>
-				<textElement textAlignment="Right">
-					<font isBold="true"/>
-				</textElement>
-				<textFieldExpression><![CDATA[$V{grandTotal}]]></textFieldExpression>
-			</textField>
-			<staticText>
-				<reportElement x="0" y="20" width="120" height="15" uuid="9a46d35a-747f-4bd6-b877-6bfe35f439fe"/>
-				<textElement>
-					<font fontName="Tahoma"/>
-				</textElement>
-				<text><![CDATA[Total Penjualan]]></text>
-			</staticText>
-			<staticText>
-				<reportElement x="0" y="35" width="120" height="15" uuid="8033c5f8-e809-4f01-84e7-de016069379d"/>
-				<textElement>
-					<font fontName="Tahoma"/>
-				</textElement>
-				<text><![CDATA[Total Pajak (+)]]></text>
-			</staticText>
-			<staticText>
-				<reportElement x="120" y="35" width="10" height="15" uuid="8a36fa78-bd81-4a18-b891-63a64163e067"/>
-				<textElement>
-					<font fontName="Tahoma"/>
-				</textElement>
-				<text><![CDATA[:]]></text>
 			</staticText>
 		</band>
 	</summary>

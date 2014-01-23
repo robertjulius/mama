@@ -1,5 +1,6 @@
 package com.ganesha.accounting.minimarket.facade;
 
+import java.awt.Window;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.Date;
@@ -33,6 +34,8 @@ import com.ganesha.hibernate.HqlParameter;
 public class PurchaseReportFacade implements TransactionReportFacade {
 
 	private static final String REPORT_NAME = "Laporan Pembelian";
+	private static final String REPORT_FILE = "com/ganesha/accounting/minimarket/reports/PurchaseReport.jrxml";
+
 	private static PurchaseReportFacade instance;
 
 	public static PurchaseReportFacade getInstance() {
@@ -74,11 +77,8 @@ public class PurchaseReportFacade implements TransactionReportFacade {
 
 		InputStream inputStream = null;
 		try {
-			inputStream = this
-					.getClass()
-					.getClassLoader()
-					.getResourceAsStream(
-							"com/ganesha/accounting/minimarket/reports/PurchaseReport.jrxml");
+			inputStream = this.getClass().getClassLoader()
+					.getResourceAsStream(REPORT_FILE);
 
 			JasperDesign jasperDesign = JRXmlLoader.load(inputStream);
 
@@ -104,16 +104,15 @@ public class PurchaseReportFacade implements TransactionReportFacade {
 	}
 
 	@Override
-	public void printReport(String transactionNumber, Date beginDate,
-			Date endDate, Session session) throws AppException, UserException {
+	public void previewReport(Window parent, String transactionNumber,
+			Date beginDate, Date endDate, Session session) throws AppException,
+			UserException {
 
 		JasperPrint jasperPrint = prepareJasper(transactionNumber, beginDate,
 				endDate, session);
 
-		JRViewer jrViewer = new JRViewer(jasperPrint);
-		ReportViewerDialog dialog = new ReportViewerDialog(null, REPORT_NAME,
-				jrViewer);
-		dialog.setVisible(true);
+		JRViewer viewer = new JRViewer(jasperPrint);
+		ReportViewerDialog.viewReport(parent, REPORT_NAME, viewer);
 	}
 
 	public List<PurchaseDetail> search(String transactionNumber,

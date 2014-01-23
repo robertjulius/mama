@@ -70,6 +70,7 @@ public class TransactionReportListDialog extends XJDialog {
 
 	private final Map<ColumnEnum, XTableParameter> tableParameters = new HashMap<>();
 	private XJComboBox cmbJenisTransaksi;
+	private XJButton btnPreview;
 	{
 		tableParameters.put(ColumnEnum.TRANSACTION_NUM,
 				new XTableParameter(0, 200, false, "No. Transaksi",
@@ -170,6 +171,7 @@ public class TransactionReportListDialog extends XJDialog {
 		pnlRangeTanggal.add(lblDari, "cell 0 1");
 
 		dtChBegin = new XJDateChooser();
+		dtChBegin.setDate(CommonUtils.getCurrentDate());
 		dtChBegin.getCalendarButton().setMnemonic('D');
 		pnlRangeTanggal.add(dtChBegin, "cell 1 1,grow");
 
@@ -178,6 +180,8 @@ public class TransactionReportListDialog extends XJDialog {
 		pnlRangeTanggal.add(lblSampai, "cell 2 1");
 
 		dtChEnd = new XJDateChooser();
+		dtChEnd.setDate(CommonUtils.getCurrentDate());
+		dtChEnd.getCalendarButton().setMnemonic('S');
 		pnlRangeTanggal.add(dtChEnd, "cell 3 1,grow");
 
 		XJButton btnRefresh = new XJButton();
@@ -211,8 +215,8 @@ public class TransactionReportListDialog extends XJDialog {
 		btnKeluar.setText("<html><center>Keluar<br/>[Esc]</center></html>");
 		panel.add(btnKeluar, "cell 0 0,growx");
 
-		XJButton btnCetak = new XJButton();
-		btnCetak.addActionListener(new ActionListener() {
+		btnPreview = new XJButton();
+		btnPreview.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				try {
@@ -222,8 +226,9 @@ public class TransactionReportListDialog extends XJDialog {
 				}
 			}
 		});
-		btnCetak.setText("<html></center>Cetak<br/>[F12]</center></html>");
-		panel.add(btnCetak, "cell 1 0,growx");
+		btnPreview
+				.setText("<html><center>Preview Laporan<br/>[F12]</center></html>");
+		panel.add(btnPreview, "cell 1 0,growx");
 
 		cmbJenisTransaksi.setSelectedIndex(2);
 
@@ -234,6 +239,9 @@ public class TransactionReportListDialog extends XJDialog {
 	@Override
 	protected void keyEventListener(int keyCode) {
 		switch (keyCode) {
+		case KeyEvent.VK_F12:
+			btnPreview.doClick();
+			break;
 		default:
 			break;
 		}
@@ -245,7 +253,8 @@ public class TransactionReportListDialog extends XJDialog {
 			String transactionNumber = txtNoTransaksi.getText();
 			Date beginDate = CommonUtils.validateDateBegin(dtChBegin.getDate());
 			Date endDate = CommonUtils.validateDateEnd(dtChEnd.getDate());
-			facade.printReport(transactionNumber, beginDate, endDate, session);
+			facade.previewReport(this, transactionNumber, beginDate, endDate,
+					session);
 		} finally {
 			session.close();
 		}

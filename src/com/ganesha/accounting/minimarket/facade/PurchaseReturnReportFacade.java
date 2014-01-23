@@ -1,5 +1,6 @@
 package com.ganesha.accounting.minimarket.facade;
 
+import java.awt.Window;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.Date;
@@ -8,12 +9,14 @@ import java.util.List;
 import java.util.Map;
 
 import net.sf.jasperreports.engine.JRException;
+import net.sf.jasperreports.engine.JasperCompileManager;
 import net.sf.jasperreports.engine.JasperFillManager;
 import net.sf.jasperreports.engine.JasperPrint;
 import net.sf.jasperreports.engine.JasperReport;
 import net.sf.jasperreports.engine.data.JRBeanCollectionDataSource;
-import net.sf.jasperreports.engine.util.JRLoader;
-import net.sf.jasperreports.view.JasperViewer;
+import net.sf.jasperreports.engine.design.JasperDesign;
+import net.sf.jasperreports.engine.xml.JRXmlLoader;
+import net.sf.jasperreports.swing.JRViewer;
 
 import org.hibernate.Criteria;
 import org.hibernate.Query;
@@ -23,6 +26,7 @@ import org.hibernate.criterion.Restrictions;
 import com.ganesha.accounting.minimarket.Main;
 import com.ganesha.accounting.minimarket.model.PurchaseDetail;
 import com.ganesha.accounting.minimarket.model.PurchaseReturnDetail;
+import com.ganesha.accounting.minimarket.ui.forms.forms.reports.ReportViewerDialog;
 import com.ganesha.core.exception.AppException;
 import com.ganesha.core.exception.UserException;
 import com.ganesha.core.utils.CommonUtils;
@@ -31,6 +35,8 @@ import com.ganesha.hibernate.HqlParameter;
 public class PurchaseReturnReportFacade implements TransactionReportFacade {
 
 	private static final String REPORT_NAME = "Laporan Retur Pembelian";
+	private static final String REPORT_FILE = "com/ganesha/accounting/minimarket/reports/PurchaseReturnReport.jrxml";
+
 	private static PurchaseReturnReportFacade instance;
 
 	public static PurchaseReturnReportFacade getInstance() {
@@ -72,14 +78,13 @@ public class PurchaseReturnReportFacade implements TransactionReportFacade {
 
 		InputStream inputStream = null;
 		try {
-			inputStream = this
-					.getClass()
-					.getClassLoader()
-					.getResourceAsStream(
-							"com/ganesha/accounting/minimarket/reports/mama.jasper");
+			inputStream = this.getClass().getClassLoader()
+					.getResourceAsStream(REPORT_FILE);
 
-			JasperReport jasperReport = (JasperReport) JRLoader
-					.loadObject(inputStream);
+			JasperDesign jasperDesign = JRXmlLoader.load(inputStream);
+
+			JasperReport jasperReport = JasperCompileManager
+					.compileReport(jasperDesign);
 
 			JasperPrint jasperPrint = JasperFillManager.fillReport(
 					jasperReport, paramReport, new JRBeanCollectionDataSource(
@@ -100,11 +105,15 @@ public class PurchaseReturnReportFacade implements TransactionReportFacade {
 	}
 
 	@Override
-	public void printReport(String transactionNumber, Date beginDate,
-			Date endDate, Session session) throws AppException, UserException {
+	public void previewReport(Window parent, String transactionNumber,
+			Date beginDate, Date endDate, Session session) throws AppException,
+			UserException {
+
 		JasperPrint jasperPrint = prepareJasper(transactionNumber, beginDate,
 				endDate, session);
-		JasperViewer.viewReport(jasperPrint);
+
+		JRViewer viewer = new JRViewer(jasperPrint);
+		ReportViewerDialog.viewReport(parent, REPORT_NAME, viewer);
 	}
 
 	public List<PurchaseReturnDetail> search(String transactionNumber,

@@ -23,12 +23,25 @@
 	<field name="unit" class="java.lang.String"/>
 	<field name="pricePerUnit" class="java.math.BigDecimal"/>
 	<field name="totalAmount" class="java.math.BigDecimal"/>
+	<variable name="totalPembelian" class="java.lang.Double" calculation="Sum">
+		<variableExpression><![CDATA[$F{totalAmount}]]></variableExpression>
+		<initialValueExpression><![CDATA[0]]></initialValueExpression>
+	</variable>
+	<variable name="totalBiaya" class="java.lang.Double" incrementType="Group" incrementGroup="Transaction" calculation="Sum">
+		<variableExpression><![CDATA[$F{purchaseHeader.expenses}]]></variableExpression>
+	</variable>
+	<variable name="totalDiskon" class="java.lang.Double" incrementType="Group" incrementGroup="Transaction" calculation="Sum">
+		<variableExpression><![CDATA[$F{purchaseHeader.discount}]]></variableExpression>
+	</variable>
+	<variable name="grandTotal" class="java.lang.Double">
+		<variableExpression><![CDATA[$V{totalPembelian} + $V{totalBiaya} - $V{totalDiskon}]]></variableExpression>
+	</variable>
 	<group name="Transaction">
 		<groupExpression><![CDATA[$F{purchaseHeader.transactionNumber}]]></groupExpression>
 		<groupHeader>
 			<band height="60">
 				<textField pattern="dd MMM yyyy HH:mm:ss">
-					<reportElement x="105" y="30" width="450" height="15" uuid="353e9cde-771d-43f8-ac12-eaa034064511"/>
+					<reportElement x="90" y="30" width="465" height="15" uuid="353e9cde-771d-43f8-ac12-eaa034064511"/>
 					<textElement>
 						<font fontName="Tahoma"/>
 					</textElement>
@@ -112,56 +125,56 @@
 					<text><![CDATA[No.]]></text>
 				</staticText>
 				<staticText>
-					<reportElement x="0" y="15" width="95" height="15" uuid="0b7a27f9-fdc9-4a88-83c9-d5ff82604d0c"/>
+					<reportElement x="0" y="15" width="80" height="15" uuid="0b7a27f9-fdc9-4a88-83c9-d5ff82604d0c"/>
 					<textElement>
 						<font fontName="Tahoma"/>
 					</textElement>
 					<text><![CDATA[No Transaksi]]></text>
 				</staticText>
 				<staticText>
-					<reportElement x="95" y="15" width="10" height="15" uuid="772cc7c1-6e55-429c-abe8-10c312332063"/>
+					<reportElement x="80" y="15" width="10" height="15" uuid="772cc7c1-6e55-429c-abe8-10c312332063"/>
 					<textElement>
 						<font fontName="Tahoma"/>
 					</textElement>
 					<text><![CDATA[:]]></text>
 				</staticText>
 				<textField pattern="dd/MM/yyyy">
-					<reportElement x="105" y="15" width="450" height="15" uuid="2b775190-d5d8-4b69-b63c-00573512c4f9"/>
+					<reportElement x="90" y="15" width="465" height="15" uuid="2b775190-d5d8-4b69-b63c-00573512c4f9"/>
 					<textElement>
 						<font fontName="Tahoma"/>
 					</textElement>
 					<textFieldExpression><![CDATA[$F{purchaseHeader.transactionNumber}]]></textFieldExpression>
 				</textField>
 				<staticText>
-					<reportElement x="0" y="30" width="95" height="15" uuid="b51abe2b-9670-4301-87ac-e6bc985cfd8b"/>
+					<reportElement x="0" y="30" width="80" height="15" uuid="b51abe2b-9670-4301-87ac-e6bc985cfd8b"/>
 					<textElement>
 						<font fontName="Tahoma"/>
 					</textElement>
 					<text><![CDATA[Tgl Transaksi]]></text>
 				</staticText>
 				<staticText>
-					<reportElement x="95" y="30" width="10" height="15" uuid="c0ad09aa-b804-43a8-8cfd-c3e409522476"/>
+					<reportElement x="80" y="30" width="10" height="15" uuid="c0ad09aa-b804-43a8-8cfd-c3e409522476"/>
 					<textElement>
 						<font fontName="Tahoma"/>
 					</textElement>
 					<text><![CDATA[:]]></text>
 				</staticText>
 				<staticText>
-					<reportElement x="0" y="0" width="95" height="15" uuid="df58f6d4-f1fa-4554-aa97-e72eed4561ce"/>
+					<reportElement x="0" y="0" width="80" height="15" uuid="df58f6d4-f1fa-4554-aa97-e72eed4561ce"/>
 					<textElement>
 						<font fontName="Tahoma"/>
 					</textElement>
 					<text><![CDATA[Supplier]]></text>
 				</staticText>
 				<staticText>
-					<reportElement x="95" y="0" width="10" height="15" uuid="b4a81031-ac49-4bae-b726-189beec4adf2"/>
+					<reportElement x="80" y="0" width="10" height="15" uuid="b4a81031-ac49-4bae-b726-189beec4adf2"/>
 					<textElement>
 						<font fontName="Tahoma"/>
 					</textElement>
 					<text><![CDATA[:]]></text>
 				</staticText>
 				<textField pattern="dd/MM/yyyy">
-					<reportElement x="105" y="0" width="450" height="15" uuid="41853af7-8298-4fdc-a5cd-66d94347a904"/>
+					<reportElement x="90" y="0" width="465" height="15" uuid="41853af7-8298-4fdc-a5cd-66d94347a904"/>
 					<textElement>
 						<font fontName="Tahoma"/>
 					</textElement>
@@ -170,13 +183,13 @@
 			</band>
 		</groupHeader>
 		<groupFooter>
-			<band height="49">
+			<band height="45">
 				<staticText>
 					<reportElement x="400" y="0" width="95" height="15" uuid="23490526-8a44-42b5-8494-aa9cae45d72c"/>
 					<textElement textAlignment="Right">
 						<font fontName="Tahoma"/>
 					</textElement>
-					<text><![CDATA[Biaya Lain-Lain :]]></text>
+					<text><![CDATA[(+) Biaya Lain-Lain :]]></text>
 				</staticText>
 				<textField pattern="#,##0">
 					<reportElement x="495" y="0" width="60" height="15" uuid="70ec302f-2a16-4c3b-8f74-aec06bd5e1af"/>
@@ -190,7 +203,7 @@
 					<textElement textAlignment="Right">
 						<font fontName="Tahoma"/>
 					</textElement>
-					<text><![CDATA[Diskon :]]></text>
+					<text><![CDATA[(-) Diskon :]]></text>
 				</staticText>
 				<textField pattern="#,##0">
 					<reportElement x="495" y="15" width="60" height="15" uuid="84d77bfa-9eac-44f7-bbde-3050e040f43c"/>
@@ -222,21 +235,21 @@
 	<title>
 		<band height="112" splitType="Stretch">
 			<textField>
-				<reportElement x="0" y="0" width="538" height="30" uuid="28341c86-98ce-44d6-913a-e42b406443dd"/>
+				<reportElement x="0" y="0" width="555" height="30" uuid="28341c86-98ce-44d6-913a-e42b406443dd"/>
 				<textElement>
 					<font fontName="Tahoma" size="22" isBold="true"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$P{reportName}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="0" y="30" width="538" height="20" uuid="3f49179d-7304-40fe-a702-36f6e771ffa7"/>
+				<reportElement x="0" y="30" width="555" height="20" uuid="3f49179d-7304-40fe-a702-36f6e771ffa7"/>
 				<textElement>
 					<font fontName="Tahoma" size="14" isBold="true"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$P{companyName}]]></textFieldExpression>
 			</textField>
 			<textField pattern="dd MMM yyyy">
-				<reportElement x="105" y="50" width="148" height="15" uuid="8f22e5b1-6f1c-4aea-bda9-2336e68f6854"/>
+				<reportElement x="105" y="50" width="450" height="15" uuid="8f22e5b1-6f1c-4aea-bda9-2336e68f6854"/>
 				<textElement>
 					<font fontName="Tahoma"/>
 				</textElement>
@@ -292,7 +305,7 @@
 				<text><![CDATA[:]]></text>
 			</staticText>
 			<textField pattern="dd MMM yyyy">
-				<reportElement x="105" y="65" width="148" height="15" uuid="4030adb5-b309-4a19-bd94-48c5dc501d0b"/>
+				<reportElement x="105" y="65" width="450" height="15" uuid="4030adb5-b309-4a19-bd94-48c5dc501d0b"/>
 				<textElement>
 					<font fontName="Tahoma"/>
 				</textElement>
@@ -306,14 +319,14 @@
 				<text><![CDATA[Dari tanggal]]></text>
 			</staticText>
 			<textField>
-				<reportElement x="105" y="80" width="148" height="15" uuid="67fb182f-dd64-41e3-bc2a-5f936083a25f"/>
+				<reportElement x="105" y="80" width="450" height="15" uuid="67fb182f-dd64-41e3-bc2a-5f936083a25f"/>
 				<textElement>
 					<font fontName="Tahoma"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$P{reportBy}]]></textFieldExpression>
 			</textField>
 			<textField pattern="dd MMM yyyy">
-				<reportElement x="105" y="95" width="148" height="15" uuid="9000ed04-4652-4d9d-9281-0249b008b1f1"/>
+				<reportElement x="105" y="95" width="450" height="15" uuid="9000ed04-4652-4d9d-9281-0249b008b1f1"/>
 				<textElement>
 					<font fontName="Tahoma"/>
 				</textElement>
@@ -381,12 +394,101 @@
 		</band>
 	</detail>
 	<columnFooter>
-		<band height="28" splitType="Stretch"/>
+		<band height="20" splitType="Stretch"/>
 	</columnFooter>
 	<pageFooter>
 		<band splitType="Stretch"/>
 	</pageFooter>
 	<summary>
-		<band splitType="Stretch"/>
+		<band height="90" splitType="Stretch">
+			<staticText>
+				<reportElement x="0" y="0" width="95" height="20" uuid="8cf5ba60-eacf-4ff0-ab02-9d6b8b2fcc11"/>
+				<textElement>
+					<font fontName="Tahoma" size="14" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Summary]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="20" width="120" height="15" uuid="d05dcd0a-ea65-490e-b1bd-054aa824d3f6"/>
+				<textElement>
+					<font fontName="Tahoma"/>
+				</textElement>
+				<text><![CDATA[Total Pembelian]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="35" width="120" height="15" uuid="dd0a8eac-09ea-4ea5-9e56-0da2e73c5156"/>
+				<textElement>
+					<font fontName="Tahoma"/>
+				</textElement>
+				<text><![CDATA[Total Biaya Lain-Lain (+)]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="50" width="120" height="15" uuid="1f131b20-06c5-4419-8dce-4ce15fbcf3a1"/>
+				<textElement>
+					<font fontName="Tahoma"/>
+				</textElement>
+				<text><![CDATA[Total Diskon (-)]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="66" width="120" height="15" uuid="3130da22-3527-41fc-99d2-464c8ea22739"/>
+				<textElement>
+					<font fontName="Tahoma" isBold="true"/>
+				</textElement>
+				<text><![CDATA[GRAND TOTAL]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="120" y="20" width="10" height="15" uuid="5b0ca2e8-7aa5-45be-b048-f8640848d4ec"/>
+				<textElement>
+					<font fontName="Tahoma"/>
+				</textElement>
+				<text><![CDATA[:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="120" y="35" width="10" height="15" uuid="a04c9846-b242-4db5-b702-b35fd0e6a3bb"/>
+				<textElement>
+					<font fontName="Tahoma"/>
+				</textElement>
+				<text><![CDATA[:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="120" y="50" width="10" height="15" uuid="4a0df30c-1726-4184-914e-05f3ffd974f8"/>
+				<textElement>
+					<font fontName="Tahoma"/>
+				</textElement>
+				<text><![CDATA[:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="120" y="66" width="10" height="15" uuid="b3b736c8-0017-434c-95cf-603afcbb553f"/>
+				<textElement>
+					<font fontName="Tahoma" isBold="true"/>
+				</textElement>
+				<text><![CDATA[:]]></text>
+			</staticText>
+			<textField pattern="#,##0">
+				<reportElement x="130" y="20" width="100" height="15" uuid="ba1ca230-85b9-4c16-bdfa-b6a5f20e2c40"/>
+				<textElement textAlignment="Right"/>
+				<textFieldExpression><![CDATA[$V{totalPembelian}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0">
+				<reportElement x="130" y="35" width="100" height="15" uuid="c58df4a8-6fd4-49c1-8770-58ea385a61c6"/>
+				<textElement textAlignment="Right"/>
+				<textFieldExpression><![CDATA[$V{totalBiaya}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0">
+				<reportElement x="130" y="50" width="100" height="15" uuid="d63eb4bd-a435-4899-9161-ad11bfbfd701"/>
+				<textElement textAlignment="Right"/>
+				<textFieldExpression><![CDATA[$V{totalDiskon}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0">
+				<reportElement x="130" y="66" width="100" height="15" uuid="36e6996a-639c-4613-8cac-4991e40e6720"/>
+				<textElement textAlignment="Right">
+					<font isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$V{grandTotal}]]></textFieldExpression>
+			</textField>
+			<line>
+				<reportElement x="0" y="65" width="230" height="1" uuid="6fae5b8b-9141-4f48-9968-e93cb3da4843"/>
+			</line>
+		</band>
 	</summary>
 </jasperReport>

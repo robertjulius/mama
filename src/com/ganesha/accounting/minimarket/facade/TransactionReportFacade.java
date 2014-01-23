@@ -1,5 +1,6 @@
 package com.ganesha.accounting.minimarket.facade;
 
+import java.awt.Window;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
@@ -11,8 +12,9 @@ import com.ganesha.core.exception.UserException;
 
 public interface TransactionReportFacade {
 
-	public void printReport(String transactionNumber, Date beginDate,
-			Date endDate, Session session) throws AppException, UserException;
+	public void previewReport(Window parent, String transactionNumber,
+			Date beginDate, Date endDate, Session session) throws AppException,
+			UserException;
 
 	public List<Map<String, Object>> searchTransaction(
 			String transactionNumber, Date beginDate, Date endDate,
