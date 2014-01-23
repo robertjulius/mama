@@ -9,15 +9,22 @@ public class XTableParameter {
 	private boolean editable;
 	private String columnIdentifier;
 	private TableCellRenderer tableCellRenderer;
+	private Class<?> columnClass;
 
 	public XTableParameter(int columnIndex, int columnWidth, boolean editable,
-			String columnIdentifier, TableCellRenderer tableCellRenderer) {
+			String columnIdentifier, TableCellRenderer tableCellRenderer,
+			Class<?> columnClass) {
 
 		this.columnIndex = columnIndex;
 		this.columnWidth = columnWidth;
 		this.editable = editable;
 		this.columnIdentifier = columnIdentifier;
 		this.tableCellRenderer = tableCellRenderer;
+		this.columnClass = columnClass;
+	}
+
+	public Class<?> getColumnClass() {
+		return columnClass;
 	}
 
 	public String getColumnIdentifier() {
@@ -38,6 +45,10 @@ public class XTableParameter {
 
 	public boolean isEditable() {
 		return editable;
+	}
+
+	public void setColumnClass(Class<?> columnClass) {
+		this.columnClass = columnClass;
 	}
 
 	public void setColumnIdentifier(String columnIdentifier) {

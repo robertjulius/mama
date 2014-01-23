@@ -72,21 +72,24 @@ public class TransactionReportListDialog extends XJDialog {
 	private XJComboBox cmbJenisTransaksi;
 	private XJButton btnPreview;
 	{
-		tableParameters.put(ColumnEnum.TRANSACTION_NUM,
-				new XTableParameter(0, 200, false, "No. Transaksi",
-						XTableConstants.CELL_RENDERER_LEFT));
+		tableParameters.put(ColumnEnum.TRANSACTION_NUM, new XTableParameter(0,
+				200, false, "No. Transaksi",
+				XTableConstants.CELL_RENDERER_LEFT, String.class));
 
 		tableParameters.put(ColumnEnum.DATE, new XTableParameter(1, 75, false,
-				"Tanggal", XTableConstants.CELL_RENDERER_LEFT));
+				"Tanggal", XTableConstants.CELL_RENDERER_LEFT, Date.class));
 
 		tableParameters.put(ColumnEnum.CLIENT_CODE, new XTableParameter(2, 100,
-				false, "Kode Klien", XTableConstants.CELL_RENDERER_LEFT));
+				false, "Kode Klien", XTableConstants.CELL_RENDERER_LEFT,
+				String.class));
 
 		tableParameters.put(ColumnEnum.CLIENT_NAME, new XTableParameter(3, 300,
-				false, "Nama Klien", XTableConstants.CELL_RENDERER_LEFT));
+				false, "Nama Klien", XTableConstants.CELL_RENDERER_LEFT,
+				String.class));
 
 		tableParameters.put(ColumnEnum.AMOUNT, new XTableParameter(4, 50,
-				false, "Total", XTableConstants.CELL_RENDERER_RIGHT));
+				false, "Total", XTableConstants.CELL_RENDERER_RIGHT,
+				Double.class));
 	}
 
 	public TransactionReportListDialog(Window parent) {
@@ -107,6 +110,7 @@ public class TransactionReportListDialog extends XJDialog {
 			}
 		};
 		XTableUtils.initTable(table, tableParameters);
+		table.setAutoCreateRowSorter(true);
 
 		JPanel pnlFilter = new JPanel();
 		getContentPane().add(pnlFilter, "cell 0 0,alignx left,growy");

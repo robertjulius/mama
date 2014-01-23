@@ -50,16 +50,20 @@ public class DiscountListDialog extends XJDialog {
 	private XJRadioButton rdPromoAktif;
 	{
 		tableParameters.put(ColumnEnum.ITEM_CODE, new XTableParameter(0, 100,
-				false, "Kode Barang", XTableConstants.CELL_RENDERER_LEFT));
+				false, "Kode Barang", XTableConstants.CELL_RENDERER_LEFT,
+				String.class));
 
 		tableParameters.put(ColumnEnum.ITEM_NAME, new XTableParameter(1, 300,
-				false, "Nama Barang", XTableConstants.CELL_RENDERER_LEFT));
+				false, "Nama Barang", XTableConstants.CELL_RENDERER_LEFT,
+				String.class));
 
 		tableParameters.put(ColumnEnum.QUANTITY, new XTableParameter(2, 50,
-				false, "Qty", XTableConstants.CELL_RENDERER_CENTER));
+				false, "Qty", XTableConstants.CELL_RENDERER_CENTER,
+				Integer.class));
 
 		tableParameters.put(ColumnEnum.DISCOUNT, new XTableParameter(3, 50,
-				false, "Diskon (%)", XTableConstants.CELL_RENDERER_CENTER));
+				false, "Diskon (%)", XTableConstants.CELL_RENDERER_CENTER,
+				Double.class));
 	}
 
 	public DiscountListDialog(Window parent) {
@@ -77,6 +81,7 @@ public class DiscountListDialog extends XJDialog {
 			}
 		};
 		XTableUtils.initTable(table, tableParameters);
+		table.setAutoCreateRowSorter(true);
 
 		JPanel pnlFilter = new JPanel();
 		getContentPane().add(pnlFilter, "cell 0 0,alignx left,growy");

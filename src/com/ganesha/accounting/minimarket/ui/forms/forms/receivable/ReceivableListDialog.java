@@ -44,14 +44,16 @@ public class ReceivableListDialog extends XJDialog {
 	private final Map<ColumnEnum, XTableParameter> tableParameters = new HashMap<>();
 	{
 		tableParameters.put(ColumnEnum.CODE, new XTableParameter(0, 30, false,
-				"Kode Supplier", XTableConstants.CELL_RENDERER_LEFT));
+				"Kode Supplier", XTableConstants.CELL_RENDERER_LEFT,
+				String.class));
 
 		tableParameters.put(ColumnEnum.NAME, new XTableParameter(1, 100, false,
-				"Nama Supplier", XTableConstants.CELL_RENDERER_LEFT));
+				"Nama Supplier", XTableConstants.CELL_RENDERER_LEFT,
+				String.class));
 
 		tableParameters.put(ColumnEnum.REMAINING_AMOUNT, new XTableParameter(2,
 				30, false, "Sisa Pembayaran",
-				XTableConstants.CELL_RENDERER_RIGHT));
+				XTableConstants.CELL_RENDERER_RIGHT, Double.class));
 	}
 
 	public ReceivableListDialog(Window parent) {
@@ -70,6 +72,7 @@ public class ReceivableListDialog extends XJDialog {
 			}
 		};
 		XTableUtils.initTable(table, tableParameters);
+		table.setAutoCreateRowSorter(true);
 
 		JPanel pnlFilter = new JPanel();
 		getContentPane().add(pnlFilter, "cell 0 0,grow");

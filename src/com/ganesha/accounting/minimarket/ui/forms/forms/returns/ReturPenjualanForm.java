@@ -9,6 +9,7 @@ import java.beans.PropertyChangeListener;
 import java.math.BigDecimal;
 import java.sql.Timestamp;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -68,35 +69,39 @@ public class ReturPenjualanForm extends XJDialog {
 	private final Map<ColumnEnum, XTableParameter> tableParameters = new HashMap<>();
 	{
 		tableParameters.put(ColumnEnum.NUM, new XTableParameter(0, 5, false,
-				"No", XTableConstants.CELL_RENDERER_CENTER));
+				"No", XTableConstants.CELL_RENDERER_CENTER, Integer.class));
 
-		tableParameters.put(ColumnEnum.TRANSACTION_NUM,
-				new XTableParameter(1, 100, false, "No. Transaksi",
-						XTableConstants.CELL_RENDERER_LEFT));
+		tableParameters.put(ColumnEnum.TRANSACTION_NUM, new XTableParameter(1,
+				100, false, "No. Transaksi",
+				XTableConstants.CELL_RENDERER_LEFT, String.class));
 
 		tableParameters.put(ColumnEnum.DATE, new XTableParameter(2, 75, false,
-				"Tanggal", XTableConstants.CELL_RENDERER_LEFT));
+				"Tanggal", XTableConstants.CELL_RENDERER_LEFT, Date.class));
 
 		tableParameters.put(ColumnEnum.ITEM_CODE, new XTableParameter(3, 100,
-				false, "Kode Barang", XTableConstants.CELL_RENDERER_LEFT));
+				false, "Kode Barang", XTableConstants.CELL_RENDERER_LEFT,
+				String.class));
 
 		tableParameters.put(ColumnEnum.ITEM_NAME, new XTableParameter(4, 300,
-				false, "Nama Barang", XTableConstants.CELL_RENDERER_LEFT));
+				false, "Nama Barang", XTableConstants.CELL_RENDERER_LEFT,
+				String.class));
 
 		tableParameters.put(ColumnEnum.QUANTITY, new XTableParameter(5, 10,
-				true, "Qty", XTableConstants.CELL_RENDERER_CENTER));
+				true, "Qty", XTableConstants.CELL_RENDERER_CENTER,
+				Integer.class));
 
 		tableParameters.put(ColumnEnum.UNIT, new XTableParameter(6, 30, false,
-				"Satuan", XTableConstants.CELL_RENDERER_LEFT));
+				"Satuan", XTableConstants.CELL_RENDERER_LEFT, String.class));
 
 		tableParameters.put(ColumnEnum.PRICE, new XTableParameter(7, 50, false,
-				"Harga", XTableConstants.CELL_RENDERER_RIGHT));
+				"Harga", XTableConstants.CELL_RENDERER_RIGHT, Double.class));
 
 		tableParameters.put(ColumnEnum.DISCOUNT, new XTableParameter(8, 100,
-				false, "Discount (%)", XTableConstants.CELL_RENDERER_CENTER));
+				false, "Discount (%)", XTableConstants.CELL_RENDERER_CENTER,
+				Double.class));
 
 		tableParameters.put(ColumnEnum.TOTAL, new XTableParameter(9, 50, false,
-				"Total", XTableConstants.CELL_RENDERER_RIGHT));
+				"Total", XTableConstants.CELL_RENDERER_RIGHT, Double.class));
 
 	}
 

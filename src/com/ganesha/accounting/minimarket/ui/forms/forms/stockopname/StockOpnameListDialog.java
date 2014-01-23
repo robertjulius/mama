@@ -50,25 +50,29 @@ public class StockOpnameListDialog extends XJDialog {
 	private XJTextField txtStartTimestamp;
 	{
 		tableParameters.put(ColumnEnum.NUM, new XTableParameter(0, 10, false,
-				"No", XTableConstants.CELL_RENDERER_CENTER));
+				"No", XTableConstants.CELL_RENDERER_CENTER, Integer.class));
 
 		tableParameters.put(ColumnEnum.CODE, new XTableParameter(1, 50, false,
-				"Kode", XTableConstants.CELL_RENDERER_LEFT));
+				"Kode", XTableConstants.CELL_RENDERER_LEFT, String.class));
 
-		tableParameters.put(ColumnEnum.NAME, new XTableParameter(2, 300, false,
-				"Nama Barang", XTableConstants.CELL_RENDERER_LEFT));
+		tableParameters.put(ColumnEnum.NAME,
+				new XTableParameter(2, 300, false, "Nama Barang",
+						XTableConstants.CELL_RENDERER_LEFT, String.class));
 
 		tableParameters.put(ColumnEnum.UNIT, new XTableParameter(3, 50, false,
-				"Satuan", XTableConstants.CELL_RENDERER_CENTER));
+				"Satuan", XTableConstants.CELL_RENDERER_CENTER, String.class));
 
 		tableParameters.put(ColumnEnum.QUANTITY_SISTEM, new XTableParameter(4,
-				50, false, "Qty Sistem", XTableConstants.CELL_RENDERER_RIGHT));
+				50, false, "Qty Sistem", XTableConstants.CELL_RENDERER_RIGHT,
+				Integer.class));
 
 		tableParameters.put(ColumnEnum.QUANTITY_MANUAL, new XTableParameter(5,
-				50, true, "Qty Manual", XTableConstants.CELL_RENDERER_RIGHT));
+				50, true, "Qty Manual", XTableConstants.CELL_RENDERER_RIGHT,
+				Integer.class));
 
 		tableParameters.put(ColumnEnum.DEVIATION, new XTableParameter(6, 75,
-				false, "Selisih", XTableConstants.CELL_RENDERER_RIGHT));
+				false, "Selisih", XTableConstants.CELL_RENDERER_RIGHT,
+				Integer.class));
 	}
 
 	public StockOpnameListDialog(Window parent) {
@@ -80,6 +84,7 @@ public class StockOpnameListDialog extends XJDialog {
 
 		table = new XJTable();
 		XTableUtils.initTable(table, tableParameters);
+		table.setAutoCreateRowSorter(true);
 		table.addPropertyChangeListener(new PropertyChangeListener() {
 			@Override
 			public void propertyChange(PropertyChangeEvent evt) {

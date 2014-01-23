@@ -55,13 +55,13 @@ public class CustomerListDialog extends XJDialog {
 	private XJRadioButton rdCustomerTidakAktif;
 	{
 		tableParameters.put(ColumnEnum.CODE, new XTableParameter(0, 30, false,
-				"Kode", XTableConstants.CELL_RENDERER_LEFT));
+				"Kode", XTableConstants.CELL_RENDERER_LEFT, String.class));
 
 		tableParameters.put(ColumnEnum.NAME, new XTableParameter(1, 100, false,
-				"Name", XTableConstants.CELL_RENDERER_LEFT));
+				"Name", XTableConstants.CELL_RENDERER_LEFT, String.class));
 
 		tableParameters.put(ColumnEnum.TELP, new XTableParameter(2, 30, false,
-				"No Telp", XTableConstants.CELL_RENDERER_CENTER));
+				"No Telp", XTableConstants.CELL_RENDERER_CENTER, String.class));
 	}
 
 	public CustomerListDialog(Window parent) {
@@ -80,6 +80,7 @@ public class CustomerListDialog extends XJDialog {
 			}
 		};
 		XTableUtils.initTable(table, tableParameters);
+		table.setAutoCreateRowSorter(true);
 
 		JPanel pnlFilter = new JPanel();
 		getContentPane().add(pnlFilter, "cell 0 0,grow");

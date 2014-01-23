@@ -83,28 +83,32 @@ public class PembelianForm extends XJDialog {
 	private XJLabel lblBayar;
 	{
 		tableParameters.put(ColumnEnum.NUM, new XTableParameter(0, 5, false,
-				"No", XTableConstants.CELL_RENDERER_CENTER));
+				"No", XTableConstants.CELL_RENDERER_CENTER, Integer.class));
 
 		tableParameters.put(ColumnEnum.CODE, new XTableParameter(1, 50, false,
-				"Kode", XTableConstants.CELL_RENDERER_LEFT));
+				"Kode", XTableConstants.CELL_RENDERER_LEFT, String.class));
 
-		tableParameters.put(ColumnEnum.NAME, new XTableParameter(2, 300, false,
-				"Nama Barang", XTableConstants.CELL_RENDERER_LEFT));
+		tableParameters.put(ColumnEnum.NAME,
+				new XTableParameter(2, 300, false, "Nama Barang",
+						XTableConstants.CELL_RENDERER_LEFT, String.class));
 
-		tableParameters.put(ColumnEnum.QUANTITY, new XTableParameter(3, 10,
-				true, "Qty", XTableConstants.CELL_RENDERER_RIGHT));
+		tableParameters.put(ColumnEnum.QUANTITY,
+				new XTableParameter(3, 10, true, "Qty",
+						XTableConstants.CELL_RENDERER_RIGHT, Integer.class));
 
 		tableParameters.put(ColumnEnum.UNIT, new XTableParameter(4, 50, false,
-				"Satuan", XTableConstants.CELL_RENDERER_LEFT));
+				"Satuan", XTableConstants.CELL_RENDERER_LEFT, String.class));
 
 		tableParameters.put(ColumnEnum.PRICE, new XTableParameter(5, 75, true,
-				"Harga Satuan", XTableConstants.CELL_RENDERER_RIGHT));
+				"Harga Satuan", XTableConstants.CELL_RENDERER_RIGHT,
+				Double.class));
 
 		tableParameters.put(ColumnEnum.LAST_PRICE, new XTableParameter(6, 75,
-				false, "Harga Terakhir", XTableConstants.CELL_RENDERER_RIGHT));
+				false, "Harga Terakhir", XTableConstants.CELL_RENDERER_RIGHT,
+				Double.class));
 
 		tableParameters.put(ColumnEnum.TOTAL, new XTableParameter(7, 75, false,
-				"Total", XTableConstants.CELL_RENDERER_RIGHT));
+				"Total", XTableConstants.CELL_RENDERER_RIGHT, Double.class));
 	}
 
 	public PembelianForm(Window parent) {

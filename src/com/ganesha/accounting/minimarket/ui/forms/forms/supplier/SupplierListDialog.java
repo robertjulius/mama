@@ -65,6 +65,7 @@ public class SupplierListDialog extends XJDialog {
 			}
 		};
 		initTable();
+		table.setAutoCreateRowSorter(true);
 
 		JPanel pnlFilter = new JPanel();
 		getContentPane().add(pnlFilter, "cell 0 0,grow");

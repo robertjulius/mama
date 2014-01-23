@@ -57,25 +57,28 @@ public class StockListDialog extends XJDialog {
 	private XJRadioButton rdBarangTidakAktif;
 	{
 		tableParameters.put(ColumnEnum.CODE, new XTableParameter(0, 25, false,
-				"Kode", XTableConstants.CELL_RENDERER_LEFT));
+				"Kode", XTableConstants.CELL_RENDERER_LEFT, String.class));
 
-		tableParameters.put(ColumnEnum.NAME, new XTableParameter(1, 300, false,
-				"Nama Barang", XTableConstants.CELL_RENDERER_LEFT));
+		tableParameters.put(ColumnEnum.NAME,
+				new XTableParameter(1, 300, false, "Nama Barang",
+						XTableConstants.CELL_RENDERER_LEFT, String.class));
 
 		tableParameters.put(ColumnEnum.STOCK, new XTableParameter(2, 25, false,
-				"Stok", XTableConstants.CELL_RENDERER_RIGHT));
+				"Stok", XTableConstants.CELL_RENDERER_RIGHT, Integer.class));
 
 		tableParameters.put(ColumnEnum.UNIT, new XTableParameter(3, 50, false,
-				"Satuan", XTableConstants.CELL_RENDERER_CENTER));
+				"Satuan", XTableConstants.CELL_RENDERER_CENTER, String.class));
 
 		tableParameters.put(ColumnEnum.BUY_PRICE, new XTableParameter(4, 75,
-				false, "Harga Beli", XTableConstants.CELL_RENDERER_RIGHT));
+				false, "Harga Beli", XTableConstants.CELL_RENDERER_RIGHT,
+				Double.class));
 
 		tableParameters.put(ColumnEnum.HPP, new XTableParameter(5, 25, false,
-				"HPP", XTableConstants.CELL_RENDERER_RIGHT));
+				"HPP", XTableConstants.CELL_RENDERER_RIGHT, Double.class));
 
 		tableParameters.put(ColumnEnum.SELL_PRICE, new XTableParameter(6, 75,
-				false, "Harga Jual", XTableConstants.CELL_RENDERER_RIGHT));
+				false, "Harga Jual", XTableConstants.CELL_RENDERER_RIGHT,
+				Double.class));
 	}
 
 	public StockListDialog(Window parent) {
@@ -94,6 +97,7 @@ public class StockListDialog extends XJDialog {
 			}
 		};
 		XTableUtils.initTable(table, tableParameters);
+		table.setAutoCreateRowSorter(true);
 
 		JPanel pnlFilter = new JPanel();
 		getContentPane().add(pnlFilter, "cell 0 0,grow");
