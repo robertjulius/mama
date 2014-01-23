@@ -224,7 +224,7 @@ public class TransactionReportListDialog extends XJDialog {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				try {
-					cetak();
+					preview();
 				} catch (Exception ex) {
 					ExceptionHandler.handleException(ex);
 				}
@@ -251,7 +251,7 @@ public class TransactionReportListDialog extends XJDialog {
 		}
 	}
 
-	private void cetak() throws AppException, UserException {
+	private void preview() throws AppException, UserException {
 		Session session = HibernateUtils.openSession();
 		try {
 			String transactionNumber = txtNoTransaksi.getText();

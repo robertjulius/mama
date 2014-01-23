@@ -168,7 +168,7 @@ public class StockOpnameListDialog extends XJDialog {
 		Session session = HibernateUtils.openSession();
 		try {
 			StockFacade facade = StockFacade.getInstance();
-			List<ItemStock> itemStocks = facade.search(null, null, false,
+			List<ItemStock> itemStocks = facade.search(null, null, false, null,
 					session);
 
 			XTableModel tableModel = (XTableModel) table.getModel();

@@ -5,6 +5,7 @@ import java.util.List;
 
 import org.hibernate.Criteria;
 import org.hibernate.Session;
+import org.hibernate.criterion.Order;
 import org.hibernate.criterion.Restrictions;
 
 import com.ganesha.accounting.minimarket.Main;
@@ -59,7 +60,7 @@ public class StockFacade {
 	}
 
 	public List<ItemStock> search(String code, String name, boolean disabled,
-			Session session) {
+			String[] orderBy, Session session) {
 		Criteria criteria = session.createCriteria(ItemStock.class);
 		criteria.createAlias("item", "item");
 
@@ -71,6 +72,14 @@ public class StockFacade {
 		if (name != null && !name.trim().isEmpty()) {
 			criteria.add(Restrictions.like("item.name", "%" + name + "%")
 					.ignoreCase());
+		}
+
+		if (orderBy != null) {
+			for (String order : orderBy) {
+				if (order != null && !order.trim().isEmpty()) {
+					criteria.addOrder(Order.asc(order));
+				}
+			}
 		}
 
 		criteria.add(Restrictions.eq("disabled", disabled));
