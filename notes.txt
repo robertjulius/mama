@@ -19,6 +19,6 @@ Cetak Barcode
 Warna UI
 Insert ke GL
 Laporan Laba Rugi
-Sorting Table
+[DONE] Sorting Table
 User Maintenance
 Permission Maintenance
