@@ -97,8 +97,7 @@ public class StockListDialog extends XJDialog {
 			}
 		};
 		XTableUtils.initTable(table, tableParameters);
-		table.setAutoCreateRowSorter(true);
-
+		
 		JPanel pnlFilter = new JPanel();
 		getContentPane().add(pnlFilter, "cell 0 0,grow");
 		pnlFilter.setLayout(new MigLayout("", "[][grow][]", "[][][grow]"));
@@ -205,7 +204,7 @@ public class StockListDialog extends XJDialog {
 				dispose();
 			}
 		});
-		btnKeluar.setText("<html><center>Keluar<br/>[ESC]</center></html>");
+		btnKeluar.setText("<html><center>Keluar<br/>[Esc]</center></html>");
 		panel.add(btnKeluar, "cell 0 0");
 		panel.add(btnRegistrasi, "cell 1 0");
 		btnRegistrasi

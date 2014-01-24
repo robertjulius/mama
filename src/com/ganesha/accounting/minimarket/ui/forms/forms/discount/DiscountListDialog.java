@@ -81,8 +81,7 @@ public class DiscountListDialog extends XJDialog {
 			}
 		};
 		XTableUtils.initTable(table, tableParameters);
-		table.setAutoCreateRowSorter(true);
-
+		
 		JPanel pnlFilter = new JPanel();
 		getContentPane().add(pnlFilter, "cell 0 0,alignx left,growy");
 		pnlFilter.setLayout(new MigLayout("", "[]", "[]"));

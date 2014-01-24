@@ -24,6 +24,8 @@
 		<mapping class="com.ganesha.accounting.minimarket.model.Item" />
 		<mapping class="com.ganesha.accounting.minimarket.model.ItemGroup" />
 		<mapping class="com.ganesha.accounting.minimarket.model.ItemStock" />
+		<mapping class="com.ganesha.accounting.minimarket.model.StockOpnameDetail" />
+		<mapping class="com.ganesha.accounting.minimarket.model.StockOpnameHeader" />
 		<mapping class="com.ganesha.accounting.minimarket.model.Supplier" />
 		<mapping class="com.ganesha.accounting.minimarket.model.Discount" />
 		<mapping class="com.ganesha.accounting.minimarket.model.Tax" />

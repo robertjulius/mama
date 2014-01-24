@@ -80,8 +80,7 @@ public class CustomerListDialog extends XJDialog {
 			}
 		};
 		XTableUtils.initTable(table, tableParameters);
-		table.setAutoCreateRowSorter(true);
-
+		
 		JPanel pnlFilter = new JPanel();
 		getContentPane().add(pnlFilter, "cell 0 0,grow");
 		pnlFilter.setLayout(new MigLayout("", "[100][grow][]", "[][][grow]"));
@@ -188,7 +187,7 @@ public class CustomerListDialog extends XJDialog {
 				dispose();
 			}
 		});
-		btnKeluar.setText("<html><center>Keluar<br/>[ESC]</center></html>");
+		btnKeluar.setText("<html><center>Keluar<br/>[Esc]</center></html>");
 		panel.add(btnKeluar, "cell 0 0");
 		panel.add(btnTambah, "cell 1 0");
 		btnTambah

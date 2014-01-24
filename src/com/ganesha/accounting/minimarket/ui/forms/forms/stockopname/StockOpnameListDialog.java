@@ -6,22 +6,30 @@ import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
+import java.sql.Timestamp;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 
 import net.miginfocom.swing.MigLayout;
+import net.sf.jasperreports.engine.JasperPrint;
+import net.sf.jasperreports.swing.JRViewer;
 
 import org.hibernate.Session;
 
 import com.ganesha.accounting.formatter.Formatter;
 import com.ganesha.accounting.minimarket.Main;
 import com.ganesha.accounting.minimarket.facade.StockFacade;
+import com.ganesha.accounting.minimarket.facade.StockOpnameFacade;
 import com.ganesha.accounting.minimarket.model.Item;
 import com.ganesha.accounting.minimarket.model.ItemStock;
+import com.ganesha.accounting.minimarket.model.StockOpnameDetail;
+import com.ganesha.accounting.minimarket.ui.forms.forms.stockopname.StockOpnameConfirmationDialog.ConfirmType;
 import com.ganesha.core.desktop.ExceptionHandler;
 import com.ganesha.core.exception.AppException;
 import com.ganesha.core.utils.CommonUtils;
@@ -41,13 +49,17 @@ public class StockOpnameListDialog extends XJDialog {
 	private XJTable table;
 
 	private final Map<ColumnEnum, XTableParameter> tableParameters = new HashMap<>();
-	private XJButton btnSelesai;
-	private XJButton btnKeluar;
+	private XJButton btnLanjut;
+	private XJButton btnBatal;
 	private JPanel pnlInformation;
 	private XJLabel lblPerformedBy;
 	private XJTextField txtPerformedBy;
 	private XJLabel lblPerformedDate;
 	private XJTextField txtStartTimestamp;
+
+	private Timestamp startTimestamp;
+	private Timestamp stopTimestamp;
+
 	{
 		tableParameters.put(ColumnEnum.NUM, new XTableParameter(0, 10, false,
 				"No", XTableConstants.CELL_RENDERER_CENTER, Integer.class));
@@ -81,10 +93,10 @@ public class StockOpnameListDialog extends XJDialog {
 		setTitle("Stock Opname");
 		getContentPane().setLayout(
 				new MigLayout("", "[1000,grow]", "[grow][300,grow][]"));
+		setCloseOnEsc(false);
 
 		table = new XJTable();
 		XTableUtils.initTable(table, tableParameters);
-		table.setAutoCreateRowSorter(true);
 		table.addPropertyChangeListener(new PropertyChangeListener() {
 			@Override
 			public void propertyChange(PropertyChangeEvent evt) {
@@ -127,27 +139,40 @@ public class StockOpnameListDialog extends XJDialog {
 
 		JPanel pnlButton = new JPanel();
 		getContentPane().add(pnlButton, "cell 0 2,alignx center,growy");
-		pnlButton.setLayout(new MigLayout("", "[][]", "[]"));
+		pnlButton.setLayout(new MigLayout("", "[200][200]", "[]"));
 
-		btnKeluar = new XJButton();
-		btnKeluar.addActionListener(new ActionListener() {
+		btnBatal = new XJButton();
+		btnBatal.setMnemonic('Q');
+		btnBatal.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				dispose();
+				batal();
 			}
 		});
-		btnKeluar.setText("<html><center>Batal<br/>[ESC]</center></html>");
-		pnlButton.add(btnKeluar, "cell 0 0");
+		btnBatal.setText("<html><center>Batal<br/>[Alt+Q]</center></html>");
+		pnlButton.add(btnBatal, "cell 0 0,growx");
 
-		btnSelesai = new XJButton();
-		btnSelesai.setText("<html></center>Selesai<br/>[F12]</center></html>");
-		pnlButton.add(btnSelesai, "cell 1 0");
+		btnLanjut = new XJButton();
+		btnLanjut.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				try {
+					lanjut();
+				} catch (Exception ex) {
+					ExceptionHandler.handleException(ex);
+				}
+			}
+		});
+		btnLanjut.setText("<html><center>Lanjut<br/>[F12]</center></html>");
+		pnlButton.add(btnLanjut, "cell 1 0,growx");
 
 		try {
 			loadData();
 		} catch (Exception ex) {
 			ExceptionHandler.handleException(ex);
 		}
+
+		startTimestamp = CommonUtils.getCurrentTimestamp();
 
 		pack();
 		setLocationRelativeTo(null);
@@ -157,10 +182,95 @@ public class StockOpnameListDialog extends XJDialog {
 	protected void keyEventListener(int keyCode) {
 		switch (keyCode) {
 		case KeyEvent.VK_F12:
-			btnSelesai.doClick();
+			btnLanjut.doClick();
 			break;
 		default:
 			break;
+		}
+	}
+
+	private void batal() {
+		String message = "Apakah Anda yakin ingin membatalkan proses stock opname ini?";
+		int selectedOption = JOptionPane.showConfirmDialog(this, message,
+				"Membatalkan Stock Opname", JOptionPane.YES_NO_OPTION);
+		if (selectedOption == JOptionPane.YES_OPTION) {
+			dispose();
+		}
+	}
+
+	private List<StockOpnameDetail> createStockOpnameList() throws AppException {
+		List<StockOpnameDetail> stockOpnameDetails = new ArrayList<>();
+		StockOpnameFacade facade = StockOpnameFacade.getInstance();
+		{
+			Session session = HibernateUtils.openSession();
+			try {
+				int rowCount = table.getRowCount();
+
+				for (int i = 0; i < rowCount; ++i) {
+					String itemCode = (String) table.getValueAt(i,
+							tableParameters.get(ColumnEnum.CODE)
+									.getColumnIndex());
+
+					int quantitySistem = Formatter.formatStringToNumber(
+							(String) table.getValueAt(
+									i,
+									tableParameters.get(
+											ColumnEnum.QUANTITY_SISTEM)
+											.getColumnIndex())).intValue();
+
+					int quantityManual = (int) table.getValueAt(i,
+							tableParameters.get(ColumnEnum.QUANTITY_MANUAL)
+									.getColumnIndex());
+
+					int overCount = quantityManual - quantitySistem;
+					if (overCount < 0) {
+						overCount = 0;
+					}
+
+					int lossCount = quantitySistem - quantityManual;
+					if (lossCount < 0) {
+						lossCount = 0;
+					}
+
+					stockOpnameDetails.add(facade.createStockOpnameEntity(itemCode,
+							quantityManual, overCount, lossCount, session));
+				}
+			} finally {
+				session.close();
+			}
+
+			return stockOpnameDetails;
+		}
+	}
+
+	private void lanjut() throws AppException {
+
+		stopTimestamp = CommonUtils.getCurrentTimestamp();
+
+		StockOpnameFacade facade = StockOpnameFacade.getInstance();
+		List<StockOpnameDetail> stockOpnames = createStockOpnameList();
+		JasperPrint jasperPrint = facade.prepareJasper(stockOpnames,
+				startTimestamp, stopTimestamp);
+
+		if (jasperPrint != null) {
+			Session session = HibernateUtils.openSession();
+			try {
+				JRViewer viewer = new JRViewer(jasperPrint);
+				ConfirmType confirmType = StockOpnameConfirmationDialog
+						.showConfirmation(this, viewer);
+
+				session.beginTransaction();
+				if (confirmType == ConfirmType.OK) {
+					facade.save(stockOpnames, startTimestamp, stopTimestamp,
+							session);
+				}
+				session.getTransaction().commit();
+			} catch (RuntimeException e) {
+				session.getTransaction().rollback();
+				throw e;
+			} finally {
+				session.close();
+			}
 		}
 	}
 

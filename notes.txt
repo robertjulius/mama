@@ -20,3 +20,5 @@ Warna UI
 Insert ke GL
 Laporan Laba Rugi
 Sorting Table
+User Maintenance
+Permission Maintenance

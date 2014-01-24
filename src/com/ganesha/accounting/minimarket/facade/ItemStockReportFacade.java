@@ -43,7 +43,7 @@ public class ItemStockReportFacade {
 	private ItemStockReportFacade() {
 	}
 
-	public JasperPrint prepareJasper(String code, String name,
+	private JasperPrint prepareJasper(String code, String name,
 			String orderById, String orderByText, Session session)
 			throws AppException {
 

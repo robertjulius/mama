@@ -90,8 +90,7 @@ public class ItemStockReportListDialog extends XJDialog {
 
 		table = new XJTable();
 		XTableUtils.initTable(table, tableParameters);
-		table.setAutoCreateRowSorter(true);
-
+		
 		pnlInformation = new JPanel();
 		getContentPane().add(pnlInformation, "cell 0 0");
 		pnlInformation.setLayout(new MigLayout("", "[grow][grow][grow]",

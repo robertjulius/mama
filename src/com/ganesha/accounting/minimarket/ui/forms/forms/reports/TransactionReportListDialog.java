@@ -110,7 +110,6 @@ public class TransactionReportListDialog extends XJDialog {
 			}
 		};
 		XTableUtils.initTable(table, tableParameters);
-		table.setAutoCreateRowSorter(true);
 
 		JPanel pnlFilter = new JPanel();
 		getContentPane().add(pnlFilter, "cell 0 0,alignx left,growy");
@@ -166,9 +165,9 @@ public class TransactionReportListDialog extends XJDialog {
 		pnlRangeTanggal.setLayout(new MigLayout("", "[][grow][][grow]",
 				"[][grow]"));
 
-		XJLabel lblNama = new XJLabel();
-		pnlRangeTanggal.add(lblNama, "cell 0 0 4 1");
-		lblNama.setText("Tanggal Transaksi");
+		XJLabel lblTanggalTransaksi = new XJLabel();
+		pnlRangeTanggal.add(lblTanggalTransaksi, "cell 0 0 4 1");
+		lblTanggalTransaksi.setText("Tanggal Transaksi");
 
 		XJLabel lblDari = new XJLabel();
 		lblDari.setText("Dari");
@@ -251,19 +250,6 @@ public class TransactionReportListDialog extends XJDialog {
 		}
 	}
 
-	private void preview() throws AppException, UserException {
-		Session session = HibernateUtils.openSession();
-		try {
-			String transactionNumber = txtNoTransaksi.getText();
-			Date beginDate = CommonUtils.validateDateBegin(dtChBegin.getDate());
-			Date endDate = CommonUtils.validateDateEnd(dtChEnd.getDate());
-			facade.previewReport(this, transactionNumber, beginDate, endDate,
-					session);
-		} finally {
-			session.close();
-		}
-	}
-
 	private void loadData() throws AppException, UserException {
 		Session session = HibernateUtils.openSession();
 		try {
@@ -332,6 +318,19 @@ public class TransactionReportListDialog extends XJDialog {
 		facade = facades.get(transactionType);
 
 		loadData();
+	}
+
+	private void preview() throws AppException, UserException {
+		Session session = HibernateUtils.openSession();
+		try {
+			String transactionNumber = txtNoTransaksi.getText();
+			Date beginDate = CommonUtils.validateDateBegin(dtChBegin.getDate());
+			Date endDate = CommonUtils.validateDateEnd(dtChEnd.getDate());
+			facade.previewReport(this, transactionNumber, beginDate, endDate,
+					session);
+		} finally {
+			session.close();
+		}
 	}
 
 	private enum ColumnEnum {

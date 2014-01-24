@@ -60,7 +60,7 @@ public class SaleReportFacade implements TransactionReportFacade {
 		return saleDetail;
 	}
 
-	public JasperPrint prepareJasper(String transactionNumber, Date beginDate,
+	private JasperPrint prepareJasper(String transactionNumber, Date beginDate,
 			Date endDate, Session session) throws AppException {
 
 		Map<String, Object> paramReport = new HashMap<String, Object>();
