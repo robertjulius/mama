@@ -112,7 +112,7 @@ public class StockForm extends XJDialog {
 
 		lblBarcode = new XJLabel();
 		pnlKode.add(lblBarcode, "cell 0 2");
-		lblBarcode.setText("Barcode");
+		lblBarcode.setText("Barcode [F8]");
 
 		txtBarcode = new XJTextField();
 		pnlKode.add(txtBarcode, "cell 1 2 2 1,growx");
@@ -292,7 +292,6 @@ public class StockForm extends XJDialog {
 			btnSimpan.doClick();
 			break;
 		case KeyEvent.VK_F8:
-			txtBarcode.setText("");
 			txtBarcode.requestFocus();
 			break;
 		default:

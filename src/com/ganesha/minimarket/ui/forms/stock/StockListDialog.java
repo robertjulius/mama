@@ -153,6 +153,16 @@ public class StockListDialog extends XJDialog {
 		pnlFilter.add(lblBarcodef, "cell 0 2,alignx trailing");
 
 		txtBarcode = new XJTextField();
+		txtBarcode.addKeyListener(new KeyAdapter() {
+			@Override
+			public void keyReleased(KeyEvent e) {
+				try {
+					loadData();
+				} catch (AppException ex) {
+					ex.printStackTrace();
+				}
+			}
+		});
 		pnlFilter.add(txtBarcode, "cell 1 2 2 1,growx");
 
 		JPanel pnlRadioButton = new JPanel();
@@ -263,6 +273,10 @@ public class StockListDialog extends XJDialog {
 			break;
 		case KeyEvent.VK_F6:
 			btnPrintBarcode.doClick();
+			break;
+		case KeyEvent.VK_F8:
+			txtBarcode.setText("");
+			txtBarcode.requestFocus();
 			break;
 		default:
 			break;

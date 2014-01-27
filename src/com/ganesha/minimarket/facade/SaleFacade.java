@@ -1,10 +1,25 @@
 package com.ganesha.minimarket.facade;
 
+import java.io.IOException;
+import java.io.InputStream;
 import java.math.BigDecimal;
 import java.sql.Timestamp;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
+import net.sf.jasperreports.engine.JRException;
+import net.sf.jasperreports.engine.JRExporterParameter;
+import net.sf.jasperreports.engine.JasperCompileManager;
+import net.sf.jasperreports.engine.JasperFillManager;
+import net.sf.jasperreports.engine.JasperPrint;
+import net.sf.jasperreports.engine.JasperReport;
+import net.sf.jasperreports.engine.data.JRBeanCollectionDataSource;
+import net.sf.jasperreports.engine.design.JasperDesign;
+import net.sf.jasperreports.engine.export.JRTextExporter;
+import net.sf.jasperreports.engine.export.JRTextExporterParameter;
+import net.sf.jasperreports.engine.xml.JRXmlLoader;
 
 import org.hibernate.Criteria;
 import org.hibernate.Query;
@@ -17,15 +32,12 @@ import com.ganesha.accounting.facade.AccountFacade;
 import com.ganesha.core.exception.AppException;
 import com.ganesha.core.exception.UserException;
 import com.ganesha.core.utils.CommonUtils;
-import com.ganesha.core.utils.Formatter;
 import com.ganesha.hibernate.HqlParameter;
 import com.ganesha.minimarket.Main;
-import com.ganesha.minimarket.model.Company;
 import com.ganesha.minimarket.model.Customer;
 import com.ganesha.minimarket.model.ItemStock;
 import com.ganesha.minimarket.model.SaleDetail;
 import com.ganesha.minimarket.model.SaleHeader;
-import com.ganesha.model.User;
 
 public class SaleFacade implements TransactionFacade {
 
@@ -41,24 +53,55 @@ public class SaleFacade implements TransactionFacade {
 	private SaleFacade() {
 	}
 
-	public void cetakStruck(SaleHeader saleHeader, List<SaleDetail> saleDetails) {
-		String newLine = "\r\n";
-		String tab = "\t";
-		Company company = Main.getCompany();
-		Timestamp timestamp = CommonUtils.getCurrentTimestamp();
-		User user = Main.getUserLogin();
+	public void cetakStruck(SaleHeader saleHeader, List<SaleDetail> saleDetails)
+			throws AppException {
+		String reportFile = "com/ganesha/minimarket/reports/Struck.jrxml";
 
-		StringBuilder builder = new StringBuilder();
-		builder.append(company.getName()).append(newLine);
-		builder.append(company.getAddress()).append(newLine);
-		builder.append(Formatter.formatTimestampToString(timestamp)).append(
-				newLine);
-		builder.append("[" + user.getLogin() + "] - " + user.getName()).append(
-				newLine);
-		builder.append("-----------------------------------").append(newLine);
+		Map<String, Object> paramReport = new HashMap<String, Object>();
+		paramReport.put("companyName", Main.getCompany().getName());
+		paramReport.put("companyAddress", Main.getCompany().getAddress());
+		paramReport.put("transactionTimestamp",
+				saleHeader.getTransactionTimestamp());
+		paramReport.put("userLoginId", Main.getUserLogin().getLogin());
+		paramReport.put("userLoginName", Main.getUserLogin().getName());
+		paramReport.put("pay", saleHeader.getPay());
+		paramReport.put("moneyChange", saleHeader.getMoneyChange());
 
-		for (SaleDetail saleDetail : saleDetails) {
-			// saleDetail.getItemName() + tab + saleDetail.getQuantity() +
+		InputStream inputStream = null;
+		try {
+			inputStream = this.getClass().getClassLoader()
+					.getResourceAsStream(reportFile);
+
+			JasperDesign jasperDesign = JRXmlLoader.load(inputStream);
+
+			JasperReport jasperReport = JasperCompileManager
+					.compileReport(jasperDesign);
+
+			JasperPrint jasperPrint = JasperFillManager.fillReport(
+					jasperReport, paramReport, new JRBeanCollectionDataSource(
+							saleDetails));
+
+			// JRViewer viewer = new JRViewer(jasperPrint);
+			// ReportViewerDialog.viewReport(null, "TEST", viewer);
+
+			JRTextExporter exporter = new JRTextExporter();
+			exporter.setParameter(JRTextExporterParameter.PAGE_WIDTH, 50);
+			exporter.setParameter(JRTextExporterParameter.PAGE_HEIGHT, 30);
+			exporter.setParameter(JRExporterParameter.JASPER_PRINT, jasperPrint);
+			exporter.setParameter(JRExporterParameter.OUTPUT_FILE_NAME,
+					"C:/Users/Asus-020/Desktop/test.txt");
+			exporter.exportReport();
+
+		} catch (JRException e) {
+			throw new AppException(e);
+		} finally {
+			if (inputStream != null) {
+				try {
+					inputStream.close();
+				} catch (IOException e) {
+					throw new AppException(e);
+				}
+			}
 		}
 	}
 
