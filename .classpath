@@ -28,5 +28,7 @@
 	<classpathentry kind="lib" path="lib/usb-api-1.0.2.jar"/>
 	<classpathentry kind="lib" path="lib/commons-lang3-3.1.jar"/>
 	<classpathentry kind="lib" path="lib/commons-io-1.4.jar"/>
+	<classpathentry kind="lib" path="lib/pdfbox-1.8.3.jar"/>
+	<classpathentry kind="lib" path="lib/fontbox-1.8.3.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

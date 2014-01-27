@@ -30,7 +30,9 @@ public class GeneralConstants {
 	public static final String FILE_BARCODE_NAME = "barcodes"
 			+ CommonUtils.getTimestampInString() + ".pdf";
 
-	public static final String PRINTER_NAME = "CutePDF Writer";
+	// public static final String PRINTER_NAME = "HP Deskjet Ink Adv 2010 K010";
+	// public static final String PRINTER_NAME = "CutePDF Writer";
+	public static final String PRINTER_NAME = "Canon iP2700 series";
 
 	public static final ComboBoxObject[] CMB_BOX_TRX_TYPES;
 	static {
