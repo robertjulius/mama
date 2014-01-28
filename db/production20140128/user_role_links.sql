@@ -1,2 +1,2 @@
-USE mama;
+USE minimarketkk;
 
