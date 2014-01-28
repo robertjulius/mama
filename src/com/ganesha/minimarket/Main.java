@@ -13,6 +13,7 @@ import org.hibernate.Query;
 import org.hibernate.Session;
 
 import com.ganesha.accounting.utils.CoaConsistencyChecker;
+import com.ganesha.core.desktop.ExceptionHandler;
 import com.ganesha.core.exception.AppException;
 import com.ganesha.core.utils.CommonUtils;
 import com.ganesha.hibernate.HibernateUtils;
@@ -60,7 +61,7 @@ public class Main {
 
 		} catch (ClassNotFoundException | InstantiationException
 				| IllegalAccessException | UnsupportedLookAndFeelException e) {
-			e.printStackTrace();
+			ExceptionHandler.handleException(null, e);
 		}
 	}
 
@@ -79,7 +80,7 @@ public class Main {
 
 		} catch (ClassNotFoundException | InstantiationException
 				| IllegalAccessException | UnsupportedLookAndFeelException e) {
-			e.printStackTrace();
+			ExceptionHandler.handleException(null, e);
 		}
 	}
 

@@ -84,8 +84,9 @@ public class SupplierListDialog extends XJDialog {
 					 * data
 					 */
 					loadData();
-				} catch (AppException ex) {
-					ex.printStackTrace();
+				} catch (Exception ex) {
+					ExceptionHandler.handleException(SupplierListDialog.this,
+							ex);
 				}
 			}
 		});
@@ -102,8 +103,9 @@ public class SupplierListDialog extends XJDialog {
 			public void keyReleased(KeyEvent e) {
 				try {
 					loadData();
-				} catch (AppException ex) {
-					ex.printStackTrace();
+				} catch (Exception ex) {
+					ExceptionHandler.handleException(SupplierListDialog.this,
+							ex);
 				}
 			}
 		});
@@ -120,8 +122,9 @@ public class SupplierListDialog extends XJDialog {
 			public void keyReleased(KeyEvent e) {
 				try {
 					loadData();
-				} catch (AppException ex) {
-					ex.printStackTrace();
+				} catch (Exception ex) {
+					ExceptionHandler.handleException(SupplierListDialog.this,
+							ex);
 				}
 			}
 		});
@@ -159,8 +162,9 @@ public class SupplierListDialog extends XJDialog {
 			public void actionPerformed(ActionEvent e) {
 				try {
 					loadData();
-				} catch (AppException ex) {
-					ex.printStackTrace();
+				} catch (Exception ex) {
+					ExceptionHandler.handleException(SupplierListDialog.this,
+							ex);
 				}
 			}
 		});

@@ -16,6 +16,7 @@ import net.miginfocom.swing.MigLayout;
 
 import org.hibernate.Session;
 
+import com.ganesha.core.desktop.ExceptionHandler;
 import com.ganesha.core.exception.AppException;
 import com.ganesha.desktop.component.XJButton;
 import com.ganesha.desktop.component.XJDialog;
@@ -72,7 +73,7 @@ public class ReceivableListDialog extends XJDialog {
 			}
 		};
 		XTableUtils.initTable(table, tableParameters);
-		
+
 		JPanel pnlFilter = new JPanel();
 		getContentPane().add(pnlFilter, "cell 0 0,grow");
 		pnlFilter.setLayout(new MigLayout("", "[100][grow][]", "[][][grow]"));
@@ -92,7 +93,8 @@ public class ReceivableListDialog extends XJDialog {
 					 */
 					loadData();
 				} catch (AppException ex) {
-					ex.printStackTrace();
+					ExceptionHandler.handleException(ReceivableListDialog.this,
+							ex);
 				}
 			}
 		});
@@ -110,7 +112,8 @@ public class ReceivableListDialog extends XJDialog {
 				try {
 					loadData();
 				} catch (AppException ex) {
-					ex.printStackTrace();
+					ExceptionHandler.handleException(ReceivableListDialog.this,
+							ex);
 				}
 			}
 		});
@@ -124,7 +127,8 @@ public class ReceivableListDialog extends XJDialog {
 				try {
 					loadData();
 				} catch (AppException ex) {
-					ex.printStackTrace();
+					ExceptionHandler.handleException(ReceivableListDialog.this,
+							ex);
 				}
 			}
 		});

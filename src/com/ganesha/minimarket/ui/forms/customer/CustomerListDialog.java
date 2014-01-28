@@ -100,7 +100,8 @@ public class CustomerListDialog extends XJDialog {
 					 */
 					loadData();
 				} catch (AppException ex) {
-					ex.printStackTrace();
+					ExceptionHandler.handleException(CustomerListDialog.this,
+							ex);
 				}
 			}
 		});
@@ -118,7 +119,8 @@ public class CustomerListDialog extends XJDialog {
 				try {
 					loadData();
 				} catch (AppException ex) {
-					ex.printStackTrace();
+					ExceptionHandler.handleException(CustomerListDialog.this,
+							ex);
 				}
 			}
 		});
@@ -158,7 +160,8 @@ public class CustomerListDialog extends XJDialog {
 				try {
 					loadData();
 				} catch (AppException ex) {
-					ex.printStackTrace();
+					ExceptionHandler.handleException(CustomerListDialog.this,
+							ex);
 				}
 			}
 		});

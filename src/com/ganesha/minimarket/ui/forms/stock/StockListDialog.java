@@ -122,8 +122,8 @@ public class StockListDialog extends XJDialog {
 					 * data
 					 */
 					loadData();
-				} catch (AppException ex) {
-					ex.printStackTrace();
+				} catch (Exception ex) {
+					ExceptionHandler.handleException(StockListDialog.this, ex);
 				}
 			}
 		});
@@ -140,8 +140,8 @@ public class StockListDialog extends XJDialog {
 			public void keyReleased(KeyEvent e) {
 				try {
 					loadData();
-				} catch (AppException ex) {
-					ex.printStackTrace();
+				} catch (Exception ex) {
+					ExceptionHandler.handleException(StockListDialog.this, ex);
 				}
 			}
 		});
@@ -158,8 +158,8 @@ public class StockListDialog extends XJDialog {
 			public void keyReleased(KeyEvent e) {
 				try {
 					loadData();
-				} catch (AppException ex) {
-					ex.printStackTrace();
+				} catch (Exception ex) {
+					ExceptionHandler.handleException(StockListDialog.this, ex);
 				}
 			}
 		});
@@ -196,8 +196,8 @@ public class StockListDialog extends XJDialog {
 			public void actionPerformed(ActionEvent e) {
 				try {
 					loadData();
-				} catch (AppException ex) {
-					ex.printStackTrace();
+				} catch (Exception ex) {
+					ExceptionHandler.handleException(StockListDialog.this, ex);
 				}
 			}
 		});

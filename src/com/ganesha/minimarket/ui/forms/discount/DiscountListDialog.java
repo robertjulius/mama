@@ -108,7 +108,8 @@ public class DiscountListDialog extends XJDialog {
 					 */
 					loadData();
 				} catch (Exception ex) {
-					ex.printStackTrace();
+					ExceptionHandler.handleException(DiscountListDialog.this,
+							ex);
 				}
 			}
 		});

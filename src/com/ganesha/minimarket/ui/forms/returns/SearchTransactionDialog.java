@@ -133,7 +133,8 @@ public class SearchTransactionDialog extends XJDialog {
 					 */
 					loadData();
 				} catch (Exception ex) {
-					ex.printStackTrace();
+					ExceptionHandler.handleException(
+							SearchTransactionDialog.this, ex);
 				}
 			}
 		});

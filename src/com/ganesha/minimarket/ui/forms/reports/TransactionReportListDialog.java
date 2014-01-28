@@ -156,7 +156,8 @@ public class TransactionReportListDialog extends XJDialog {
 					 */
 					loadData();
 				} catch (Exception ex) {
-					ex.printStackTrace();
+					ExceptionHandler.handleException(
+							TransactionReportListDialog.this, ex);
 				}
 			}
 		});

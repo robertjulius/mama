@@ -79,7 +79,8 @@ public class SearchEntityDialog extends XJDialog {
 					 */
 					loadData();
 				} catch (AppException ex) {
-					ex.printStackTrace();
+					ExceptionHandler.handleException(SearchEntityDialog.this,
+							ex);
 				}
 			}
 		});
@@ -96,8 +97,9 @@ public class SearchEntityDialog extends XJDialog {
 			public void keyReleased(KeyEvent e) {
 				try {
 					loadData();
-				} catch (AppException ex) {
-					ex.printStackTrace();
+				} catch (Exception ex) {
+					ExceptionHandler.handleException(SearchEntityDialog.this,
+							ex);
 				}
 			}
 		});
