@@ -2,6 +2,7 @@ package com.ganesha.minimarket.facade;
 
 import java.math.BigDecimal;
 import java.sql.Timestamp;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
@@ -17,6 +18,7 @@ import com.ganesha.accounting.facade.AccountFacade;
 import com.ganesha.core.exception.AppException;
 import com.ganesha.core.exception.UserException;
 import com.ganesha.core.utils.CommonUtils;
+import com.ganesha.core.utils.Formatter;
 import com.ganesha.hibernate.HqlParameter;
 import com.ganesha.minimarket.Main;
 import com.ganesha.minimarket.model.Customer;
@@ -41,6 +43,19 @@ public class SaleFacade implements TransactionFacade {
 	}
 
 	public void cetakStruck(SaleHeader saleHeader, List<SaleDetail> saleDetails) {
+
+		String companyName = Main.getCompany().getName();
+		String companyAddress = Main.getCompany().getAddress();
+		String transactionTimestamp = Formatter
+				.formatTimestampToString(saleHeader.getTransactionTimestamp());
+		String userInformation = "[" + Main.getUserLogin().getLogin() + "] "
+				+ Main.getUserLogin().getName();
+		String totalBelanja = Formatter.formatNumberToString(saleHeader
+				.getTotalAmount());
+		String pay = Formatter.formatNumberToString(saleHeader.getPay());
+		String moneyChange = Formatter.formatNumberToString(saleHeader
+				.getMoneyChange());
+
 		ReceiptPrinter receiptPrinter = new ReceiptPrinter();
 		receiptPrinter.setCompanyName(companyName);
 		receiptPrinter.setCompanyAddress(companyAddress);
@@ -50,10 +65,32 @@ public class SaleFacade implements TransactionFacade {
 		receiptPrinter.setPay(pay);
 		receiptPrinter.setMoneyChange(moneyChange);
 
+		List<ItemBelanja> itemBelanjaList = new ArrayList<>();
 		for (SaleDetail saleDetail : saleDetails) {
+			String itemName = saleDetail.getItemName();
+			String quantiy = Formatter.formatNumberToString(saleDetail
+					.getQuantity());
+			String pricePerUnit = Formatter.formatNumberToString(saleDetail
+					.getPricePerUnit());
+			String discountPercent = Formatter.formatNumberToString(saleDetail
+					.getDiscountPercent()) + "%";
+			String totalAmount = Formatter.formatNumberToString(saleDetail
+					.getTotalAmount());
+
 			ItemBelanja itemBelanja = new ItemBelanja();
 			itemBelanja.setItemName(itemName);
+			itemBelanja.setQuantiy(quantiy);
+			itemBelanja.setPricePerUnit(pricePerUnit);
+			itemBelanja.setDiscountPercent(discountPercent);
+			itemBelanja.setTotalAmount(totalAmount);
+
+			itemBelanjaList.add(itemBelanja);
 		}
+
+		receiptPrinter.setItemBelanjaList(itemBelanjaList);
+
+		String struct = receiptPrinter.buildStruct();
+		System.out.println(struct);
 	}
 
 	// public void cetakStruck(SaleHeader saleHeader, List<SaleDetail>
@@ -145,7 +182,7 @@ public class SaleFacade implements TransactionFacade {
 					session);
 		}
 
-		cetakStruck(saleHeader, saleDetails);
+		// cetakStruck(saleHeader, saleDetails);
 	}
 
 	@Override

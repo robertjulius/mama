@@ -31,27 +31,47 @@ public class ReceiptPrinter {
 	public String buildItemList() {
 		StringBuilder builder = new StringBuilder();
 		for (ItemBelanja itemBelanja : itemBelanjaList) {
-			builder.append(
-					itemBelanja.getItemName()
-							.substring(0, MAX_LENGTH_ITEM_NAME)).append(
-					NEW_LINE);
+			if (itemBelanja.getItemName().length() > MAX_LENGTH_ITEM_NAME) {
+				builder.append(
+						itemBelanja.getItemName().substring(0,
+								MAX_LENGTH_ITEM_NAME)).append(NEW_LINE);
+			} else {
+				builder.append(itemBelanja.getItemName()).append(NEW_LINE);
+			}
 
-			builder.append(alignRight(
-					itemBelanja.getItemName().substring(0, MAX_LENGTH_QUANTITY),
-					MAX_LENGTH_QUANTITY));
+			if (itemBelanja.getQuantiy().length() > MAX_LENGTH_QUANTITY) {
+				builder.append(alignRight(
+						itemBelanja.getQuantiy().substring(0,
+								MAX_LENGTH_QUANTITY), MAX_LENGTH_QUANTITY));
+			} else {
+				builder.append(itemBelanja.getQuantiy());
+			}
 
-			builder.append(alignRight(
-					itemBelanja.getPricePerUnit().substring(0,
-							MAX_LENGTH_PRICE_PER_UNIT),
-					MAX_LENGTH_PRICE_PER_UNIT));
+			if (itemBelanja.getPricePerUnit().length() > MAX_LENGTH_PRICE_PER_UNIT) {
+				builder.append(alignRight(itemBelanja.getPricePerUnit()
+						.substring(0, MAX_LENGTH_PRICE_PER_UNIT),
+						MAX_LENGTH_PRICE_PER_UNIT));
+			} else {
+				builder.append(itemBelanja.getPricePerUnit());
+			}
 
-			builder.append(alignRight(itemBelanja.getDiscountPercent()
-					.substring(0, MAX_LENGTH_DISCOUNT_PERCENT),
-					MAX_LENGTH_DISCOUNT_PERCENT));
+			if (itemBelanja.getDiscountPercent().length() > MAX_LENGTH_DISCOUNT_PERCENT) {
+				builder.append(alignRight(itemBelanja.getDiscountPercent()
+						.substring(0, MAX_LENGTH_DISCOUNT_PERCENT),
+						MAX_LENGTH_DISCOUNT_PERCENT));
+			} else {
+				builder.append(itemBelanja.getDiscountPercent());
+			}
 
-			builder.append(alignRight(
-					itemBelanja.getTotalAmount().substring(0,
-							MAX_LENGTH_TOTAL_AMOUNT), MAX_LENGTH_TOTAL_AMOUNT));
+			if (itemBelanja.getTotalAmount().length() > MAX_LENGTH_TOTAL_AMOUNT) {
+				builder.append(alignRight(itemBelanja.getTotalAmount()
+						.substring(0, MAX_LENGTH_TOTAL_AMOUNT),
+						MAX_LENGTH_TOTAL_AMOUNT));
+			} else {
+				builder.append(itemBelanja.getTotalAmount());
+			}
+
+			builder.append(NEW_LINE);
 		}
 		return builder.toString();
 	}
@@ -59,28 +79,66 @@ public class ReceiptPrinter {
 	public String buildStruct() {
 		StringBuilder builder = new StringBuilder();
 
-		builder.append(companyName.substring(0, MAX_LENGTH_COMPANY_NAME));
-		builder.append(companyAddress.substring(0, MAX_LENGTH_COMPANY_ADDRESS));
-		builder.append(transactionTimestamp.substring(0,
-				MAX_LENGTH_TRANSACTION_TIMESTAMP));
-		builder.append(userInformation
-				.substring(0, MAX_LENGTH_USER_INFORMATION));
+		if (companyName.length() > MAX_LENGTH_COMPANY_NAME) {
+			builder.append(companyName.substring(0, MAX_LENGTH_COMPANY_NAME))
+					.append(NEW_LINE);
+		} else {
+			builder.append(companyName).append(NEW_LINE);
+		}
+
+		if (companyAddress.length() > MAX_LENGTH_COMPANY_ADDRESS) {
+			builder.append(
+					companyAddress.substring(0, MAX_LENGTH_COMPANY_ADDRESS))
+					.append(NEW_LINE);
+		} else {
+			builder.append(companyAddress).append(NEW_LINE);
+		}
+
+		if (transactionTimestamp.length() > MAX_LENGTH_TRANSACTION_TIMESTAMP) {
+			builder.append(
+					transactionTimestamp.substring(0,
+							MAX_LENGTH_TRANSACTION_TIMESTAMP)).append(NEW_LINE);
+		} else {
+			builder.append(transactionTimestamp).append(NEW_LINE);
+		}
+
+		if (userInformation.length() > MAX_LENGTH_USER_INFORMATION) {
+			builder.append(
+					userInformation.substring(0, MAX_LENGTH_USER_INFORMATION))
+					.append(NEW_LINE);
+		} else {
+			builder.append(userInformation).append(NEW_LINE);
+		}
 
 		builder.append(NEW_LINE);
 		builder.append(buildItemList());
 		builder.append(NEW_LINE);
 
-		builder.append(
-				alignRight(totalBelanja.substring(0, MAX_LENGTH_TOTAL_BELANJA),
-						MAX_LENGTH_TOTAL_BELANJA)).append(NEW_LINE);
+		if (totalBelanja.length() > MAX_LENGTH_TOTAL_BELANJA) {
+			builder.append(
+					alignRight(
+							totalBelanja.substring(0, MAX_LENGTH_TOTAL_BELANJA),
+							MAX_LENGTH_TOTAL_BELANJA)).append(NEW_LINE);
+		} else {
+			builder.append(totalBelanja).append(NEW_LINE);
+		}
 
-		builder.append(
-				alignRight(pay.substring(0, MAX_LENGTH_PAY), MAX_LENGTH_PAY))
-				.append(NEW_LINE);
+		if (pay.length() > MAX_LENGTH_PAY) {
+			builder.append(
+					alignRight(pay.substring(0, MAX_LENGTH_PAY), MAX_LENGTH_PAY))
+					.append(NEW_LINE);
+		} else {
+			builder.append(pay).append(NEW_LINE);
+		}
 
-		builder.append(
-				alignRight(moneyChange.substring(0, MAX_LENGTH_MONEY_CHANGE),
-						MAX_LENGTH_MONEY_CHANGE)).append(NEW_LINE);
+		if (moneyChange.length() > MAX_LENGTH_MONEY_CHANGE) {
+			builder.append(
+					alignRight(
+							moneyChange.substring(0, MAX_LENGTH_MONEY_CHANGE),
+							MAX_LENGTH_MONEY_CHANGE)).append(NEW_LINE);
+		} else {
+			builder.append(moneyChange).append(NEW_LINE);
+		}
 
 		return builder.toString();
 	}
@@ -151,20 +209,28 @@ public class ReceiptPrinter {
 
 	private String alignRight(String string, int width) {
 		int length = string.length();
-		int emtyCount = width - length;
-		String emtyString = "";
-		for (int i = 0; i < emtyCount; ++i) {
-			emtyString += " ";
+
+		if (length > width) {
+			int emtyCount = width - length;
+			String emtyString = "";
+			for (int i = 0; i < emtyCount; ++i) {
+				emtyString += " ";
+			}
+			return emtyString + string;
+		} else {
+			return string.substring(0, width);
 		}
-		return emtyString + string;
 	}
 
-	public class ItemBelanja {
+	public static class ItemBelanja {
 		private String itemName;
 		private String quantiy;
 		private String pricePerUnit;
 		private String discountPercent;
 		private String totalAmount;
+
+		public ItemBelanja() {
+		}
 
 		public String getDiscountPercent() {
 			return discountPercent;
