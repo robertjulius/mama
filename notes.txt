@@ -29,3 +29,5 @@ Setting:
 2. Nama Company
 3. Pajak
 4. Temp PDF File
+
+Check warning pada saat build-eclipse.xml

@@ -1,25 +1,10 @@
 package com.ganesha.minimarket.facade;
 
-import java.io.IOException;
-import java.io.InputStream;
 import java.math.BigDecimal;
 import java.sql.Timestamp;
 import java.util.Date;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
-import net.sf.jasperreports.engine.JRException;
-import net.sf.jasperreports.engine.JRExporterParameter;
-import net.sf.jasperreports.engine.JasperCompileManager;
-import net.sf.jasperreports.engine.JasperFillManager;
-import net.sf.jasperreports.engine.JasperPrint;
-import net.sf.jasperreports.engine.JasperReport;
-import net.sf.jasperreports.engine.data.JRBeanCollectionDataSource;
-import net.sf.jasperreports.engine.design.JasperDesign;
-import net.sf.jasperreports.engine.export.JRTextExporter;
-import net.sf.jasperreports.engine.export.JRTextExporterParameter;
-import net.sf.jasperreports.engine.xml.JRXmlLoader;
 
 import org.hibernate.Criteria;
 import org.hibernate.Query;
@@ -38,6 +23,8 @@ import com.ganesha.minimarket.model.Customer;
 import com.ganesha.minimarket.model.ItemStock;
 import com.ganesha.minimarket.model.SaleDetail;
 import com.ganesha.minimarket.model.SaleHeader;
+import com.ganesha.minimarket.utils.ReceiptPrinter;
+import com.ganesha.minimarket.utils.ReceiptPrinter.ItemBelanja;
 
 public class SaleFacade implements TransactionFacade {
 
@@ -53,57 +40,74 @@ public class SaleFacade implements TransactionFacade {
 	private SaleFacade() {
 	}
 
-	public void cetakStruck(SaleHeader saleHeader, List<SaleDetail> saleDetails)
-			throws AppException {
-		String reportFile = "com/ganesha/minimarket/reports/Struck.jrxml";
+	public void cetakStruck(SaleHeader saleHeader, List<SaleDetail> saleDetails) {
+		ReceiptPrinter receiptPrinter = new ReceiptPrinter();
+		receiptPrinter.setCompanyName(companyName);
+		receiptPrinter.setCompanyAddress(companyAddress);
+		receiptPrinter.setTransactionTimestamp(transactionTimestamp);
+		receiptPrinter.setUserInformation(userInformation);
+		receiptPrinter.setTotalBelanja(totalBelanja);
+		receiptPrinter.setPay(pay);
+		receiptPrinter.setMoneyChange(moneyChange);
 
-		Map<String, Object> paramReport = new HashMap<String, Object>();
-		paramReport.put("companyName", Main.getCompany().getName());
-		paramReport.put("companyAddress", Main.getCompany().getAddress());
-		paramReport.put("transactionTimestamp",
-				saleHeader.getTransactionTimestamp());
-		paramReport.put("userLoginId", Main.getUserLogin().getLogin());
-		paramReport.put("userLoginName", Main.getUserLogin().getName());
-		paramReport.put("pay", saleHeader.getPay());
-		paramReport.put("moneyChange", saleHeader.getMoneyChange());
-
-		InputStream inputStream = null;
-		try {
-			inputStream = this.getClass().getClassLoader()
-					.getResourceAsStream(reportFile);
-
-			JasperDesign jasperDesign = JRXmlLoader.load(inputStream);
-
-			JasperReport jasperReport = JasperCompileManager
-					.compileReport(jasperDesign);
-
-			JasperPrint jasperPrint = JasperFillManager.fillReport(
-					jasperReport, paramReport, new JRBeanCollectionDataSource(
-							saleDetails));
-
-			// JRViewer viewer = new JRViewer(jasperPrint);
-			// ReportViewerDialog.viewReport(null, "TEST", viewer);
-
-			JRTextExporter exporter = new JRTextExporter();
-			exporter.setParameter(JRTextExporterParameter.PAGE_WIDTH, 50);
-			exporter.setParameter(JRTextExporterParameter.PAGE_HEIGHT, 30);
-			exporter.setParameter(JRExporterParameter.JASPER_PRINT, jasperPrint);
-			exporter.setParameter(JRExporterParameter.OUTPUT_FILE_NAME,
-					"C:/Users/Asus-020/Desktop/test.txt");
-			exporter.exportReport();
-
-		} catch (JRException e) {
-			throw new AppException(e);
-		} finally {
-			if (inputStream != null) {
-				try {
-					inputStream.close();
-				} catch (IOException e) {
-					throw new AppException(e);
-				}
-			}
+		for (SaleDetail saleDetail : saleDetails) {
+			ItemBelanja itemBelanja = new ItemBelanja();
+			itemBelanja.setItemName(itemName);
 		}
 	}
+
+	// public void cetakStruck(SaleHeader saleHeader, List<SaleDetail>
+	// saleDetails)
+	// throws AppException {
+	// String reportFile = "com/ganesha/minimarket/reports/Struck.jrxml";
+	//
+	// Map<String, Object> paramReport = new HashMap<String, Object>();
+	// paramReport.put("companyName", Main.getCompany().getName());
+	// paramReport.put("companyAddress", Main.getCompany().getAddress());
+	// paramReport.put("transactionTimestamp",
+	// saleHeader.getTransactionTimestamp());
+	// paramReport.put("userLoginId", Main.getUserLogin().getLogin());
+	// paramReport.put("userLoginName", Main.getUserLogin().getName());
+	// paramReport.put("pay", saleHeader.getPay());
+	// paramReport.put("moneyChange", saleHeader.getMoneyChange());
+	//
+	// InputStream inputStream = null;
+	// try {
+	// inputStream = this.getClass().getClassLoader()
+	// .getResourceAsStream(reportFile);
+	//
+	// JasperDesign jasperDesign = JRXmlLoader.load(inputStream);
+	//
+	// JasperReport jasperReport = JasperCompileManager
+	// .compileReport(jasperDesign);
+	//
+	// JasperPrint jasperPrint = JasperFillManager.fillReport(
+	// jasperReport, paramReport, new JRBeanCollectionDataSource(
+	// saleDetails));
+	//
+	// // JRViewer viewer = new JRViewer(jasperPrint);
+	// // ReportViewerDialog.viewReport(null, "TEST", viewer);
+	//
+	// JRTextExporter exporter = new JRTextExporter();
+	// exporter.setParameter(JRTextExporterParameter.PAGE_WIDTH, 50);
+	// exporter.setParameter(JRTextExporterParameter.PAGE_HEIGHT, 30);
+	// exporter.setParameter(JRExporterParameter.JASPER_PRINT, jasperPrint);
+	// exporter.setParameter(JRExporterParameter.OUTPUT_FILE_NAME,
+	// "C:/Users/Asus-020/Desktop/test.txt");
+	// exporter.exportReport();
+	//
+	// } catch (JRException e) {
+	// throw new AppException(e);
+	// } finally {
+	// if (inputStream != null) {
+	// try {
+	// inputStream.close();
+	// } catch (IOException e) {
+	// throw new AppException(e);
+	// }
+	// }
+	// }
+	// }
 
 	public SaleDetail getDetail(String transactionNumber, Integer orderNum,
 			Session session) {
