@@ -375,7 +375,8 @@ public class ReturPembelianForm extends XJDialog {
 				try {
 					selesaiDanSimpan();
 				} catch (Exception ex) {
-					ExceptionHandler.handleException(ex);
+					ExceptionHandler.handleException(ReturPembelianForm.this,
+							ex);
 				}
 			}
 		});

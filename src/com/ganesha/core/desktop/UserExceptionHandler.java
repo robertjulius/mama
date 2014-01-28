@@ -19,8 +19,8 @@ public class UserExceptionHandler extends XJDialog {
 	private XJButton btnOk;
 	private XJLabel lblMessage;
 
-	public static void handleException(Exception ex) {
-		UserExceptionHandler exceptionHandler = new UserExceptionHandler(null);
+	public static void handleException(Window parent, Exception ex) {
+		UserExceptionHandler exceptionHandler = new UserExceptionHandler(parent);
 		exceptionHandler.setMessage("<html><center>PROSES GAGAL<br/><br/>"
 				+ ex.getMessage() + "</center></html>");
 		exceptionHandler.pack();

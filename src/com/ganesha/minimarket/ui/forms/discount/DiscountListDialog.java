@@ -81,7 +81,7 @@ public class DiscountListDialog extends XJDialog {
 			}
 		};
 		XTableUtils.initTable(table, tableParameters);
-		
+
 		JPanel pnlFilter = new JPanel();
 		getContentPane().add(pnlFilter, "cell 0 0,alignx left,growy");
 		pnlFilter.setLayout(new MigLayout("", "[]", "[]"));
@@ -137,7 +137,8 @@ public class DiscountListDialog extends XJDialog {
 				try {
 					loadData();
 				} catch (Exception ex) {
-					ExceptionHandler.handleException(ex);
+					ExceptionHandler.handleException(DiscountListDialog.this,
+							ex);
 				}
 			}
 		});
@@ -168,7 +169,8 @@ public class DiscountListDialog extends XJDialog {
 				try {
 					tambah();
 				} catch (Exception ex) {
-					ExceptionHandler.handleException(ex);
+					ExceptionHandler.handleException(DiscountListDialog.this,
+							ex);
 				}
 			}
 		});
@@ -183,7 +185,8 @@ public class DiscountListDialog extends XJDialog {
 				try {
 					showDetail();
 				} catch (Exception ex) {
-					ExceptionHandler.handleException(ex);
+					ExceptionHandler.handleException(DiscountListDialog.this,
+							ex);
 				}
 			}
 		});
@@ -194,7 +197,7 @@ public class DiscountListDialog extends XJDialog {
 		try {
 			loadData();
 		} catch (Exception ex) {
-			ExceptionHandler.handleException(ex);
+			ExceptionHandler.handleException(this, ex);
 		}
 
 		pack();

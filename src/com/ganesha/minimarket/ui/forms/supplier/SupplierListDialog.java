@@ -144,7 +144,8 @@ public class SupplierListDialog extends XJDialog {
 				try {
 					loadData();
 				} catch (Exception ex) {
-					ExceptionHandler.handleException(ex);
+					ExceptionHandler.handleException(SupplierListDialog.this,
+							ex);
 				}
 			}
 		});

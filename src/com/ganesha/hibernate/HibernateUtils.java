@@ -1,7 +1,6 @@
 package com.ganesha.hibernate;
 
 import java.io.File;
-import java.net.URISyntaxException;
 
 import org.hibernate.HibernateException;
 import org.hibernate.Session;
@@ -9,14 +8,17 @@ import org.hibernate.SessionFactory;
 import org.hibernate.cfg.AnnotationConfiguration;
 import org.slf4j.LoggerFactory;
 
+import com.ganesha.core.utils.ResourceUtils;
+
 public class HibernateUtils {
 
+	private static final String FILE_HIBERNATE_CONFIG_XML = "hibernate.cfg.xml";
 	private static SessionFactory sessionFactory;
 
 	static {
 		try {
-			File file = new File(HibernateUtils.class.getResource(
-					"/configurations/hibernate.cfg.xml").toURI());
+			File configBase = ResourceUtils.getConfigBase();
+			File file = new File(configBase, FILE_HIBERNATE_CONFIG_XML);
 			sessionFactory = new AnnotationConfiguration().configure(file)
 					.buildSessionFactory();
 		} catch (RuntimeException e) {
@@ -24,11 +26,6 @@ public class HibernateUtils {
 					"Initial SessionFactory creation failed:" + e.getMessage(),
 					e);
 			throw e;
-		} catch (URISyntaxException e) {
-			LoggerFactory.getLogger(HibernateUtils.class).error(
-					"Initial SessionFactory creation failed:" + e.getMessage(),
-					e);
-			System.exit(1);
 		}
 	}
 

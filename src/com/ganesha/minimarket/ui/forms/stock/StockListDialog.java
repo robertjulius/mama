@@ -182,7 +182,7 @@ public class StockListDialog extends XJDialog {
 				try {
 					loadData();
 				} catch (Exception ex) {
-					ExceptionHandler.handleException(ex);
+					ExceptionHandler.handleException(StockListDialog.this, ex);
 				}
 			}
 		});
@@ -248,7 +248,7 @@ public class StockListDialog extends XJDialog {
 				try {
 					printBarcode();
 				} catch (Exception ex) {
-					ExceptionHandler.handleException(ex);
+					ExceptionHandler.handleException(StockListDialog.this, ex);
 				}
 			}
 		});

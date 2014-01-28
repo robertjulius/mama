@@ -245,7 +245,8 @@ public class ReturPenjualanForm extends XJDialog {
 				try {
 					selesaiDanSimpan();
 				} catch (Exception ex) {
-					ExceptionHandler.handleException(ex);
+					ExceptionHandler.handleException(ReturPenjualanForm.this,
+							ex);
 				}
 			}
 		});

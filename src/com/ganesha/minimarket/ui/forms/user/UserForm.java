@@ -96,7 +96,7 @@ public class UserForm extends XJDialog {
 				try {
 					save();
 				} catch (Exception ex) {
-					ExceptionHandler.handleException(ex);
+					ExceptionHandler.handleException(UserForm.this, ex);
 				}
 			}
 		});
@@ -120,7 +120,7 @@ public class UserForm extends XJDialog {
 					deleted = true;
 					save();
 				} catch (Exception ex) {
-					ExceptionHandler.handleException(ex);
+					ExceptionHandler.handleException(UserForm.this, ex);
 				}
 			}
 		});

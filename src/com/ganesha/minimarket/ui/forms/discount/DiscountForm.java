@@ -119,7 +119,7 @@ public class DiscountForm extends XJDialog {
 				try {
 					save();
 				} catch (Exception ex) {
-					ExceptionHandler.handleException(ex);
+					ExceptionHandler.handleException(DiscountForm.this, ex);
 				}
 			}
 		});

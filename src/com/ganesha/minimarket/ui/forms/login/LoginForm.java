@@ -8,8 +8,6 @@ import java.awt.event.KeyEvent;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
-import java.net.URISyntaxException;
-import java.net.URL;
 
 import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
@@ -21,7 +19,9 @@ import javax.swing.JSeparator;
 import net.miginfocom.swing.MigLayout;
 
 import com.ganesha.core.desktop.ExceptionHandler;
+import com.ganesha.core.exception.AppException;
 import com.ganesha.core.exception.UserException;
+import com.ganesha.core.utils.ResourceUtils;
 import com.ganesha.desktop.component.XJButton;
 import com.ganesha.desktop.component.XJFrame;
 import com.ganesha.desktop.component.XJLabel;
@@ -64,8 +64,6 @@ public class LoginForm extends XJFrame {
 
 		lblLblImage = new XJLabel();
 		pnlImage.add(lblLblImage, "cell 0 0,alignx left,aligny top");
-		lblLblImage.setIcon(loadImageFromFile(
-				LoginForm.class.getResource("/images/login.jpg"), 100, 75));
 
 		JPanel pnlInput = new JPanel();
 		getContentPane().add(pnlInput, "cell 1 2,grow");
@@ -105,11 +103,17 @@ public class LoginForm extends XJFrame {
 					login(txtLoginId.getText(),
 							new String(txtPassword.getPassword()));
 				} catch (Exception ex) {
-					ExceptionHandler.handleException(ex);
+					ExceptionHandler.handleException(LoginForm.this, ex);
 				}
 			}
 		});
 		pnlButton.add(btnLogin, "cell 1 0");
+
+		try {
+			loadImageFromFile();
+		} catch (AppException ex) {
+			ExceptionHandler.handleException(this, ex);
+		}
 
 		pack();
 		setLocationRelativeTo(null);
@@ -126,16 +130,20 @@ public class LoginForm extends XJFrame {
 		}
 	}
 
-	private ImageIcon loadImageFromFile(URL fileUrl, int width, int height) {
+	private ImageIcon loadImageFromFile() throws AppException {
 		ImageIcon imageIcon = null;
 		try {
-			BufferedImage bufferedImage = ImageIO
-					.read(new File(fileUrl.toURI()));
-			Image scaledImage = bufferedImage.getScaledInstance(width, height,
+			File imageBase = ResourceUtils.getImageBase();
+			File image = new File(imageBase, "login.jpg");
+
+			BufferedImage bufferedImage = ImageIO.read(image);
+			Image scaledImage = bufferedImage.getScaledInstance(100, 75,
 					Image.SCALE_SMOOTH);
 			imageIcon = new ImageIcon(scaledImage);
-		} catch (IOException | URISyntaxException e) {
-			e.printStackTrace();
+
+			lblLblImage.setIcon(imageIcon);
+		} catch (IOException ex) {
+			throw new AppException(ex);
 		}
 		return imageIcon;
 	}

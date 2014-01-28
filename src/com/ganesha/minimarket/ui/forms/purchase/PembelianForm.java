@@ -252,7 +252,7 @@ public class PembelianForm extends XJDialog {
 				try {
 					cariBarcode();
 				} catch (Exception ex) {
-					ExceptionHandler.handleException(ex);
+					ExceptionHandler.handleException(PembelianForm.this, ex);
 				}
 			}
 		});
@@ -402,7 +402,7 @@ public class PembelianForm extends XJDialog {
 				try {
 					selesaiDanSimpan();
 				} catch (Exception ex) {
-					ExceptionHandler.handleException(ex);
+					ExceptionHandler.handleException(PembelianForm.this, ex);
 				}
 			}
 		});

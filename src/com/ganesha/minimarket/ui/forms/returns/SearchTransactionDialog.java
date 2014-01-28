@@ -170,7 +170,8 @@ public class SearchTransactionDialog extends XJDialog {
 				try {
 					loadData();
 				} catch (Exception ex) {
-					ExceptionHandler.handleException(ex);
+					ExceptionHandler.handleException(
+							SearchTransactionDialog.this, ex);
 				}
 			}
 		});
@@ -191,7 +192,8 @@ public class SearchTransactionDialog extends XJDialog {
 				try {
 					pilih();
 				} catch (Exception ex) {
-					ExceptionHandler.handleException(ex);
+					ExceptionHandler.handleException(
+							SearchTransactionDialog.this, ex);
 				}
 			}
 		});
@@ -204,7 +206,7 @@ public class SearchTransactionDialog extends XJDialog {
 		try {
 			loadData();
 		} catch (Exception ex) {
-			ExceptionHandler.handleException(ex);
+			ExceptionHandler.handleException(this, ex);
 		}
 	}
 

@@ -105,7 +105,8 @@ public class TransactionReportListDialog extends XJDialog {
 				try {
 					facade.showDetail(null);
 				} catch (Exception ex) {
-					ExceptionHandler.handleException(ex);
+					ExceptionHandler.handleException(
+							TransactionReportListDialog.this, ex);
 				}
 			}
 		};
@@ -132,7 +133,8 @@ public class TransactionReportListDialog extends XJDialog {
 				try {
 					onComboBoxSelected();
 				} catch (Exception ex) {
-					ExceptionHandler.handleException(ex);
+					ExceptionHandler.handleException(
+							TransactionReportListDialog.this, ex);
 				}
 			}
 		});
@@ -194,7 +196,8 @@ public class TransactionReportListDialog extends XJDialog {
 				try {
 					loadData();
 				} catch (Exception ex) {
-					ExceptionHandler.handleException(ex);
+					ExceptionHandler.handleException(
+							TransactionReportListDialog.this, ex);
 				}
 			}
 		});
@@ -225,7 +228,8 @@ public class TransactionReportListDialog extends XJDialog {
 				try {
 					preview();
 				} catch (Exception ex) {
-					ExceptionHandler.handleException(ex);
+					ExceptionHandler.handleException(
+							TransactionReportListDialog.this, ex);
 				}
 			}
 		});

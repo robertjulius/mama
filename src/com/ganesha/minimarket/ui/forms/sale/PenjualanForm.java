@@ -236,7 +236,7 @@ public class PenjualanForm extends XJDialog {
 				try {
 					cariBarcode();
 				} catch (Exception ex) {
-					ExceptionHandler.handleException(ex);
+					ExceptionHandler.handleException(PenjualanForm.this, ex);
 				}
 			}
 		});
@@ -360,7 +360,7 @@ public class PenjualanForm extends XJDialog {
 				try {
 					selesaiDanSimpan();
 				} catch (Exception ex) {
-					ExceptionHandler.handleException(ex);
+					ExceptionHandler.handleException(PenjualanForm.this, ex);
 				}
 			}
 		});

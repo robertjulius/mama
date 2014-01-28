@@ -80,7 +80,7 @@ public class CustomerListDialog extends XJDialog {
 			}
 		};
 		XTableUtils.initTable(table, tableParameters);
-		
+
 		JPanel pnlFilter = new JPanel();
 		getContentPane().add(pnlFilter, "cell 0 0,grow");
 		pnlFilter.setLayout(new MigLayout("", "[100][grow][]", "[][][grow]"));
@@ -142,7 +142,8 @@ public class CustomerListDialog extends XJDialog {
 				try {
 					loadData();
 				} catch (Exception ex) {
-					ExceptionHandler.handleException(ex);
+					ExceptionHandler.handleException(CustomerListDialog.this,
+							ex);
 				}
 			}
 		});

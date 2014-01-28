@@ -159,7 +159,8 @@ public class StockOpnameListDialog extends XJDialog {
 				try {
 					lanjut();
 				} catch (Exception ex) {
-					ExceptionHandler.handleException(ex);
+					ExceptionHandler.handleException(
+							StockOpnameListDialog.this, ex);
 				}
 			}
 		});
@@ -169,7 +170,7 @@ public class StockOpnameListDialog extends XJDialog {
 		try {
 			loadData();
 		} catch (Exception ex) {
-			ExceptionHandler.handleException(ex);
+			ExceptionHandler.handleException(this, ex);
 		}
 
 		startTimestamp = CommonUtils.getCurrentTimestamp();

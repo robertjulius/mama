@@ -25,8 +25,8 @@ public class AppExceptionHandler extends JDialog {
 	private JTextArea txtStackTrace;
 	private JLabel lblMessage;
 
-	public static void handleException(Exception ex) {
-		AppExceptionHandler exceptionHandler = new AppExceptionHandler(null);
+	public static void handleException(Window parent, Exception ex) {
+		AppExceptionHandler exceptionHandler = new AppExceptionHandler(parent);
 		exceptionHandler.setMessage(ex.getMessage());
 		exceptionHandler.setStackTrace(ex);
 		exceptionHandler.pack();

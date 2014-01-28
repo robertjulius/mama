@@ -79,7 +79,7 @@ public class StockForm extends XJDialog {
 				try {
 					initForm();
 				} catch (Exception ex) {
-					ExceptionHandler.handleException(ex);
+					ExceptionHandler.handleException(StockForm.this, ex);
 				}
 			}
 		});
@@ -218,7 +218,7 @@ public class StockForm extends XJDialog {
 				try {
 					save();
 				} catch (Exception ex) {
-					ExceptionHandler.handleException(ex);
+					ExceptionHandler.handleException(StockForm.this, ex);
 				}
 			}
 		});
@@ -242,7 +242,7 @@ public class StockForm extends XJDialog {
 					deleted = true;
 					save();
 				} catch (Exception ex) {
-					ExceptionHandler.handleException(ex);
+					ExceptionHandler.handleException(StockForm.this, ex);
 				}
 			}
 		});

@@ -1,15 +1,17 @@
 package com.ganesha.core.desktop;
 
+import java.awt.Window;
+
 import com.ganesha.core.exception.UserException;
 
 public class ExceptionHandler {
 
-	public static void handleException(Exception ex) {
+	public static void handleException(Window parent, Exception ex) {
 
 		if (ex instanceof UserException) {
-			UserExceptionHandler.handleException(ex);
+			UserExceptionHandler.handleException(parent, ex);
 		} else {
-			AppExceptionHandler.handleException(ex);
+			AppExceptionHandler.handleException(parent, ex);
 		}
 	}
 }

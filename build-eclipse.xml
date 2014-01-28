@@ -1,0 +1,73 @@
+<project>
+
+	<property name="app-name" value="MiniMarketKK-v1.0.0.jar" />
+	<property name="source-path1" value="src" />
+	<property name="source-path2" value="resources" />
+	<property name="main-class" value="com.ganesha.minimarket.Main" />
+	<property name="lib-path" value="lib" />
+	<property name="eclipse-ant-path" value="eclipse-ant" />
+	<property name="compile-path" value="bin" />
+	<property name="jar-path" value="${eclipse-ant-path}/jar" />
+
+	<!-- ############ CLEAN ALL ############ -->
+	<target name="clean">
+		<delete dir="${compile-path}" />
+		<delete dir="${jar-path}" />
+	</target>
+
+	<!-- ############ COMPILE ALL ############ -->
+	<target name="compile" depends="clean">
+		<mkdir dir="${compile-path}" />
+		<javac srcdir="${source-path1}" destdir="${compile-path}">
+			<classpath>
+				<fileset dir="${lib-path}">
+					<include name="*" />
+				</fileset>
+			</classpath>
+		</javac>
+		<copy todir="${compile-path}">
+			<fileset dir="${source-path1}" excludes="**/*.java" />
+		</copy>
+		<javac srcdir="${source-path2}" destdir="${compile-path}">
+			<classpath>
+				<fileset dir="${lib-path}">
+					<include name="*" />
+				</fileset>
+			</classpath>
+		</javac>
+		<copy todir="${compile-path}">
+			<fileset dir="${source-path2}" excludes="**/*.java" />
+		</copy>
+	</target>
+
+	<!-- ############ CREATE JAR ############ -->
+	<target name="jar" depends="compile">
+		<mkdir dir="${jar-path}/lib" />
+		<copy todir="${jar-path}/lib">
+			<fileset dir="${lib-path}" includes="*" />
+		</copy>
+		<copy todir="${jar-path}">
+			<fileset dir="" includes="setting.properties,resources/**" />
+		</copy>
+		<path id="jar-classpath">
+			<fileset dir="${jar-path}/lib">
+				<include name="*" />
+			</fileset>
+		</path>
+		<manifestclasspath property="manifest.lib.list" jarfile="${jar-path}/${app-name}">
+			<classpath refid="jar-classpath" />
+		</manifestclasspath>
+		<jar destfile="${jar-path}/${app-name}" basedir="${compile-path}">
+			<manifest>
+				<attribute name="Class-Path" value="${manifest.lib.list}" />
+				<attribute name="Main-Class" value="${main-class}" />
+			</manifest>
+		</jar>
+	</target>
+
+	<!-- ############ RUN JAR ############ -->
+	<target name="run" depends="jar">
+		<java jar="${jar-path}/${app-name}" fork="true" />
+	</target>
+
+</project>

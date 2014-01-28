@@ -69,7 +69,7 @@ public class CustomerForm extends XJDialog {
 				try {
 					initForm();
 				} catch (Exception ex) {
-					ExceptionHandler.handleException(ex);
+					ExceptionHandler.handleException(CustomerForm.this, ex);
 				}
 			}
 		});
@@ -170,7 +170,7 @@ public class CustomerForm extends XJDialog {
 				try {
 					save();
 				} catch (Exception ex) {
-					ExceptionHandler.handleException(ex);
+					ExceptionHandler.handleException(CustomerForm.this, ex);
 				}
 			}
 		});
@@ -194,7 +194,7 @@ public class CustomerForm extends XJDialog {
 					deleted = true;
 					save();
 				} catch (Exception ex) {
-					ExceptionHandler.handleException(ex);
+					ExceptionHandler.handleException(CustomerForm.this, ex);
 				}
 			}
 		});

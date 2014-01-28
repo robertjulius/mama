@@ -1,6 +1,7 @@
 package com.ganesha.minimarket;
 
 import java.awt.Color;
+import java.net.URL;
 import java.util.Date;
 import java.util.List;
 
@@ -37,6 +38,7 @@ public class Main {
 	public static void main(String[] args) throws AppException {
 		runApp();
 		// testHibernate2();
+		// testResource();
 	}
 
 	public static void runApp() throws AppException {
@@ -133,5 +135,10 @@ public class Main {
 		} finally {
 			session.close();
 		}
+	}
+
+	public static void testResource() {
+		URL url = Main.class.getResource("");
+		System.out.println(url);
 	}
 }

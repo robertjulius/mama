@@ -118,7 +118,8 @@ public class SearchEntityDialog extends XJDialog {
 				try {
 					pilih();
 				} catch (Exception ex) {
-					ExceptionHandler.handleException(ex);
+					ExceptionHandler.handleException(SearchEntityDialog.this,
+							ex);
 				}
 			}
 		});
@@ -131,7 +132,7 @@ public class SearchEntityDialog extends XJDialog {
 		try {
 			loadData();
 		} catch (AppException ex) {
-			ExceptionHandler.handleException(ex);
+			ExceptionHandler.handleException(this, ex);
 		}
 	}
 

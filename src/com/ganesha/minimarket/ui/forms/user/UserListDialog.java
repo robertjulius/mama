@@ -126,7 +126,7 @@ public class UserListDialog extends XJDialog {
 				try {
 					loadData();
 				} catch (Exception ex) {
-					ExceptionHandler.handleException(ex);
+					ExceptionHandler.handleException(UserListDialog.this, ex);
 				}
 			}
 		});

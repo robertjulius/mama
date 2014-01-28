@@ -122,7 +122,8 @@ public class ItemStockReportListDialog extends XJDialog {
 				try {
 					loadData();
 				} catch (Exception ex) {
-					ExceptionHandler.handleException(ex);
+					ExceptionHandler.handleException(
+							ItemStockReportListDialog.this, ex);
 				}
 			}
 		});
@@ -152,7 +153,8 @@ public class ItemStockReportListDialog extends XJDialog {
 				try {
 					preview();
 				} catch (Exception ex) {
-					ExceptionHandler.handleException(ex);
+					ExceptionHandler.handleException(
+							ItemStockReportListDialog.this, ex);
 				}
 			}
 		});
@@ -163,7 +165,7 @@ public class ItemStockReportListDialog extends XJDialog {
 		try {
 			loadData();
 		} catch (Exception ex) {
-			ExceptionHandler.handleException(ex);
+			ExceptionHandler.handleException(this, ex);
 		}
 
 		pack();

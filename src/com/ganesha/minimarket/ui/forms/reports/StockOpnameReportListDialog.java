@@ -70,7 +70,8 @@ public class StockOpnameReportListDialog extends XJDialog {
 				try {
 					btnPreview.doClick();
 				} catch (Exception ex) {
-					ExceptionHandler.handleException(ex);
+					ExceptionHandler.handleException(
+							StockOpnameReportListDialog.this, ex);
 				}
 			}
 		};
@@ -100,7 +101,8 @@ public class StockOpnameReportListDialog extends XJDialog {
 				try {
 					loadData();
 				} catch (Exception ex) {
-					ExceptionHandler.handleException(ex);
+					ExceptionHandler.handleException(
+							StockOpnameReportListDialog.this, ex);
 				}
 			}
 		});
@@ -140,7 +142,8 @@ public class StockOpnameReportListDialog extends XJDialog {
 				try {
 					preview();
 				} catch (Exception ex) {
-					ExceptionHandler.handleException(ex);
+					ExceptionHandler.handleException(
+							StockOpnameReportListDialog.this, ex);
 				}
 			}
 		});

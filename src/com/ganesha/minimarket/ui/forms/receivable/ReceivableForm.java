@@ -147,7 +147,7 @@ public class ReceivableForm extends XJDialog {
 				try {
 					save();
 				} catch (Exception ex) {
-					ExceptionHandler.handleException(ex);
+					ExceptionHandler.handleException(ReceivableForm.this, ex);
 				}
 			}
 		});

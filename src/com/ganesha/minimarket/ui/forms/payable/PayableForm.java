@@ -147,7 +147,7 @@ public class PayableForm extends XJDialog {
 				try {
 					save();
 				} catch (Exception ex) {
-					ExceptionHandler.handleException(ex);
+					ExceptionHandler.handleException(PayableForm.this, ex);
 				}
 			}
 		});
