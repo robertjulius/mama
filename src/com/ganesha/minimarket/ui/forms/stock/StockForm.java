@@ -67,8 +67,6 @@ public class StockForm extends XJDialog {
 	private JPanel pnlDisable;
 	private XJCheckBox chkDisabled;
 
-	private boolean deleted;
-
 	public StockForm(Window parent, ActionType actionType) {
 		super(parent);
 		this.actionType = actionType;
@@ -221,7 +219,7 @@ public class StockForm extends XJDialog {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				try {
-					save();
+					save(false);
 				} catch (Exception ex) {
 					ExceptionHandler.handleException(StockForm.this, ex);
 				}
@@ -244,8 +242,7 @@ public class StockForm extends XJDialog {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				try {
-					deleted = true;
-					save();
+					save(true);
 				} catch (Exception ex) {
 					ExceptionHandler.handleException(StockForm.this, ex);
 				}
@@ -347,7 +344,8 @@ public class StockForm extends XJDialog {
 		}
 	}
 
-	private void save() throws ActionTypeNotSupported, UserException {
+	private void save(boolean deleted) throws ActionTypeNotSupported,
+			UserException {
 		validateForm();
 
 		Session session = HibernateUtils.openSession();
@@ -404,6 +402,16 @@ public class StockForm extends XJDialog {
 
 		if (txtSatuan.getText().trim().equals("")) {
 			throw new UserException("Satuan harus diisi");
+		}
+
+		if (chkDisabled.isSelected()) {
+			int jumlahSaatIni = Formatter.formatStringToNumber(
+					txtJumlahSaatIni.getText()).intValue();
+			if (jumlahSaatIni > 0) {
+				throw new UserException(
+						"Tidak bisa menonaktifkan barang kareng jumlah stok untuk barang ini masih ada sebanyak "
+								+ jumlahSaatIni);
+			}
 		}
 	}
 }

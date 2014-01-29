@@ -120,6 +120,12 @@ public class CustomerFacade {
 		}
 		customer.setName(name);
 		customer.setPhone(phone);
+		if (deleted) {
+			if (!disabled) {
+				throw new UserException(
+						"Tidak dapat menghapus Customer yang masih dalam kondisi aktif");
+			}
+		}
 		customer.setDisabled(disabled);
 		customer.setDeleted(deleted);
 		customer.setLastUpdatedBy(Main.getUserLogin().getId());

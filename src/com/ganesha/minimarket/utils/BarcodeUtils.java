@@ -110,9 +110,14 @@ public class BarcodeUtils {
 		print(file);
 	}
 
-	public static void print(File file) throws AppException {
+	public static boolean print(File file) throws AppException {
 		PrintService printService = choosePrinter();
-		printPDF(file, printService);
+		if (printService != null) {
+			printPDF(file, printService);
+			return true;
+		} else {
+			return false;
+		}
 	}
 
 	private static PrintService choosePrinter() {

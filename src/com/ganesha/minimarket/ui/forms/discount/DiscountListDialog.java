@@ -176,7 +176,7 @@ public class DiscountListDialog extends XJDialog {
 			}
 		});
 		btnTambah
-				.setText("<html><center>Tambah Supplier Baru<br/>[F5]</center><html>");
+				.setText("<html><center>Tambah Diskon Baru<br/>[F5]</center><html>");
 		panel.add(btnTambah, "cell 1 0");
 
 		XJButton btnlihatDetailenter = new XJButton();

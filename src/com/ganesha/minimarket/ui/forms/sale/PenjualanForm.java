@@ -382,8 +382,7 @@ public class PenjualanForm extends XJDialog {
 			btnTambah.doClick();
 			break;
 		case KeyEvent.VK_F8:
-			txtBarcode.setText("");
-			txtBarcode.requestFocus();
+			setFocusToBarcodeField();
 			break;
 		case KeyEvent.VK_F12:
 			btnSelesai.doClick();
@@ -602,6 +601,12 @@ public class PenjualanForm extends XJDialog {
 		}
 	}
 
+	private void setFocusToBarcodeField() {
+		table.getCellEditor().stopCellEditing();
+		txtBarcode.setText("");
+		txtBarcode.requestFocus();
+	}
+
 	private void setTotalBayarDanKembalian() {
 		double total = Formatter.formatStringToNumber(txtTotal.getText())
 				.doubleValue();
@@ -715,7 +720,7 @@ public class PenjualanForm extends XJDialog {
 			tableModel.setValueAt(item.getName(), rowIndex, tableParameters
 					.get(ColumnEnum.NAME).getColumnIndex());
 
-			tableModel.setValueAt(0, rowIndex,
+			tableModel.setValueAt(1, rowIndex,
 					tableParameters.get(ColumnEnum.QUANTITY).getColumnIndex());
 
 			tableModel.setValueAt(itemStock.getUnit(), rowIndex,
@@ -737,7 +742,9 @@ public class PenjualanForm extends XJDialog {
 			table.requestFocus();
 			table.changeSelection(row, tableParameters.get(ColumnEnum.QUANTITY)
 					.getColumnIndex(), false, false);
+			table.getCellEditor().stopCellEditing();
 
+			setTotalPerRow(row);
 			setTotalPenjualan();
 
 		} finally {

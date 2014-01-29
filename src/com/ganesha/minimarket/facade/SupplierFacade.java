@@ -157,6 +157,12 @@ public class SupplierFacade {
 		supplier.setName(name);
 		supplier.setPhone1(phone1);
 		supplier.setPhone2(phone2);
+		if (deleted) {
+			if (!disabled) {
+				throw new UserException(
+						"Tidak dapat menghapus Supplier yang masih dalam kondisi aktif");
+			}
+		}
 		supplier.setDisabled(disabled);
 		supplier.setDeleted(deleted);
 		supplier.setLastUpdatedBy(Main.getUserLogin().getId());

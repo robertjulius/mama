@@ -82,8 +82,6 @@ public class SupplierForm extends XJDialog {
 	private XJCheckBox chkDisabled;
 	private XJButton btnhapussupplier;
 
-	private boolean deleted;
-
 	public SupplierForm(Window parent, ActionType actionType) {
 		super(parent);
 		this.actionType = actionType;
@@ -284,7 +282,7 @@ public class SupplierForm extends XJDialog {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				try {
-					save();
+					save(false);
 				} catch (Exception ex) {
 					ExceptionHandler.handleException(SupplierForm.this, ex);
 				}
@@ -307,8 +305,7 @@ public class SupplierForm extends XJDialog {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				try {
-					deleted = true;
-					save();
+					save(true);
 				} catch (Exception ex) {
 					ExceptionHandler.handleException(SupplierForm.this, ex);
 				}
@@ -370,7 +367,8 @@ public class SupplierForm extends XJDialog {
 		lblKodeTerakhirValue.setText(String.valueOf(kodeTerakhir));
 	}
 
-	private void save() throws ActionTypeNotSupported, UserException {
+	private void save(boolean deleted) throws ActionTypeNotSupported,
+			UserException {
 		validateForm();
 
 		Session session = HibernateUtils.openSession();

@@ -427,8 +427,7 @@ public class PembelianForm extends XJDialog {
 			btnRegistrasi.doClick();
 			break;
 		case KeyEvent.VK_F8:
-			txtBarcode.setText("");
-			txtBarcode.requestFocus();
+			setFocusToBarcodeField();
 			break;
 		case KeyEvent.VK_F12:
 			btnSelesai.doClick();
@@ -646,6 +645,12 @@ public class PembelianForm extends XJDialog {
 		} finally {
 			session.close();
 		}
+	}
+
+	private void setFocusToBarcodeField() {
+		table.getCellEditor().stopCellEditing();
+		txtBarcode.setText("");
+		txtBarcode.requestFocus();
 	}
 
 	private void setTotalBayarDanHutang() {

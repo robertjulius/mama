@@ -58,8 +58,6 @@ public class CustomerForm extends XJDialog {
 	private JSeparator separator;
 	private XJButton btnhapuscustomer;
 
-	private boolean deleted;
-
 	public CustomerForm(Window parent, ActionType actionType) {
 		super(parent);
 		this.actionType = actionType;
@@ -168,7 +166,7 @@ public class CustomerForm extends XJDialog {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				try {
-					save();
+					save(false);
 				} catch (Exception ex) {
 					ExceptionHandler.handleException(CustomerForm.this, ex);
 				}
@@ -191,8 +189,7 @@ public class CustomerForm extends XJDialog {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				try {
-					deleted = true;
-					save();
+					save(true);
 				} catch (Exception ex) {
 					ExceptionHandler.handleException(CustomerForm.this, ex);
 				}
@@ -245,7 +242,8 @@ public class CustomerForm extends XJDialog {
 		lblKodeTerakhirValue.setText(String.valueOf(kodeTerakhir));
 	}
 
-	private void save() throws ActionTypeNotSupported, UserException {
+	private void save(boolean deleted) throws ActionTypeNotSupported,
+			UserException {
 		validateForm();
 
 		Session session = HibernateUtils.openSession();

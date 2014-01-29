@@ -141,7 +141,15 @@ public class StockFacade {
 				item.setName(name);
 			}
 		}
-		item.setBarcode(barcode);
+		if (deleted) {
+			item.setBarcode(null);
+			if (!disabled) {
+				throw new UserException(
+						"Tidak dapat menghapus Barang yang masih dalam kondisi aktif");
+			}
+		} else {
+			item.setBarcode(barcode);
+		}
 		item.setDisabled(disabled);
 		item.setDeleted(deleted);
 		item.setLastUpdatedBy(Main.getUserLogin().getId());

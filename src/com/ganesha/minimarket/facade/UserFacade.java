@@ -94,6 +94,12 @@ public class UserFacade {
 		if (password != null && !password.trim().equals("")) {
 			user.setPassword(password);
 		}
+		if (deleted) {
+			if (!disabled) {
+				throw new UserException(
+						"Tidak dapat menghapus User yang masih dalam kondisi aktif");
+			}
+		}
 		user.setDisabled(disabled);
 		user.setDeleted(deleted);
 		user.setLastUpdatedBy(Main.getUserLogin().getId());

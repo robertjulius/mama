@@ -40,7 +40,6 @@ public class UserForm extends XJDialog {
 	private XJButton btnBatal;
 	private XJButton btnHapus;
 
-	private boolean deleted;
 	private XJCheckBox chkDisabled;
 	private JSeparator separator;
 
@@ -94,7 +93,7 @@ public class UserForm extends XJDialog {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				try {
-					save();
+					save(false);
 				} catch (Exception ex) {
 					ExceptionHandler.handleException(UserForm.this, ex);
 				}
@@ -117,8 +116,7 @@ public class UserForm extends XJDialog {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				try {
-					deleted = true;
-					save();
+					save(false);
 				} catch (Exception ex) {
 					ExceptionHandler.handleException(UserForm.this, ex);
 				}
@@ -157,7 +155,8 @@ public class UserForm extends XJDialog {
 		dispose();
 	}
 
-	private void save() throws ActionTypeNotSupported, UserException {
+	private void save(boolean deleted) throws ActionTypeNotSupported,
+			UserException {
 		validateForm();
 
 		Session session = HibernateUtils.openSession();
