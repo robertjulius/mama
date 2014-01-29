@@ -10,7 +10,7 @@ Permission Maintenance
 
 
 Setting:
-1. Printer
+1. Printer Barcode
 2. Nama Company
 3. Pajak
 4. Temp PDF File
@@ -18,3 +18,11 @@ Setting:
 Check warning pada saat build-eclipse.xml
 
 BUGS...!!! Kalo habis delete master item, barcode nya di-release aja supaya bisa dipake lagi. Mungkin bisa pake flag barcode=DELETED
+Validasi Disabled Item: Harus dalam keadaan stok kosong
+Validasi Hapus Item: Dalam keadaan disabled 
+Validasi Hapus Master lainnya: Dalam keadaan disabled
+Hashing password
+Backup restore DB
+Scan barang, langsung kasih quantity 1
+Format receipt, pake max width
+Tambahin fungsi F8, maka end proses table

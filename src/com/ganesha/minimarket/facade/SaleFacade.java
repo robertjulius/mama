@@ -1,11 +1,27 @@
 package com.ganesha.minimarket.facade;
 
+import java.awt.print.PrinterJob;
+import java.io.ByteArrayInputStream;
+import java.io.IOException;
+import java.io.InputStream;
 import java.math.BigDecimal;
 import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
+
+import javax.print.Doc;
+import javax.print.DocFlavor;
+import javax.print.DocPrintJob;
+import javax.print.PrintException;
+import javax.print.PrintService;
+import javax.print.SimpleDoc;
+import javax.print.attribute.HashPrintRequestAttributeSet;
+import javax.print.attribute.PrintRequestAttributeSet;
+import javax.print.attribute.standard.Copies;
+import javax.print.event.PrintJobAdapter;
+import javax.print.event.PrintJobEvent;
 
 import org.hibernate.Criteria;
 import org.hibernate.Query;
@@ -15,6 +31,7 @@ import org.hibernate.criterion.Restrictions;
 import com.ganesha.accounting.constants.CoaCodeConstants;
 import com.ganesha.accounting.constants.Enums.DebitCreditFlag;
 import com.ganesha.accounting.facade.AccountFacade;
+import com.ganesha.core.SystemSetting;
 import com.ganesha.core.exception.AppException;
 import com.ganesha.core.exception.UserException;
 import com.ganesha.core.utils.CommonUtils;
@@ -25,6 +42,7 @@ import com.ganesha.minimarket.model.Customer;
 import com.ganesha.minimarket.model.ItemStock;
 import com.ganesha.minimarket.model.SaleDetail;
 import com.ganesha.minimarket.model.SaleHeader;
+import com.ganesha.minimarket.ui.forms.systemsetting.SystemSettingForm;
 import com.ganesha.minimarket.utils.ReceiptPrinter;
 import com.ganesha.minimarket.utils.ReceiptPrinter.ItemBelanja;
 
@@ -42,7 +60,8 @@ public class SaleFacade implements TransactionFacade {
 	private SaleFacade() {
 	}
 
-	public void cetakStruck(SaleHeader saleHeader, List<SaleDetail> saleDetails) {
+	public void cetakReceipt(SaleHeader saleHeader, List<SaleDetail> saleDetails)
+			throws AppException {
 
 		String companyName = Main.getCompany().getName();
 		String companyAddress = Main.getCompany().getAddress();
@@ -72,8 +91,10 @@ public class SaleFacade implements TransactionFacade {
 					.getQuantity()) + "x";
 			String pricePerUnit = Formatter.formatNumberToString(saleDetail
 					.getPricePerUnit());
-			String discountPercent = Formatter.formatNumberToString(saleDetail
-					.getDiscountPercent()) + "%";
+			String discountPercent = saleDetail.getDiscountPercent()
+					.doubleValue() > 0 ? Formatter
+					.formatNumberToString(saleDetail.getDiscountPercent())
+					+ "%" : "";
 			String totalAmount = Formatter.formatNumberToString(saleDetail
 					.getTotalAmount());
 
@@ -88,9 +109,39 @@ public class SaleFacade implements TransactionFacade {
 		}
 
 		receiptPrinter.setItemBelanjaList(itemBelanjaList);
+		String receipt = receiptPrinter.buildReceipt();
 
-		String struct = receiptPrinter.buildStruct();
-		System.out.println(struct);
+		String printerName = (String) SystemSetting
+				.get(SystemSettingForm.SYSTEM_SETTING_PRINTER_RECEIPT);
+		PrintService[] services = PrinterJob.lookupPrintServices();
+		InputStream is = null;
+		try {
+			is = new ByteArrayInputStream(receipt.getBytes());
+			for (PrintService printService : services) {
+				if (printService.getName().equals(printerName)) {
+					DocFlavor flavor = DocFlavor.STRING.INPUT_STREAM.AUTOSENSE;
+					Doc doc = new SimpleDoc(is, flavor, null);
+					DocPrintJob printJob = printService.createPrintJob();
+					PrintRequestAttributeSet pras = new HashPrintRequestAttributeSet();
+					pras.add(new Copies(1));
+
+					PrintJobWatcher pjw = new PrintJobWatcher(printJob);
+					printJob.print(doc, pras);
+
+					pjw.waitForDone();
+				}
+			}
+		} catch (PrintException e) {
+			throw new AppException(e);
+		} finally {
+			if (is != null) {
+				try {
+					is.close();
+				} catch (IOException e) {
+					throw new AppException(e);
+				}
+			}
+		}
 	}
 
 	public SaleDetail getDetail(String transactionNumber, Integer orderNum,
@@ -129,7 +180,7 @@ public class SaleFacade implements TransactionFacade {
 					session);
 		}
 
-		cetakStruck(saleHeader, saleDetails);
+		cetakReceipt(saleHeader, saleDetails);
 	}
 
 	@Override
@@ -205,5 +256,50 @@ public class SaleFacade implements TransactionFacade {
 		header.setLastUpdatedTimestamp(CommonUtils.getCurrentTimestamp());
 
 		return header;
+	}
+
+	class PrintJobWatcher {
+		boolean done = false;
+
+		PrintJobWatcher(DocPrintJob job) {
+			job.addPrintJobListener(new PrintJobAdapter() {
+				@Override
+				public void printJobCanceled(PrintJobEvent pje) {
+					allDone();
+				}
+
+				@Override
+				public void printJobCompleted(PrintJobEvent pje) {
+					allDone();
+				}
+
+				@Override
+				public void printJobFailed(PrintJobEvent pje) {
+					allDone();
+				}
+
+				@Override
+				public void printJobNoMoreEvents(PrintJobEvent pje) {
+					allDone();
+				}
+
+				void allDone() {
+					synchronized (PrintJobWatcher.this) {
+						done = true;
+						System.out.println("Printing done ...");
+						PrintJobWatcher.this.notify();
+					}
+				}
+			});
+		}
+
+		public synchronized void waitForDone() {
+			try {
+				while (!done) {
+					wait();
+				}
+			} catch (InterruptedException e) {
+			}
+		}
 	}
 }

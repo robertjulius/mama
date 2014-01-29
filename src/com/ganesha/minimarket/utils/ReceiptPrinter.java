@@ -47,7 +47,7 @@ public class ReceiptPrinter {
 		return builder.toString();
 	}
 
-	public String buildStruct() {
+	public String buildReceipt() {
 		StringBuilder builder = new StringBuilder();
 
 		builder.append(NEW_LINE);

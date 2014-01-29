@@ -12,6 +12,7 @@ import javax.swing.JSeparator;
 
 import net.miginfocom.swing.MigLayout;
 
+import com.ganesha.core.desktop.ExceptionHandler;
 import com.ganesha.desktop.component.XJFrame;
 import com.ganesha.desktop.component.XJLabel;
 import com.ganesha.minimarket.Main;
@@ -29,6 +30,7 @@ import com.ganesha.minimarket.ui.forms.sale.PenjualanForm;
 import com.ganesha.minimarket.ui.forms.stock.StockListDialog;
 import com.ganesha.minimarket.ui.forms.stockopname.StockOpnameListDialog;
 import com.ganesha.minimarket.ui.forms.supplier.SupplierListDialog;
+import com.ganesha.minimarket.ui.forms.systemsetting.SystemSettingForm;
 import com.ganesha.minimarket.ui.forms.user.UserListDialog;
 
 public class MainFrame extends XJFrame {
@@ -200,8 +202,21 @@ public class MainFrame extends XJFrame {
 		});
 		mnBackOffice.add(mntmStockOpname);
 
-		JMenu mnLaporan = new JMenu("Laporan");
-		menuBar.add(mnLaporan);
+		JMenu mnSetting = new JMenu("Setting");
+		menuBar.add(mnSetting);
+
+		JMenuItem mntmSettingAplikasi = new JMenuItem("Setting Aplikasi");
+		mntmSettingAplikasi.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				try {
+					new SystemSettingForm(MainFrame.this).setVisible(true);
+				} catch (Exception ex) {
+					ExceptionHandler.handleException(MainFrame.this, ex);
+				}
+			}
+		});
+		mnSetting.add(mntmSettingAplikasi);
 
 		setExtendedState(JFrame.MAXIMIZED_BOTH);
 		pack();
