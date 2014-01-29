@@ -33,6 +33,7 @@ import com.ganesha.hibernate.HibernateUtils;
 import com.ganesha.minimarket.facade.StockFacade;
 import com.ganesha.minimarket.model.Item;
 import com.ganesha.minimarket.model.ItemStock;
+import com.ganesha.minimarket.utils.BarcodeUtils;
 
 public class StockForm extends XJDialog {
 
@@ -121,7 +122,11 @@ public class StockForm extends XJDialog {
 		btnGenerateBarcode.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				setBarcode(System.currentTimeMillis());
+				try {
+					setBarcode(BarcodeUtils.generateBarcode());
+				} catch (Exception ex) {
+					ExceptionHandler.handleException(StockForm.this, ex);
+				}
 			}
 		});
 		btnGenerateBarcode.setText("Generate Barcode");

@@ -1,25 +1,10 @@
-[DONE] Customer
-[DONE] Penjualan
-[DONE] Retur Penjualan
-[DONE] Pembayaran Hutang
-[DONE] Pembayaran Piutang
-[DONE] Inquiry Transaksi Pembelian
-[DONE] Inquiry Transaksi Penjualan
-[DONE] Inquiry Retur Pembelian
-[DONE] Inquiry Retur Penjualan
-[DONE] Inquiry stok barang
-Stok Opname
 Cetak Struk
 Scan Barcode
 [DONE] Generate Barcode
 Cetak Barcode
-[DONE] Delete Master Data (Customer, Barang, Supplier)
-[DONE] Master Diskon
-[DONE] Validasi kalo transaksi ga ada item sama sekali -> Pembelian, Retur Pembelian, Penjualan, Retur Penjualan
 Warna UI
 Insert ke GL
 Laporan Laba Rugi
-[DONE] Sorting Table
 User Maintenance
 Permission Maintenance
 
@@ -31,3 +16,5 @@ Setting:
 4. Temp PDF File
 
 Check warning pada saat build-eclipse.xml
+
+BUGS...!!! Kalo habis delete master item, barcode nya di-release aja supaya bisa dipake lagi. Mungkin bisa pake flag barcode=DELETED

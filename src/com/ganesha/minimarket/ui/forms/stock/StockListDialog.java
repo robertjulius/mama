@@ -355,8 +355,7 @@ public class StockListDialog extends XJDialog {
 						+ " belum diregistrasi");
 			}
 
-			File file = BarcodeUtils.generateBarcode(Long.parseLong(item
-					.getBarcode()));
+			File file = BarcodeUtils.generatePdfFile(item.getBarcode());
 			BarcodeUtils.print(file);
 
 		} finally {

@@ -27,26 +27,22 @@ import com.itextpdf.text.pdf.PdfWriter;
 
 public class BarcodeUtils {
 
-	public static PrintService choosePrinter() {
-		PrinterJob printJob = PrinterJob.getPrinterJob();
-		if (printJob.printDialog()) {
-			return printJob.getPrintService();
-		} else {
-			return null;
-		}
-	}
+	public static final String COUNTRY_CODE = "899";
+	public static final String MANUFACTURER_CODE = "1212";
 
-	public static File generateBarcode() throws AppException {
-		return generateBarcode(System.currentTimeMillis());
-	}
-
-	public static File generateBarcode(long code) throws AppException {
-		String codeInString = String.valueOf(code);
-		if (codeInString.length() != 13) {
+	public static String generateBarcode() throws AppException {
+		String productCode = generateProductCode();
+		String code = COUNTRY_CODE + MANUFACTURER_CODE + productCode;
+		String checksum = generateChecksum(code);
+		String generatedBarcode = code + checksum;
+		if (generatedBarcode.length() != 13) {
 			throw new AppException("Failed when generating barcode for code "
-					+ codeInString);
+					+ generatedBarcode);
 		}
+		return generatedBarcode;
+	}
 
+	public static File generatePdfFile(String barcode) throws AppException {
 		Document document = null;
 		try {
 			File tempFile = File.createTempFile(
@@ -60,7 +56,7 @@ public class BarcodeUtils {
 
 			BarcodeEAN codeEAN = new BarcodeEAN();
 			codeEAN.setCodeType(BarcodeEAN.EAN13);
-			codeEAN.setCode(codeInString);
+			codeEAN.setCode(barcode);
 			codeEAN.setX(1.3f);
 			codeEAN.setBarHeight(40f);
 
@@ -109,8 +105,8 @@ public class BarcodeUtils {
 
 	public static void main(String[] args) throws AppException,
 			PrinterException {
-
-		File file = generateBarcode();
+		String barcode = generateBarcode();
+		File file = generatePdfFile(barcode);
 		print(file);
 	}
 
@@ -119,7 +115,38 @@ public class BarcodeUtils {
 		printPDF(file, printService);
 	}
 
-	public static void printPDF(File file, PrintService printService)
+	private static PrintService choosePrinter() {
+		PrinterJob printJob = PrinterJob.getPrinterJob();
+		if (printJob.printDialog()) {
+			return printJob.getPrintService();
+		} else {
+			return null;
+		}
+	}
+
+	private static String generateChecksum(String code) {
+		int sum = 0;
+		for (int i = 0; i < code.length(); i++) {
+			sum += (Integer.parseInt(code.charAt(i) + ""))
+					* ((i % 2 == 0) ? 1 : 3);
+		}
+
+		int checksumDigit = 10 - (sum % 10);
+		if (checksumDigit == 10) {
+			checksumDigit = 0;
+		}
+
+		return String.valueOf(checksumDigit);
+	}
+
+	private static String generateProductCode() {
+		long currentTimeMillis = System.currentTimeMillis();
+		long generatedCode = currentTimeMillis % 100000;
+		String productCode = String.valueOf(generatedCode);
+		return productCode;
+	}
+
+	private static void printPDF(File file, PrintService printService)
 			throws AppException {
 		PDDocument doc = null;
 		try {
