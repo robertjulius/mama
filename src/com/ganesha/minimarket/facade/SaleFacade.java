@@ -69,7 +69,7 @@ public class SaleFacade implements TransactionFacade {
 		for (SaleDetail saleDetail : saleDetails) {
 			String itemName = saleDetail.getItemName();
 			String quantiy = Formatter.formatNumberToString(saleDetail
-					.getQuantity());
+					.getQuantity()) + "x";
 			String pricePerUnit = Formatter.formatNumberToString(saleDetail
 					.getPricePerUnit());
 			String discountPercent = Formatter.formatNumberToString(saleDetail
@@ -92,59 +92,6 @@ public class SaleFacade implements TransactionFacade {
 		String struct = receiptPrinter.buildStruct();
 		System.out.println(struct);
 	}
-
-	// public void cetakStruck(SaleHeader saleHeader, List<SaleDetail>
-	// saleDetails)
-	// throws AppException {
-	// String reportFile = "com/ganesha/minimarket/reports/Struck.jrxml";
-	//
-	// Map<String, Object> paramReport = new HashMap<String, Object>();
-	// paramReport.put("companyName", Main.getCompany().getName());
-	// paramReport.put("companyAddress", Main.getCompany().getAddress());
-	// paramReport.put("transactionTimestamp",
-	// saleHeader.getTransactionTimestamp());
-	// paramReport.put("userLoginId", Main.getUserLogin().getLogin());
-	// paramReport.put("userLoginName", Main.getUserLogin().getName());
-	// paramReport.put("pay", saleHeader.getPay());
-	// paramReport.put("moneyChange", saleHeader.getMoneyChange());
-	//
-	// InputStream inputStream = null;
-	// try {
-	// inputStream = this.getClass().getClassLoader()
-	// .getResourceAsStream(reportFile);
-	//
-	// JasperDesign jasperDesign = JRXmlLoader.load(inputStream);
-	//
-	// JasperReport jasperReport = JasperCompileManager
-	// .compileReport(jasperDesign);
-	//
-	// JasperPrint jasperPrint = JasperFillManager.fillReport(
-	// jasperReport, paramReport, new JRBeanCollectionDataSource(
-	// saleDetails));
-	//
-	// // JRViewer viewer = new JRViewer(jasperPrint);
-	// // ReportViewerDialog.viewReport(null, "TEST", viewer);
-	//
-	// JRTextExporter exporter = new JRTextExporter();
-	// exporter.setParameter(JRTextExporterParameter.PAGE_WIDTH, 50);
-	// exporter.setParameter(JRTextExporterParameter.PAGE_HEIGHT, 30);
-	// exporter.setParameter(JRExporterParameter.JASPER_PRINT, jasperPrint);
-	// exporter.setParameter(JRExporterParameter.OUTPUT_FILE_NAME,
-	// "C:/Users/Asus-020/Desktop/test.txt");
-	// exporter.exportReport();
-	//
-	// } catch (JRException e) {
-	// throw new AppException(e);
-	// } finally {
-	// if (inputStream != null) {
-	// try {
-	// inputStream.close();
-	// } catch (IOException e) {
-	// throw new AppException(e);
-	// }
-	// }
-	// }
-	// }
 
 	public SaleDetail getDetail(String transactionNumber, Integer orderNum,
 			Session session) {
@@ -182,7 +129,7 @@ public class SaleFacade implements TransactionFacade {
 					session);
 		}
 
-		// cetakStruck(saleHeader, saleDetails);
+		cetakStruck(saleHeader, saleDetails);
 	}
 
 	@Override
