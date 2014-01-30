@@ -31,6 +31,7 @@ import com.ganesha.minimarket.ui.forms.stock.StockListDialog;
 import com.ganesha.minimarket.ui.forms.stockopname.StockOpnameListDialog;
 import com.ganesha.minimarket.ui.forms.supplier.SupplierListDialog;
 import com.ganesha.minimarket.ui.forms.systemsetting.SystemSettingForm;
+import com.ganesha.minimarket.ui.forms.systemsetting.TestReceiptPrinter;
 import com.ganesha.minimarket.ui.forms.user.UserListDialog;
 
 public class MainFrame extends XJFrame {
@@ -217,6 +218,15 @@ public class MainFrame extends XJFrame {
 			}
 		});
 		mnSetting.add(mntmSettingAplikasi);
+
+		JMenuItem mntmReceiptPrinterTest = new JMenuItem("Receipt Printer Test");
+		mntmReceiptPrinterTest.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				TestReceiptPrinter.showDialog(MainFrame.this);
+			}
+		});
+		mnSetting.add(mntmReceiptPrinterTest);
 
 		setExtendedState(JFrame.MAXIMIZED_BOTH);
 		pack();

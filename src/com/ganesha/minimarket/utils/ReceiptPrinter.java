@@ -6,11 +6,12 @@ public class ReceiptPrinter {
 
 	private static final String NEW_LINE = "\r\n";
 
-	private static final int MAX_LENGTH_COMPANY_NAME = 30;
-	private static final int MAX_LENGTH_COMPANY_ADDRESS = 30;
-	private static final int MAX_LENGTH_TRANSACTION_TIMESTAMP = 30;
-	private static final int MAX_LENGTH_USER_INFORMATION = 30;
-	private static final int MAX_LENGTH_ITEM_NAME = 20;
+	private static final int MAX_LENGTH_PARAGRAPH = 30;
+	private static final int MAX_LENGTH_COMPANY_NAME = MAX_LENGTH_PARAGRAPH;
+	private static final int MAX_LENGTH_COMPANY_ADDRESS = MAX_LENGTH_PARAGRAPH;
+	private static final int MAX_LENGTH_TRANSACTION_TIMESTAMP = MAX_LENGTH_PARAGRAPH;
+	private static final int MAX_LENGTH_USER_INFORMATION = MAX_LENGTH_PARAGRAPH;
+	private static final int MAX_LENGTH_ITEM_NAME = MAX_LENGTH_PARAGRAPH;
 	private static final int MAX_LENGTH_QUANTITY = 3;
 	private static final int MAX_LENGTH_PRICE_PER_UNIT = 11;
 	private static final int MAX_LENGTH_DISCOUNT_PERCENT = 5;
@@ -79,7 +80,8 @@ public class ReceiptPrinter {
 				.append(NEW_LINE);
 
 		builder.append(NEW_LINE);
-		builder.append(alignCenter("*** TERIMA KASIH ***", 30))
+		builder.append(
+				alignCenter("*** TERIMA KASIH ***", MAX_LENGTH_PARAGRAPH))
 				.append(NEW_LINE);
 
 		return builder.toString();
