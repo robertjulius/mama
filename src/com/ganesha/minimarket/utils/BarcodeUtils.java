@@ -57,36 +57,29 @@ public class BarcodeUtils {
 			BarcodeEAN codeEAN = new BarcodeEAN();
 			codeEAN.setCodeType(BarcodeEAN.EAN13);
 			codeEAN.setCode(barcode);
-			codeEAN.setX(1.3f);
-			codeEAN.setBarHeight(40f);
+			// codeEAN.setX(1.3f);
+			// codeEAN.setBarHeight(40f);
 
 			Image image = codeEAN.createImageWithBarcode(cb, null, null);
 
 			PdfPCell cell = new PdfPCell(image);
 			cell.setHorizontalAlignment(Element.ALIGN_CENTER);
-			cell.setPaddingTop(10);
-			cell.setPaddingBottom(10);
+			cell.setPaddingTop(7);
+			cell.setPaddingBottom(7);
 			cell.setBorder(Rectangle.NO_BORDER);
 
-			PdfPTable table = new PdfPTable(4);
+			PdfPTable table = new PdfPTable(5);
 			table.setWidthPercentage(100);
-			table.setWidths(new int[] { 1, 1, 1, 1 });
+			table.setWidths(new int[] { 1, 1, 1, 1, 1 });
+			table.addCell(cell);
 			table.addCell(cell);
 			table.addCell(cell);
 			table.addCell(cell);
 			table.addCell(cell);
 
-			document.add(table);
-			document.add(table);
-			document.add(table);
-			document.add(table);
-			document.add(table);
-			document.add(table);
-			document.add(table);
-			document.add(table);
-			document.add(table);
-			document.add(table);
-			document.add(table);
+			for (int i = 0; i < 16; ++i) {
+				document.add(table);
+			}
 
 			return tempFile;
 
@@ -148,7 +141,11 @@ public class BarcodeUtils {
 		long currentTimeMillis = System.currentTimeMillis();
 		long generatedCode = currentTimeMillis % 100000;
 		String productCode = String.valueOf(generatedCode);
-		return productCode;
+		if (productCode.length() < 5) {
+			return generateProductCode();
+		} else {
+			return productCode;
+		}
 	}
 
 	private static void printPDF(File file, PrintService printService)
