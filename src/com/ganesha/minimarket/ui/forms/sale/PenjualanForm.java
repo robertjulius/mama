@@ -20,6 +20,7 @@ import javax.swing.JScrollPane;
 import javax.swing.JSeparator;
 import javax.swing.SwingConstants;
 import javax.swing.border.EtchedBorder;
+import javax.swing.table.TableCellEditor;
 
 import net.miginfocom.swing.MigLayout;
 
@@ -742,7 +743,11 @@ public class PenjualanForm extends XJDialog {
 			table.requestFocus();
 			table.changeSelection(row, tableParameters.get(ColumnEnum.QUANTITY)
 					.getColumnIndex(), false, false);
-			table.getCellEditor().stopCellEditing();
+
+			TableCellEditor cellEditor = table.getCellEditor();
+			if (cellEditor != null) {
+				cellEditor.stopCellEditing();
+			}
 
 			setTotalPerRow(row);
 			setTotalPenjualan();

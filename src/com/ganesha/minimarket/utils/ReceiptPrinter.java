@@ -6,16 +6,16 @@ public class ReceiptPrinter {
 
 	private static final String NEW_LINE = "\r\n";
 
-	private static final int MAX_LENGTH_PARAGRAPH = 30;
+	private static final int MAX_LENGTH_PARAGRAPH = 40;
 	private static final int MAX_LENGTH_COMPANY_NAME = MAX_LENGTH_PARAGRAPH;
 	private static final int MAX_LENGTH_COMPANY_ADDRESS = MAX_LENGTH_PARAGRAPH;
 	private static final int MAX_LENGTH_TRANSACTION_TIMESTAMP = MAX_LENGTH_PARAGRAPH;
 	private static final int MAX_LENGTH_USER_INFORMATION = MAX_LENGTH_PARAGRAPH;
 	private static final int MAX_LENGTH_ITEM_NAME = MAX_LENGTH_PARAGRAPH;
 	private static final int MAX_LENGTH_QUANTITY = 3;
-	private static final int MAX_LENGTH_PRICE_PER_UNIT = 11;
+	private static final int MAX_LENGTH_PRICE_PER_UNIT = 16;
 	private static final int MAX_LENGTH_DISCOUNT_PERCENT = 5;
-	private static final int MAX_LENGTH_TOTAL_AMOUNT = 11;
+	private static final int MAX_LENGTH_TOTAL_AMOUNT = 16;
 	private static final int MAX_LENGTH_TOTAL_BELANJA = 15;
 	private static final int MAX_LENGTH_PAY = 15;
 	private static final int MAX_LENGTH_MONEY_CHANGE = 15;
@@ -63,7 +63,7 @@ public class ReceiptPrinter {
 				.append(NEW_LINE);
 
 		String separator = "";
-		for (int i = 0; i < MAX_LENGTH_COMPANY_ADDRESS; ++i) {
+		for (int i = 0; i < MAX_LENGTH_PARAGRAPH; ++i) {
 			separator += "-";
 		}
 		builder.append(separator).append(NEW_LINE);
@@ -83,6 +83,13 @@ public class ReceiptPrinter {
 		builder.append(
 				alignCenter("*** TERIMA KASIH ***", MAX_LENGTH_PARAGRAPH))
 				.append(NEW_LINE);
+
+		builder.append(NEW_LINE);
+		builder.append(NEW_LINE);
+		builder.append(NEW_LINE);
+		builder.append(NEW_LINE);
+		builder.append(NEW_LINE);
+		builder.append(NEW_LINE);
 
 		return builder.toString();
 	}

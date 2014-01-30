@@ -28,3 +28,12 @@ Format receipt, pake max width
 [DONE] Tambahin fungsi F8, maka end proses table
 
 [DONE] Ada bugs pas lagi delete, flagnya jangan taruh di kelas, karena bisa kacau
+
+
+
+Install:
+========
+Smadav
+Skype
+Test Ping
+Toad

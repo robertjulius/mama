@@ -21,6 +21,7 @@ import javax.swing.JScrollPane;
 import javax.swing.JSeparator;
 import javax.swing.SwingConstants;
 import javax.swing.border.EtchedBorder;
+import javax.swing.table.TableCellEditor;
 
 import net.miginfocom.swing.MigLayout;
 
@@ -648,7 +649,10 @@ public class PembelianForm extends XJDialog {
 	}
 
 	private void setFocusToBarcodeField() {
-		table.getCellEditor().stopCellEditing();
+		TableCellEditor cellEditor = table.getCellEditor();
+		if (cellEditor != null) {
+			cellEditor.stopCellEditing();
+		}
 		txtBarcode.setText("");
 		txtBarcode.requestFocus();
 	}
