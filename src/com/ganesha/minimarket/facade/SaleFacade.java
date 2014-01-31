@@ -61,7 +61,7 @@ public class SaleFacade implements TransactionFacade {
 	}
 
 	public void cetakReceipt(SaleHeader saleHeader, List<SaleDetail> saleDetails)
-			throws AppException {
+			throws PrintException {
 
 		String companyName = Main.getCompany().getName();
 		String companyAddress = Main.getCompany().getAddress();
@@ -111,11 +111,11 @@ public class SaleFacade implements TransactionFacade {
 		receiptPrinter.setItemBelanjaList(itemBelanjaList);
 		String receipt = receiptPrinter.buildReceipt();
 
-		String printerName = (String) SystemSetting
-				.get(SystemSettingForm.SYSTEM_SETTING_PRINTER_RECEIPT);
 		PrintService[] services = PrinterJob.lookupPrintServices();
 		InputStream is = null;
 		try {
+			String printerName = (String) SystemSetting
+					.get(SystemSettingForm.SYSTEM_SETTING_PRINTER_RECEIPT);
 			is = new ByteArrayInputStream(receipt.getBytes());
 			for (PrintService printService : services) {
 				if (printService.getName().equals(printerName)) {
@@ -131,14 +131,14 @@ public class SaleFacade implements TransactionFacade {
 					pjw.waitForDone();
 				}
 			}
-		} catch (PrintException e) {
-			throw new AppException(e);
+		} catch (AppException e) {
+			throw new PrintException(e);
 		} finally {
 			if (is != null) {
 				try {
 					is.close();
 				} catch (IOException e) {
-					throw new AppException(e);
+					throw new PrintException(e);
 				}
 			}
 		}
@@ -179,8 +179,6 @@ public class SaleFacade implements TransactionFacade {
 					DebitCreditFlag.CREDIT, saleDetail.getTotalAmount(),
 					session);
 		}
-
-		cetakReceipt(saleHeader, saleDetails);
 	}
 
 	@Override

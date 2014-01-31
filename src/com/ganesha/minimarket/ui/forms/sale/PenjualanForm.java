@@ -14,6 +14,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.print.PrintException;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
@@ -27,6 +28,7 @@ import net.miginfocom.swing.MigLayout;
 import org.hibernate.Session;
 
 import com.ganesha.core.desktop.ExceptionHandler;
+import com.ganesha.core.exception.AppException;
 import com.ganesha.core.exception.UserException;
 import com.ganesha.core.utils.CommonUtils;
 import com.ganesha.core.utils.Formatter;
@@ -481,7 +483,7 @@ public class PenjualanForm extends XJDialog {
 		}
 	}
 
-	private void selesaiDanSimpan() throws Exception {
+	private void selesaiDanSimpan() throws AppException, UserException {
 
 		if (!(table.getRowCount() > 0)) {
 			throw new UserException(
@@ -590,13 +592,16 @@ public class PenjualanForm extends XJDialog {
 			}
 
 			facade.performSale(saleHeader, saleDetails, session);
-
 			session.getTransaction().commit();
+
+			facade.cetakReceipt(saleHeader, saleDetails);
 			dispose();
 
-		} catch (Exception e) {
+		} catch (AppException e) {
 			session.getTransaction().rollback();
 			throw e;
+		} catch (PrintException e) {
+			throw new AppException(e);
 		} finally {
 			session.close();
 		}
