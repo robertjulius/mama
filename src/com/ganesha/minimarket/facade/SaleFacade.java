@@ -67,8 +67,7 @@ public class SaleFacade implements TransactionFacade {
 		String companyAddress = Main.getCompany().getAddress();
 		String transactionTimestamp = Formatter
 				.formatTimestampToString(saleHeader.getTransactionTimestamp());
-		String userInformation = "[" + Main.getUserLogin().getLogin() + "] "
-				+ Main.getUserLogin().getName();
+		String cashier = "Kasir: " + Main.getUserLogin().getName();
 		String totalBelanja = Formatter.formatNumberToString(saleHeader
 				.getTotalAmount());
 		String pay = Formatter.formatNumberToString(saleHeader.getPay());
@@ -79,7 +78,7 @@ public class SaleFacade implements TransactionFacade {
 		receiptPrinter.setCompanyName(companyName);
 		receiptPrinter.setCompanyAddress(companyAddress);
 		receiptPrinter.setTransactionTimestamp(transactionTimestamp);
-		receiptPrinter.setUserInformation(userInformation);
+		receiptPrinter.setCashier(cashier);
 		receiptPrinter.setTotalBelanja(totalBelanja);
 		receiptPrinter.setPay(pay);
 		receiptPrinter.setMoneyChange(moneyChange);

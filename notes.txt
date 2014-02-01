@@ -24,7 +24,7 @@ Check warning pada saat build-eclipse.xml
 Hashing password
 Backup restore DB
 [DONE] Scan barang, langsung kasih quantity 1
-Format receipt, pake max width
+[DONE] Format receipt, pake max width
 [DONE] Tambahin fungsi F8, maka end proses table
 
 [DONE] Ada bugs pas lagi delete, flagnya jangan taruh di kelas, karena bisa kacau

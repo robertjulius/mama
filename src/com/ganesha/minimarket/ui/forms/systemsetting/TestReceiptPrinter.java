@@ -116,8 +116,7 @@ public class TestReceiptPrinter extends JDialog {
 		String companyAddress = Main.getCompany().getAddress();
 		String transactionTimestamp = Formatter
 				.formatTimestampToString(CommonUtils.getCurrentTimestamp());
-		String userInformation = "[" + Main.getUserLogin().getLogin() + "] "
-				+ Main.getUserLogin().getName();
+		String cashier = "Kasir: " + Main.getUserLogin().getName();
 		String totalBelanja = Formatter.formatNumberToString(312500);
 		String pay = Formatter.formatNumberToString(500000);
 		String moneyChange = Formatter.formatNumberToString(187500);
@@ -126,7 +125,7 @@ public class TestReceiptPrinter extends JDialog {
 		receiptPrinter.setCompanyName(companyName);
 		receiptPrinter.setCompanyAddress(companyAddress);
 		receiptPrinter.setTransactionTimestamp(transactionTimestamp);
-		receiptPrinter.setUserInformation(userInformation);
+		receiptPrinter.setCashier(cashier);
 		receiptPrinter.setTotalBelanja(totalBelanja);
 		receiptPrinter.setPay(pay);
 		receiptPrinter.setMoneyChange(moneyChange);

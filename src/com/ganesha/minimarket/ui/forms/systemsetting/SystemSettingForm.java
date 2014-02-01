@@ -10,6 +10,7 @@ import java.io.IOException;
 import javax.print.PrintService;
 import javax.swing.JPanel;
 import javax.swing.border.EtchedBorder;
+import javax.swing.plaf.FileChooserUI;
 
 import net.miginfocom.swing.MigLayout;
 
@@ -62,13 +63,18 @@ public class SystemSettingForm extends XJDialog {
 	private XJButton btnBackupDatabase;
 	private XJLabel lblMysqlLocation;
 	private XJTextField txtMySqlLocation;
+	private XJLabel lblBackupLocation;
+	private XJTextField txtBackupLocation;
+	private XJButton btnBrowse;
+	private XJButton btnBrowse_1;
+	private XJLabel lblBackupFileName;
+	private XJTextField txtBackupFileName;
 
 	public SystemSettingForm(Window parent) {
 		super(parent);
 		setCloseOnEsc(false);
 		setTitle("System Setting");
-		getContentPane().setLayout(
-				new MigLayout("", "[grow]", "[grow][grow][grow][grow]"));
+		getContentPane().setLayout(new MigLayout("", "[grow][]", "[][][]"));
 
 		pnlKode = new JPanel();
 		pnlKode.setBorder(new EtchedBorder(EtchedBorder.LOWERED, null, null));
@@ -82,36 +88,10 @@ public class SystemSettingForm extends XJDialog {
 		cmbReceiptPrinter = new XJComboBox(getReceiptPrinterComboBoxList());
 		pnlKode.add(cmbReceiptPrinter, "cell 1 0,growx");
 
-		pnlBackupDB = new JPanel();
-		getContentPane().add(pnlBackupDB, "cell 0 1,grow");
-		pnlBackupDB.setLayout(new MigLayout("", "[grow][300]", "[][]"));
-
-		lblMysqlLocation = new XJLabel();
-		lblMysqlLocation.setText("MySQL Location");
-		pnlBackupDB.add(lblMysqlLocation, "cell 0 0");
-
-		txtMySqlLocation = new XJTextField();
-		pnlBackupDB.add(txtMySqlLocation, "cell 1 0,growx");
-
-		btnBackupDatabase = new XJButton();
-		btnBackupDatabase.addActionListener(new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				try {
-					backupDb();
-				} catch (Exception ex) {
-					ExceptionHandler
-							.handleException(SystemSettingForm.this, ex);
-				}
-			}
-		});
-		btnBackupDatabase.setText("Backup Database");
-		pnlBackupDB.add(btnBackupDatabase, "cell 1 1,alignx trailing");
-
 		pnlProblemReporting = new JPanel();
 		pnlProblemReporting.setBorder(new EtchedBorder(EtchedBorder.LOWERED,
 				null, null));
-		getContentPane().add(pnlProblemReporting, "cell 0 2,grow");
+		getContentPane().add(pnlProblemReporting, "cell 1 0 1 2,grow");
 		pnlProblemReporting.setLayout(new MigLayout("", "[grow][300]",
 				"[][][][][][][]"));
 
@@ -120,6 +100,7 @@ public class SystemSettingForm extends XJDialog {
 		pnlProblemReporting.add(lblSmtpHost, "cell 0 0");
 
 		txtSmtpHost = new XJTextField();
+		txtSmtpHost.setUpperCaseOnFocusLost(false);
 		pnlProblemReporting.add(txtSmtpHost, "cell 1 0,growx");
 
 		lblSmtpPort = new XJLabel();
@@ -127,6 +108,7 @@ public class SystemSettingForm extends XJDialog {
 		pnlProblemReporting.add(lblSmtpPort, "cell 0 1");
 
 		txtSmtpPort = new XJTextField();
+		txtSmtpPort.setUpperCaseOnFocusLost(false);
 		pnlProblemReporting.add(txtSmtpPort, "cell 1 1,growx");
 
 		lblTimeout = new XJLabel();
@@ -134,6 +116,7 @@ public class SystemSettingForm extends XJDialog {
 		pnlProblemReporting.add(lblTimeout, "cell 0 2");
 
 		txtTimeout = new XJTextField();
+		txtTimeout.setUpperCaseOnFocusLost(false);
 		pnlProblemReporting.add(txtTimeout, "cell 1 2,growx");
 
 		lblAccountId = new XJLabel();
@@ -141,6 +124,7 @@ public class SystemSettingForm extends XJDialog {
 		pnlProblemReporting.add(lblAccountId, "cell 0 3");
 
 		txtAccountId = new XJTextField();
+		txtAccountId.setUpperCaseOnFocusLost(false);
 		pnlProblemReporting.add(txtAccountId, "cell 1 3,growx");
 
 		lblAccountLoginId = new XJLabel();
@@ -148,6 +132,7 @@ public class SystemSettingForm extends XJDialog {
 		pnlProblemReporting.add(lblAccountLoginId, "cell 0 4");
 
 		txtLoginId = new XJTextField();
+		txtLoginId.setUpperCaseOnFocusLost(false);
 		pnlProblemReporting.add(txtLoginId, "cell 1 4,growx");
 
 		lblAccountPassword = new XJLabel();
@@ -162,10 +147,70 @@ public class SystemSettingForm extends XJDialog {
 		pnlProblemReporting.add(lblEmailTo, "cell 0 6");
 
 		txtEmailTo = new XJTextField();
+		txtEmailTo.setUpperCaseOnFocusLost(false);
 		pnlProblemReporting.add(txtEmailTo, "cell 1 6,growx");
 
+		pnlBackupDB = new JPanel();
+		pnlBackupDB
+				.setBorder(new EtchedBorder(EtchedBorder.LOWERED, null, null));
+		getContentPane().add(pnlBackupDB, "cell 0 1,grow");
+		pnlBackupDB.setLayout(new MigLayout("", "[grow][300,grow]",
+				"[][][][][][]"));
+
+		lblMysqlLocation = new XJLabel();
+		lblMysqlLocation.setText("MySQL Location");
+		pnlBackupDB.add(lblMysqlLocation, "cell 0 0");
+
+		txtMySqlLocation = new XJTextField();
+		txtMySqlLocation.setEditable(false);
+		pnlBackupDB.add(txtMySqlLocation, "cell 1 0,growx");
+
+		btnBackupDatabase = new XJButton();
+		btnBackupDatabase.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				try {
+					backupDb();
+				} catch (Exception ex) {
+					ExceptionHandler
+							.handleException(SystemSettingForm.this, ex);
+				}
+			}
+		});
+
+		btnBrowse = new XJButton();
+		btnBrowse.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				browseMySqlLocation();
+			}
+		});
+		btnBrowse.setText("Browse");
+		pnlBackupDB.add(btnBrowse, "cell 1 1,alignx right");
+
+		lblBackupLocation = new XJLabel();
+		lblBackupLocation.setText("Backup To Location");
+		pnlBackupDB.add(lblBackupLocation, "cell 0 2,alignx trailing");
+
+		txtBackupLocation = new XJTextField();
+		txtBackupLocation.setEditable(false);
+		pnlBackupDB.add(txtBackupLocation, "cell 1 2,growx");
+
+		btnBrowse_1 = new XJButton();
+		btnBrowse_1.setText("Browse");
+		pnlBackupDB.add(btnBrowse_1, "cell 1 3,alignx right");
+
+		lblBackupFileName = new XJLabel();
+		lblBackupFileName.setText("Backup File Name");
+		pnlBackupDB.add(lblBackupFileName, "cell 0 4");
+
+		txtBackupFileName = new XJTextField();
+		pnlBackupDB.add(txtBackupFileName, "cell 1 4,growx");
+		btnBackupDatabase.setText("Backup Database");
+		pnlBackupDB.add(btnBackupDatabase, "cell 1 5,alignx trailing");
+
 		JPanel pnlButton = new JPanel();
-		getContentPane().add(pnlButton, "cell 0 3,alignx center,growy");
+		getContentPane().add(pnlButton, "cell 0 2 2 1,alignx center,growy");
 		pnlButton.setLayout(new MigLayout("", "[][]", "[]"));
 
 		btnSimpan = new XJButton();
@@ -255,6 +300,10 @@ public class SystemSettingForm extends XJDialog {
 
 	private void batal() {
 		dispose();
+	}
+
+	private void browseMySqlLocation() {
+		FileChooserUI
 	}
 
 	private ComboBoxObject[] getReceiptPrinterComboBoxList() {
