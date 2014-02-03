@@ -34,6 +34,10 @@ public class Permission extends Trackable {
 		return description;
 	}
 
+	public Integer getId() {
+		return id;
+	}
+
 	public String getName() {
 		return name;
 	}

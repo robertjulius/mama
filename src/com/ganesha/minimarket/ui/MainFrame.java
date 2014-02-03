@@ -26,6 +26,7 @@ import com.ganesha.minimarket.ui.forms.reports.StockOpnameReportListDialog;
 import com.ganesha.minimarket.ui.forms.reports.TransactionReportListDialog;
 import com.ganesha.minimarket.ui.forms.returns.ReturPembelianForm;
 import com.ganesha.minimarket.ui.forms.returns.ReturPenjualanForm;
+import com.ganesha.minimarket.ui.forms.role.RoleListDialog;
 import com.ganesha.minimarket.ui.forms.sale.PenjualanForm;
 import com.ganesha.minimarket.ui.forms.stock.StockListDialog;
 import com.ganesha.minimarket.ui.forms.stockopname.StockOpnameListDialog;
@@ -47,6 +48,22 @@ public class MainFrame extends XJFrame {
 
 		JMenu mnFile = new JMenu("File");
 		menuBar.add(mnFile);
+
+		JMenu mnAdministrasi = new JMenu("Administrasi");
+		menuBar.add(mnAdministrasi);
+
+		JMenuItem mntmRole = new JMenuItem("Role");
+		mntmRole.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				try {
+					new RoleListDialog(MainFrame.this).setVisible(true);
+				} catch (Exception ex) {
+					ExceptionHandler.handleException(MainFrame.this, ex);
+				}
+			}
+		});
+		mnAdministrasi.add(mntmRole);
 
 		JMenu mnMasterData = new JMenu("Master Data");
 		menuBar.add(mnMasterData);

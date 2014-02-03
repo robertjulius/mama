@@ -9,11 +9,11 @@ public abstract class PermissionChecker {
 
 	public static void checkPermission(PermissionControl permissionControl)
 			throws UserException {
-		if (permissionChecker == null) {
-			throw new NullPointerException(
-					"No implementation registered as permission checker");
-		}
-		permissionChecker.check(permissionControl);
+		// if (permissionChecker == null) {
+		// throw new NullPointerException(
+		// "No implementation registered as permission checker");
+		// }
+		// permissionChecker.check(permissionControl);
 	}
 
 	public static void register(PermissionChecker permissionChecker)

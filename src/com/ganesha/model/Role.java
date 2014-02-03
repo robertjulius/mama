@@ -28,7 +28,7 @@ public class Role extends Trackable {
 	private String description;
 
 	@OneToMany(mappedBy = "primaryKey.role")
-	@JoinColumn(name = "PERMISSION_ID", nullable = false)
+	@JoinColumn(name = "ROLE_ID", nullable = false)
 	private List<RolePermissionLink> rolePermissionLinks;
 
 	public String getDescription() {
