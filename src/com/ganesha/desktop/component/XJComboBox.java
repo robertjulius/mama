@@ -2,6 +2,7 @@ package com.ganesha.desktop.component;
 
 import java.awt.Font;
 
+import javax.swing.ComboBoxModel;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JComboBox;
 
@@ -16,5 +17,20 @@ public class XJComboBox extends JComboBox<ComboBoxObject> implements
 	public XJComboBox(ComboBoxObject[] comboBoxObjects) {
 		this();
 		setModel(new DefaultComboBoxModel<ComboBoxObject>(comboBoxObjects));
+	}
+
+	@Override
+	public void setSelectedItem(Object object) {
+		ComboBoxObject objectToSet = (ComboBoxObject) object;
+		ComboBoxModel<ComboBoxObject> model = getModel();
+		int size = model.getSize();
+		for (int i = 0; i < size; ++i) {
+			ComboBoxObject comboBoxObject = model.getElementAt(i);
+			if (objectToSet.getId().equals(comboBoxObject.getId())) {
+				super.setSelectedItem(comboBoxObject);
+				return;
+			}
+		}
+		super.setSelectedItem(object);
 	}
 }

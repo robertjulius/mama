@@ -29,6 +29,7 @@ Backup restore DB
 
 [DONE] Ada bugs pas lagi delete, flagnya jangan taruh di kelas, karena bisa kacau
 
+BUGS Laporan...!!!
 
 
 Install:
