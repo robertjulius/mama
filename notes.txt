@@ -1,7 +1,7 @@
-Cetak Struk
-Scan Barcode
+[DONE] Cetak Struk
+[DONE] Scan Barcode
 [DONE] Generate Barcode
-Cetak Barcode
+[DONE] Cetak Barcode
 Warna UI
 Insert ke GL
 Laporan Laba Rugi
@@ -9,11 +9,11 @@ User Maintenance
 Permission Maintenance
 
 
-Setting:
-1. Printer Barcode
-2. Nama Company
-3. Pajak
-4. Temp PDF File
+[DONE] Setting:
+[DONE] 1. Printer Barcode
+[DONE] 2. Nama Company
+[DONE] 3. Pajak
+[DONE] 4. Temp PDF File
 
 Check warning pada saat build-eclipse.xml
 
@@ -22,14 +22,13 @@ Check warning pada saat build-eclipse.xml
 [DONE] Validasi Hapus Item: Dalam keadaan disabled 
 [DONE] Validasi Hapus Master lainnya: Dalam keadaan disabled
 Hashing password
-Backup restore DB
+[DONE] Backup DB
+Restore DB
 [DONE] Scan barang, langsung kasih quantity 1
 [DONE] Format receipt, pake max width
 [DONE] Tambahin fungsi F8, maka end proses table
-
 [DONE] Ada bugs pas lagi delete, flagnya jangan taruh di kelas, karena bisa kacau
-
-BUGS Laporan...!!!
+[DONE] BUGS Laporan...!!!
 
 
 Install:

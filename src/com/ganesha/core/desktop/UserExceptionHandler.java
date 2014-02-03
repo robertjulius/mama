@@ -31,6 +31,8 @@ public class UserExceptionHandler extends XJDialog {
 	private UserExceptionHandler(Window parent) {
 		super(parent);
 		setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
+		setPermissionRequired(false);
+
 		setTitle("Peringatan");
 		getContentPane().setLayout(
 				new MigLayout("", "[500,grow]", "[200px,grow][]"));

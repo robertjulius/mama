@@ -1,6 +1,7 @@
 package com.ganesha.minimarket.facade;
 
 import org.hibernate.Criteria;
+import org.hibernate.Hibernate;
 import org.hibernate.Session;
 import org.hibernate.criterion.Restrictions;
 
@@ -36,6 +37,7 @@ public class LoginFacade {
 				if (!user.getPassword().trim().equalsIgnoreCase(password)) {
 					throw new UserException("Login ID atau Password salah");
 				}
+				Hibernate.initialize(user.getUserRoleLinks());
 				Main.setUserLogin(user);
 				return true;
 			} else {

@@ -9,13 +9,21 @@ import java.awt.event.WindowFocusListener;
 
 import javax.swing.JDialog;
 
-public abstract class XJDialog extends JDialog implements XComponentConstants {
+import com.ganesha.core.desktop.ExceptionHandler;
+import com.ganesha.core.exception.UserException;
+import com.ganesha.desktop.component.permissionutils.PermissionChecker;
+import com.ganesha.desktop.component.permissionutils.PermissionControl;
+
+public abstract class XJDialog extends JDialog implements XComponentConstants,
+		PermissionControl {
 	private static final long serialVersionUID = 8731044804764016513L;
 
 	private KeyboardFocusManager keyboardFocusManager = KeyboardFocusManager
 			.getCurrentKeyboardFocusManager();
 	private MyDispatcher dispatcher = new MyDispatcher();
 
+	private String permissionCode;
+	private boolean permissionRequired = true;
 	private boolean closeOnEsc = true;
 
 	public XJDialog(Window parent) {
@@ -35,8 +43,43 @@ public abstract class XJDialog extends JDialog implements XComponentConstants {
 		});
 	}
 
+	@Override
+	public String getPermissionCode() {
+		return permissionCode;
+	}
+
+	@Override
+	public boolean isPermissionRequired() {
+		return permissionRequired;
+	}
+
 	public void setCloseOnEsc(boolean closeOnEsc) {
 		this.closeOnEsc = closeOnEsc;
+	}
+
+	@Override
+	public void setPermissionCode(String permissionCode) {
+		this.permissionCode = permissionCode;
+	}
+
+	@Override
+	public void setPermissionRequired(boolean permissionRequired) {
+		this.permissionRequired = permissionRequired;
+	}
+
+	@Override
+	public void setVisible(boolean visible) {
+		if (visible) {
+			if (permissionRequired) {
+				try {
+					PermissionChecker.checkPermission(this);
+				} catch (UserException ex) {
+					ExceptionHandler.handleException((Window) getParent(), ex);
+					return;
+				}
+			}
+		}
+		super.setVisible(visible);
 	}
 
 	protected abstract void keyEventListener(int keyCode);

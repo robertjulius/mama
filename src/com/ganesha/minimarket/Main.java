@@ -16,11 +16,13 @@ import com.ganesha.accounting.utils.CoaConsistencyChecker;
 import com.ganesha.core.desktop.ExceptionHandler;
 import com.ganesha.core.exception.AppException;
 import com.ganesha.core.utils.CommonUtils;
+import com.ganesha.desktop.component.permissionutils.PermissionChecker;
 import com.ganesha.hibernate.HibernateUtils;
 import com.ganesha.hibernate.HqlParameter;
 import com.ganesha.minimarket.model.Company;
 import com.ganesha.minimarket.ui.forms.login.LoginForm;
 import com.ganesha.minimarket.utils.CompanyConsistencyChecker;
+import com.ganesha.minimarket.utils.SimplePermissionChecker;
 import com.ganesha.model.User;
 
 public class Main {
@@ -55,6 +57,8 @@ public class Main {
 		CompanyConsistencyChecker companyChecker = new CompanyConsistencyChecker();
 		companyChecker.check();
 		company = companyChecker.getCompany();
+
+		PermissionChecker.register(new SimplePermissionChecker());
 
 		new LoginForm().setVisible(true);
 	}

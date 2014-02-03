@@ -17,29 +17,36 @@ public class Permission extends Trackable {
 	@Column(name = "ID", nullable = false)
 	private Integer id;
 
+	@Column(name = "CODE", nullable = false, unique = true)
+	private String code;
+
 	@Column(name = "NAME", nullable = false, unique = true)
 	private String name;
 
 	@Column(name = "DESCRIPTION")
 	private String description;
 
-	public String getDescription() {
-		return description;
+	public String getCode() {
+		return code;
 	}
 
-	public int getId() {
-		return id;
+	public String getDescription() {
+		return description;
 	}
 
 	public String getName() {
 		return name;
 	}
 
+	public void setCode(String code) {
+		this.code = code;
+	}
+
 	public void setDescription(String description) {
 		this.description = description;
 	}
 
-	public void setId(int id) {
+	public void setId(Integer id) {
 		this.id = id;
 	}
 

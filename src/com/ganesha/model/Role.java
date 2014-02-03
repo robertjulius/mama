@@ -1,10 +1,14 @@
 package com.ganesha.model;
 
+import java.util.List;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 @Entity
@@ -23,11 +27,15 @@ public class Role extends Trackable {
 	@Column(name = "DESCRIPTION")
 	private String description;
 
+	@OneToMany(mappedBy = "primaryKey.role")
+	@JoinColumn(name = "PERMISSION_ID", nullable = false)
+	private List<RolePermissionLink> rolePermissionLinks;
+
 	public String getDescription() {
 		return description;
 	}
 
-	public int getId() {
+	public Integer getId() {
 		return id;
 	}
 
@@ -35,15 +43,24 @@ public class Role extends Trackable {
 		return name;
 	}
 
+	public List<RolePermissionLink> getRolePermissionLinks() {
+		return rolePermissionLinks;
+	}
+
 	public void setDescription(String description) {
 		this.description = description;
 	}
 
-	public void setId(int id) {
+	public void setId(Integer id) {
 		this.id = id;
 	}
 
 	public void setName(String name) {
 		this.name = name;
+	}
+
+	public void setRolePermissionLinks(
+			List<RolePermissionLink> rolePermissionLinks) {
+		this.rolePermissionLinks = rolePermissionLinks;
 	}
 }

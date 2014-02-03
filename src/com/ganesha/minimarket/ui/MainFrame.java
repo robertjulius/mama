@@ -55,7 +55,11 @@ public class MainFrame extends XJFrame {
 		mntmPersediaan.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				new StockListDialog(MainFrame.this).setVisible(true);
+				try {
+					new StockListDialog(MainFrame.this).setVisible(true);
+				} catch (Exception ex) {
+					ExceptionHandler.handleException(MainFrame.this, ex);
+				}
 			}
 		});
 		mnMasterData.add(mntmPersediaan);
@@ -64,7 +68,11 @@ public class MainFrame extends XJFrame {
 		mntmSupplier.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				new SupplierListDialog(MainFrame.this).setVisible(true);
+				try {
+					new SupplierListDialog(MainFrame.this).setVisible(true);
+				} catch (Exception ex) {
+					ExceptionHandler.handleException(MainFrame.this, ex);
+				}
 			}
 		});
 		mnMasterData.add(mntmSupplier);
@@ -73,7 +81,11 @@ public class MainFrame extends XJFrame {
 		mntmCustomer.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				new CustomerListDialog(MainFrame.this).setVisible(true);
+				try {
+					new CustomerListDialog(MainFrame.this).setVisible(true);
+				} catch (Exception ex) {
+					ExceptionHandler.handleException(MainFrame.this, ex);
+				}
 			}
 		});
 		mnMasterData.add(mntmCustomer);
@@ -82,7 +94,11 @@ public class MainFrame extends XJFrame {
 		mntmDiskon.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				new DiscountListDialog(MainFrame.this).setVisible(true);
+				try {
+					new DiscountListDialog(MainFrame.this).setVisible(true);
+				} catch (Exception ex) {
+					ExceptionHandler.handleException(MainFrame.this, ex);
+				}
 			}
 		});
 		mnMasterData.add(mntmDiskon);
@@ -91,7 +107,11 @@ public class MainFrame extends XJFrame {
 		mntmUser.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				new UserListDialog(MainFrame.this).setVisible(true);
+				try {
+					new UserListDialog(MainFrame.this).setVisible(true);
+				} catch (Exception ex) {
+					ExceptionHandler.handleException(MainFrame.this, ex);
+				}
 			}
 		});
 		mnMasterData.add(mntmUser);
@@ -103,7 +123,11 @@ public class MainFrame extends XJFrame {
 		mntmPembelian.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				new PembelianForm(MainFrame.this).setVisible(true);
+				try {
+					new PembelianForm(MainFrame.this).setVisible(true);
+				} catch (Exception ex) {
+					ExceptionHandler.handleException(MainFrame.this, ex);
+				}
 			}
 		});
 		mnTransaksi.add(mntmPembelian);
@@ -112,7 +136,11 @@ public class MainFrame extends XJFrame {
 		mntmReturPembelian.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				new ReturPembelianForm(MainFrame.this).setVisible(true);
+				try {
+					new ReturPembelianForm(MainFrame.this).setVisible(true);
+				} catch (Exception ex) {
+					ExceptionHandler.handleException(MainFrame.this, ex);
+				}
 			}
 		});
 		mnTransaksi.add(mntmReturPembelian);
@@ -124,7 +152,11 @@ public class MainFrame extends XJFrame {
 		mntmPenjualan.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				new PenjualanForm(MainFrame.this).setVisible(true);
+				try {
+					new PenjualanForm(MainFrame.this).setVisible(true);
+				} catch (Exception ex) {
+					ExceptionHandler.handleException(MainFrame.this, ex);
+				}
 			}
 		});
 		mnTransaksi.add(mntmPenjualan);
@@ -133,7 +165,11 @@ public class MainFrame extends XJFrame {
 		mntmReturPenjualan.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				new ReturPenjualanForm(MainFrame.this).setVisible(true);
+				try {
+					new ReturPenjualanForm(MainFrame.this).setVisible(true);
+				} catch (Exception ex) {
+					ExceptionHandler.handleException(MainFrame.this, ex);
+				}
 			}
 		});
 		mnTransaksi.add(mntmReturPenjualan);
@@ -145,7 +181,11 @@ public class MainFrame extends XJFrame {
 		mntmHutang.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				new PayableListDialog(MainFrame.this).setVisible(true);
+				try {
+					new PayableListDialog(MainFrame.this).setVisible(true);
+				} catch (Exception ex) {
+					ExceptionHandler.handleException(MainFrame.this, ex);
+				}
 			}
 		});
 		mnTransaksi.add(mntmHutang);
@@ -154,7 +194,11 @@ public class MainFrame extends XJFrame {
 		mntmPiutang.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				new ReceivableListDialog(MainFrame.this).setVisible(true);
+				try {
+					new ReceivableListDialog(MainFrame.this).setVisible(true);
+				} catch (Exception ex) {
+					ExceptionHandler.handleException(MainFrame.this, ex);
+				}
 			}
 		});
 		mnTransaksi.add(mntmPiutang);
@@ -169,8 +213,12 @@ public class MainFrame extends XJFrame {
 		mntmReportTransaksi.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				new TransactionReportListDialog(MainFrame.this)
-						.setVisible(true);
+				try {
+					new TransactionReportListDialog(MainFrame.this)
+							.setVisible(true);
+				} catch (Exception ex) {
+					ExceptionHandler.handleException(MainFrame.this, ex);
+				}
 			}
 		});
 		mnReport.add(mntmReportTransaksi);
@@ -179,7 +227,12 @@ public class MainFrame extends XJFrame {
 		mntmLaporanStokBarang.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				new ItemStockReportListDialog(MainFrame.this).setVisible(true);
+				try {
+					new ItemStockReportListDialog(MainFrame.this)
+							.setVisible(true);
+				} catch (Exception ex) {
+					ExceptionHandler.handleException(MainFrame.this, ex);
+				}
 			}
 		});
 		mnReport.add(mntmLaporanStokBarang);
@@ -188,8 +241,12 @@ public class MainFrame extends XJFrame {
 		mntmLaporanStockOpname.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				new StockOpnameReportListDialog(MainFrame.this)
-						.setVisible(true);
+				try {
+					new StockOpnameReportListDialog(MainFrame.this)
+							.setVisible(true);
+				} catch (Exception ex) {
+					ExceptionHandler.handleException(MainFrame.this, ex);
+				}
 			}
 		});
 		mnReport.add(mntmLaporanStockOpname);
@@ -198,7 +255,11 @@ public class MainFrame extends XJFrame {
 		mntmStockOpname.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				new StockOpnameListDialog(MainFrame.this).setVisible(true);
+				try {
+					new StockOpnameListDialog(MainFrame.this).setVisible(true);
+				} catch (Exception ex) {
+					ExceptionHandler.handleException(MainFrame.this, ex);
+				}
 			}
 		});
 		mnBackOffice.add(mntmStockOpname);
@@ -223,7 +284,11 @@ public class MainFrame extends XJFrame {
 		mntmReceiptPrinterTest.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				TestReceiptPrinter.showDialog(MainFrame.this);
+				try {
+					TestReceiptPrinter.showDialog(MainFrame.this);
+				} catch (Exception ex) {
+					ExceptionHandler.handleException(MainFrame.this, ex);
+				}
 			}
 		});
 		mnSetting.add(mntmReceiptPrinterTest);
