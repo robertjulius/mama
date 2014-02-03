@@ -5,12 +5,12 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.print.PrinterJob;
-import java.io.IOException;
+import java.io.File;
 
 import javax.print.PrintService;
+import javax.swing.JFileChooser;
 import javax.swing.JPanel;
 import javax.swing.border.EtchedBorder;
-import javax.swing.plaf.FileChooserUI;
 
 import net.miginfocom.swing.MigLayout;
 
@@ -25,6 +25,7 @@ import com.ganesha.desktop.component.XJDialog;
 import com.ganesha.desktop.component.XJLabel;
 import com.ganesha.desktop.component.XJPasswordField;
 import com.ganesha.desktop.component.XJTextField;
+import com.ganesha.minimarket.utils.BackupDB;
 
 public class SystemSettingForm extends XJDialog {
 
@@ -32,6 +33,8 @@ public class SystemSettingForm extends XJDialog {
 
 	public static final String SYSTEM_SETTING_PRINTER_RECEIPT = "system.setting.printer.receipt";
 	public static final String SYSTEM_SETTING_MYSQL_LOCATION = "system.setting.mysql.location";
+	public static final String SYSTEM_SETTING_BACKUP_LOCATION = "system.setting.backup.location";
+	public static final String SYSTEM_SETTING_BACKUP_FILENAME = "system.setting.backup.filename";
 	public static final String SYSTEM_SETTING_SMTP_HOST = "system.setting.smtp.host";
 	public static final String SYSTEM_SETTING_SMTP_PORT = "system.setting.smtp.port";
 	public static final String SYSTEM_SETTING_SMTP_TIMEOUT = "system.setting.smtp.timeout";
@@ -65,8 +68,8 @@ public class SystemSettingForm extends XJDialog {
 	private XJTextField txtMySqlLocation;
 	private XJLabel lblBackupLocation;
 	private XJTextField txtBackupLocation;
-	private XJButton btnBrowse;
-	private XJButton btnBrowse_1;
+	private XJButton btnBrowseMySqlLocation;
+	private XJButton btnBrowseBackupLocation;
 	private XJLabel lblBackupFileName;
 	private XJTextField txtBackupFileName;
 
@@ -178,15 +181,15 @@ public class SystemSettingForm extends XJDialog {
 			}
 		});
 
-		btnBrowse = new XJButton();
-		btnBrowse.addActionListener(new ActionListener() {
+		btnBrowseMySqlLocation = new XJButton();
+		btnBrowseMySqlLocation.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				browseMySqlLocation();
 			}
 		});
-		btnBrowse.setText("Browse");
-		pnlBackupDB.add(btnBrowse, "cell 1 1,alignx right");
+		btnBrowseMySqlLocation.setText("Browse");
+		pnlBackupDB.add(btnBrowseMySqlLocation, "cell 1 1,alignx right");
 
 		lblBackupLocation = new XJLabel();
 		lblBackupLocation.setText("Backup To Location");
@@ -196,15 +199,22 @@ public class SystemSettingForm extends XJDialog {
 		txtBackupLocation.setEditable(false);
 		pnlBackupDB.add(txtBackupLocation, "cell 1 2,growx");
 
-		btnBrowse_1 = new XJButton();
-		btnBrowse_1.setText("Browse");
-		pnlBackupDB.add(btnBrowse_1, "cell 1 3,alignx right");
+		btnBrowseBackupLocation = new XJButton();
+		btnBrowseBackupLocation.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				browseBackupLocation();
+			}
+		});
+		btnBrowseBackupLocation.setText("Browse");
+		pnlBackupDB.add(btnBrowseBackupLocation, "cell 1 3,alignx right");
 
 		lblBackupFileName = new XJLabel();
 		lblBackupFileName.setText("Backup File Name");
 		pnlBackupDB.add(lblBackupFileName, "cell 0 4");
 
 		txtBackupFileName = new XJTextField();
+		txtBackupFileName.setUpperCaseOnFocusLost(false);
 		pnlBackupDB.add(txtBackupFileName, "cell 1 4,growx");
 		btnBackupDatabase.setText("Backup Database");
 		pnlBackupDB.add(btnBackupDatabase, "cell 1 5,alignx trailing");
@@ -258,6 +268,10 @@ public class SystemSettingForm extends XJDialog {
 
 		txtMySqlLocation.setText((String) SystemSetting
 				.get(SYSTEM_SETTING_MYSQL_LOCATION));
+		txtBackupLocation.setText((String) SystemSetting
+				.get(SYSTEM_SETTING_BACKUP_LOCATION));
+		txtBackupFileName.setText((String) SystemSetting
+				.get(SYSTEM_SETTING_BACKUP_FILENAME));
 
 		txtSmtpHost.setText((String) SystemSetting
 				.get(SYSTEM_SETTING_SMTP_HOST));
@@ -285,25 +299,43 @@ public class SystemSettingForm extends XJDialog {
 		}
 	}
 
-	private void backupDb() throws AppException {
-		try {
-			String exePath = txtMySqlLocation.getText();
-			String command = "\""
-					+ exePath
-					+ "\""
-					+ " -u root -pP@ssw0rd minimarketkk > D:\\BACKUP\\minimarketkk.sql";
-			Runtime.getRuntime().exec(command);
-		} catch (IOException e) {
-			throw new AppException(e);
-		}
+	private void backupDb() throws AppException, UserException {
+		File mysqldump = new File(txtMySqlLocation.getText(), "mysqldump.exe");
+		File backupFile = new File(txtBackupLocation.getText(),
+				txtBackupFileName.getText());
+		BackupDB.backup(mysqldump, backupFile, "root", "root", "minimarketkk");
 	}
 
 	private void batal() {
 		dispose();
 	}
 
+	private void browseBackupLocation() {
+		JFileChooser fileChooser = new JFileChooser();
+		if (!txtBackupLocation.getText().trim().equals("")) {
+			fileChooser.setCurrentDirectory(new File(txtBackupLocation
+					.getText()));
+		}
+		fileChooser.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
+		int returnVal = fileChooser.showOpenDialog(this);
+		if (returnVal == JFileChooser.APPROVE_OPTION) {
+			File file = fileChooser.getSelectedFile();
+			txtBackupLocation.setText(file.getAbsolutePath());
+		}
+	}
+
 	private void browseMySqlLocation() {
-		FileChooserUI
+		JFileChooser fileChooser = new JFileChooser();
+		if (!txtMySqlLocation.getText().trim().equals("")) {
+			fileChooser
+					.setCurrentDirectory(new File(txtMySqlLocation.getText()));
+		}
+		fileChooser.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
+		int returnVal = fileChooser.showOpenDialog(this);
+		if (returnVal == JFileChooser.APPROVE_OPTION) {
+			File file = fileChooser.getSelectedFile();
+			txtMySqlLocation.setText(file.getAbsolutePath());
+		}
 	}
 
 	private ComboBoxObject[] getReceiptPrinterComboBoxList() {
@@ -323,6 +355,13 @@ public class SystemSettingForm extends XJDialog {
 				.getSelectedItem();
 		String printServiceName = (String) comboBoxObject.getId();
 		SystemSetting.save(SYSTEM_SETTING_PRINTER_RECEIPT, printServiceName);
+
+		SystemSetting.save(SYSTEM_SETTING_MYSQL_LOCATION,
+				txtMySqlLocation.getText());
+		SystemSetting.save(SYSTEM_SETTING_BACKUP_LOCATION,
+				txtBackupLocation.getText());
+		SystemSetting.save(SYSTEM_SETTING_BACKUP_FILENAME,
+				txtBackupFileName.getText());
 
 		SystemSetting.save(SYSTEM_SETTING_SMTP_HOST, txtSmtpHost.getText());
 		SystemSetting.save(SYSTEM_SETTING_SMTP_PORT, txtSmtpPort.getText());

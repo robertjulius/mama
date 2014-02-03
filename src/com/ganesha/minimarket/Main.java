@@ -36,10 +36,14 @@ public class Main {
 		return userLogin;
 	}
 
-	public static void main(String[] args) throws AppException {
-		runApp();
-		// testHibernate2();
-		// testResource();
+	public static void main(String[] args) {
+		try {
+			// testHibernate2();
+			// testResource();
+			runApp();
+		} catch (Exception ex) {
+			ExceptionHandler.handleException(null, ex);
+		}
 	}
 
 	public static void runApp() throws AppException {
