@@ -3,11 +3,15 @@ package com.ganesha.minimarket.facade;
 import java.util.List;
 
 import org.hibernate.Criteria;
+import org.hibernate.Hibernate;
+import org.hibernate.Query;
 import org.hibernate.Session;
+import org.hibernate.StatelessSession;
 import org.hibernate.criterion.Restrictions;
 
 import com.ganesha.core.exception.UserException;
 import com.ganesha.core.utils.CommonUtils;
+import com.ganesha.hibernate.HibernateUtils;
 import com.ganesha.minimarket.Main;
 import com.ganesha.model.Permission;
 import com.ganesha.model.Role;
@@ -65,12 +69,35 @@ public class RoleFacade {
 		}
 	}
 
+	public List<Role> getAll(Session session) {
+		Query query = session.createQuery("from Role");
+
+		@SuppressWarnings("unchecked")
+		List<Role> roles = query.list();
+
+		return roles;
+	}
+
 	public Role getDetail(int id, Session session) {
 		Criteria criteria = session.createCriteria(Role.class);
 		criteria.add(Restrictions.eq("id", id));
 
 		Role role = (Role) criteria.uniqueResult();
 		return role;
+	}
+
+	public Role getDetail(String name) {
+		StatelessSession session = HibernateUtils.openStatelessSession();
+		try {
+			Criteria criteria = session.createCriteria(Role.class);
+			criteria.add(Restrictions.eq("name", name));
+
+			Role role = (Role) criteria.uniqueResult();
+			Hibernate.initialize(role.getRolePermissionLinks());
+			return role;
+		} finally {
+			session.close();
+		}
 	}
 
 	public Role getDetail(String name, Session session) {
@@ -119,17 +146,17 @@ public class RoleFacade {
 			session.delete(rolePermissionLink);
 		}
 
-		role.setLastUpdatedBy(Main.getUserLogin().getId());
-		role.setLastUpdatedTimestamp(CommonUtils.getCurrentTimestamp());
-
-		session.saveOrUpdate(role);
-
 		for (Permission permission : permissions) {
 			RolePermissionLinkPK primaryKey = new RolePermissionLinkPK();
 			primaryKey.setRole(role);
 			primaryKey.setPermission(permission);
 
-			RolePermissionLink rolePermissionLink = new RolePermissionLink();
+			RolePermissionLink rolePermissionLink = (RolePermissionLink) session
+					.get(RolePermissionLink.class, primaryKey);
+			if (rolePermissionLink == null) {
+				rolePermissionLink = new RolePermissionLink();
+			}
+
 			rolePermissionLink.setPrimaryKey(primaryKey);
 			rolePermissionLink.setDisabled(false);
 			rolePermissionLink.setDeleted(false);
@@ -137,7 +164,12 @@ public class RoleFacade {
 			rolePermissionLink.setLastUpdatedTimestamp(CommonUtils
 					.getCurrentTimestamp());
 
-			session.saveOrUpdate(rolePermissionLink);
+			session.merge(rolePermissionLink);
 		}
+
+		role.setLastUpdatedBy(Main.getUserLogin().getId());
+		role.setLastUpdatedTimestamp(CommonUtils.getCurrentTimestamp());
+
+		session.saveOrUpdate(role);
 	}
 }

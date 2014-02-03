@@ -1,11 +1,16 @@
 package com.ganesha.minimarket.ui.forms.user;
 
+import java.awt.Font;
 import java.awt.Window;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
+import java.util.ArrayList;
+import java.util.List;
 
+import javax.swing.DefaultListModel;
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
 import javax.swing.JSeparator;
 import javax.swing.border.EtchedBorder;
 
@@ -17,15 +22,20 @@ import com.ganesha.core.desktop.ExceptionHandler;
 import com.ganesha.core.exception.ActionTypeNotSupported;
 import com.ganesha.core.exception.UserException;
 import com.ganesha.core.utils.GeneralConstants.ActionType;
+import com.ganesha.desktop.component.ComboBoxObject;
 import com.ganesha.desktop.component.XJButton;
 import com.ganesha.desktop.component.XJCheckBox;
 import com.ganesha.desktop.component.XJDialog;
 import com.ganesha.desktop.component.XJLabel;
+import com.ganesha.desktop.component.XJList;
 import com.ganesha.desktop.component.XJPasswordField;
 import com.ganesha.desktop.component.XJTextField;
 import com.ganesha.hibernate.HibernateUtils;
+import com.ganesha.minimarket.facade.RoleFacade;
 import com.ganesha.minimarket.facade.UserFacade;
+import com.ganesha.model.Role;
 import com.ganesha.model.User;
+import com.ganesha.model.UserRoleLink;
 
 public class UserForm extends XJDialog {
 
@@ -42,6 +52,16 @@ public class UserForm extends XJDialog {
 
 	private XJCheckBox chkDisabled;
 	private JSeparator separator;
+	private JPanel pnlRoles;
+	private JScrollPane scrollPaneTop;
+	private JScrollPane scrollPaneBottom;
+	private XJList listRoleTop;
+	private XJList listRoleBottom;
+	private JPanel pnlMove;
+	private XJButton btnAdd;
+	private XJButton btnAddAll;
+	private XJButton btnRemove;
+	private XJButton btnRemoveAll;
 
 	public UserForm(Window parent, ActionType actionType) {
 		super(parent);
@@ -49,12 +69,13 @@ public class UserForm extends XJDialog {
 		setTitle("Form User");
 		setCloseOnEsc(false);
 
-		getContentPane().setLayout(new MigLayout("", "[400]", "[][][10][]"));
+		getContentPane().setLayout(
+				new MigLayout("", "[400][grow]", "[grow][][10][]"));
 
 		JPanel pnlInput = new JPanel();
-		getContentPane().add(pnlInput, "cell 0 0,growx");
+		getContentPane().add(pnlInput, "cell 0 0,grow");
 		pnlInput.setBorder(new EtchedBorder(EtchedBorder.LOWERED, null, null));
-		pnlInput.setLayout(new MigLayout("", "[][200][grow]", "[][][]"));
+		pnlInput.setLayout(new MigLayout("", "[][grow]", "[][][]"));
 
 		XJLabel lblLogin = new XJLabel();
 		pnlInput.add(lblLogin, "cell 0 0");
@@ -77,15 +98,92 @@ public class UserForm extends XJDialog {
 		txtPassword = new XJPasswordField();
 		pnlInput.add(txtPassword, "cell 1 2,growx");
 
+		pnlRoles = new JPanel();
+		getContentPane().add(pnlRoles, "cell 1 0,grow");
+		pnlRoles.setLayout(new MigLayout("", "[grow]", "[grow][grow][grow]"));
+
+		scrollPaneTop = new JScrollPane();
+		pnlRoles.add(scrollPaneTop, "cell 0 0,grow");
+
+		listRoleTop = new XJList();
+		scrollPaneTop.setViewportView(listRoleTop);
+
+		pnlMove = new JPanel();
+		pnlRoles.add(pnlMove, "cell 0 1,grow");
+		pnlMove.setLayout(new MigLayout("", "[200][][200]", "[][]"));
+
+		btnAdd = new XJButton();
+		btnAdd.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				try {
+					tambah();
+				} catch (Exception ex) {
+					ExceptionHandler.handleException(UserForm.this, ex);
+				}
+			}
+		});
+		btnAdd.setText("Add");
+		pnlMove.add(btnAdd, "cell 0 0,growx");
+
+		btnRemove = new XJButton();
+		btnRemove.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				try {
+					kurang();
+				} catch (Exception ex) {
+					ExceptionHandler.handleException(UserForm.this, ex);
+				}
+			}
+		});
+		btnRemove.setText("Remove");
+		pnlMove.add(btnRemove, "cell 2 0,growx");
+
+		btnAddAll = new XJButton();
+		btnAddAll.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				try {
+					tambahAll();
+				} catch (Exception ex) {
+					ExceptionHandler.handleException(UserForm.this, ex);
+				}
+			}
+		});
+		btnAddAll.setText("Add All");
+		pnlMove.add(btnAddAll, "cell 0 1,growx");
+
+		btnRemoveAll = new XJButton();
+		btnRemoveAll.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				try {
+					kurangAll();
+				} catch (Exception ex) {
+					ExceptionHandler.handleException(UserForm.this, ex);
+				}
+			}
+		});
+		btnRemoveAll.setText("Remove All");
+		pnlMove.add(btnRemoveAll, "cell 2 1,growx");
+
+		scrollPaneBottom = new JScrollPane();
+		pnlRoles.add(scrollPaneBottom, "cell 0 2,grow");
+
+		listRoleBottom = new XJList();
+		scrollPaneBottom.setViewportView(listRoleBottom);
+
 		chkDisabled = new XJCheckBox();
+		chkDisabled.setFont(new Font("Tahoma", Font.BOLD, 12));
 		chkDisabled.setText("User ini sudah tidak aktif lagi");
-		getContentPane().add(chkDisabled, "cell 0 1,alignx trailing");
+		getContentPane().add(chkDisabled, "cell 0 1 2 1,alignx trailing");
 
 		separator = new JSeparator();
-		getContentPane().add(separator, "cell 0 2,growx,aligny center");
+		getContentPane().add(separator, "cell 0 2 2 1,growx,aligny center");
 
 		JPanel pnlButton = new JPanel();
-		getContentPane().add(pnlButton, "cell 0 3,grow");
+		getContentPane().add(pnlButton, "cell 0 3 2 1,grow");
 		pnlButton.setLayout(new MigLayout("", "[][grow][][]", "[]"));
 
 		btnSimpan = new XJButton();
@@ -127,6 +225,8 @@ public class UserForm extends XJDialog {
 		btnSimpan.setText("<html><center>Simpan<br/>[F12]</center></html>");
 		pnlButton.add(btnSimpan, "cell 3 0");
 
+		initForm();
+
 		pack();
 		setLocationRelativeTo(null);
 	}
@@ -136,6 +236,24 @@ public class UserForm extends XJDialog {
 		txtLogin.setText(user.getLogin());
 		txtNama.setEditable(false);
 		txtNama.setText(user.getName());
+
+		DefaultListModel<ComboBoxObject> listModelTop = (DefaultListModel<ComboBoxObject>) listRoleTop
+				.getModel();
+
+		List<UserRoleLink> roleRoleLinks = user.getUserRoleLinks();
+		for (UserRoleLink roleRoleLink : roleRoleLinks) {
+			Role role = roleRoleLink.getPrimaryKey().getRole();
+
+			for (int i = 0; i < listModelTop.size(); ++i) {
+				Role roleAtTop = (Role) listModelTop.getElementAt(i).getId();
+
+				if (roleAtTop.getId().equals(role.getId())) {
+					listRoleTop.setSelectedIndex(i);
+					tambah();
+				}
+			}
+		}
+
 		btnSimpan
 				.setText("<html><center>Simpan Perubahan<br/>[F12]</center></html>");
 	}
@@ -155,6 +273,63 @@ public class UserForm extends XJDialog {
 		dispose();
 	}
 
+	private void initForm() {
+		Session session = HibernateUtils.openSession();
+		try {
+			List<Role> roles = RoleFacade.getInstance().getAll(session);
+			DefaultListModel<ComboBoxObject> listModel = (DefaultListModel<ComboBoxObject>) listRoleTop
+					.getModel();
+			listModel.clear();
+			for (Role role : roles) {
+				ComboBoxObject comboBoxObject = new ComboBoxObject(role,
+						role.getName());
+				listModel.addElement(comboBoxObject);
+			}
+		} finally {
+			session.close();
+		}
+	}
+
+	private void kurang() {
+		DefaultListModel<ComboBoxObject> listModelTop = (DefaultListModel<ComboBoxObject>) listRoleTop
+				.getModel();
+		DefaultListModel<ComboBoxObject> listModelBottom = (DefaultListModel<ComboBoxObject>) listRoleBottom
+				.getModel();
+
+		int index = listRoleBottom.getSelectedIndex();
+		if (index < 0 || index >= listModelBottom.size()) {
+			return;
+		}
+
+		ComboBoxObject comboBoxObject = listModelBottom.get(index);
+		int i = 0;
+		for (; i < listModelTop.size(); ++i) {
+			Role roleAtTop = (Role) listModelTop.getElementAt(i).getId();
+
+			Role roleAtBottom = (Role) comboBoxObject.getId();
+
+			if (roleAtBottom.getId() > roleAtTop.getId()) {
+				/*
+				 * Do nothing. Lets assign i = i+1
+				 */
+			} else {
+				break;
+			}
+		}
+
+		listModelBottom.remove(index);
+		listModelTop.add(i, comboBoxObject);
+	}
+
+	private void kurangAll() {
+		DefaultListModel<ComboBoxObject> listModelBottom = (DefaultListModel<ComboBoxObject>) listRoleBottom
+				.getModel();
+		while (listModelBottom.size() > 0) {
+			listRoleBottom.setSelectedIndex(0);
+			kurang();
+		}
+	}
+
 	private void save(boolean deleted) throws ActionTypeNotSupported,
 			UserException {
 		validateForm();
@@ -164,16 +339,25 @@ public class UserForm extends XJDialog {
 			session.beginTransaction();
 			UserFacade facade = UserFacade.getInstance();
 
+			List<Role> roles = new ArrayList<>();
+			DefaultListModel<ComboBoxObject> listModelBottom = (DefaultListModel<ComboBoxObject>) listRoleBottom
+					.getModel();
+			for (int i = 0; i < listModelBottom.size(); ++i) {
+				ComboBoxObject comboBoxObject = listModelBottom.get(i);
+				Role role = (Role) comboBoxObject.getId();
+				roles.add(role);
+			}
+
 			if (actionType == ActionType.CREATE) {
 				facade.addNewUser(txtLogin.getText(), txtNama.getText(),
-						new String(txtPassword.getPassword()),
+						new String(txtPassword.getPassword()), roles,
 						chkDisabled.isSelected(), deleted, session);
 
 				dispose();
 			} else if (actionType == ActionType.UPDATE) {
 				facade.updateExistingUser(txtLogin.getText(), new String(
-						txtPassword.getPassword()), chkDisabled.isSelected(),
-						deleted, session);
+						txtPassword.getPassword()), roles, chkDisabled
+						.isSelected(), deleted, session);
 				dispose();
 			} else {
 				throw new ActionTypeNotSupported(actionType);
@@ -184,6 +368,46 @@ public class UserForm extends XJDialog {
 			throw e;
 		} finally {
 			session.close();
+		}
+	}
+
+	private void tambah() {
+		DefaultListModel<ComboBoxObject> listModelTop = (DefaultListModel<ComboBoxObject>) listRoleTop
+				.getModel();
+		DefaultListModel<ComboBoxObject> listModelBottom = (DefaultListModel<ComboBoxObject>) listRoleBottom
+				.getModel();
+
+		int index = listRoleTop.getSelectedIndex();
+		if (index < 0 || index >= listModelTop.size()) {
+			return;
+		}
+
+		ComboBoxObject comboBoxObject = listModelTop.get(index);
+		int i = 0;
+		for (; i < listModelBottom.size(); ++i) {
+			Role roleAtBottom = (Role) listModelBottom.getElementAt(i).getId();
+
+			Role roleAtTop = (Role) comboBoxObject.getId();
+
+			if (roleAtTop.getId() > roleAtBottom.getId()) {
+				/*
+				 * Do nothing. Lets assign i = i+1
+				 */
+			} else {
+				break;
+			}
+		}
+
+		listModelTop.remove(index);
+		listModelBottom.add(i, comboBoxObject);
+	}
+
+	private void tambahAll() {
+		DefaultListModel<ComboBoxObject> listModelTop = (DefaultListModel<ComboBoxObject>) listRoleTop
+				.getModel();
+		while (listModelTop.size() > 0) {
+			listRoleTop.setSelectedIndex(0);
+			tambah();
 		}
 	}
 

@@ -13,6 +13,7 @@
 		<property name="format_sql">true</property>
 		<property name="use_sql_comments">false</property>
 		<property name="hibernate.hbm2ddl.auto">update</property>
+		<property name="hibernate.connection.release_mode">on_close</property>
 		<mapping class="com.ganesha.model.Permission" />
 		<mapping class="com.ganesha.model.Role" />
 		<mapping class="com.ganesha.model.User" />

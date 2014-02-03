@@ -194,7 +194,7 @@ public class RoleListDialog extends XJDialog {
 					tableParameters.get(ColumnEnum.NAME).getColumnIndex());
 
 			RoleFacade facade = RoleFacade.getInstance();
-			Role role = facade.getDetail(name, session);
+			Role role = facade.getDetail(name);
 
 			RoleForm roleForm = new RoleForm(this, ActionType.UPDATE);
 			roleForm.setFormDetailValue(role);

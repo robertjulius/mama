@@ -3,13 +3,17 @@ package com.ganesha.minimarket.facade;
 import java.util.List;
 
 import org.hibernate.Criteria;
+import org.hibernate.Hibernate;
 import org.hibernate.Session;
 import org.hibernate.criterion.Restrictions;
 
 import com.ganesha.core.exception.UserException;
 import com.ganesha.core.utils.CommonUtils;
 import com.ganesha.minimarket.Main;
+import com.ganesha.model.Role;
 import com.ganesha.model.User;
+import com.ganesha.model.UserRoleLink;
+import com.ganesha.model.UserRoleLinkPK;
 
 public class UserFacade {
 
@@ -26,7 +30,7 @@ public class UserFacade {
 	}
 
 	public void addNewUser(String login, String name, String password,
-			boolean disabled, boolean deleted, Session session)
+			List<Role> roles, boolean disabled, boolean deleted, Session session)
 			throws UserException {
 
 		if (GlobalFacade.getInstance().isExists("login", login, User.class,
@@ -45,6 +49,22 @@ public class UserFacade {
 		user.setLastUpdatedTimestamp(CommonUtils.getCurrentTimestamp());
 
 		session.saveOrUpdate(user);
+
+		for (Role role : roles) {
+			UserRoleLinkPK primaryKey = new UserRoleLinkPK();
+			primaryKey.setUser(user);
+			primaryKey.setRole(role);
+
+			UserRoleLink userRoleLink = new UserRoleLink();
+			userRoleLink.setPrimaryKey(primaryKey);
+			userRoleLink.setDisabled(false);
+			userRoleLink.setDeleted(false);
+			userRoleLink.setLastUpdatedBy(Main.getUserLogin().getId());
+			userRoleLink.setLastUpdatedTimestamp(CommonUtils
+					.getCurrentTimestamp());
+
+			session.saveOrUpdate(userRoleLink);
+		}
 	}
 
 	public User getDetail(int id, Session session) {
@@ -60,6 +80,8 @@ public class UserFacade {
 		criteria.add(Restrictions.eq("login", login));
 
 		User user = (User) criteria.uniqueResult();
+		Hibernate.initialize(user.getUserRoleLinks());
+
 		return user;
 	}
 
@@ -87,7 +109,7 @@ public class UserFacade {
 	}
 
 	public void updateExistingUser(String login, String password,
-			boolean disabled, boolean deleted, Session session)
+			List<Role> roles, boolean disabled, boolean deleted, Session session)
 			throws UserException {
 
 		User user = getDetail(login, session);
@@ -100,6 +122,27 @@ public class UserFacade {
 						"Tidak dapat menghapus User yang masih dalam kondisi aktif");
 			}
 		}
+		List<UserRoleLink> userRoleLinks = user.getUserRoleLinks();
+		for (UserRoleLink userRoleLink : userRoleLinks) {
+			session.delete(userRoleLink);
+		}
+
+		for (Role role : roles) {
+			UserRoleLinkPK primaryKey = new UserRoleLinkPK();
+			primaryKey.setUser(user);
+			primaryKey.setRole(role);
+
+			UserRoleLink userRoleLink = new UserRoleLink();
+			userRoleLink.setPrimaryKey(primaryKey);
+			userRoleLink.setDisabled(false);
+			userRoleLink.setDeleted(false);
+			userRoleLink.setLastUpdatedBy(Main.getUserLogin().getId());
+			userRoleLink.setLastUpdatedTimestamp(CommonUtils
+					.getCurrentTimestamp());
+
+			session.merge(userRoleLink);
+		}
+
 		user.setDisabled(disabled);
 		user.setDeleted(deleted);
 		user.setLastUpdatedBy(Main.getUserLogin().getId());
