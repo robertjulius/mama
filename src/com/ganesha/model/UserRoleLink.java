@@ -6,7 +6,7 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name = "USER_ROLE_LINKS")
-public class UserRoleLink extends Trackable {
+public class UserRoleLink implements TableEntity {
 	private static final long serialVersionUID = 7322827690429228470L;
 
 	@EmbeddedId

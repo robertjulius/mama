@@ -208,15 +208,14 @@ public class RoleForm extends XJDialog {
 		setLocationRelativeTo(null);
 	}
 
-	public void setFormDetailValue(Role role) {
+	public void setFormDetailValue(Role role,
+			List<RolePermissionLink> rolePermissionLinks) {
 		txtRoleName.setText(role.getName());
 		txtDescription.setText(role.getDescription());
 
 		DefaultListModel<ComboBoxObject> listModelLeft = (DefaultListModel<ComboBoxObject>) listPermissionLeft
 				.getModel();
 
-		List<RolePermissionLink> rolePermissionLinks = role
-				.getRolePermissionLinks();
 		for (RolePermissionLink rolePermissionLink : rolePermissionLinks) {
 			Permission permission = rolePermissionLink.getPrimaryKey()
 					.getPermission();

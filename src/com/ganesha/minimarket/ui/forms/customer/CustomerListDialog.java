@@ -201,7 +201,12 @@ public class CustomerListDialog extends XJDialog {
 		btnDetail.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				showDetail();
+				try {
+					showDetail();
+				} catch (Exception ex) {
+					ExceptionHandler.handleException(CustomerListDialog.this,
+							ex);
+				}
 			}
 		});
 		btnDetail

@@ -30,6 +30,8 @@ public class HibernateUtils {
 	}
 
 	public static Session openSession() throws HibernateException {
-		return sessionFactory.openSession();
+		Session session = sessionFactory.openSession();
+		session.clear();
+		return session;
 	}
 }

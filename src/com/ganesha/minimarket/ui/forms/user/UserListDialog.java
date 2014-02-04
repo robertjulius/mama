@@ -7,12 +7,13 @@ import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.swing.ButtonGroup;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
-import javax.swing.table.TableColumnModel;
 
 import net.miginfocom.swing.MigLayout;
 
@@ -27,10 +28,14 @@ import com.ganesha.desktop.component.XJLabel;
 import com.ganesha.desktop.component.XJRadioButton;
 import com.ganesha.desktop.component.XJTable;
 import com.ganesha.desktop.component.XJTextField;
+import com.ganesha.desktop.component.xtableutils.XTableConstants;
 import com.ganesha.desktop.component.xtableutils.XTableModel;
+import com.ganesha.desktop.component.xtableutils.XTableParameter;
+import com.ganesha.desktop.component.xtableutils.XTableUtils;
 import com.ganesha.hibernate.HibernateUtils;
 import com.ganesha.minimarket.facade.UserFacade;
 import com.ganesha.model.User;
+import com.ganesha.model.UserRoleLink;
 
 public class UserListDialog extends XJDialog {
 	private static final long serialVersionUID = 1452286313727721700L;
@@ -47,6 +52,14 @@ public class UserListDialog extends XJDialog {
 	private XJButton btnRefresh;
 	private XJRadioButton rdUserAktif;
 	private XJRadioButton rdUserTidakAktif;
+	private final Map<ColumnEnum, XTableParameter> tableParameters = new HashMap<>();
+	{
+		tableParameters.put(ColumnEnum.LOGIN, new XTableParameter(0, 50, false,
+				"Login", XTableConstants.CELL_RENDERER_CENTER, String.class));
+
+		tableParameters.put(ColumnEnum.NAME, new XTableParameter(1, 100, false,
+				"Nama User", XTableConstants.CELL_RENDERER_LEFT, String.class));
+	}
 
 	public UserListDialog(Window parent) {
 		super(parent);
@@ -63,14 +76,14 @@ public class UserListDialog extends XJDialog {
 				btnDetail.doClick();
 			}
 		};
-		initTable();
+		XTableUtils.initTable(table, tableParameters);
 
 		JPanel pnlFilter = new JPanel();
 		getContentPane().add(pnlFilter, "cell 0 0,grow");
-		pnlFilter.setLayout(new MigLayout("", "[100][grow][]", "[][][grow]"));
+		pnlFilter.setLayout(new MigLayout("", "[100][grow][]", "[][][]"));
 
 		XJLabel lblLogin = new XJLabel();
-		lblLogin.setText("Login ID");
+		lblLogin.setText("Login");
 		pnlFilter.add(lblLogin, "cell 0 0");
 
 		txtLogin = new XJTextField();
@@ -181,7 +194,11 @@ public class UserListDialog extends XJDialog {
 		btnDetail.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				showDetail();
+				try {
+					showDetail();
+				} catch (Exception ex) {
+					ExceptionHandler.handleException(UserListDialog.this, ex);
+				}
 			}
 		});
 		btnDetail
@@ -195,8 +212,8 @@ public class UserListDialog extends XJDialog {
 	}
 
 	@Override
-	protected void keyEventListener(int keyCode) {
-		switch (keyCode) {
+	protected void keyEventListener(int keyLogin) {
+		switch (keyLogin) {
 		case KeyEvent.VK_F5:
 			btnTambah.doClick();
 			break;
@@ -205,36 +222,28 @@ public class UserListDialog extends XJDialog {
 		}
 	}
 
-	private void initTable() {
-		XTableModel tableModel = new XTableModel();
-		tableModel.setColumnIdentifiers(new String[] { "Login", "Nama" });
-		tableModel.setColumnEditable(new boolean[] { false, false, false,
-				false, false });
-		table.setModel(tableModel);
-
-		TableColumnModel columnModel = table.getColumnModel();
-		columnModel.getColumn(0).setPreferredWidth(50);
-		columnModel.getColumn(1).setPreferredWidth(100);
-	}
-
 	private void loadData() throws AppException {
 		Session session = HibernateUtils.openSession();
 		try {
-			String code = txtLogin.getText();
+			String login = txtLogin.getText();
 			String name = txtNama.getText();
 			boolean disabled = rdUserTidakAktif.isSelected();
 
 			UserFacade facade = UserFacade.getInstance();
 
-			List<User> users = facade.search(code, name, disabled, session);
+			List<User> users = facade.search(login, name, disabled, session);
 
 			XTableModel tableModel = (XTableModel) table.getModel();
 			tableModel.setRowCount(users.size());
 
 			for (int i = 0; i < users.size(); ++i) {
 				User user = users.get(i);
-				tableModel.setValueAt(user.getLogin(), i, 0);
-				tableModel.setValueAt(user.getName(), i, 1);
+
+				tableModel.setValueAt(user.getLogin(), i,
+						tableParameters.get(ColumnEnum.LOGIN).getColumnIndex());
+
+				tableModel.setValueAt(user.getName(), i,
+						tableParameters.get(ColumnEnum.NAME).getColumnIndex());
 			}
 		} finally {
 			session.close();
@@ -248,13 +257,17 @@ public class UserListDialog extends XJDialog {
 			if (selectedRow < 0) {
 				return;
 			}
-			String code = (String) table.getModel().getValueAt(selectedRow, 0);
+			String login = (String) table.getModel().getValueAt(selectedRow,
+					tableParameters.get(ColumnEnum.LOGIN).getColumnIndex());
 
 			UserFacade facade = UserFacade.getInstance();
-			User user = facade.getDetail(code, session);
+			User user = facade.getDetail(login, session);
+
+			List<UserRoleLink> userRoleLinks = facade.getUserRoleLinks(
+					user.getId(), session);
 
 			UserForm userForm = new UserForm(this, ActionType.UPDATE);
-			userForm.setFormDetailValue(user);
+			userForm.setFormDetailValue(user, userRoleLinks);
 			userForm.setVisible(true);
 
 			btnRefresh.doClick();
@@ -271,5 +284,9 @@ public class UserListDialog extends XJDialog {
 		int column = table.getSelectedColumn();
 		table.requestFocus();
 		table.changeSelection(row, column, false, false);
+	}
+
+	private enum ColumnEnum {
+		LOGIN, NAME
 	}
 }

@@ -92,7 +92,7 @@ public class StockListDialog extends XJDialog {
 
 		setTitle("Master Barang");
 		getContentPane().setLayout(
-				new MigLayout("", "[1000,grow]", "[][300,grow][]"));
+				new MigLayout("", "[1000]", "[][300,grow][]"));
 
 		table = new XJTable() {
 			private static final long serialVersionUID = 1L;
@@ -150,7 +150,7 @@ public class StockListDialog extends XJDialog {
 
 		lblBarcodef = new XJLabel();
 		lblBarcodef.setText("Barcode [F8]");
-		pnlFilter.add(lblBarcodef, "cell 0 2,alignx trailing");
+		pnlFilter.add(lblBarcodef, "cell 0 2");
 
 		txtBarcode = new XJTextField();
 		txtBarcode.addKeyListener(new KeyAdapter() {
@@ -237,7 +237,11 @@ public class StockListDialog extends XJDialog {
 		btnDetail.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				showDetail();
+				try {
+					showDetail();
+				} catch (Exception ex) {
+					ExceptionHandler.handleException(StockListDialog.this, ex);
+				}
 			}
 		});
 

@@ -7,12 +7,13 @@ import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.swing.ButtonGroup;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
-import javax.swing.table.TableColumnModel;
 
 import net.miginfocom.swing.MigLayout;
 
@@ -27,7 +28,10 @@ import com.ganesha.desktop.component.XJLabel;
 import com.ganesha.desktop.component.XJRadioButton;
 import com.ganesha.desktop.component.XJTable;
 import com.ganesha.desktop.component.XJTextField;
+import com.ganesha.desktop.component.xtableutils.XTableConstants;
 import com.ganesha.desktop.component.xtableutils.XTableModel;
+import com.ganesha.desktop.component.xtableutils.XTableParameter;
+import com.ganesha.desktop.component.xtableutils.XTableUtils;
 import com.ganesha.hibernate.HibernateUtils;
 import com.ganesha.minimarket.facade.SupplierFacade;
 import com.ganesha.minimarket.model.Supplier;
@@ -48,6 +52,26 @@ public class SupplierListDialog extends XJDialog {
 	private XJButton btnRefresh;
 	private XJRadioButton rdSupplierAktif;
 	private XJRadioButton rdSupplierTidakAktif;
+	private final Map<ColumnEnum, XTableParameter> tableParameters = new HashMap<>();
+	{
+		tableParameters.put(ColumnEnum.CODE, new XTableParameter(0, 25, false,
+				"Kode", XTableConstants.CELL_RENDERER_CENTER, String.class));
+
+		tableParameters.put(ColumnEnum.NAME, new XTableParameter(1, 300, false,
+				"Nama Supplier", XTableConstants.CELL_RENDERER_LEFT,
+				String.class));
+
+		tableParameters.put(ColumnEnum.CONTACT_PERSON1, new XTableParameter(2,
+				75, false, "Kontak Person 1",
+				XTableConstants.CELL_RENDERER_CENTER, Integer.class));
+
+		tableParameters.put(ColumnEnum.CONTACT_PERSON2, new XTableParameter(3,
+				75, false, "Kontak Person 2",
+				XTableConstants.CELL_RENDERER_CENTER, String.class));
+
+		tableParameters.put(ColumnEnum.PHONE, new XTableParameter(4, 25, false,
+				"Telepon", XTableConstants.CELL_RENDERER_CENTER, Double.class));
+	}
 
 	public SupplierListDialog(Window parent) {
 		super(parent);
@@ -64,7 +88,7 @@ public class SupplierListDialog extends XJDialog {
 				btnDetail.doClick();
 			}
 		};
-		initTable();
+		XTableUtils.initTable(table, tableParameters);
 
 		JPanel pnlFilter = new JPanel();
 		getContentPane().add(pnlFilter, "cell 0 0,grow");
@@ -228,22 +252,6 @@ public class SupplierListDialog extends XJDialog {
 		}
 	}
 
-	private void initTable() {
-		XTableModel tableModel = new XTableModel();
-		tableModel.setColumnIdentifiers(new String[] { "Kode", "Nama",
-				"Kontak Person 1", "Kontak Person 2", "Telepon" });
-		tableModel.setColumnEditable(new boolean[] { false, false, false,
-				false, false });
-		table.setModel(tableModel);
-
-		TableColumnModel columnModel = table.getColumnModel();
-		columnModel.getColumn(0).setPreferredWidth(25);
-		columnModel.getColumn(1).setPreferredWidth(300);
-		columnModel.getColumn(2).setPreferredWidth(75);
-		columnModel.getColumn(3).setPreferredWidth(75);
-		columnModel.getColumn(4).setPreferredWidth(25);
-	}
-
 	private void loadData() throws AppException {
 		Session session = HibernateUtils.openSession();
 		try {
@@ -262,11 +270,23 @@ public class SupplierListDialog extends XJDialog {
 
 			for (int i = 0; i < suppliers.size(); ++i) {
 				Supplier supplier = suppliers.get(i);
-				tableModel.setValueAt(supplier.getCode(), i, 0);
-				tableModel.setValueAt(supplier.getName(), i, 1);
-				tableModel.setValueAt(supplier.getContactPerson1(), i, 2);
-				tableModel.setValueAt(supplier.getContactPerson2(), i, 3);
-				tableModel.setValueAt(supplier.getPhone1(), i, 4);
+
+				tableModel.setValueAt(supplier.getCode(), i, tableParameters
+						.get(ColumnEnum.CODE).getColumnIndex());
+
+				tableModel.setValueAt(supplier.getName(), i, tableParameters
+						.get(ColumnEnum.NAME).getColumnIndex());
+
+				tableModel.setValueAt(supplier.getContactPerson1(), i,
+						tableParameters.get(ColumnEnum.CONTACT_PERSON1)
+								.getColumnIndex());
+
+				tableModel.setValueAt(supplier.getContactPerson2(), i,
+						tableParameters.get(ColumnEnum.CONTACT_PERSON2)
+								.getColumnIndex());
+
+				tableModel.setValueAt(supplier.getPhone1(), i, tableParameters
+						.get(ColumnEnum.PHONE).getColumnIndex());
 			}
 		} finally {
 			session.close();
@@ -280,7 +300,8 @@ public class SupplierListDialog extends XJDialog {
 			if (selectedRow < 0) {
 				return;
 			}
-			String code = (String) table.getModel().getValueAt(selectedRow, 0);
+			String code = (String) table.getModel().getValueAt(selectedRow,
+					tableParameters.get(ColumnEnum.CODE).getColumnIndex());
 
 			SupplierFacade facade = SupplierFacade.getInstance();
 			Supplier supplier = facade.getDetail(code, session);
@@ -305,5 +326,9 @@ public class SupplierListDialog extends XJDialog {
 		int column = table.getSelectedColumn();
 		table.requestFocus();
 		table.changeSelection(row, column, false, false);
+	}
+
+	private enum ColumnEnum {
+		CODE, NAME, CONTACT_PERSON1, CONTACT_PERSON2, PHONE
 	}
 }

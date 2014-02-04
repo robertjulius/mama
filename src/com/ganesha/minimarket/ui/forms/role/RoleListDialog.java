@@ -31,6 +31,7 @@ import com.ganesha.desktop.component.xtableutils.XTableUtils;
 import com.ganesha.hibernate.HibernateUtils;
 import com.ganesha.minimarket.facade.RoleFacade;
 import com.ganesha.model.Role;
+import com.ganesha.model.RolePermissionLink;
 
 public class RoleListDialog extends XJDialog {
 	private static final long serialVersionUID = 1452286313727721700L;
@@ -194,10 +195,13 @@ public class RoleListDialog extends XJDialog {
 					tableParameters.get(ColumnEnum.NAME).getColumnIndex());
 
 			RoleFacade facade = RoleFacade.getInstance();
-			Role role = facade.getDetail(name);
+			Role role = facade.getDetail(name, session);
+
+			List<RolePermissionLink> rolePermissionLinks = facade
+					.getRolePermissionLinks(role.getId(), session);
 
 			RoleForm roleForm = new RoleForm(this, ActionType.UPDATE);
-			roleForm.setFormDetailValue(role);
+			roleForm.setFormDetailValue(role, rolePermissionLinks);
 			roleForm.setVisible(true);
 
 			loadData();

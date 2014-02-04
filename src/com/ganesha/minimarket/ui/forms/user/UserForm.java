@@ -231,16 +231,14 @@ public class UserForm extends XJDialog {
 		setLocationRelativeTo(null);
 	}
 
-	public void setFormDetailValue(User user) {
+	public void setFormDetailValue(User user, List<UserRoleLink> roleRoleLinks) {
 		txtLogin.setEditable(false);
 		txtLogin.setText(user.getLogin());
-		txtNama.setEditable(false);
 		txtNama.setText(user.getName());
 
 		DefaultListModel<ComboBoxObject> listModelTop = (DefaultListModel<ComboBoxObject>) listRoleTop
 				.getModel();
 
-		List<UserRoleLink> roleRoleLinks = user.getUserRoleLinks();
 		for (UserRoleLink roleRoleLink : roleRoleLinks) {
 			Role role = roleRoleLink.getPrimaryKey().getRole();
 
@@ -355,9 +353,10 @@ public class UserForm extends XJDialog {
 
 				dispose();
 			} else if (actionType == ActionType.UPDATE) {
-				facade.updateExistingUser(txtLogin.getText(), new String(
-						txtPassword.getPassword()), roles, chkDisabled
-						.isSelected(), deleted, session);
+				facade.updateExistingUser(txtLogin.getText(),
+						txtNama.getText(),
+						new String(txtPassword.getPassword()), roles,
+						chkDisabled.isSelected(), deleted, session);
 				dispose();
 			} else {
 				throw new ActionTypeNotSupported(actionType);

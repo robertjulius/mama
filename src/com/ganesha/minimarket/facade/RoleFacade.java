@@ -3,20 +3,18 @@ package com.ganesha.minimarket.facade;
 import java.util.List;
 
 import org.hibernate.Criteria;
-import org.hibernate.Hibernate;
 import org.hibernate.Query;
+import org.hibernate.SQLQuery;
 import org.hibernate.Session;
-import org.hibernate.StatelessSession;
 import org.hibernate.criterion.Restrictions;
 
 import com.ganesha.core.exception.UserException;
 import com.ganesha.core.utils.CommonUtils;
-import com.ganesha.hibernate.HibernateUtils;
+import com.ganesha.hibernate.HqlParameter;
 import com.ganesha.minimarket.Main;
 import com.ganesha.model.Permission;
 import com.ganesha.model.Role;
 import com.ganesha.model.RolePermissionLink;
-import com.ganesha.model.RolePermissionLinkPK;
 
 public class RoleFacade {
 
@@ -52,21 +50,7 @@ public class RoleFacade {
 
 		session.saveOrUpdate(role);
 
-		for (Permission permission : permissions) {
-			RolePermissionLinkPK primaryKey = new RolePermissionLinkPK();
-			primaryKey.setRole(role);
-			primaryKey.setPermission(permission);
-
-			RolePermissionLink rolePermissionLink = new RolePermissionLink();
-			rolePermissionLink.setPrimaryKey(primaryKey);
-			rolePermissionLink.setDisabled(false);
-			rolePermissionLink.setDeleted(false);
-			rolePermissionLink.setLastUpdatedBy(Main.getUserLogin().getId());
-			rolePermissionLink.setLastUpdatedTimestamp(CommonUtils
-					.getCurrentTimestamp());
-
-			session.saveOrUpdate(rolePermissionLink);
-		}
+		updateRolePermissionLink(role.getId(), permissions, session);
 	}
 
 	public List<Role> getAll(Session session) {
@@ -86,26 +70,27 @@ public class RoleFacade {
 		return role;
 	}
 
-	public Role getDetail(String name) {
-		StatelessSession session = HibernateUtils.openStatelessSession();
-		try {
-			Criteria criteria = session.createCriteria(Role.class);
-			criteria.add(Restrictions.eq("name", name));
-
-			Role role = (Role) criteria.uniqueResult();
-			Hibernate.initialize(role.getRolePermissionLinks());
-			return role;
-		} finally {
-			session.close();
-		}
-	}
-
 	public Role getDetail(String name, Session session) {
 		Criteria criteria = session.createCriteria(Role.class);
 		criteria.add(Restrictions.eq("name", name));
 
 		Role role = (Role) criteria.uniqueResult();
 		return role;
+	}
+
+	public List<RolePermissionLink> getRolePermissionLinks(int roleId,
+			Session session) {
+		Query query = session
+				.createQuery("FROM RolePermissionLink link WHERE link.primaryKey.role.id = :roleId");
+
+		HqlParameter parameter = new HqlParameter(query);
+		parameter.put("roleId", roleId);
+		parameter.validate();
+
+		@SuppressWarnings("unchecked")
+		List<RolePermissionLink> rolePermissionLinks = query.list();
+
+		return rolePermissionLinks;
 	}
 
 	public List<Role> search(String name, boolean disabled, Session session) {
@@ -140,36 +125,45 @@ public class RoleFacade {
 				role.setName(name);
 			}
 		}
-		List<RolePermissionLink> rolePermissionLinks = role
-				.getRolePermissionLinks();
-		for (RolePermissionLink rolePermissionLink : rolePermissionLinks) {
-			session.delete(rolePermissionLink);
-		}
-
-		for (Permission permission : permissions) {
-			RolePermissionLinkPK primaryKey = new RolePermissionLinkPK();
-			primaryKey.setRole(role);
-			primaryKey.setPermission(permission);
-
-			RolePermissionLink rolePermissionLink = (RolePermissionLink) session
-					.get(RolePermissionLink.class, primaryKey);
-			if (rolePermissionLink == null) {
-				rolePermissionLink = new RolePermissionLink();
-			}
-
-			rolePermissionLink.setPrimaryKey(primaryKey);
-			rolePermissionLink.setDisabled(false);
-			rolePermissionLink.setDeleted(false);
-			rolePermissionLink.setLastUpdatedBy(Main.getUserLogin().getId());
-			rolePermissionLink.setLastUpdatedTimestamp(CommonUtils
-					.getCurrentTimestamp());
-
-			session.merge(rolePermissionLink);
-		}
 
 		role.setLastUpdatedBy(Main.getUserLogin().getId());
 		role.setLastUpdatedTimestamp(CommonUtils.getCurrentTimestamp());
 
 		session.saveOrUpdate(role);
+
+		updateRolePermissionLink(role.getId(), permissions, session);
+	}
+
+	private void deleteRolePermissionLinkByRoleId(int roleId, Session session) {
+		String sql = "DELETE FROM role_permission_links WHERE role_id = :roleId";
+		SQLQuery query = session.createSQLQuery(sql);
+
+		HqlParameter parameter = new HqlParameter(query);
+		parameter.put("roleId", roleId);
+		parameter.validate();
+
+		query.executeUpdate();
+	}
+
+	private void insertIntoRolePermissionLink(int roleId,
+			List<Permission> permissions, Session session) {
+
+		for (Permission permission : permissions) {
+			String sql = "INSERT INTO role_permission_links (role_id, permission_id) VALUES (:roleId, :permissionId)";
+			SQLQuery query = session.createSQLQuery(sql);
+
+			HqlParameter parameter = new HqlParameter(query);
+			parameter.put("roleId", roleId);
+			parameter.put("permissionId", permission.getId());
+			parameter.validate();
+
+			query.executeUpdate();
+		}
+	}
+
+	private void updateRolePermissionLink(int roleId,
+			List<Permission> permissions, Session session) {
+		deleteRolePermissionLinkByRoleId(roleId, session);
+		insertIntoRolePermissionLink(roleId, permissions, session);
 	}
 }

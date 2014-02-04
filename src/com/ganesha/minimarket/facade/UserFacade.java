@@ -3,17 +3,18 @@ package com.ganesha.minimarket.facade;
 import java.util.List;
 
 import org.hibernate.Criteria;
-import org.hibernate.Hibernate;
+import org.hibernate.Query;
+import org.hibernate.SQLQuery;
 import org.hibernate.Session;
 import org.hibernate.criterion.Restrictions;
 
 import com.ganesha.core.exception.UserException;
 import com.ganesha.core.utils.CommonUtils;
+import com.ganesha.hibernate.HqlParameter;
 import com.ganesha.minimarket.Main;
 import com.ganesha.model.Role;
 import com.ganesha.model.User;
 import com.ganesha.model.UserRoleLink;
-import com.ganesha.model.UserRoleLinkPK;
 
 public class UserFacade {
 
@@ -50,21 +51,7 @@ public class UserFacade {
 
 		session.saveOrUpdate(user);
 
-		for (Role role : roles) {
-			UserRoleLinkPK primaryKey = new UserRoleLinkPK();
-			primaryKey.setUser(user);
-			primaryKey.setRole(role);
-
-			UserRoleLink userRoleLink = new UserRoleLink();
-			userRoleLink.setPrimaryKey(primaryKey);
-			userRoleLink.setDisabled(false);
-			userRoleLink.setDeleted(false);
-			userRoleLink.setLastUpdatedBy(Main.getUserLogin().getId());
-			userRoleLink.setLastUpdatedTimestamp(CommonUtils
-					.getCurrentTimestamp());
-
-			session.saveOrUpdate(userRoleLink);
-		}
+		updateUserRoleLink(user.getId(), roles, session);
 	}
 
 	public User getDetail(int id, Session session) {
@@ -80,9 +67,21 @@ public class UserFacade {
 		criteria.add(Restrictions.eq("login", login));
 
 		User user = (User) criteria.uniqueResult();
-		Hibernate.initialize(user.getUserRoleLinks());
-
 		return user;
+	}
+
+	public List<UserRoleLink> getUserRoleLinks(int userId, Session session) {
+		Query query = session
+				.createQuery("FROM UserRoleLink link WHERE link.primaryKey.user.id = :userId");
+
+		HqlParameter parameter = new HqlParameter(query);
+		parameter.put("userId", userId);
+		parameter.validate();
+
+		@SuppressWarnings("unchecked")
+		List<UserRoleLink> userRoleLinks = query.list();
+
+		return userRoleLinks;
 	}
 
 	public List<User> search(String login, String name, boolean disabled,
@@ -108,11 +107,12 @@ public class UserFacade {
 		return user;
 	}
 
-	public void updateExistingUser(String login, String password,
+	public void updateExistingUser(String login, String name, String password,
 			List<Role> roles, boolean disabled, boolean deleted, Session session)
 			throws UserException {
 
 		User user = getDetail(login, session);
+		user.setName(name);
 		if (password != null && !password.trim().equals("")) {
 			user.setPassword(password);
 		}
@@ -122,32 +122,46 @@ public class UserFacade {
 						"Tidak dapat menghapus User yang masih dalam kondisi aktif");
 			}
 		}
-		List<UserRoleLink> userRoleLinks = user.getUserRoleLinks();
-		for (UserRoleLink userRoleLink : userRoleLinks) {
-			session.delete(userRoleLink);
-		}
-
-		for (Role role : roles) {
-			UserRoleLinkPK primaryKey = new UserRoleLinkPK();
-			primaryKey.setUser(user);
-			primaryKey.setRole(role);
-
-			UserRoleLink userRoleLink = new UserRoleLink();
-			userRoleLink.setPrimaryKey(primaryKey);
-			userRoleLink.setDisabled(false);
-			userRoleLink.setDeleted(false);
-			userRoleLink.setLastUpdatedBy(Main.getUserLogin().getId());
-			userRoleLink.setLastUpdatedTimestamp(CommonUtils
-					.getCurrentTimestamp());
-
-			session.merge(userRoleLink);
-		}
-
 		user.setDisabled(disabled);
 		user.setDeleted(deleted);
 		user.setLastUpdatedBy(Main.getUserLogin().getId());
 		user.setLastUpdatedTimestamp(CommonUtils.getCurrentTimestamp());
 
 		session.saveOrUpdate(user);
+
+		updateUserRoleLink(user.getId(), roles, session);
+	}
+
+	private void deleteUserRoleLinkByUserId(int userId, Session session) {
+		String sql = "DELETE FROM user_role_links WHERE user_id = :userId";
+		SQLQuery query = session.createSQLQuery(sql);
+
+		HqlParameter parameter = new HqlParameter(query);
+		parameter.put("userId", userId);
+		parameter.validate();
+
+		query.executeUpdate();
+	}
+
+	private void insertIntoUserRoleLink(int userId, List<Role> roles,
+			Session session) {
+
+		for (Role role : roles) {
+			String sql = "INSERT INTO user_role_links (user_id, role_id) VALUES (:userId, :roleId)";
+			SQLQuery query = session.createSQLQuery(sql);
+
+			HqlParameter parameter = new HqlParameter(query);
+			parameter.put("userId", userId);
+			parameter.put("roleId", role.getId());
+			parameter.validate();
+
+			query.executeUpdate();
+		}
+	}
+
+	private void updateUserRoleLink(int userId, List<Role> roles,
+			Session session) {
+		deleteUserRoleLinkByUserId(userId, session);
+		insertIntoUserRoleLink(userId, roles, session);
 	}
 }

@@ -157,7 +157,12 @@ public class ReceivableListDialog extends XJDialog {
 		btnDetail.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				showDetail();
+				try {
+					showDetail();
+				} catch (Exception ex) {
+					ExceptionHandler.handleException(ReceivableListDialog.this,
+							ex);
+				}
 			}
 		});
 		btnDetail

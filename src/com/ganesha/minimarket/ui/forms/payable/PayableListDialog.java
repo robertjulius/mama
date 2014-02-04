@@ -157,7 +157,12 @@ public class PayableListDialog extends XJDialog {
 		btnDetail.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				showDetail();
+				try {
+					showDetail();
+				} catch (Exception ex) {
+					ExceptionHandler
+							.handleException(PayableListDialog.this, ex);
+				}
 			}
 		});
 		btnDetail
