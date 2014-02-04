@@ -10,7 +10,6 @@ import java.awt.event.WindowFocusListener;
 import javax.swing.JDialog;
 
 import com.ganesha.core.desktop.ExceptionHandler;
-import com.ganesha.core.exception.UserException;
 import com.ganesha.desktop.component.permissionutils.PermissionChecker;
 import com.ganesha.desktop.component.permissionutils.PermissionControl;
 
@@ -22,7 +21,6 @@ public abstract class XJDialog extends JDialog implements XComponentConstants,
 			.getCurrentKeyboardFocusManager();
 	private MyDispatcher dispatcher = new MyDispatcher();
 
-	private String permissionCode;
 	private boolean permissionRequired = true;
 	private boolean closeOnEsc = true;
 
@@ -45,7 +43,7 @@ public abstract class XJDialog extends JDialog implements XComponentConstants,
 
 	@Override
 	public String getPermissionCode() {
-		return permissionCode;
+		return getClass().getName();
 	}
 
 	@Override
@@ -55,11 +53,6 @@ public abstract class XJDialog extends JDialog implements XComponentConstants,
 
 	public void setCloseOnEsc(boolean closeOnEsc) {
 		this.closeOnEsc = closeOnEsc;
-	}
-
-	@Override
-	public void setPermissionCode(String permissionCode) {
-		this.permissionCode = permissionCode;
 	}
 
 	@Override
@@ -73,7 +66,7 @@ public abstract class XJDialog extends JDialog implements XComponentConstants,
 			if (permissionRequired) {
 				try {
 					PermissionChecker.checkPermission(this);
-				} catch (UserException ex) {
+				} catch (Exception ex) {
 					ExceptionHandler.handleException((Window) getParent(), ex);
 					return;
 				}

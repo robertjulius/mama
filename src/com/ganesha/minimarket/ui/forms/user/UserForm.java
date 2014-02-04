@@ -214,7 +214,7 @@ public class UserForm extends XJDialog {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				try {
-					save(false);
+					save(true);
 				} catch (Exception ex) {
 					ExceptionHandler.handleException(UserForm.this, ex);
 				}

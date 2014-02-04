@@ -1,5 +1,7 @@
 package com.ganesha.minimarket.facade;
 
+import java.util.List;
+
 import org.hibernate.Criteria;
 import org.hibernate.Hibernate;
 import org.hibernate.Session;
@@ -9,6 +11,7 @@ import com.ganesha.core.exception.UserException;
 import com.ganesha.hibernate.HibernateUtils;
 import com.ganesha.minimarket.Main;
 import com.ganesha.model.User;
+import com.ganesha.model.UserRoleLink;
 
 public class LoginFacade {
 
@@ -37,7 +40,11 @@ public class LoginFacade {
 				if (!user.getPassword().trim().equalsIgnoreCase(password)) {
 					throw new UserException("Login ID atau Password salah");
 				}
-				Hibernate.initialize(user.getUserRoleLinks());
+				List<UserRoleLink> userRoleLinks = user.getUserRoleLinks();
+				for (UserRoleLink userRoleLink : userRoleLinks) {
+					Hibernate.initialize(userRoleLink.getPrimaryKey().getRole()
+							.getRolePermissionLinks());
+				}
 				Main.setUserLogin(user);
 				return true;
 			} else {

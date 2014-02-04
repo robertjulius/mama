@@ -6,7 +6,5 @@ public interface PermissionControl {
 
 	public boolean isPermissionRequired();
 
-	public void setPermissionCode(String code);
-
 	public void setPermissionRequired(boolean permissionRequired);
 }

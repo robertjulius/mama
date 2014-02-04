@@ -52,7 +52,6 @@ public class RoleListDialog extends XJDialog {
 
 	public RoleListDialog(Window parent) {
 		super(parent);
-
 		setTitle("Master Role");
 		getContentPane()
 				.setLayout(new MigLayout("", "[500]", "[][300,grow][]"));

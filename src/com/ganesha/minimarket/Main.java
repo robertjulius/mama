@@ -22,6 +22,7 @@ import com.ganesha.hibernate.HqlParameter;
 import com.ganesha.minimarket.model.Company;
 import com.ganesha.minimarket.ui.forms.login.LoginForm;
 import com.ganesha.minimarket.utils.CompanyConsistencyChecker;
+import com.ganesha.minimarket.utils.PermissionConsistencyChecker;
 import com.ganesha.minimarket.utils.SimplePermissionChecker;
 import com.ganesha.model.User;
 
@@ -59,6 +60,8 @@ public class Main {
 		company = companyChecker.getCompany();
 
 		PermissionChecker.register(new SimplePermissionChecker());
+		PermissionConsistencyChecker permissionChecker = new PermissionConsistencyChecker();
+		permissionChecker.initDB();
 
 		new LoginForm().setVisible(true);
 	}

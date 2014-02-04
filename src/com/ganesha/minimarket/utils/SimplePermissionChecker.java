@@ -2,6 +2,7 @@ package com.ganesha.minimarket.utils;
 
 import java.util.List;
 
+import com.ganesha.core.exception.AppException;
 import com.ganesha.core.exception.UserException;
 import com.ganesha.desktop.component.permissionutils.PermissionChecker;
 import com.ganesha.desktop.component.permissionutils.PermissionControl;
@@ -13,8 +14,14 @@ import com.ganesha.model.UserRoleLink;
 public class SimplePermissionChecker extends PermissionChecker {
 
 	@Override
-	public void check(PermissionControl permissionControl) throws UserException {
+	public void check(PermissionControl permissionControl) throws AppException,
+			UserException {
 		String permissionCode = permissionControl.getPermissionCode();
+		if (permissionCode == null) {
+			throw new AppException("Permission Code for "
+					+ permissionControl.getClass().getCanonicalName()
+					+ " is not set");
+		}
 		List<UserRoleLink> userRoleLinks = Main.getUserLogin()
 				.getUserRoleLinks();
 		for (UserRoleLink userRoleLink : userRoleLinks) {

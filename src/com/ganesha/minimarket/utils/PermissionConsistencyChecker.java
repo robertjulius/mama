@@ -1,84 +1,73 @@
 package com.ganesha.minimarket.utils;
 
-import java.lang.reflect.Field;
-import java.util.HashMap;
+import java.sql.Timestamp;
+import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 
-import org.hibernate.Query;
 import org.hibernate.Session;
 
-import com.ganesha.core.exception.AppException;
+import com.ganesha.core.utils.CommonUtils;
+import com.ganesha.desktop.component.permissionutils.PermissionControl;
 import com.ganesha.hibernate.HibernateUtils;
+import com.ganesha.minimarket.facade.GlobalFacade;
+import com.ganesha.minimarket.ui.forms.role.RoleForm;
+import com.ganesha.minimarket.ui.forms.role.RoleListDialog;
+import com.ganesha.minimarket.ui.forms.user.UserForm;
+import com.ganesha.minimarket.ui.forms.user.UserListDialog;
 import com.ganesha.model.Permission;
 
 public class PermissionConsistencyChecker {
 
-	private Map<Integer, Permission> permissionsFromConstants;
-	private List<Permission> permissionsFromDB;
+	private List<Class<? extends PermissionControl>> classes;
 
 	public PermissionConsistencyChecker() {
+		classes = new ArrayList<>();
+		classes.add(RoleListDialog.class);
+		classes.add(RoleForm.class);
+		classes.add(UserListDialog.class);
+		classes.add(UserForm.class);
 	}
 
-	public void check() throws AppException {
-		loadListFromConstants();
-		loadListFromDB();
-
-		if (permissionsFromConstants.size() != permissionsFromDB.size()) {
-			String additionalMessage = "Size in DB: "
-					+ permissionsFromDB.size() + " , size in Constants: "
-					+ permissionsFromConstants.size();
-			throwException(additionalMessage);
-		}
-
-		for (Permission permissionDb : permissionsFromDB) {
-			int id = permissionDb.getId();
-			Permission permissionConstant = permissionsFromConstants
-					.get(permissionDb.getId());
-
-			if (permissionConstant == null) {
-				String additionalMessage = "Permission " + id
-						+ " in Constant is not set";
-				throwException(additionalMessage);
-			}
-		}
-	}
-
-	private void loadListFromConstants() throws AppException {
-		permissionsFromConstants = new HashMap<>();
-		try {
-			Class<PermissionConstants> clazz = PermissionConstants.class;
-			Field[] fields = clazz.getFields();
-
-			for (Field field : fields) {
-				String permissionName = field.getName();
-				int permissionId = field.getInt(null);
-				Permission permission = new Permission();
-				permission.setId(permissionId);
-				permission.setName(permissionName);
-				permissionsFromConstants.put(permissionId, permission);
-			}
-		} catch (IllegalArgumentException | IllegalAccessException e) {
-			throw new AppException(e);
-		}
-	}
-
-	private void loadListFromDB() {
+	public void initDB() {
 		Session session = HibernateUtils.openSession();
 		try {
-			Query query = session.createQuery("from Permission");
+			session.beginTransaction();
 
-			@SuppressWarnings("unchecked")
-			List<Permission> permissions = query.list();
+			int userId = 0;
+			Timestamp currentTimestamp = CommonUtils.getCurrentTimestamp();
 
-			permissionsFromDB = permissions;
+			for (Class<? extends PermissionControl> clazz : classes) {
+				String code = clazz.getName();
+				String name = clazz.getSimpleName();
+				String description = null;
+
+				boolean exists = GlobalFacade.getInstance().isExists("code",
+						code, Permission.class, session);
+				if (!exists) {
+					Permission permission = createPermission(code, name,
+							description, userId, currentTimestamp);
+					session.saveOrUpdate(permission);
+				}
+			}
+			session.getTransaction().commit();
+		} catch (Exception e) {
+			session.getTransaction().rollback();
+			throw e;
 		} finally {
 			session.close();
 		}
 	}
 
-	private void throwException(String additionalMessage) throws AppException {
-		throw new AppException("Inconsistent Permission in DB. "
-				+ additionalMessage);
+	private Permission createPermission(String code, String name,
+			String description, int userId, Timestamp currentTimestamp) {
+
+		Permission permission = new Permission();
+		permission.setCode(code);
+		permission.setName(name);
+		permission.setDescription(description);
+		permission.setLastUpdatedBy(userId);
+		permission.setLastUpdatedTimestamp(currentTimestamp);
+
+		return permission;
 	}
 }
