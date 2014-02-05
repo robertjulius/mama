@@ -5,8 +5,9 @@
 Warna UI
 Insert ke GL
 Laporan Laba Rugi
-User Maintenance
-Permission Maintenance
+[DONE] User Maintenance
+Change Password
+[DONE] Permission Maintenance
 
 
 [DONE] Setting:

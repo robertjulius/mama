@@ -31,7 +31,6 @@ public class HibernateUtils {
 
 	public static Session openSession() throws HibernateException {
 		Session session = sessionFactory.openSession();
-		session.clear();
 		return session;
 	}
 }
