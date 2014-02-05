@@ -13,8 +13,10 @@ import com.ganesha.minimarket.ui.forms.customer.CustomerListDialog;
 import com.ganesha.minimarket.ui.forms.discount.DiscountForm;
 import com.ganesha.minimarket.ui.forms.discount.DiscountListDialog;
 import com.ganesha.minimarket.ui.forms.payable.PayableForm;
+import com.ganesha.minimarket.ui.forms.payable.PayableListDialog;
 import com.ganesha.minimarket.ui.forms.purchase.PembelianForm;
 import com.ganesha.minimarket.ui.forms.receivable.ReceivableForm;
+import com.ganesha.minimarket.ui.forms.receivable.ReceivableListDialog;
 import com.ganesha.minimarket.ui.forms.reports.ItemStockReportListDialog;
 import com.ganesha.minimarket.ui.forms.reports.ReportViewerDialog;
 import com.ganesha.minimarket.ui.forms.reports.StockOpnameReportListDialog;
@@ -31,6 +33,7 @@ import com.ganesha.minimarket.ui.forms.stockopname.StockOpnameListDialog;
 import com.ganesha.minimarket.ui.forms.supplier.SupplierForm;
 import com.ganesha.minimarket.ui.forms.supplier.SupplierListDialog;
 import com.ganesha.minimarket.ui.forms.systemsetting.SystemSettingForm;
+import com.ganesha.minimarket.ui.forms.user.ChangePasswordForm;
 import com.ganesha.minimarket.ui.forms.user.UserForm;
 import com.ganesha.minimarket.ui.forms.user.UserListDialog;
 import com.ganesha.model.Permission;
@@ -55,6 +58,12 @@ public class PermissionConsistencyChecker {
 		permissions.add(createPermission(UserListDialog.class,
 				"User List Dialog", 221));
 		permissions.add(createPermission(UserForm.class, "User Form", 222));
+
+		// Administrasi - Change Password
+		permissions.add(createPermission("/administrasi/changepassword",
+				"/Administrasi/Ganti Password", 230));
+		permissions.add(createPermission(ChangePasswordForm.class,
+				"Change Password Form", 231));
 
 		// Master Date - Persediaan Barang
 		permissions.add(createPermission("/master/stock",
@@ -114,14 +123,18 @@ public class PermissionConsistencyChecker {
 		// Transaction - Payable
 		permissions.add(createPermission("/transaction/payable",
 				"/Transaksi/Hutang", 450));
+		permissions.add(createPermission(PayableListDialog.class,
+				"Payable List Dialog", 451));
 		permissions
-				.add(createPermission(PayableForm.class, "Payable Form", 451));
+				.add(createPermission(PayableForm.class, "Payable Form", 452));
 
 		// Transaction - Receivable
 		permissions.add(createPermission("/transaction/receivable",
 				"/Transaksi/Piutang", 460));
+		permissions.add(createPermission(ReceivableListDialog.class,
+				"Receivable List Dialog", 461));
 		permissions.add(createPermission(ReceivableForm.class,
-				"Receivable Form", 461));
+				"Receivable Form", 462));
 
 		// Back Office - Laporan - Laporan Transaksi
 		permissions.add(createPermission("/backoffice/report/transaction",
@@ -172,7 +185,9 @@ public class PermissionConsistencyChecker {
 
 				boolean exists = GlobalFacade.getInstance().isExists("code",
 						permission.getCode(), Permission.class, session);
-				if (!exists) {
+				if (exists) {
+					session.merge(permission);
+				} else {
 					session.saveOrUpdate(permission);
 				}
 			}

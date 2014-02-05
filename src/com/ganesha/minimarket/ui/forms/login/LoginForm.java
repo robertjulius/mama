@@ -149,7 +149,8 @@ public class LoginForm extends XJFrame {
 		return imageIcon;
 	}
 
-	private void login(String loginId, String password) throws UserException {
+	private void login(String loginId, String password) throws UserException,
+			AppException {
 
 		LoginFacade facade = LoginFacade.getInstance();
 		boolean success = facade.login(loginId, password);

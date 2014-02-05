@@ -5,7 +5,6 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 import javax.swing.JFrame;
-import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JSeparator;
 
@@ -14,6 +13,7 @@ import net.miginfocom.swing.MigLayout;
 import com.ganesha.core.desktop.ExceptionHandler;
 import com.ganesha.desktop.component.XJFrame;
 import com.ganesha.desktop.component.XJLabel;
+import com.ganesha.desktop.component.XJMenu;
 import com.ganesha.desktop.component.XJMenuItem;
 import com.ganesha.minimarket.Main;
 import com.ganesha.minimarket.ui.forms.customer.CustomerListDialog;
@@ -33,6 +33,7 @@ import com.ganesha.minimarket.ui.forms.stockopname.StockOpnameListDialog;
 import com.ganesha.minimarket.ui.forms.supplier.SupplierListDialog;
 import com.ganesha.minimarket.ui.forms.systemsetting.SystemSettingForm;
 import com.ganesha.minimarket.ui.forms.systemsetting.TestReceiptPrinter;
+import com.ganesha.minimarket.ui.forms.user.ChangePasswordForm;
 import com.ganesha.minimarket.ui.forms.user.UserListDialog;
 
 public class MainFrame extends XJFrame {
@@ -46,10 +47,10 @@ public class MainFrame extends XJFrame {
 		JMenuBar menuBar = new JMenuBar();
 		setJMenuBar(menuBar);
 
-		JMenu mnFile = new JMenu("File");
+		XJMenu mnFile = new XJMenu("File");
 		menuBar.add(mnFile);
 
-		JMenu mnAdministrasi = new JMenu("Administrasi");
+		XJMenu mnAdministrasi = new XJMenu("Administrasi");
 		menuBar.add(mnAdministrasi);
 
 		XJMenuItem mntmRole = new XJMenuItem("Role", "/administrasi/role");
@@ -78,7 +79,22 @@ public class MainFrame extends XJFrame {
 			}
 		});
 
-		JMenu mnMasterData = new JMenu("Master Data");
+		XJMenuItem mntmGantiPassword = new XJMenuItem("Ganti Password",
+				"/administrasi/changepassword");
+		mntmGantiPassword.setPermissionRequired(false);
+		mnAdministrasi.add(mntmGantiPassword);
+		mntmGantiPassword.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				try {
+					new ChangePasswordForm(MainFrame.this).setVisible(true);
+				} catch (Exception ex) {
+					ExceptionHandler.handleException(MainFrame.this, ex);
+				}
+			}
+		});
+
+		XJMenu mnMasterData = new XJMenu("Master Data");
 		menuBar.add(mnMasterData);
 
 		XJMenuItem mntmPersediaan = new XJMenuItem("Persediaan Barang",
@@ -134,7 +150,7 @@ public class MainFrame extends XJFrame {
 		});
 		mnMasterData.add(mntmDiskon);
 
-		JMenu mnTransaksi = new JMenu("Transaksi");
+		XJMenu mnTransaksi = new XJMenu("Transaksi");
 		menuBar.add(mnTransaksi);
 
 		XJMenuItem mntmPembelian = new XJMenuItem("Pembelian",
@@ -226,10 +242,10 @@ public class MainFrame extends XJFrame {
 		});
 		mnTransaksi.add(mntmPiutang);
 
-		JMenu mnBackOffice = new JMenu("Back Office");
+		XJMenu mnBackOffice = new XJMenu("Back Office");
 		menuBar.add(mnBackOffice);
 
-		JMenu mnReport = new JMenu("Laporan");
+		XJMenu mnReport = new XJMenu("Laporan");
 		mnBackOffice.add(mnReport);
 
 		XJMenuItem mntmReportTransaksi = new XJMenuItem("Laporan Transaksi",
@@ -291,7 +307,7 @@ public class MainFrame extends XJFrame {
 		});
 		mnBackOffice.add(mntmStockOpname);
 
-		JMenu mnSetting = new JMenu("Setting");
+		XJMenu mnSetting = new XJMenu("Setting");
 		menuBar.add(mnSetting);
 
 		XJMenuItem mntmSettingAplikasi = new XJMenuItem("Setting Aplikasi",

@@ -20,6 +20,7 @@ import org.hibernate.Session;
 
 import com.ganesha.core.desktop.ExceptionHandler;
 import com.ganesha.core.exception.ActionTypeNotSupported;
+import com.ganesha.core.exception.AppException;
 import com.ganesha.core.exception.UserException;
 import com.ganesha.core.utils.GeneralConstants.ActionType;
 import com.ganesha.desktop.component.ComboBoxObject;
@@ -330,7 +331,7 @@ public class UserForm extends XJDialog {
 	}
 
 	private void save(boolean deleted) throws ActionTypeNotSupported,
-			UserException {
+			UserException, AppException {
 		validateForm();
 
 		Session session = HibernateUtils.openSession();

@@ -91,6 +91,7 @@ public class SearchTransactionDialog extends XJDialog {
 			TransactionFacade facade) {
 		super(parent);
 		setTitle(title);
+		setPermissionRequired(false);
 
 		this.facade = facade;
 

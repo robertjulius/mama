@@ -7,7 +7,9 @@ import org.hibernate.Hibernate;
 import org.hibernate.Session;
 import org.hibernate.criterion.Restrictions;
 
+import com.ganesha.core.exception.AppException;
 import com.ganesha.core.exception.UserException;
+import com.ganesha.core.utils.SecurityUtils;
 import com.ganesha.hibernate.HibernateUtils;
 import com.ganesha.minimarket.Main;
 import com.ganesha.model.User;
@@ -27,7 +29,8 @@ public class LoginFacade {
 	private LoginFacade() {
 	}
 
-	public boolean login(String loginId, String password) throws UserException {
+	public boolean login(String loginId, String password) throws UserException,
+			AppException {
 		Session session = HibernateUtils.openSession();
 		try {
 
@@ -37,7 +40,7 @@ public class LoginFacade {
 			User user = (User) criteria.uniqueResult();
 
 			if (user != null) {
-				if (!user.getPassword().trim().equalsIgnoreCase(password)) {
+				if (!validatePassword(password, user.getPassword())) {
 					throw new UserException("Login ID atau Password salah");
 				}
 				List<UserRoleLink> userRoleLinks = user.getUserRoleLinks();
@@ -53,5 +56,14 @@ public class LoginFacade {
 		} finally {
 			session.close();
 		}
+	}
+
+	public boolean validatePassword(String passwordToBeCheck,
+			String passwordInDb) throws AppException {
+		String hashedPassword = SecurityUtils.hash(passwordToBeCheck);
+		if (passwordInDb.equalsIgnoreCase(hashedPassword)) {
+			return true;
+		}
+		return false;
 	}
 }

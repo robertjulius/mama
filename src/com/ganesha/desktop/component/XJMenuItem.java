@@ -18,7 +18,7 @@ public class XJMenuItem extends JMenuItem implements XComponentConstants,
 	public XJMenuItem(String text, String permissionCode) {
 		super(text);
 		this.permissionCode = permissionCode;
-		setEnabled(true);
+		setVisible(true);
 	}
 
 	@Override
@@ -32,26 +32,26 @@ public class XJMenuItem extends JMenuItem implements XComponentConstants,
 	}
 
 	@Override
-	public void setEnabled(boolean enabled) {
-		if (!enabled || !permissionRequired) {
-			super.setEnabled(enabled);
+	public void setPermissionRequired(boolean permissionRequired) {
+		this.permissionRequired = permissionRequired;
+	}
+
+	@Override
+	public void setVisible(boolean visible) {
+		if (!visible || !permissionRequired) {
+			super.setVisible(visible);
 			return;
 		}
 		try {
 			boolean permitted = PermissionChecker.checkPermission(this);
 			if (!permitted) {
-				super.setEnabled(false);
+				super.setVisible(false);
 			} else {
-				super.setEnabled(enabled);
+				super.setVisible(visible);
 			}
 		} catch (Exception ex) {
 			ExceptionHandler.handleException((Window) getParent(), ex);
 			return;
 		}
-	}
-
-	@Override
-	public void setPermissionRequired(boolean permissionRequired) {
-		this.permissionRequired = permissionRequired;
 	}
 }

@@ -15,14 +15,12 @@ Change Password
 [DONE] 2. Nama Company
 [DONE] 3. Pajak
 [DONE] 4. Temp PDF File
-
-Check warning pada saat build-eclipse.xml
-
+[DONE] Check warning pada saat build-eclipse.xml -> Tanggal modifikasi untuk file-file tersebut ngaco, karena test main-main ganti tanggal sistem 
 [DONE] BUGS...!!! Kalo habis delete master item, barcode nya di-release aja supaya bisa dipake lagi. Mungkin bisa pake flag barcode=DELETED
 [DONE] Validasi Disabled Item: Harus dalam keadaan stok kosong
 [DONE] Validasi Hapus Item: Dalam keadaan disabled 
 [DONE] Validasi Hapus Master lainnya: Dalam keadaan disabled
-Hashing password
+[DONE] Hashing password
 [DONE] Backup DB
 Restore DB
 [DONE] Scan barang, langsung kasih quantity 1

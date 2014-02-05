@@ -46,6 +46,7 @@ public class SearchEntityDialog extends XJDialog {
 		super(parent);
 		this.entityClass = entityClass;
 
+		setPermissionRequired(false);
 		setTitle(title);
 		getContentPane().setLayout(
 				new MigLayout("", "[500,grow]", "[][300,grow][]"));

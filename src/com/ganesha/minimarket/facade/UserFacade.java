@@ -8,8 +8,10 @@ import org.hibernate.SQLQuery;
 import org.hibernate.Session;
 import org.hibernate.criterion.Restrictions;
 
+import com.ganesha.core.exception.AppException;
 import com.ganesha.core.exception.UserException;
 import com.ganesha.core.utils.CommonUtils;
+import com.ganesha.core.utils.SecurityUtils;
 import com.ganesha.hibernate.HqlParameter;
 import com.ganesha.minimarket.Main;
 import com.ganesha.model.Role;
@@ -32,7 +34,7 @@ public class UserFacade {
 
 	public void addNewUser(String login, String name, String password,
 			List<Role> roles, boolean disabled, boolean deleted, Session session)
-			throws UserException {
+			throws UserException, AppException {
 
 		if (GlobalFacade.getInstance().isExists("login", login, User.class,
 				session)) {
@@ -43,7 +45,7 @@ public class UserFacade {
 		User user = new User();
 		user.setLogin(login);
 		user.setName(name);
-		user.setPassword(password);
+		user.setPassword(SecurityUtils.hash(password));
 		user.setDisabled(disabled);
 		user.setDeleted(deleted);
 		user.setLastUpdatedBy(Main.getUserLogin().getId());
@@ -52,6 +54,26 @@ public class UserFacade {
 		session.saveOrUpdate(user);
 
 		updateUserRoleLink(user.getId(), roles, session);
+	}
+
+	public void changePassword(int userId, String oldPassword,
+			String newPassword, Session session) throws AppException,
+			UserException {
+
+		User user = getDetail(userId, session);
+		boolean oldPasswordValid = LoginFacade.getInstance().validatePassword(
+				oldPassword, user.getPassword());
+
+		if (!oldPasswordValid) {
+			throw new UserException("Password Lama tidak sesuai");
+		}
+
+		String hashedPassword = SecurityUtils.hash(newPassword);
+		user.setPassword(hashedPassword);
+		user.setLastUpdatedBy(Main.getUserLogin().getId());
+		user.setLastUpdatedTimestamp(CommonUtils.getCurrentTimestamp());
+
+		session.saveOrUpdate(user);
 	}
 
 	public User getDetail(int id, Session session) {
@@ -109,12 +131,12 @@ public class UserFacade {
 
 	public void updateExistingUser(String login, String name, String password,
 			List<Role> roles, boolean disabled, boolean deleted, Session session)
-			throws UserException {
+			throws UserException, AppException {
 
 		User user = getDetail(login, session);
 		user.setName(name);
 		if (password != null && !password.trim().equals("")) {
-			user.setPassword(password);
+			user.setPassword(SecurityUtils.hash(password));
 		}
 		if (deleted) {
 			if (!disabled) {
