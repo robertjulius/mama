@@ -21,6 +21,7 @@ import net.miginfocom.swing.MigLayout;
 import com.ganesha.core.desktop.ExceptionHandler;
 import com.ganesha.core.exception.AppException;
 import com.ganesha.core.exception.UserException;
+import com.ganesha.core.utils.GeneralConstants;
 import com.ganesha.core.utils.ResourceUtils;
 import com.ganesha.desktop.component.XJButton;
 import com.ganesha.desktop.component.XJFrame;
@@ -41,7 +42,7 @@ public class LoginForm extends XJFrame {
 
 	public LoginForm() {
 
-		setTitle(Main.getCompany().getName());
+		setTitle(Main.getCompany().getName() + " " + GeneralConstants.VERSION);
 
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		getContentPane().setLayout(

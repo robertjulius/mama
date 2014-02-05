@@ -11,6 +11,7 @@ import javax.swing.JSeparator;
 import net.miginfocom.swing.MigLayout;
 
 import com.ganesha.core.desktop.ExceptionHandler;
+import com.ganesha.core.utils.GeneralConstants;
 import com.ganesha.desktop.component.XJFrame;
 import com.ganesha.desktop.component.XJLabel;
 import com.ganesha.desktop.component.XJMenu;
@@ -42,7 +43,7 @@ public class MainFrame extends XJFrame {
 	public MainFrame() {
 
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setTitle(Main.getCompany().getName());
+		setTitle(Main.getCompany().getName() + " " + GeneralConstants.VERSION);
 
 		JMenuBar menuBar = new JMenuBar();
 		setJMenuBar(menuBar);
