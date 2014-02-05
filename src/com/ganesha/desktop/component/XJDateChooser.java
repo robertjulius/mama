@@ -10,7 +10,8 @@ public class XJDateChooser extends JDateChooser implements XComponentConstants {
 
 	public XJDateChooser() {
 		setFont(new Font("Tahoma", Font.PLAIN, FONT_SIZE_NORMAL));
-
-		((JTextFieldDateEditor) getDateEditor()).setEditable(false);
+		JTextFieldDateEditor dateEditor = (JTextFieldDateEditor) getDateEditor();
+		dateEditor.setEditable(false);
+		dateEditor.setBackground(TXT_BG_NOTEDITABLE);
 	}
 }

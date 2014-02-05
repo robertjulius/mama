@@ -7,18 +7,18 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 
-import javax.swing.JPanel;
-
 import net.miginfocom.swing.MigLayout;
 import net.sf.jasperreports.swing.JRViewer;
 
+import com.ganesha.desktop.component.XEtchedBorder;
 import com.ganesha.desktop.component.XJButton;
 import com.ganesha.desktop.component.XJDialog;
+import com.ganesha.desktop.component.XJPanel;
 
 public class StockOpnameConfirmationDialog extends XJDialog {
 	private static final long serialVersionUID = 1452286313727721700L;
 
-	private JPanel pnlJasper;
+	private XJPanel pnlJasper;
 	private XJButton btnSelesai;
 	private ConfirmType confirmType;
 
@@ -33,12 +33,13 @@ public class StockOpnameConfirmationDialog extends XJDialog {
 		super(parent);
 		setPreferredSize(new Dimension(1000, 700));
 
-		pnlJasper = new JPanel();
+		pnlJasper = new XJPanel();
 		getContentPane().add(pnlJasper, BorderLayout.CENTER);
 		pnlJasper.setLayout(new BorderLayout(0, 0));
 		pnlJasper.add(viewer, BorderLayout.CENTER);
 
-		JPanel pnlButton = new JPanel();
+		XJPanel pnlButton = new XJPanel();
+		pnlButton.setBorder(new XEtchedBorder());
 		pnlJasper.add(pnlButton, BorderLayout.SOUTH);
 		pnlButton.setLayout(new MigLayout("", "[][grow][]", "[]"));
 

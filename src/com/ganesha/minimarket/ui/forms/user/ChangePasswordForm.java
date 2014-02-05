@@ -5,9 +5,6 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 
-import javax.swing.JPanel;
-import javax.swing.border.EtchedBorder;
-
 import net.miginfocom.swing.MigLayout;
 
 import org.hibernate.Session;
@@ -16,9 +13,11 @@ import com.ganesha.core.desktop.ExceptionHandler;
 import com.ganesha.core.exception.ActionTypeNotSupported;
 import com.ganesha.core.exception.AppException;
 import com.ganesha.core.exception.UserException;
+import com.ganesha.desktop.component.XEtchedBorder;
 import com.ganesha.desktop.component.XJButton;
 import com.ganesha.desktop.component.XJDialog;
 import com.ganesha.desktop.component.XJLabel;
+import com.ganesha.desktop.component.XJPanel;
 import com.ganesha.desktop.component.XJPasswordField;
 import com.ganesha.hibernate.HibernateUtils;
 import com.ganesha.minimarket.Main;
@@ -40,9 +39,9 @@ public class ChangePasswordForm extends XJDialog {
 
 		getContentPane().setLayout(new MigLayout("", "[]", "[grow][]"));
 
-		JPanel pnlInput = new JPanel();
+		XJPanel pnlInput = new XJPanel();
 		getContentPane().add(pnlInput, "cell 0 0,grow");
-		pnlInput.setBorder(new EtchedBorder(EtchedBorder.LOWERED, null, null));
+		pnlInput.setBorder(new XEtchedBorder());
 		pnlInput.setLayout(new MigLayout("", "[][200]", "[][][]"));
 
 		XJLabel lblOldPassword = new XJLabel();
@@ -66,7 +65,7 @@ public class ChangePasswordForm extends XJDialog {
 		txtConfirmNewPassword = new XJPasswordField();
 		pnlInput.add(txtConfirmNewPassword, "cell 1 2,growx");
 
-		JPanel pnlButton = new JPanel();
+		XJPanel pnlButton = new XJPanel();
 		getContentPane().add(pnlButton, "cell 0 1,grow");
 		pnlButton.setLayout(new MigLayout("", "[][grow][]", "[]"));
 

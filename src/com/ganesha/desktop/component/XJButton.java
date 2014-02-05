@@ -14,5 +14,6 @@ public class XJButton extends JButton implements XComponentConstants {
 	public XJButton(String text) {
 		super(text);
 		setFont(new Font("Tahoma", Font.PLAIN, FONT_SIZE_NORMAL));
+		setBackground(BTN_BG);
 	}
 }

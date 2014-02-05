@@ -1,5 +1,7 @@
 package com.ganesha.minimarket.ui.forms.sale;
 
+import java.awt.Color;
+import java.awt.Font;
 import java.awt.Window;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -16,11 +18,10 @@ import java.util.Map;
 
 import javax.print.PrintException;
 import javax.swing.JOptionPane;
-import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JSeparator;
+import javax.swing.JTextField;
 import javax.swing.SwingConstants;
-import javax.swing.border.EtchedBorder;
 import javax.swing.table.TableCellEditor;
 
 import net.miginfocom.swing.MigLayout;
@@ -33,10 +34,12 @@ import com.ganesha.core.exception.UserException;
 import com.ganesha.core.utils.CommonUtils;
 import com.ganesha.core.utils.Formatter;
 import com.ganesha.core.utils.GeneralConstants;
+import com.ganesha.desktop.component.XEtchedBorder;
 import com.ganesha.desktop.component.XJButton;
 import com.ganesha.desktop.component.XJDateChooser;
 import com.ganesha.desktop.component.XJDialog;
 import com.ganesha.desktop.component.XJLabel;
+import com.ganesha.desktop.component.XJPanel;
 import com.ganesha.desktop.component.XJTable;
 import com.ganesha.desktop.component.XJTextField;
 import com.ganesha.desktop.component.xtableutils.XTableConstants;
@@ -65,34 +68,34 @@ public class PenjualanForm extends XJDialog {
 	private XJTextField txtNoTransaksi;
 	private XJDateChooser dateChooser;
 	private XJTextField txtKodeCustomer;
-	private XJButton btnTambah;
+	private XJButton btnCari;
 	private XJButton btnCariCustomer;
 	private XJButton btnHapus;
 	private XJTextField txtTaxPercent;
 	private XJTextField txtTotalPenjualan;
 	private XJTextField txtBayar;
-	private XJTextField txtKembalian;
-	private XJTextField txtTotal;
+	private JTextField txtKembalian;
+	private JTextField txtTotal;
 	private XJButton btnBatal;
 	private XJButton btnSelesai;
-	private XJLabel lblKembalian;
+	private XJLabel lblKembali;
 	private XJTextField txtNamaCustomer;
 
 	private final Map<ColumnEnum, XTableParameter> tableParameters = new HashMap<>();
 	private XJLabel lblBayar;
 	private XJLabel lblTaxAmount;
-	private JPanel pnlBarcode;
 	private XJLabel lblBarcodef;
 	private XJTextField txtBarcode;
+	private XJPanel pnlSearch;
 	{
 		tableParameters.put(ColumnEnum.NUM, new XTableParameter(0, 5, false,
 				"No", XTableConstants.CELL_RENDERER_CENTER, Integer.class));
 
-		tableParameters.put(ColumnEnum.CODE, new XTableParameter(1, 50, false,
+		tableParameters.put(ColumnEnum.CODE, new XTableParameter(1, 75, false,
 				"Kode", XTableConstants.CELL_RENDERER_LEFT, String.class));
 
 		tableParameters.put(ColumnEnum.NAME,
-				new XTableParameter(2, 300, false, "Nama Barang",
+				new XTableParameter(2, 400, false, "Nama Barang",
 						XTableConstants.CELL_RENDERER_LEFT, String.class));
 
 		tableParameters.put(ColumnEnum.QUANTITY,
@@ -102,12 +105,12 @@ public class PenjualanForm extends XJDialog {
 		tableParameters.put(ColumnEnum.UNIT, new XTableParameter(4, 50, false,
 				"Satuan", XTableConstants.CELL_RENDERER_LEFT, String.class));
 
-		tableParameters.put(ColumnEnum.PRICE, new XTableParameter(5, 50, false,
+		tableParameters.put(ColumnEnum.PRICE, new XTableParameter(5, 75, false,
 				"Harga", XTableConstants.CELL_RENDERER_RIGHT, Double.class));
 
-		tableParameters.put(ColumnEnum.DISCOUNT, new XTableParameter(6, 30,
-				false, "Diskon (%)", XTableConstants.CELL_RENDERER_CENTER,
-				Double.class));
+		tableParameters
+				.put(ColumnEnum.DISCOUNT, new XTableParameter(6, 5, false, "%",
+						XTableConstants.CELL_RENDERER_CENTER, Double.class));
 
 		tableParameters.put(ColumnEnum.TOTAL, new XTableParameter(7, 75, false,
 				"Total", XTableConstants.CELL_RENDERER_RIGHT, Double.class));
@@ -119,8 +122,7 @@ public class PenjualanForm extends XJDialog {
 		setCloseOnEsc(false);
 
 		getContentPane().setLayout(
-				new MigLayout("", "[1200,grow]",
-						"[grow][grow][grow][grow][][grow]"));
+				new MigLayout("", "[1200,grow]", "[][][][][][]"));
 
 		table = new XJTable();
 		XTableUtils.initTable(table, tableParameters);
@@ -138,10 +140,11 @@ public class PenjualanForm extends XJDialog {
 			}
 		});
 
-		JPanel pnlHeader = new JPanel();
-		pnlHeader.setBorder(new EtchedBorder(EtchedBorder.LOWERED, null, null));
-		getContentPane().add(pnlHeader, "cell 0 0,alignx left,growy");
-		pnlHeader.setLayout(new MigLayout("", "[150][100][200][]", "[][][]"));
+		XJPanel pnlHeader = new XJPanel();
+		pnlHeader.setBorder(new XEtchedBorder());
+		getContentPane().add(pnlHeader, "cell 0 0,grow");
+		pnlHeader.setLayout(new MigLayout("", "[150][100][200][grow][250]",
+				"[][]"));
 
 		XJLabel lblNoTransaksi = new XJLabel();
 		lblNoTransaksi.setText("No. Transaksi Penjualan");
@@ -155,16 +158,11 @@ public class PenjualanForm extends XJDialog {
 
 		XJLabel lblTanggal = new XJLabel();
 		lblTanggal.setText("Tanggal Penjualan");
-		pnlHeader.add(lblTanggal, "cell 0 1,alignx trailing");
-
-		dateChooser = new XJDateChooser();
-		dateChooser.setDate(CommonUtils.getCurrentDate());
-		dateChooser.getCalendarButton().setMnemonic('T');
-		pnlHeader.add(dateChooser, "cell 1 1 2 1,grow");
+		pnlHeader.add(lblTanggal, "cell 4 0");
 
 		XJLabel lblCustomer = new XJLabel();
 		lblCustomer.setText("Customer");
-		pnlHeader.add(lblCustomer, "cell 0 2,alignx trailing");
+		pnlHeader.add(lblCustomer, "cell 0 1,alignx trailing");
 
 		Customer defaultCustomer = null;
 		Session session = HibernateUtils.openSession();
@@ -177,12 +175,12 @@ public class PenjualanForm extends XJDialog {
 		txtKodeCustomer = new XJTextField();
 		txtKodeCustomer.setText(defaultCustomer.getCode());
 		txtKodeCustomer.setEditable(false);
-		pnlHeader.add(txtKodeCustomer, "cell 1 2,growx");
+		pnlHeader.add(txtKodeCustomer, "cell 1 1,growx");
 
 		txtNamaCustomer = new XJTextField();
 		txtNamaCustomer.setText(defaultCustomer.getName());
 		txtNamaCustomer.setEditable(false);
-		pnlHeader.add(txtNamaCustomer, "flowx,cell 2 2,growx");
+		pnlHeader.add(txtNamaCustomer, "flowx,cell 2 1,growx");
 
 		btnCariCustomer = new XJButton();
 		btnCariCustomer.addActionListener(new ActionListener() {
@@ -192,47 +190,27 @@ public class PenjualanForm extends XJDialog {
 			}
 		});
 		btnCariCustomer.setText("Cari Customer [F5]");
-		pnlHeader.add(btnCariCustomer, "cell 3 2");
+		pnlHeader.add(btnCariCustomer, "cell 3 1");
 
-		JPanel pnlPenjualan = new JPanel();
+		dateChooser = new XJDateChooser();
+		dateChooser.setDate(CommonUtils.getCurrentDate());
+		dateChooser.getCalendarButton().setMnemonic('T');
+		pnlHeader.add(dateChooser, "cell 4 1,grow");
+
+		XJPanel pnlPenjualan = new XJPanel();
 		getContentPane().add(pnlPenjualan, "cell 0 1,grow");
-		pnlPenjualan.setLayout(new MigLayout("", "[612px,grow]",
-				"[grow][::200,baseline]"));
+		pnlPenjualan.setLayout(new MigLayout("", "[][grow]", "[][200]"));
 
-		JPanel pnlSearchItem = new JPanel();
-		pnlPenjualan.add(pnlSearchItem, "cell 0 0,grow");
-		pnlSearchItem.setLayout(new MigLayout("", "[][][grow][]", "[][grow]"));
-
-		btnTambah = new XJButton();
-		btnTambah.addActionListener(new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				cariBarang();
-			}
-		});
-		pnlSearchItem.add(btnTambah, "cell 0 0,alignx left");
-		btnTambah
-				.setText("<html><center>Tambah ke Dalam List<br/>[F6]</center></html>");
-
-		btnHapus = new XJButton();
-		btnHapus.addActionListener(new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				hapus();
-			}
-		});
-		btnHapus.setText("<html><center>Hapus<br/>[Delete]</center></html>");
-		pnlSearchItem.add(btnHapus, "cell 3 0");
-
-		pnlBarcode = new JPanel();
-		pnlSearchItem.add(pnlBarcode, "cell 0 1 2 1,grow");
+		XJPanel pnlBarcode = new XJPanel();
+		pnlPenjualan.add(pnlBarcode, "cell 1 0,grow");
 		pnlBarcode.setLayout(new MigLayout("", "[][300]", "[]"));
 
 		lblBarcodef = new XJLabel();
+		pnlBarcode.add(lblBarcodef, "cell 0 0");
 		lblBarcodef.setText("Barcode [F8]");
-		pnlBarcode.add(lblBarcodef, "cell 0 0,alignx trailing");
 
 		txtBarcode = new XJTextField();
+		pnlBarcode.add(txtBarcode, "cell 1 0,growx");
 		txtBarcode.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
@@ -243,37 +221,52 @@ public class PenjualanForm extends XJDialog {
 				}
 			}
 		});
-		pnlBarcode.add(txtBarcode, "cell 1 0,growx");
+
+		pnlSearch = new XJPanel();
+		pnlPenjualan.add(pnlSearch, "cell 0 1,growx,aligny center");
+		pnlSearch.setLayout(new MigLayout("", "[]", "[][]"));
+
+		btnCari = new XJButton();
+		pnlSearch.add(btnCari, "cell 0 0,growx");
+		btnCari.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				cariBarang();
+			}
+		});
+		btnCari.setText("<html><center>Cari Barang<br/>[F6]</center></html>");
+
+		btnHapus = new XJButton();
+		pnlSearch.add(btnHapus, "cell 0 1,growx");
+		btnHapus.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				hapus();
+			}
+		});
+		btnHapus.setText("<html><center>Hapus<br/>[Delete]</center></html>");
 
 		JScrollPane scrollPane = new JScrollPane(table);
-		pnlPenjualan.add(scrollPane, "cell 0 1,growx");
+		pnlPenjualan.add(scrollPane, "cell 1 1,growx");
 
-		JPanel pnlSubTotal = new JPanel();
-		getContentPane().add(pnlSubTotal, "cell 0 2,grow");
-		pnlSubTotal.setLayout(new MigLayout("", "[grow][][200]", "[]"));
+		XJPanel pnlTotalBelanja = new XJPanel();
+		getContentPane().add(pnlTotalBelanja, "cell 0 2,alignx right");
+		pnlTotalBelanja.setBorder(new XEtchedBorder());
+		pnlTotalBelanja.setLayout(new MigLayout("", "[][200]", "[][][]"));
 
 		XJLabel lblTotalPenjualan = new XJLabel();
-		pnlSubTotal.add(lblTotalPenjualan, "cell 1 0");
+		pnlTotalBelanja.add(lblTotalPenjualan, "cell 0 0");
 		lblTotalPenjualan.setText("Total Penjualan");
 
 		txtTotalPenjualan = new XJTextField();
+		pnlTotalBelanja.add(txtTotalPenjualan, "cell 1 0,growx");
 		txtTotalPenjualan.setText("0");
 		txtTotalPenjualan.setHorizontalAlignment(SwingConstants.TRAILING);
-		pnlSubTotal.add(txtTotalPenjualan, "cell 2 0,growx");
 		txtTotalPenjualan.setEditable(false);
-
-		JPanel pnlPerhitungan = new JPanel();
-		getContentPane().add(pnlPerhitungan, "cell 0 3,alignx center,growy");
-		pnlPerhitungan.setLayout(new MigLayout("", "[300][300]", "[grow]"));
-
-		JPanel pnlBeban = new JPanel();
-		pnlBeban.setBorder(new EtchedBorder(EtchedBorder.LOWERED, null, null));
-		pnlPerhitungan.add(pnlBeban, "cell 0 0,grow");
-		pnlBeban.setLayout(new MigLayout("", "[][grow]", "[][][10][]"));
 
 		XJLabel lblTaxPercent = new XJLabel();
 		lblTaxPercent.setText("Pajak (%)");
-		pnlBeban.add(lblTaxPercent, "cell 0 0");
+		pnlTotalBelanja.add(lblTaxPercent, "cell 0 1");
 
 		txtTaxPercent = new XJTextField();
 		txtTaxPercent.setEditable(false);
@@ -286,37 +279,41 @@ public class PenjualanForm extends XJDialog {
 		txtTaxPercent.setHorizontalAlignment(SwingConstants.TRAILING);
 		txtTaxPercent.setText(Formatter.formatNumberToString(GlobalFacade
 				.getInstance().getTaxPercent()));
-		pnlBeban.add(txtTaxPercent, "cell 1 0,growx");
+		pnlTotalBelanja.add(txtTaxPercent, "cell 1 1,growx");
 
 		lblTaxAmount = new XJLabel();
 		lblTaxAmount.setText("0");
-		pnlBeban.add(lblTaxAmount, "cell 1 1,alignx right");
+		pnlTotalBelanja.add(lblTaxAmount, "cell 1 2,alignx right");
 
-		JSeparator separator = new JSeparator();
-		pnlBeban.add(separator, "cell 0 2 2 1,growx,aligny center");
+		XJPanel pnlKembalian = new XJPanel();
+		pnlKembalian.setBackground(Color.BLACK);
+		getContentPane().add(pnlKembalian, "cell 0 3,growx");
+		pnlKembalian.setBorder(new XEtchedBorder());
+		pnlKembalian.setLayout(new MigLayout("",
+				"[][grow][200][grow][200][grow]", "[grow]"));
 
 		XJLabel lblTotal = new XJLabel();
+		lblTotal.setForeground(Color.WHITE);
+		lblTotal.setFont(new Font("Tahoma", Font.BOLD, 40));
+		pnlKembalian.add(lblTotal, "cell 0 0,alignx right");
 		lblTotal.setText("TOTAL");
-		pnlBeban.add(lblTotal, "cell 0 3");
 
-		txtTotal = new XJTextField();
+		txtTotal = new JTextField();
+		txtTotal.setBackground(Color.YELLOW);
+		txtTotal.setEditable(false);
+		txtTotal.setFont(new Font("Tahoma", Font.BOLD, 40));
+		pnlKembalian.add(txtTotal, "cell 1 0,growx");
 		txtTotal.setHorizontalAlignment(SwingConstants.TRAILING);
 		txtTotal.setText("0");
-		txtTotal.setEditable(false);
-		pnlBeban.add(txtTotal, "cell 1 3,growx");
-
-		JPanel pnlUangMuka = new JPanel();
-		pnlUangMuka
-				.setBorder(new EtchedBorder(EtchedBorder.LOWERED, null, null));
-		pnlPerhitungan.add(pnlUangMuka, "cell 1 0,grow");
-		pnlUangMuka.setLayout(new MigLayout("", "[150][grow]", "[][][]"));
 
 		lblBayar = new XJLabel();
+		lblBayar.setForeground(Color.WHITE);
+		lblBayar.setFont(new Font("Tahoma", Font.BOLD, 40));
 		lblBayar.setText("Bayar");
-		pnlUangMuka.add(lblBayar, "cell 0 0");
+		pnlKembalian.add(lblBayar, "cell 2 0,alignx right");
 
 		txtBayar = new XJTextField();
-		txtBayar.setForeground(COLOR_TRASACTIONABLE);
+		txtBayar.setFont(new Font("Tahoma", Font.BOLD, 40));
 		txtBayar.addKeyListener(new KeyAdapter() {
 			@Override
 			public void keyReleased(KeyEvent e) {
@@ -325,36 +322,28 @@ public class PenjualanForm extends XJDialog {
 		});
 		txtBayar.setHorizontalAlignment(SwingConstants.TRAILING);
 		txtBayar.setText("0");
-		pnlUangMuka.add(txtBayar, "cell 1 0,growx,aligny top");
+		pnlKembalian.add(txtBayar, "cell 3 0,growx");
 
-		lblKembalian = new XJLabel();
-		lblKembalian.setText("Kembalian");
-		pnlUangMuka.add(lblKembalian, "cell 0 1");
+		lblKembali = new XJLabel();
+		lblKembali.setForeground(Color.WHITE);
+		lblKembali.setFont(new Font("Tahoma", Font.BOLD, 40));
+		lblKembali.setText("Kembali");
+		pnlKembalian.add(lblKembali, "cell 4 0,alignx right");
 
-		txtKembalian = new XJTextField();
+		txtKembalian = new JTextField();
+		txtKembalian.setBackground(Color.PINK);
+		txtKembalian.setFont(new Font("Tahoma", Font.BOLD, 40));
 		txtKembalian.setHorizontalAlignment(SwingConstants.TRAILING);
 		txtKembalian.setText("0");
 		txtKembalian.setEditable(false);
-		txtKembalian.setForeground(COLOR_WARNING);
-		pnlUangMuka.add(txtKembalian, "cell 1 1,growx,aligny top");
+		pnlKembalian.add(txtKembalian, "cell 5 0,growx");
 
 		JSeparator separator_1 = new JSeparator();
 		getContentPane().add(separator_1, "cell 0 4,grow");
 
-		JPanel pnlButton = new JPanel();
-		getContentPane().add(pnlButton, "cell 0 5,alignx center,growy");
-		pnlButton.setLayout(new MigLayout("", "[][]", "[]"));
-
-		btnBatal = new XJButton();
-		btnBatal.setMnemonic('Q');
-		btnBatal.addActionListener(new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				batal();
-			}
-		});
-		btnBatal.setText("<html><center>Batal<br/>[Alt+Q]</center></html>");
-		pnlButton.add(btnBatal, "cell 0 0,growy");
+		XJPanel pnlButton = new XJPanel();
+		getContentPane().add(pnlButton, "cell 0 5,grow");
+		pnlButton.setLayout(new MigLayout("", "[][grow][]", "[]"));
 
 		btnSelesai = new XJButton();
 		btnSelesai.addActionListener(new ActionListener() {
@@ -367,9 +356,20 @@ public class PenjualanForm extends XJDialog {
 				}
 			}
 		});
+
+		btnBatal = new XJButton();
+		btnBatal.setMnemonic('Q');
+		btnBatal.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				batal();
+			}
+		});
+		btnBatal.setText("<html><center>Batal<br/>[Alt+Q]</center></html>");
+		pnlButton.add(btnBatal, "cell 0 0,growy");
 		btnSelesai
 				.setText("<html><center>Selesai & Simpan Data<br/>[F12]</center></html>");
-		pnlButton.add(btnSelesai, "cell 1 0,growy");
+		pnlButton.add(btnSelesai, "cell 2 0");
 
 		pack();
 		setLocationRelativeTo(null);
@@ -382,7 +382,7 @@ public class PenjualanForm extends XJDialog {
 			btnCariCustomer.doClick();
 			break;
 		case KeyEvent.VK_F6:
-			btnTambah.doClick();
+			btnCari.doClick();
 			break;
 		case KeyEvent.VK_F8:
 			setFocusToBarcodeField();

@@ -7,9 +7,6 @@ import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.math.BigDecimal;
 
-import javax.swing.JPanel;
-import javax.swing.border.EtchedBorder;
-
 import net.miginfocom.swing.MigLayout;
 
 import org.hibernate.Session;
@@ -19,10 +16,12 @@ import com.ganesha.core.exception.ActionTypeNotSupported;
 import com.ganesha.core.exception.UserException;
 import com.ganesha.core.utils.Formatter;
 import com.ganesha.core.utils.GeneralConstants;
+import com.ganesha.desktop.component.XEtchedBorder;
 import com.ganesha.desktop.component.XJButton;
 import com.ganesha.desktop.component.XJCheckBox;
 import com.ganesha.desktop.component.XJDialog;
 import com.ganesha.desktop.component.XJLabel;
+import com.ganesha.desktop.component.XJPanel;
 import com.ganesha.desktop.component.XJTextField;
 import com.ganesha.hibernate.HibernateUtils;
 import com.ganesha.minimarket.facade.DiscountFacade;
@@ -39,12 +38,12 @@ public class DiscountForm extends XJDialog {
 	private XJTextField txtNama;
 	private XJLabel lblQuantity;
 	private XJTextField txtQuantity;
-	private JPanel pnlKode;
+	private XJPanel pnlKode;
 	private XJLabel lblDiscount;
 	private XJTextField txtDiscount;
 	private XJButton btnBatal;
 	private XJButton btnCariBarang;
-	private JPanel pnlDisabled;
+	private XJPanel pnlDisabled;
 	private XJCheckBox chkDisabled;
 
 	public DiscountForm(Window parent) {
@@ -54,8 +53,8 @@ public class DiscountForm extends XJDialog {
 		getContentPane().setLayout(
 				new MigLayout("", "[grow]", "[grow][grow][grow]"));
 
-		pnlKode = new JPanel();
-		pnlKode.setBorder(new EtchedBorder(EtchedBorder.LOWERED, null, null));
+		pnlKode = new XJPanel();
+		pnlKode.setBorder(new XEtchedBorder());
 		getContentPane().add(pnlKode, "cell 0 0,grow");
 		pnlKode.setLayout(new MigLayout("", "[][100px][200]", "[][][][]"));
 
@@ -99,16 +98,16 @@ public class DiscountForm extends XJDialog {
 				.setFormatterFactory(GeneralConstants.FORMATTER_FACTORY_NUMBER);
 		txtDiscount.setText("0");
 
-		pnlDisabled = new JPanel();
+		pnlDisabled = new XJPanel();
 		getContentPane().add(pnlDisabled, "cell 0 1,alignx right,growy");
 		pnlDisabled.setLayout(new MigLayout("", "[]", "[][]"));
 
 		chkDisabled = new XJCheckBox();
-		chkDisabled.setFont(new Font("Tahoma", Font.BOLD, 12));
+		chkDisabled.setFont(new Font("Tahoma", Font.BOLD, FONT_SIZE_SMALLEST));
 		chkDisabled.setText("Promo ini sudah tidak aktif");
 		pnlDisabled.add(chkDisabled, "cell 0 0");
 
-		JPanel pnlButton = new JPanel();
+		XJPanel pnlButton = new XJPanel();
 		getContentPane().add(pnlButton, "cell 0 2,alignx center,growy");
 		pnlButton.setLayout(new MigLayout("", "[][]", "[]"));
 

@@ -9,7 +9,6 @@ import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.List;
 
-import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.table.TableColumnModel;
 
@@ -24,6 +23,7 @@ import com.ganesha.core.exception.AppException;
 import com.ganesha.desktop.component.XJButton;
 import com.ganesha.desktop.component.XJDialog;
 import com.ganesha.desktop.component.XJLabel;
+import com.ganesha.desktop.component.XJPanel;
 import com.ganesha.desktop.component.XJTable;
 import com.ganesha.desktop.component.XJTextField;
 import com.ganesha.desktop.component.xtableutils.XTableModel;
@@ -61,7 +61,7 @@ public class SearchEntityDialog extends XJDialog {
 		};
 		initTable();
 
-		JPanel pnlFilter = new JPanel();
+		XJPanel pnlFilter = new XJPanel();
 		getContentPane().add(pnlFilter, "cell 0 0,grow");
 		pnlFilter.setLayout(new MigLayout("", "[100][grow]", "[][]"));
 
@@ -110,7 +110,7 @@ public class SearchEntityDialog extends XJDialog {
 		JScrollPane scrollPane = new JScrollPane(table);
 		getContentPane().add(scrollPane, "cell 0 1,grow");
 
-		JPanel panel = new JPanel();
+		XJPanel panel = new XJPanel();
 		getContentPane().add(panel, "cell 0 2,alignx center,growy");
 		panel.setLayout(new MigLayout("", "[]", "[]"));
 

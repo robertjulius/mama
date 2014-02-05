@@ -9,7 +9,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 
 import net.miginfocom.swing.MigLayout;
@@ -22,6 +21,7 @@ import com.ganesha.core.utils.GeneralConstants.ActionType;
 import com.ganesha.desktop.component.XJButton;
 import com.ganesha.desktop.component.XJDialog;
 import com.ganesha.desktop.component.XJLabel;
+import com.ganesha.desktop.component.XJPanel;
 import com.ganesha.desktop.component.XJTable;
 import com.ganesha.desktop.component.XJTextField;
 import com.ganesha.desktop.component.xtableutils.XTableConstants;
@@ -69,7 +69,7 @@ public class RoleListDialog extends XJDialog {
 		};
 		XTableUtils.initTable(table, tableParameters);
 
-		JPanel pnlFilter = new JPanel();
+		XJPanel pnlFilter = new XJPanel();
 		getContentPane().add(pnlFilter, "cell 0 0,grow");
 		pnlFilter.setLayout(new MigLayout("", "[100][grow]", "[]"));
 
@@ -94,7 +94,7 @@ public class RoleListDialog extends XJDialog {
 		JScrollPane scrollPane = new JScrollPane(table);
 		getContentPane().add(scrollPane, "cell 0 1,grow");
 
-		JPanel panel = new JPanel();
+		XJPanel panel = new XJPanel();
 		getContentPane().add(panel, "cell 0 2,alignx center,growy");
 		panel.setLayout(new MigLayout("", "[][][]", "[]"));
 

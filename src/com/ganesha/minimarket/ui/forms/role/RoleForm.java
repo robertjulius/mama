@@ -8,7 +8,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javax.swing.DefaultListModel;
-import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 
 import net.miginfocom.swing.MigLayout;
@@ -24,6 +23,7 @@ import com.ganesha.desktop.component.XJButton;
 import com.ganesha.desktop.component.XJDialog;
 import com.ganesha.desktop.component.XJLabel;
 import com.ganesha.desktop.component.XJList;
+import com.ganesha.desktop.component.XJPanel;
 import com.ganesha.desktop.component.XJTextField;
 import com.ganesha.hibernate.HibernateUtils;
 import com.ganesha.minimarket.facade.PermissionFacade;
@@ -41,13 +41,13 @@ public class RoleForm extends XJDialog {
 	private ActionType actionType;
 	private XJButton btnBatal;
 	private XJButton btnHapus;
-	private JPanel pnlRoleName;
-	private JPanel pnlPermissionList;
+	private XJPanel pnlRoleName;
+	private XJPanel pnlPermissionList;
 	private JScrollPane scrollPaneLeft;
 	private JScrollPane scrollPaneRight;
 	private XJList listPermissionLeft;
 	private XJList listPermissionRight;
-	private JPanel pnlMove;
+	private XJPanel pnlMove;
 	private XJButton btnAddAll;
 	private XJButton btnAdd;
 	private XJButton btnRemove;
@@ -66,7 +66,7 @@ public class RoleForm extends XJDialog {
 		getContentPane().setLayout(
 				new MigLayout("", "[grow][grow]", "[][grow][]"));
 
-		pnlRoleName = new JPanel();
+		pnlRoleName = new XJPanel();
 		getContentPane().add(pnlRoleName, "cell 0 0 2 1,grow");
 		pnlRoleName.setLayout(new MigLayout("", "[][grow]", "[][][]"));
 
@@ -92,7 +92,7 @@ public class RoleForm extends XJDialog {
 		txtDescription = new XJTextField();
 		pnlRoleName.add(txtDescription, "cell 1 2,growx");
 
-		pnlPermissionList = new JPanel();
+		pnlPermissionList = new XJPanel();
 		getContentPane().add(pnlPermissionList, "cell 0 1 2 1,grow");
 		pnlPermissionList
 				.setLayout(new MigLayout("", "[500][][500]", "[grow]"));
@@ -103,7 +103,7 @@ public class RoleForm extends XJDialog {
 		listPermissionLeft = new XJList();
 		scrollPaneLeft.setViewportView(listPermissionLeft);
 
-		pnlMove = new JPanel();
+		pnlMove = new XJPanel();
 		pnlPermissionList.add(pnlMove, "cell 1 0,grow");
 		pnlMove.setLayout(new MigLayout("", "[]", "[][][20][][]"));
 
@@ -169,7 +169,7 @@ public class RoleForm extends XJDialog {
 		listPermissionRight = new XJList();
 		scrollPaneRight.setViewportView(listPermissionRight);
 
-		JPanel pnlButton = new JPanel();
+		XJPanel pnlButton = new XJPanel();
 		getContentPane().add(pnlButton, "cell 0 2 2 1,grow");
 		pnlButton.setLayout(new MigLayout("", "[][grow][][]", "[]"));
 

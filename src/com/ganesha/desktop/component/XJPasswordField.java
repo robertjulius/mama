@@ -11,4 +11,14 @@ public class XJPasswordField extends JPasswordField implements
 	public XJPasswordField() {
 		setFont(new Font("Tahoma", Font.PLAIN, FONT_SIZE_NORMAL));
 	}
+
+	@Override
+	public void setEditable(boolean editable) {
+		if (editable) {
+			setBackground(TXT_BG_EDITABLE);
+		} else {
+			setBackground(TXT_BG_NOTEDITABLE);
+		}
+		super.setEditable(editable);
+	}
 }

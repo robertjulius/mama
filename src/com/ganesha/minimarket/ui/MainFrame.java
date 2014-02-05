@@ -1,8 +1,11 @@
 package com.ganesha.minimarket.ui;
 
+import java.awt.Color;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.KeyEvent;
+import java.util.Date;
 
 import javax.swing.JFrame;
 import javax.swing.JMenuBar;
@@ -11,11 +14,15 @@ import javax.swing.JSeparator;
 import net.miginfocom.swing.MigLayout;
 
 import com.ganesha.core.desktop.ExceptionHandler;
+import com.ganesha.core.utils.CommonUtils;
+import com.ganesha.core.utils.Formatter;
 import com.ganesha.core.utils.GeneralConstants;
+import com.ganesha.desktop.component.XJButton;
 import com.ganesha.desktop.component.XJFrame;
 import com.ganesha.desktop.component.XJLabel;
 import com.ganesha.desktop.component.XJMenu;
 import com.ganesha.desktop.component.XJMenuItem;
+import com.ganesha.desktop.component.XJPanel;
 import com.ganesha.minimarket.Main;
 import com.ganesha.minimarket.ui.forms.customer.CustomerListDialog;
 import com.ganesha.minimarket.ui.forms.discount.DiscountListDialog;
@@ -39,8 +46,16 @@ import com.ganesha.minimarket.ui.forms.user.UserListDialog;
 
 public class MainFrame extends XJFrame {
 	private static final long serialVersionUID = 5527217675003046133L;
+	private XJMenuItem mntmPenjualan;
+	private XJButton btnSaleTransaction;
+	private XJPanel pnlButton;
+	private XJPanel pnlUserInfo;
+	private XJPanel pnlCompanyInfo;
+	private XJLabel lblTanggal;
+	private XJLabel lblJam;
 
 	public MainFrame() {
+		getContentPane().setBackground(Color.BLACK);
 
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setTitle(Main.getCompany().getName() + " " + GeneralConstants.VERSION);
@@ -185,8 +200,7 @@ public class MainFrame extends XJFrame {
 		JSeparator separator = new JSeparator();
 		mnTransaksi.add(separator);
 
-		XJMenuItem mntmPenjualan = new XJMenuItem("Penjualan",
-				"/transaction/sale");
+		mntmPenjualan = new XJMenuItem("Penjualan", "/transaction/sale");
 		mntmPenjualan.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
@@ -342,29 +356,139 @@ public class MainFrame extends XJFrame {
 		setExtendedState(JFrame.MAXIMIZED_BOTH);
 		pack();
 		setLocationRelativeTo(null);
-		getContentPane().setLayout(new MigLayout("", "[][]", "[][][]"));
+		getContentPane().setLayout(new MigLayout("", "[grow]", "[][][][]"));
+
+		XJPanel pnlRunningClock = new XJPanel();
+		pnlRunningClock.setOpaque(false);
+		getContentPane().add(pnlRunningClock, "cell 0 0,alignx center");
+		pnlRunningClock.setLayout(new MigLayout("", "[]", "[][]"));
+
+		lblTanggal = new XJLabel();
+		lblTanggal.setForeground(Color.WHITE);
+		lblTanggal.setFont(new Font("Tahoma", Font.BOLD, 30));
+		lblTanggal.setText(Formatter.formatDateToString(CommonUtils
+				.getCurrentDate()));
+		pnlRunningClock.add(lblTanggal, "cell 0 0,alignx center");
+
+		lblJam = new XJLabel();
+		lblJam.setForeground(Color.WHITE);
+		lblJam.setFont(new Font("Tahoma", Font.BOLD, 30));
+		lblJam.setText(Formatter.formatClockToString(CommonUtils
+				.getCurrentDate()));
+		pnlRunningClock.add(lblJam, "cell 0 1,alignx center");
+
+		pnlUserInfo = new XJPanel();
+		pnlUserInfo.setOpaque(false);
+		getContentPane().add(pnlUserInfo, "cell 0 1,alignx center,growy");
+		pnlUserInfo.setLayout(new MigLayout("", "[100][50][]", "[][][]"));
+
+		XJLabel lblLogin = new XJLabel();
+		lblLogin.setForeground(Color.WHITE);
+		lblLogin.setText("Login ID");
+		pnlUserInfo.add(lblLogin, "cell 0 0");
+
+		XJLabel lblTitikDua1 = new XJLabel();
+		lblTitikDua1.setForeground(Color.WHITE);
+		lblTitikDua1.setText(":");
+		pnlUserInfo.add(lblTitikDua1, "cell 1 0,alignx right");
+
+		XJLabel lblLoginValue = new XJLabel();
+		lblLoginValue.setForeground(Color.WHITE);
+		pnlUserInfo.add(lblLoginValue, "cell 2 0");
+		lblLoginValue.setText(Main.getUserLogin().getLogin());
+
+		XJLabel lblNama = new XJLabel();
+		lblNama.setForeground(Color.WHITE);
+		lblNama.setText("Nama User");
+		pnlUserInfo.add(lblNama, "cell 0 1");
+
+		XJLabel lblTitikDua2 = new XJLabel();
+		lblTitikDua2.setForeground(Color.WHITE);
+		lblTitikDua2.setText(":");
+		pnlUserInfo.add(lblTitikDua2, "cell 1 1,alignx right");
+
+		XJLabel lblNameValue = new XJLabel();
+		lblNameValue.setForeground(Color.WHITE);
+		pnlUserInfo.add(lblNameValue, "cell 2 1");
+		lblNameValue.setText(Main.getUserLogin().getName());
+
+		XJLabel lblRole = new XJLabel();
+		lblRole.setForeground(Color.WHITE);
+		lblRole.setText("Role");
+		pnlUserInfo.add(lblRole, "cell 0 2");
+
+		XJLabel lblTitikDua3 = new XJLabel();
+		lblTitikDua3.setForeground(Color.WHITE);
+		lblTitikDua3.setText(":");
+		pnlUserInfo.add(lblTitikDua3, "cell 1 2,alignx right");
+
+		XJLabel lblRoleValue = new XJLabel();
+		lblRoleValue.setForeground(Color.WHITE);
+		lblRoleValue.setText("");
+		lblRoleValue.setText(Main.getUserLogin().getUserRoleLinks().get(0)
+				.getPrimaryKey().getRole().getName());
+		pnlUserInfo.add(lblRoleValue, "cell 2 2");
+
+		pnlCompanyInfo = new XJPanel();
+		pnlCompanyInfo.setOpaque(false);
+		getContentPane().add(pnlCompanyInfo, "cell 0 2,alignx center,growy");
+		pnlCompanyInfo.setLayout(new MigLayout("", "[]", "[]"));
 
 		XJLabel lblCompanyName = new XJLabel();
+		lblCompanyName.setForeground(Color.WHITE);
+		lblCompanyName.setFont(new Font("Tahoma", Font.BOLD, 80));
+		pnlCompanyInfo.add(lblCompanyName, "cell 0 0");
 		lblCompanyName.setText(Main.getCompany().getName());
-		getContentPane().add(lblCompanyName, "cell 0 0 2 1");
 
-		XJLabel lblUserId = new XJLabel();
-		lblUserId.setFont(new Font("Tahoma", Font.BOLD, 12));
-		lblUserId.setText(Main.getUserLogin().getLogin());
-		getContentPane().add(lblUserId, "cell 0 1,aligny bottom");
+		pnlButton = new XJPanel();
+		pnlButton.setOpaque(false);
+		getContentPane().add(pnlButton, "cell 0 3,growx");
+		pnlButton.setLayout(new MigLayout("", "[grow][][grow]", "[]"));
 
-		XJLabel lblUserName = new XJLabel();
-		lblUserName.setFont(new Font("Tahoma", Font.BOLD, 12));
-		lblUserName.setText(Main.getUserLogin().getName());
-		getContentPane().add(lblUserName, "cell 1 1");
+		btnSaleTransaction = new XJButton(
+				"<html><center>Transaksi Penjualan<br/>[F5]</center></html>");
+		btnSaleTransaction.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				mntmPenjualan.doClick();
+			}
+		});
+		pnlButton.add(btnSaleTransaction, "cell 1 0");
+
+		runClock();
 	}
 
 	@Override
 	protected void keyEventListener(int keyCode) {
 		switch (keyCode) {
-		// TODO Auto-generated method stub
+		case KeyEvent.VK_F5:
+			btnSaleTransaction.doClick();
+			break;
 		default:
 			break;
 		}
+	}
+
+	private void runClock() {
+		Thread thread = new Thread() {
+			@Override
+			public void run() {
+				while (true) {
+					Date date = CommonUtils.getCurrentDate();
+					String tanggal = Formatter.formatDateToString(date);
+					String jam = Formatter.formatClockToString(date);
+					lblTanggal.setText(tanggal);
+					lblJam.setText(jam);
+					try {
+						Thread.sleep(1000);
+					} catch (InterruptedException e) {
+						/*
+						 * Do Nothing
+						 */
+					}
+				}
+			};
+		};
+		thread.start();
 	}
 }

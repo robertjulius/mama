@@ -8,10 +8,8 @@ import java.awt.event.KeyEvent;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 
-import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JSeparator;
-import javax.swing.border.EtchedBorder;
 
 import net.miginfocom.swing.MigLayout;
 
@@ -22,10 +20,12 @@ import com.ganesha.core.exception.ActionTypeNotSupported;
 import com.ganesha.core.exception.UserException;
 import com.ganesha.core.utils.DBUtils;
 import com.ganesha.core.utils.GeneralConstants.ActionType;
+import com.ganesha.desktop.component.XEtchedBorder;
 import com.ganesha.desktop.component.XJButton;
 import com.ganesha.desktop.component.XJCheckBox;
 import com.ganesha.desktop.component.XJDialog;
 import com.ganesha.desktop.component.XJLabel;
+import com.ganesha.desktop.component.XJPanel;
 import com.ganesha.desktop.component.XJTextArea;
 import com.ganesha.desktop.component.XJTextField;
 import com.ganesha.hibernate.HibernateUtils;
@@ -44,7 +44,7 @@ public class CustomerForm extends XJDialog {
 	private XJLabel lblDeskripsi;
 	private XJTextField txtDeskripsi;
 	private XJLabel lblAlamat;
-	private JPanel pnlKontakPerson1;
+	private XJPanel pnlKontakPerson1;
 	private XJLabel lblPhone;
 	private XJTextField txtPhone;
 	private XJLabel lblEmail;
@@ -54,7 +54,7 @@ public class CustomerForm extends XJDialog {
 	private XJTextArea txtAlamat;
 	private XJLabel lblKodeTerakhirValue;
 	private XJCheckBox chkDisabled;
-	private JPanel pnlDisabled;
+	private XJPanel pnlDisabled;
 	private JSeparator separator;
 	private XJButton btnhapuscustomer;
 
@@ -77,10 +77,9 @@ public class CustomerForm extends XJDialog {
 		getContentPane().setLayout(
 				new MigLayout("", "[400][grow]", "[][][10][]"));
 
-		JPanel pnlKodeCustomer = new JPanel();
+		XJPanel pnlKodeCustomer = new XJPanel();
 		getContentPane().add(pnlKodeCustomer, "cell 0 0,grow");
-		pnlKodeCustomer.setBorder(new EtchedBorder(EtchedBorder.LOWERED, null,
-				null));
+		pnlKodeCustomer.setBorder(new XEtchedBorder());
 		pnlKodeCustomer.setLayout(new MigLayout("", "[150][][grow]",
 				"[][][][][][]"));
 
@@ -92,12 +91,14 @@ public class CustomerForm extends XJDialog {
 		pnlKodeCustomer.add(txtKode, "cell 1 0 2 1,growx");
 
 		lblKodeTerakhir = new XJLabel();
-		lblKodeTerakhir.setFont(new Font("Tahoma", Font.BOLD, 12));
+		lblKodeTerakhir.setFont(new Font("Tahoma", Font.BOLD,
+				FONT_SIZE_SMALLEST));
 		lblKodeTerakhir.setText("Kode Terakhir:");
 		pnlKodeCustomer.add(lblKodeTerakhir, "cell 1 1");
 
 		lblKodeTerakhirValue = new XJLabel();
-		lblKodeTerakhirValue.setFont(new Font("Tahoma", Font.BOLD, 12));
+		lblKodeTerakhirValue.setFont(new Font("Tahoma", Font.BOLD,
+				FONT_SIZE_SMALLEST));
 		lblKodeTerakhirValue.setText("");
 		pnlKodeCustomer.add(lblKodeTerakhirValue, "cell 2 1");
 
@@ -129,10 +130,9 @@ public class CustomerForm extends XJDialog {
 		txtEmail = new XJTextField();
 		pnlKodeCustomer.add(txtEmail, "cell 1 5 2 1,growx");
 
-		pnlKontakPerson1 = new JPanel();
+		pnlKontakPerson1 = new XJPanel();
 		getContentPane().add(pnlKontakPerson1, "cell 1 0,grow");
-		pnlKontakPerson1.setBorder(new EtchedBorder(EtchedBorder.LOWERED, null,
-				null));
+		pnlKontakPerson1.setBorder(new XEtchedBorder());
 		pnlKontakPerson1.setLayout(new MigLayout("", "[300,grow]", "[][grow]"));
 
 		lblAlamat = new XJLabel();
@@ -145,19 +145,19 @@ public class CustomerForm extends XJDialog {
 		txtAlamat = new XJTextArea();
 		scrollPane.setViewportView(txtAlamat);
 
-		pnlDisabled = new JPanel();
+		pnlDisabled = new XJPanel();
 		getContentPane().add(pnlDisabled, "cell 0 1 2 1,alignx right,growy");
 		pnlDisabled.setLayout(new MigLayout("", "[]", "[][]"));
 
 		chkDisabled = new XJCheckBox();
 		pnlDisabled.add(chkDisabled, "cell 0 0");
-		chkDisabled.setFont(new Font("Tahoma", Font.BOLD, 12));
+		chkDisabled.setFont(new Font("Tahoma", Font.BOLD, FONT_SIZE_SMALLEST));
 		chkDisabled.setText("Customer ini sudah tidak aktif");
 
 		separator = new JSeparator();
 		getContentPane().add(separator, "cell 0 2 2 1,growx,aligny center");
 
-		JPanel pnlButton = new JPanel();
+		XJPanel pnlButton = new XJPanel();
 		getContentPane().add(pnlButton, "cell 0 3 2 1,grow");
 		pnlButton.setLayout(new MigLayout("", "[][grow][][]", "[]"));
 

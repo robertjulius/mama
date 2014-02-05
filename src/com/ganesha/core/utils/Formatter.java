@@ -15,6 +15,18 @@ public class Formatter {
 			"dd MMM yyyy");
 	private static final DateFormat timestampFormat = new SimpleDateFormat(
 			"dd MMM yyyy HH:mm:ss");
+	private static final DateFormat clockFormat = new SimpleDateFormat(
+			"HH:mm:ss");
+
+	public static String formatClockToString(Date date) {
+		String string = null;
+		try {
+			string = clockFormat.format(date);
+		} catch (Exception e) {
+			string = null;
+		}
+		return string;
+	}
 
 	public static String formatDateToString(Date date) {
 		String string = null;

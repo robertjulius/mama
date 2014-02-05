@@ -9,8 +9,6 @@ import java.io.File;
 
 import javax.print.PrintService;
 import javax.swing.JFileChooser;
-import javax.swing.JPanel;
-import javax.swing.border.EtchedBorder;
 
 import net.miginfocom.swing.MigLayout;
 
@@ -19,10 +17,12 @@ import com.ganesha.core.desktop.ExceptionHandler;
 import com.ganesha.core.exception.AppException;
 import com.ganesha.core.exception.UserException;
 import com.ganesha.desktop.component.ComboBoxObject;
+import com.ganesha.desktop.component.XEtchedBorder;
 import com.ganesha.desktop.component.XJButton;
 import com.ganesha.desktop.component.XJComboBox;
 import com.ganesha.desktop.component.XJDialog;
 import com.ganesha.desktop.component.XJLabel;
+import com.ganesha.desktop.component.XJPanel;
 import com.ganesha.desktop.component.XJPasswordField;
 import com.ganesha.desktop.component.XJTextField;
 import com.ganesha.minimarket.utils.BackupDB;
@@ -44,10 +44,10 @@ public class SystemSettingForm extends XJDialog {
 	public static final String SYSTEM_SETTING_EMAIL_TO = "system.setting.email.to";
 
 	private XJButton btnSimpan;
-	private JPanel pnlKode;
+	private XJPanel pnlKode;
 	private XJButton btnBatal;
 	private XJComboBox cmbReceiptPrinter;
-	private JPanel pnlProblemReporting;
+	private XJPanel pnlProblemReporting;
 	private XJLabel lblEmailTo;
 	private XJTextField txtEmailTo;
 	private XJLabel lblSmtpHost;
@@ -62,7 +62,7 @@ public class SystemSettingForm extends XJDialog {
 	private XJTextField txtAccountId;
 	private XJTextField txtLoginId;
 	private XJPasswordField txtPassword;
-	private JPanel pnlBackupDB;
+	private XJPanel pnlBackupDB;
 	private XJButton btnBackupDatabase;
 	private XJLabel lblMysqlLocation;
 	private XJTextField txtMySqlLocation;
@@ -79,8 +79,8 @@ public class SystemSettingForm extends XJDialog {
 		setTitle("System Setting");
 		getContentPane().setLayout(new MigLayout("", "[grow][]", "[][][]"));
 
-		pnlKode = new JPanel();
-		pnlKode.setBorder(new EtchedBorder(EtchedBorder.LOWERED, null, null));
+		pnlKode = new XJPanel();
+		pnlKode.setBorder(new XEtchedBorder());
 		getContentPane().add(pnlKode, "cell 0 0,grow");
 		pnlKode.setLayout(new MigLayout("", "[grow][300]", "[]"));
 
@@ -91,9 +91,8 @@ public class SystemSettingForm extends XJDialog {
 		cmbReceiptPrinter = new XJComboBox(getReceiptPrinterComboBoxList());
 		pnlKode.add(cmbReceiptPrinter, "cell 1 0,growx");
 
-		pnlProblemReporting = new JPanel();
-		pnlProblemReporting.setBorder(new EtchedBorder(EtchedBorder.LOWERED,
-				null, null));
+		pnlProblemReporting = new XJPanel();
+		pnlProblemReporting.setBorder(new XEtchedBorder());
 		getContentPane().add(pnlProblemReporting, "cell 1 0 1 2,grow");
 		pnlProblemReporting.setLayout(new MigLayout("", "[grow][300]",
 				"[][][][][][][]"));
@@ -153,9 +152,8 @@ public class SystemSettingForm extends XJDialog {
 		txtEmailTo.setUpperCaseOnFocusLost(false);
 		pnlProblemReporting.add(txtEmailTo, "cell 1 6,growx");
 
-		pnlBackupDB = new JPanel();
-		pnlBackupDB
-				.setBorder(new EtchedBorder(EtchedBorder.LOWERED, null, null));
+		pnlBackupDB = new XJPanel();
+		pnlBackupDB.setBorder(new XEtchedBorder());
 		getContentPane().add(pnlBackupDB, "cell 0 1,grow");
 		pnlBackupDB.setLayout(new MigLayout("", "[grow][300,grow]",
 				"[][][][][][]"));
@@ -219,7 +217,7 @@ public class SystemSettingForm extends XJDialog {
 		btnBackupDatabase.setText("Backup Database");
 		pnlBackupDB.add(btnBackupDatabase, "cell 1 5,alignx trailing");
 
-		JPanel pnlButton = new JPanel();
+		XJPanel pnlButton = new XJPanel();
 		getContentPane().add(pnlButton, "cell 0 2 2 1,alignx center,growy");
 		pnlButton.setLayout(new MigLayout("", "[][]", "[]"));
 

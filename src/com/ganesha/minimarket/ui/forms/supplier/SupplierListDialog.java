@@ -12,7 +12,6 @@ import java.util.List;
 import java.util.Map;
 
 import javax.swing.ButtonGroup;
-import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 
 import net.miginfocom.swing.MigLayout;
@@ -25,6 +24,7 @@ import com.ganesha.core.utils.GeneralConstants.ActionType;
 import com.ganesha.desktop.component.XJButton;
 import com.ganesha.desktop.component.XJDialog;
 import com.ganesha.desktop.component.XJLabel;
+import com.ganesha.desktop.component.XJPanel;
 import com.ganesha.desktop.component.XJRadioButton;
 import com.ganesha.desktop.component.XJTable;
 import com.ganesha.desktop.component.XJTextField;
@@ -90,7 +90,7 @@ public class SupplierListDialog extends XJDialog {
 		};
 		XTableUtils.initTable(table, tableParameters);
 
-		JPanel pnlFilter = new JPanel();
+		XJPanel pnlFilter = new XJPanel();
 		getContentPane().add(pnlFilter, "cell 0 0,grow");
 		pnlFilter.setLayout(new MigLayout("", "[100][grow][]", "[][][][grow]"));
 
@@ -154,7 +154,7 @@ public class SupplierListDialog extends XJDialog {
 		});
 		pnlFilter.add(txtKontakPerson, "cell 1 2 2 1,growx");
 
-		JPanel pnlRadioButton = new JPanel();
+		XJPanel pnlRadioButton = new XJPanel();
 		pnlFilter.add(pnlRadioButton, "cell 1 3,grow");
 		pnlRadioButton.setLayout(new MigLayout("", "[]", "[][]"));
 
@@ -199,7 +199,7 @@ public class SupplierListDialog extends XJDialog {
 		JScrollPane scrollPane = new JScrollPane(table);
 		getContentPane().add(scrollPane, "cell 0 1,grow");
 
-		JPanel panel = new JPanel();
+		XJPanel panel = new XJPanel();
 		getContentPane().add(panel, "cell 0 2,alignx center,growy");
 		panel.setLayout(new MigLayout("", "[][][]", "[]"));
 

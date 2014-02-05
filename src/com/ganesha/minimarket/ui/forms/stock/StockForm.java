@@ -9,9 +9,7 @@ import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.math.BigDecimal;
 
-import javax.swing.JPanel;
 import javax.swing.JSeparator;
-import javax.swing.border.EtchedBorder;
 
 import net.miginfocom.swing.MigLayout;
 
@@ -24,10 +22,12 @@ import com.ganesha.core.utils.DBUtils;
 import com.ganesha.core.utils.Formatter;
 import com.ganesha.core.utils.GeneralConstants;
 import com.ganesha.core.utils.GeneralConstants.ActionType;
+import com.ganesha.desktop.component.XEtchedBorder;
 import com.ganesha.desktop.component.XJButton;
 import com.ganesha.desktop.component.XJCheckBox;
 import com.ganesha.desktop.component.XJDialog;
 import com.ganesha.desktop.component.XJLabel;
+import com.ganesha.desktop.component.XJPanel;
 import com.ganesha.desktop.component.XJTextField;
 import com.ganesha.hibernate.HibernateUtils;
 import com.ganesha.minimarket.facade.StockFacade;
@@ -49,12 +49,12 @@ public class StockForm extends XJDialog {
 	private XJLabel lblKodeTerakhir;
 	private ActionType actionType;
 	private JSeparator separator;
-	private JPanel pnlKanan;
+	private XJPanel pnlKanan;
 	private XJLabel lblJumlahSaatIni;
 	private XJTextField txtJumlahSaatIni;
 	private XJLabel lblHargaBeli;
 	private XJTextField txtHargaBeli;
-	private JPanel pnlKode;
+	private XJPanel pnlKode;
 	private XJLabel lblHpp;
 	private XJTextField txtHpp;
 	private XJLabel lblHargaJual;
@@ -64,7 +64,7 @@ public class StockForm extends XJDialog {
 	private XJTextField txtStokMinimum;
 	private XJButton btnGenerateBarcode;
 	private XJButton btnHapusBarang;
-	private JPanel pnlDisable;
+	private XJPanel pnlDisable;
 	private XJCheckBox chkDisabled;
 
 	public StockForm(Window parent, ActionType actionType) {
@@ -87,8 +87,8 @@ public class StockForm extends XJDialog {
 				new MigLayout("", "[400,grow][400]",
 						"[grow][grow][grow][10][grow]"));
 
-		pnlKode = new JPanel();
-		pnlKode.setBorder(new EtchedBorder(EtchedBorder.LOWERED, null, null));
+		pnlKode = new XJPanel();
+		pnlKode.setBorder(new XEtchedBorder());
 		getContentPane().add(pnlKode, "cell 0 0 2 1,grow");
 		pnlKode.setLayout(new MigLayout("", "[150][][100][]", "[][][][]"));
 
@@ -100,12 +100,14 @@ public class StockForm extends XJDialog {
 		pnlKode.add(txtKode, "cell 1 0 2 1,growx");
 
 		lblKodeTerakhir = new XJLabel();
-		lblKodeTerakhir.setFont(new Font("Tahoma", Font.BOLD, 12));
+		lblKodeTerakhir.setFont(new Font("Tahoma", Font.BOLD,
+				FONT_SIZE_SMALLEST));
 		pnlKode.add(lblKodeTerakhir, "cell 1 1");
 		lblKodeTerakhir.setText("Kode Terakhir:");
 
 		lblKodeTerakhirValue = new XJLabel();
-		lblKodeTerakhirValue.setFont(new Font("Tahoma", Font.BOLD, 12));
+		lblKodeTerakhirValue.setFont(new Font("Tahoma", Font.BOLD,
+				FONT_SIZE_SMALLEST));
 		pnlKode.add(lblKodeTerakhirValue, "cell 2 1");
 		lblKodeTerakhirValue.setText("");
 
@@ -130,8 +132,8 @@ public class StockForm extends XJDialog {
 		btnGenerateBarcode.setText("Generate Barcode");
 		pnlKode.add(btnGenerateBarcode, "cell 3 2");
 
-		JPanel pnlKiri = new JPanel();
-		pnlKiri.setBorder(new EtchedBorder(EtchedBorder.LOWERED, null, null));
+		XJPanel pnlKiri = new XJPanel();
+		pnlKiri.setBorder(new XEtchedBorder());
 		getContentPane().add(pnlKiri, "cell 0 1,grow");
 		pnlKiri.setLayout(new MigLayout("", "[150][grow]", "[][][][]"));
 
@@ -167,8 +169,8 @@ public class StockForm extends XJDialog {
 		txtStokMinimum.setText("0");
 		pnlKiri.add(txtStokMinimum, "cell 1 3,growx");
 
-		pnlKanan = new JPanel();
-		pnlKanan.setBorder(new EtchedBorder(EtchedBorder.LOWERED, null, null));
+		pnlKanan = new XJPanel();
+		pnlKanan.setBorder(new XEtchedBorder());
 		getContentPane().add(pnlKanan, "cell 1 1,grow");
 		pnlKanan.setLayout(new MigLayout("", "[150][grow]", "[][][]"));
 
@@ -198,19 +200,19 @@ public class StockForm extends XJDialog {
 		txtHargaJual.setText("0");
 		pnlKanan.add(txtHargaJual, "cell 1 2,growx");
 
-		pnlDisable = new JPanel();
+		pnlDisable = new XJPanel();
 		getContentPane().add(pnlDisable, "cell 0 2 2 1,alignx right,growy");
 		pnlDisable.setLayout(new MigLayout("", "[]", "[]"));
 
 		chkDisabled = new XJCheckBox();
-		chkDisabled.setFont(new Font("Tahoma", Font.BOLD, 12));
+		chkDisabled.setFont(new Font("Tahoma", Font.BOLD, FONT_SIZE_SMALLEST));
 		chkDisabled.setText("Item ini sudah tidak aktif lagi");
 		pnlDisable.add(chkDisabled, "cell 0 0");
 
 		separator = new JSeparator();
 		getContentPane().add(separator, "cell 0 3 2 1,grow");
 
-		JPanel pnlButton = new JPanel();
+		XJPanel pnlButton = new XJPanel();
 		getContentPane().add(pnlButton, "cell 0 4 2 1,grow");
 		pnlButton.setLayout(new MigLayout("", "[][grow][][]", "[grow]"));
 

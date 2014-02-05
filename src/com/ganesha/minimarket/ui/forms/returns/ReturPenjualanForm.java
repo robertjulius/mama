@@ -1,5 +1,7 @@
 package com.ganesha.minimarket.ui.forms.returns;
 
+import java.awt.Color;
+import java.awt.Font;
 import java.awt.Window;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -15,10 +17,8 @@ import java.util.List;
 import java.util.Map;
 
 import javax.swing.JOptionPane;
-import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.SwingConstants;
-import javax.swing.border.EtchedBorder;
 
 import net.miginfocom.swing.MigLayout;
 
@@ -29,10 +29,12 @@ import com.ganesha.core.exception.UserException;
 import com.ganesha.core.utils.CommonUtils;
 import com.ganesha.core.utils.Formatter;
 import com.ganesha.core.utils.GeneralConstants;
+import com.ganesha.desktop.component.XEtchedBorder;
 import com.ganesha.desktop.component.XJButton;
 import com.ganesha.desktop.component.XJDateChooser;
 import com.ganesha.desktop.component.XJDialog;
 import com.ganesha.desktop.component.XJLabel;
+import com.ganesha.desktop.component.XJPanel;
 import com.ganesha.desktop.component.XJTable;
 import com.ganesha.desktop.component.XJTextField;
 import com.ganesha.desktop.component.xtableutils.XTableConstants;
@@ -61,7 +63,7 @@ public class ReturPenjualanForm extends XJDialog {
 	private XJButton btnTambah;
 	private XJButton btnCariCustomer;
 	private XJButton btnHapus;
-	private XJTextField txtTotalRetur;
+	private XJLabel lblTotalReturValue;
 	private XJButton btnBatal;
 	private XJButton btnSelesai;
 	private XJTextField txtNamaCustomer;
@@ -129,8 +131,8 @@ public class ReturPenjualanForm extends XJDialog {
 			}
 		});
 
-		JPanel pnlHeader = new JPanel();
-		pnlHeader.setBorder(new EtchedBorder(EtchedBorder.LOWERED, null, null));
+		XJPanel pnlHeader = new XJPanel();
+		pnlHeader.setBorder(new XEtchedBorder());
 		getContentPane().add(pnlHeader, "cell 0 0,alignx left,growy");
 		pnlHeader.setLayout(new MigLayout("", "[150][100][200][]", "[][][]"));
 
@@ -176,12 +178,12 @@ public class ReturPenjualanForm extends XJDialog {
 		btnCariCustomer.setText("Cari Customer [F5]");
 		pnlHeader.add(btnCariCustomer, "cell 3 2");
 
-		JPanel pnlPenjualan = new JPanel();
+		XJPanel pnlPenjualan = new XJPanel();
 		getContentPane().add(pnlPenjualan, "cell 0 1,grow");
 		pnlPenjualan.setLayout(new MigLayout("", "[612px,grow]",
 				"[grow][::200,baseline]"));
 
-		JPanel pnlSearchItem = new JPanel();
+		XJPanel pnlSearchItem = new XJPanel();
 		pnlPenjualan.add(pnlSearchItem, "cell 0 0,grow");
 		pnlSearchItem.setLayout(new MigLayout("", "[][grow][]", "[]"));
 
@@ -209,21 +211,25 @@ public class ReturPenjualanForm extends XJDialog {
 		JScrollPane scrollPane = new JScrollPane(table);
 		pnlPenjualan.add(scrollPane, "cell 0 1,growx");
 
-		JPanel pnlSubTotal = new JPanel();
+		XJPanel pnlSubTotal = new XJPanel();
+		pnlSubTotal.setBackground(Color.BLACK);
 		getContentPane().add(pnlSubTotal, "cell 0 2,grow");
-		pnlSubTotal.setLayout(new MigLayout("", "[grow][][200]", "[]"));
+		pnlSubTotal.setLayout(new MigLayout("", "[][grow][300]", "[]"));
 
 		XJLabel lblTotalRetur = new XJLabel();
-		pnlSubTotal.add(lblTotalRetur, "cell 1 0");
+		lblTotalRetur.setForeground(Color.WHITE);
+		lblTotalRetur.setFont(new Font("Tahoma", Font.BOLD, 40));
+		pnlSubTotal.add(lblTotalRetur, "cell 0 0");
 		lblTotalRetur.setText("Total Retur");
 
-		txtTotalRetur = new XJTextField();
-		txtTotalRetur.setText("0");
-		txtTotalRetur.setHorizontalAlignment(SwingConstants.TRAILING);
-		pnlSubTotal.add(txtTotalRetur, "cell 2 0,growx");
-		txtTotalRetur.setEditable(false);
+		lblTotalReturValue = new XJLabel();
+		lblTotalReturValue.setForeground(Color.WHITE);
+		lblTotalReturValue.setFont(new Font("Tahoma", Font.BOLD, 40));
+		lblTotalReturValue.setText("0");
+		lblTotalReturValue.setHorizontalAlignment(SwingConstants.TRAILING);
+		pnlSubTotal.add(lblTotalReturValue, "cell 2 0,alignx right");
 
-		JPanel pnlButton = new JPanel();
+		XJPanel pnlButton = new XJPanel();
 		getContentPane().add(pnlButton, "cell 0 3,alignx center,growy");
 		pnlButton.setLayout(new MigLayout("", "[][]", "[]"));
 
@@ -362,13 +368,13 @@ public class ReturPenjualanForm extends XJDialog {
 			String customerCode = txtKodeCustomer.getText();
 
 			double subTotalAmount = Formatter.formatStringToNumber(
-					txtTotalRetur.getText()).doubleValue();
+					lblTotalReturValue.getText()).doubleValue();
 
 			double taxPercent = 0;
 			double taxAmount = 0;
 
 			double totalReturnAmount = Formatter.formatStringToNumber(
-					txtTotalRetur.getText()).doubleValue();
+					lblTotalReturValue.getText()).doubleValue();
 
 			SaleReturnHeader saleReturnHeader = facade.validateForm(
 					transactionNumber, transactionTimestamp, customerCode,
@@ -518,7 +524,7 @@ public class ReturPenjualanForm extends XJDialog {
 					.doubleValue();
 			totalRetur += totalPerRow;
 		}
-		txtTotalRetur.setText(Formatter.formatNumberToString(totalRetur));
+		lblTotalReturValue.setText(Formatter.formatNumberToString(totalRetur));
 	}
 
 	private void tambah(String transactionNumber, Integer orderNum) {

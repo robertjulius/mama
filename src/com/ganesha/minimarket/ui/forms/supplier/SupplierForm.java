@@ -8,10 +8,8 @@ import java.awt.event.KeyEvent;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 
-import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JSeparator;
-import javax.swing.border.EtchedBorder;
 
 import net.miginfocom.swing.MigLayout;
 
@@ -22,10 +20,12 @@ import com.ganesha.core.exception.ActionTypeNotSupported;
 import com.ganesha.core.exception.UserException;
 import com.ganesha.core.utils.DBUtils;
 import com.ganesha.core.utils.GeneralConstants.ActionType;
+import com.ganesha.desktop.component.XEtchedBorder;
 import com.ganesha.desktop.component.XJButton;
 import com.ganesha.desktop.component.XJCheckBox;
 import com.ganesha.desktop.component.XJDialog;
 import com.ganesha.desktop.component.XJLabel;
+import com.ganesha.desktop.component.XJPanel;
 import com.ganesha.desktop.component.XJTextArea;
 import com.ganesha.desktop.component.XJTextField;
 import com.ganesha.hibernate.HibernateUtils;
@@ -44,19 +44,19 @@ public class SupplierForm extends XJDialog {
 	private ActionType actionType;
 	private XJLabel lblDeskripsi;
 	private XJTextField txtDeskripsi;
-	private JPanel pnlAlamat1;
+	private XJPanel pnlAlamat1;
 	private XJLabel lblAlamat1;
 	private JScrollPane scrollPaneAlamat1;
 	private XJLabel lblAlamat2;
 	private JScrollPane scrollPaneAlamat2;
 	private XJTextArea txtAlamat2;
 	private XJTextArea txtAlamat1;
-	private JPanel pnlKanan;
+	private XJPanel pnlKanan;
 	private XJLabel lblKontakPerson1;
 	private XJLabel lblKontakPerson2;
 	private XJTextField txtKontakPerson1;
 	private XJTextField txtKontakPerson2;
-	private JPanel pnlKontakPerson1;
+	private XJPanel pnlKontakPerson1;
 	private XJLabel lblPhone1;
 	private XJTextField txtPhone1;
 	private XJLabel lblEmail1;
@@ -65,10 +65,10 @@ public class SupplierForm extends XJDialog {
 	private XJTextField txtPhone2;
 	private XJLabel lblEmail2;
 	private XJTextField txtEmail2;
-	private JPanel pnlAlamat2;
-	private JPanel pnlKiri;
+	private XJPanel pnlAlamat2;
+	private XJPanel pnlKiri;
 	private JSeparator separator;
-	private JPanel lblKontakPerson2Email;
+	private XJPanel lblKontakPerson2Email;
 	private XJLabel lblKontakPerson1Phone;
 	private XJTextField txtKontakPerson1Phone;
 	private XJLabel lblKontakPerson1Email;
@@ -78,7 +78,7 @@ public class SupplierForm extends XJDialog {
 	private XJLabel lblKontakPerson2Phone;
 	private XJLabel lblEmail;
 	private XJButton btnBatal;
-	private JPanel pnlDisable;
+	private XJPanel pnlDisable;
 	private XJCheckBox chkDisabled;
 	private XJButton btnhapussupplier;
 
@@ -101,13 +101,12 @@ public class SupplierForm extends XJDialog {
 		getContentPane().setLayout(
 				new MigLayout("", "[grow][grow]", "[grow][grow][][grow]"));
 
-		pnlKiri = new JPanel();
+		pnlKiri = new XJPanel();
 		getContentPane().add(pnlKiri, "cell 0 0,grow");
 		pnlKiri.setLayout(new MigLayout("", "[400,grow]", "[][][grow]"));
 
-		JPanel pnlKodeSupplier = new JPanel();
-		pnlKodeSupplier.setBorder(new EtchedBorder(EtchedBorder.LOWERED, null,
-				null));
+		XJPanel pnlKodeSupplier = new XJPanel();
+		pnlKodeSupplier.setBorder(new XEtchedBorder());
 		pnlKiri.add(pnlKodeSupplier, "cell 0 0,growx");
 		pnlKodeSupplier
 				.setLayout(new MigLayout("", "[150][][grow]", "[][][][]"));
@@ -120,12 +119,14 @@ public class SupplierForm extends XJDialog {
 		pnlKodeSupplier.add(txtKode, "cell 1 0 2 1,growx");
 
 		lblKodeTerakhir = new XJLabel();
-		lblKodeTerakhir.setFont(new Font("Tahoma", Font.BOLD, 12));
+		lblKodeTerakhir.setFont(new Font("Tahoma", Font.BOLD,
+				FONT_SIZE_SMALLEST));
 		lblKodeTerakhir.setText("Kode Terakhir:");
 		pnlKodeSupplier.add(lblKodeTerakhir, "cell 1 1");
 
 		lblKodeTerakhirValue = new XJLabel();
-		lblKodeTerakhirValue.setFont(new Font("Tahoma", Font.BOLD, 12));
+		lblKodeTerakhirValue.setFont(new Font("Tahoma", Font.BOLD,
+				FONT_SIZE_SMALLEST));
 		lblKodeTerakhirValue.setText("");
 		pnlKodeSupplier.add(lblKodeTerakhirValue, "cell 2 1");
 
@@ -143,9 +144,8 @@ public class SupplierForm extends XJDialog {
 		txtDeskripsi = new XJTextField();
 		pnlKodeSupplier.add(txtDeskripsi, "cell 1 3 2 1,growx");
 
-		pnlKontakPerson1 = new JPanel();
-		pnlKontakPerson1.setBorder(new EtchedBorder(EtchedBorder.LOWERED, null,
-				null));
+		pnlKontakPerson1 = new XJPanel();
+		pnlKontakPerson1.setBorder(new XEtchedBorder());
 		pnlKiri.add(pnlKontakPerson1, "cell 0 1,growx");
 		pnlKontakPerson1.setLayout(new MigLayout("", "[150][grow]", "[][][]"));
 
@@ -170,9 +170,8 @@ public class SupplierForm extends XJDialog {
 		txtKontakPerson1Email = new XJTextField();
 		pnlKontakPerson1.add(txtKontakPerson1Email, "cell 1 2,growx");
 
-		lblKontakPerson2Email = new JPanel();
-		lblKontakPerson2Email.setBorder(new EtchedBorder(EtchedBorder.LOWERED,
-				null, null));
+		lblKontakPerson2Email = new XJPanel();
+		lblKontakPerson2Email.setBorder(new XEtchedBorder());
 		pnlKiri.add(lblKontakPerson2Email, "cell 0 2,grow");
 		lblKontakPerson2Email.setLayout(new MigLayout("", "[150][grow]",
 				"[][][]"));
@@ -198,13 +197,12 @@ public class SupplierForm extends XJDialog {
 		txtKontakPerson2Email = new XJTextField();
 		lblKontakPerson2Email.add(txtKontakPerson2Email, "cell 1 2,growx");
 
-		pnlKanan = new JPanel();
+		pnlKanan = new XJPanel();
 		getContentPane().add(pnlKanan, "cell 1 0,grow");
 		pnlKanan.setLayout(new MigLayout("", "[grow]", "[grow][grow]"));
 
-		pnlAlamat1 = new JPanel();
-		pnlAlamat1
-				.setBorder(new EtchedBorder(EtchedBorder.LOWERED, null, null));
+		pnlAlamat1 = new XJPanel();
+		pnlAlamat1.setBorder(new XEtchedBorder());
 		pnlKanan.add(pnlAlamat1, "cell 0 0,grow");
 		pnlAlamat1.setLayout(new MigLayout("", "[100][300:n,grow]",
 				"[100,grow][][]"));
@@ -232,9 +230,8 @@ public class SupplierForm extends XJDialog {
 		txtEmail1 = new XJTextField();
 		pnlAlamat1.add(txtEmail1, "cell 1 2,growx");
 
-		pnlAlamat2 = new JPanel();
-		pnlAlamat2
-				.setBorder(new EtchedBorder(EtchedBorder.LOWERED, null, null));
+		pnlAlamat2 = new XJPanel();
+		pnlAlamat2.setBorder(new XEtchedBorder());
 		pnlKanan.add(pnlAlamat2, "cell 0 1,grow");
 		pnlAlamat2.setLayout(new MigLayout("", "[100][300:n,grow]",
 				"[100,grow][][]"));
@@ -261,19 +258,19 @@ public class SupplierForm extends XJDialog {
 		txtEmail2 = new XJTextField();
 		pnlAlamat2.add(txtEmail2, "cell 1 2,growx");
 
-		pnlDisable = new JPanel();
+		pnlDisable = new XJPanel();
 		getContentPane().add(pnlDisable, "cell 0 1 2 1,alignx right,growy");
 		pnlDisable.setLayout(new MigLayout("", "[]", "[]"));
 
 		chkDisabled = new XJCheckBox();
-		chkDisabled.setFont(new Font("Tahoma", Font.BOLD, 12));
+		chkDisabled.setFont(new Font("Tahoma", Font.BOLD, FONT_SIZE_SMALLEST));
 		chkDisabled.setText("Supplier ini sudah tidak aktif lagi");
 		pnlDisable.add(chkDisabled, "cell 0 0");
 
 		separator = new JSeparator();
 		getContentPane().add(separator, "cell 0 2 2 1,grow");
 
-		JPanel pnlButton = new JPanel();
+		XJPanel pnlButton = new XJPanel();
 		getContentPane().add(pnlButton, "cell 0 3 2 1,grow");
 		pnlButton.setLayout(new MigLayout("", "[][grow][][]", "[]"));
 

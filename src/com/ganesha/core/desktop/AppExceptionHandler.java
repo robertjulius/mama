@@ -10,11 +10,12 @@ import java.io.StringWriter;
 import javax.swing.JButton;
 import javax.swing.JDialog;
 import javax.swing.JLabel;
-import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 
 import net.miginfocom.swing.MigLayout;
+
+import com.ganesha.desktop.component.XJPanel;
 
 public class AppExceptionHandler extends JDialog {
 
@@ -41,7 +42,7 @@ public class AppExceptionHandler extends JDialog {
 		getContentPane().setLayout(
 				new MigLayout("", "[800,grow]", "[grow][400,grow][]"));
 
-		JPanel pnlMessage = new JPanel();
+		XJPanel pnlMessage = new XJPanel();
 		getContentPane().add(pnlMessage, "cell 0 0,grow");
 		pnlMessage.setLayout(new MigLayout("", "[]", "[][]"));
 
@@ -61,7 +62,7 @@ public class AppExceptionHandler extends JDialog {
 		txtStackTrace.setFont(new Font("Tahoma", Font.PLAIN, 11));
 		scrollPane.setViewportView(txtStackTrace);
 
-		JPanel pnlButton = new JPanel();
+		XJPanel pnlButton = new XJPanel();
 		getContentPane().add(pnlButton, "cell 0 2,alignx center,growy");
 		pnlButton.setLayout(new MigLayout("", "[100]", "[]"));
 

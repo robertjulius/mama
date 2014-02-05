@@ -8,7 +8,7 @@ import java.awt.event.WindowFocusListener;
 
 import javax.swing.JFrame;
 
-public abstract class XJFrame extends JFrame {
+public abstract class XJFrame extends JFrame implements XComponentConstants {
 	private static final long serialVersionUID = 8731044804764016513L;
 
 	private KeyboardFocusManager keyboardFocusManager = KeyboardFocusManager
@@ -16,6 +16,8 @@ public abstract class XJFrame extends JFrame {
 	private MyDispatcher dispatcher = new MyDispatcher();
 
 	public XJFrame() {
+		getContentPane().setBackground(PNL_BG);
+
 		addWindowFocusListener(new WindowFocusListener() {
 			@Override
 			public void windowGainedFocus(WindowEvent e) {
@@ -27,7 +29,6 @@ public abstract class XJFrame extends JFrame {
 				keyboardFocusManager.removeKeyEventDispatcher(dispatcher);
 			}
 		});
-
 	}
 
 	protected abstract void keyEventListener(int keyCode);

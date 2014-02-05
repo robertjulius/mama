@@ -9,6 +9,6 @@ public class XJRadioButton extends JRadioButton implements XComponentConstants {
 
 	public XJRadioButton() {
 		setFont(new Font("Tahoma", Font.PLAIN, FONT_SIZE_NORMAL));
+		setBackground(PNL_BG);
 	}
-
 }

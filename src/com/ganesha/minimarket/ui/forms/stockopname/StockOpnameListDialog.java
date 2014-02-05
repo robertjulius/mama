@@ -13,7 +13,6 @@ import java.util.List;
 import java.util.Map;
 
 import javax.swing.JOptionPane;
-import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 
 import net.miginfocom.swing.MigLayout;
@@ -29,6 +28,7 @@ import com.ganesha.core.utils.Formatter;
 import com.ganesha.desktop.component.XJButton;
 import com.ganesha.desktop.component.XJDialog;
 import com.ganesha.desktop.component.XJLabel;
+import com.ganesha.desktop.component.XJPanel;
 import com.ganesha.desktop.component.XJTable;
 import com.ganesha.desktop.component.XJTextField;
 import com.ganesha.desktop.component.xtableutils.XTableConstants;
@@ -51,7 +51,7 @@ public class StockOpnameListDialog extends XJDialog {
 	private final Map<ColumnEnum, XTableParameter> tableParameters = new HashMap<>();
 	private XJButton btnLanjut;
 	private XJButton btnBatal;
-	private JPanel pnlInformation;
+	private XJPanel pnlInformation;
 	private XJLabel lblPerformedBy;
 	private XJTextField txtPerformedBy;
 	private XJLabel lblPerformedDate;
@@ -111,7 +111,7 @@ public class StockOpnameListDialog extends XJDialog {
 			}
 		});
 
-		pnlInformation = new JPanel();
+		pnlInformation = new XJPanel();
 		getContentPane().add(pnlInformation, "cell 0 0");
 		pnlInformation.setLayout(new MigLayout("", "[][300]", "[][]"));
 
@@ -137,7 +137,7 @@ public class StockOpnameListDialog extends XJDialog {
 		JScrollPane scrollPane = new JScrollPane(table);
 		getContentPane().add(scrollPane, "cell 0 1,grow");
 
-		JPanel pnlButton = new JPanel();
+		XJPanel pnlButton = new XJPanel();
 		getContentPane().add(pnlButton, "cell 0 2,alignx center,growy");
 		pnlButton.setLayout(new MigLayout("", "[200][200]", "[]"));
 

@@ -31,6 +31,16 @@ public class XJTextField extends JFormattedTextField implements
 		return upperCaseOnFocusLost;
 	}
 
+	@Override
+	public void setEditable(boolean editable) {
+		if (editable) {
+			setBackground(TXT_BG_EDITABLE);
+		} else {
+			setBackground(TXT_BG_NOTEDITABLE);
+		}
+		super.setEditable(editable);
+	}
+
 	public void setUpperCaseOnFocusLost(boolean upperCaseOnFocusLost) {
 		this.upperCaseOnFocusLost = upperCaseOnFocusLost;
 	}

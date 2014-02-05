@@ -9,10 +9,8 @@ import java.math.BigDecimal;
 import java.util.Calendar;
 import java.util.Date;
 
-import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JSeparator;
-import javax.swing.border.EtchedBorder;
 
 import net.miginfocom.swing.MigLayout;
 
@@ -23,9 +21,11 @@ import com.ganesha.core.exception.UserException;
 import com.ganesha.core.utils.CommonUtils;
 import com.ganesha.core.utils.Formatter;
 import com.ganesha.core.utils.GeneralConstants.AccountAction;
+import com.ganesha.desktop.component.XEtchedBorder;
 import com.ganesha.desktop.component.XJButton;
 import com.ganesha.desktop.component.XJDialog;
 import com.ganesha.desktop.component.XJLabel;
+import com.ganesha.desktop.component.XJPanel;
 import com.ganesha.desktop.component.XJTextArea;
 import com.ganesha.desktop.component.XJTextField;
 import com.ganesha.hibernate.HibernateUtils;
@@ -43,11 +43,11 @@ public class ReceivableForm extends XJDialog {
 	private XJLabel lblLastRemainingPayment;
 	private XJTextField txtLastRemainingPayment;
 	private XJLabel lblCatatan;
-	private JPanel pnlKontakPerson1;
+	private XJPanel pnlKontakPerson1;
 	private XJLabel lblAmount;
 	private XJTextField txtAmount;
 	private XJLabel lblRemainingPayment;
-	private XJTextField txtRemainingPayment;
+	private XJLabel lblRemainingPaymentValue;
 	private XJButton btnBatal;
 	private JScrollPane scrollPane;
 	private XJTextArea txtCatatan;
@@ -63,10 +63,9 @@ public class ReceivableForm extends XJDialog {
 
 		getContentPane().setLayout(new MigLayout("", "[400][]", "[][]"));
 
-		JPanel pnlKodeReceivable = new JPanel();
+		XJPanel pnlKodeReceivable = new XJPanel();
 		getContentPane().add(pnlKodeReceivable, "cell 0 0,grow");
-		pnlKodeReceivable.setBorder(new EtchedBorder(EtchedBorder.LOWERED,
-				null, null));
+		pnlKodeReceivable.setBorder(new XEtchedBorder());
 		pnlKodeReceivable.setLayout(new MigLayout("", "[150][grow]",
 				"[][][][10][][]"));
 
@@ -102,7 +101,6 @@ public class ReceivableForm extends XJDialog {
 		lblAmount.setText("Uang Diterima");
 
 		txtAmount = new XJTextField();
-		txtAmount.setForeground(COLOR_TRASACTIONABLE);
 		txtAmount.addKeyListener(new KeyAdapter() {
 			@Override
 			public void keyReleased(KeyEvent e) {
@@ -115,15 +113,13 @@ public class ReceivableForm extends XJDialog {
 		pnlKodeReceivable.add(lblRemainingPayment, "cell 0 5");
 		lblRemainingPayment.setText("Sisa");
 
-		txtRemainingPayment = new XJTextField();
-		txtRemainingPayment.setEditable(false);
-		txtRemainingPayment.setForeground(COLOR_WARNING);
-		pnlKodeReceivable.add(txtRemainingPayment, "cell 1 5,growx");
+		lblRemainingPaymentValue = new XJLabel();
+		lblRemainingPaymentValue.setForeground(LBL_WARNING);
+		pnlKodeReceivable.add(lblRemainingPaymentValue, "cell 1 5,growx");
 
-		pnlKontakPerson1 = new JPanel();
+		pnlKontakPerson1 = new XJPanel();
 		getContentPane().add(pnlKontakPerson1, "cell 1 0,grow");
-		pnlKontakPerson1.setBorder(new EtchedBorder(EtchedBorder.LOWERED, null,
-				null));
+		pnlKontakPerson1.setBorder(new XEtchedBorder());
 		pnlKontakPerson1.setLayout(new MigLayout("", "[300,grow]", "[][grow]"));
 
 		lblCatatan = new XJLabel();
@@ -136,7 +132,7 @@ public class ReceivableForm extends XJDialog {
 		txtCatatan = new XJTextArea();
 		scrollPane.setViewportView(txtCatatan);
 
-		JPanel pnlButton = new JPanel();
+		XJPanel pnlButton = new XJPanel();
 		getContentPane().add(pnlButton, "cell 0 1 2 1,alignx center,growy");
 		pnlButton.setLayout(new MigLayout("", "[][]", "[]"));
 
@@ -182,7 +178,7 @@ public class ReceivableForm extends XJDialog {
 					.formatNumberToString(receivableSummary
 							.getRemainingAmount().doubleValue()));
 			txtAmount.setText("0");
-			txtRemainingPayment.setText(txtLastRemainingPayment.getText());
+			lblRemainingPaymentValue.setText(txtLastRemainingPayment.getText());
 		} finally {
 			session.close();
 		}
@@ -241,8 +237,8 @@ public class ReceivableForm extends XJDialog {
 		txtAmount.setText(Formatter.formatNumberToString(pembayaran));
 
 		double sisaSaatIni = sisaSebelumnya - pembayaran;
-		txtRemainingPayment
-				.setText(Formatter.formatNumberToString(sisaSaatIni));
+		lblRemainingPaymentValue.setText(Formatter
+				.formatNumberToString(sisaSaatIni));
 
 		if (sisaSaatIni < 0) {
 			btnSimpan.setEnabled(false);

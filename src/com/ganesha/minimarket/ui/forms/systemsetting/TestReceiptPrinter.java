@@ -24,7 +24,6 @@ import javax.print.event.PrintJobAdapter;
 import javax.print.event.PrintJobEvent;
 import javax.swing.JButton;
 import javax.swing.JDialog;
-import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 
@@ -35,6 +34,7 @@ import com.ganesha.core.desktop.ExceptionHandler;
 import com.ganesha.core.exception.AppException;
 import com.ganesha.core.utils.CommonUtils;
 import com.ganesha.core.utils.Formatter;
+import com.ganesha.desktop.component.XJPanel;
 import com.ganesha.minimarket.Main;
 import com.ganesha.minimarket.utils.ReceiptPrinter;
 import com.ganesha.minimarket.utils.ReceiptPrinter.ItemBelanja;
@@ -69,7 +69,7 @@ public class TestReceiptPrinter extends JDialog {
 		txtReceipt.setFont(new Font("Courier New", Font.PLAIN, 11));
 		scrollPane.setViewportView(txtReceipt);
 
-		JPanel pnlButton = new JPanel();
+		XJPanel pnlButton = new XJPanel();
 		getContentPane().add(pnlButton, "cell 0 1,alignx center,growy");
 		pnlButton.setLayout(new MigLayout("", "[100][100][100]", "[]"));
 

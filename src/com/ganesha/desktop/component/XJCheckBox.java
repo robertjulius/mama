@@ -9,5 +9,6 @@ public class XJCheckBox extends JCheckBox implements XComponentConstants {
 
 	public XJCheckBox() {
 		setFont(new Font("Tahoma", Font.PLAIN, FONT_SIZE_NORMAL));
+		setBackground(PNL_BG);
 	}
 }

@@ -16,11 +16,9 @@ import java.util.List;
 import java.util.Map;
 
 import javax.swing.JOptionPane;
-import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JSeparator;
 import javax.swing.SwingConstants;
-import javax.swing.border.EtchedBorder;
 import javax.swing.table.TableCellEditor;
 
 import net.miginfocom.swing.MigLayout;
@@ -33,10 +31,12 @@ import com.ganesha.core.utils.CommonUtils;
 import com.ganesha.core.utils.Formatter;
 import com.ganesha.core.utils.GeneralConstants;
 import com.ganesha.core.utils.GeneralConstants.ActionType;
+import com.ganesha.desktop.component.XEtchedBorder;
 import com.ganesha.desktop.component.XJButton;
 import com.ganesha.desktop.component.XJDateChooser;
 import com.ganesha.desktop.component.XJDialog;
 import com.ganesha.desktop.component.XJLabel;
+import com.ganesha.desktop.component.XJPanel;
 import com.ganesha.desktop.component.XJTable;
 import com.ganesha.desktop.component.XJTextField;
 import com.ganesha.desktop.component.xtableutils.XTableConstants;
@@ -83,7 +83,7 @@ public class PembelianForm extends XJDialog {
 	private final Map<ColumnEnum, XTableParameter> tableParameters = new HashMap<>();
 	private XJLabel lblBayar;
 	private XJTextField txtBarcode;
-	private JPanel pnlBarcode;
+	private XJPanel pnlBarcode;
 	private XJLabel lblBarcode;
 	{
 		tableParameters.put(ColumnEnum.NUM, new XTableParameter(0, 5, false,
@@ -150,8 +150,8 @@ public class PembelianForm extends XJDialog {
 			}
 		});
 
-		JPanel pnlHeader = new JPanel();
-		pnlHeader.setBorder(new EtchedBorder(EtchedBorder.LOWERED, null, null));
+		XJPanel pnlHeader = new XJPanel();
+		pnlHeader.setBorder(new XEtchedBorder());
 		getContentPane().add(pnlHeader, "cell 0 0,alignx left,growy");
 		pnlHeader.setLayout(new MigLayout("", "[150][100][200][]", "[][][]"));
 
@@ -196,12 +196,12 @@ public class PembelianForm extends XJDialog {
 		btnCariSupplier.setText("Cari Supplier [F5]");
 		pnlHeader.add(btnCariSupplier, "cell 3 2");
 
-		JPanel pnlPembelian = new JPanel();
+		XJPanel pnlPembelian = new XJPanel();
 		getContentPane().add(pnlPembelian, "cell 0 1,grow");
 		pnlPembelian.setLayout(new MigLayout("", "[612px,grow]",
 				"[grow][::200,baseline]"));
 
-		JPanel pnlSearchItem = new JPanel();
+		XJPanel pnlSearchItem = new XJPanel();
 		pnlPembelian.add(pnlSearchItem, "cell 0 0,grow");
 		pnlSearchItem.setLayout(new MigLayout("", "[][][grow][]", "[][grow]"));
 
@@ -237,7 +237,7 @@ public class PembelianForm extends XJDialog {
 		btnHapus.setText("<html><center>Hapus<br/>[Delete]</center></html>");
 		pnlSearchItem.add(btnHapus, "cell 3 0");
 
-		pnlBarcode = new JPanel();
+		pnlBarcode = new XJPanel();
 		pnlSearchItem.add(pnlBarcode, "cell 0 1 2 1,grow");
 		pnlBarcode.setLayout(new MigLayout("", "[][grow]", "[]"));
 
@@ -261,7 +261,7 @@ public class PembelianForm extends XJDialog {
 		JScrollPane scrollPane = new JScrollPane(table);
 		pnlPembelian.add(scrollPane, "cell 0 1,growx");
 
-		JPanel pnlSubTotal = new JPanel();
+		XJPanel pnlSubTotal = new XJPanel();
 		getContentPane().add(pnlSubTotal, "cell 0 2,grow");
 		pnlSubTotal.setLayout(new MigLayout("", "[][grow][][200]", "[]"));
 
@@ -286,12 +286,12 @@ public class PembelianForm extends XJDialog {
 		pnlSubTotal.add(txtTotalPembelian, "cell 3 0,growx");
 		txtTotalPembelian.setEditable(false);
 
-		JPanel pnlPerhitungan = new JPanel();
+		XJPanel pnlPerhitungan = new XJPanel();
 		getContentPane().add(pnlPerhitungan, "cell 0 3,alignx center,growy");
 		pnlPerhitungan.setLayout(new MigLayout("", "[300][300]", "[grow]"));
 
-		JPanel pnlBeban = new JPanel();
-		pnlBeban.setBorder(new EtchedBorder(EtchedBorder.LOWERED, null, null));
+		XJPanel pnlBeban = new XJPanel();
+		pnlBeban.setBorder(new XEtchedBorder());
 		pnlPerhitungan.add(pnlBeban, "cell 0 0,grow");
 		pnlBeban.setLayout(new MigLayout("", "[][grow]", "[][][10][]"));
 
@@ -338,9 +338,8 @@ public class PembelianForm extends XJDialog {
 		txtTotal.setEditable(false);
 		pnlBeban.add(txtTotal, "cell 1 3,growx");
 
-		JPanel pnlUangMuka = new JPanel();
-		pnlUangMuka
-				.setBorder(new EtchedBorder(EtchedBorder.LOWERED, null, null));
+		XJPanel pnlUangMuka = new XJPanel();
+		pnlUangMuka.setBorder(new XEtchedBorder());
 		pnlPerhitungan.add(pnlUangMuka, "cell 1 0,grow");
 		pnlUangMuka.setLayout(new MigLayout("", "[150][grow]", "[][][]"));
 
@@ -349,7 +348,6 @@ public class PembelianForm extends XJDialog {
 		pnlUangMuka.add(lblBayar, "cell 0 0");
 
 		txtBayar = new XJTextField();
-		txtBayar.setForeground(COLOR_TRASACTIONABLE);
 		txtBayar.addKeyListener(new KeyAdapter() {
 			@Override
 			public void keyReleased(KeyEvent e) {
@@ -373,7 +371,6 @@ public class PembelianForm extends XJDialog {
 		lblLunas = new XJLabel();
 		pnlUangMuka.add(lblLunas, "cell 0 2 2 1,alignx center");
 
-		lblLunas.setForeground(COLOR_GOOD);
 		lblLunas.setFont(new Font("Tahoma", Font.BOLD, 30));
 		lblLunas.setText("LUNAS");
 		lblLunas.setVisible(false);
@@ -381,7 +378,7 @@ public class PembelianForm extends XJDialog {
 		JSeparator separator_1 = new JSeparator();
 		getContentPane().add(separator_1, "cell 0 4,grow");
 
-		JPanel pnlButton = new JPanel();
+		XJPanel pnlButton = new XJPanel();
 		getContentPane().add(pnlButton, "cell 0 5,alignx center,growy");
 		pnlButton.setLayout(new MigLayout("", "[][]", "[]"));
 
@@ -675,13 +672,11 @@ public class PembelianForm extends XJDialog {
 			btnSelesai.setEnabled(true);
 			lblLunas.setVisible(true);
 			if (uangMuka < total) {
-				lblSisa.setForeground(COLOR_WARNING);
-				txtSisa.setForeground(COLOR_WARNING);
+				lblSisa.setForeground(LBL_WARNING);
 				lblLunas.setText("HUTANG");
-				lblLunas.setForeground(COLOR_WARNING);
+				lblLunas.setForeground(LBL_WARNING);
 			} else {
-				lblSisa.setForeground(COLOR_NORMAL_FOREGROUND);
-				txtSisa.setForeground(COLOR_NORMAL_FOREGROUND);
+				lblSisa.setForeground(LBL_NORMAL);
 				lblLunas.setText("LUNAS");
 				lblLunas.setForeground(COLOR_GOOD);
 			}

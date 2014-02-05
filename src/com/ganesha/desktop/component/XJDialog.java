@@ -28,6 +28,7 @@ public abstract class XJDialog extends JDialog implements XComponentConstants,
 	public XJDialog(Window parent) {
 		super(parent, ModalityType.APPLICATION_MODAL);
 		setDefaultCloseOperation(JDialog.DO_NOTHING_ON_CLOSE);
+		getContentPane().setBackground(PNL_BG);
 
 		addWindowFocusListener(new WindowFocusListener() {
 			@Override

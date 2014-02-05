@@ -13,7 +13,6 @@ import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
-import javax.swing.JPanel;
 import javax.swing.JSeparator;
 
 import net.miginfocom.swing.MigLayout;
@@ -26,6 +25,7 @@ import com.ganesha.core.utils.ResourceUtils;
 import com.ganesha.desktop.component.XJButton;
 import com.ganesha.desktop.component.XJFrame;
 import com.ganesha.desktop.component.XJLabel;
+import com.ganesha.desktop.component.XJPanel;
 import com.ganesha.desktop.component.XJPasswordField;
 import com.ganesha.desktop.component.XJTextField;
 import com.ganesha.minimarket.Main;
@@ -48,7 +48,7 @@ public class LoginForm extends XJFrame {
 		getContentPane().setLayout(
 				new MigLayout("", "[grow][]", "[grow][][][][]"));
 
-		JPanel pnlHeader = new JPanel();
+		XJPanel pnlHeader = new XJPanel();
 		getContentPane().add(pnlHeader, "cell 0 0 2 1,grow");
 		pnlHeader.setLayout(new MigLayout("", "[]", "[]"));
 
@@ -59,14 +59,14 @@ public class LoginForm extends XJFrame {
 		JSeparator separator = new JSeparator();
 		getContentPane().add(separator, "cell 0 1 2 1,grow");
 
-		JPanel pnlImage = new JPanel();
+		XJPanel pnlImage = new XJPanel();
 		getContentPane().add(pnlImage, "flowx,cell 0 2 1 3,growy");
 		pnlImage.setLayout(new MigLayout("", "[100px]", "[75px]"));
 
 		lblLblImage = new XJLabel();
 		pnlImage.add(lblLblImage, "cell 0 0,alignx left,aligny top");
 
-		JPanel pnlInput = new JPanel();
+		XJPanel pnlInput = new XJPanel();
 		getContentPane().add(pnlInput, "cell 1 2,grow");
 		pnlInput.setLayout(new MigLayout("", "[][200px]", "[][][]"));
 
@@ -88,7 +88,7 @@ public class LoginForm extends XJFrame {
 		JSeparator separator_1 = new JSeparator();
 		getContentPane().add(separator_1, "cell 1 3,grow");
 
-		JPanel pnlButton = new JPanel();
+		XJPanel pnlButton = new XJPanel();
 		getContentPane().add(pnlButton, "cell 1 4,alignx right,growy");
 		pnlButton.setLayout(new MigLayout("", "[][][]", "[][]"));
 

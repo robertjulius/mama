@@ -6,13 +6,13 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 import javax.swing.JDialog;
-import javax.swing.JPanel;
 
 import net.miginfocom.swing.MigLayout;
 
 import com.ganesha.desktop.component.XJButton;
 import com.ganesha.desktop.component.XJDialog;
 import com.ganesha.desktop.component.XJLabel;
+import com.ganesha.desktop.component.XJPanel;
 
 public class UserExceptionHandler extends XJDialog {
 	private static final long serialVersionUID = -3986040446960213196L;
@@ -37,7 +37,7 @@ public class UserExceptionHandler extends XJDialog {
 		getContentPane().setLayout(
 				new MigLayout("", "[500,grow]", "[200px,grow][]"));
 
-		JPanel pnlMessage = new JPanel();
+		XJPanel pnlMessage = new XJPanel();
 		getContentPane()
 				.add(pnlMessage, "cell 0 0,alignx center,aligny center");
 		pnlMessage.setLayout(new MigLayout("", "[]", "[]"));
@@ -47,7 +47,7 @@ public class UserExceptionHandler extends XJDialog {
 		lblMessage.setText("User Message");
 		pnlMessage.add(lblMessage, "cell 0 0");
 
-		JPanel pnlButton = new JPanel();
+		XJPanel pnlButton = new XJPanel();
 		getContentPane().add(pnlButton, "cell 0 1,alignx center,growy");
 		pnlButton.setLayout(new MigLayout("", "[100]", "[]"));
 

@@ -11,9 +11,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import javax.swing.JPanel;
 import javax.swing.JScrollPane;
-import javax.swing.border.EtchedBorder;
 
 import net.miginfocom.swing.MigLayout;
 
@@ -23,9 +21,11 @@ import com.ganesha.core.desktop.ExceptionHandler;
 import com.ganesha.core.exception.AppException;
 import com.ganesha.core.exception.UserException;
 import com.ganesha.core.utils.Formatter;
+import com.ganesha.desktop.component.XEtchedBorder;
 import com.ganesha.desktop.component.XJButton;
 import com.ganesha.desktop.component.XJDialog;
 import com.ganesha.desktop.component.XJLabel;
+import com.ganesha.desktop.component.XJPanel;
 import com.ganesha.desktop.component.XJRadioButton;
 import com.ganesha.desktop.component.XJTable;
 import com.ganesha.desktop.component.XJTextField;
@@ -82,13 +82,12 @@ public class DiscountListDialog extends XJDialog {
 		};
 		XTableUtils.initTable(table, tableParameters);
 
-		JPanel pnlFilter = new JPanel();
+		XJPanel pnlFilter = new XJPanel();
 		getContentPane().add(pnlFilter, "cell 0 0,alignx left,growy");
 		pnlFilter.setLayout(new MigLayout("", "[]", "[]"));
 
-		JPanel pnlKriteria = new JPanel();
-		pnlKriteria
-				.setBorder(new EtchedBorder(EtchedBorder.LOWERED, null, null));
+		XJPanel pnlKriteria = new XJPanel();
+		pnlKriteria.setBorder(new XEtchedBorder());
 		pnlFilter.add(pnlKriteria, "cell 0 0,grow");
 		pnlKriteria.setLayout(new MigLayout("", "[][300,grow]", "[][][grow]"));
 
@@ -122,7 +121,7 @@ public class DiscountListDialog extends XJDialog {
 		txtNamaBarang = new XJTextField();
 		pnlKriteria.add(txtNamaBarang, "cell 1 1,growx");
 
-		JPanel pnlRadioButton = new JPanel();
+		XJPanel pnlRadioButton = new XJPanel();
 		pnlKriteria.add(pnlRadioButton, "cell 1 2,grow");
 		pnlRadioButton.setLayout(new MigLayout("", "[]", "[][][]"));
 
@@ -149,7 +148,7 @@ public class DiscountListDialog extends XJDialog {
 		JScrollPane scrollPane = new JScrollPane(table);
 		getContentPane().add(scrollPane, "cell 0 1,grow");
 
-		JPanel panel = new JPanel();
+		XJPanel panel = new XJPanel();
 		getContentPane().add(panel, "cell 0 2,alignx center,growy");
 		panel.setLayout(new MigLayout("", "[][][]", "[]"));
 

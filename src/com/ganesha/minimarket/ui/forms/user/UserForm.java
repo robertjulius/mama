@@ -9,10 +9,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javax.swing.DefaultListModel;
-import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JSeparator;
-import javax.swing.border.EtchedBorder;
 
 import net.miginfocom.swing.MigLayout;
 
@@ -24,11 +22,13 @@ import com.ganesha.core.exception.AppException;
 import com.ganesha.core.exception.UserException;
 import com.ganesha.core.utils.GeneralConstants.ActionType;
 import com.ganesha.desktop.component.ComboBoxObject;
+import com.ganesha.desktop.component.XEtchedBorder;
 import com.ganesha.desktop.component.XJButton;
 import com.ganesha.desktop.component.XJCheckBox;
 import com.ganesha.desktop.component.XJDialog;
 import com.ganesha.desktop.component.XJLabel;
 import com.ganesha.desktop.component.XJList;
+import com.ganesha.desktop.component.XJPanel;
 import com.ganesha.desktop.component.XJTextField;
 import com.ganesha.hibernate.HibernateUtils;
 import com.ganesha.minimarket.facade.RoleFacade;
@@ -52,12 +52,12 @@ public class UserForm extends XJDialog {
 
 	private XJCheckBox chkDisabled;
 	private JSeparator separator;
-	private JPanel pnlRoles;
+	private XJPanel pnlRoles;
 	private JScrollPane scrollPaneTop;
 	private JScrollPane scrollPaneBottom;
 	private XJList listRoleTop;
 	private XJList listRoleBottom;
-	private JPanel pnlMove;
+	private XJPanel pnlMove;
 	private XJButton btnAdd;
 	private XJButton btnAddAll;
 	private XJButton btnRemove;
@@ -73,9 +73,9 @@ public class UserForm extends XJDialog {
 		getContentPane().setLayout(
 				new MigLayout("", "[400][grow]", "[grow][][10][]"));
 
-		JPanel pnlInput = new JPanel();
+		XJPanel pnlInput = new XJPanel();
 		getContentPane().add(pnlInput, "cell 0 0,grow");
-		pnlInput.setBorder(new EtchedBorder(EtchedBorder.LOWERED, null, null));
+		pnlInput.setBorder(new XEtchedBorder());
 		pnlInput.setLayout(new MigLayout("", "[][grow]", "[][][][]"));
 
 		XJLabel lblLogin = new XJLabel();
@@ -112,7 +112,7 @@ public class UserForm extends XJDialog {
 				.setText("<html><center>Generate Password<br/>[Alt+G]</center></html>");
 		pnlInput.add(btnGeneratePassword, "cell 1 3,alignx right");
 
-		pnlRoles = new JPanel();
+		pnlRoles = new XJPanel();
 		getContentPane().add(pnlRoles, "cell 1 0,grow");
 		pnlRoles.setLayout(new MigLayout("", "[grow]", "[200][grow][200]"));
 
@@ -122,7 +122,7 @@ public class UserForm extends XJDialog {
 		listRoleTop = new XJList();
 		scrollPaneTop.setViewportView(listRoleTop);
 
-		pnlMove = new JPanel();
+		pnlMove = new XJPanel();
 		pnlRoles.add(pnlMove, "cell 0 1,grow");
 		pnlMove.setLayout(new MigLayout("", "[150][150]", "[][10][]"));
 
@@ -189,14 +189,14 @@ public class UserForm extends XJDialog {
 		scrollPaneBottom.setViewportView(listRoleBottom);
 
 		chkDisabled = new XJCheckBox();
-		chkDisabled.setFont(new Font("Tahoma", Font.BOLD, 12));
+		chkDisabled.setFont(new Font("Tahoma", Font.BOLD, FONT_SIZE_SMALLEST));
 		chkDisabled.setText("User ini sudah tidak aktif lagi");
 		getContentPane().add(chkDisabled, "cell 0 1 2 1,alignx trailing");
 
 		separator = new JSeparator();
 		getContentPane().add(separator, "cell 0 2 2 1,growx,aligny center");
 
-		JPanel pnlButton = new JPanel();
+		XJPanel pnlButton = new XJPanel();
 		getContentPane().add(pnlButton, "cell 0 3 2 1,grow");
 		pnlButton.setLayout(new MigLayout("", "[][grow][][]", "[]"));
 
