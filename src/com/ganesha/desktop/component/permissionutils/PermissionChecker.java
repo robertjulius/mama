@@ -8,6 +8,11 @@ public abstract class PermissionChecker {
 
 	public static boolean checkPermission(PermissionControl permissionControl)
 			throws AppException {
+
+		if (isLoadByEclipse()) {
+			return true;
+		}
+
 		if (permissionChecker == null) {
 			throw new NullPointerException(
 					"No implementation registered as permission checker");
@@ -23,6 +28,13 @@ public abstract class PermissionChecker {
 			throw new AppException(
 					"An implementation already registered as permission checker");
 		}
+	}
+
+	private static boolean isLoadByEclipse() {
+		String eclipseClassLoader = "org.eclipse.wb.internal.core.utils.reflect.ProjectClassLoader";
+		ClassLoader classLoader = PermissionChecker.class.getClassLoader();
+		String classLoaderName = classLoader.getClass().getName();
+		return classLoaderName.equals(eclipseClassLoader);
 	}
 
 	public abstract boolean check(PermissionControl permissionControl)
