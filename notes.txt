@@ -6,10 +6,8 @@ Warna UI
 Insert ke GL
 Laporan Laba Rugi
 [DONE] User Maintenance
-Change Password
+[DONE] Change Password
 [DONE] Permission Maintenance
-
-
 [DONE] Setting:
 [DONE] 1. Printer Barcode
 [DONE] 2. Nama Company

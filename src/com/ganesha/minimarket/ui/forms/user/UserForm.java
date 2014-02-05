@@ -29,7 +29,6 @@ import com.ganesha.desktop.component.XJCheckBox;
 import com.ganesha.desktop.component.XJDialog;
 import com.ganesha.desktop.component.XJLabel;
 import com.ganesha.desktop.component.XJList;
-import com.ganesha.desktop.component.XJPasswordField;
 import com.ganesha.desktop.component.XJTextField;
 import com.ganesha.hibernate.HibernateUtils;
 import com.ganesha.minimarket.facade.RoleFacade;
@@ -47,7 +46,7 @@ public class UserForm extends XJDialog {
 	private XJTextField txtNama;
 	private ActionType actionType;
 	private XJLabel lblPassword;
-	private XJPasswordField txtPassword;
+	private XJTextField txtPassword;
 	private XJButton btnBatal;
 	private XJButton btnHapus;
 
@@ -63,6 +62,7 @@ public class UserForm extends XJDialog {
 	private XJButton btnAddAll;
 	private XJButton btnRemove;
 	private XJButton btnRemoveAll;
+	private XJButton btnGeneratePassword;
 
 	public UserForm(Window parent, ActionType actionType) {
 		super(parent);
@@ -76,7 +76,7 @@ public class UserForm extends XJDialog {
 		JPanel pnlInput = new JPanel();
 		getContentPane().add(pnlInput, "cell 0 0,grow");
 		pnlInput.setBorder(new EtchedBorder(EtchedBorder.LOWERED, null, null));
-		pnlInput.setLayout(new MigLayout("", "[][grow]", "[][][]"));
+		pnlInput.setLayout(new MigLayout("", "[][grow]", "[][][][]"));
 
 		XJLabel lblLogin = new XJLabel();
 		pnlInput.add(lblLogin, "cell 0 0");
@@ -96,8 +96,21 @@ public class UserForm extends XJDialog {
 		lblPassword.setText("Password");
 		pnlInput.add(lblPassword, "cell 0 2");
 
-		txtPassword = new XJPasswordField();
+		txtPassword = new XJTextField();
+		txtPassword.setEditable(false);
 		pnlInput.add(txtPassword, "cell 1 2,growx");
+
+		btnGeneratePassword = new XJButton();
+		btnGeneratePassword.setMnemonic('G');
+		btnGeneratePassword.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				generatePassword();
+			}
+		});
+		btnGeneratePassword
+				.setText("<html><center>Generate Password<br/>[Alt+G]</center></html>");
+		pnlInput.add(btnGeneratePassword, "cell 1 3,alignx right");
 
 		pnlRoles = new JPanel();
 		getContentPane().add(pnlRoles, "cell 1 0,grow");
@@ -273,6 +286,15 @@ public class UserForm extends XJDialog {
 		dispose();
 	}
 
+	private void generatePassword() {
+		int random = (int) (Math.random() * 1000000);
+		if (random < 100000) {
+			generatePassword();
+		} else {
+			txtPassword.setText(String.valueOf(random));
+		}
+	}
+
 	private void initForm() {
 		Session session = HibernateUtils.openSession();
 		try {
@@ -350,14 +372,13 @@ public class UserForm extends XJDialog {
 
 			if (actionType == ActionType.CREATE) {
 				facade.addNewUser(txtLogin.getText(), txtNama.getText(),
-						new String(txtPassword.getPassword()), roles,
-						chkDisabled.isSelected(), deleted, session);
+						txtPassword.getText(), roles, chkDisabled.isSelected(),
+						deleted, session);
 
 				dispose();
 			} else if (actionType == ActionType.UPDATE) {
 				facade.updateExistingUser(txtLogin.getText(),
-						txtNama.getText(),
-						new String(txtPassword.getPassword()), roles,
+						txtNama.getText(), txtPassword.getText(), roles,
 						chkDisabled.isSelected(), deleted, session);
 				dispose();
 			} else {
@@ -422,7 +443,7 @@ public class UserForm extends XJDialog {
 		}
 
 		if (actionType == ActionType.CREATE
-				&& new String(txtPassword.getPassword()).trim().equals("")) {
+				&& txtPassword.getText().trim().equals("")) {
 			throw new UserException("Password harus diisi");
 		}
 	}
