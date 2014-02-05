@@ -22,7 +22,8 @@ public class PermissionFacade {
 	}
 
 	public List<Permission> getAll(Session session) {
-		Query query = session.createQuery("from Permission");
+		Query query = session
+				.createQuery("from Permission p order by p.orderNum");
 
 		@SuppressWarnings("unchecked")
 		List<Permission> permissions = query.list();

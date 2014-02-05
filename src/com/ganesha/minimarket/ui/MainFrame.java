@@ -7,7 +7,6 @@ import java.awt.event.ActionListener;
 import javax.swing.JFrame;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
-import javax.swing.JMenuItem;
 import javax.swing.JSeparator;
 
 import net.miginfocom.swing.MigLayout;
@@ -15,6 +14,7 @@ import net.miginfocom.swing.MigLayout;
 import com.ganesha.core.desktop.ExceptionHandler;
 import com.ganesha.desktop.component.XJFrame;
 import com.ganesha.desktop.component.XJLabel;
+import com.ganesha.desktop.component.XJMenuItem;
 import com.ganesha.minimarket.Main;
 import com.ganesha.minimarket.ui.forms.customer.CustomerListDialog;
 import com.ganesha.minimarket.ui.forms.discount.DiscountListDialog;
@@ -52,7 +52,7 @@ public class MainFrame extends XJFrame {
 		JMenu mnAdministrasi = new JMenu("Administrasi");
 		menuBar.add(mnAdministrasi);
 
-		JMenuItem mntmRole = new JMenuItem("Role");
+		XJMenuItem mntmRole = new XJMenuItem("Role", "/administrasi/role");
 		mntmRole.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
@@ -65,10 +65,24 @@ public class MainFrame extends XJFrame {
 		});
 		mnAdministrasi.add(mntmRole);
 
+		XJMenuItem mntmUser = new XJMenuItem("User", "/administrasi/user");
+		mnAdministrasi.add(mntmUser);
+		mntmUser.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				try {
+					new UserListDialog(MainFrame.this).setVisible(true);
+				} catch (Exception ex) {
+					ExceptionHandler.handleException(MainFrame.this, ex);
+				}
+			}
+		});
+
 		JMenu mnMasterData = new JMenu("Master Data");
 		menuBar.add(mnMasterData);
 
-		JMenuItem mntmPersediaan = new JMenuItem("Persediaan Barang");
+		XJMenuItem mntmPersediaan = new XJMenuItem("Persediaan Barang",
+				"/master/stock");
 		mntmPersediaan.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
@@ -81,7 +95,7 @@ public class MainFrame extends XJFrame {
 		});
 		mnMasterData.add(mntmPersediaan);
 
-		JMenuItem mntmSupplier = new JMenuItem("Supplier");
+		XJMenuItem mntmSupplier = new XJMenuItem("Supplier", "/master/supplier");
 		mntmSupplier.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
@@ -94,7 +108,7 @@ public class MainFrame extends XJFrame {
 		});
 		mnMasterData.add(mntmSupplier);
 
-		JMenuItem mntmCustomer = new JMenuItem("Customer");
+		XJMenuItem mntmCustomer = new XJMenuItem("Customer", "/master/customer");
 		mntmCustomer.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
@@ -107,7 +121,7 @@ public class MainFrame extends XJFrame {
 		});
 		mnMasterData.add(mntmCustomer);
 
-		JMenuItem mntmDiskon = new JMenuItem("Diskon");
+		XJMenuItem mntmDiskon = new XJMenuItem("Diskon", "/master/discount");
 		mntmDiskon.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
@@ -120,23 +134,11 @@ public class MainFrame extends XJFrame {
 		});
 		mnMasterData.add(mntmDiskon);
 
-		JMenuItem mntmUser = new JMenuItem("User");
-		mntmUser.addActionListener(new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				try {
-					new UserListDialog(MainFrame.this).setVisible(true);
-				} catch (Exception ex) {
-					ExceptionHandler.handleException(MainFrame.this, ex);
-				}
-			}
-		});
-		mnMasterData.add(mntmUser);
-
 		JMenu mnTransaksi = new JMenu("Transaksi");
 		menuBar.add(mnTransaksi);
 
-		JMenuItem mntmPembelian = new JMenuItem("Pembelian");
+		XJMenuItem mntmPembelian = new XJMenuItem("Pembelian",
+				"/transaction/purchase");
 		mntmPembelian.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
@@ -149,7 +151,8 @@ public class MainFrame extends XJFrame {
 		});
 		mnTransaksi.add(mntmPembelian);
 
-		JMenuItem mntmReturPembelian = new JMenuItem("Retur Pembelian");
+		XJMenuItem mntmReturPembelian = new XJMenuItem("Retur Pembelian",
+				"/transaction/purchasereturn");
 		mntmReturPembelian.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
@@ -165,7 +168,8 @@ public class MainFrame extends XJFrame {
 		JSeparator separator = new JSeparator();
 		mnTransaksi.add(separator);
 
-		JMenuItem mntmPenjualan = new JMenuItem("Penjualan");
+		XJMenuItem mntmPenjualan = new XJMenuItem("Penjualan",
+				"/transaction/sale");
 		mntmPenjualan.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
@@ -178,7 +182,8 @@ public class MainFrame extends XJFrame {
 		});
 		mnTransaksi.add(mntmPenjualan);
 
-		JMenuItem mntmReturPenjualan = new JMenuItem("Retur Penjualan");
+		XJMenuItem mntmReturPenjualan = new XJMenuItem("Retur Penjualan",
+				"/transaction/salereturn");
 		mntmReturPenjualan.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
@@ -194,7 +199,7 @@ public class MainFrame extends XJFrame {
 		JSeparator separator_1 = new JSeparator();
 		mnTransaksi.add(separator_1);
 
-		JMenuItem mntmHutang = new JMenuItem("Hutang");
+		XJMenuItem mntmHutang = new XJMenuItem("Hutang", "/transaction/payable");
 		mntmHutang.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
@@ -207,7 +212,8 @@ public class MainFrame extends XJFrame {
 		});
 		mnTransaksi.add(mntmHutang);
 
-		JMenuItem mntmPiutang = new JMenuItem("Piutang");
+		XJMenuItem mntmPiutang = new XJMenuItem("Piutang",
+				"/transaction/receivable");
 		mntmPiutang.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
@@ -226,7 +232,8 @@ public class MainFrame extends XJFrame {
 		JMenu mnReport = new JMenu("Laporan");
 		mnBackOffice.add(mnReport);
 
-		JMenuItem mntmReportTransaksi = new JMenuItem("Laporan Transaksi");
+		XJMenuItem mntmReportTransaksi = new XJMenuItem("Laporan Transaksi",
+				"/backoffice/report/transaction");
 		mntmReportTransaksi.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
@@ -240,7 +247,8 @@ public class MainFrame extends XJFrame {
 		});
 		mnReport.add(mntmReportTransaksi);
 
-		JMenuItem mntmLaporanStokBarang = new JMenuItem("Laporan Stok Barang");
+		XJMenuItem mntmLaporanStokBarang = new XJMenuItem(
+				"Laporan Stok Barang", "/backoffice/report/stock");
 		mntmLaporanStokBarang.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
@@ -254,7 +262,8 @@ public class MainFrame extends XJFrame {
 		});
 		mnReport.add(mntmLaporanStokBarang);
 
-		JMenuItem mntmLaporanStockOpname = new JMenuItem("Laporan Stock Opname");
+		XJMenuItem mntmLaporanStockOpname = new XJMenuItem(
+				"Laporan Stock Opname", "/backoffice/report/stockopname");
 		mntmLaporanStockOpname.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
@@ -268,7 +277,8 @@ public class MainFrame extends XJFrame {
 		});
 		mnReport.add(mntmLaporanStockOpname);
 
-		JMenuItem mntmStockOpname = new JMenuItem("Stock Opname");
+		XJMenuItem mntmStockOpname = new XJMenuItem("Stock Opname",
+				"/backoffice/stockopname");
 		mntmStockOpname.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
@@ -284,7 +294,8 @@ public class MainFrame extends XJFrame {
 		JMenu mnSetting = new JMenu("Setting");
 		menuBar.add(mnSetting);
 
-		JMenuItem mntmSettingAplikasi = new JMenuItem("Setting Aplikasi");
+		XJMenuItem mntmSettingAplikasi = new XJMenuItem("Setting Aplikasi",
+				"/setting/systemsetting");
 		mntmSettingAplikasi.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
@@ -297,7 +308,8 @@ public class MainFrame extends XJFrame {
 		});
 		mnSetting.add(mntmSettingAplikasi);
 
-		JMenuItem mntmReceiptPrinterTest = new JMenuItem("Receipt Printer Test");
+		XJMenuItem mntmReceiptPrinterTest = new XJMenuItem(
+				"Receipt Printer Test", "/setting/receipttest");
 		mntmReceiptPrinterTest.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {

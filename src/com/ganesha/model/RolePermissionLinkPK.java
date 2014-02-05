@@ -11,7 +11,7 @@ public class RolePermissionLinkPK implements TableEntity {
 	private Role role;
 
 	@ManyToOne
-	@JoinColumn(name = "PERMISSION_ID", nullable = false)
+	@JoinColumn(name = "PERMISSION_CODE", nullable = false)
 	private Permission permission;
 
 	public Permission getPermission() {

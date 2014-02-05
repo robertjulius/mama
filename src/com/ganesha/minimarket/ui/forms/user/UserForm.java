@@ -100,7 +100,7 @@ public class UserForm extends XJDialog {
 
 		pnlRoles = new JPanel();
 		getContentPane().add(pnlRoles, "cell 1 0,grow");
-		pnlRoles.setLayout(new MigLayout("", "[grow]", "[grow][grow][grow]"));
+		pnlRoles.setLayout(new MigLayout("", "[grow]", "[200][grow][200]"));
 
 		scrollPaneTop = new JScrollPane();
 		pnlRoles.add(scrollPaneTop, "cell 0 0,grow");
@@ -110,7 +110,7 @@ public class UserForm extends XJDialog {
 
 		pnlMove = new JPanel();
 		pnlRoles.add(pnlMove, "cell 0 1,grow");
-		pnlMove.setLayout(new MigLayout("", "[200][][200]", "[][]"));
+		pnlMove.setLayout(new MigLayout("", "[150][150]", "[][10][]"));
 
 		btnAdd = new XJButton();
 		btnAdd.addActionListener(new ActionListener() {
@@ -126,19 +126,17 @@ public class UserForm extends XJDialog {
 		btnAdd.setText("Add");
 		pnlMove.add(btnAdd, "cell 0 0,growx");
 
-		btnRemove = new XJButton();
-		btnRemove.addActionListener(new ActionListener() {
+		btnRemoveAll = new XJButton();
+		btnRemoveAll.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				try {
-					kurang();
+					kurangAll();
 				} catch (Exception ex) {
 					ExceptionHandler.handleException(UserForm.this, ex);
 				}
 			}
 		});
-		btnRemove.setText("Remove");
-		pnlMove.add(btnRemove, "cell 2 0,growx");
 
 		btnAddAll = new XJButton();
 		btnAddAll.addActionListener(new ActionListener() {
@@ -152,21 +150,23 @@ public class UserForm extends XJDialog {
 			}
 		});
 		btnAddAll.setText("Add All");
-		pnlMove.add(btnAddAll, "cell 0 1,growx");
+		pnlMove.add(btnAddAll, "cell 1 0,growx");
 
-		btnRemoveAll = new XJButton();
-		btnRemoveAll.addActionListener(new ActionListener() {
+		btnRemove = new XJButton();
+		btnRemove.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				try {
-					kurangAll();
+					kurang();
 				} catch (Exception ex) {
 					ExceptionHandler.handleException(UserForm.this, ex);
 				}
 			}
 		});
+		btnRemove.setText("Remove");
+		pnlMove.add(btnRemove, "cell 0 2,growx");
 		btnRemoveAll.setText("Remove All");
-		pnlMove.add(btnRemoveAll, "cell 2 1,growx");
+		pnlMove.add(btnRemoveAll, "cell 1 2,growx");
 
 		scrollPaneBottom = new JScrollPane();
 		pnlRoles.add(scrollPaneBottom, "cell 0 2,grow");
@@ -235,6 +235,7 @@ public class UserForm extends XJDialog {
 		txtLogin.setEditable(false);
 		txtLogin.setText(user.getLogin());
 		txtNama.setText(user.getName());
+		chkDisabled.setSelected(user.getDisabled());
 
 		DefaultListModel<ComboBoxObject> listModelTop = (DefaultListModel<ComboBoxObject>) listRoleTop
 				.getModel();

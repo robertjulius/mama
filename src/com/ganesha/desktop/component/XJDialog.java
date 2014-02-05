@@ -10,6 +10,7 @@ import java.awt.event.WindowFocusListener;
 import javax.swing.JDialog;
 
 import com.ganesha.core.desktop.ExceptionHandler;
+import com.ganesha.core.exception.UserException;
 import com.ganesha.desktop.component.permissionutils.PermissionChecker;
 import com.ganesha.desktop.component.permissionutils.PermissionControl;
 
@@ -62,17 +63,23 @@ public abstract class XJDialog extends JDialog implements XComponentConstants,
 
 	@Override
 	public void setVisible(boolean visible) {
-		if (visible) {
-			if (permissionRequired) {
-				try {
-					PermissionChecker.checkPermission(this);
-				} catch (Exception ex) {
-					ExceptionHandler.handleException((Window) getParent(), ex);
-					return;
-				}
-			}
+		if (!visible || !permissionRequired) {
+			super.setVisible(visible);
+			return;
 		}
-		super.setVisible(visible);
+		try {
+			boolean permitted = PermissionChecker.checkPermission(this);
+			if (!permitted) {
+				super.setVisible(false);
+				throw new UserException(
+						"Anda tidak mempunyai ijin untuk mengakses form ini");
+			} else {
+				super.setVisible(visible);
+			}
+		} catch (Exception ex) {
+			ExceptionHandler.handleException((Window) getParent(), ex);
+			return;
+		}
 	}
 
 	protected abstract void keyEventListener(int keyCode);

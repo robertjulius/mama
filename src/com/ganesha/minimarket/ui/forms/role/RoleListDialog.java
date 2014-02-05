@@ -42,10 +42,13 @@ public class RoleListDialog extends XJDialog {
 	private XJButton btnDetail;
 	private final Map<ColumnEnum, XTableParameter> tableParameters = new HashMap<>();
 	{
-		tableParameters.put(ColumnEnum.NAME, new XTableParameter(0, 50, false,
+		tableParameters.put(ColumnEnum.ID, new XTableParameter(0, 50, false,
+				"ID", XTableConstants.CELL_RENDERER_CENTER, String.class));
+
+		tableParameters.put(ColumnEnum.NAME, new XTableParameter(1, 280, false,
 				"Nama Role", XTableConstants.CELL_RENDERER_LEFT, String.class));
 
-		tableParameters.put(ColumnEnum.DESCRIPTION, new XTableParameter(1, 300,
+		tableParameters.put(ColumnEnum.DESCRIPTION, new XTableParameter(2, 500,
 				false, "Deskripsi Role", XTableConstants.CELL_RENDERER_LEFT,
 				String.class));
 	}
@@ -54,7 +57,7 @@ public class RoleListDialog extends XJDialog {
 		super(parent);
 		setTitle("Master Role");
 		getContentPane()
-				.setLayout(new MigLayout("", "[500]", "[][300,grow][]"));
+				.setLayout(new MigLayout("", "[800]", "[][300,grow][]"));
 
 		table = new XJTable() {
 			private static final long serialVersionUID = 1L;
@@ -172,6 +175,9 @@ public class RoleListDialog extends XJDialog {
 			for (int i = 0; i < roles.size(); ++i) {
 				Role role = roles.get(i);
 
+				tableModel.setValueAt(role.getId(), i,
+						tableParameters.get(ColumnEnum.ID).getColumnIndex());
+
 				tableModel.setValueAt(role.getName(), i,
 						tableParameters.get(ColumnEnum.NAME).getColumnIndex());
 
@@ -190,11 +196,11 @@ public class RoleListDialog extends XJDialog {
 			if (selectedRow < 0) {
 				return;
 			}
-			String name = (String) table.getModel().getValueAt(selectedRow,
-					tableParameters.get(ColumnEnum.NAME).getColumnIndex());
+			int id = (int) table.getModel().getValueAt(selectedRow,
+					tableParameters.get(ColumnEnum.ID).getColumnIndex());
 
 			RoleFacade facade = RoleFacade.getInstance();
-			Role role = facade.getDetail(name, session);
+			Role role = facade.getDetail(id, session);
 
 			List<RolePermissionLink> rolePermissionLinks = facade
 					.getRolePermissionLinks(role.getId(), session);
@@ -220,6 +226,6 @@ public class RoleListDialog extends XJDialog {
 	}
 
 	private enum ColumnEnum {
-		NAME, DESCRIPTION
+		ID, NAME, DESCRIPTION
 	}
 }

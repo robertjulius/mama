@@ -54,10 +54,11 @@ public class UserListDialog extends XJDialog {
 	private XJRadioButton rdUserTidakAktif;
 	private final Map<ColumnEnum, XTableParameter> tableParameters = new HashMap<>();
 	{
-		tableParameters.put(ColumnEnum.LOGIN, new XTableParameter(0, 50, false,
-				"Login", XTableConstants.CELL_RENDERER_CENTER, String.class));
+		tableParameters.put(ColumnEnum.LOGIN, new XTableParameter(0, 200,
+				false, "Login", XTableConstants.CELL_RENDERER_CENTER,
+				String.class));
 
-		tableParameters.put(ColumnEnum.NAME, new XTableParameter(1, 100, false,
+		tableParameters.put(ColumnEnum.NAME, new XTableParameter(1, 400, false,
 				"Nama User", XTableConstants.CELL_RENDERER_LEFT, String.class));
 	}
 

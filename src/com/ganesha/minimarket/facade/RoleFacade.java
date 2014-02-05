@@ -70,14 +70,6 @@ public class RoleFacade {
 		return role;
 	}
 
-	public Role getDetail(String name, Session session) {
-		Criteria criteria = session.createCriteria(Role.class);
-		criteria.add(Restrictions.eq("name", name));
-
-		Role role = (Role) criteria.uniqueResult();
-		return role;
-	}
-
 	public List<RolePermissionLink> getRolePermissionLinks(int roleId,
 			Session session) {
 		Query query = session
@@ -110,10 +102,10 @@ public class RoleFacade {
 		return role;
 	}
 
-	public void updateExistingRole(String name, String description,
+	public void updateExistingRole(int id, String name, String description,
 			List<Permission> permissions, Session session) throws UserException {
 
-		Role role = getDetail(name, session);
+		Role role = getDetail(id, session);
 		role.setName(name);
 		role.setDescription(description);
 		if (!role.getName().equals(name)) {
@@ -149,12 +141,12 @@ public class RoleFacade {
 			List<Permission> permissions, Session session) {
 
 		for (Permission permission : permissions) {
-			String sql = "INSERT INTO role_permission_links (role_id, permission_id) VALUES (:roleId, :permissionId)";
+			String sql = "INSERT INTO role_permission_links (role_id, permission_code) VALUES (:roleId, :permissionCode)";
 			SQLQuery query = session.createSQLQuery(sql);
 
 			HqlParameter parameter = new HqlParameter(query);
 			parameter.put("roleId", roleId);
-			parameter.put("permissionId", permission.getId());
+			parameter.put("permissionCode", permission.getCode());
 			parameter.validate();
 
 			query.executeUpdate();

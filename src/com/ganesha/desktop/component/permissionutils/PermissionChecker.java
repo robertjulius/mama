@@ -1,19 +1,18 @@
 package com.ganesha.desktop.component.permissionutils;
 
 import com.ganesha.core.exception.AppException;
-import com.ganesha.core.exception.UserException;
 
 public abstract class PermissionChecker {
 
 	private static PermissionChecker permissionChecker;
 
-	public static void checkPermission(PermissionControl permissionControl)
-			throws AppException, UserException {
+	public static boolean checkPermission(PermissionControl permissionControl)
+			throws AppException {
 		if (permissionChecker == null) {
 			throw new NullPointerException(
 					"No implementation registered as permission checker");
 		}
-		permissionChecker.check(permissionControl);
+		return permissionChecker.check(permissionControl);
 	}
 
 	public static void register(PermissionChecker permissionChecker)
@@ -26,6 +25,6 @@ public abstract class PermissionChecker {
 		}
 	}
 
-	public abstract void check(PermissionControl permissionControl)
-			throws AppException, UserException;
+	public abstract boolean check(PermissionControl permissionControl)
+			throws AppException;
 }
