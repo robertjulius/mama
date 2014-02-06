@@ -13,7 +13,7 @@ public class XJTextField extends JFormattedTextField implements
 
 	public XJTextField() {
 		setFont(new Font("Tahoma", Font.PLAIN, FONT_SIZE_NORMAL));
-		setUpperCaseOnFocusLost(true);
+		setUpperCaseOnFocusLost(false);
 
 		addFocusListener(new FocusAdapter() {
 			@Override

@@ -25,10 +25,10 @@ import com.ganesha.core.utils.Formatter;
 import com.ganesha.desktop.component.ComboBoxObject;
 import com.ganesha.desktop.component.XJButton;
 import com.ganesha.desktop.component.XJComboBox;
-import com.ganesha.desktop.component.XJDialog;
 import com.ganesha.desktop.component.XJLabel;
 import com.ganesha.desktop.component.XJPanel;
 import com.ganesha.desktop.component.XJTable;
+import com.ganesha.desktop.component.XJTableDialog;
 import com.ganesha.desktop.component.xtableutils.XTableConstants;
 import com.ganesha.desktop.component.xtableutils.XTableModel;
 import com.ganesha.desktop.component.xtableutils.XTableParameter;
@@ -39,7 +39,7 @@ import com.ganesha.minimarket.facade.StockFacade;
 import com.ganesha.minimarket.model.Item;
 import com.ganesha.minimarket.model.ItemStock;
 
-public class ItemStockReportListDialog extends XJDialog {
+public class ItemStockReportListDialog extends XJTableDialog {
 
 	private static final long serialVersionUID = 1452286313727721700L;
 	private static final ComboBoxObject[] CMB_ORDER_BY;
@@ -120,7 +120,7 @@ public class ItemStockReportListDialog extends XJDialog {
 			@Override
 			public void itemStateChanged(ItemEvent e) {
 				try {
-					loadData();
+					loadDataInThread();
 				} catch (Exception ex) {
 					ExceptionHandler.handleException(
 							ItemStockReportListDialog.this, ex);
@@ -163,7 +163,7 @@ public class ItemStockReportListDialog extends XJDialog {
 		pnlButton.add(btnSelesai, "cell 1 0,growx");
 
 		try {
-			loadData();
+			loadDataInThread();
 		} catch (Exception ex) {
 			ExceptionHandler.handleException(this, ex);
 		}
@@ -173,17 +173,7 @@ public class ItemStockReportListDialog extends XJDialog {
 	}
 
 	@Override
-	protected void keyEventListener(int keyCode) {
-		switch (keyCode) {
-		case KeyEvent.VK_F12:
-			btnSelesai.doClick();
-			break;
-		default:
-			break;
-		}
-	}
-
-	private void loadData() throws AppException {
+	public void loadData() throws AppException {
 		Session session = HibernateUtils.openSession();
 		try {
 			String[] orderBy = { (String) ((ComboBoxObject) cmbOrderBy
@@ -219,6 +209,17 @@ public class ItemStockReportListDialog extends XJDialog {
 			}
 		} finally {
 			session.close();
+		}
+	}
+
+	@Override
+	protected void keyEventListener(int keyCode) {
+		switch (keyCode) {
+		case KeyEvent.VK_F12:
+			btnSelesai.doClick();
+			break;
+		default:
+			break;
 		}
 	}
 

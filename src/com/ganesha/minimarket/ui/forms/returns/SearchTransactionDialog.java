@@ -26,10 +26,10 @@ import com.ganesha.core.utils.Formatter;
 import com.ganesha.desktop.component.XEtchedBorder;
 import com.ganesha.desktop.component.XJButton;
 import com.ganesha.desktop.component.XJDateChooser;
-import com.ganesha.desktop.component.XJDialog;
 import com.ganesha.desktop.component.XJLabel;
 import com.ganesha.desktop.component.XJPanel;
 import com.ganesha.desktop.component.XJTable;
+import com.ganesha.desktop.component.XJTableDialog;
 import com.ganesha.desktop.component.XJTextField;
 import com.ganesha.desktop.component.xtableutils.XTableConstants;
 import com.ganesha.desktop.component.xtableutils.XTableModel;
@@ -38,7 +38,7 @@ import com.ganesha.desktop.component.xtableutils.XTableUtils;
 import com.ganesha.hibernate.HibernateUtils;
 import com.ganesha.minimarket.facade.TransactionFacade;
 
-public class SearchTransactionDialog extends XJDialog {
+public class SearchTransactionDialog extends XJTableDialog {
 	private static final long serialVersionUID = 1452286313727721700L;
 	private XJTextField txtNoTransaksi;
 	private XJTable table;
@@ -131,7 +131,7 @@ public class SearchTransactionDialog extends XJDialog {
 					 * TODO Perbaiki supaya kalo pas key = alt+tab, ga usah load
 					 * data
 					 */
-					loadData();
+					loadDataInThread();
 				} catch (Exception ex) {
 					ExceptionHandler.handleException(
 							SearchTransactionDialog.this, ex);
@@ -169,7 +169,7 @@ public class SearchTransactionDialog extends XJDialog {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				try {
-					loadData();
+					loadDataInThread();
 				} catch (Exception ex) {
 					ExceptionHandler.handleException(
 							SearchTransactionDialog.this, ex);
@@ -205,7 +205,7 @@ public class SearchTransactionDialog extends XJDialog {
 		setLocationRelativeTo(null);
 
 		try {
-			loadData();
+			loadDataInThread();
 		} catch (Exception ex) {
 			ExceptionHandler.handleException(this, ex);
 		}
@@ -228,14 +228,7 @@ public class SearchTransactionDialog extends XJDialog {
 	}
 
 	@Override
-	protected void keyEventListener(int keyCode) {
-		switch (keyCode) {
-		default:
-			break;
-		}
-	}
-
-	private void loadData() throws AppException, UserException {
+	public void loadData() throws AppException, UserException {
 		Session session = HibernateUtils.openSession();
 		try {
 			String transactionNumber = txtNoTransaksi.getText();
@@ -305,6 +298,14 @@ public class SearchTransactionDialog extends XJDialog {
 			}
 		} finally {
 			session.close();
+		}
+	}
+
+	@Override
+	protected void keyEventListener(int keyCode) {
+		switch (keyCode) {
+		default:
+			break;
 		}
 	}
 

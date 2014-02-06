@@ -32,10 +32,10 @@ import com.ganesha.desktop.component.XEtchedBorder;
 import com.ganesha.desktop.component.XJButton;
 import com.ganesha.desktop.component.XJComboBox;
 import com.ganesha.desktop.component.XJDateChooser;
-import com.ganesha.desktop.component.XJDialog;
 import com.ganesha.desktop.component.XJLabel;
 import com.ganesha.desktop.component.XJPanel;
 import com.ganesha.desktop.component.XJTable;
+import com.ganesha.desktop.component.XJTableDialog;
 import com.ganesha.desktop.component.XJTextField;
 import com.ganesha.desktop.component.xtableutils.XTableConstants;
 import com.ganesha.desktop.component.xtableutils.XTableModel;
@@ -48,7 +48,7 @@ import com.ganesha.minimarket.facade.SaleReportFacade;
 import com.ganesha.minimarket.facade.SaleReturnReportFacade;
 import com.ganesha.minimarket.facade.TransactionReportFacade;
 
-public class TransactionReportListDialog extends XJDialog {
+public class TransactionReportListDialog extends XJTableDialog {
 	private static final long serialVersionUID = 1452286313727721700L;
 	private XJTextField txtNoTransaksi;
 	private XJTable table;
@@ -153,7 +153,7 @@ public class TransactionReportListDialog extends XJDialog {
 					 * TODO Perbaiki supaya kalo pas key = alt+tab, ga usah load
 					 * data
 					 */
-					loadData();
+					loadDataInThread();
 				} catch (Exception ex) {
 					ExceptionHandler.handleException(
 							TransactionReportListDialog.this, ex);
@@ -194,7 +194,7 @@ public class TransactionReportListDialog extends XJDialog {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				try {
-					loadData();
+					loadDataInThread();
 				} catch (Exception ex) {
 					ExceptionHandler.handleException(
 							TransactionReportListDialog.this, ex);
@@ -244,17 +244,7 @@ public class TransactionReportListDialog extends XJDialog {
 	}
 
 	@Override
-	protected void keyEventListener(int keyCode) {
-		switch (keyCode) {
-		case KeyEvent.VK_F12:
-			btnPreview.doClick();
-			break;
-		default:
-			break;
-		}
-	}
-
-	private void loadData() throws AppException, UserException {
+	public void loadData() throws AppException, UserException {
 		Session session = HibernateUtils.openSession();
 		try {
 			String transactionNumber = txtNoTransaksi.getText();
@@ -310,6 +300,17 @@ public class TransactionReportListDialog extends XJDialog {
 		}
 	}
 
+	@Override
+	protected void keyEventListener(int keyCode) {
+		switch (keyCode) {
+		case KeyEvent.VK_F12:
+			btnPreview.doClick();
+			break;
+		default:
+			break;
+		}
+	}
+
 	private void onComboBoxSelected() throws AppException, UserException {
 
 		ComboBoxObject comboBoxObject = (ComboBoxObject) cmbJenisTransaksi
@@ -321,7 +322,7 @@ public class TransactionReportListDialog extends XJDialog {
 		setTitle("Laporan Transaksi " + comboBoxObject.getText());
 		facade = facades.get(transactionType);
 
-		loadData();
+		loadDataInThread();
 	}
 
 	private void preview() throws AppException, UserException {

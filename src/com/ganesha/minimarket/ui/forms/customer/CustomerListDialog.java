@@ -22,11 +22,11 @@ import com.ganesha.core.desktop.ExceptionHandler;
 import com.ganesha.core.exception.AppException;
 import com.ganesha.core.utils.GeneralConstants.ActionType;
 import com.ganesha.desktop.component.XJButton;
-import com.ganesha.desktop.component.XJDialog;
 import com.ganesha.desktop.component.XJLabel;
 import com.ganesha.desktop.component.XJPanel;
 import com.ganesha.desktop.component.XJRadioButton;
 import com.ganesha.desktop.component.XJTable;
+import com.ganesha.desktop.component.XJTableDialog;
 import com.ganesha.desktop.component.XJTextField;
 import com.ganesha.desktop.component.xtableutils.XTableConstants;
 import com.ganesha.desktop.component.xtableutils.XTableModel;
@@ -36,7 +36,7 @@ import com.ganesha.hibernate.HibernateUtils;
 import com.ganesha.minimarket.facade.CustomerFacade;
 import com.ganesha.minimarket.model.Customer;
 
-public class CustomerListDialog extends XJDialog {
+public class CustomerListDialog extends XJTableDialog {
 	private static final long serialVersionUID = 1452286313727721700L;
 	private XJTextField txtKode;
 	private XJTextField txtNama;
@@ -98,8 +98,8 @@ public class CustomerListDialog extends XJDialog {
 					 * TODO Perbaiki supaya kalo pas key = alt+tab, ga usah load
 					 * data
 					 */
-					loadData();
-				} catch (AppException ex) {
+					loadDataInThread();
+				} catch (Exception ex) {
 					ExceptionHandler.handleException(CustomerListDialog.this,
 							ex);
 				}
@@ -117,8 +117,8 @@ public class CustomerListDialog extends XJDialog {
 			@Override
 			public void keyReleased(KeyEvent e) {
 				try {
-					loadData();
-				} catch (AppException ex) {
+					loadDataInThread();
+				} catch (Exception ex) {
 					ExceptionHandler.handleException(CustomerListDialog.this,
 							ex);
 				}
@@ -142,7 +142,7 @@ public class CustomerListDialog extends XJDialog {
 			@Override
 			public void itemStateChanged(ItemEvent e) {
 				try {
-					loadData();
+					loadDataInThread();
 				} catch (Exception ex) {
 					ExceptionHandler.handleException(CustomerListDialog.this,
 							ex);
@@ -158,8 +158,8 @@ public class CustomerListDialog extends XJDialog {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				try {
-					loadData();
-				} catch (AppException ex) {
+					loadDataInThread();
+				} catch (Exception ex) {
 					ExceptionHandler.handleException(CustomerListDialog.this,
 							ex);
 				}
@@ -220,17 +220,7 @@ public class CustomerListDialog extends XJDialog {
 	}
 
 	@Override
-	protected void keyEventListener(int keyCode) {
-		switch (keyCode) {
-		case KeyEvent.VK_F5:
-			btnTambah.doClick();
-			break;
-		default:
-			break;
-		}
-	}
-
-	private void loadData() throws AppException {
+	public void loadData() throws AppException {
 		Session session = HibernateUtils.openSession();
 		try {
 			String code = txtKode.getText();
@@ -258,6 +248,17 @@ public class CustomerListDialog extends XJDialog {
 			}
 		} finally {
 			session.close();
+		}
+	}
+
+	@Override
+	protected void keyEventListener(int keyCode) {
+		switch (keyCode) {
+		case KeyEvent.VK_F5:
+			btnTambah.doClick();
+			break;
+		default:
+			break;
 		}
 	}
 

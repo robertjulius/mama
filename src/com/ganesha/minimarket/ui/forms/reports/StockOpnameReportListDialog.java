@@ -27,10 +27,10 @@ import com.ganesha.core.utils.CommonUtils;
 import com.ganesha.core.utils.Formatter;
 import com.ganesha.desktop.component.XJButton;
 import com.ganesha.desktop.component.XJDateChooser;
-import com.ganesha.desktop.component.XJDialog;
 import com.ganesha.desktop.component.XJLabel;
 import com.ganesha.desktop.component.XJPanel;
 import com.ganesha.desktop.component.XJTable;
+import com.ganesha.desktop.component.XJTableDialog;
 import com.ganesha.desktop.component.xtableutils.XTableConstants;
 import com.ganesha.desktop.component.xtableutils.XTableModel;
 import com.ganesha.desktop.component.xtableutils.XTableParameter;
@@ -40,7 +40,7 @@ import com.ganesha.minimarket.facade.StockOpnameFacade;
 import com.ganesha.minimarket.model.StockOpnameDetail;
 import com.ganesha.minimarket.model.StockOpnameHeader;
 
-public class StockOpnameReportListDialog extends XJDialog {
+public class StockOpnameReportListDialog extends XJTableDialog {
 	private static final long serialVersionUID = 1452286313727721700L;
 	private XJTable table;
 	private XJButton btnKeluar;
@@ -99,7 +99,7 @@ public class StockOpnameReportListDialog extends XJDialog {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				try {
-					loadData();
+					loadDataInThread();
 				} catch (Exception ex) {
 					ExceptionHandler.handleException(
 							StockOpnameReportListDialog.this, ex);
@@ -156,17 +156,7 @@ public class StockOpnameReportListDialog extends XJDialog {
 	}
 
 	@Override
-	protected void keyEventListener(int keyCode) {
-		switch (keyCode) {
-		case KeyEvent.VK_F12:
-			btnPreview.doClick();
-			break;
-		default:
-			break;
-		}
-	}
-
-	private void loadData() throws AppException, UserException {
+	public void loadData() throws AppException, UserException {
 		Session session = HibernateUtils.openSession();
 		try {
 			Date beginDate = CommonUtils.validateDateBegin(dtChBegin.getDate());
@@ -191,6 +181,17 @@ public class StockOpnameReportListDialog extends XJDialog {
 			}
 		} finally {
 			session.close();
+		}
+	}
+
+	@Override
+	protected void keyEventListener(int keyCode) {
+		switch (keyCode) {
+		case KeyEvent.VK_F12:
+			btnPreview.doClick();
+			break;
+		default:
+			break;
 		}
 	}
 

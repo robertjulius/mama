@@ -19,10 +19,10 @@ import com.ganesha.core.desktop.ExceptionHandler;
 import com.ganesha.core.exception.AppException;
 import com.ganesha.core.utils.GeneralConstants.ActionType;
 import com.ganesha.desktop.component.XJButton;
-import com.ganesha.desktop.component.XJDialog;
 import com.ganesha.desktop.component.XJLabel;
 import com.ganesha.desktop.component.XJPanel;
 import com.ganesha.desktop.component.XJTable;
+import com.ganesha.desktop.component.XJTableDialog;
 import com.ganesha.desktop.component.XJTextField;
 import com.ganesha.desktop.component.xtableutils.XTableConstants;
 import com.ganesha.desktop.component.xtableutils.XTableModel;
@@ -33,7 +33,7 @@ import com.ganesha.minimarket.facade.RoleFacade;
 import com.ganesha.model.Role;
 import com.ganesha.model.RolePermissionLink;
 
-public class RoleListDialog extends XJDialog {
+public class RoleListDialog extends XJTableDialog {
 	private static final long serialVersionUID = 1452286313727721700L;
 	private XJTextField txtNama;
 	private XJTable table;
@@ -82,7 +82,7 @@ public class RoleListDialog extends XJDialog {
 			@Override
 			public void keyReleased(KeyEvent e) {
 				try {
-					loadData();
+					loadDataInThread();
 				} catch (Exception ex) {
 					ExceptionHandler.handleException(RoleListDialog.this, ex);
 				}
@@ -139,7 +139,7 @@ public class RoleListDialog extends XJDialog {
 		panel.add(btnDetail, "cell 2 0");
 
 		try {
-			loadData();
+			loadDataInThread();
 		} catch (Exception ex) {
 			ExceptionHandler.handleException(this, ex);
 		}
@@ -149,17 +149,7 @@ public class RoleListDialog extends XJDialog {
 	}
 
 	@Override
-	protected void keyEventListener(int keyCode) {
-		switch (keyCode) {
-		case KeyEvent.VK_F5:
-			btnTambah.doClick();
-			break;
-		default:
-			break;
-		}
-	}
-
-	private void loadData() throws AppException {
+	public void loadData() throws AppException {
 		Session session = HibernateUtils.openSession();
 		try {
 			String name = txtNama.getText();
@@ -189,6 +179,17 @@ public class RoleListDialog extends XJDialog {
 		}
 	}
 
+	@Override
+	protected void keyEventListener(int keyCode) {
+		switch (keyCode) {
+		case KeyEvent.VK_F5:
+			btnTambah.doClick();
+			break;
+		default:
+			break;
+		}
+	}
+
 	private void showDetail() throws AppException {
 		Session session = HibernateUtils.openSession();
 		try {
@@ -209,7 +210,7 @@ public class RoleListDialog extends XJDialog {
 			roleForm.setFormDetailValue(role, rolePermissionLinks);
 			roleForm.setVisible(true);
 
-			loadData();
+			loadDataInThread();
 		} finally {
 			session.close();
 		}
@@ -217,7 +218,7 @@ public class RoleListDialog extends XJDialog {
 
 	private void tambah() throws AppException {
 		new RoleForm(RoleListDialog.this, ActionType.CREATE).setVisible(true);
-		loadData();
+		loadDataInThread();
 
 		int row = table.getRowCount() - 1;
 		int column = table.getSelectedColumn();

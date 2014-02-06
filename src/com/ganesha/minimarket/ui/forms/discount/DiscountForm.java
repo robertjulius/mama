@@ -194,7 +194,7 @@ public class DiscountForm extends XJDialog {
 			session.beginTransaction();
 			DiscountFacade facade = DiscountFacade.getInstance();
 
-			String code = txtKode.getText();
+			String code = txtKode.getText().toUpperCase();
 			int quantity = Formatter
 					.formatStringToNumber(txtQuantity.getText()).intValue();
 			BigDecimal discountPercent = BigDecimal.valueOf(Formatter

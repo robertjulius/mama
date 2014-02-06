@@ -116,6 +116,7 @@ public class SupplierForm extends XJDialog {
 		lblKode.setText("Kode");
 
 		txtKode = new XJTextField();
+		txtKode.setUpperCaseOnFocusLost(true);
 		pnlKodeSupplier.add(txtKode, "cell 1 0 2 1,growx");
 
 		lblKodeTerakhir = new XJLabel();
@@ -135,6 +136,7 @@ public class SupplierForm extends XJDialog {
 		lblNama.setText("Nama");
 
 		txtNama = new XJTextField();
+		txtNama.setUpperCaseOnFocusLost(true);
 		pnlKodeSupplier.add(txtNama, "cell 1 2 2 1,growx");
 
 		lblDeskripsi = new XJLabel();
@@ -154,6 +156,7 @@ public class SupplierForm extends XJDialog {
 		lblKontakPerson1.setText("Kontak Person 1");
 
 		txtKontakPerson1 = new XJTextField();
+		txtKontakPerson1.setUpperCaseOnFocusLost(true);
 		pnlKontakPerson1.add(txtKontakPerson1, "cell 1 0,growx");
 
 		lblKontakPerson1Phone = new XJLabel();
@@ -181,6 +184,7 @@ public class SupplierForm extends XJDialog {
 		lblKontakPerson2.setText("Kontak Person 2");
 
 		txtKontakPerson2 = new XJTextField();
+		txtKontakPerson2.setUpperCaseOnFocusLost(true);
 		lblKontakPerson2Email.add(txtKontakPerson2, "cell 1 0,growx");
 
 		lblKontakPerson2Phone = new XJLabel();
@@ -374,32 +378,32 @@ public class SupplierForm extends XJDialog {
 			SupplierFacade facade = SupplierFacade.getInstance();
 
 			if (actionType == ActionType.CREATE) {
-				facade.addNewSupplier(txtAlamat1.getText(),
-						txtAlamat2.getText(), txtKode.getText(),
-						txtKontakPerson1.getText(),
-						txtKontakPerson1Email.getText(),
-						txtKontakPerson1Phone.getText(),
-						txtKontakPerson2.getText(),
-						txtKontakPerson2Email.getText(),
-						txtKontakPerson2Phone.getText(),
-						txtDeskripsi.getText(), txtEmail1.getText(),
-						txtEmail2.getText(), txtNama.getText(),
-						txtPhone1.getText(), txtPhone2.getText(),
-						chkDisabled.isSelected(), deleted, session);
+				facade.addNewSupplier(txtAlamat1.getText(), txtAlamat2
+						.getText(), txtKode.getText().toUpperCase(),
+						txtKontakPerson1.getText().toUpperCase(),
+						txtKontakPerson1Email.getText(), txtKontakPerson1Phone
+								.getText(), txtKontakPerson2.getText()
+								.toUpperCase(),
+						txtKontakPerson2Email.getText(), txtKontakPerson2Phone
+								.getText(), txtDeskripsi.getText(), txtEmail1
+								.getText(), txtEmail2.getText(), txtNama
+								.getText().toUpperCase(), txtPhone1.getText(),
+						txtPhone2.getText(), chkDisabled.isSelected(), deleted,
+						session);
 				dispose();
 			} else if (actionType == ActionType.UPDATE) {
-				facade.updateExistingSupplier(txtAlamat1.getText(),
-						txtAlamat2.getText(), txtKode.getText(),
-						txtKontakPerson1.getText(),
-						txtKontakPerson1Email.getText(),
-						txtKontakPerson1Phone.getText(),
-						txtKontakPerson2.getText(),
-						txtKontakPerson2Email.getText(),
-						txtKontakPerson2Phone.getText(),
-						txtDeskripsi.getText(), txtEmail1.getText(),
-						txtEmail2.getText(), txtNama.getText(),
-						txtPhone1.getText(), txtPhone2.getText(),
-						chkDisabled.isSelected(), deleted, session);
+				facade.updateExistingSupplier(txtAlamat1.getText(), txtAlamat2
+						.getText(), txtKode.getText().toUpperCase(),
+						txtKontakPerson1.getText().toUpperCase(),
+						txtKontakPerson1Email.getText(), txtKontakPerson1Phone
+								.getText(), txtKontakPerson2.getText()
+								.toUpperCase(),
+						txtKontakPerson2Email.getText(), txtKontakPerson2Phone
+								.getText(), txtDeskripsi.getText(), txtEmail1
+								.getText(), txtEmail2.getText(), txtNama
+								.getText().toUpperCase(), txtPhone1.getText(),
+						txtPhone2.getText(), chkDisabled.isSelected(), deleted,
+						session);
 				dispose();
 			} else {
 				throw new ActionTypeNotSupported(actionType);

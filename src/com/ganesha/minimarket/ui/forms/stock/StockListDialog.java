@@ -25,11 +25,11 @@ import com.ganesha.core.exception.UserException;
 import com.ganesha.core.utils.Formatter;
 import com.ganesha.core.utils.GeneralConstants.ActionType;
 import com.ganesha.desktop.component.XJButton;
-import com.ganesha.desktop.component.XJDialog;
 import com.ganesha.desktop.component.XJLabel;
 import com.ganesha.desktop.component.XJPanel;
 import com.ganesha.desktop.component.XJRadioButton;
 import com.ganesha.desktop.component.XJTable;
+import com.ganesha.desktop.component.XJTableDialog;
 import com.ganesha.desktop.component.XJTextField;
 import com.ganesha.desktop.component.xtableutils.XTableConstants;
 import com.ganesha.desktop.component.xtableutils.XTableModel;
@@ -41,7 +41,7 @@ import com.ganesha.minimarket.model.Item;
 import com.ganesha.minimarket.model.ItemStock;
 import com.ganesha.minimarket.utils.BarcodeUtils;
 
-public class StockListDialog extends XJDialog {
+public class StockListDialog extends XJTableDialog {
 	private static final long serialVersionUID = 1452286313727721700L;
 	private XJTextField txtKode;
 	private XJTextField txtNama;
@@ -121,7 +121,7 @@ public class StockListDialog extends XJDialog {
 					 * TODO Perbaiki supaya kalo pas key = alt+tab, ga usah load
 					 * data
 					 */
-					loadData();
+					loadDataInThread();
 				} catch (Exception ex) {
 					ExceptionHandler.handleException(StockListDialog.this, ex);
 				}
@@ -139,7 +139,7 @@ public class StockListDialog extends XJDialog {
 			@Override
 			public void keyReleased(KeyEvent e) {
 				try {
-					loadData();
+					loadDataInThread();
 				} catch (Exception ex) {
 					ExceptionHandler.handleException(StockListDialog.this, ex);
 				}
@@ -157,7 +157,7 @@ public class StockListDialog extends XJDialog {
 			@Override
 			public void keyReleased(KeyEvent e) {
 				try {
-					loadData();
+					loadDataInThread();
 				} catch (Exception ex) {
 					ExceptionHandler.handleException(StockListDialog.this, ex);
 				}
@@ -180,7 +180,7 @@ public class StockListDialog extends XJDialog {
 			@Override
 			public void itemStateChanged(ItemEvent e) {
 				try {
-					loadData();
+					loadDataInThread();
 				} catch (Exception ex) {
 					ExceptionHandler.handleException(StockListDialog.this, ex);
 				}
@@ -195,7 +195,7 @@ public class StockListDialog extends XJDialog {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				try {
-					loadData();
+					loadDataInThread();
 				} catch (Exception ex) {
 					ExceptionHandler.handleException(StockListDialog.this, ex);
 				}
@@ -270,24 +270,7 @@ public class StockListDialog extends XJDialog {
 	}
 
 	@Override
-	protected void keyEventListener(int keyCode) {
-		switch (keyCode) {
-		case KeyEvent.VK_F5:
-			btnRegistrasi.doClick();
-			break;
-		case KeyEvent.VK_F6:
-			btnPrintBarcode.doClick();
-			break;
-		case KeyEvent.VK_F8:
-			txtBarcode.setText("");
-			txtBarcode.requestFocus();
-			break;
-		default:
-			break;
-		}
-	}
-
-	private void loadData() throws AppException {
+	public void loadData() throws AppException {
 		Session session = HibernateUtils.openSession();
 		try {
 			String code = txtKode.getText();
@@ -335,6 +318,24 @@ public class StockListDialog extends XJDialog {
 			}
 		} finally {
 			session.close();
+		}
+	}
+
+	@Override
+	protected void keyEventListener(int keyCode) {
+		switch (keyCode) {
+		case KeyEvent.VK_F5:
+			btnRegistrasi.doClick();
+			break;
+		case KeyEvent.VK_F6:
+			btnPrintBarcode.doClick();
+			break;
+		case KeyEvent.VK_F8:
+			txtBarcode.setText("");
+			txtBarcode.requestFocus();
+			break;
+		default:
+			break;
 		}
 	}
 

@@ -23,11 +23,11 @@ import com.ganesha.core.exception.UserException;
 import com.ganesha.core.utils.Formatter;
 import com.ganesha.desktop.component.XEtchedBorder;
 import com.ganesha.desktop.component.XJButton;
-import com.ganesha.desktop.component.XJDialog;
 import com.ganesha.desktop.component.XJLabel;
 import com.ganesha.desktop.component.XJPanel;
 import com.ganesha.desktop.component.XJRadioButton;
 import com.ganesha.desktop.component.XJTable;
+import com.ganesha.desktop.component.XJTableDialog;
 import com.ganesha.desktop.component.XJTextField;
 import com.ganesha.desktop.component.xtableutils.XTableConstants;
 import com.ganesha.desktop.component.xtableutils.XTableModel;
@@ -38,7 +38,7 @@ import com.ganesha.minimarket.facade.DiscountFacade;
 import com.ganesha.minimarket.model.Discount;
 import com.ganesha.minimarket.model.Item;
 
-public class DiscountListDialog extends XJDialog {
+public class DiscountListDialog extends XJTableDialog {
 	private static final long serialVersionUID = 1452286313727721700L;
 	private XJTextField txtKodeBarang;
 	private XJTable table;
@@ -105,7 +105,7 @@ public class DiscountListDialog extends XJDialog {
 					 * TODO Perbaiki supaya kalo pas key = alt+tab, ga usah load
 					 * data
 					 */
-					loadData();
+					loadDataInThread();
 				} catch (Exception ex) {
 					ExceptionHandler.handleException(DiscountListDialog.this,
 							ex);
@@ -135,7 +135,7 @@ public class DiscountListDialog extends XJDialog {
 			@Override
 			public void itemStateChanged(ItemEvent e) {
 				try {
-					loadData();
+					loadDataInThread();
 				} catch (Exception ex) {
 					ExceptionHandler.handleException(DiscountListDialog.this,
 							ex);
@@ -195,7 +195,7 @@ public class DiscountListDialog extends XJDialog {
 		panel.add(btnlihatDetailenter, "cell 2 0");
 
 		try {
-			loadData();
+			loadDataInThread();
 		} catch (Exception ex) {
 			ExceptionHandler.handleException(this, ex);
 		}
@@ -205,14 +205,7 @@ public class DiscountListDialog extends XJDialog {
 	}
 
 	@Override
-	protected void keyEventListener(int keyCode) {
-		switch (keyCode) {
-		default:
-			break;
-		}
-	}
-
-	private void loadData() throws AppException, UserException {
+	public void loadData() throws AppException, UserException {
 		Session session = HibernateUtils.openSession();
 		try {
 			String itemCode = txtKodeBarang.getText();
@@ -251,6 +244,14 @@ public class DiscountListDialog extends XJDialog {
 		}
 	}
 
+	@Override
+	protected void keyEventListener(int keyCode) {
+		switch (keyCode) {
+		default:
+			break;
+		}
+	}
+
 	private void showDetail() throws AppException, UserException {
 		Session session = HibernateUtils.openSession();
 		try {
@@ -273,7 +274,7 @@ public class DiscountListDialog extends XJDialog {
 			stockForm.setFormDetailValue(discount);
 			stockForm.setVisible(true);
 
-			loadData();
+			loadDataInThread();
 		} finally {
 			session.close();
 		}
@@ -281,7 +282,7 @@ public class DiscountListDialog extends XJDialog {
 
 	private void tambah() throws AppException, UserException {
 		new DiscountForm(DiscountListDialog.this).setVisible(true);
-		loadData();
+		loadDataInThread();
 
 		int row = table.getRowCount() - 1;
 		int column = table.getSelectedColumn();

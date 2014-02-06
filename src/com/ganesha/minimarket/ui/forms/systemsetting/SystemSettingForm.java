@@ -102,7 +102,6 @@ public class SystemSettingForm extends XJDialog {
 		pnlProblemReporting.add(lblSmtpHost, "cell 0 0");
 
 		txtSmtpHost = new XJTextField();
-		txtSmtpHost.setUpperCaseOnFocusLost(false);
 		pnlProblemReporting.add(txtSmtpHost, "cell 1 0,growx");
 
 		lblSmtpPort = new XJLabel();
@@ -110,7 +109,6 @@ public class SystemSettingForm extends XJDialog {
 		pnlProblemReporting.add(lblSmtpPort, "cell 0 1");
 
 		txtSmtpPort = new XJTextField();
-		txtSmtpPort.setUpperCaseOnFocusLost(false);
 		pnlProblemReporting.add(txtSmtpPort, "cell 1 1,growx");
 
 		lblTimeout = new XJLabel();
@@ -118,7 +116,6 @@ public class SystemSettingForm extends XJDialog {
 		pnlProblemReporting.add(lblTimeout, "cell 0 2");
 
 		txtTimeout = new XJTextField();
-		txtTimeout.setUpperCaseOnFocusLost(false);
 		pnlProblemReporting.add(txtTimeout, "cell 1 2,growx");
 
 		lblAccountId = new XJLabel();
@@ -126,7 +123,6 @@ public class SystemSettingForm extends XJDialog {
 		pnlProblemReporting.add(lblAccountId, "cell 0 3");
 
 		txtAccountId = new XJTextField();
-		txtAccountId.setUpperCaseOnFocusLost(false);
 		pnlProblemReporting.add(txtAccountId, "cell 1 3,growx");
 
 		lblAccountLoginId = new XJLabel();
@@ -134,7 +130,6 @@ public class SystemSettingForm extends XJDialog {
 		pnlProblemReporting.add(lblAccountLoginId, "cell 0 4");
 
 		txtLoginId = new XJTextField();
-		txtLoginId.setUpperCaseOnFocusLost(false);
 		pnlProblemReporting.add(txtLoginId, "cell 1 4,growx");
 
 		lblAccountPassword = new XJLabel();
@@ -149,7 +144,6 @@ public class SystemSettingForm extends XJDialog {
 		pnlProblemReporting.add(lblEmailTo, "cell 0 6");
 
 		txtEmailTo = new XJTextField();
-		txtEmailTo.setUpperCaseOnFocusLost(false);
 		pnlProblemReporting.add(txtEmailTo, "cell 1 6,growx");
 
 		pnlBackupDB = new XJPanel();
@@ -212,7 +206,6 @@ public class SystemSettingForm extends XJDialog {
 		pnlBackupDB.add(lblBackupFileName, "cell 0 4");
 
 		txtBackupFileName = new XJTextField();
-		txtBackupFileName.setUpperCaseOnFocusLost(false);
 		pnlBackupDB.add(txtBackupFileName, "cell 1 4,growx");
 		btnBackupDatabase.setText("Backup Database");
 		pnlBackupDB.add(btnBackupDatabase, "cell 1 5,alignx trailing");

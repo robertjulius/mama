@@ -21,16 +21,16 @@ import org.hibernate.criterion.Restrictions;
 import com.ganesha.core.desktop.ExceptionHandler;
 import com.ganesha.core.exception.AppException;
 import com.ganesha.desktop.component.XJButton;
-import com.ganesha.desktop.component.XJDialog;
 import com.ganesha.desktop.component.XJLabel;
 import com.ganesha.desktop.component.XJPanel;
 import com.ganesha.desktop.component.XJTable;
+import com.ganesha.desktop.component.XJTableDialog;
 import com.ganesha.desktop.component.XJTextField;
 import com.ganesha.desktop.component.xtableutils.XTableModel;
 import com.ganesha.hibernate.HibernateUtils;
 import com.ganesha.model.TableEntity;
 
-public class SearchEntityDialog extends XJDialog {
+public class SearchEntityDialog extends XJTableDialog {
 	private static final long serialVersionUID = 1452286313727721700L;
 	private XJTextField txtKode;
 	private XJTextField txtNama;
@@ -78,8 +78,8 @@ public class SearchEntityDialog extends XJDialog {
 					 * TODO Perbaiki supaya kalo pas key = alt+tab, ga usah load
 					 * data
 					 */
-					loadData();
-				} catch (AppException ex) {
+					loadDataInThread();
+				} catch (Exception ex) {
 					ExceptionHandler.handleException(SearchEntityDialog.this,
 							ex);
 				}
@@ -97,7 +97,7 @@ public class SearchEntityDialog extends XJDialog {
 			@Override
 			public void keyReleased(KeyEvent e) {
 				try {
-					loadData();
+					loadDataInThread();
 				} catch (Exception ex) {
 					ExceptionHandler.handleException(SearchEntityDialog.this,
 							ex);
@@ -132,11 +132,7 @@ public class SearchEntityDialog extends XJDialog {
 		pack();
 		setLocationRelativeTo(null);
 
-		try {
-			loadData();
-		} catch (AppException ex) {
-			ExceptionHandler.handleException(this, ex);
-		}
+		loadDataInThread();
 	}
 
 	public String getSelectedCode() {
@@ -148,25 +144,7 @@ public class SearchEntityDialog extends XJDialog {
 	}
 
 	@Override
-	protected void keyEventListener(int keyCode) {
-		switch (keyCode) {
-		default:
-			break;
-		}
-	}
-
-	private void initTable() {
-		XTableModel tableModel = new XTableModel();
-		tableModel.setColumnIdentifiers(new String[] { "Kode", "Name" });
-		tableModel.setColumnEditable(new boolean[] { false, false });
-		table.setModel(tableModel);
-
-		TableColumnModel columnModel = table.getColumnModel();
-		columnModel.getColumn(0).setPreferredWidth(50);
-		columnModel.getColumn(1).setPreferredWidth(300);
-	}
-
-	private void loadData() throws AppException {
+	public void loadData() throws AppException {
 		Session session = HibernateUtils.openSession();
 		try {
 			String code = txtKode.getText();
@@ -209,6 +187,25 @@ public class SearchEntityDialog extends XJDialog {
 		} finally {
 			session.close();
 		}
+	}
+
+	@Override
+	protected void keyEventListener(int keyCode) {
+		switch (keyCode) {
+		default:
+			break;
+		}
+	}
+
+	private void initTable() {
+		XTableModel tableModel = new XTableModel();
+		tableModel.setColumnIdentifiers(new String[] { "Kode", "Name" });
+		tableModel.setColumnEditable(new boolean[] { false, false });
+		table.setModel(tableModel);
+
+		TableColumnModel columnModel = table.getColumnModel();
+		columnModel.getColumn(0).setPreferredWidth(50);
+		columnModel.getColumn(1).setPreferredWidth(300);
 	}
 
 	private void pilih() {

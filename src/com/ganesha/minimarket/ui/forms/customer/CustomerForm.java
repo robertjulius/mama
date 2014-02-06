@@ -88,6 +88,7 @@ public class CustomerForm extends XJDialog {
 		lblKode.setText("Kode");
 
 		txtKode = new XJTextField();
+		txtKode.setUpperCaseOnFocusLost(true);
 		pnlKodeCustomer.add(txtKode, "cell 1 0 2 1,growx");
 
 		lblKodeTerakhir = new XJLabel();
@@ -107,6 +108,7 @@ public class CustomerForm extends XJDialog {
 		lblNama.setText("Nama");
 
 		txtNama = new XJTextField();
+		txtNama.setUpperCaseOnFocusLost(true);
 		pnlKodeCustomer.add(txtNama, "cell 1 2 2 1,growx");
 
 		lblDeskripsi = new XJLabel();
@@ -252,15 +254,15 @@ public class CustomerForm extends XJDialog {
 			CustomerFacade facade = CustomerFacade.getInstance();
 
 			if (actionType == ActionType.CREATE) {
-				facade.addNewCustomer(txtAlamat.getText(), txtKode.getText(),
-						txtDeskripsi.getText(), txtEmail.getText(),
-						txtNama.getText(), txtPhone.getText(),
-						chkDisabled.isSelected(), deleted, session);
+				facade.addNewCustomer(txtAlamat.getText(), txtKode.getText()
+						.toUpperCase(), txtDeskripsi.getText(), txtEmail
+						.getText(), txtNama.getText().toUpperCase(), txtPhone
+						.getText(), chkDisabled.isSelected(), deleted, session);
 				dispose();
 			} else if (actionType == ActionType.UPDATE) {
-				facade.updateExistingCustomer(txtAlamat.getText(),
-						txtKode.getText(), txtDeskripsi.getText(),
-						txtEmail.getText(), txtNama.getText(),
+				facade.updateExistingCustomer(txtAlamat.getText(), txtKode
+						.getText().toUpperCase(), txtDeskripsi.getText(),
+						txtEmail.getText(), txtNama.getText().toUpperCase(),
 						txtPhone.getText(), chkDisabled.isSelected(), deleted,
 						session);
 				dispose();

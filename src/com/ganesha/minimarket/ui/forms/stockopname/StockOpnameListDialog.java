@@ -26,10 +26,10 @@ import com.ganesha.core.exception.AppException;
 import com.ganesha.core.utils.CommonUtils;
 import com.ganesha.core.utils.Formatter;
 import com.ganesha.desktop.component.XJButton;
-import com.ganesha.desktop.component.XJDialog;
 import com.ganesha.desktop.component.XJLabel;
 import com.ganesha.desktop.component.XJPanel;
 import com.ganesha.desktop.component.XJTable;
+import com.ganesha.desktop.component.XJTableDialog;
 import com.ganesha.desktop.component.XJTextField;
 import com.ganesha.desktop.component.xtableutils.XTableConstants;
 import com.ganesha.desktop.component.xtableutils.XTableModel;
@@ -44,7 +44,7 @@ import com.ganesha.minimarket.model.ItemStock;
 import com.ganesha.minimarket.model.StockOpnameDetail;
 import com.ganesha.minimarket.ui.forms.stockopname.StockOpnameConfirmationDialog.ConfirmType;
 
-public class StockOpnameListDialog extends XJDialog {
+public class StockOpnameListDialog extends XJTableDialog {
 	private static final long serialVersionUID = 1452286313727721700L;
 	private XJTable table;
 
@@ -168,7 +168,7 @@ public class StockOpnameListDialog extends XJDialog {
 		pnlButton.add(btnLanjut, "cell 1 0,growx");
 
 		try {
-			loadData();
+			loadDataInThread();
 		} catch (Exception ex) {
 			ExceptionHandler.handleException(this, ex);
 		}
@@ -177,6 +177,51 @@ public class StockOpnameListDialog extends XJDialog {
 
 		pack();
 		setLocationRelativeTo(null);
+	}
+
+	@Override
+	public void loadData() throws AppException {
+		Session session = HibernateUtils.openSession();
+		try {
+			StockFacade facade = StockFacade.getInstance();
+			List<ItemStock> itemStocks = facade.search(null, null, null, false,
+					null, session);
+
+			XTableModel tableModel = (XTableModel) table.getModel();
+			tableModel.setRowCount(itemStocks.size());
+
+			for (int i = 0; i < itemStocks.size(); ++i) {
+				ItemStock itemStock = itemStocks.get(i);
+				Item item = itemStock.getItem();
+
+				tableModel.setValueAt(i + 1, i,
+						tableParameters.get(ColumnEnum.NUM).getColumnIndex());
+
+				tableModel.setValueAt(item.getCode(), i,
+						tableParameters.get(ColumnEnum.CODE).getColumnIndex());
+
+				tableModel.setValueAt(item.getName(), i,
+						tableParameters.get(ColumnEnum.NAME).getColumnIndex());
+
+				tableModel.setValueAt(itemStock.getUnit(), i, tableParameters
+						.get(ColumnEnum.UNIT).getColumnIndex());
+
+				tableModel.setValueAt(Formatter.formatNumberToString(itemStock
+						.getStock()), i,
+						tableParameters.get(ColumnEnum.QUANTITY_SISTEM)
+								.getColumnIndex());
+
+				tableModel.setValueAt(0, i,
+						tableParameters.get(ColumnEnum.QUANTITY_MANUAL)
+								.getColumnIndex());
+
+				tableModel.setValueAt(0, i,
+						tableParameters.get(ColumnEnum.DEVIATION)
+								.getColumnIndex());
+			}
+		} finally {
+			session.close();
+		}
 	}
 
 	@Override
@@ -278,50 +323,6 @@ public class StockOpnameListDialog extends XJDialog {
 			} finally {
 				session.close();
 			}
-		}
-	}
-
-	private void loadData() throws AppException {
-		Session session = HibernateUtils.openSession();
-		try {
-			StockFacade facade = StockFacade.getInstance();
-			List<ItemStock> itemStocks = facade.search(null, null, null, false,
-					null, session);
-
-			XTableModel tableModel = (XTableModel) table.getModel();
-			tableModel.setRowCount(itemStocks.size());
-
-			for (int i = 0; i < itemStocks.size(); ++i) {
-				ItemStock itemStock = itemStocks.get(i);
-				Item item = itemStock.getItem();
-
-				tableModel.setValueAt(i + 1, i,
-						tableParameters.get(ColumnEnum.NUM).getColumnIndex());
-
-				tableModel.setValueAt(item.getCode(), i,
-						tableParameters.get(ColumnEnum.CODE).getColumnIndex());
-
-				tableModel.setValueAt(item.getName(), i,
-						tableParameters.get(ColumnEnum.NAME).getColumnIndex());
-
-				tableModel.setValueAt(itemStock.getUnit(), i, tableParameters
-						.get(ColumnEnum.UNIT).getColumnIndex());
-
-				tableModel.setValueAt(Formatter.formatNumberToString(itemStock
-						.getStock()), i,
-						tableParameters.get(ColumnEnum.QUANTITY_SISTEM)
-								.getColumnIndex());
-
-				tableModel.setValueAt(0, i,
-						tableParameters.get(ColumnEnum.QUANTITY_MANUAL)
-								.getColumnIndex());
-
-				tableModel.setValueAt(0, i,
-						tableParameters.get(ColumnEnum.DEVIATION)
-								.getColumnIndex());
-			}
-		} finally {
-			session.close();
 		}
 	}
 

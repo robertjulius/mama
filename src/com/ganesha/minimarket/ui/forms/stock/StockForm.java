@@ -97,6 +97,7 @@ public class StockForm extends XJDialog {
 		lblKode.setText("Kode");
 
 		txtKode = new XJTextField();
+		txtKode.setUpperCaseOnFocusLost(true);
 		pnlKode.add(txtKode, "cell 1 0 2 1,growx");
 
 		lblKodeTerakhir = new XJLabel();
@@ -116,6 +117,7 @@ public class StockForm extends XJDialog {
 		lblBarcode.setText("Barcode [F8]");
 
 		txtBarcode = new XJTextField();
+		txtBarcode.setUpperCaseOnFocusLost(true);
 		pnlKode.add(txtBarcode, "cell 1 2 2 1,growx");
 
 		btnGenerateBarcode = new XJButton();
@@ -373,13 +375,14 @@ public class StockForm extends XJDialog {
 			boolean disabled = chkDisabled.isSelected();
 
 			if (actionType == ActionType.CREATE) {
-				facade.addNewItem(code, name, barcode, unit, buyPrice, hpp,
-						sellPrice, minimumStock, disabled, deleted, session);
+				facade.addNewItem(code.toUpperCase(), name.toUpperCase(),
+						barcode, unit, buyPrice, hpp, sellPrice, minimumStock,
+						disabled, deleted, session);
 				dispose();
 			} else if (actionType == ActionType.UPDATE) {
-				facade.updateExistingItem(code, name, barcode, unit, buyPrice,
-						hpp, sellPrice, minimumStock, disabled, deleted,
-						session);
+				facade.updateExistingItem(code.toUpperCase(),
+						name.toUpperCase(), barcode, unit, buyPrice, hpp,
+						sellPrice, minimumStock, disabled, deleted, session);
 				dispose();
 			} else {
 				throw new ActionTypeNotSupported(actionType);
