@@ -11,7 +11,7 @@ import com.ganesha.desktop.component.ComboBoxObject;
 
 public class GeneralConstants {
 
-	public static final String VERSION = "v1.0.3";
+	public static final String VERSION = "v2.0.0";
 
 	public static final String USER_SESSION = "userSession";
 

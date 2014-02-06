@@ -1,6 +1,6 @@
 <project>
 
-	<property name="app-name" value="MiniMarketKK-v1.0.3.jar" />
+	<property name="app-name" value="MiniMarketKK-v2.0.0.jar" />
 	<property name="source-path1" value="src" />
 	<property name="source-path2" value="resources" />
 	<property name="main-class" value="com.ganesha.minimarket.Main" />
