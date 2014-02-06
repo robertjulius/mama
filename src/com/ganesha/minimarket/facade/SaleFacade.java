@@ -65,23 +65,17 @@ public class SaleFacade implements TransactionFacade {
 
 		String companyName = Main.getCompany().getName();
 		String companyAddress = Main.getCompany().getAddress();
-		String transactionTimestamp = Formatter
-				.formatTimestampToString(saleHeader.getTransactionTimestamp());
-		String cashier = "Kasir: " + Main.getUserLogin().getName();
+		String transactionNumber = "No      : "
+				+ saleHeader.getTransactionNumber();
+		String transactionTimestamp = "Tanggal : "
+				+ Formatter.formatTimestampToString(saleHeader
+						.getTransactionTimestamp());
+		String cashier = "Kasir   : " + Main.getUserLogin().getName();
 		String totalBelanja = Formatter.formatNumberToString(saleHeader
 				.getTotalAmount());
 		String pay = Formatter.formatNumberToString(saleHeader.getPay());
 		String moneyChange = Formatter.formatNumberToString(saleHeader
 				.getMoneyChange());
-
-		ReceiptPrinter receiptPrinter = new ReceiptPrinter();
-		receiptPrinter.setCompanyName(companyName);
-		receiptPrinter.setCompanyAddress(companyAddress);
-		receiptPrinter.setTransactionTimestamp(transactionTimestamp);
-		receiptPrinter.setCashier(cashier);
-		receiptPrinter.setTotalBelanja(totalBelanja);
-		receiptPrinter.setPay(pay);
-		receiptPrinter.setMoneyChange(moneyChange);
 
 		List<ItemBelanja> itemBelanjaList = new ArrayList<>();
 		for (SaleDetail saleDetail : saleDetails) {
@@ -97,17 +91,16 @@ public class SaleFacade implements TransactionFacade {
 			String totalAmount = Formatter.formatNumberToString(saleDetail
 					.getTotalAmount());
 
-			ItemBelanja itemBelanja = new ItemBelanja();
-			itemBelanja.setItemName(itemName);
-			itemBelanja.setQuantiy(quantiy);
-			itemBelanja.setPricePerUnit(pricePerUnit);
-			itemBelanja.setDiscountPercent(discountPercent);
-			itemBelanja.setTotalAmount(totalAmount);
+			ItemBelanja itemBelanja = new ItemBelanja(itemName, quantiy,
+					pricePerUnit, discountPercent, totalAmount);
 
 			itemBelanjaList.add(itemBelanja);
 		}
 
-		receiptPrinter.setItemBelanjaList(itemBelanjaList);
+		ReceiptPrinter receiptPrinter = new ReceiptPrinter(companyName,
+				companyAddress, transactionNumber, transactionTimestamp,
+				cashier, itemBelanjaList, totalBelanja, pay, moneyChange);
+
 		String receipt = receiptPrinter.buildReceipt();
 
 		PrintService[] services = PrinterJob.lookupPrintServices();

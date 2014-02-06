@@ -9,6 +9,7 @@ public class ReceiptPrinter {
 	private static final int LENGTH_PARAGRAPH = 40;
 	private static final int LENGTH_COMPANY_NAME = LENGTH_PARAGRAPH;
 	private static final int LENGTH_COMPANY_ADDRESS = LENGTH_PARAGRAPH;
+	private static final int LENGTH_TRANSACTION_NUMBER = LENGTH_PARAGRAPH;
 	private static final int LENGTH_TRANSACTION_TIMESTAMP = LENGTH_PARAGRAPH;
 	private static final int LENGTH_CASHIER = LENGTH_PARAGRAPH;
 	private static final int LENGTH_ITEM_NAME = LENGTH_PARAGRAPH;
@@ -23,12 +24,28 @@ public class ReceiptPrinter {
 
 	private String companyName;
 	private String companyAddress;
+	private String transactionNumber;
 	private String transactionTimestamp;
 	private String cashier;
 	private List<ItemBelanja> itemBelanjaList;
 	private String totalBelanja;
 	private String pay;
 	private String moneyChange;
+
+	public ReceiptPrinter(String companyName, String companyAddress,
+			String transactionNumber, String transactionTimestamp,
+			String cashier, List<ItemBelanja> itemBelanjaList,
+			String totalBelanja, String pay, String moneyChange) {
+		this.companyName = companyName;
+		this.companyAddress = companyAddress;
+		this.transactionNumber = transactionNumber;
+		this.transactionTimestamp = transactionTimestamp;
+		this.cashier = cashier;
+		this.itemBelanjaList = itemBelanjaList;
+		this.totalBelanja = totalBelanja;
+		this.pay = pay;
+		this.moneyChange = moneyChange;
+	}
 
 	public String buildItemList() {
 		StringBuilder builder = new StringBuilder();
@@ -55,6 +72,8 @@ public class ReceiptPrinter {
 		builder.append(alignLeft(companyName, LENGTH_COMPANY_NAME)).append(
 				NEW_LINE);
 		builder.append(alignLeft(companyAddress, LENGTH_COMPANY_ADDRESS))
+				.append(NEW_LINE);
+		builder.append(alignLeft(transactionNumber, LENGTH_TRANSACTION_NUMBER))
 				.append(NEW_LINE);
 		builder.append(
 				alignLeft(transactionTimestamp, LENGTH_TRANSACTION_TIMESTAMP))
@@ -122,40 +141,12 @@ public class ReceiptPrinter {
 		return totalBelanja;
 	}
 
+	public String getTransactionNumber() {
+		return transactionNumber;
+	}
+
 	public String getTransactionTimestamp() {
 		return transactionTimestamp;
-	}
-
-	public void setCashier(String cashier) {
-		this.cashier = cashier;
-	}
-
-	public void setCompanyAddress(String companyAddress) {
-		this.companyAddress = companyAddress;
-	}
-
-	public void setCompanyName(String companyName) {
-		this.companyName = companyName;
-	}
-
-	public void setItemBelanjaList(List<ItemBelanja> itemBelanjaList) {
-		this.itemBelanjaList = itemBelanjaList;
-	}
-
-	public void setMoneyChange(String moneyChange) {
-		this.moneyChange = moneyChange;
-	}
-
-	public void setPay(String pay) {
-		this.pay = pay;
-	}
-
-	public void setTotalBelanja(String totalBelanja) {
-		this.totalBelanja = totalBelanja;
-	}
-
-	public void setTransactionTimestamp(String transactionTimestamp) {
-		this.transactionTimestamp = transactionTimestamp;
 	}
 
 	private String alignCenter(String string, int width) {
@@ -210,7 +201,13 @@ public class ReceiptPrinter {
 		private String discountPercent;
 		private String totalAmount;
 
-		public ItemBelanja() {
+		public ItemBelanja(String itemName, String quantiy,
+				String pricePerUnit, String discountPercent, String totalAmount) {
+			this.itemName = itemName;
+			this.quantiy = quantiy;
+			this.pricePerUnit = pricePerUnit;
+			this.discountPercent = discountPercent;
+			this.totalAmount = totalAmount;
 		}
 
 		public String getDiscountPercent() {
@@ -231,26 +228,6 @@ public class ReceiptPrinter {
 
 		public String getTotalAmount() {
 			return totalAmount;
-		}
-
-		public void setDiscountPercent(String discountPercent) {
-			this.discountPercent = discountPercent;
-		}
-
-		public void setItemName(String itemName) {
-			this.itemName = itemName;
-		}
-
-		public void setPricePerUnit(String pricePerUnit) {
-			this.pricePerUnit = pricePerUnit;
-		}
-
-		public void setQuantiy(String quantiy) {
-			this.quantiy = quantiy;
-		}
-
-		public void setTotalAmount(String totalAmount) {
-			this.totalAmount = totalAmount;
 		}
 	}
 }

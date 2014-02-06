@@ -34,17 +34,20 @@ import com.ganesha.core.desktop.ExceptionHandler;
 import com.ganesha.core.exception.AppException;
 import com.ganesha.core.utils.CommonUtils;
 import com.ganesha.core.utils.Formatter;
+import com.ganesha.desktop.component.XJDialog;
 import com.ganesha.desktop.component.XJPanel;
 import com.ganesha.minimarket.Main;
 import com.ganesha.minimarket.utils.ReceiptPrinter;
 import com.ganesha.minimarket.utils.ReceiptPrinter.ItemBelanja;
 
-public class TestReceiptPrinter extends JDialog {
+public class TestReceiptPrinter extends XJDialog {
 
 	private static final long serialVersionUID = -3986040446960213196L;
 
 	private JButton btnPrint;
 	private JTextArea txtReceipt;
+	private JButton btnCancel;
+	private JButton btnDone;
 
 	public static void showDialog(Window parent) {
 		TestReceiptPrinter exceptionHandler = new TestReceiptPrinter(parent);
@@ -55,7 +58,7 @@ public class TestReceiptPrinter extends JDialog {
 	}
 
 	private TestReceiptPrinter(Window parent) {
-		super(parent, ModalityType.APPLICATION_MODAL);
+		super(parent);
 		setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
 		setTitle("Test Receipt Printer");
 		getContentPane().setLayout(
@@ -87,7 +90,7 @@ public class TestReceiptPrinter extends JDialog {
 			}
 		});
 
-		JButton btnCancel = new JButton("Cancel");
+		btnCancel = new JButton("Cancel");
 		btnCancel.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
@@ -99,7 +102,7 @@ public class TestReceiptPrinter extends JDialog {
 		btnPrint.setText("Print");
 		pnlButton.add(btnPrint, "cell 1 0,growx");
 
-		JButton btnDone = new JButton("Done");
+		btnDone = new JButton("Done");
 		btnDone.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
@@ -110,25 +113,26 @@ public class TestReceiptPrinter extends JDialog {
 		pnlButton.add(btnDone, "cell 2 0,growx");
 	}
 
+	@Override
+	protected void keyEventListener(int keyCode) {
+		switch (keyCode) {
+		default:
+			break;
+		}
+	}
+
 	private void initReceiptText() {
 
 		String companyName = Main.getCompany().getName();
 		String companyAddress = Main.getCompany().getAddress();
-		String transactionTimestamp = Formatter
-				.formatTimestampToString(CommonUtils.getCurrentTimestamp());
-		String cashier = "Kasir: " + Main.getUserLogin().getName();
+		String transactionNumber = "No      : " + "PUR0123456789";
+		String transactionTimestamp = "Tanggal : "
+				+ Formatter.formatTimestampToString(CommonUtils
+						.getCurrentTimestamp());
+		String cashier = "Kasir   : " + Main.getUserLogin().getName();
 		String totalBelanja = Formatter.formatNumberToString(312500);
 		String pay = Formatter.formatNumberToString(500000);
 		String moneyChange = Formatter.formatNumberToString(187500);
-
-		ReceiptPrinter receiptPrinter = new ReceiptPrinter();
-		receiptPrinter.setCompanyName(companyName);
-		receiptPrinter.setCompanyAddress(companyAddress);
-		receiptPrinter.setTransactionTimestamp(transactionTimestamp);
-		receiptPrinter.setCashier(cashier);
-		receiptPrinter.setTotalBelanja(totalBelanja);
-		receiptPrinter.setPay(pay);
-		receiptPrinter.setMoneyChange(moneyChange);
 
 		List<ItemBelanja> itemBelanjaList = new ArrayList<>();
 		for (int i = 0; i < 5; ++i) {
@@ -138,19 +142,17 @@ public class TestReceiptPrinter extends JDialog {
 			String discountPercent = "";
 			String totalAmount = Formatter.formatNumberToString(62500);
 
-			ItemBelanja itemBelanja = new ItemBelanja();
-			itemBelanja.setItemName(itemName);
-			itemBelanja.setQuantiy(quantiy);
-			itemBelanja.setPricePerUnit(pricePerUnit);
-			itemBelanja.setDiscountPercent(discountPercent);
-			itemBelanja.setTotalAmount(totalAmount);
+			ItemBelanja itemBelanja = new ItemBelanja(itemName, quantiy,
+					pricePerUnit, discountPercent, totalAmount);
 
 			itemBelanjaList.add(itemBelanja);
 		}
 
-		receiptPrinter.setItemBelanjaList(itemBelanjaList);
-		String receipt = receiptPrinter.buildReceipt();
+		ReceiptPrinter receiptPrinter = new ReceiptPrinter(companyName,
+				companyAddress, transactionNumber, transactionTimestamp,
+				cashier, itemBelanjaList, totalBelanja, pay, moneyChange);
 
+		String receipt = receiptPrinter.buildReceipt();
 		txtReceipt.setText(receipt);
 	}
 

@@ -33,6 +33,7 @@ import com.ganesha.minimarket.ui.forms.stockopname.StockOpnameListDialog;
 import com.ganesha.minimarket.ui.forms.supplier.SupplierForm;
 import com.ganesha.minimarket.ui.forms.supplier.SupplierListDialog;
 import com.ganesha.minimarket.ui.forms.systemsetting.SystemSettingForm;
+import com.ganesha.minimarket.ui.forms.systemsetting.TestReceiptPrinter;
 import com.ganesha.minimarket.ui.forms.user.ChangePasswordForm;
 import com.ganesha.minimarket.ui.forms.user.UserForm;
 import com.ganesha.minimarket.ui.forms.user.UserListDialog;
@@ -174,6 +175,8 @@ public class PermissionConsistencyChecker {
 		// Setting - Receipt Printer Test
 		permissions.add(createPermission("/setting/receipttest",
 				"/Setting/Receipt Printer Test", 620));
+		permissions.add(createPermission(TestReceiptPrinter.class,
+				"Receipt Printer Test", 621));
 	}
 
 	public void initDB() {
