@@ -2,7 +2,7 @@
 [DONE] Scan Barcode
 [DONE] Generate Barcode
 [DONE] Cetak Barcode
-Warna UI
+[DONE] Warna UI
 Insert ke GL
 Laporan Laba Rugi
 [DONE] User Maintenance

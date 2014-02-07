@@ -15,9 +15,10 @@ import javax.swing.JTextArea;
 
 import net.miginfocom.swing.MigLayout;
 
+import com.ganesha.desktop.component.XJDialog;
 import com.ganesha.desktop.component.XJPanel;
 
-public class AppExceptionHandler extends JDialog {
+public class AppExceptionHandler extends XJDialog {
 
 	private static final long serialVersionUID = -3986040446960213196L;
 	private static final int MESSAGE_MAX_LENGTH = 150;
@@ -36,8 +37,9 @@ public class AppExceptionHandler extends JDialog {
 	}
 
 	private AppExceptionHandler(Window parent) {
-		super(parent, ModalityType.APPLICATION_MODAL);
+		super(parent);
 		setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
+		setPermissionRequired(false);
 		setTitle("ERROR");
 		getContentPane().setLayout(
 				new MigLayout("", "[800,grow]", "[grow][400,grow][]"));
@@ -75,6 +77,14 @@ public class AppExceptionHandler extends JDialog {
 		});
 		btnOk.setText("OK");
 		pnlButton.add(btnOk, "cell 0 0,growx");
+	}
+
+	@Override
+	protected void keyEventListener(int keyCode) {
+		switch (keyCode) {
+		default:
+			break;
+		}
 	}
 
 	private void setMessage(String message) {

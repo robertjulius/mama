@@ -23,8 +23,8 @@ public interface XComponentConstants {
 	public static final Color TXT_BG_NOTEDITABLE = Color.ORANGE;
 	public static final Color TXT_BG_EDITABLE = Color.GREEN;
 
-	// public static final Color BTN_BG = new Color(150, 150, 255);
-	public static final Color BTN_BG = PNL_BG.darker();
+	public static final Color BTN_BG = new Color(150, 150, 255);
+	// public static final Color BTN_BG = PNL_BG.darker();
 
 	public static final Color BORDER_HIGHLIGHT = null;
 	public static final Color BORDER_SHADOW = Color.BLACK;

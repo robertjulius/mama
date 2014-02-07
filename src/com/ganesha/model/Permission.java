@@ -20,7 +20,7 @@ public class Permission implements TableEntity {
 	@Column(name = "DESCRIPTION")
 	private String description;
 
-	@Column(name = "orderNum", nullable = false, unique = true)
+	@Column(name = "ORDER_NUM", nullable = false, unique = true)
 	private Integer orderNum;
 
 	public String getCode() {
