@@ -8,7 +8,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 import com.ganesha.model.Trackable;
@@ -23,7 +23,7 @@ public class ItemStock extends Trackable {
 	@Column(name = "ID", nullable = false)
 	private Integer id;
 
-	@ManyToOne
+	@OneToOne
 	@JoinColumn(name = "ITEM_ID", nullable = false)
 	private Item item;
 
@@ -49,16 +49,16 @@ public class ItemStock extends Trackable {
 		return buyPrice;
 	}
 
-	public Item getItem() {
-		return item;
-	}
-
 	public BigDecimal getHpp() {
 		return hpp;
 	}
 
 	public Integer getId() {
 		return id;
+	}
+
+	public Item getItem() {
+		return item;
 	}
 
 	public Integer getMinimumStock() {
@@ -81,16 +81,16 @@ public class ItemStock extends Trackable {
 		this.buyPrice = buyPrice;
 	}
 
-	public void setItem(Item item) {
-		this.item = item;
-	}
-
 	public void setHpp(BigDecimal hpp) {
 		this.hpp = hpp;
 	}
 
 	public void setId(Integer id) {
 		this.id = id;
+	}
+
+	public void setItem(Item item) {
+		this.item = item;
 	}
 
 	public void setMinimumStock(Integer minimumStock) {

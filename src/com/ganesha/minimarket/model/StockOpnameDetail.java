@@ -49,12 +49,19 @@ public class StockOpnameDetail extends Trackable {
 	@Column(name = "LOSS_AMOUNT", nullable = false)
 	private BigDecimal lossAmount;
 
+	@Column(name = "LAST_STOCK_AMOUNT", nullable = false)
+	private BigDecimal lastStockAmount;
+
 	public Integer getId() {
 		return id;
 	}
 
 	public ItemStock getItemStock() {
 		return itemStock;
+	}
+
+	public BigDecimal getLastStockAmount() {
+		return lastStockAmount;
 	}
 
 	public BigDecimal getLossAmount() {
@@ -91,6 +98,10 @@ public class StockOpnameDetail extends Trackable {
 
 	public void setItemStock(ItemStock itemStock) {
 		this.itemStock = itemStock;
+	}
+
+	public void setLastStockAmount(BigDecimal lastStockAmount) {
+		this.lastStockAmount = lastStockAmount;
 	}
 
 	public void setLossAmount(BigDecimal lossAmount) {

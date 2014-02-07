@@ -218,9 +218,13 @@ public class StockOpnameListDialog extends XJDialog {
 											ColumnEnum.QUANTITY_SISTEM)
 											.getColumnIndex())).intValue();
 
-					int quantityManual = (int) table.getValueAt(i,
-							tableParameters.get(ColumnEnum.QUANTITY_MANUAL)
-									.getColumnIndex());
+					int quantityManual = Formatter.formatStringToNumber(
+							table.getValueAt(
+									i,
+									tableParameters.get(
+											ColumnEnum.QUANTITY_MANUAL)
+											.getColumnIndex()).toString())
+							.intValue();
 
 					int overCount = quantityManual - quantitySistem;
 					if (overCount < 0) {
@@ -232,8 +236,9 @@ public class StockOpnameListDialog extends XJDialog {
 						lossCount = 0;
 					}
 
-					stockOpnameDetails.add(facade.createStockOpnameEntity(itemCode,
-							quantityManual, overCount, lossCount, session));
+					stockOpnameDetails.add(facade.createStockOpnameEntity(
+							itemCode, quantityManual, overCount, lossCount,
+							session));
 				}
 			} finally {
 				session.close();
@@ -265,6 +270,7 @@ public class StockOpnameListDialog extends XJDialog {
 							session);
 				}
 				session.getTransaction().commit();
+				dispose();
 			} catch (RuntimeException e) {
 				session.getTransaction().rollback();
 				throw e;

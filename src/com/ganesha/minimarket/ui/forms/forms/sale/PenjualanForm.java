@@ -568,10 +568,6 @@ public class PenjualanForm extends XJDialog {
 		double totalPenjualan = Formatter.formatStringToNumber(
 				txtTotalPenjualan.getText()).doubleValue();
 
-		double biaya = Formatter.formatStringToNumber(lblTaxAmount.getText())
-				.doubleValue();
-		lblTaxAmount.setText(Formatter.formatNumberToString(biaya));
-
 		double taxPercent = Formatter.formatStringToNumber(
 				txtTaxPercent.getText()).doubleValue();
 		txtTaxPercent.setText(Formatter.formatNumberToString(taxPercent));
@@ -579,7 +575,7 @@ public class PenjualanForm extends XJDialog {
 		double taxAmount = taxPercent / 100 * totalPenjualan;
 		lblTaxAmount.setText(Formatter.formatNumberToString(taxAmount));
 
-		double total = Math.floor(totalPenjualan + biaya + taxAmount);
+		double total = Math.floor(totalPenjualan + taxAmount);
 		txtTotal.setText(Formatter.formatNumberToString(total));
 
 		setTotalBayarDanKembalian();

@@ -87,7 +87,7 @@
 				</textElement>
 				<textFieldExpression><![CDATA[$P{reportBy}]]></textFieldExpression>
 			</textField>
-			<textField pattern="dd MMM yyyy">
+			<textField pattern="dd MMM yyyy HH:mm:ss">
 				<reportElement x="105" y="80" width="148" height="15" uuid="9000ed04-4652-4d9d-9281-0249b008b1f1"/>
 				<textElement>
 					<font fontName="Tahoma"/>

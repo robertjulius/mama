@@ -46,7 +46,7 @@ public class StockOpnameConfirmationDialog extends XJDialog {
 		btnKoreksi.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				confirmType = ConfirmType.CANCEL;
+				koreksi();
 			}
 		});
 		btnKoreksi.setText("<html><center>Koreksi<br/>[Esc]</center></html>");
@@ -76,6 +76,11 @@ public class StockOpnameConfirmationDialog extends XJDialog {
 		default:
 			break;
 		}
+	}
+
+	private void koreksi() {
+		confirmType = ConfirmType.CANCEL;
+		dispose();
 	}
 
 	private void simpan() {

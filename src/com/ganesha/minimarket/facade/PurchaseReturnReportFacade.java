@@ -35,7 +35,7 @@ import com.ganesha.minimarket.ui.forms.forms.reports.ReportViewerDialog;
 public class PurchaseReturnReportFacade implements TransactionReportFacade {
 
 	private static final String REPORT_NAME = "Laporan Retur Pembelian";
-	private static final String REPORT_FILE = "com/ganesha/accounting/minimarket/reports/PurchaseReturnReport.jrxml";
+	private static final String REPORT_FILE = "com/ganesha/minimarket/reports/PurchaseReturnReport.jrxml";
 
 	private static PurchaseReturnReportFacade instance;
 

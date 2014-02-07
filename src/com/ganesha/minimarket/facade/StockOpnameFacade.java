@@ -20,19 +20,22 @@ import net.sf.jasperreports.engine.xml.JRXmlLoader;
 
 import org.hibernate.Criteria;
 import org.hibernate.Session;
+import org.hibernate.criterion.Order;
 import org.hibernate.criterion.Restrictions;
 
 import com.ganesha.core.exception.AppException;
 import com.ganesha.core.utils.CommonUtils;
 import com.ganesha.minimarket.Main;
+import com.ganesha.minimarket.model.Item;
 import com.ganesha.minimarket.model.ItemStock;
+import com.ganesha.minimarket.model.PurchaseDetail;
 import com.ganesha.minimarket.model.StockOpnameDetail;
 import com.ganesha.minimarket.model.StockOpnameHeader;
 
 public class StockOpnameFacade {
 
 	private static final String REPORT_NAME = "Laporan Stok Opname";
-	private static final String REPORT_FILE = "com/ganesha/accounting/minimarket/reports/StockOpnameReport.jrxml";
+	private static final String REPORT_FILE = "com/ganesha/minimarket/reports/StockOpnameReport.jrxml";
 
 	private static StockOpnameFacade instance;
 
@@ -53,11 +56,12 @@ public class StockOpnameFacade {
 		ItemStock itemStock = StockFacade.getInstance().getDetail(itemCode,
 				session);
 
-		BigDecimal hpp = countHpp();
-		itemStock.setHpp(hpp);
+		BigDecimal overAmount = getLifoAmount(overCount, itemCode, session);
+		BigDecimal lossAmount = getLifoAmount(lossCount, itemCode, session);
 
-		BigDecimal overAmount = hpp.multiply(BigDecimal.valueOf(overCount));
-		BigDecimal lossAmount = hpp.multiply(BigDecimal.valueOf(lossCount));
+		BigDecimal lastStockAmount = countStockAmountEnd(itemStock, overAmount,
+				lossAmount, session);
+		itemStock.setHpp(lastStockAmount);
 
 		StockOpnameDetail stockOpname = new StockOpnameDetail();
 		stockOpname.setItemStock(itemStock);
@@ -67,11 +71,13 @@ public class StockOpnameFacade {
 		stockOpname.setOverAmount(overAmount);
 		stockOpname.setLossCount(lossCount);
 		stockOpname.setLossAmount(lossAmount);
+		stockOpname.setLastStockAmount(lastStockAmount);
 
 		return stockOpname;
 	}
 
-	public JasperPrint prepareJasper(List<StockOpnameDetail> stockOpnameDetails,
+	public JasperPrint prepareJasper(
+			List<StockOpnameDetail> stockOpnameDetails,
 			Timestamp beginTimestamp, Timestamp endTimestamp)
 			throws AppException {
 
@@ -135,6 +141,8 @@ public class StockOpnameFacade {
 			session.saveOrUpdate(itemStock);
 
 			stockOpname.setStockOpnameHeader(stockOpnameHeader);
+			stockOpname.setDisabled(false);
+			stockOpname.setDeleted(false);
 			stockOpname.setLastUpdatedBy(lastUpdatedBy);
 			stockOpname.setLastUpdatedTimestamp(lastUpdatedTimestamp);
 			session.saveOrUpdate(stockOpname);
@@ -160,10 +168,103 @@ public class StockOpnameFacade {
 		return stockOpnameHeaders;
 	}
 
-	private BigDecimal countHpp() {
-		/*
-		 * TODO
-		 */
-		return BigDecimal.valueOf(0);
+	private BigDecimal countStockAmountEnd(ItemStock itemStock,
+			BigDecimal overAmount, BigDecimal lossAmount, Session session)
+			throws AppException {
+
+		Item item = itemStock.getItem();
+		int itemStockId = itemStock.getId();
+		String itemCode = item.getCode();
+
+		StockOpnameHeader lastStockOpnameHeader = getLastStockOpnameHeader(session);
+		StockOpnameDetail lastStockOpnameDetail = null;
+		if (lastStockOpnameHeader != null) {
+			lastStockOpnameDetail = getStockOpnameDetail(
+					lastStockOpnameHeader.getId(), itemStockId, session);
+		}
+
+		BigDecimal stockAmountBegin = null;
+		if (lastStockOpnameDetail == null) {
+			stockAmountBegin = BigDecimal.valueOf(0);
+		} else if (lastStockOpnameDetail.getLastStockAmount() == null) {
+			stockAmountBegin = BigDecimal.valueOf(0);
+		} else {
+			stockAmountBegin = lastStockOpnameDetail.getLastStockAmount();
+		}
+
+		BigDecimal lastStockAmountBySystem = getLifoAmount(
+				itemStock.getStock(), itemCode, session);
+
+		BigDecimal stockAmountEnd = stockAmountBegin
+				.add(lastStockAmountBySystem).add(overAmount)
+				.subtract(lossAmount);
+
+		return stockAmountEnd;
+	}
+
+	private PurchaseDetail getLastPurchaseDetail(String itemCode,
+			Integer belowThisPurchaseDetailId, Session session) {
+		Criteria criteria = session.createCriteria(PurchaseDetail.class);
+		if (belowThisPurchaseDetailId != null) {
+			criteria.add(Restrictions.lt("id", belowThisPurchaseDetailId));
+		}
+		criteria.add(Restrictions.eq("itemCode", itemCode));
+		criteria.addOrder(Order.desc("id"));
+		criteria.setMaxResults(1);
+
+		PurchaseDetail purchaseDetail = (PurchaseDetail) criteria
+				.uniqueResult();
+		return purchaseDetail;
+	}
+
+	private StockOpnameHeader getLastStockOpnameHeader(Session session) {
+		Criteria criteria = session.createCriteria(StockOpnameHeader.class);
+		criteria.addOrder(Order.desc("id"));
+		criteria.setMaxResults(1);
+		StockOpnameHeader stockOpnameHeader = (StockOpnameHeader) criteria
+				.uniqueResult();
+		return stockOpnameHeader;
+	}
+
+	private BigDecimal getLifoAmount(int quantity, String itemCode,
+			Session session) {
+
+		Integer belowThisPurchaseDetailId = null;
+		BigDecimal amount = BigDecimal.valueOf(0);
+
+		while (quantity > 0) {
+			PurchaseDetail purchaseDetail = getLastPurchaseDetail(itemCode,
+					belowThisPurchaseDetailId, session);
+
+			if (quantity > purchaseDetail.getQuantity()) {
+				amount = amount.add(purchaseDetail.getPricePerUnit().multiply(
+						BigDecimal.valueOf(purchaseDetail.getQuantity())));
+				quantity -= purchaseDetail.getQuantity();
+			} else {
+				amount = amount.add(purchaseDetail.getPricePerUnit().multiply(
+						BigDecimal.valueOf(quantity)));
+				quantity = 0;
+			}
+
+			belowThisPurchaseDetailId = purchaseDetail.getId();
+		}
+
+		return amount;
+	}
+
+	private StockOpnameDetail getStockOpnameDetail(int stockOpnameHeaderId,
+			int itemStockId, Session session) {
+
+		Criteria criteria = session.createCriteria(StockOpnameDetail.class);
+		criteria.createAlias("stockOpnameHeader", "stockOpnameHeader");
+		criteria.createAlias("itemStock", "itemStock");
+
+		criteria.add(Restrictions.eq("stockOpnameHeader.id",
+				stockOpnameHeaderId));
+		criteria.add(Restrictions.eq("itemStock.id", itemStockId));
+
+		StockOpnameDetail stockOpnameDetail = (StockOpnameDetail) criteria
+				.uniqueResult();
+		return stockOpnameDetail;
 	}
 }

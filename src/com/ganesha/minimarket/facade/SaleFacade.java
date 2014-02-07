@@ -11,6 +11,9 @@ import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.criterion.Restrictions;
 
+import com.ganesha.accounting.constants.CoaCodeConstants;
+import com.ganesha.accounting.constants.Enums.DebitCreditFlag;
+import com.ganesha.accounting.facade.AccountFacade;
 import com.ganesha.core.exception.AppException;
 import com.ganesha.core.exception.UserException;
 import com.ganesha.core.utils.CommonUtils;
@@ -63,6 +66,12 @@ public class SaleFacade implements TransactionFacade {
 			saleDetail.setSaleHeader(saleHeader);
 			session.saveOrUpdate(saleDetail);
 			session.saveOrUpdate(itemStock);
+
+			AccountFacade.getInstance().insertIntoAccount(
+					CoaCodeConstants.PENJUALAN, saleDetail.getId(),
+					CommonUtils.getCurrentTimestamp(), "Penjualan", "",
+					DebitCreditFlag.CREDIT, saleDetail.getTotalAmount(),
+					session);
 		}
 	}
 

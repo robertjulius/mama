@@ -29,7 +29,7 @@ import com.ganesha.minimarket.ui.forms.forms.reports.ReportViewerDialog;
 public class ItemStockReportFacade {
 
 	private static final String REPORT_NAME = "Laporan Stok Barang";
-	private static final String REPORT_FILE = "com/ganesha/accounting/minimarket/reports/StockReport.jrxml";
+	private static final String REPORT_FILE = "com/ganesha/minimarket/reports/StockReport.jrxml";
 
 	private static ItemStockReportFacade instance;
 
