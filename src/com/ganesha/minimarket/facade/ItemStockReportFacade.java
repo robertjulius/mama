@@ -24,7 +24,7 @@ import com.ganesha.core.exception.UserException;
 import com.ganesha.core.utils.CommonUtils;
 import com.ganesha.minimarket.Main;
 import com.ganesha.minimarket.model.ItemStock;
-import com.ganesha.minimarket.ui.forms.forms.reports.ReportViewerDialog;
+import com.ganesha.minimarket.ui.forms.reports.ReportViewerDialog;
 
 public class ItemStockReportFacade {
 
@@ -43,9 +43,18 @@ public class ItemStockReportFacade {
 	private ItemStockReportFacade() {
 	}
 
-	private JasperPrint prepareJasper(String code, String name,
-			String orderById, String orderByText, Session session)
-			throws AppException {
+	public void previewReport(Window parent, String orderById,
+			String orderByText, Session session) throws AppException,
+			UserException {
+
+		JasperPrint jasperPrint = prepareJasper(orderById, orderByText, session);
+
+		JRViewer viewer = new JRViewer(jasperPrint);
+		ReportViewerDialog.viewReport(parent, REPORT_NAME, viewer);
+	}
+
+	private JasperPrint prepareJasper(String orderById, String orderByText,
+			Session session) throws AppException {
 
 		Map<String, Object> paramReport = new HashMap<String, Object>();
 		paramReport.put("companyName", Main.getCompany().getName());
@@ -54,8 +63,8 @@ public class ItemStockReportFacade {
 		paramReport.put("reportBy", Main.getUserLogin().getName());
 		paramReport.put("reportDate", CommonUtils.getCurrentDate());
 
-		List<ItemStock> itemStocks = StockFacade.getInstance().search(code,
-				name, false, new String[] { orderById }, session);
+		List<ItemStock> itemStocks = StockFacade.getInstance().search(null,
+				null, null, false, new String[] { orderById }, session);
 
 		InputStream inputStream = null;
 		try {
@@ -83,16 +92,5 @@ public class ItemStockReportFacade {
 				}
 			}
 		}
-	}
-
-	public void previewReport(Window parent, String code, String name,
-			String orderById, String orderByText, Session session)
-			throws AppException, UserException {
-
-		JasperPrint jasperPrint = prepareJasper(code, name, orderById,
-				orderByText, session);
-
-		JRViewer viewer = new JRViewer(jasperPrint);
-		ReportViewerDialog.viewReport(parent, REPORT_NAME, viewer);
 	}
 }

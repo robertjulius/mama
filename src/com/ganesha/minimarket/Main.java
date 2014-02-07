@@ -17,7 +17,7 @@ import com.ganesha.core.utils.CommonUtils;
 import com.ganesha.hibernate.HibernateUtils;
 import com.ganesha.hibernate.HqlParameter;
 import com.ganesha.minimarket.model.Company;
-import com.ganesha.minimarket.ui.forms.forms.login.LoginForm;
+import com.ganesha.minimarket.ui.forms.login.LoginForm;
 import com.ganesha.minimarket.utils.CompanyConsistencyChecker;
 import com.ganesha.model.User;
 

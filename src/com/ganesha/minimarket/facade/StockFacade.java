@@ -45,9 +45,28 @@ public class StockFacade {
 					+ " sudah pernah didaftarkan");
 		}
 
+		Item item = getByBarcode(barcode, session);
+		if (item != null) {
+			throw new UserException("Barang dengan Barcode " + barcode
+					+ " sudah pernah didaftarkan untuk barang ["
+					+ item.getCode() + "] " + item.getName());
+		}
+
+		if (GlobalFacade.getInstance().isExists("barcode", barcode, Item.class,
+				session)) {
+
+		}
+
 		insertIntoItem(code, name, barcode, disabled, deleted, session);
 		insertIntoItemStock(code, unit, buyPrice, hpp, sellPrice, minimumStock,
 				disabled, deleted, session);
+	}
+
+	public Item getByBarcode(String barcode, Session session) {
+		Criteria criteria = session.createCriteria(Item.class);
+		criteria.add(Restrictions.eq("barcode", barcode));
+		Item item = (Item) criteria.uniqueResult();
+		return item;
 	}
 
 	public ItemStock getDetail(String code, Session session) {
@@ -59,13 +78,18 @@ public class StockFacade {
 		return itemStock;
 	}
 
-	public List<ItemStock> search(String code, String name, boolean disabled,
-			String[] orderBy, Session session) {
+	public List<ItemStock> search(String code, String barcode, String name,
+			boolean disabled, String[] orderBy, Session session) {
 		Criteria criteria = session.createCriteria(ItemStock.class);
 		criteria.createAlias("item", "item");
 
 		if (code != null && !code.trim().isEmpty()) {
 			criteria.add(Restrictions.like("item.code", "%" + code + "%")
+					.ignoreCase());
+		}
+
+		if (barcode != null && !barcode.trim().isEmpty()) {
+			criteria.add(Restrictions.like("item.barcode", "%" + barcode + "%")
 					.ignoreCase());
 		}
 

@@ -30,7 +30,7 @@ import com.ganesha.hibernate.HqlParameter;
 import com.ganesha.minimarket.Main;
 import com.ganesha.minimarket.model.PurchaseDetail;
 import com.ganesha.minimarket.model.PurchaseReturnDetail;
-import com.ganesha.minimarket.ui.forms.forms.reports.ReportViewerDialog;
+import com.ganesha.minimarket.ui.forms.reports.ReportViewerDialog;
 
 public class PurchaseReturnReportFacade implements TransactionReportFacade {
 

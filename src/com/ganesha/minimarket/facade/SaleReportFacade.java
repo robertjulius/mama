@@ -29,7 +29,7 @@ import com.ganesha.core.utils.CommonUtils;
 import com.ganesha.hibernate.HqlParameter;
 import com.ganesha.minimarket.Main;
 import com.ganesha.minimarket.model.SaleDetail;
-import com.ganesha.minimarket.ui.forms.forms.reports.ReportViewerDialog;
+import com.ganesha.minimarket.ui.forms.reports.ReportViewerDialog;
 
 public class SaleReportFacade implements TransactionReportFacade {
 

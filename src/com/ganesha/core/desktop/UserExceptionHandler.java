@@ -4,7 +4,6 @@ import java.awt.Font;
 import java.awt.Window;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.KeyEvent;
 
 import javax.swing.JDialog;
 import javax.swing.JPanel;
@@ -64,9 +63,6 @@ public class UserExceptionHandler extends XJDialog {
 	@Override
 	protected void keyEventListener(int keyCode) {
 		switch (keyCode) {
-		case KeyEvent.VK_ENTER:
-			btnOk.doClick();
-			break;
 		default:
 			break;
 		}
