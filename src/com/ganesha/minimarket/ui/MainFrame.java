@@ -1,5 +1,6 @@
 package com.ganesha.minimarket.ui;
 
+import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
@@ -9,7 +10,10 @@ import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 import javax.swing.JSeparator;
 
+import net.miginfocom.swing.MigLayout;
+
 import com.ganesha.desktop.component.XJFrame;
+import com.ganesha.desktop.component.XJLabel;
 import com.ganesha.minimarket.Main;
 import com.ganesha.minimarket.ui.forms.customer.CustomerListDialog;
 import com.ganesha.minimarket.ui.forms.discount.DiscountListDialog;
@@ -25,6 +29,7 @@ import com.ganesha.minimarket.ui.forms.sale.PenjualanForm;
 import com.ganesha.minimarket.ui.forms.stock.StockListDialog;
 import com.ganesha.minimarket.ui.forms.stockopname.StockOpnameListDialog;
 import com.ganesha.minimarket.ui.forms.supplier.SupplierListDialog;
+import com.ganesha.minimarket.ui.forms.user.UserListDialog;
 
 public class MainFrame extends XJFrame {
 	private static final long serialVersionUID = 5527217675003046133L;
@@ -78,6 +83,15 @@ public class MainFrame extends XJFrame {
 			}
 		});
 		mnMasterData.add(mntmDiskon);
+
+		JMenuItem mntmUser = new JMenuItem("User");
+		mntmUser.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				new UserListDialog(MainFrame.this).setVisible(true);
+			}
+		});
+		mnMasterData.add(mntmUser);
 
 		JMenu mnTransaksi = new JMenu("Transaksi");
 		menuBar.add(mnTransaksi);
@@ -189,9 +203,24 @@ public class MainFrame extends XJFrame {
 		JMenu mnLaporan = new JMenu("Laporan");
 		menuBar.add(mnLaporan);
 
-		// setExtendedState(JFrame.MAXIMIZED_BOTH);
+		setExtendedState(JFrame.MAXIMIZED_BOTH);
 		pack();
 		setLocationRelativeTo(null);
+		getContentPane().setLayout(new MigLayout("", "[][]", "[][][]"));
+
+		XJLabel lblCompanyName = new XJLabel();
+		lblCompanyName.setText(Main.getCompany().getName());
+		getContentPane().add(lblCompanyName, "cell 0 0 2 1");
+
+		XJLabel lblUserId = new XJLabel();
+		lblUserId.setFont(new Font("Tahoma", Font.BOLD, 12));
+		lblUserId.setText(Main.getUserLogin().getLogin());
+		getContentPane().add(lblUserId, "cell 0 1,aligny bottom");
+
+		XJLabel lblUserName = new XJLabel();
+		lblUserName.setFont(new Font("Tahoma", Font.BOLD, 12));
+		lblUserName.setText(Main.getUserLogin().getName());
+		getContentPane().add(lblUserName, "cell 1 1");
 	}
 
 	@Override

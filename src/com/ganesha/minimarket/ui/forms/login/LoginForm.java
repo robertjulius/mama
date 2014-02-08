@@ -20,9 +20,12 @@ import javax.swing.JSeparator;
 
 import net.miginfocom.swing.MigLayout;
 
+import com.ganesha.core.desktop.ExceptionHandler;
+import com.ganesha.core.exception.UserException;
 import com.ganesha.desktop.component.XJButton;
 import com.ganesha.desktop.component.XJFrame;
 import com.ganesha.desktop.component.XJLabel;
+import com.ganesha.desktop.component.XJPasswordField;
 import com.ganesha.desktop.component.XJTextField;
 import com.ganesha.minimarket.Main;
 import com.ganesha.minimarket.facade.LoginFacade;
@@ -30,7 +33,7 @@ import com.ganesha.minimarket.ui.MainFrame;
 
 public class LoginForm extends XJFrame {
 	private static final long serialVersionUID = -4959314146160473962L;
-	private XJTextField txtPassword;
+	private XJPasswordField txtPassword;
 	private XJTextField txtLoginId;
 	private XJLabel lblLblImage;
 	private XJButton btnClear;
@@ -72,14 +75,13 @@ public class LoginForm extends XJFrame {
 		pnlInput.add(lblLoginId, "cell 0 0,alignx right");
 
 		txtLoginId = new XJTextField();
-		txtLoginId.setText("ADMIN");
 		pnlInput.add(txtLoginId, "cell 1 0,growx");
 		txtLoginId.setColumns(10);
 
 		XJLabel lblLblPassword = new XJLabel("Password");
 		pnlInput.add(lblLblPassword, "cell 0 1,alignx right");
 
-		txtPassword = new XJTextField();
+		txtPassword = new XJPasswordField();
 		pnlInput.add(txtPassword, "cell 1 1,growx");
 		txtPassword.setColumns(10);
 
@@ -99,7 +101,12 @@ public class LoginForm extends XJFrame {
 		btnLogin.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				login(txtLoginId.getText(), txtPassword.getText());
+				try {
+					login(txtLoginId.getText(),
+							new String(txtPassword.getPassword()));
+				} catch (Exception ex) {
+					ExceptionHandler.handleException(ex);
+				}
 			}
 		});
 		pnlButton.add(btnLogin, "cell 1 0");
@@ -133,10 +140,10 @@ public class LoginForm extends XJFrame {
 		return imageIcon;
 	}
 
-	private void login(String loginId, String password) {
+	private void login(String loginId, String password) throws UserException {
 
 		LoginFacade facade = LoginFacade.getInstance();
-		boolean success = facade.login(loginId);
+		boolean success = facade.login(loginId, password);
 		if (success) {
 			setVisible(false);
 			new MainFrame().setVisible(true);
