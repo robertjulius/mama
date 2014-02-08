@@ -17,12 +17,15 @@ import com.ganesha.accounting.facade.AccountFacade;
 import com.ganesha.core.exception.AppException;
 import com.ganesha.core.exception.UserException;
 import com.ganesha.core.utils.CommonUtils;
+import com.ganesha.core.utils.Formatter;
 import com.ganesha.hibernate.HqlParameter;
 import com.ganesha.minimarket.Main;
+import com.ganesha.minimarket.model.Company;
 import com.ganesha.minimarket.model.Customer;
 import com.ganesha.minimarket.model.ItemStock;
 import com.ganesha.minimarket.model.SaleDetail;
 import com.ganesha.minimarket.model.SaleHeader;
+import com.ganesha.model.User;
 
 public class SaleFacade implements TransactionFacade {
 
@@ -36,6 +39,27 @@ public class SaleFacade implements TransactionFacade {
 	}
 
 	private SaleFacade() {
+	}
+
+	public void cetakStruck(SaleHeader saleHeader, List<SaleDetail> saleDetails) {
+		String newLine = "\r\n";
+		String tab = "\t";
+		Company company = Main.getCompany();
+		Timestamp timestamp = CommonUtils.getCurrentTimestamp();
+		User user = Main.getUserLogin();
+
+		StringBuilder builder = new StringBuilder();
+		builder.append(company.getName()).append(newLine);
+		builder.append(company.getAddress()).append(newLine);
+		builder.append(Formatter.formatTimestampToString(timestamp)).append(
+				newLine);
+		builder.append("[" + user.getLogin() + "] - " + user.getName()).append(
+				newLine);
+		builder.append("-----------------------------------").append(newLine);
+
+		for (SaleDetail saleDetail : saleDetails) {
+			// saleDetail.getItemName() + tab + saleDetail.getQuantity() +
+		}
 	}
 
 	public SaleDetail getDetail(String transactionNumber, Integer orderNum,
@@ -73,6 +97,8 @@ public class SaleFacade implements TransactionFacade {
 					DebitCreditFlag.CREDIT, saleDetail.getTotalAmount(),
 					session);
 		}
+
+		cetakStruck(saleHeader, saleDetails);
 	}
 
 	@Override

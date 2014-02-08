@@ -22,3 +22,10 @@ Laporan Laba Rugi
 [DONE] Sorting Table
 User Maintenance
 Permission Maintenance
+
+
+Setting:
+1. Printer
+2. Nama Company
+3. Pajak
+4. Temp PDF File

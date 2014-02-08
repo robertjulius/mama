@@ -7,6 +7,7 @@ import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
+import java.io.File;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -21,6 +22,7 @@ import org.hibernate.Session;
 
 import com.ganesha.core.desktop.ExceptionHandler;
 import com.ganesha.core.exception.AppException;
+import com.ganesha.core.exception.UserException;
 import com.ganesha.core.utils.Formatter;
 import com.ganesha.core.utils.GeneralConstants.ActionType;
 import com.ganesha.desktop.component.XJButton;
@@ -37,6 +39,7 @@ import com.ganesha.hibernate.HibernateUtils;
 import com.ganesha.minimarket.facade.StockFacade;
 import com.ganesha.minimarket.model.Item;
 import com.ganesha.minimarket.model.ItemStock;
+import com.ganesha.minimarket.utils.BarcodeUtils;
 
 public class StockListDialog extends XJDialog {
 	private static final long serialVersionUID = 1452286313727721700L;
@@ -57,6 +60,7 @@ public class StockListDialog extends XJDialog {
 	private XJRadioButton rdBarangTidakAktif;
 	private XJLabel lblBarcodef;
 	private XJTextField txtBarcode;
+	private XJButton btnPrintBarcode;
 	{
 		tableParameters.put(ColumnEnum.CODE, new XTableParameter(0, 25, false,
 				"Kode", XTableConstants.CELL_RENDERER_LEFT, String.class));
@@ -196,7 +200,7 @@ public class StockListDialog extends XJDialog {
 
 		JPanel panel = new JPanel();
 		getContentPane().add(panel, "cell 0 2,alignx center,growy");
-		panel.setLayout(new MigLayout("", "[][][]", "[]"));
+		panel.setLayout(new MigLayout("", "[][][][]", "[]"));
 
 		btnRegistrasi = new XJButton();
 		btnRegistrasi.addActionListener(new ActionListener() {
@@ -226,9 +230,24 @@ public class StockListDialog extends XJDialog {
 				showDetail();
 			}
 		});
+
+		btnPrintBarcode = new XJButton();
+		btnPrintBarcode.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				try {
+					printBarcode();
+				} catch (Exception ex) {
+					ExceptionHandler.handleException(ex);
+				}
+			}
+		});
+		btnPrintBarcode
+				.setText("<html><center>Print Barcode<br/>[F6]</center><html>");
+		panel.add(btnPrintBarcode, "cell 2 0");
 		btnDetail
 				.setText("<html><center>Lihat Detail<br/>[Enter]</center></html>");
-		panel.add(btnDetail, "cell 2 0");
+		panel.add(btnDetail, "cell 3 0");
 
 		btnRefresh.doClick();
 
@@ -241,6 +260,9 @@ public class StockListDialog extends XJDialog {
 		switch (keyCode) {
 		case KeyEvent.VK_F5:
 			btnRegistrasi.doClick();
+			break;
+		case KeyEvent.VK_F6:
+			btnPrintBarcode.doClick();
 			break;
 		default:
 			break;
@@ -293,6 +315,36 @@ public class StockListDialog extends XJDialog {
 						tableParameters.get(ColumnEnum.SELL_PRICE)
 								.getColumnIndex());
 			}
+		} finally {
+			session.close();
+		}
+	}
+
+	private void printBarcode() throws AppException, UserException {
+		Session session = HibernateUtils.openSession();
+		try {
+			int selectedRow = table.getSelectedRow();
+			if (selectedRow < 0) {
+				return;
+			}
+			String code = (String) table.getModel().getValueAt(selectedRow,
+					tableParameters.get(ColumnEnum.CODE).getColumnIndex());
+
+			StockFacade facade = StockFacade.getInstance();
+			ItemStock itemStock = facade.getDetail(code, session);
+			Item item = itemStock.getItem();
+
+			String barcode = item.getBarcode();
+			if (barcode == null || barcode.trim().equals("")) {
+				throw new UserException("Barcode untuk barang ["
+						+ item.getCode() + "] " + item.getName()
+						+ " belum diregistrasi");
+			}
+
+			File file = BarcodeUtils.generateBarcode(Long.parseLong(item
+					.getBarcode()));
+			BarcodeUtils.print(file);
+
 		} finally {
 			session.close();
 		}

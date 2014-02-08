@@ -27,6 +27,10 @@ public class GeneralConstants {
 	public static final String PREFIX_TRX_NUMBER_PAYABLE = "PAY";
 
 	public static final String TAX_CODE_PPN = "PPN";
+	public static final String FILE_BARCODE_NAME = "barcodes"
+			+ CommonUtils.getTimestampInString() + ".pdf";
+
+	public static final String PRINTER_NAME = "CutePDF Writer";
 
 	public static final ComboBoxObject[] CMB_BOX_TRX_TYPES;
 	static {
