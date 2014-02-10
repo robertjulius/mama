@@ -3,8 +3,6 @@
 [DONE] Generate Barcode
 [DONE] Cetak Barcode
 [DONE] Warna UI
-Insert ke GL
-Laporan Laba Rugi
 [DONE] User Maintenance
 [DONE] Change Password
 [DONE] Permission Maintenance
@@ -20,12 +18,18 @@ Laporan Laba Rugi
 [DONE] Validasi Hapus Master lainnya: Dalam keadaan disabled
 [DONE] Hashing password
 [DONE] Backup DB
-Restore DB
 [DONE] Scan barang, langsung kasih quantity 1
 [DONE] Format receipt, pake max width
 [DONE] Tambahin fungsi F8, maka end proses table
 [DONE] Ada bugs pas lagi delete, flagnya jangan taruh di kelas, karena bisa kacau
 [DONE] BUGS Laporan...!!!
+
+Restore DB
+Insert ke GL
+Laporan Laba Rugi
+FIFO
+Pindahin System Setting, jangan dalam satu form
+Pindahin CoaConsitencyChecker & PermissionConsistenctChecker, pindahin ke System Setting Dialog, jangan dari void main()
 
 
 Install:

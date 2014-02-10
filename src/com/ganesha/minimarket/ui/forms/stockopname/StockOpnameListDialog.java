@@ -39,6 +39,7 @@ import com.ganesha.hibernate.HibernateUtils;
 import com.ganesha.minimarket.Main;
 import com.ganesha.minimarket.facade.StockFacade;
 import com.ganesha.minimarket.facade.StockOpnameFacade;
+import com.ganesha.minimarket.facade.StockOpnameFacade.StockQueueMethod;
 import com.ganesha.minimarket.model.Item;
 import com.ganesha.minimarket.model.ItemStock;
 import com.ganesha.minimarket.model.StockOpnameDetail;
@@ -284,7 +285,7 @@ public class StockOpnameListDialog extends XJTableDialog {
 
 					stockOpnameDetails.add(facade.createStockOpnameEntity(
 							itemCode, quantityManual, overCount, lossCount,
-							session));
+							StockQueueMethod.FIFO, session));
 				}
 			} finally {
 				session.close();
