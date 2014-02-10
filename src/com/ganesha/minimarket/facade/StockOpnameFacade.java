@@ -229,9 +229,13 @@ public class StockOpnameFacade {
 
 	private BigDecimal getFifoAmount(int required, int quantityInThisStage,
 			String itemCode, Session session) {
+
 		List<BigDecimal> amountContainer = new ArrayList<BigDecimal>();
+
+		Integer belowThisPurchaseDetailId = null;
 		getFifoAmountRecursive(required, quantityInThisStage, itemCode,
-				amountContainer, session);
+				amountContainer, belowThisPurchaseDetailId, session);
+
 		BigDecimal fifoAmount = BigDecimal.valueOf(0);
 		for (BigDecimal amount : amountContainer) {
 			fifoAmount.add(amount);
@@ -241,9 +245,8 @@ public class StockOpnameFacade {
 
 	private Integer getFifoAmountRecursive(int required,
 			int quantityInThisStage, String itemCode,
-			List<BigDecimal> amountContainer, Session session) {
-
-		Integer belowThisPurchaseDetailId = null;
+			List<BigDecimal> amountContainer,
+			Integer belowThisPurchaseDetailId, Session session) {
 
 		PurchaseDetail purchaseDetail = getLastPurchaseDetail(itemCode,
 				belowThisPurchaseDetailId, session);
@@ -253,7 +256,8 @@ public class StockOpnameFacade {
 			int quantityInPreviousStage = quantityInThisStage
 					- purchaseDetail.getQuantity();
 			int needMore = getFifoAmountRecursive(required,
-					quantityInPreviousStage, itemCode, amountContainer, session);
+					quantityInPreviousStage, itemCode, amountContainer,
+					purchaseDetail.getId(), session);
 			required = needMore;
 			available = purchaseDetail.getQuantity();
 
