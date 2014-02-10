@@ -4,6 +4,7 @@ import java.awt.Font;
 import java.awt.Window;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.KeyEvent;
 import java.awt.print.PrinterJob;
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
@@ -23,7 +24,6 @@ import javax.print.attribute.standard.Copies;
 import javax.print.event.PrintJobAdapter;
 import javax.print.event.PrintJobEvent;
 import javax.swing.JButton;
-import javax.swing.JDialog;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 
@@ -32,93 +32,148 @@ import net.miginfocom.swing.MigLayout;
 import com.ganesha.core.SystemSetting;
 import com.ganesha.core.desktop.ExceptionHandler;
 import com.ganesha.core.exception.AppException;
+import com.ganesha.core.exception.UserException;
 import com.ganesha.core.utils.CommonUtils;
 import com.ganesha.core.utils.Formatter;
+import com.ganesha.core.utils.GeneralConstants;
+import com.ganesha.desktop.component.ComboBoxObject;
+import com.ganesha.desktop.component.XEtchedBorder;
+import com.ganesha.desktop.component.XJButton;
+import com.ganesha.desktop.component.XJComboBox;
 import com.ganesha.desktop.component.XJDialog;
+import com.ganesha.desktop.component.XJLabel;
 import com.ganesha.desktop.component.XJPanel;
 import com.ganesha.minimarket.Main;
+import com.ganesha.minimarket.utils.PermissionConstants;
 import com.ganesha.minimarket.utils.ReceiptPrinter;
 import com.ganesha.minimarket.utils.ReceiptPrinter.ItemBelanja;
 
-public class TestReceiptPrinter extends XJDialog {
+public class PrinterSettingForm extends XJDialog {
 
-	private static final long serialVersionUID = -3986040446960213196L;
+	private static final long serialVersionUID = 1401014426195840845L;
 
-	private JButton btnPrint;
+	private XJButton btnSimpan;
+	private XJPanel pnlPrinter;
 	private JTextArea txtReceipt;
-	private JButton btnCancel;
-	private JButton btnDone;
+	private XJButton btnBatal;
+	private XJComboBox cmbReceiptPrinter;
+	private JButton Print;
 
-	public static void showDialog(Window parent) {
-		TestReceiptPrinter exceptionHandler = new TestReceiptPrinter(parent);
-		exceptionHandler.initReceiptText();
-		exceptionHandler.pack();
-		exceptionHandler.setLocationRelativeTo(null);
-		exceptionHandler.setVisible(true);
-	}
-
-	private TestReceiptPrinter(Window parent) {
+	public PrinterSettingForm(Window parent) {
 		super(parent);
-		setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
-		setTitle("Test Receipt Printer");
-		getContentPane().setLayout(
-				new MigLayout("", "[400,grow]", "[400,grow][]"));
+		setTitle("Printer Setting");
+		setPermissionCode(PermissionConstants.SETTING_PRINTER_FORM);
+		getContentPane().setLayout(new MigLayout("", "[grow]", "[][250][][]"));
+
+		pnlPrinter = new XJPanel();
+		pnlPrinter.setBorder(new XEtchedBorder());
+		getContentPane().add(pnlPrinter, "cell 0 0,grow");
+		pnlPrinter.setLayout(new MigLayout("", "[grow][300]", "[]"));
+
+		XJLabel lblReceiptPrinter = new XJLabel();
+		pnlPrinter.add(lblReceiptPrinter, "cell 0 0,alignx left");
+		lblReceiptPrinter.setText("Receipt Printer");
+
+		cmbReceiptPrinter = new XJComboBox(getReceiptPrinterComboBoxList());
+		pnlPrinter.add(cmbReceiptPrinter, "cell 1 0,growx");
 
 		JScrollPane scrollPane = new JScrollPane();
-		getContentPane().add(scrollPane, "cell 0 0,grow");
+		getContentPane().add(scrollPane, "cell 0 1,grow");
 
 		txtReceipt = new JTextArea();
 		txtReceipt.setEditable(false);
 		txtReceipt.setFont(new Font("Courier New", Font.PLAIN, 11));
 		scrollPane.setViewportView(txtReceipt);
 
-		XJPanel pnlButton = new XJPanel();
-		getContentPane().add(pnlButton, "cell 0 1,alignx center,growy");
-		pnlButton.setLayout(new MigLayout("", "[100][100][100]", "[]"));
-
-		btnPrint = new JButton();
-		btnPrint.setMnemonic('P');
-		btnPrint.addActionListener(new ActionListener() {
+		Print = new JButton("Test Print");
+		Print.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				try {
 					print();
 				} catch (Exception ex) {
-					ExceptionHandler.handleException(TestReceiptPrinter.this,
+					ExceptionHandler.handleException(PrinterSettingForm.this,
+							ex);
+				}
+			}
+		});
+		Print.setMnemonic('P');
+		getContentPane().add(Print, "cell 0 2,alignx right");
+
+		XJPanel pnlButton = new XJPanel();
+		getContentPane().add(pnlButton, "cell 0 3,alignx center,growy");
+		pnlButton.setLayout(new MigLayout("", "[][]", "[]"));
+
+		btnSimpan = new XJButton();
+		btnSimpan.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				try {
+					save();
+				} catch (Exception ex) {
+					ExceptionHandler.handleException(PrinterSettingForm.this,
 							ex);
 				}
 			}
 		});
 
-		btnCancel = new JButton("Cancel");
-		btnCancel.addActionListener(new ActionListener() {
+		btnBatal = new XJButton();
+		btnBatal.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				dispose();
+				batal();
 			}
 		});
-		btnCancel.setMnemonic('C');
-		pnlButton.add(btnCancel, "cell 0 0,growx");
-		btnPrint.setText("Print");
-		pnlButton.add(btnPrint, "cell 1 0,growx");
+		btnBatal.setMnemonic('Q');
+		btnBatal.setText("<html><center>Batal<br/>[Alt+Q]</center></html>");
+		pnlButton.add(btnBatal, "cell 0 0");
+		btnSimpan.setText("<html><center>Simpan<br/>[F12]</center></html>");
+		pnlButton.add(btnSimpan, "cell 1 0");
 
-		btnDone = new JButton("Done");
-		btnDone.addActionListener(new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				dispose();
-			}
-		});
-		btnDone.setMnemonic('D');
-		pnlButton.add(btnDone, "cell 2 0,growx");
+		try {
+			initForm();
+		} catch (AppException ex) {
+			ExceptionHandler.handleException(this, ex);
+		}
+
+		pack();
+		setLocationRelativeTo(null);
+	}
+
+	public void initForm() throws AppException {
+		String selectedItem = (String) SystemSetting
+				.get(GeneralConstants.SYSTEM_SETTING_PRINTER_RECEIPT);
+		ComboBoxObject comboBoxObject = new ComboBoxObject(selectedItem,
+				selectedItem);
+		cmbReceiptPrinter.setSelectedItem(comboBoxObject);
+
+		initReceiptText();
 	}
 
 	@Override
 	protected void keyEventListener(int keyCode) {
 		switch (keyCode) {
+		case KeyEvent.VK_F12:
+			btnSimpan.doClick();
+			break;
 		default:
 			break;
 		}
+	}
+
+	private void batal() {
+		dispose();
+	}
+
+	private ComboBoxObject[] getReceiptPrinterComboBoxList() {
+		PrintService[] printServices = PrinterJob.lookupPrintServices();
+		ComboBoxObject[] comboBoxObjects = new ComboBoxObject[printServices.length + 1];
+		comboBoxObjects[0] = new ComboBoxObject(null, null);
+		for (int i = 0; i < printServices.length; ++i) {
+			comboBoxObjects[i + 1] = new ComboBoxObject(
+					printServices[i].getName(), printServices[i].getName());
+		}
+		return comboBoxObjects;
 	}
 
 	private void initReceiptText() {
@@ -158,7 +213,7 @@ public class TestReceiptPrinter extends XJDialog {
 
 	private void print() throws AppException {
 		String printerName = (String) SystemSetting
-				.get(SystemSettingForm.SYSTEM_SETTING_PRINTER_RECEIPT);
+				.get(GeneralConstants.SYSTEM_SETTING_PRINTER_RECEIPT);
 		PrintService[] services = PrinterJob.lookupPrintServices();
 		InputStream is = null;
 		try {
@@ -187,6 +242,26 @@ public class TestReceiptPrinter extends XJDialog {
 					throw new AppException(e);
 				}
 			}
+		}
+	}
+
+	private void save() throws UserException, AppException {
+		validateForm();
+		ComboBoxObject comboBoxObject = (ComboBoxObject) cmbReceiptPrinter
+				.getSelectedItem();
+		String printServiceName = (String) comboBoxObject.getId();
+		SystemSetting.save(GeneralConstants.SYSTEM_SETTING_PRINTER_RECEIPT,
+				printServiceName);
+
+		dispose();
+	}
+
+	private void validateForm() throws UserException {
+		ComboBoxObject comboBoxObject = (ComboBoxObject) cmbReceiptPrinter
+				.getSelectedItem();
+		String printServiceName = (String) comboBoxObject.getId();
+		if (printServiceName == null) {
+			throw new UserException("Printer Receipt harus diisi");
 		}
 	}
 

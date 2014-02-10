@@ -32,6 +32,7 @@ import com.ganesha.hibernate.HibernateUtils;
 import com.ganesha.minimarket.facade.PayableFacade;
 import com.ganesha.minimarket.model.PayableSummary;
 import com.ganesha.minimarket.model.Supplier;
+import com.ganesha.minimarket.utils.PermissionConstants;
 
 public class PayableForm extends XJDialog {
 
@@ -59,6 +60,7 @@ public class PayableForm extends XJDialog {
 		super(parent);
 
 		setTitle("Pembayaran Hutang");
+		setPermissionCode(PermissionConstants.PAYABLE_FORM);
 		setCloseOnEsc(false);
 
 		getContentPane().setLayout(new MigLayout("", "[400][]", "[][]"));

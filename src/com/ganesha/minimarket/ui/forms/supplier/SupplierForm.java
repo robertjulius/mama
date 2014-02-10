@@ -31,6 +31,7 @@ import com.ganesha.desktop.component.XJTextField;
 import com.ganesha.hibernate.HibernateUtils;
 import com.ganesha.minimarket.facade.SupplierFacade;
 import com.ganesha.minimarket.model.Supplier;
+import com.ganesha.minimarket.utils.PermissionConstants;
 
 public class SupplierForm extends XJDialog {
 
@@ -96,6 +97,7 @@ public class SupplierForm extends XJDialog {
 			}
 		});
 		setTitle("Form Supplier");
+		setPermissionCode(PermissionConstants.SUPPLIER_FORM);
 		setCloseOnEsc(false);
 
 		getContentPane().setLayout(

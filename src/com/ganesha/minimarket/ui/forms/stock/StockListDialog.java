@@ -40,6 +40,7 @@ import com.ganesha.minimarket.facade.StockFacade;
 import com.ganesha.minimarket.model.Item;
 import com.ganesha.minimarket.model.ItemStock;
 import com.ganesha.minimarket.utils.BarcodeUtils;
+import com.ganesha.minimarket.utils.PermissionConstants;
 
 public class StockListDialog extends XJTableDialog {
 	private static final long serialVersionUID = 1452286313727721700L;
@@ -91,6 +92,7 @@ public class StockListDialog extends XJTableDialog {
 		super(parent);
 
 		setTitle("Master Barang");
+		setPermissionCode(PermissionConstants.STOCK_LIST);
 		getContentPane().setLayout(
 				new MigLayout("", "[1000]", "[][300,grow][]"));
 

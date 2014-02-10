@@ -7,6 +7,7 @@ import java.awt.Window;
 import net.sf.jasperreports.swing.JRViewer;
 
 import com.ganesha.desktop.component.XJDialog;
+import com.ganesha.minimarket.utils.PermissionConstants;
 
 public class ReportViewerDialog extends XJDialog {
 	private static final long serialVersionUID = 5275444252124892379L;
@@ -20,6 +21,7 @@ public class ReportViewerDialog extends XJDialog {
 	public ReportViewerDialog(Window parent, String title, JRViewer viewer) {
 		super(parent);
 		setTitle(title);
+		setPermissionCode(PermissionConstants.REPORT_VIEWER);
 		setPreferredSize(new Dimension(1000, 700));
 		getContentPane().add(viewer, BorderLayout.CENTER);
 		pack();

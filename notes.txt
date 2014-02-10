@@ -28,8 +28,8 @@ Restore DB
 Insert ke GL
 Laporan Laba Rugi
 FIFO
-Pindahin System Setting, jangan dalam satu form
-Pindahin CoaConsitencyChecker & PermissionConsistenctChecker, pindahin ke System Setting Dialog, jangan dari void main()
+[DONE] Pindahin System Setting, jangan dalam satu form
+[DONE] Pindahin CoaConsitencyChecker & PermissionConsistenctChecker, pindahin ke System Setting Dialog, jangan dari void main()
 
 
 Install:

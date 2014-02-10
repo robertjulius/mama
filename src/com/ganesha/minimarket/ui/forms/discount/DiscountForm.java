@@ -28,6 +28,7 @@ import com.ganesha.minimarket.facade.DiscountFacade;
 import com.ganesha.minimarket.model.Discount;
 import com.ganesha.minimarket.model.Item;
 import com.ganesha.minimarket.ui.forms.searchentity.SearchEntityDialog;
+import com.ganesha.minimarket.utils.PermissionConstants;
 
 public class DiscountForm extends XJDialog {
 
@@ -50,6 +51,7 @@ public class DiscountForm extends XJDialog {
 		super(parent);
 		setCloseOnEsc(false);
 		setTitle("Diskon");
+		setPermissionCode(PermissionConstants.DISCOUNT_FORM);
 		getContentPane().setLayout(
 				new MigLayout("", "[grow]", "[grow][grow][grow]"));
 

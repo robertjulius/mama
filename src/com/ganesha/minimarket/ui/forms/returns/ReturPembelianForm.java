@@ -52,6 +52,7 @@ import com.ganesha.minimarket.model.PurchaseReturnDetail;
 import com.ganesha.minimarket.model.PurchaseReturnHeader;
 import com.ganesha.minimarket.model.Supplier;
 import com.ganesha.minimarket.ui.forms.searchentity.SearchEntityDialog;
+import com.ganesha.minimarket.utils.PermissionConstants;
 
 public class ReturPembelianForm extends XJDialog {
 
@@ -116,6 +117,7 @@ public class ReturPembelianForm extends XJDialog {
 	public ReturPembelianForm(Window parent) {
 		super(parent);
 		setTitle("Retur Pembelian");
+		setPermissionCode(PermissionConstants.PURRTN_FORM);
 		setCloseOnEsc(false);
 
 		getContentPane().setLayout(

@@ -30,6 +30,7 @@ import com.ganesha.desktop.component.xtableutils.XTableParameter;
 import com.ganesha.desktop.component.xtableutils.XTableUtils;
 import com.ganesha.hibernate.HibernateUtils;
 import com.ganesha.minimarket.facade.RoleFacade;
+import com.ganesha.minimarket.utils.PermissionConstants;
 import com.ganesha.model.Role;
 import com.ganesha.model.RolePermissionLink;
 
@@ -56,6 +57,7 @@ public class RoleListDialog extends XJTableDialog {
 	public RoleListDialog(Window parent) {
 		super(parent);
 		setTitle("Master Role");
+		setPermissionCode(PermissionConstants.ROLE_LIST);
 		getContentPane()
 				.setLayout(new MigLayout("", "[800]", "[][300,grow][]"));
 

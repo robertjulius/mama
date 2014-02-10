@@ -44,6 +44,7 @@ import com.ganesha.minimarket.model.Item;
 import com.ganesha.minimarket.model.ItemStock;
 import com.ganesha.minimarket.model.StockOpnameDetail;
 import com.ganesha.minimarket.ui.forms.stockopname.StockOpnameConfirmationDialog.ConfirmType;
+import com.ganesha.minimarket.utils.PermissionConstants;
 
 public class StockOpnameListDialog extends XJTableDialog {
 	private static final long serialVersionUID = 1452286313727721700L;
@@ -92,6 +93,7 @@ public class StockOpnameListDialog extends XJTableDialog {
 		super(parent);
 
 		setTitle("Stock Opname");
+		setPermissionCode(PermissionConstants.STOCKOPNAME_LIST);
 		getContentPane().setLayout(
 				new MigLayout("", "[1000,grow]", "[grow][300,grow][]"));
 		setCloseOnEsc(false);

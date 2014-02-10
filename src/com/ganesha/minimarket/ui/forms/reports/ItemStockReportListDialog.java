@@ -38,6 +38,7 @@ import com.ganesha.minimarket.facade.ItemStockReportFacade;
 import com.ganesha.minimarket.facade.StockFacade;
 import com.ganesha.minimarket.model.Item;
 import com.ganesha.minimarket.model.ItemStock;
+import com.ganesha.minimarket.utils.PermissionConstants;
 
 public class ItemStockReportListDialog extends XJTableDialog {
 
@@ -85,6 +86,8 @@ public class ItemStockReportListDialog extends XJTableDialog {
 		super(parent);
 
 		setTitle("Laporan Stok Barang");
+		setPermissionCode(PermissionConstants.REPORT_STOCK_LIST);
+
 		getContentPane().setLayout(
 				new MigLayout("", "[600,grow]", "[grow][300,grow][]"));
 

@@ -35,6 +35,7 @@ import com.ganesha.desktop.component.xtableutils.XTableUtils;
 import com.ganesha.hibernate.HibernateUtils;
 import com.ganesha.minimarket.facade.SupplierFacade;
 import com.ganesha.minimarket.model.Supplier;
+import com.ganesha.minimarket.utils.PermissionConstants;
 
 public class SupplierListDialog extends XJTableDialog {
 	private static final long serialVersionUID = 1452286313727721700L;
@@ -77,6 +78,7 @@ public class SupplierListDialog extends XJTableDialog {
 		super(parent);
 
 		setTitle("Master Supplier");
+		setPermissionCode(PermissionConstants.SUPPLIER_LIST);
 		getContentPane().setLayout(
 				new MigLayout("", "[1000,grow]", "[][300,grow][]"));
 

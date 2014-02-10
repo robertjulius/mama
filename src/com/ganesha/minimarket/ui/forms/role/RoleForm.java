@@ -28,6 +28,7 @@ import com.ganesha.desktop.component.XJTextField;
 import com.ganesha.hibernate.HibernateUtils;
 import com.ganesha.minimarket.facade.PermissionFacade;
 import com.ganesha.minimarket.facade.RoleFacade;
+import com.ganesha.minimarket.utils.PermissionConstants;
 import com.ganesha.model.Permission;
 import com.ganesha.model.Role;
 import com.ganesha.model.RolePermissionLink;
@@ -61,6 +62,7 @@ public class RoleForm extends XJDialog {
 		super(parent);
 		this.actionType = actionType;
 		setTitle("Form Role");
+		setPermissionCode(PermissionConstants.ROLE_FORM);
 		setCloseOnEsc(false);
 
 		getContentPane().setLayout(

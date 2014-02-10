@@ -39,6 +39,7 @@ import com.ganesha.hibernate.HibernateUtils;
 import com.ganesha.minimarket.facade.StockOpnameFacade;
 import com.ganesha.minimarket.model.StockOpnameDetail;
 import com.ganesha.minimarket.model.StockOpnameHeader;
+import com.ganesha.minimarket.utils.PermissionConstants;
 
 public class StockOpnameReportListDialog extends XJTableDialog {
 	private static final long serialVersionUID = 1452286313727721700L;
@@ -61,6 +62,9 @@ public class StockOpnameReportListDialog extends XJTableDialog {
 		super(parent);
 		getContentPane().setLayout(
 				new MigLayout("", "[300,grow]", "[][300,grow][]"));
+
+		setTitle("Laporan Stock Opname");
+		setPermissionCode(PermissionConstants.REPORT_STOCKOPNAME_LIST);
 
 		table = new XJTable() {
 			private static final long serialVersionUID = 1L;

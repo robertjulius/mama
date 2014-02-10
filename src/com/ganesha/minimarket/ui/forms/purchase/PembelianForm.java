@@ -54,6 +54,7 @@ import com.ganesha.minimarket.model.PurchaseHeader;
 import com.ganesha.minimarket.model.Supplier;
 import com.ganesha.minimarket.ui.forms.searchentity.SearchEntityDialog;
 import com.ganesha.minimarket.ui.forms.stock.StockForm;
+import com.ganesha.minimarket.utils.PermissionConstants;
 
 public class PembelianForm extends XJDialog {
 
@@ -118,6 +119,7 @@ public class PembelianForm extends XJDialog {
 	public PembelianForm(Window parent) {
 		super(parent);
 		setTitle("Transaksi Pembelian");
+		setPermissionCode(PermissionConstants.PUR_FORM);
 		setCloseOnEsc(false);
 
 		getContentPane().setLayout(

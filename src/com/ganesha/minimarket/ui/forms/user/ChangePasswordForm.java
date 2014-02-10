@@ -22,6 +22,7 @@ import com.ganesha.desktop.component.XJPasswordField;
 import com.ganesha.hibernate.HibernateUtils;
 import com.ganesha.minimarket.Main;
 import com.ganesha.minimarket.facade.UserFacade;
+import com.ganesha.minimarket.utils.PermissionConstants;
 
 public class ChangePasswordForm extends XJDialog {
 
@@ -35,7 +36,8 @@ public class ChangePasswordForm extends XJDialog {
 
 	public ChangePasswordForm(Window parent) {
 		super(parent);
-		setTitle("Form User");
+		setTitle("Ganti Password");
+		setPermissionCode(PermissionConstants.CHGPWD_FORM);
 
 		getContentPane().setLayout(new MigLayout("", "[]", "[grow][]"));
 

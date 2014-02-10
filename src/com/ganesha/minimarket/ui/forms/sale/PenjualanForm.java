@@ -59,6 +59,7 @@ import com.ganesha.minimarket.model.ItemStock;
 import com.ganesha.minimarket.model.SaleDetail;
 import com.ganesha.minimarket.model.SaleHeader;
 import com.ganesha.minimarket.ui.forms.searchentity.SearchEntityDialog;
+import com.ganesha.minimarket.utils.PermissionConstants;
 
 public class PenjualanForm extends XJDialog {
 
@@ -119,6 +120,7 @@ public class PenjualanForm extends XJDialog {
 	public PenjualanForm(Window parent) {
 		super(parent);
 		setTitle("Transaksi Penjualan");
+		setPermissionCode(PermissionConstants.SAL_FORM);
 		setCloseOnEsc(false);
 
 		getContentPane().setLayout(

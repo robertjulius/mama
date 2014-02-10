@@ -36,13 +36,13 @@ import com.ganesha.core.exception.AppException;
 import com.ganesha.core.exception.UserException;
 import com.ganesha.core.utils.CommonUtils;
 import com.ganesha.core.utils.Formatter;
+import com.ganesha.core.utils.GeneralConstants;
 import com.ganesha.hibernate.HqlParameter;
 import com.ganesha.minimarket.Main;
 import com.ganesha.minimarket.model.Customer;
 import com.ganesha.minimarket.model.ItemStock;
 import com.ganesha.minimarket.model.SaleDetail;
 import com.ganesha.minimarket.model.SaleHeader;
-import com.ganesha.minimarket.ui.forms.systemsetting.SystemSettingForm;
 import com.ganesha.minimarket.utils.ReceiptPrinter;
 import com.ganesha.minimarket.utils.ReceiptPrinter.ItemBelanja;
 
@@ -107,7 +107,7 @@ public class SaleFacade implements TransactionFacade {
 		InputStream is = null;
 		try {
 			String printerName = (String) SystemSetting
-					.get(SystemSettingForm.SYSTEM_SETTING_PRINTER_RECEIPT);
+					.get(GeneralConstants.SYSTEM_SETTING_PRINTER_RECEIPT);
 			is = new ByteArrayInputStream(receipt.getBytes());
 			for (PrintService printService : services) {
 				if (printService.getName().equals(printerName)) {

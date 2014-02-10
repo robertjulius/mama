@@ -5,38 +5,8 @@ import java.util.List;
 
 import org.hibernate.Session;
 
-import com.ganesha.desktop.component.permissionutils.PermissionControl;
 import com.ganesha.hibernate.HibernateUtils;
 import com.ganesha.minimarket.facade.GlobalFacade;
-import com.ganesha.minimarket.ui.forms.customer.CustomerForm;
-import com.ganesha.minimarket.ui.forms.customer.CustomerListDialog;
-import com.ganesha.minimarket.ui.forms.discount.DiscountForm;
-import com.ganesha.minimarket.ui.forms.discount.DiscountListDialog;
-import com.ganesha.minimarket.ui.forms.payable.PayableForm;
-import com.ganesha.minimarket.ui.forms.payable.PayableListDialog;
-import com.ganesha.minimarket.ui.forms.purchase.PembelianForm;
-import com.ganesha.minimarket.ui.forms.receivable.ReceivableForm;
-import com.ganesha.minimarket.ui.forms.receivable.ReceivableListDialog;
-import com.ganesha.minimarket.ui.forms.reports.ItemStockReportListDialog;
-import com.ganesha.minimarket.ui.forms.reports.ReportViewerDialog;
-import com.ganesha.minimarket.ui.forms.reports.StockOpnameReportListDialog;
-import com.ganesha.minimarket.ui.forms.reports.TransactionReportListDialog;
-import com.ganesha.minimarket.ui.forms.returns.ReturPembelianForm;
-import com.ganesha.minimarket.ui.forms.returns.ReturPenjualanForm;
-import com.ganesha.minimarket.ui.forms.role.RoleForm;
-import com.ganesha.minimarket.ui.forms.role.RoleListDialog;
-import com.ganesha.minimarket.ui.forms.sale.PenjualanForm;
-import com.ganesha.minimarket.ui.forms.stock.StockForm;
-import com.ganesha.minimarket.ui.forms.stock.StockListDialog;
-import com.ganesha.minimarket.ui.forms.stockopname.StockOpnameConfirmationDialog;
-import com.ganesha.minimarket.ui.forms.stockopname.StockOpnameListDialog;
-import com.ganesha.minimarket.ui.forms.supplier.SupplierForm;
-import com.ganesha.minimarket.ui.forms.supplier.SupplierListDialog;
-import com.ganesha.minimarket.ui.forms.systemsetting.SystemSettingForm;
-import com.ganesha.minimarket.ui.forms.systemsetting.TestReceiptPrinter;
-import com.ganesha.minimarket.ui.forms.user.ChangePasswordForm;
-import com.ganesha.minimarket.ui.forms.user.UserForm;
-import com.ganesha.minimarket.ui.forms.user.UserListDialog;
 import com.ganesha.model.Permission;
 
 public class PermissionConsistencyChecker {
@@ -47,136 +17,163 @@ public class PermissionConsistencyChecker {
 		permissions = new ArrayList<>();
 
 		// Administrasi - Role
-		permissions.add(createPermission("/administrasi/role",
+		permissions.add(createPermission(PermissionConstants.MN_ADMIN_ROLE,
 				"/Administrasi/Role", 210));
-		permissions.add(createPermission(RoleListDialog.class,
-				"Role List Dialog", 211));
-		permissions.add(createPermission(RoleForm.class, "Role Form", 212));
+		permissions.add(createPermission(PermissionConstants.ROLE_LIST,
+				"Role List", 211));
+		permissions.add(createPermission(PermissionConstants.ROLE_FORM,
+				"Role Form", 212));
 
 		// Administrasi - User
-		permissions.add(createPermission("/administrasi/user",
+		permissions.add(createPermission(PermissionConstants.MN_ADMIN_USER,
 				"/Administrasi/User", 220));
-		permissions.add(createPermission(UserListDialog.class,
-				"User List Dialog", 221));
-		permissions.add(createPermission(UserForm.class, "User Form", 222));
+		permissions.add(createPermission(PermissionConstants.USER_LIST,
+				"User List", 221));
+		permissions.add(createPermission(PermissionConstants.USER_FORM,
+				"User Form", 222));
 
 		// Administrasi - Change Password
-		permissions.add(createPermission("/administrasi/changepassword",
+		permissions.add(createPermission(PermissionConstants.MN_ADMIN_CHGPWD,
 				"/Administrasi/Ganti Password", 230));
-		permissions.add(createPermission(ChangePasswordForm.class,
+		permissions.add(createPermission(PermissionConstants.CHGPWD_FORM,
 				"Change Password Form", 231));
 
 		// Master Date - Persediaan Barang
-		permissions.add(createPermission("/master/stock",
+		permissions.add(createPermission(PermissionConstants.MN_MASTER_STOCK,
 				"/Master Data/Persediaan Barang", 310));
-		permissions.add(createPermission(StockListDialog.class,
-				"Stock List Dialog", 311));
-		permissions.add(createPermission(StockForm.class, "Stock Form", 312));
+		permissions.add(createPermission(PermissionConstants.STOCK_LIST,
+				"Stock List", 311));
+		permissions.add(createPermission(PermissionConstants.STOCK_FORM,
+				"Stock Form", 312));
 
 		// Master Date - Supplier
-		permissions.add(createPermission("/master/supplier",
+		permissions.add(createPermission(
+				PermissionConstants.MN_MASTER_SUPPLIER,
 				"/Master Data/Supplier", 320));
-		permissions.add(createPermission(SupplierListDialog.class,
-				"Supplier List Dialog", 321));
-		permissions.add(createPermission(SupplierForm.class, "Supplier Form",
-				322));
+		permissions.add(createPermission(PermissionConstants.SUPPLIER_LIST,
+				"Supplier List", 321));
+		permissions.add(createPermission(PermissionConstants.SUPPLIER_FORM,
+				"Supplier Form", 322));
 
 		// Master Date - Customer
-		permissions.add(createPermission("/master/customer",
+		permissions.add(createPermission(
+				PermissionConstants.MN_MASTER_CUSTOMER,
 				"/Master Data/Customer", 330));
-		permissions.add(createPermission(CustomerListDialog.class,
-				"Customer List Dialog", 331));
-		permissions.add(createPermission(CustomerForm.class, "Customer Form",
-				332));
+		permissions.add(createPermission(PermissionConstants.CUST_LIST,
+				"Customer List", 331));
+		permissions.add(createPermission(PermissionConstants.CUST_FORM,
+				"Customer Form", 332));
 
 		// Master Date - Discount
-		permissions.add(createPermission("/master/discount",
+		permissions.add(createPermission(
+				PermissionConstants.MN_MASTER_DISCOUNT,
 				"/Master Data/Discount", 340));
-		permissions.add(createPermission(DiscountListDialog.class,
-				"Discount List Dialog", 341));
-		permissions.add(createPermission(DiscountForm.class, "Discount Form",
-				342));
+		permissions.add(createPermission(PermissionConstants.DISCOUNT_LIST,
+				"Discount List", 341));
+		permissions.add(createPermission(PermissionConstants.DISCOUNT_FORM,
+				"Discount Form", 342));
 
 		// Transaction - Pembelian
-		permissions.add(createPermission("/transaction/purchase",
+		permissions.add(createPermission(PermissionConstants.MN_TRX_PUR,
 				"/Transaksi/Pembelian", 410));
-		permissions.add(createPermission(PembelianForm.class, "Pembelian Form",
-				411));
+		permissions.add(createPermission(PermissionConstants.PUR_FORM,
+				"Pembelian Form", 411));
 
 		// Transaction - Retur Pembelian
-		permissions.add(createPermission("/transaction/purchasereturn",
+		permissions.add(createPermission(PermissionConstants.MN_TRX_PURRTN,
 				"/Transaksi/Retur Pembelian", 420));
-		permissions.add(createPermission(ReturPembelianForm.class,
+		permissions.add(createPermission(PermissionConstants.PURRTN_FORM,
 				"Retur Pembelian Form", 421));
 
 		// Transaction - Penjualan
-		permissions.add(createPermission("/transaction/sale",
+		permissions.add(createPermission(PermissionConstants.MN_TRX_SAL,
 				"/Transaksi/Penjualan", 430));
-		permissions.add(createPermission(PenjualanForm.class, "Penjualan Form",
-				431));
+		permissions.add(createPermission(PermissionConstants.SAL_FORM,
+				"Penjualan Form", 431));
 
 		// Transaction - Retur Penjualan
-		permissions.add(createPermission("/transaction/salereturn",
+		permissions.add(createPermission(PermissionConstants.MN_TRX_SALRTN,
 				"/Transaksi/Retur Penjualan", 440));
-		permissions.add(createPermission(ReturPenjualanForm.class,
+		permissions.add(createPermission(PermissionConstants.SALRTN_FORM,
 				"Retur Penjualan Form", 441));
 
 		// Transaction - Payable
-		permissions.add(createPermission("/transaction/payable",
+		permissions.add(createPermission(PermissionConstants.MN_TRX_PAYABLE,
 				"/Transaksi/Hutang", 450));
-		permissions.add(createPermission(PayableListDialog.class,
-				"Payable List Dialog", 451));
-		permissions
-				.add(createPermission(PayableForm.class, "Payable Form", 452));
+		permissions.add(createPermission(PermissionConstants.PAYABLE_LIST,
+				"Payable List", 451));
+		permissions.add(createPermission(PermissionConstants.PAYABLE_FORM,
+				"Payable Form", 452));
 
 		// Transaction - Receivable
-		permissions.add(createPermission("/transaction/receivable",
+		permissions.add(createPermission(PermissionConstants.MN_TRX_RECEIVABLE,
 				"/Transaksi/Piutang", 460));
-		permissions.add(createPermission(ReceivableListDialog.class,
-				"Receivable List Dialog", 461));
-		permissions.add(createPermission(ReceivableForm.class,
+		permissions.add(createPermission(PermissionConstants.RECEIVABLE_LIST,
+				"Receivable List", 461));
+		permissions.add(createPermission(PermissionConstants.RECEIVABLE_FORM,
 				"Receivable Form", 462));
 
 		// Back Office - Laporan - Laporan Transaksi
-		permissions.add(createPermission("/backoffice/report/transaction",
+		permissions.add(createPermission(PermissionConstants.MN_REPORT_TRX,
 				"/Back Office/Laporan/Laporan Transaksi", 510));
-		permissions.add(createPermission(TransactionReportListDialog.class,
-				"Transaction Report List Dialog", 511));
+		permissions.add(createPermission(PermissionConstants.REPORT_TRX_LIST,
+				"Transaction Report List", 511));
 
 		// Back Office - Laporan - Laporan Stok Barang
-		permissions.add(createPermission("/backoffice/report/stock",
+		permissions.add(createPermission(PermissionConstants.MN_REPORT_STOCK,
 				"/Back Office/Laporan/Laporan Stok Barang", 520));
-		permissions.add(createPermission(ItemStockReportListDialog.class,
-				"Item Stock Report List Dialog", 521));
+		permissions.add(createPermission(PermissionConstants.REPORT_STOCK_LIST,
+				"Item Stock Report List", 521));
 
 		// Back Office - Laporan - Laporan Stok Opname
-		permissions.add(createPermission("/backoffice/report/stockopname",
+		permissions.add(createPermission(
+				PermissionConstants.MN_REPORT_STOCKOPNAME,
 				"/Back Office/Laporan/Laporan Stok Opname", 530));
-		permissions.add(createPermission(StockOpnameReportListDialog.class,
-				"Stock Opname Report List Dialog", 531));
+		permissions.add(createPermission(
+				PermissionConstants.REPORT_STOCKOPNAME_LIST,
+				"Stock Opname Report List", 531));
 
-		permissions.add(createPermission(ReportViewerDialog.class,
-				"Report Viewer Dialog", 539));
+		permissions.add(createPermission(PermissionConstants.REPORT_VIEWER,
+				"Report Viewer", 539));
 
 		// Back Office - Stock Opname
-		permissions.add(createPermission("/backoffice/stockopname",
+		permissions.add(createPermission(PermissionConstants.MN_BO_STOCKOPNAME,
 				"/Back Office/Stock Opname", 540));
-		permissions.add(createPermission(StockOpnameListDialog.class,
-				"Stock Opname List Dialog", 541));
-		permissions.add(createPermission(StockOpnameConfirmationDialog.class,
-				"Stock Opname Confirmation Dialog", 542));
+		permissions.add(createPermission(PermissionConstants.STOCKOPNAME_LIST,
+				"Stock Opname List", 541));
+		permissions.add(createPermission(
+				PermissionConstants.STOCKOPNAME_CONFIRM,
+				"Stock Opname Confirmation", 542));
 
-		// Setting - Setting Aplikasi
-		permissions.add(createPermission("/setting/systemsetting",
-				"/Setting/Setting Aplikasi", 610));
-		permissions.add(createPermission(SystemSettingForm.class,
-				"System Setting Form", 611));
+		// Setting - Setting Database
+		permissions.add(createPermission(PermissionConstants.MN_SETTING_DB,
+				"/Setting/Database", 610));
+		permissions.add(createPermission(PermissionConstants.SETTING_DB_FORM,
+				"Setting Database Form", 611));
 
-		// Setting - Receipt Printer Test
-		permissions.add(createPermission("/setting/receipttest",
-				"/Setting/Receipt Printer Test", 620));
-		permissions.add(createPermission(TestReceiptPrinter.class,
-				"Receipt Printer Test", 621));
+		// Setting - Setting Printer
+		permissions
+				.add(createPermission(PermissionConstants.MN_SETTING_PRINTER,
+						"/Setting/Printer", 620));
+		permissions.add(createPermission(
+				PermissionConstants.SETTING_PRINTER_FORM,
+				"Setting Printer Form", 621));
+
+		// Setting - Setting Printer
+		permissions.add(createPermission(
+				PermissionConstants.MN_SETTING_PROBLEMREPORT,
+				"/Setting/Problem Report", 630));
+		permissions.add(createPermission(
+				PermissionConstants.SETTING_PROBLEMREPORT_FORM,
+				"Setting Problem Report Form", 631));
+
+		// Setting - Setting Printer
+		permissions.add(createPermission(
+				PermissionConstants.MN_SETTING_DBCONSISTENCY,
+				"/Setting/Database Consistency", 640));
+		permissions.add(createPermission(
+				PermissionConstants.SETTING_DBCONSISTENCY,
+				"Database Consistency Checker", 641));
 	}
 
 	public void initDB() {
@@ -201,11 +198,6 @@ public class PermissionConsistencyChecker {
 		} finally {
 			session.close();
 		}
-	}
-
-	private Permission createPermission(
-			Class<? extends PermissionControl> clazz, String name, int orderNum) {
-		return createPermission(clazz.getName(), name, orderNum);
 	}
 
 	private Permission createPermission(String code, String name, int orderNum) {

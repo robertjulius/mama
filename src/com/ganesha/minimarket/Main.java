@@ -12,7 +12,6 @@ import javax.swing.plaf.nimbus.NimbusLookAndFeel;
 import org.hibernate.Query;
 import org.hibernate.Session;
 
-import com.ganesha.accounting.utils.CoaConsistencyChecker;
 import com.ganesha.core.desktop.ExceptionHandler;
 import com.ganesha.core.exception.AppException;
 import com.ganesha.core.utils.CommonUtils;
@@ -22,7 +21,6 @@ import com.ganesha.hibernate.HqlParameter;
 import com.ganesha.minimarket.model.Company;
 import com.ganesha.minimarket.ui.forms.login.LoginForm;
 import com.ganesha.minimarket.utils.CompanyConsistencyChecker;
-import com.ganesha.minimarket.utils.PermissionConsistencyChecker;
 import com.ganesha.minimarket.utils.SimplePermissionChecker;
 import com.ganesha.model.User;
 
@@ -52,16 +50,11 @@ public class Main {
 	public static void runApp() throws AppException {
 		setLookAndFeel();
 
-		CoaConsistencyChecker coaChecker = new CoaConsistencyChecker();
-		coaChecker.check();
-
 		CompanyConsistencyChecker companyChecker = new CompanyConsistencyChecker();
 		companyChecker.check();
 		company = companyChecker.getCompany();
 
 		PermissionChecker.register(new SimplePermissionChecker());
-		PermissionConsistencyChecker permissionChecker = new PermissionConsistencyChecker();
-		permissionChecker.initDB();
 
 		new LoginForm().setVisible(true);
 	}

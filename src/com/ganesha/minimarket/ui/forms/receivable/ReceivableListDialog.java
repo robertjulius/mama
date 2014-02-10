@@ -32,6 +32,7 @@ import com.ganesha.minimarket.facade.ReceivableFacade;
 import com.ganesha.minimarket.facade.SupplierFacade;
 import com.ganesha.minimarket.model.ReceivableSummary;
 import com.ganesha.minimarket.model.Supplier;
+import com.ganesha.minimarket.utils.PermissionConstants;
 
 public class ReceivableListDialog extends XJTableDialog {
 	private static final long serialVersionUID = 1452286313727721700L;
@@ -61,6 +62,7 @@ public class ReceivableListDialog extends XJTableDialog {
 		super(parent);
 
 		setTitle("Master Piutang");
+		setPermissionCode(PermissionConstants.RECEIVABLE_LIST);
 		getContentPane().setLayout(
 				new MigLayout("", "[500,grow]", "[][300,grow][]"));
 

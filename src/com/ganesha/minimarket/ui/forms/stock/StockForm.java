@@ -34,6 +34,7 @@ import com.ganesha.minimarket.facade.StockFacade;
 import com.ganesha.minimarket.model.Item;
 import com.ganesha.minimarket.model.ItemStock;
 import com.ganesha.minimarket.utils.BarcodeUtils;
+import com.ganesha.minimarket.utils.PermissionConstants;
 
 public class StockForm extends XJDialog {
 
@@ -70,6 +71,8 @@ public class StockForm extends XJDialog {
 	public StockForm(Window parent, ActionType actionType) {
 		super(parent);
 		this.actionType = actionType;
+		setTitle("Form Barang");
+		setPermissionCode(PermissionConstants.STOCK_FORM);
 		setCloseOnEsc(false);
 
 		addWindowListener(new WindowAdapter() {
@@ -83,6 +86,7 @@ public class StockForm extends XJDialog {
 			}
 		});
 		setTitle("Form Barang");
+		setPermissionCode(PermissionConstants.STOCK_FORM);
 		getContentPane().setLayout(
 				new MigLayout("", "[400,grow][400]",
 						"[grow][grow][grow][10][grow]"));

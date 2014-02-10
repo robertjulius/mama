@@ -47,6 +47,7 @@ import com.ganesha.minimarket.facade.PurchaseReturnReportFacade;
 import com.ganesha.minimarket.facade.SaleReportFacade;
 import com.ganesha.minimarket.facade.SaleReturnReportFacade;
 import com.ganesha.minimarket.facade.TransactionReportFacade;
+import com.ganesha.minimarket.utils.PermissionConstants;
 
 public class TransactionReportListDialog extends XJTableDialog {
 	private static final long serialVersionUID = 1452286313727721700L;
@@ -94,6 +95,7 @@ public class TransactionReportListDialog extends XJTableDialog {
 
 	public TransactionReportListDialog(Window parent) {
 		super(parent);
+		setPermissionCode(PermissionConstants.REPORT_TRX_LIST);
 		getContentPane().setLayout(
 				new MigLayout("", "[1200,grow]", "[][300,grow][]"));
 

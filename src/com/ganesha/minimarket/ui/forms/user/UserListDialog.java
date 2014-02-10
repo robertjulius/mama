@@ -34,6 +34,7 @@ import com.ganesha.desktop.component.xtableutils.XTableParameter;
 import com.ganesha.desktop.component.xtableutils.XTableUtils;
 import com.ganesha.hibernate.HibernateUtils;
 import com.ganesha.minimarket.facade.UserFacade;
+import com.ganesha.minimarket.utils.PermissionConstants;
 import com.ganesha.model.User;
 import com.ganesha.model.UserRoleLink;
 
@@ -66,6 +67,7 @@ public class UserListDialog extends XJTableDialog {
 		super(parent);
 
 		setTitle("Master User");
+		setPermissionCode(PermissionConstants.USER_LIST);
 		getContentPane()
 				.setLayout(new MigLayout("", "[600]", "[][300,grow][]"));
 

@@ -35,6 +35,7 @@ import com.ganesha.desktop.component.xtableutils.XTableUtils;
 import com.ganesha.hibernate.HibernateUtils;
 import com.ganesha.minimarket.facade.CustomerFacade;
 import com.ganesha.minimarket.model.Customer;
+import com.ganesha.minimarket.utils.PermissionConstants;
 
 public class CustomerListDialog extends XJTableDialog {
 	private static final long serialVersionUID = 1452286313727721700L;
@@ -68,6 +69,7 @@ public class CustomerListDialog extends XJTableDialog {
 		super(parent);
 
 		setTitle("Master Customer");
+		setPermissionCode(PermissionConstants.CUST_LIST);
 		getContentPane().setLayout(
 				new MigLayout("", "[500,grow]", "[][300,grow][]"));
 

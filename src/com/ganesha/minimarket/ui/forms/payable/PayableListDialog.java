@@ -32,6 +32,7 @@ import com.ganesha.minimarket.facade.PayableFacade;
 import com.ganesha.minimarket.facade.SupplierFacade;
 import com.ganesha.minimarket.model.PayableSummary;
 import com.ganesha.minimarket.model.Supplier;
+import com.ganesha.minimarket.utils.PermissionConstants;
 
 public class PayableListDialog extends XJTableDialog {
 	private static final long serialVersionUID = 1452286313727721700L;
@@ -61,6 +62,7 @@ public class PayableListDialog extends XJTableDialog {
 		super(parent);
 
 		setTitle("Master Hutang");
+		setPermissionCode(PermissionConstants.PAYABLE_LIST);
 		getContentPane().setLayout(
 				new MigLayout("", "[500,grow]", "[][300,grow][]"));
 

@@ -39,10 +39,12 @@ import com.ganesha.minimarket.ui.forms.sale.PenjualanForm;
 import com.ganesha.minimarket.ui.forms.stock.StockListDialog;
 import com.ganesha.minimarket.ui.forms.stockopname.StockOpnameListDialog;
 import com.ganesha.minimarket.ui.forms.supplier.SupplierListDialog;
-import com.ganesha.minimarket.ui.forms.systemsetting.SystemSettingForm;
-import com.ganesha.minimarket.ui.forms.systemsetting.TestReceiptPrinter;
+import com.ganesha.minimarket.ui.forms.systemsetting.DbConsistencyChecker;
+import com.ganesha.minimarket.ui.forms.systemsetting.DbSettingForm;
+import com.ganesha.minimarket.ui.forms.systemsetting.PrinterSettingForm;
 import com.ganesha.minimarket.ui.forms.user.ChangePasswordForm;
 import com.ganesha.minimarket.ui.forms.user.UserListDialog;
+import com.ganesha.minimarket.utils.PermissionConstants;
 
 public class MainFrame extends XJFrame {
 	private static final long serialVersionUID = 5527217675003046133L;
@@ -69,7 +71,8 @@ public class MainFrame extends XJFrame {
 		XJMenu mnAdministrasi = new XJMenu("Administrasi");
 		menuBar.add(mnAdministrasi);
 
-		XJMenuItem mntmRole = new XJMenuItem("Role", "/administrasi/role");
+		XJMenuItem mntmRole = new XJMenuItem("Role",
+				PermissionConstants.MN_ADMIN_ROLE);
 		mntmRole.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
@@ -82,7 +85,8 @@ public class MainFrame extends XJFrame {
 		});
 		mnAdministrasi.add(mntmRole);
 
-		XJMenuItem mntmUser = new XJMenuItem("User", "/administrasi/user");
+		XJMenuItem mntmUser = new XJMenuItem("User",
+				PermissionConstants.MN_ADMIN_USER);
 		mnAdministrasi.add(mntmUser);
 		mntmUser.addActionListener(new ActionListener() {
 			@Override
@@ -96,7 +100,7 @@ public class MainFrame extends XJFrame {
 		});
 
 		XJMenuItem mntmGantiPassword = new XJMenuItem("Ganti Password",
-				"/administrasi/changepassword");
+				PermissionConstants.MN_ADMIN_CHGPWD);
 		mntmGantiPassword.setPermissionRequired(false);
 		mnAdministrasi.add(mntmGantiPassword);
 		mntmGantiPassword.addActionListener(new ActionListener() {
@@ -114,7 +118,7 @@ public class MainFrame extends XJFrame {
 		menuBar.add(mnMasterData);
 
 		XJMenuItem mntmPersediaan = new XJMenuItem("Persediaan Barang",
-				"/master/stock");
+				PermissionConstants.MN_MASTER_STOCK);
 		mntmPersediaan.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
@@ -127,7 +131,8 @@ public class MainFrame extends XJFrame {
 		});
 		mnMasterData.add(mntmPersediaan);
 
-		XJMenuItem mntmSupplier = new XJMenuItem("Supplier", "/master/supplier");
+		XJMenuItem mntmSupplier = new XJMenuItem("Supplier",
+				PermissionConstants.MN_MASTER_SUPPLIER);
 		mntmSupplier.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
@@ -140,7 +145,8 @@ public class MainFrame extends XJFrame {
 		});
 		mnMasterData.add(mntmSupplier);
 
-		XJMenuItem mntmCustomer = new XJMenuItem("Customer", "/master/customer");
+		XJMenuItem mntmCustomer = new XJMenuItem("Customer",
+				PermissionConstants.MN_MASTER_CUSTOMER);
 		mntmCustomer.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
@@ -153,7 +159,8 @@ public class MainFrame extends XJFrame {
 		});
 		mnMasterData.add(mntmCustomer);
 
-		XJMenuItem mntmDiskon = new XJMenuItem("Diskon", "/master/discount");
+		XJMenuItem mntmDiskon = new XJMenuItem("Diskon",
+				PermissionConstants.MN_MASTER_DISCOUNT);
 		mntmDiskon.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
@@ -170,7 +177,7 @@ public class MainFrame extends XJFrame {
 		menuBar.add(mnTransaksi);
 
 		XJMenuItem mntmPembelian = new XJMenuItem("Pembelian",
-				"/transaction/purchase");
+				PermissionConstants.MN_TRX_PUR);
 		mntmPembelian.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
@@ -184,7 +191,7 @@ public class MainFrame extends XJFrame {
 		mnTransaksi.add(mntmPembelian);
 
 		XJMenuItem mntmReturPembelian = new XJMenuItem("Retur Pembelian",
-				"/transaction/purchasereturn");
+				PermissionConstants.MN_TRX_PURRTN);
 		mntmReturPembelian.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
@@ -200,7 +207,8 @@ public class MainFrame extends XJFrame {
 		JSeparator separator = new JSeparator();
 		mnTransaksi.add(separator);
 
-		mntmPenjualan = new XJMenuItem("Penjualan", "/transaction/sale");
+		mntmPenjualan = new XJMenuItem("Penjualan",
+				PermissionConstants.MN_TRX_SAL);
 		mntmPenjualan.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
@@ -214,7 +222,7 @@ public class MainFrame extends XJFrame {
 		mnTransaksi.add(mntmPenjualan);
 
 		XJMenuItem mntmReturPenjualan = new XJMenuItem("Retur Penjualan",
-				"/transaction/salereturn");
+				PermissionConstants.MN_TRX_SALRTN);
 		mntmReturPenjualan.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
@@ -230,7 +238,8 @@ public class MainFrame extends XJFrame {
 		JSeparator separator_1 = new JSeparator();
 		mnTransaksi.add(separator_1);
 
-		XJMenuItem mntmHutang = new XJMenuItem("Hutang", "/transaction/payable");
+		XJMenuItem mntmHutang = new XJMenuItem("Hutang",
+				PermissionConstants.MN_TRX_PAYABLE);
 		mntmHutang.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
@@ -244,7 +253,7 @@ public class MainFrame extends XJFrame {
 		mnTransaksi.add(mntmHutang);
 
 		XJMenuItem mntmPiutang = new XJMenuItem("Piutang",
-				"/transaction/receivable");
+				PermissionConstants.MN_TRX_RECEIVABLE);
 		mntmPiutang.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
@@ -264,7 +273,7 @@ public class MainFrame extends XJFrame {
 		mnBackOffice.add(mnReport);
 
 		XJMenuItem mntmReportTransaksi = new XJMenuItem("Laporan Transaksi",
-				"/backoffice/report/transaction");
+				PermissionConstants.MN_REPORT_TRX);
 		mntmReportTransaksi.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
@@ -279,7 +288,7 @@ public class MainFrame extends XJFrame {
 		mnReport.add(mntmReportTransaksi);
 
 		XJMenuItem mntmLaporanStokBarang = new XJMenuItem(
-				"Laporan Stok Barang", "/backoffice/report/stock");
+				"Laporan Stok Barang", PermissionConstants.MN_REPORT_STOCK);
 		mntmLaporanStokBarang.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
@@ -294,7 +303,8 @@ public class MainFrame extends XJFrame {
 		mnReport.add(mntmLaporanStokBarang);
 
 		XJMenuItem mntmLaporanStockOpname = new XJMenuItem(
-				"Laporan Stock Opname", "/backoffice/report/stockopname");
+				"Laporan Stock Opname",
+				PermissionConstants.MN_REPORT_STOCKOPNAME);
 		mntmLaporanStockOpname.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
@@ -309,7 +319,7 @@ public class MainFrame extends XJFrame {
 		mnReport.add(mntmLaporanStockOpname);
 
 		XJMenuItem mntmStockOpname = new XJMenuItem("Stock Opname",
-				"/backoffice/stockopname");
+				PermissionConstants.MN_BO_STOCKOPNAME);
 		mntmStockOpname.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
@@ -325,35 +335,49 @@ public class MainFrame extends XJFrame {
 		XJMenu mnSetting = new XJMenu("Setting");
 		menuBar.add(mnSetting);
 
-		XJMenuItem mntmSettingAplikasi = new XJMenuItem("Setting Aplikasi",
-				"/setting/systemsetting");
-		mntmSettingAplikasi.addActionListener(new ActionListener() {
+		XJMenuItem mntmDbSetting = new XJMenuItem("Database",
+				PermissionConstants.MN_SETTING_DB);
+		mntmDbSetting.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				try {
-					new SystemSettingForm(MainFrame.this).setVisible(true);
+					new DbSettingForm(MainFrame.this).setVisible(true);
 				} catch (Exception ex) {
 					ExceptionHandler.handleException(MainFrame.this, ex);
 				}
 			}
 		});
-		mnSetting.add(mntmSettingAplikasi);
+		mnSetting.add(mntmDbSetting);
 
-		XJMenuItem mntmReceiptPrinterTest = new XJMenuItem(
-				"Receipt Printer Test", "/setting/receipttest");
-		mntmReceiptPrinterTest.addActionListener(new ActionListener() {
+		XJMenuItem mntmPrinterSetting = new XJMenuItem("Printer",
+				PermissionConstants.MN_SETTING_PRINTER);
+		mntmPrinterSetting.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				try {
-					TestReceiptPrinter.showDialog(MainFrame.this);
+					new PrinterSettingForm(MainFrame.this).setVisible(true);
 				} catch (Exception ex) {
 					ExceptionHandler.handleException(MainFrame.this, ex);
 				}
 			}
 		});
-		mnSetting.add(mntmReceiptPrinterTest);
+		mnSetting.add(mntmPrinterSetting);
 
-		setExtendedState(JFrame.MAXIMIZED_BOTH);
+		XJMenuItem mntmDbConsistencyCheckerSetting = new XJMenuItem(
+				"DB Consistency", PermissionConstants.MN_SETTING_DBCONSISTENCY);
+		mntmDbConsistencyCheckerSetting.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				try {
+					new DbConsistencyChecker(MainFrame.this).setVisible(true);
+				} catch (Exception ex) {
+					ExceptionHandler.handleException(MainFrame.this, ex);
+				}
+			}
+		});
+		mnSetting.add(mntmDbConsistencyCheckerSetting);
+
+		// setExtendedState(JFrame.MAXIMIZED_BOTH);
 		pack();
 		setLocationRelativeTo(null);
 		getContentPane().setLayout(new MigLayout("", "[grow]", "[][][][]"));

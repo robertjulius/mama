@@ -22,6 +22,7 @@ public abstract class XJDialog extends JDialog implements XComponentConstants,
 			.getCurrentKeyboardFocusManager();
 	private MyDispatcher dispatcher = new MyDispatcher();
 
+	private String permissionCode;
 	private boolean permissionRequired = true;
 	private boolean closeOnEsc = true;
 
@@ -45,7 +46,7 @@ public abstract class XJDialog extends JDialog implements XComponentConstants,
 
 	@Override
 	public String getPermissionCode() {
-		return getClass().getName();
+		return permissionCode;
 	}
 
 	@Override
@@ -55,6 +56,10 @@ public abstract class XJDialog extends JDialog implements XComponentConstants,
 
 	public void setCloseOnEsc(boolean closeOnEsc) {
 		this.closeOnEsc = closeOnEsc;
+	}
+
+	public void setPermissionCode(String permissionCode) {
+		this.permissionCode = permissionCode;
 	}
 
 	@Override

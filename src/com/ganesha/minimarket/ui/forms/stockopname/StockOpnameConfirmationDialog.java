@@ -14,6 +14,7 @@ import com.ganesha.desktop.component.XEtchedBorder;
 import com.ganesha.desktop.component.XJButton;
 import com.ganesha.desktop.component.XJDialog;
 import com.ganesha.desktop.component.XJPanel;
+import com.ganesha.minimarket.utils.PermissionConstants;
 
 public class StockOpnameConfirmationDialog extends XJDialog {
 	private static final long serialVersionUID = 1452286313727721700L;
@@ -32,6 +33,7 @@ public class StockOpnameConfirmationDialog extends XJDialog {
 	private StockOpnameConfirmationDialog(Window parent, JRViewer viewer) {
 		super(parent);
 		setPreferredSize(new Dimension(1000, 700));
+		setPermissionCode(PermissionConstants.STOCKOPNAME_CONFIRM);
 
 		pnlJasper = new XJPanel();
 		getContentPane().add(pnlJasper, BorderLayout.CENTER);

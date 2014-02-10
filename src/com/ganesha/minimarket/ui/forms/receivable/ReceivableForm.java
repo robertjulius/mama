@@ -32,6 +32,7 @@ import com.ganesha.hibernate.HibernateUtils;
 import com.ganesha.minimarket.facade.ReceivableFacade;
 import com.ganesha.minimarket.model.ReceivableSummary;
 import com.ganesha.minimarket.model.Supplier;
+import com.ganesha.minimarket.utils.PermissionConstants;
 
 public class ReceivableForm extends XJDialog {
 
@@ -59,6 +60,7 @@ public class ReceivableForm extends XJDialog {
 		super(parent);
 
 		setTitle("Pembayaran Piutang");
+		setPermissionCode(PermissionConstants.RECEIVABLE_FORM);
 		setCloseOnEsc(false);
 
 		getContentPane().setLayout(new MigLayout("", "[400][]", "[][]"));

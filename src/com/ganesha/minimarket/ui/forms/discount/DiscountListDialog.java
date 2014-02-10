@@ -37,6 +37,7 @@ import com.ganesha.hibernate.HibernateUtils;
 import com.ganesha.minimarket.facade.DiscountFacade;
 import com.ganesha.minimarket.model.Discount;
 import com.ganesha.minimarket.model.Item;
+import com.ganesha.minimarket.utils.PermissionConstants;
 
 public class DiscountListDialog extends XJTableDialog {
 	private static final long serialVersionUID = 1452286313727721700L;
@@ -69,6 +70,7 @@ public class DiscountListDialog extends XJTableDialog {
 	public DiscountListDialog(Window parent) {
 		super(parent);
 		setTitle("Master Diskon");
+		setPermissionCode(PermissionConstants.DISCOUNT_LIST);
 		getContentPane().setLayout(
 				new MigLayout("", "[600,grow]", "[][300,grow][]"));
 
