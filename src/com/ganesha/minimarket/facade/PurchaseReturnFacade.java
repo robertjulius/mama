@@ -163,8 +163,6 @@ public class PurchaseReturnFacade implements TransactionFacade {
 				.valueOf(remainingReturnAmount));
 		header.setReturnedInFullFlag(returnedInFullFlag);
 
-		header.setDisabled(false);
-		header.setDeleted(false);
 		header.setLastUpdatedBy(Main.getUserLogin().getId());
 		header.setLastUpdatedTimestamp(CommonUtils.getCurrentTimestamp());
 

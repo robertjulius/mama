@@ -155,8 +155,6 @@ public class PurchaseFacade implements TransactionFacade {
 		header.setRemainingPayment(BigDecimal.valueOf(remainingPayment));
 		header.setPaidInFullFlag(paidInFullFlag);
 
-		header.setDisabled(false);
-		header.setDeleted(false);
 		header.setLastUpdatedBy(Main.getUserLogin().getId());
 		header.setLastUpdatedTimestamp(CommonUtils.getCurrentTimestamp());
 

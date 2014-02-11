@@ -145,8 +145,6 @@ public class SaleReturnFacade implements TransactionFacade {
 		header.setTaxPercent(BigDecimal.valueOf(taxPercent));
 		header.setTaxAmount(BigDecimal.valueOf(taxAmount));
 		header.setTotalReturnAmount(BigDecimal.valueOf(totalReturnAmount));
-		header.setDisabled(false);
-		header.setDeleted(false);
 		header.setLastUpdatedBy(Main.getUserLogin().getId());
 		header.setLastUpdatedTimestamp(CommonUtils.getCurrentTimestamp());
 

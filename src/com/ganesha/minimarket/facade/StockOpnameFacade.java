@@ -135,15 +135,10 @@ public class StockOpnameFacade {
 			Timestamp performedBeginTimestamp, Timestamp performedEndTimestamp,
 			Session session) {
 
-		int lastUpdatedBy = Main.getUserLogin().getId();
-		Timestamp lastUpdatedTimestamp = CommonUtils.getCurrentTimestamp();
-
 		StockOpnameHeader stockOpnameHeader = new StockOpnameHeader();
 		stockOpnameHeader.setPerformedBy(Main.getUserLogin());
 		stockOpnameHeader.setPerformedBeginTimestamp(performedBeginTimestamp);
 		stockOpnameHeader.setPerformedEndTimestamp(performedEndTimestamp);
-		stockOpnameHeader.setDisabled(false);
-		stockOpnameHeader.setDeleted(false);
 		stockOpnameHeader.setLastUpdatedBy(Main.getUserLogin().getId());
 		stockOpnameHeader.setLastUpdatedTimestamp(CommonUtils
 				.getCurrentTimestamp());
@@ -156,10 +151,6 @@ public class StockOpnameFacade {
 			session.saveOrUpdate(itemStock);
 
 			stockOpname.setStockOpnameHeader(stockOpnameHeader);
-			stockOpname.setDisabled(false);
-			stockOpname.setDeleted(false);
-			stockOpname.setLastUpdatedBy(lastUpdatedBy);
-			stockOpname.setLastUpdatedTimestamp(lastUpdatedTimestamp);
 			session.saveOrUpdate(stockOpname);
 		}
 	}

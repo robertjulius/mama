@@ -38,8 +38,6 @@ public class PayableFacade {
 		payableSummary.setClientId(clientId);
 		payableSummary.setRemainingAmount(BigDecimal.valueOf(0));
 		payableSummary.setLastPayableTransactionId(-1);
-		payableSummary.setDisabled(false);
-		payableSummary.setDeleted(false);
 		payableSummary.setLastUpdatedBy(Main.getUserLogin().getId());
 		payableSummary.setLastUpdatedTimestamp(CommonUtils
 				.getCurrentTimestamp());

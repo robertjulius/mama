@@ -240,8 +240,6 @@ public class SaleFacade implements TransactionFacade {
 		header.setPay(BigDecimal.valueOf(pay));
 		header.setMoneyChange(BigDecimal.valueOf(moneyChange));
 
-		header.setDisabled(false);
-		header.setDeleted(false);
 		header.setLastUpdatedBy(Main.getUserLogin().getId());
 		header.setLastUpdatedTimestamp(CommonUtils.getCurrentTimestamp());
 

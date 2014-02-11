@@ -38,8 +38,6 @@ public class ReceivableFacade {
 		receivableSummary.setClientId(clientId);
 		receivableSummary.setRemainingAmount(BigDecimal.valueOf(0));
 		receivableSummary.setLastReceivableTransactionId(-1);
-		receivableSummary.setDisabled(false);
-		receivableSummary.setDeleted(false);
 		receivableSummary.setLastUpdatedBy(Main.getUserLogin().getId());
 		receivableSummary.setLastUpdatedTimestamp(CommonUtils
 				.getCurrentTimestamp());

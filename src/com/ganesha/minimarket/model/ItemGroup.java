@@ -7,11 +7,11 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
-import com.ganesha.model.Trackable;
+import com.ganesha.model.Inactivable;
 
 @Entity
 @Table(name = "ITEM_GROUPS")
-public class ItemGroup extends Trackable {
+public class ItemGroup extends Inactivable {
 	private static final long serialVersionUID = -7780389008755790841L;
 
 	@Id

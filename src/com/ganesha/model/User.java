@@ -13,7 +13,7 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name = "USERS")
-public class User extends Trackable {
+public class User extends Inactivable {
 	private static final long serialVersionUID = -7108231842533900375L;
 
 	@Id

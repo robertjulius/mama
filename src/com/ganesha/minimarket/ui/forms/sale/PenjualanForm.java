@@ -47,7 +47,6 @@ import com.ganesha.desktop.component.xtableutils.XTableModel;
 import com.ganesha.desktop.component.xtableutils.XTableParameter;
 import com.ganesha.desktop.component.xtableutils.XTableUtils;
 import com.ganesha.hibernate.HibernateUtils;
-import com.ganesha.minimarket.Main;
 import com.ganesha.minimarket.facade.CustomerFacade;
 import com.ganesha.minimarket.facade.DiscountFacade;
 import com.ganesha.minimarket.facade.GlobalFacade;
@@ -588,12 +587,6 @@ public class PenjualanForm extends XJDialog {
 										tableParameters.get(ColumnEnum.TOTAL)
 												.getColumnIndex()).toString())
 						.doubleValue()));
-
-				saleDetail.setDisabled(false);
-				saleDetail.setDeleted(false);
-				saleDetail.setLastUpdatedBy(Main.getUserLogin().getId());
-				saleDetail.setLastUpdatedTimestamp(CommonUtils
-						.getCurrentTimestamp());
 
 				saleDetails.add(saleDetail);
 			}

@@ -44,7 +44,6 @@ import com.ganesha.desktop.component.xtableutils.XTableModel;
 import com.ganesha.desktop.component.xtableutils.XTableParameter;
 import com.ganesha.desktop.component.xtableutils.XTableUtils;
 import com.ganesha.hibernate.HibernateUtils;
-import com.ganesha.minimarket.Main;
 import com.ganesha.minimarket.facade.PurchaseFacade;
 import com.ganesha.minimarket.facade.StockFacade;
 import com.ganesha.minimarket.model.Item;
@@ -628,12 +627,6 @@ public class PembelianForm extends XJDialog {
 										tableParameters.get(ColumnEnum.TOTAL)
 												.getColumnIndex()).toString())
 						.doubleValue()));
-
-				purchaseDetail.setDisabled(false);
-				purchaseDetail.setDeleted(false);
-				purchaseDetail.setLastUpdatedBy(Main.getUserLogin().getId());
-				purchaseDetail.setLastUpdatedTimestamp(CommonUtils
-						.getCurrentTimestamp());
 
 				purchaseDetails.add(purchaseDetail);
 			}

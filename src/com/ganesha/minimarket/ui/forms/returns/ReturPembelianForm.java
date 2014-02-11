@@ -43,7 +43,6 @@ import com.ganesha.desktop.component.xtableutils.XTableModel;
 import com.ganesha.desktop.component.xtableutils.XTableParameter;
 import com.ganesha.desktop.component.xtableutils.XTableUtils;
 import com.ganesha.hibernate.HibernateUtils;
-import com.ganesha.minimarket.Main;
 import com.ganesha.minimarket.facade.PurchaseFacade;
 import com.ganesha.minimarket.facade.PurchaseReturnFacade;
 import com.ganesha.minimarket.model.PurchaseDetail;
@@ -591,13 +590,6 @@ public class ReturPembelianForm extends XJDialog {
 										tableParameters.get(ColumnEnum.TOTAL)
 												.getColumnIndex()).toString())
 								.doubleValue()));
-
-				purchaseReturnDetail.setDisabled(false);
-				purchaseReturnDetail.setDeleted(false);
-				purchaseReturnDetail.setLastUpdatedBy(Main.getUserLogin()
-						.getId());
-				purchaseReturnDetail.setLastUpdatedTimestamp(CommonUtils
-						.getCurrentTimestamp());
 
 				purchaseReturnDetails.add(purchaseReturnDetail);
 			}
