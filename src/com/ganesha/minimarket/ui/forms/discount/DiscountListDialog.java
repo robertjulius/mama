@@ -51,19 +51,19 @@ public class DiscountListDialog extends XJTableDialog {
 	private XJRadioButton rdPromoAktif;
 	{
 		tableParameters.put(ColumnEnum.ITEM_CODE, new XTableParameter(0, 100,
-				false, "Kode Barang", XTableConstants.CELL_RENDERER_LEFT,
+				false, "Kode Barang", false, XTableConstants.CELL_RENDERER_LEFT,
 				String.class));
 
 		tableParameters.put(ColumnEnum.ITEM_NAME, new XTableParameter(1, 300,
-				false, "Nama Barang", XTableConstants.CELL_RENDERER_LEFT,
+				false, "Nama Barang", false, XTableConstants.CELL_RENDERER_LEFT,
 				String.class));
 
 		tableParameters.put(ColumnEnum.QUANTITY, new XTableParameter(2, 50,
-				false, "Qty", XTableConstants.CELL_RENDERER_CENTER,
+				false, "Qty", false, XTableConstants.CELL_RENDERER_CENTER,
 				Integer.class));
 
 		tableParameters.put(ColumnEnum.DISCOUNT, new XTableParameter(3, 50,
-				false, "Diskon (%)", XTableConstants.CELL_RENDERER_CENTER,
+				false, "Diskon (%)", false, XTableConstants.CELL_RENDERER_CENTER,
 				Double.class));
 	}
 

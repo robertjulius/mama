@@ -65,21 +65,24 @@ public class ItemStockReportListDialog extends XJTableDialog {
 	private final Map<ColumnEnum, XTableParameter> tableParameters = new HashMap<>();
 	{
 		tableParameters.put(ColumnEnum.NUM, new XTableParameter(0, 5, false,
-				"No", XTableConstants.CELL_RENDERER_CENTER, Integer.class));
+				"No", false, XTableConstants.CELL_RENDERER_CENTER,
+				Integer.class));
 
-		tableParameters.put(ColumnEnum.CODE, new XTableParameter(1, 50, false,
-				"Kode", XTableConstants.CELL_RENDERER_LEFT, String.class));
-
-		tableParameters.put(ColumnEnum.NAME,
-				new XTableParameter(2, 200, false, "Nama Barang",
+		tableParameters.put(ColumnEnum.CODE,
+				new XTableParameter(1, 50, false, "Kode", false,
 						XTableConstants.CELL_RENDERER_LEFT, String.class));
 
+		tableParameters.put(ColumnEnum.NAME, new XTableParameter(2, 200, false,
+				"Nama Barang", false, XTableConstants.CELL_RENDERER_LEFT,
+				String.class));
+
 		tableParameters.put(ColumnEnum.QUANTITY, new XTableParameter(3, 20,
-				false, "Qty", XTableConstants.CELL_RENDERER_RIGHT,
+				false, "Qty", false, XTableConstants.CELL_RENDERER_RIGHT,
 				Integer.class));
 
 		tableParameters.put(ColumnEnum.UNIT, new XTableParameter(4, 50, false,
-				"Satuan", XTableConstants.CELL_RENDERER_CENTER, String.class));
+				"Satuan", false, XTableConstants.CELL_RENDERER_CENTER,
+				String.class));
 	}
 
 	public ItemStockReportListDialog(Window parent) {

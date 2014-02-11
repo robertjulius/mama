@@ -52,10 +52,10 @@ public class StockOpnameReportListDialog extends XJTableDialog {
 	private XJButton btnPreview;
 	{
 		tableParameters.put(ColumnEnum.NUM, new XTableParameter(0, 10, false,
-				"No", XTableConstants.CELL_RENDERER_LEFT, String.class));
+				"No", false, XTableConstants.CELL_RENDERER_LEFT, String.class));
 
 		tableParameters.put(ColumnEnum.DATE, new XTableParameter(1, 200, false,
-				"Tanggal", XTableConstants.CELL_RENDERER_LEFT, Date.class));
+				"Tanggal", false, XTableConstants.CELL_RENDERER_LEFT, Date.class));
 	}
 
 	public StockOpnameReportListDialog(Window parent) {

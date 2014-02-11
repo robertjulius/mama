@@ -63,29 +63,33 @@ public class StockListDialog extends XJTableDialog {
 	private XJTextField txtBarcode;
 	private XJButton btnPrintBarcode;
 	{
-		tableParameters.put(ColumnEnum.CODE, new XTableParameter(0, 25, false,
-				"Kode", XTableConstants.CELL_RENDERER_LEFT, String.class));
-
-		tableParameters.put(ColumnEnum.NAME,
-				new XTableParameter(1, 300, false, "Nama Barang",
+		tableParameters.put(ColumnEnum.CODE,
+				new XTableParameter(0, 25, false, "Kode", false,
 						XTableConstants.CELL_RENDERER_LEFT, String.class));
 
+		tableParameters.put(ColumnEnum.NAME, new XTableParameter(1, 300, false,
+				"Nama Barang", false, XTableConstants.CELL_RENDERER_LEFT,
+				String.class));
+
 		tableParameters.put(ColumnEnum.STOCK, new XTableParameter(2, 25, false,
-				"Stok", XTableConstants.CELL_RENDERER_RIGHT, Integer.class));
+				"Stok", false, XTableConstants.CELL_RENDERER_RIGHT,
+				Integer.class));
 
 		tableParameters.put(ColumnEnum.UNIT, new XTableParameter(3, 50, false,
-				"Satuan", XTableConstants.CELL_RENDERER_CENTER, String.class));
+				"Satuan", false, XTableConstants.CELL_RENDERER_CENTER,
+				String.class));
 
 		tableParameters.put(ColumnEnum.BUY_PRICE, new XTableParameter(4, 75,
-				false, "Harga Beli", XTableConstants.CELL_RENDERER_RIGHT,
-				Double.class));
+				false, "Harga Beli", false,
+				XTableConstants.CELL_RENDERER_RIGHT, Double.class));
 
-		tableParameters.put(ColumnEnum.HPP, new XTableParameter(5, 25, false,
-				"HPP", XTableConstants.CELL_RENDERER_RIGHT, Double.class));
+		tableParameters.put(ColumnEnum.HPP,
+				new XTableParameter(5, 25, false, "HPP", false,
+						XTableConstants.CELL_RENDERER_RIGHT, Double.class));
 
 		tableParameters.put(ColumnEnum.SELL_PRICE, new XTableParameter(6, 75,
-				false, "Harga Jual", XTableConstants.CELL_RENDERER_RIGHT,
-				Double.class));
+				false, "Harga Jual", false,
+				XTableConstants.CELL_RENDERER_RIGHT, Double.class));
 	}
 
 	public StockListDialog(Window parent) {

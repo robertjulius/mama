@@ -46,15 +46,15 @@ public class ReceivableListDialog extends XJTableDialog {
 	private final Map<ColumnEnum, XTableParameter> tableParameters = new HashMap<>();
 	{
 		tableParameters.put(ColumnEnum.CODE, new XTableParameter(0, 30, false,
-				"Kode Supplier", XTableConstants.CELL_RENDERER_LEFT,
+				"Kode Supplier", false, XTableConstants.CELL_RENDERER_LEFT,
 				String.class));
 
 		tableParameters.put(ColumnEnum.NAME, new XTableParameter(1, 100, false,
-				"Nama Supplier", XTableConstants.CELL_RENDERER_LEFT,
+				"Nama Supplier", false, XTableConstants.CELL_RENDERER_LEFT,
 				String.class));
 
 		tableParameters.put(ColumnEnum.REMAINING_AMOUNT, new XTableParameter(2,
-				30, false, "Sisa Pembayaran",
+				30, false, "Sisa Pembayaran", false,
 				XTableConstants.CELL_RENDERER_RIGHT, Double.class));
 	}
 

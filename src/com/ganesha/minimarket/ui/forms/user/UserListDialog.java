@@ -56,11 +56,11 @@ public class UserListDialog extends XJTableDialog {
 	private final Map<ColumnEnum, XTableParameter> tableParameters = new HashMap<>();
 	{
 		tableParameters.put(ColumnEnum.LOGIN, new XTableParameter(0, 200,
-				false, "Login", XTableConstants.CELL_RENDERER_CENTER,
+				false, "Login", false, XTableConstants.CELL_RENDERER_CENTER,
 				String.class));
 
 		tableParameters.put(ColumnEnum.NAME, new XTableParameter(1, 400, false,
-				"Nama User", XTableConstants.CELL_RENDERER_LEFT, String.class));
+				"Nama User", false, XTableConstants.CELL_RENDERER_LEFT, String.class));
 	}
 
 	public UserListDialog(Window parent) {

@@ -43,15 +43,18 @@ public class RoleListDialog extends XJTableDialog {
 	private XJButton btnDetail;
 	private final Map<ColumnEnum, XTableParameter> tableParameters = new HashMap<>();
 	{
-		tableParameters.put(ColumnEnum.ID, new XTableParameter(0, 50, false,
-				"ID", XTableConstants.CELL_RENDERER_CENTER, String.class));
+		tableParameters
+				.put(ColumnEnum.ID, new XTableParameter(0, 50, false, "ID",
+						true, XTableConstants.CELL_RENDERER_CENTER,
+						String.class));
 
 		tableParameters.put(ColumnEnum.NAME, new XTableParameter(1, 280, false,
-				"Nama Role", XTableConstants.CELL_RENDERER_LEFT, String.class));
+				"Nama Role", false, XTableConstants.CELL_RENDERER_LEFT,
+				String.class));
 
 		tableParameters.put(ColumnEnum.DESCRIPTION, new XTableParameter(2, 500,
-				false, "Deskripsi Role", XTableConstants.CELL_RENDERER_LEFT,
-				String.class));
+				false, "Deskripsi Role", false,
+				XTableConstants.CELL_RENDERER_LEFT, String.class));
 	}
 
 	public RoleListDialog(Window parent) {

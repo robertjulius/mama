@@ -82,35 +82,40 @@ public class ReturPembelianForm extends XJDialog {
 	private XJLabel lblUangDiterima;
 	{
 		tableParameters.put(ColumnEnum.NUM, new XTableParameter(0, 5, false,
-				"No", XTableConstants.CELL_RENDERER_CENTER, Integer.class));
+				"No", false, XTableConstants.CELL_RENDERER_CENTER,
+				Integer.class));
 
 		tableParameters.put(ColumnEnum.TRANSACTION_NUM, new XTableParameter(1,
-				200, false, "No. Transaksi",
+				200, false, "No. Transaksi", false,
 				XTableConstants.CELL_RENDERER_LEFT, String.class));
 
 		tableParameters.put(ColumnEnum.DATE, new XTableParameter(2, 75, false,
-				"Tanggal", XTableConstants.CELL_RENDERER_LEFT, Date.class));
+				"Tanggal", false, XTableConstants.CELL_RENDERER_LEFT,
+				Date.class));
 
 		tableParameters.put(ColumnEnum.ITEM_CODE, new XTableParameter(3, 75,
-				false, "Kode Barang", XTableConstants.CELL_RENDERER_LEFT,
-				String.class));
+				false, "Kode Barang", false,
+				XTableConstants.CELL_RENDERER_LEFT, String.class));
 
 		tableParameters.put(ColumnEnum.ITEM_NAME, new XTableParameter(4, 300,
-				false, "Nama Barang", XTableConstants.CELL_RENDERER_LEFT,
-				String.class));
+				false, "Nama Barang", false,
+				XTableConstants.CELL_RENDERER_LEFT, String.class));
 
 		tableParameters.put(ColumnEnum.QUANTITY, new XTableParameter(5, 10,
-				true, "Qty", XTableConstants.CELL_RENDERER_CENTER,
+				true, "Qty", false, XTableConstants.CELL_RENDERER_CENTER,
 				Integer.class));
 
 		tableParameters.put(ColumnEnum.UNIT, new XTableParameter(6, 30, false,
-				"Satuan", XTableConstants.CELL_RENDERER_LEFT, String.class));
+				"Satuan", false, XTableConstants.CELL_RENDERER_LEFT,
+				String.class));
 
 		tableParameters.put(ColumnEnum.PRICE, new XTableParameter(7, 50, true,
-				"Harga", XTableConstants.CELL_RENDERER_RIGHT, Double.class));
+				"Harga", false, XTableConstants.CELL_RENDERER_RIGHT,
+				Double.class));
 
 		tableParameters.put(ColumnEnum.TOTAL, new XTableParameter(8, 50, false,
-				"Total", XTableConstants.CELL_RENDERER_RIGHT, Double.class));
+				"Total", false, XTableConstants.CELL_RENDERER_RIGHT,
+				Double.class));
 
 	}
 

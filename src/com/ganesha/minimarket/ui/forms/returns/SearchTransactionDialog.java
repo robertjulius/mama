@@ -55,36 +55,40 @@ public class SearchTransactionDialog extends XJTableDialog {
 	private final Map<ColumnEnum, XTableParameter> tableParameters = new HashMap<>();
 	{
 		tableParameters.put(ColumnEnum.TRANSACTION_NUM, new XTableParameter(0,
-				200, false, "No. Transaksi",
+				200, false, "No. Transaksi", false,
 				XTableConstants.CELL_RENDERER_LEFT, String.class));
 
 		tableParameters.put(ColumnEnum.DATE, new XTableParameter(1, 75, false,
-				"Tanggal", XTableConstants.CELL_RENDERER_LEFT, Date.class));
+				"Tanggal", false, XTableConstants.CELL_RENDERER_LEFT,
+				Date.class));
 
 		tableParameters.put(ColumnEnum.ORDER_NO, new XTableParameter(2, 5,
-				false, "No", XTableConstants.CELL_RENDERER_CENTER,
+				false, "No", false, XTableConstants.CELL_RENDERER_CENTER,
 				Integer.class));
 
 		tableParameters.put(ColumnEnum.ITEM_CODE, new XTableParameter(3, 100,
-				false, "Kode Barang", XTableConstants.CELL_RENDERER_LEFT,
-				String.class));
+				false, "Kode Barang", false,
+				XTableConstants.CELL_RENDERER_LEFT, String.class));
 
 		tableParameters.put(ColumnEnum.ITEM_NAME, new XTableParameter(4, 300,
-				false, "Nama Barang", XTableConstants.CELL_RENDERER_LEFT,
-				String.class));
+				false, "Nama Barang", false,
+				XTableConstants.CELL_RENDERER_LEFT, String.class));
 
 		tableParameters.put(ColumnEnum.QUANTITY, new XTableParameter(5, 10,
-				false, "Qty", XTableConstants.CELL_RENDERER_RIGHT,
+				false, "Qty", false, XTableConstants.CELL_RENDERER_RIGHT,
 				Integer.class));
 
 		tableParameters.put(ColumnEnum.UNIT, new XTableParameter(6, 25, false,
-				"Satuan", XTableConstants.CELL_RENDERER_LEFT, String.class));
+				"Satuan", false, XTableConstants.CELL_RENDERER_LEFT,
+				String.class));
 
 		tableParameters.put(ColumnEnum.PRICE, new XTableParameter(7, 50, false,
-				"Harga", XTableConstants.CELL_RENDERER_RIGHT, Double.class));
+				"Harga", false, XTableConstants.CELL_RENDERER_RIGHT,
+				Double.class));
 
 		tableParameters.put(ColumnEnum.TOTAL, new XTableParameter(8, 50, false,
-				"Total", XTableConstants.CELL_RENDERER_RIGHT, Double.class));
+				"Total", false, XTableConstants.CELL_RENDERER_RIGHT,
+				Double.class));
 	}
 
 	public SearchTransactionDialog(String title, Window parent,

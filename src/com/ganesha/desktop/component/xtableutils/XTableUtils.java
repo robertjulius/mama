@@ -4,6 +4,7 @@ import java.util.Iterator;
 import java.util.Map;
 
 import javax.swing.table.TableCellRenderer;
+import javax.swing.table.TableColumn;
 import javax.swing.table.TableColumnModel;
 
 import com.ganesha.desktop.component.XJTable;
@@ -50,14 +51,19 @@ public class XTableUtils {
 		while (iterator.hasNext()) {
 			Object key = iterator.next();
 			XTableParameter tableParameter = tableParameters.get(key);
-			int index = tableParameter.getColumnIndex();
+			int index = columnModel.getColumnIndex(tableParameter
+					.getColumnIdentifier());
 			int width = tableParameter.getColumnWidth();
 
 			TableCellRenderer tableCellRenderer = tableParameter
 					.getTableCellRenderer();
 
-			columnModel.getColumn(index).setPreferredWidth(width);
-			columnModel.getColumn(index).setCellRenderer(tableCellRenderer);
+			TableColumn tableColumn = columnModel.getColumn(index);
+			tableColumn.setPreferredWidth(width);
+			tableColumn.setCellRenderer(tableCellRenderer);
+			if (tableParameter.isHidden()) {
+				table.removeColumn(tableColumn);
+			}
 		}
 	}
 }

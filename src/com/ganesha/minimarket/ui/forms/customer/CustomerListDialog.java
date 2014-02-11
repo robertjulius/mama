@@ -56,13 +56,13 @@ public class CustomerListDialog extends XJTableDialog {
 	private XJRadioButton rdCustomerTidakAktif;
 	{
 		tableParameters.put(ColumnEnum.CODE, new XTableParameter(0, 30, false,
-				"Kode", XTableConstants.CELL_RENDERER_LEFT, String.class));
+				"Kode", false, XTableConstants.CELL_RENDERER_LEFT, String.class));
 
 		tableParameters.put(ColumnEnum.NAME, new XTableParameter(1, 100, false,
-				"Name", XTableConstants.CELL_RENDERER_LEFT, String.class));
+				"Name", false, XTableConstants.CELL_RENDERER_LEFT, String.class));
 
 		tableParameters.put(ColumnEnum.TELP, new XTableParameter(2, 30, false,
-				"No Telp", XTableConstants.CELL_RENDERER_CENTER, String.class));
+				"No Telp", false, XTableConstants.CELL_RENDERER_CENTER, String.class));
 	}
 
 	public CustomerListDialog(Window parent) {

@@ -74,22 +74,23 @@ public class TransactionReportListDialog extends XJTableDialog {
 	private XJButton btnPreview;
 	{
 		tableParameters.put(ColumnEnum.TRANSACTION_NUM, new XTableParameter(0,
-				200, false, "No. Transaksi",
+				200, false, "No. Transaksi", false,
 				XTableConstants.CELL_RENDERER_LEFT, String.class));
 
 		tableParameters.put(ColumnEnum.DATE, new XTableParameter(1, 75, false,
-				"Tanggal", XTableConstants.CELL_RENDERER_LEFT, Date.class));
+				"Tanggal", false, XTableConstants.CELL_RENDERER_LEFT,
+				Date.class));
 
 		tableParameters.put(ColumnEnum.CLIENT_CODE, new XTableParameter(2, 100,
-				false, "Kode Klien", XTableConstants.CELL_RENDERER_LEFT,
+				false, "Kode Klien", false, XTableConstants.CELL_RENDERER_LEFT,
 				String.class));
 
 		tableParameters.put(ColumnEnum.CLIENT_NAME, new XTableParameter(3, 300,
-				false, "Nama Klien", XTableConstants.CELL_RENDERER_LEFT,
+				false, "Nama Klien", false, XTableConstants.CELL_RENDERER_LEFT,
 				String.class));
 
 		tableParameters.put(ColumnEnum.AMOUNT, new XTableParameter(4, 50,
-				false, "Total", XTableConstants.CELL_RENDERER_RIGHT,
+				false, "Total", false, XTableConstants.CELL_RENDERER_RIGHT,
 				Double.class));
 	}
 

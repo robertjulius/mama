@@ -56,22 +56,24 @@ public class SupplierListDialog extends XJTableDialog {
 	private final Map<ColumnEnum, XTableParameter> tableParameters = new HashMap<>();
 	{
 		tableParameters.put(ColumnEnum.CODE, new XTableParameter(0, 25, false,
-				"Kode", XTableConstants.CELL_RENDERER_CENTER, String.class));
+				"Kode", false, XTableConstants.CELL_RENDERER_CENTER,
+				String.class));
 
 		tableParameters.put(ColumnEnum.NAME, new XTableParameter(1, 300, false,
-				"Nama Supplier", XTableConstants.CELL_RENDERER_LEFT,
+				"Nama Supplier", false, XTableConstants.CELL_RENDERER_LEFT,
 				String.class));
 
 		tableParameters.put(ColumnEnum.CONTACT_PERSON1, new XTableParameter(2,
-				75, false, "Kontak Person 1",
+				75, false, "Kontak Person 1", false,
 				XTableConstants.CELL_RENDERER_CENTER, Integer.class));
 
 		tableParameters.put(ColumnEnum.CONTACT_PERSON2, new XTableParameter(3,
-				75, false, "Kontak Person 2",
+				75, false, "Kontak Person 2", false,
 				XTableConstants.CELL_RENDERER_CENTER, String.class));
 
 		tableParameters.put(ColumnEnum.PHONE, new XTableParameter(4, 25, false,
-				"Telepon", XTableConstants.CELL_RENDERER_CENTER, Double.class));
+				"Telepon", false, XTableConstants.CELL_RENDERER_CENTER,
+				Double.class));
 	}
 
 	public SupplierListDialog(Window parent) {
