@@ -77,10 +77,7 @@ public class UserFacade {
 	}
 
 	public User getDetail(int id, Session session) {
-		Criteria criteria = session.createCriteria(User.class);
-		criteria.add(Restrictions.eq("id", id));
-
-		User user = (User) criteria.uniqueResult();
+		User user = (User) session.get(User.class, id);
 		return user;
 	}
 

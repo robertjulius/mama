@@ -1,7 +1,6 @@
 package com.ganesha.minimarket.model;
 
 import java.math.BigDecimal;
-import java.sql.Timestamp;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -31,26 +30,12 @@ public class PurchaseReturnDetail implements TableEntity {
 	@Column(name = "ORDER_NUM", nullable = false)
 	private Integer orderNum;
 
-	@Column(name = "PURCHASE_TRANSACTION_NUMBER", nullable = false)
-	private String purchaseTransactionNumber;
-
-	@Column(name = "PURCHASE_TRANSACTION_TIMESTAMP", nullable = false)
-	private Timestamp purchaseTransactionTimestamp;
-
-	@Column(name = "ITEM_CODE", nullable = false)
-	private String itemCode;
-
-	@Column(name = "ITEM_NAME", nullable = false)
-	private String itemName;
+	@ManyToOne
+	@JoinColumn(name = "PURCHASE_DETAIL_ID", nullable = false)
+	private PurchaseDetail purchaseDetail;
 
 	@Column(name = "QUANTITY", nullable = false)
 	private Integer quantity;
-
-	@Column(name = "UNIT", nullable = false)
-	private String unit;
-
-	@Column(name = "PRICE_PER_UNIT", nullable = false)
-	private BigDecimal pricePerUnit;
 
 	@Column(name = "TOTAL_AMOUNT", nullable = false)
 	private BigDecimal totalAmount;
@@ -59,32 +44,16 @@ public class PurchaseReturnDetail implements TableEntity {
 		return id;
 	}
 
-	public String getItemCode() {
-		return itemCode;
-	}
-
-	public String getItemName() {
-		return itemName;
-	}
-
 	public Integer getOrderNum() {
 		return orderNum;
 	}
 
-	public BigDecimal getPricePerUnit() {
-		return pricePerUnit;
+	public PurchaseDetail getPurchaseDetail() {
+		return purchaseDetail;
 	}
 
 	public PurchaseReturnHeader getPurchaseReturnHeader() {
 		return purchaseReturnHeader;
-	}
-
-	public String getPurchaseTransactionNumber() {
-		return purchaseTransactionNumber;
-	}
-
-	public Timestamp getPurchaseTransactionTimestamp() {
-		return purchaseTransactionTimestamp;
 	}
 
 	public Integer getQuantity() {
@@ -95,42 +64,21 @@ public class PurchaseReturnDetail implements TableEntity {
 		return totalAmount;
 	}
 
-	public String getUnit() {
-		return unit;
-	}
-
 	public void setId(Integer id) {
 		this.id = id;
-	}
-
-	public void setItemCode(String itemCode) {
-		this.itemCode = itemCode;
-	}
-
-	public void setItemName(String itemName) {
-		this.itemName = itemName;
 	}
 
 	public void setOrderNum(Integer orderNum) {
 		this.orderNum = orderNum;
 	}
 
-	public void setPricePerUnit(BigDecimal pricePerUnit) {
-		this.pricePerUnit = pricePerUnit;
+	public void setPurchaseDetail(PurchaseDetail purchaseDetail) {
+		this.purchaseDetail = purchaseDetail;
 	}
 
 	public void setPurchaseReturnHeader(
 			PurchaseReturnHeader purchaseReturnHeader) {
 		this.purchaseReturnHeader = purchaseReturnHeader;
-	}
-
-	public void setPurchaseTransactionNumber(String purchaseTransactionNumber) {
-		this.purchaseTransactionNumber = purchaseTransactionNumber;
-	}
-
-	public void setPurchaseTransactionTimestamp(
-			Timestamp purchaseTransactionTimestamp) {
-		this.purchaseTransactionTimestamp = purchaseTransactionTimestamp;
 	}
 
 	public void setQuantity(Integer quantity) {
@@ -139,9 +87,5 @@ public class PurchaseReturnDetail implements TableEntity {
 
 	public void setTotalAmount(BigDecimal totalAmount) {
 		this.totalAmount = totalAmount;
-	}
-
-	public void setUnit(String unit) {
-		this.unit = unit;
 	}
 }

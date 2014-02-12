@@ -30,6 +30,9 @@ public class PurchaseDetail implements TableEntity {
 	@Column(name = "ORDER_NUM", nullable = false)
 	private Integer orderNum;
 
+	@Column(name = "ITEM_ID", nullable = false)
+	private Integer itemId;
+
 	@Column(name = "ITEM_CODE", nullable = false)
 	private String itemCode;
 
@@ -54,6 +57,10 @@ public class PurchaseDetail implements TableEntity {
 
 	public String getItemCode() {
 		return itemCode;
+	}
+
+	public Integer getItemId() {
+		return itemId;
 	}
 
 	public String getItemName() {
@@ -90,6 +97,10 @@ public class PurchaseDetail implements TableEntity {
 
 	public void setItemCode(String itemCode) {
 		this.itemCode = itemCode;
+	}
+
+	public void setItemId(Integer itemId) {
+		this.itemId = itemId;
 	}
 
 	public void setItemName(String itemName) {

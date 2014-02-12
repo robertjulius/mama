@@ -40,7 +40,7 @@ import com.ganesha.core.utils.GeneralConstants;
 import com.ganesha.hibernate.HqlParameter;
 import com.ganesha.minimarket.Main;
 import com.ganesha.minimarket.model.Customer;
-import com.ganesha.minimarket.model.ItemStock;
+import com.ganesha.minimarket.model.Item;
 import com.ganesha.minimarket.model.SaleDetail;
 import com.ganesha.minimarket.model.SaleHeader;
 import com.ganesha.minimarket.utils.ReceiptPrinter;
@@ -155,15 +155,15 @@ public class SaleFacade implements TransactionFacade {
 		session.saveOrUpdate(saleHeader);
 
 		for (SaleDetail saleDetail : saleDetails) {
-			ItemStock itemStock = stockFacade.getDetail(
-					saleDetail.getItemCode(), session);
+			Item item = stockFacade.getDetail(saleDetail.getItemId(), session);
 
-			int stock = itemStock.getStock() - saleDetail.getQuantity();
-			itemStock.setStock(stock);
+			int stock = stockFacade.calculateStock(item)
+					- saleDetail.getQuantity();
+			stockFacade.reAdjustStock(item, stock, session);
 
 			saleDetail.setSaleHeader(saleHeader);
 			session.saveOrUpdate(saleDetail);
-			session.saveOrUpdate(itemStock);
+			session.saveOrUpdate(item);
 
 			AccountFacade.getInstance().insertIntoAccount(
 					CoaCodeConstants.PENJUALAN, saleDetail.getId(),
@@ -216,19 +216,19 @@ public class SaleFacade implements TransactionFacade {
 	}
 
 	public SaleHeader validateForm(String transactionNumber,
-			Timestamp transactionTimestamp, String customerCode,
+			Timestamp transactionTimestamp, Integer customerId,
 			Double subTotalAmount, Double taxPercent, Double taxAmount,
 			Double totalAmount, Double pay, Double moneyChange, Session session)
 			throws UserException {
 
-		if (customerCode == null || customerCode.equals("")) {
+		if (customerId == null) {
 			throw new UserException("Field Customer dibutuhkan");
 		}
 
 		SaleHeader header = new SaleHeader();
 
-		Customer customer = CustomerFacade.getInstance().getDetail(
-				customerCode, session);
+		Customer customer = CustomerFacade.getInstance().getDetail(customerId,
+				session);
 
 		header.setTransactionNumber(transactionNumber);
 		header.setTransactionTimestamp(transactionTimestamp);

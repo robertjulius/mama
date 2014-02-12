@@ -55,14 +55,20 @@ public class CustomerListDialog extends XJTableDialog {
 	private XJRadioButton rdCustomerAktif;
 	private XJRadioButton rdCustomerTidakAktif;
 	{
-		tableParameters.put(ColumnEnum.CODE, new XTableParameter(0, 30, false,
-				"Kode", false, XTableConstants.CELL_RENDERER_LEFT, String.class));
+		tableParameters.put(ColumnEnum.ID, new XTableParameter(0, 0, false,
+				"ID", true, XTableConstants.CELL_RENDERER_LEFT, Integer.class));
 
-		tableParameters.put(ColumnEnum.NAME, new XTableParameter(1, 100, false,
-				"Name", false, XTableConstants.CELL_RENDERER_LEFT, String.class));
+		tableParameters.put(ColumnEnum.CODE,
+				new XTableParameter(1, 30, false, "Kode", false,
+						XTableConstants.CELL_RENDERER_LEFT, String.class));
 
-		tableParameters.put(ColumnEnum.TELP, new XTableParameter(2, 30, false,
-				"No Telp", false, XTableConstants.CELL_RENDERER_CENTER, String.class));
+		tableParameters.put(ColumnEnum.NAME,
+				new XTableParameter(2, 100, false, "Name", false,
+						XTableConstants.CELL_RENDERER_LEFT, String.class));
+
+		tableParameters.put(ColumnEnum.TELP, new XTableParameter(3, 30, false,
+				"No Telp", false, XTableConstants.CELL_RENDERER_CENTER,
+				String.class));
 	}
 
 	public CustomerListDialog(Window parent) {
@@ -239,6 +245,10 @@ public class CustomerListDialog extends XJTableDialog {
 
 			for (int i = 0; i < customers.size(); ++i) {
 				Customer customer = customers.get(i);
+
+				tableModel.setValueAt(customer.getId(), i,
+						tableParameters.get(ColumnEnum.ID).getColumnIndex());
+
 				tableModel.setValueAt(customer.getCode(), i, tableParameters
 						.get(ColumnEnum.CODE).getColumnIndex());
 
@@ -271,10 +281,11 @@ public class CustomerListDialog extends XJTableDialog {
 			if (selectedRow < 0) {
 				return;
 			}
-			String code = (String) table.getModel().getValueAt(selectedRow, 0);
+			int customerId = (int) table.getModel().getValueAt(selectedRow,
+					tableParameters.get(ColumnEnum.ID).getColumnIndex());
 
 			CustomerFacade facade = CustomerFacade.getInstance();
-			Customer customer = facade.getDetail(code, session);
+			Customer customer = facade.getDetail(customerId, session);
 
 			CustomerForm stockForm = new CustomerForm(this, ActionType.UPDATE);
 			stockForm.setFormDetailValue(customer);
@@ -298,6 +309,6 @@ public class CustomerListDialog extends XJTableDialog {
 	}
 
 	private enum ColumnEnum {
-		CODE, NAME, TELP
+		ID, CODE, NAME, TELP
 	}
 }

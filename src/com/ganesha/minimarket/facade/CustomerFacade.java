@@ -61,18 +61,7 @@ public class CustomerFacade {
 	}
 
 	public Customer getDetail(int id, Session session) {
-		Criteria criteria = session.createCriteria(Customer.class);
-		criteria.add(Restrictions.eq("id", id));
-
-		Customer customer = (Customer) criteria.uniqueResult();
-		return customer;
-	}
-
-	public Customer getDetail(String code, Session session) {
-		Criteria criteria = session.createCriteria(Customer.class);
-		criteria.add(Restrictions.eq("code", code));
-
-		Customer customer = (Customer) criteria.uniqueResult();
+		Customer customer = (Customer) session.get(Customer.class, id);
 		return customer;
 	}
 
@@ -99,14 +88,13 @@ public class CustomerFacade {
 		return customer;
 	}
 
-	public void updateExistingCustomer(String address, String code,
+	public void updateExistingCustomer(String address, int id,
 			String description, String email, String name, String phone,
 			boolean disabled, boolean deleted, Session session)
 			throws UserException {
 
-		Customer customer = getDetail(code, session);
+		Customer customer = getDetail(id, session);
 		customer.setAddress(address);
-		customer.setCode(code);
 		customer.setDescription(description);
 		customer.setEmail(email);
 		if (!customer.getName().equals(name)) {

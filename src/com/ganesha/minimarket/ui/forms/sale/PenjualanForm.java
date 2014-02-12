@@ -54,7 +54,6 @@ import com.ganesha.minimarket.facade.SaleFacade;
 import com.ganesha.minimarket.facade.StockFacade;
 import com.ganesha.minimarket.model.Customer;
 import com.ganesha.minimarket.model.Item;
-import com.ganesha.minimarket.model.ItemStock;
 import com.ganesha.minimarket.model.SaleDetail;
 import com.ganesha.minimarket.model.SaleHeader;
 import com.ganesha.minimarket.ui.forms.searchentity.SearchEntityDialog;
@@ -87,7 +86,13 @@ public class PenjualanForm extends XJDialog {
 	private XJLabel lblBarcodef;
 	private XJTextField txtBarcode;
 	private XJPanel pnlSearch;
+
+	private Integer customerId;
+
 	{
+		tableParameters.put(ColumnEnum.ID, new XTableParameter(0, 0, false,
+				"ID", true, XTableConstants.CELL_RENDERER_LEFT, Integer.class));
+
 		tableParameters.put(ColumnEnum.NUM, new XTableParameter(0, 5, false,
 				"No", false, XTableConstants.CELL_RENDERER_CENTER,
 				Integer.class));
@@ -420,9 +425,9 @@ public class PenjualanForm extends XJDialog {
 				"Cari Barang", this, Item.class);
 		searchEntityDialog.setVisible(true);
 
-		String kodeBarang = searchEntityDialog.getSelectedCode();
-		if (kodeBarang != null) {
-			tambah(kodeBarang);
+		Integer idBarang = searchEntityDialog.getSelectedId();
+		if (idBarang != null) {
+			tambah(idBarang);
 		}
 	}
 
@@ -440,8 +445,8 @@ public class PenjualanForm extends XJDialog {
 				throw new UserException("Barang dengan barcode " + barcode
 						+ " tidak ditemukan.");
 			}
-			String kodeBarang = item.getCode();
-			tambah(kodeBarang);
+			Integer itemId = item.getId();
+			tambah(itemId);
 			txtBarcode.setText("");
 
 		} finally {
@@ -454,11 +459,12 @@ public class PenjualanForm extends XJDialog {
 				"Cari Customer", this, Customer.class);
 		searchEntityDialog.setVisible(true);
 
-		String kodeCustomer = searchEntityDialog.getSelectedCode();
-		if (kodeCustomer != null) {
-			String namaCustomer = searchEntityDialog.getSelectedName();
-			txtKodeCustomer.setText(kodeCustomer);
-			txtNamaCustomer.setText(namaCustomer);
+		customerId = searchEntityDialog.getSelectedId();
+		if (customerId != null) {
+			String kode = searchEntityDialog.getSelectedCode();
+			String nama = searchEntityDialog.getSelectedName();
+			txtKodeCustomer.setText(kode);
+			txtNamaCustomer.setText(nama);
 		}
 	}
 
@@ -507,8 +513,6 @@ public class PenjualanForm extends XJDialog {
 			Timestamp transactionTimestamp = CommonUtils
 					.castDateToTimestamp(dateChooser.getDate());
 
-			String customerCode = txtKodeCustomer.getText();
-
 			double subTotalAmount = Formatter.formatStringToNumber(
 					txtTotalPenjualan.getText()).doubleValue();
 
@@ -528,7 +532,7 @@ public class PenjualanForm extends XJDialog {
 					txtKembalian.getText()).doubleValue();
 
 			SaleHeader saleHeader = facade.validateForm(transactionNumber,
-					transactionTimestamp, customerCode, subTotalAmount,
+					transactionTimestamp, customerId, subTotalAmount,
 					taxPercent, taxAmount, totalAmount, pay, moneyChange,
 					session);
 
@@ -682,14 +686,14 @@ public class PenjualanForm extends XJDialog {
 
 		double totalBeforeDiscount = jumlah * hargaSatuan;
 
-		String itemCode = (String) table.getValueAt(row,
-				tableParameters.get(ColumnEnum.CODE).getColumnIndex());
+		int itemId = (int) table.getValueAt(row,
+				tableParameters.get(ColumnEnum.ID).getColumnIndex());
 
 		double discountPercent = 0;
 		Session session = HibernateUtils.openSession();
 		try {
 			discountPercent = DiscountFacade.getInstance().getDiscountPercent(
-					itemCode, jumlah, session);
+					itemId, jumlah, session);
 		} finally {
 			session.close();
 		}
@@ -705,20 +709,22 @@ public class PenjualanForm extends XJDialog {
 		setTotalPenjualan();
 	}
 
-	private void tambah(String kodeBarang) {
-		if (kodeBarang.trim().equals("")) {
+	private void tambah(Integer itemId) {
+		if (itemId == null) {
 			return;
 		}
 
 		Session session = HibernateUtils.openSession();
 		try {
 			StockFacade facade = StockFacade.getInstance();
-			ItemStock itemStock = facade.getDetail(kodeBarang, session);
-			Item item = itemStock.getItem();
+			Item item = facade.getDetail(itemId, session);
 
 			XTableModel tableModel = (XTableModel) table.getModel();
 			tableModel.setRowCount(tableModel.getRowCount() + 1);
 			int rowIndex = tableModel.getRowCount() - 1;
+
+			tableModel.setValueAt(item.getId(), rowIndex,
+					tableParameters.get(ColumnEnum.ID).getColumnIndex());
 
 			tableModel.setValueAt(item.getCode(), rowIndex, tableParameters
 					.get(ColumnEnum.CODE).getColumnIndex());
@@ -729,10 +735,10 @@ public class PenjualanForm extends XJDialog {
 			tableModel.setValueAt(1, rowIndex,
 					tableParameters.get(ColumnEnum.QUANTITY).getColumnIndex());
 
-			tableModel.setValueAt(itemStock.getUnit(), rowIndex,
-					tableParameters.get(ColumnEnum.UNIT).getColumnIndex());
+			tableModel.setValueAt(item.getUnit(), rowIndex, tableParameters
+					.get(ColumnEnum.UNIT).getColumnIndex());
 
-			tableModel.setValueAt(Formatter.formatNumberToString(itemStock
+			tableModel.setValueAt(Formatter.formatNumberToString(item
 					.getSellPrice()), rowIndex,
 					tableParameters.get(ColumnEnum.PRICE).getColumnIndex());
 
@@ -763,6 +769,6 @@ public class PenjualanForm extends XJDialog {
 	}
 
 	private enum ColumnEnum {
-		NUM, CODE, NAME, QUANTITY, UNIT, PRICE, DISCOUNT, TOTAL
+		ID, NUM, CODE, NAME, QUANTITY, UNIT, PRICE, DISCOUNT, TOTAL
 	}
 }

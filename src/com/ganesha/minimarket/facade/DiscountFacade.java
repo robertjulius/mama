@@ -11,7 +11,7 @@ import com.ganesha.core.exception.UserException;
 import com.ganesha.core.utils.CommonUtils;
 import com.ganesha.minimarket.Main;
 import com.ganesha.minimarket.model.Discount;
-import com.ganesha.minimarket.model.ItemStock;
+import com.ganesha.minimarket.model.Item;
 
 public class DiscountFacade {
 
@@ -27,35 +27,34 @@ public class DiscountFacade {
 	private DiscountFacade() {
 	}
 
-	public Discount getDetail(String code, int quantity, Session session) {
+	public Discount getDetail(Integer itemId, int quantity, Session session) {
 		Criteria criteria = session.createCriteria(Discount.class);
 		criteria.createAlias("item", "item");
-		criteria.add(Restrictions.eq("item.code", code));
+		criteria.add(Restrictions.eq("item.id", itemId));
 		criteria.add(Restrictions.eq("quantity", quantity));
 		Discount discount = (Discount) criteria.uniqueResult();
 		return discount;
 	}
 
-	public double getDiscountPercent(String itemCode, int quantity,
+	public double getDiscountPercent(Integer itemId, int quantity,
 			Session session) {
 		double discountPercent = 0;
-		Discount discount = getDetail(itemCode, quantity, session);
+		Discount discount = getDetail(itemId, quantity, session);
 		if (discount != null && !discount.getDisabled()) {
 			discountPercent = discount.getDiscountPercent().doubleValue();
 		}
 		return discountPercent;
 	}
 
-	public void saveOrUpdate(String code, Integer quantity,
+	public void saveOrUpdate(Integer itemId, Integer quantity,
 			BigDecimal discountPercent, boolean disabled, Session session)
 			throws UserException {
 
-		Discount discount = getDetail(code, quantity, session);
+		Discount discount = getDetail(itemId, quantity, session);
 		if (discount == null) {
 			discount = new Discount();
-			ItemStock itemStock = StockFacade.getInstance().getDetail(code,
-					session);
-			discount.setItem(itemStock.getItem());
+			Item item = StockFacade.getInstance().getDetail(itemId, session);
+			discount.setItem(item);
 		}
 		discount.setQuantity(quantity);
 		discount.setDiscountPercent(discountPercent);

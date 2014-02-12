@@ -68,6 +68,8 @@ public class ReturPenjualanForm extends XJDialog {
 	private XJButton btnSelesai;
 	private XJTextField txtNamaCustomer;
 
+	private Integer customerId;
+
 	private final Map<ColumnEnum, XTableParameter> tableParameters = new HashMap<>();
 	{
 		tableParameters.put(ColumnEnum.NUM, new XTableParameter(0, 5, false,
@@ -306,11 +308,12 @@ public class ReturPenjualanForm extends XJDialog {
 				"Cari Customer", this, Customer.class);
 		searchEntityDialog.setVisible(true);
 
-		String kodeCustomer = searchEntityDialog.getSelectedCode();
-		if (kodeCustomer != null) {
-			String namaCustomer = searchEntityDialog.getSelectedName();
-			txtKodeCustomer.setText(kodeCustomer);
-			txtNamaCustomer.setText(namaCustomer);
+		customerId = searchEntityDialog.getSelectedId();
+		if (customerId != null) {
+			String kode = searchEntityDialog.getSelectedCode();
+			String nama = searchEntityDialog.getSelectedName();
+			txtKodeCustomer.setText(kode);
+			txtNamaCustomer.setText(nama);
 		}
 	}
 
@@ -371,8 +374,6 @@ public class ReturPenjualanForm extends XJDialog {
 			Timestamp transactionTimestamp = CommonUtils
 					.castDateToTimestamp(dateChooser.getDate());
 
-			String customerCode = txtKodeCustomer.getText();
-
 			double subTotalAmount = Formatter.formatStringToNumber(
 					lblTotalReturValue.getText()).doubleValue();
 
@@ -383,7 +384,7 @@ public class ReturPenjualanForm extends XJDialog {
 					lblTotalReturValue.getText()).doubleValue();
 
 			SaleReturnHeader saleReturnHeader = facade.validateForm(
-					transactionNumber, transactionTimestamp, customerCode,
+					transactionNumber, transactionTimestamp, customerId,
 					subTotalAmount, taxPercent, taxAmount, totalReturnAmount,
 					session);
 
@@ -399,58 +400,12 @@ public class ReturPenjualanForm extends XJDialog {
 										.getColumnIndex()).toString())
 						.intValue());
 
-				saleReturnDetail.setSaleTransactionNumber(table.getValueAt(
-						i,
-						tableParameters.get(ColumnEnum.TRANSACTION_NUM)
-								.getColumnIndex()).toString());
-
-				saleReturnDetail
-						.setSaleTransactionTimestamp(CommonUtils
-								.castDateToTimestamp(Formatter
-										.formatStringToDate(table.getValueAt(
-												i,
-												tableParameters.get(
-														ColumnEnum.DATE)
-														.getColumnIndex())
-												.toString())));
-
-				saleReturnDetail.setItemCode(table.getValueAt(
-						i,
-						tableParameters.get(ColumnEnum.ITEM_CODE)
-								.getColumnIndex()).toString());
-
-				saleReturnDetail.setItemName(table.getValueAt(
-						i,
-						tableParameters.get(ColumnEnum.ITEM_NAME)
-								.getColumnIndex()).toString());
-
 				saleReturnDetail.setQuantity(Formatter.formatStringToNumber(
 						table.getValueAt(
 								i,
 								tableParameters.get(ColumnEnum.QUANTITY)
 										.getColumnIndex()).toString())
 						.intValue());
-
-				saleReturnDetail.setUnit(table.getValueAt(i,
-						tableParameters.get(ColumnEnum.UNIT).getColumnIndex())
-						.toString());
-
-				saleReturnDetail.setPricePerUnit(BigDecimal.valueOf(Formatter
-						.formatStringToNumber(
-								table.getValueAt(
-										i,
-										tableParameters.get(ColumnEnum.PRICE)
-												.getColumnIndex()).toString())
-						.doubleValue()));
-
-				saleReturnDetail.setDiscountPercent(BigDecimal
-						.valueOf(Formatter.formatStringToNumber(
-								table.getValueAt(
-										i,
-										tableParameters
-												.get(ColumnEnum.DISCOUNT)
-												.getColumnIndex()).toString())
-								.doubleValue()));
 
 				saleReturnDetail.setTotalAmount(BigDecimal.valueOf(Formatter
 						.formatStringToNumber(

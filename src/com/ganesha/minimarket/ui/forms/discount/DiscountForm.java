@@ -47,6 +47,8 @@ public class DiscountForm extends XJDialog {
 	private XJPanel pnlDisabled;
 	private XJCheckBox chkDisabled;
 
+	private Integer itemId;
+
 	public DiscountForm(Window parent) {
 		super(parent);
 		setCloseOnEsc(false);
@@ -181,10 +183,12 @@ public class DiscountForm extends XJDialog {
 				"Cari Barang", this, Item.class);
 		searchEntityDialog.setVisible(true);
 
-		String kodeBarang = searchEntityDialog.getSelectedCode();
-		if (kodeBarang != null) {
-			txtKode.setText(kodeBarang);
-			txtNama.setText(searchEntityDialog.getSelectedName());
+		itemId = searchEntityDialog.getSelectedId();
+		if (itemId != null) {
+			String kode = searchEntityDialog.getSelectedCode();
+			String nama = searchEntityDialog.getSelectedName();
+			txtKode.setText(kode);
+			txtNama.setText(nama);
 		}
 	}
 
@@ -196,14 +200,13 @@ public class DiscountForm extends XJDialog {
 			session.beginTransaction();
 			DiscountFacade facade = DiscountFacade.getInstance();
 
-			String code = txtKode.getText().toUpperCase();
 			int quantity = Formatter
 					.formatStringToNumber(txtQuantity.getText()).intValue();
 			BigDecimal discountPercent = BigDecimal.valueOf(Formatter
 					.formatStringToNumber(txtDiscount.getText()).doubleValue());
 			boolean disabled = chkDisabled.isSelected();
 
-			facade.saveOrUpdate(code, quantity, discountPercent, disabled,
+			facade.saveOrUpdate(itemId, quantity, discountPercent, disabled,
 					session);
 			dispose();
 

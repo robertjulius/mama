@@ -8,14 +8,15 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
-import com.ganesha.model.Inactivable;
+import com.ganesha.model.Trackable;
 
 @Entity
 @Table(name = "ITEM_STOCKS")
-public class ItemStock extends Inactivable {
+public class ItemStock extends Trackable {
 	private static final long serialVersionUID = -7780389008755790841L;
 
 	@Id
@@ -23,34 +24,22 @@ public class ItemStock extends Inactivable {
 	@Column(name = "ID", nullable = false)
 	private Integer id;
 
-	@OneToOne
+	@ManyToOne
 	@JoinColumn(name = "ITEM_ID", nullable = false)
 	private Item item;
+
+	@OneToOne
+	@JoinColumn(name = "PURCHASE_DETAIL_ID", nullable = false)
+	private PurchaseDetail purchaseDetail;
 
 	@Column(name = "BUY_PRICE", nullable = false)
 	private BigDecimal buyPrice;
 
-	@Column(name = "HPP", nullable = false)
-	private BigDecimal hpp;
-
-	@Column(name = "SELL_PRICE", nullable = false)
-	private BigDecimal sellPrice;
-
-	@Column(name = "STOCK", nullable = false)
-	private Integer stock;
-
-	@Column(name = "MINIMUM_STOCK", nullable = false)
-	private Integer minimumStock;
-
-	@Column(name = "UNIT", nullable = false)
-	private String unit;
+	@Column(name = "QUANTITY", nullable = false)
+	private Integer quantity;
 
 	public BigDecimal getBuyPrice() {
 		return buyPrice;
-	}
-
-	public BigDecimal getHpp() {
-		return hpp;
 	}
 
 	public Integer getId() {
@@ -61,28 +50,16 @@ public class ItemStock extends Inactivable {
 		return item;
 	}
 
-	public Integer getMinimumStock() {
-		return minimumStock;
+	public PurchaseDetail getPurchaseDetail() {
+		return purchaseDetail;
 	}
 
-	public BigDecimal getSellPrice() {
-		return sellPrice;
-	}
-
-	public Integer getStock() {
-		return stock;
-	}
-
-	public String getUnit() {
-		return unit;
+	public Integer getQuantity() {
+		return quantity;
 	}
 
 	public void setBuyPrice(BigDecimal buyPrice) {
 		this.buyPrice = buyPrice;
-	}
-
-	public void setHpp(BigDecimal hpp) {
-		this.hpp = hpp;
 	}
 
 	public void setId(Integer id) {
@@ -93,19 +70,11 @@ public class ItemStock extends Inactivable {
 		this.item = item;
 	}
 
-	public void setMinimumStock(Integer minimumStock) {
-		this.minimumStock = minimumStock;
+	public void setPurchaseDetail(PurchaseDetail purchaseDetail) {
+		this.purchaseDetail = purchaseDetail;
 	}
 
-	public void setSellPrice(BigDecimal sellPrice) {
-		this.sellPrice = sellPrice;
-	}
-
-	public void setStock(Integer stock) {
-		this.stock = stock;
-	}
-
-	public void setUnit(String unit) {
-		this.unit = unit;
+	public void setQuantity(Integer quantity) {
+		this.quantity = quantity;
 	}
 }

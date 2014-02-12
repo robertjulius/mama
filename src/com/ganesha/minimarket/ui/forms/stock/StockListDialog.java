@@ -63,31 +63,34 @@ public class StockListDialog extends XJTableDialog {
 	private XJTextField txtBarcode;
 	private XJButton btnPrintBarcode;
 	{
+		tableParameters.put(ColumnEnum.ID, new XTableParameter(0, 0, false,
+				"ID", true, XTableConstants.CELL_RENDERER_LEFT, Integer.class));
+
 		tableParameters.put(ColumnEnum.CODE,
-				new XTableParameter(0, 25, false, "Kode", false,
+				new XTableParameter(1, 25, false, "Kode", false,
 						XTableConstants.CELL_RENDERER_LEFT, String.class));
 
-		tableParameters.put(ColumnEnum.NAME, new XTableParameter(1, 300, false,
+		tableParameters.put(ColumnEnum.NAME, new XTableParameter(2, 300, false,
 				"Nama Barang", false, XTableConstants.CELL_RENDERER_LEFT,
 				String.class));
 
-		tableParameters.put(ColumnEnum.STOCK, new XTableParameter(2, 25, false,
+		tableParameters.put(ColumnEnum.STOCK, new XTableParameter(3, 25, false,
 				"Stok", false, XTableConstants.CELL_RENDERER_RIGHT,
 				Integer.class));
 
-		tableParameters.put(ColumnEnum.UNIT, new XTableParameter(3, 50, false,
+		tableParameters.put(ColumnEnum.UNIT, new XTableParameter(4, 50, false,
 				"Satuan", false, XTableConstants.CELL_RENDERER_CENTER,
 				String.class));
 
-		tableParameters.put(ColumnEnum.BUY_PRICE, new XTableParameter(4, 75,
+		tableParameters.put(ColumnEnum.BUY_PRICE, new XTableParameter(5, 75,
 				false, "Harga Beli", false,
 				XTableConstants.CELL_RENDERER_RIGHT, Double.class));
 
 		tableParameters.put(ColumnEnum.HPP,
-				new XTableParameter(5, 25, false, "HPP", false,
+				new XTableParameter(6, 25, false, "HPP", false,
 						XTableConstants.CELL_RENDERER_RIGHT, Double.class));
 
-		tableParameters.put(ColumnEnum.SELL_PRICE, new XTableParameter(6, 75,
+		tableParameters.put(ColumnEnum.SELL_PRICE, new XTableParameter(7, 75,
 				false, "Harga Jual", false,
 				XTableConstants.CELL_RENDERER_RIGHT, Double.class));
 	}
@@ -301,12 +304,12 @@ public class StockListDialog extends XJTableDialog {
 				tableModel.setValueAt(item.getName(), i,
 						tableParameters.get(ColumnEnum.NAME).getColumnIndex());
 
-				tableModel.setValueAt(Formatter.formatNumberToString(itemStock
-						.getStock()), i, tableParameters.get(ColumnEnum.STOCK)
-						.getColumnIndex());
+				tableModel.setValueAt(Formatter.formatNumberToString(facade
+						.calculateStock(item)), i,
+						tableParameters.get(ColumnEnum.STOCK).getColumnIndex());
 
-				tableModel.setValueAt(itemStock.getUnit(), i, tableParameters
-						.get(ColumnEnum.UNIT).getColumnIndex());
+				tableModel.setValueAt(item.getUnit(), i,
+						tableParameters.get(ColumnEnum.UNIT).getColumnIndex());
 				tableModel
 						.setValueAt(Formatter.formatNumberToString(itemStock
 								.getBuyPrice()), i,
@@ -314,10 +317,10 @@ public class StockListDialog extends XJTableDialog {
 										.getColumnIndex());
 
 				tableModel.setValueAt(
-						Formatter.formatNumberToString(itemStock.getHpp()), i,
+						Formatter.formatNumberToString(item.getHpp()), i,
 						tableParameters.get(ColumnEnum.HPP).getColumnIndex());
 
-				tableModel.setValueAt(Formatter.formatNumberToString(itemStock
+				tableModel.setValueAt(Formatter.formatNumberToString(item
 						.getSellPrice()), i,
 						tableParameters.get(ColumnEnum.SELL_PRICE)
 								.getColumnIndex());
@@ -352,12 +355,11 @@ public class StockListDialog extends XJTableDialog {
 			if (selectedRow < 0) {
 				return;
 			}
-			String code = (String) table.getModel().getValueAt(selectedRow,
-					tableParameters.get(ColumnEnum.CODE).getColumnIndex());
+			int itemId = (int) table.getModel().getValueAt(selectedRow,
+					tableParameters.get(ColumnEnum.ID).getColumnIndex());
 
 			StockFacade facade = StockFacade.getInstance();
-			ItemStock itemStock = facade.getDetail(code, session);
-			Item item = itemStock.getItem();
+			Item item = facade.getDetail(itemId, session);
 
 			String barcode = item.getBarcode();
 			if (barcode == null || barcode.trim().equals("")) {
@@ -381,14 +383,14 @@ public class StockListDialog extends XJTableDialog {
 			if (selectedRow < 0) {
 				return;
 			}
-			String code = (String) table.getModel().getValueAt(selectedRow,
-					tableParameters.get(ColumnEnum.CODE).getColumnIndex());
+			int itemId = (int) table.getModel().getValueAt(selectedRow,
+					tableParameters.get(ColumnEnum.ID).getColumnIndex());
 
 			StockFacade facade = StockFacade.getInstance();
-			ItemStock itemStock = facade.getDetail(code, session);
+			Item item = facade.getDetail(itemId, session);
 
 			StockForm stockForm = new StockForm(this, ActionType.UPDATE);
-			stockForm.setFormDetailValue(itemStock);
+			stockForm.setFormDetailValue(item);
 			stockForm.setVisible(true);
 
 			btnRefresh.doClick();
@@ -408,6 +410,6 @@ public class StockListDialog extends XJTableDialog {
 	}
 
 	private enum ColumnEnum {
-		CODE, NAME, STOCK, UNIT, BUY_PRICE, HPP, SELL_PRICE
+		ID, CODE, NAME, STOCK, UNIT, BUY_PRICE, HPP, SELL_PRICE
 	}
 }

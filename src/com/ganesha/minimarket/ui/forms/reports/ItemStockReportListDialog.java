@@ -205,11 +205,11 @@ public class ItemStockReportListDialog extends XJTableDialog {
 				tableModel.setValueAt(item.getName(), i,
 						tableParameters.get(ColumnEnum.NAME).getColumnIndex());
 
-				tableModel.setValueAt(itemStock.getUnit(), i, tableParameters
-						.get(ColumnEnum.UNIT).getColumnIndex());
+				tableModel.setValueAt(item.getUnit(), i,
+						tableParameters.get(ColumnEnum.UNIT).getColumnIndex());
 
-				tableModel.setValueAt(Formatter.formatNumberToString(itemStock
-						.getStock()), i,
+				tableModel.setValueAt(Formatter.formatNumberToString(facade
+						.calculateStock(item)), i,
 						tableParameters.get(ColumnEnum.QUANTITY)
 								.getColumnIndex());
 			}

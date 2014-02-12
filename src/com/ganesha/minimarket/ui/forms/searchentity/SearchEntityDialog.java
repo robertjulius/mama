@@ -7,10 +7,11 @@ import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.swing.JScrollPane;
-import javax.swing.table.TableColumnModel;
 
 import net.miginfocom.swing.MigLayout;
 
@@ -26,7 +27,10 @@ import com.ganesha.desktop.component.XJPanel;
 import com.ganesha.desktop.component.XJTable;
 import com.ganesha.desktop.component.XJTableDialog;
 import com.ganesha.desktop.component.XJTextField;
+import com.ganesha.desktop.component.xtableutils.XTableConstants;
 import com.ganesha.desktop.component.xtableutils.XTableModel;
+import com.ganesha.desktop.component.xtableutils.XTableParameter;
+import com.ganesha.desktop.component.xtableutils.XTableUtils;
 import com.ganesha.hibernate.HibernateUtils;
 import com.ganesha.model.TableEntity;
 
@@ -37,10 +41,26 @@ public class SearchEntityDialog extends XJTableDialog {
 	private XJTable table;
 
 	private Class<?> entityClass;
+	private Integer selectedId;
 	private String selectedCode;
 	private String selectedName;
 
 	private XJButton btnPilih;
+
+	private final Map<ColumnEnum, XTableParameter> tableParameters = new HashMap<>();
+	{
+		tableParameters.put(ColumnEnum.ID,
+				new XTableParameter(0, 0, false, "ID", true,
+						XTableConstants.CELL_RENDERER_CENTER, Integer.class));
+
+		tableParameters.put(ColumnEnum.CODE, new XTableParameter(0, 50, false,
+				"Kode", false, XTableConstants.CELL_RENDERER_CENTER,
+				String.class));
+
+		tableParameters.put(ColumnEnum.NAME,
+				new XTableParameter(1, 300, false, "Nama", false,
+						XTableConstants.CELL_RENDERER_LEFT, String.class));
+	}
 
 	public SearchEntityDialog(String title, Window parent, Class<?> entityClass) {
 		super(parent);
@@ -59,7 +79,7 @@ public class SearchEntityDialog extends XJTableDialog {
 				btnPilih.doClick();
 			}
 		};
-		initTable();
+		XTableUtils.initTable(table, tableParameters);
 
 		XJPanel pnlFilter = new XJPanel();
 		getContentPane().add(pnlFilter, "cell 0 0,grow");
@@ -139,6 +159,10 @@ public class SearchEntityDialog extends XJTableDialog {
 		return selectedCode;
 	}
 
+	public Integer getSelectedId() {
+		return selectedId;
+	}
+
 	public String getSelectedName() {
 		return selectedName;
 	}
@@ -167,14 +191,22 @@ public class SearchEntityDialog extends XJTableDialog {
 				TableEntity searchResult = (TableEntity) searchResults.get(i);
 
 				Class<?> clazz = searchResult.getClass();
+				Method getIdMethod = clazz.getDeclaredMethod("getId");
 				Method getCodeMethod = clazz.getDeclaredMethod("getCode");
 				Method getNameMethod = clazz.getDeclaredMethod("getName");
 
+				int idValue = (int) getIdMethod.invoke(searchResult);
 				String codeValue = (String) getCodeMethod.invoke(searchResult);
 				String nameValue = (String) getNameMethod.invoke(searchResult);
 
-				tableModel.setValueAt(codeValue, i, 0);
-				tableModel.setValueAt(nameValue, i, 1);
+				tableModel.setValueAt(idValue, i,
+						tableParameters.get(ColumnEnum.ID).getColumnIndex());
+
+				tableModel.setValueAt(codeValue, i,
+						tableParameters.get(ColumnEnum.CODE).getColumnIndex());
+
+				tableModel.setValueAt(nameValue, i,
+						tableParameters.get(ColumnEnum.NAME).getColumnIndex());
 			}
 		} catch (NoSuchMethodException | SecurityException e) {
 			throw new AppException(e);
@@ -197,24 +229,21 @@ public class SearchEntityDialog extends XJTableDialog {
 		}
 	}
 
-	private void initTable() {
-		XTableModel tableModel = new XTableModel();
-		tableModel.setColumnIdentifiers(new String[] { "Kode", "Name" });
-		tableModel.setColumnEditable(new boolean[] { false, false });
-		table.setModel(tableModel);
-
-		TableColumnModel columnModel = table.getColumnModel();
-		columnModel.getColumn(0).setPreferredWidth(50);
-		columnModel.getColumn(1).setPreferredWidth(300);
-	}
-
 	private void pilih() {
 		int selectedRow = table.getSelectedRow();
 		if (selectedRow < 0) {
 			return;
 		}
-		selectedCode = (String) table.getModel().getValueAt(selectedRow, 0);
-		selectedName = (String) table.getModel().getValueAt(selectedRow, 1);
+		selectedId = (Integer) table.getModel().getValueAt(selectedRow,
+				tableParameters.get(ColumnEnum.ID).getColumnIndex());
+		selectedCode = (String) table.getModel().getValueAt(selectedRow,
+				tableParameters.get(ColumnEnum.CODE).getColumnIndex());
+		selectedName = (String) table.getModel().getValueAt(selectedRow,
+				tableParameters.get(ColumnEnum.NAME).getColumnIndex());
 		dispose();
+	}
+
+	private enum ColumnEnum {
+		ID, CODE, NAME
 	}
 }

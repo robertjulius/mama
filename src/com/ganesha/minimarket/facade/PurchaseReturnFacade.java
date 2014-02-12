@@ -22,7 +22,7 @@ import com.ganesha.core.utils.GeneralConstants;
 import com.ganesha.core.utils.GeneralConstants.AccountAction;
 import com.ganesha.hibernate.HqlParameter;
 import com.ganesha.minimarket.Main;
-import com.ganesha.minimarket.model.ItemStock;
+import com.ganesha.minimarket.model.Item;
 import com.ganesha.minimarket.model.PayableSummary;
 import com.ganesha.minimarket.model.PurchaseReturnDetail;
 import com.ganesha.minimarket.model.PurchaseReturnHeader;
@@ -67,19 +67,19 @@ public class PurchaseReturnFacade implements TransactionFacade {
 		session.saveOrUpdate(purchaseReturnHeader);
 
 		for (PurchaseReturnDetail purchaseReturnDetail : purchaseReturnDetails) {
-			ItemStock itemStock = stockFacade.getDetail(
-					purchaseReturnDetail.getItemCode(), session);
+			Item item = stockFacade.getDetail(purchaseReturnDetail
+					.getPurchaseDetail().getItemId(), session);
 
-			int stock = itemStock.getStock()
+			int stock = stockFacade.calculateStock(item)
 					- purchaseReturnDetail.getQuantity();
-			itemStock.setStock(stock);
+			stockFacade.reAdjustStock(item, stock, session);
 
-			BigDecimal lastPrice = purchaseReturnDetail.getPricePerUnit();
-			itemStock.setBuyPrice(lastPrice);
+			// BigDecimal lastPrice = purchaseReturnDetail.getPricePerUnit();
+			// item.setBuyPrice(lastPrice);
 
 			purchaseReturnDetail.setPurchaseReturnHeader(purchaseReturnHeader);
 			session.saveOrUpdate(purchaseReturnDetail);
-			session.saveOrUpdate(itemStock);
+			session.saveOrUpdate(item);
 
 			session.saveOrUpdate(purchaseReturnDetail);
 
@@ -135,20 +135,20 @@ public class PurchaseReturnFacade implements TransactionFacade {
 	}
 
 	public PurchaseReturnHeader validateForm(String transactionNumber,
-			Timestamp transactionTimestamp, String supplierCode,
+			Timestamp transactionTimestamp, Integer supplierId,
 			Double subTotalAmount, Double expenses, Double discountReturned,
 			Double totalReturnAmount, Double amountReturned, Double debtCut,
 			Double remainingReturnAmount, Boolean returnedInFullFlag,
 			Session session) throws UserException {
 
-		if (supplierCode == null || supplierCode.equals("")) {
+		if (supplierId == null) {
 			throw new UserException("Field Supplier dibutuhkan");
 		}
 
 		PurchaseReturnHeader header = new PurchaseReturnHeader();
 
-		Supplier supplier = SupplierFacade.getInstance().getDetail(
-				supplierCode, session);
+		Supplier supplier = SupplierFacade.getInstance().getDetail(supplierId,
+				session);
 
 		header.setTransactionNumber(transactionNumber);
 		header.setTransactionTimestamp(transactionTimestamp);

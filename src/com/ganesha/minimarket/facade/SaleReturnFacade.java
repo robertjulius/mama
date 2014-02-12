@@ -20,7 +20,7 @@ import com.ganesha.core.utils.CommonUtils;
 import com.ganesha.hibernate.HqlParameter;
 import com.ganesha.minimarket.Main;
 import com.ganesha.minimarket.model.Customer;
-import com.ganesha.minimarket.model.ItemStock;
+import com.ganesha.minimarket.model.Item;
 import com.ganesha.minimarket.model.SaleReturnDetail;
 import com.ganesha.minimarket.model.SaleReturnHeader;
 
@@ -59,18 +59,19 @@ public class SaleReturnFacade implements TransactionFacade {
 		session.saveOrUpdate(saleReturnHeader);
 
 		for (SaleReturnDetail saleReturnDetail : saleReturnDetails) {
-			ItemStock itemStock = stockFacade.getDetail(
-					saleReturnDetail.getItemCode(), session);
+			Item item = stockFacade.getDetail(saleReturnDetail.getSaleDetail()
+					.getItemId(), session);
 
-			int stock = itemStock.getStock() + saleReturnDetail.getQuantity();
-			itemStock.setStock(stock);
+			int stock = stockFacade.calculateStock(item)
+					+ saleReturnDetail.getQuantity();
+			stockFacade.reAdjustStock(item, stock, session);
 
-			BigDecimal lastPrice = saleReturnDetail.getPricePerUnit();
-			itemStock.setBuyPrice(lastPrice);
+			// BigDecimal lastPrice = saleReturnDetail.getPricePerUnit();
+			// item.setBuyPrice(lastPrice);
 
 			saleReturnDetail.setSaleReturnHeader(saleReturnHeader);
 			session.saveOrUpdate(saleReturnDetail);
-			session.saveOrUpdate(itemStock);
+			session.saveOrUpdate(item);
 
 			session.saveOrUpdate(saleReturnDetail);
 
@@ -125,18 +126,18 @@ public class SaleReturnFacade implements TransactionFacade {
 	}
 
 	public SaleReturnHeader validateForm(String transactionNumber,
-			Timestamp transactionTimestamp, String customerCode,
+			Timestamp transactionTimestamp, Integer customerId,
 			Double subTotalAmount, Double taxPercent, Double taxAmount,
 			Double totalReturnAmount, Session session) throws UserException {
 
-		if (customerCode == null || customerCode.equals("")) {
+		if (customerId == null) {
 			throw new UserException("Field Customer dibutuhkan");
 		}
 
 		SaleReturnHeader header = new SaleReturnHeader();
 
-		Customer customer = CustomerFacade.getInstance().getDetail(
-				customerCode, session);
+		Customer customer = CustomerFacade.getInstance().getDetail(customerId,
+				session);
 
 		header.setTransactionNumber(transactionNumber);
 		header.setTransactionTimestamp(transactionTimestamp);

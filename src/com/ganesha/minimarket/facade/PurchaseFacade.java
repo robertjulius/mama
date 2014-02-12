@@ -22,7 +22,7 @@ import com.ganesha.core.utils.GeneralConstants;
 import com.ganesha.core.utils.GeneralConstants.AccountAction;
 import com.ganesha.hibernate.HqlParameter;
 import com.ganesha.minimarket.Main;
-import com.ganesha.minimarket.model.ItemStock;
+import com.ganesha.minimarket.model.Item;
 import com.ganesha.minimarket.model.PurchaseDetail;
 import com.ganesha.minimarket.model.PurchaseHeader;
 import com.ganesha.minimarket.model.Supplier;
@@ -62,18 +62,19 @@ public class PurchaseFacade implements TransactionFacade {
 		session.saveOrUpdate(purchaseHeader);
 
 		for (PurchaseDetail purchaseDetail : purchaseDetails) {
-			ItemStock itemStock = stockFacade.getDetail(
-					purchaseDetail.getItemCode(), session);
+			Item item = stockFacade.getDetail(purchaseDetail.getItemId(),
+					session);
 
-			int stock = itemStock.getStock() + purchaseDetail.getQuantity();
-			itemStock.setStock(stock);
+			int stock = stockFacade.calculateStock(item)
+					+ purchaseDetail.getQuantity();
+			stockFacade.reAdjustStock(item, stock, session);
 
-			BigDecimal lastPrice = purchaseDetail.getPricePerUnit();
-			itemStock.setBuyPrice(lastPrice);
+			// BigDecimal lastPrice = purchaseDetail.getPricePerUnit();
+			// item.setBuyPrice(lastPrice);
 
 			purchaseDetail.setPurchaseHeader(purchaseHeader);
 			session.saveOrUpdate(purchaseDetail);
-			session.saveOrUpdate(itemStock);
+			session.saveOrUpdate(item);
 
 			AccountFacade.getInstance().insertIntoAccount(
 					CoaCodeConstants.PEMBELIAN, purchaseDetail.getId(),
@@ -130,19 +131,19 @@ public class PurchaseFacade implements TransactionFacade {
 	}
 
 	public PurchaseHeader validateForm(String transactionNumber,
-			Timestamp transactionTimestamp, String supplierCode,
+			Timestamp transactionTimestamp, Integer supplierId,
 			Double subTotalAmount, Double expenses, Double discount,
 			Double totalAmount, Double advancePayment, Double remainingPayment,
 			Boolean paidInFullFlag, Session session) throws UserException {
 
-		if (supplierCode == null || supplierCode.equals("")) {
+		if (supplierId == null) {
 			throw new UserException("Field Supplier dibutuhkan");
 		}
 
 		PurchaseHeader header = new PurchaseHeader();
 
-		Supplier supplier = SupplierFacade.getInstance().getDetail(
-				supplierCode, session);
+		Supplier supplier = SupplierFacade.getInstance().getDetail(supplierId,
+				session);
 
 		header.setTransactionNumber(transactionNumber);
 		header.setTransactionTimestamp(transactionTimestamp);

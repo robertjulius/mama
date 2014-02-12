@@ -83,6 +83,8 @@ public class SupplierForm extends XJDialog {
 	private XJCheckBox chkDisabled;
 	private XJButton btnhapussupplier;
 
+	private Integer supplierId;
+
 	public SupplierForm(Window parent, ActionType actionType) {
 		super(parent);
 		this.actionType = actionType;
@@ -325,6 +327,8 @@ public class SupplierForm extends XJDialog {
 	}
 
 	public void setFormDetailValue(Supplier supplier) {
+		supplierId = supplier.getId();
+
 		lblKodeTerakhir.setVisible(false);
 		lblKodeTerakhirValue.setVisible(false);
 		txtKode.setEditable(false);
@@ -395,17 +399,15 @@ public class SupplierForm extends XJDialog {
 				dispose();
 			} else if (actionType == ActionType.UPDATE) {
 				facade.updateExistingSupplier(txtAlamat1.getText(), txtAlamat2
-						.getText(), txtKode.getText().toUpperCase(),
-						txtKontakPerson1.getText().toUpperCase(),
-						txtKontakPerson1Email.getText(), txtKontakPerson1Phone
-								.getText(), txtKontakPerson2.getText()
-								.toUpperCase(),
-						txtKontakPerson2Email.getText(), txtKontakPerson2Phone
-								.getText(), txtDeskripsi.getText(), txtEmail1
-								.getText(), txtEmail2.getText(), txtNama
-								.getText().toUpperCase(), txtPhone1.getText(),
-						txtPhone2.getText(), chkDisabled.isSelected(), deleted,
-						session);
+						.getText(), supplierId, txtKontakPerson1.getText()
+						.toUpperCase(), txtKontakPerson1Email.getText(),
+						txtKontakPerson1Phone.getText(), txtKontakPerson2
+								.getText().toUpperCase(), txtKontakPerson2Email
+								.getText(), txtKontakPerson2Phone.getText(),
+						txtDeskripsi.getText(), txtEmail1.getText(), txtEmail2
+								.getText(), txtNama.getText().toUpperCase(),
+						txtPhone1.getText(), txtPhone2.getText(), chkDisabled
+								.isSelected(), deleted, session);
 				dispose();
 			} else {
 				throw new ActionTypeNotSupported(actionType);

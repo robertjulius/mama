@@ -55,23 +55,29 @@ public class SupplierListDialog extends XJTableDialog {
 	private XJRadioButton rdSupplierTidakAktif;
 	private final Map<ColumnEnum, XTableParameter> tableParameters = new HashMap<>();
 	{
-		tableParameters.put(ColumnEnum.CODE, new XTableParameter(0, 25, false,
+
+		tableParameters
+				.put(ColumnEnum.ID, new XTableParameter(0, 0, false, "ID",
+						true, XTableConstants.CELL_RENDERER_CENTER,
+						String.class));
+
+		tableParameters.put(ColumnEnum.CODE, new XTableParameter(1, 25, false,
 				"Kode", false, XTableConstants.CELL_RENDERER_CENTER,
 				String.class));
 
-		tableParameters.put(ColumnEnum.NAME, new XTableParameter(1, 300, false,
+		tableParameters.put(ColumnEnum.NAME, new XTableParameter(2, 300, false,
 				"Nama Supplier", false, XTableConstants.CELL_RENDERER_LEFT,
 				String.class));
 
-		tableParameters.put(ColumnEnum.CONTACT_PERSON1, new XTableParameter(2,
+		tableParameters.put(ColumnEnum.CONTACT_PERSON1, new XTableParameter(3,
 				75, false, "Kontak Person 1", false,
 				XTableConstants.CELL_RENDERER_CENTER, Integer.class));
 
-		tableParameters.put(ColumnEnum.CONTACT_PERSON2, new XTableParameter(3,
+		tableParameters.put(ColumnEnum.CONTACT_PERSON2, new XTableParameter(4,
 				75, false, "Kontak Person 2", false,
 				XTableConstants.CELL_RENDERER_CENTER, String.class));
 
-		tableParameters.put(ColumnEnum.PHONE, new XTableParameter(4, 25, false,
+		tableParameters.put(ColumnEnum.PHONE, new XTableParameter(5, 25, false,
 				"Telepon", false, XTableConstants.CELL_RENDERER_CENTER,
 				Double.class));
 	}
@@ -265,6 +271,9 @@ public class SupplierListDialog extends XJTableDialog {
 			for (int i = 0; i < suppliers.size(); ++i) {
 				Supplier supplier = suppliers.get(i);
 
+				tableModel.setValueAt(supplier.getId(), i,
+						tableParameters.get(ColumnEnum.ID).getColumnIndex());
+
 				tableModel.setValueAt(supplier.getCode(), i, tableParameters
 						.get(ColumnEnum.CODE).getColumnIndex());
 
@@ -305,11 +314,11 @@ public class SupplierListDialog extends XJTableDialog {
 			if (selectedRow < 0) {
 				return;
 			}
-			String code = (String) table.getModel().getValueAt(selectedRow,
-					tableParameters.get(ColumnEnum.CODE).getColumnIndex());
+			int id = (int) table.getModel().getValueAt(selectedRow,
+					tableParameters.get(ColumnEnum.ID).getColumnIndex());
 
 			SupplierFacade facade = SupplierFacade.getInstance();
-			Supplier supplier = facade.getDetail(code, session);
+			Supplier supplier = facade.getDetail(id, session);
 
 			SupplierForm supplierForm = new SupplierForm(this,
 					ActionType.UPDATE);
@@ -334,6 +343,6 @@ public class SupplierListDialog extends XJTableDialog {
 	}
 
 	private enum ColumnEnum {
-		CODE, NAME, CONTACT_PERSON1, CONTACT_PERSON2, PHONE
+		ID, CODE, NAME, CONTACT_PERSON1, CONTACT_PERSON2, PHONE
 	}
 }

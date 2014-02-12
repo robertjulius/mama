@@ -28,8 +28,8 @@ public class StockOpnameDetail implements TableEntity {
 	private StockOpnameHeader stockOpnameHeader;
 
 	@ManyToOne
-	@JoinColumn(name = "ITEM_STOCK_ID", nullable = false)
-	private ItemStock itemStock;
+	@JoinColumn(name = "ITEM_ID", nullable = false)
+	private Item item;
 
 	@Column(name = "QUANTITY_SYSTEM", nullable = false)
 	private Integer quantitySystem;
@@ -56,8 +56,8 @@ public class StockOpnameDetail implements TableEntity {
 		return id;
 	}
 
-	public ItemStock getItemStock() {
-		return itemStock;
+	public Item getItem() {
+		return item;
 	}
 
 	public BigDecimal getLastStockAmount() {
@@ -96,8 +96,8 @@ public class StockOpnameDetail implements TableEntity {
 		this.id = id;
 	}
 
-	public void setItemStock(ItemStock itemStock) {
-		this.itemStock = itemStock;
+	public void setItem(Item item) {
+		this.item = item;
 	}
 
 	public void setLastStockAmount(BigDecimal lastStockAmount) {

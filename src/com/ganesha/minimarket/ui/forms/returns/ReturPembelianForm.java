@@ -79,6 +79,8 @@ public class ReturPembelianForm extends XJDialog {
 	private final Map<ColumnEnum, XTableParameter> tableParameters = new HashMap<>();
 	private XJTextField txtPotongHutang;
 	private XJLabel lblUangDiterima;
+	private Integer supplierId;
+
 	{
 		tableParameters.put(ColumnEnum.NUM, new XTableParameter(0, 5, false,
 				"No", false, XTableConstants.CELL_RENDERER_CENTER,
@@ -427,8 +429,9 @@ public class ReturPembelianForm extends XJDialog {
 				"Cari Supplier", this, Supplier.class);
 		searchEntityDialog.setVisible(true);
 
-		String kodeSupplier = searchEntityDialog.getSelectedCode();
-		if (kodeSupplier != null) {
+		supplierId = searchEntityDialog.getSelectedId();
+		if (supplierId != null) {
+			String kodeSupplier = searchEntityDialog.getSelectedCode();
 			String namaSupplier = searchEntityDialog.getSelectedName();
 			txtKodeSupplier.setText(kodeSupplier);
 			txtNamaSupplier.setText(namaSupplier);
@@ -492,8 +495,6 @@ public class ReturPembelianForm extends XJDialog {
 			Timestamp transactionTimestamp = CommonUtils
 					.castDateToTimestamp(dateChooser.getDate());
 
-			String supplierCode = txtKodeSupplier.getText();
-
 			double subTotalAmount = Formatter.formatStringToNumber(
 					txtTotalRetur.getText()).doubleValue();
 
@@ -518,7 +519,7 @@ public class ReturPembelianForm extends XJDialog {
 			boolean returnedInFullFlag = !(remainingReturnAmount > 0);
 
 			PurchaseReturnHeader purchaseReturnHeader = facade.validateForm(
-					transactionNumber, transactionTimestamp, supplierCode,
+					transactionNumber, transactionTimestamp, supplierId,
 					subTotalAmount, expenses, discountReturned,
 					totalReturnAmount, amountReturned, debtCut,
 					remainingReturnAmount, returnedInFullFlag, session);
@@ -536,32 +537,6 @@ public class ReturPembelianForm extends XJDialog {
 												.getColumnIndex()).toString())
 						.intValue());
 
-				purchaseReturnDetail.setPurchaseTransactionNumber(table
-						.getValueAt(
-								i,
-								tableParameters.get(ColumnEnum.TRANSACTION_NUM)
-										.getColumnIndex()).toString());
-
-				purchaseReturnDetail
-						.setPurchaseTransactionTimestamp(CommonUtils
-								.castDateToTimestamp(Formatter
-										.formatStringToDate(table.getValueAt(
-												i,
-												tableParameters.get(
-														ColumnEnum.DATE)
-														.getColumnIndex())
-												.toString())));
-
-				purchaseReturnDetail.setItemCode(table.getValueAt(
-						i,
-						tableParameters.get(ColumnEnum.ITEM_CODE)
-								.getColumnIndex()).toString());
-
-				purchaseReturnDetail.setItemName(table.getValueAt(
-						i,
-						tableParameters.get(ColumnEnum.ITEM_NAME)
-								.getColumnIndex()).toString());
-
 				purchaseReturnDetail.setQuantity(Formatter
 						.formatStringToNumber(
 								table.getValueAt(
@@ -570,18 +545,6 @@ public class ReturPembelianForm extends XJDialog {
 												.get(ColumnEnum.QUANTITY)
 												.getColumnIndex()).toString())
 						.intValue());
-
-				purchaseReturnDetail.setUnit(table.getValueAt(i,
-						tableParameters.get(ColumnEnum.UNIT).getColumnIndex())
-						.toString());
-
-				purchaseReturnDetail.setPricePerUnit(BigDecimal
-						.valueOf(Formatter.formatStringToNumber(
-								table.getValueAt(
-										i,
-										tableParameters.get(ColumnEnum.PRICE)
-												.getColumnIndex()).toString())
-								.doubleValue()));
 
 				purchaseReturnDetail.setTotalAmount(BigDecimal
 						.valueOf(Formatter.formatStringToNumber(

@@ -449,8 +449,13 @@ public class MainFrame extends XJFrame {
 		XJLabel lblRoleValue = new XJLabel();
 		lblRoleValue.setForeground(Color.WHITE);
 		lblRoleValue.setText("");
-		lblRoleValue.setText(Main.getUserLogin().getUserRoleLinks().get(0)
-				.getPrimaryKey().getRole().getName());
+		if (Main.getUserLogin().getUserRoleLinks().isEmpty()) {
+			lblRoleValue.setText("-");
+		} else {
+			lblRoleValue.setText(Main.getUserLogin().getUserRoleLinks().get(0)
+					.getPrimaryKey().getRole().getName());
+		}
+
 		pnlUserInfo.add(lblRoleValue, "cell 2 2");
 
 		pnlCompanyInfo = new XJPanel();

@@ -57,9 +57,17 @@ public class StockFacade {
 
 		}
 
-		insertIntoItem(code, name, barcode, disabled, deleted, session);
-		insertIntoItemStock(code, unit, buyPrice, hpp, sellPrice, minimumStock,
-				disabled, deleted, session);
+		insertIntoItem(code, name, barcode, unit, buyPrice, hpp, sellPrice,
+				minimumStock, disabled, deleted, session);
+	}
+
+	public int calculateStock(Item item) {
+		int stock = 0;
+		List<ItemStock> itemStocks = item.getItemStocks();
+		for (ItemStock itemStock : itemStocks) {
+			stock += itemStock.getQuantity();
+		}
+		return stock;
 	}
 
 	public Item getByBarcode(String barcode, Session session) {
@@ -69,13 +77,15 @@ public class StockFacade {
 		return item;
 	}
 
-	public ItemStock getDetail(String code, Session session) {
-		Criteria criteria = session.createCriteria(ItemStock.class);
-		criteria.createAlias("item", "item");
-		criteria.add(Restrictions.eq("item.code", code));
+	public Item getDetail(int id, Session session) {
+		Item item = (Item) session.get(Item.class, id);
+		return item;
+	}
 
-		ItemStock itemStock = (ItemStock) criteria.uniqueResult();
-		return itemStock;
+	public void reAdjustStock(Item item, int stock, Session session) {
+		/*
+		 * TODO
+		 */
 	}
 
 	public List<ItemStock> search(String code, String barcode, String name,
@@ -115,23 +125,21 @@ public class StockFacade {
 		return itemStocks;
 	}
 
-	public void updateExistingItem(String code, String name, String barcode,
+	public void updateExistingItem(int id, String name, String barcode,
 			String unit, BigDecimal buyPrice, BigDecimal hpp,
 			BigDecimal sellPrice, int minimumStock, boolean disabled,
 			boolean deleted, Session session) throws UserException {
 
-		ItemStock itemStock = getDetail(code, session);
-		itemStock.setUnit(unit);
-		itemStock.setBuyPrice(buyPrice);
-		itemStock.setHpp(hpp);
-		itemStock.setSellPrice(sellPrice);
-		itemStock.setMinimumStock(minimumStock);
-		itemStock.setDisabled(disabled);
-		itemStock.setDeleted(deleted);
-		itemStock.setLastUpdatedBy(Main.getUserLogin().getId());
-		itemStock.setLastUpdatedTimestamp(CommonUtils.getCurrentTimestamp());
+		Item item = getDetail(id, session);
+		item.setUnit(unit);
+		item.setHpp(hpp);
+		item.setSellPrice(sellPrice);
+		item.setMinimumStock(minimumStock);
+		item.setDisabled(disabled);
+		item.setDeleted(deleted);
+		item.setLastUpdatedBy(Main.getUserLogin().getId());
+		item.setLastUpdatedTimestamp(CommonUtils.getCurrentTimestamp());
 
-		Item item = itemStock.getItem();
 		if (!item.getName().equals(name)) {
 			if (GlobalFacade.getInstance().isExists("name", name, Item.class,
 					session)) {
@@ -155,47 +163,28 @@ public class StockFacade {
 		item.setLastUpdatedBy(Main.getUserLogin().getId());
 		item.setLastUpdatedTimestamp(CommonUtils.getCurrentTimestamp());
 
-		session.saveOrUpdate(itemStock);
+		session.saveOrUpdate(item);
 	}
 
 	private void insertIntoItem(String code, String name, String barcode,
-			boolean disabled, boolean deleted, Session session) {
+			String unit, BigDecimal buyPrice, BigDecimal hpp,
+			BigDecimal sellPrice, int minimumStock, boolean disabled,
+			boolean deleted, Session session) {
 
 		Item item = new Item();
+
 		item.setCode(code);
 		item.setName(name);
 		item.setBarcode(barcode);
+		item.setUnit(unit);
+		item.setHpp(hpp);
+		item.setSellPrice(sellPrice);
+		item.setMinimumStock(minimumStock);
 		item.setDisabled(disabled);
 		item.setDeleted(deleted);
 		item.setLastUpdatedBy(Main.getUserLogin().getId());
 		item.setLastUpdatedTimestamp(CommonUtils.getCurrentTimestamp());
 
 		session.saveOrUpdate(item);
-	}
-
-	private void insertIntoItemStock(String code, String unit,
-			BigDecimal buyPrice, BigDecimal hpp, BigDecimal sellPrice,
-			int minimumStock, boolean disabled, boolean deleted, Session session) {
-
-		ItemStock itemStock = new ItemStock();
-		itemStock.setBuyPrice(buyPrice);
-
-		Criteria criteria = session.createCriteria(Item.class);
-		criteria.add(Restrictions.eq("code", code));
-		Item item = (Item) criteria.uniqueResult();
-
-		itemStock.setItem(item);
-		itemStock.setUnit(unit);
-		itemStock.setBuyPrice(buyPrice);
-		itemStock.setHpp(hpp);
-		itemStock.setSellPrice(sellPrice);
-		itemStock.setStock(0);
-		itemStock.setMinimumStock(minimumStock);
-		itemStock.setDisabled(disabled);
-		itemStock.setDeleted(deleted);
-		itemStock.setLastUpdatedBy(Main.getUserLogin().getId());
-		itemStock.setLastUpdatedTimestamp(CommonUtils.getCurrentTimestamp());
-
-		session.saveOrUpdate(itemStock);
 	}
 }

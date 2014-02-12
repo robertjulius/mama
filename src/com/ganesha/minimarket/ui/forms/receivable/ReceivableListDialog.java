@@ -45,15 +45,18 @@ public class ReceivableListDialog extends XJTableDialog {
 
 	private final Map<ColumnEnum, XTableParameter> tableParameters = new HashMap<>();
 	{
-		tableParameters.put(ColumnEnum.CODE, new XTableParameter(0, 30, false,
+		tableParameters.put(ColumnEnum.ID, new XTableParameter(0, 0, false,
+				"ID", true, XTableConstants.CELL_RENDERER_LEFT, Integer.class));
+
+		tableParameters.put(ColumnEnum.CODE, new XTableParameter(1, 30, false,
 				"Kode Supplier", false, XTableConstants.CELL_RENDERER_LEFT,
 				String.class));
 
-		tableParameters.put(ColumnEnum.NAME, new XTableParameter(1, 100, false,
+		tableParameters.put(ColumnEnum.NAME, new XTableParameter(2, 100, false,
 				"Nama Supplier", false, XTableConstants.CELL_RENDERER_LEFT,
 				String.class));
 
-		tableParameters.put(ColumnEnum.REMAINING_AMOUNT, new XTableParameter(2,
+		tableParameters.put(ColumnEnum.REMAINING_AMOUNT, new XTableParameter(3,
 				30, false, "Sisa Pembayaran", false,
 				XTableConstants.CELL_RENDERER_RIGHT, Double.class));
 	}
@@ -197,6 +200,9 @@ public class ReceivableListDialog extends XJTableDialog {
 				Map<String, Object> receivableSummary = receivableSummaries
 						.get(i);
 
+				tableModel.setValueAt(receivableSummary.get("id"), i,
+						tableParameters.get(ColumnEnum.ID).getColumnIndex());
+
 				tableModel.setValueAt(receivableSummary.get("code"), i,
 						tableParameters.get(ColumnEnum.CODE).getColumnIndex());
 
@@ -227,8 +233,9 @@ public class ReceivableListDialog extends XJTableDialog {
 			if (selectedRow < 0) {
 				return;
 			}
-			String code = (String) table.getModel().getValueAt(selectedRow, 0);
-			Supplier supplier = SupplierFacade.getInstance().getDetail(code,
+			int id = (int) table.getModel().getValueAt(selectedRow,
+					tableParameters.get(ColumnEnum.ID).getColumnIndex());
+			Supplier supplier = SupplierFacade.getInstance().getDetail(id,
 					session);
 
 			ReceivableFacade facade = ReceivableFacade.getInstance();
@@ -246,6 +253,6 @@ public class ReceivableListDialog extends XJTableDialog {
 	}
 
 	private enum ColumnEnum {
-		CODE, NAME, REMAINING_AMOUNT
+		ID, CODE, NAME, REMAINING_AMOUNT
 	}
 }

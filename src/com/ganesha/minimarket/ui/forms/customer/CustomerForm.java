@@ -59,6 +59,8 @@ public class CustomerForm extends XJDialog {
 	private JSeparator separator;
 	private XJButton btnhapuscustomer;
 
+	private Integer customerId;
+
 	public CustomerForm(Window parent, ActionType actionType) {
 		super(parent);
 		this.actionType = actionType;
@@ -210,6 +212,9 @@ public class CustomerForm extends XJDialog {
 	}
 
 	public void setFormDetailValue(Customer customer) {
+
+		customerId = customer.getId();
+
 		lblKodeTerakhir.setVisible(false);
 		lblKodeTerakhirValue.setVisible(false);
 		txtKode.setEditable(false);
@@ -262,11 +267,10 @@ public class CustomerForm extends XJDialog {
 						.getText(), chkDisabled.isSelected(), deleted, session);
 				dispose();
 			} else if (actionType == ActionType.UPDATE) {
-				facade.updateExistingCustomer(txtAlamat.getText(), txtKode
-						.getText().toUpperCase(), txtDeskripsi.getText(),
-						txtEmail.getText(), txtNama.getText().toUpperCase(),
-						txtPhone.getText(), chkDisabled.isSelected(), deleted,
-						session);
+				facade.updateExistingCustomer(txtAlamat.getText(), customerId,
+						txtDeskripsi.getText(), txtEmail.getText(), txtNama
+								.getText().toUpperCase(), txtPhone.getText(),
+						chkDisabled.isSelected(), deleted, session);
 				dispose();
 			} else {
 				throw new ActionTypeNotSupported(actionType);

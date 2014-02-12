@@ -63,31 +63,34 @@ public class StockOpnameListDialog extends XJTableDialog {
 	private Timestamp stopTimestamp;
 
 	{
-		tableParameters.put(ColumnEnum.NUM, new XTableParameter(0, 10, false,
+		tableParameters.put(ColumnEnum.ID, new XTableParameter(0, 0, false,
+				"ID", true, XTableConstants.CELL_RENDERER_LEFT, Integer.class));
+
+		tableParameters.put(ColumnEnum.NUM, new XTableParameter(1, 10, false,
 				"No", false, XTableConstants.CELL_RENDERER_CENTER,
 				Integer.class));
 
 		tableParameters.put(ColumnEnum.CODE,
-				new XTableParameter(1, 50, false, "Kode", false,
+				new XTableParameter(2, 50, false, "Kode", false,
 						XTableConstants.CELL_RENDERER_LEFT, String.class));
 
-		tableParameters.put(ColumnEnum.NAME, new XTableParameter(2, 300, false,
+		tableParameters.put(ColumnEnum.NAME, new XTableParameter(3, 300, false,
 				"Nama Barang", false, XTableConstants.CELL_RENDERER_LEFT,
 				String.class));
 
-		tableParameters.put(ColumnEnum.UNIT, new XTableParameter(3, 50, false,
+		tableParameters.put(ColumnEnum.UNIT, new XTableParameter(4, 50, false,
 				"Satuan", false, XTableConstants.CELL_RENDERER_CENTER,
 				String.class));
 
-		tableParameters.put(ColumnEnum.QUANTITY_SISTEM, new XTableParameter(4,
+		tableParameters.put(ColumnEnum.QUANTITY_SISTEM, new XTableParameter(5,
 				50, false, "Qty Sistem", false,
 				XTableConstants.CELL_RENDERER_RIGHT, Integer.class));
 
-		tableParameters.put(ColumnEnum.QUANTITY_MANUAL, new XTableParameter(5,
+		tableParameters.put(ColumnEnum.QUANTITY_MANUAL, new XTableParameter(6,
 				50, true, "Qty Manual", false,
 				XTableConstants.CELL_RENDERER_RIGHT, Integer.class));
 
-		tableParameters.put(ColumnEnum.DEVIATION, new XTableParameter(6, 75,
+		tableParameters.put(ColumnEnum.DEVIATION, new XTableParameter(7, 75,
 				false, "Selisih", false, XTableConstants.CELL_RENDERER_RIGHT,
 				Integer.class));
 	}
@@ -200,6 +203,9 @@ public class StockOpnameListDialog extends XJTableDialog {
 				ItemStock itemStock = itemStocks.get(i);
 				Item item = itemStock.getItem();
 
+				tableModel.setValueAt(item.getId(), i,
+						tableParameters.get(ColumnEnum.ID).getColumnIndex());
+
 				tableModel.setValueAt(i + 1, i,
 						tableParameters.get(ColumnEnum.NUM).getColumnIndex());
 
@@ -209,11 +215,11 @@ public class StockOpnameListDialog extends XJTableDialog {
 				tableModel.setValueAt(item.getName(), i,
 						tableParameters.get(ColumnEnum.NAME).getColumnIndex());
 
-				tableModel.setValueAt(itemStock.getUnit(), i, tableParameters
-						.get(ColumnEnum.UNIT).getColumnIndex());
+				tableModel.setValueAt(item.getUnit(), i,
+						tableParameters.get(ColumnEnum.UNIT).getColumnIndex());
 
-				tableModel.setValueAt(Formatter.formatNumberToString(itemStock
-						.getStock()), i,
+				tableModel.setValueAt(Formatter.formatNumberToString(facade
+						.calculateStock(item)), i,
 						tableParameters.get(ColumnEnum.QUANTITY_SISTEM)
 								.getColumnIndex());
 
@@ -259,8 +265,8 @@ public class StockOpnameListDialog extends XJTableDialog {
 				int rowCount = table.getRowCount();
 
 				for (int i = 0; i < rowCount; ++i) {
-					String itemCode = (String) table.getValueAt(i,
-							tableParameters.get(ColumnEnum.CODE)
+					int itemId = (int) table
+							.getValueAt(i, tableParameters.get(ColumnEnum.ID)
 									.getColumnIndex());
 
 					int quantitySistem = Formatter.formatStringToNumber(
@@ -289,7 +295,7 @@ public class StockOpnameListDialog extends XJTableDialog {
 					}
 
 					stockOpnameDetails.add(facade.createStockOpnameEntity(
-							itemCode, quantityManual, overCount, lossCount,
+							itemId, quantityManual, overCount, lossCount,
 							StockQueueMethod.FIFO, session));
 				}
 			} finally {
@@ -361,6 +367,6 @@ public class StockOpnameListDialog extends XJTableDialog {
 	}
 
 	private enum ColumnEnum {
-		NUM, CODE, NAME, UNIT, QUANTITY_SISTEM, QUANTITY_MANUAL, DEVIATION
+		ID, NUM, CODE, NAME, UNIT, QUANTITY_SISTEM, QUANTITY_MANUAL, DEVIATION
 	}
 }

@@ -72,18 +72,7 @@ public class SupplierFacade {
 	}
 
 	public Supplier getDetail(int id, Session session) {
-		Criteria criteria = session.createCriteria(Supplier.class);
-		criteria.add(Restrictions.eq("id", id));
-
-		Supplier supplier = (Supplier) criteria.uniqueResult();
-		return supplier;
-	}
-
-	public Supplier getDetail(String code, Session session) {
-		Criteria criteria = session.createCriteria(Supplier.class);
-		criteria.add(Restrictions.eq("code", code));
-
-		Supplier supplier = (Supplier) criteria.uniqueResult();
+		Supplier supplier = (Supplier) session.get(Supplier.class, id);
 		return supplier;
 	}
 
@@ -125,17 +114,16 @@ public class SupplierFacade {
 	}
 
 	public void updateExistingSupplier(String address1, String address2,
-			String code, String contackPerson1, String contackPerson1Email,
+			Integer id, String contackPerson1, String contackPerson1Email,
 			String contackPerson1Phone, String contackPerson2,
 			String contackPerson2Email, String contackPerson2Phone,
 			String description, String email1, String email2, String name,
 			String phone1, String phone2, boolean disabled, boolean deleted,
 			Session session) throws UserException {
 
-		Supplier supplier = getDetail(code, session);
+		Supplier supplier = getDetail(id, session);
 		supplier.setAddress1(address1);
 		supplier.setAddress2(address2);
-		supplier.setCode(code);
 		supplier.setContactPerson1(contackPerson1);
 		supplier.setContactPerson1Email(contackPerson1Email);
 		supplier.setContactPerson1Phone(contackPerson1Phone);

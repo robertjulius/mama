@@ -32,7 +32,6 @@ import com.ganesha.desktop.component.XJTextField;
 import com.ganesha.hibernate.HibernateUtils;
 import com.ganesha.minimarket.facade.StockFacade;
 import com.ganesha.minimarket.model.Item;
-import com.ganesha.minimarket.model.ItemStock;
 import com.ganesha.minimarket.utils.BarcodeUtils;
 import com.ganesha.minimarket.utils.PermissionConstants;
 
@@ -67,6 +66,8 @@ public class StockForm extends XJDialog {
 	private XJButton btnHapusBarang;
 	private XJPanel pnlDisable;
 	private XJCheckBox chkDisabled;
+
+	private int itemId;
 
 	public StockForm(Window parent, ActionType actionType) {
 		super(parent);
@@ -266,30 +267,31 @@ public class StockForm extends XJDialog {
 		setLocationRelativeTo(null);
 	}
 
-	public String getKodeBarang() {
-		return txtKode.getText();
+	public int getIdBarang() {
+		return itemId;
 	}
 
 	public void setBarcode(Object barcode) {
 		txtBarcode.setText(barcode.toString());
 	}
 
-	public void setFormDetailValue(ItemStock itemStock) {
-		Item item = itemStock.getItem();
+	public void setFormDetailValue(Item item) {
+		itemId = item.getId();
+
 		txtKode.setText(item.getCode());
 		txtNama.setText(item.getName());
 		txtBarcode.setText(item.getBarcode());
-		txtSatuan.setText(itemStock.getUnit());
-		txtJumlahSaatIni.setText(Formatter.formatNumberToString(itemStock
-				.getStock()));
-		txtStokMinimum.setText(Formatter.formatNumberToString(itemStock
+		txtSatuan.setText(item.getUnit());
+		txtJumlahSaatIni.setText(Formatter.formatNumberToString(StockFacade
+				.getInstance().calculateStock(item)));
+		txtStokMinimum.setText(Formatter.formatNumberToString(item
 				.getMinimumStock()));
-		txtHargaBeli.setText(Formatter.formatNumberToString(itemStock
-				.getBuyPrice()));
-		txtHpp.setText(Formatter.formatNumberToString(itemStock.getHpp()));
-		txtHargaJual.setText(Formatter.formatNumberToString(itemStock
-				.getSellPrice()));
-		chkDisabled.setSelected(itemStock.getDisabled());
+		txtHargaBeli.setText(Formatter.formatNumberToString(item
+				.getLastBuyPrice()));
+		txtHpp.setText(Formatter.formatNumberToString(item.getHpp()));
+		txtHargaJual
+				.setText(Formatter.formatNumberToString(item.getSellPrice()));
+		chkDisabled.setSelected(item.getDisabled());
 
 		btnSimpan
 				.setText("<html><center>Simpan Perubahan<br/>[F12]</center></html>");
@@ -384,9 +386,9 @@ public class StockForm extends XJDialog {
 						disabled, deleted, session);
 				dispose();
 			} else if (actionType == ActionType.UPDATE) {
-				facade.updateExistingItem(code.toUpperCase(),
-						name.toUpperCase(), barcode, unit, buyPrice, hpp,
-						sellPrice, minimumStock, disabled, deleted, session);
+				facade.updateExistingItem(itemId, name.toUpperCase(), barcode,
+						unit, buyPrice, hpp, sellPrice, minimumStock, disabled,
+						deleted, session);
 				dispose();
 			} else {
 				throw new ActionTypeNotSupported(actionType);
