@@ -151,7 +151,7 @@ public class SaleFacade implements TransactionFacade {
 	public void performSale(SaleHeader saleHeader,
 			List<SaleDetail> saleDetails, Session session) throws AppException {
 
-		StockFacade stockFacade = StockFacade.getInstance();
+		ItemFacade stockFacade = ItemFacade.getInstance();
 		session.saveOrUpdate(saleHeader);
 
 		for (SaleDetail saleDetail : saleDetails) {

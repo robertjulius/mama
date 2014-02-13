@@ -531,7 +531,7 @@ public class ReturPembelianForm extends XJDialog {
 
 				purchaseReturnDetail.setOrderNum(Formatter
 						.formatStringToNumber(
-								table.getValueAt(
+								table.getModel().getValueAt(
 										i,
 										tableParameters.get(ColumnEnum.NUM)
 												.getColumnIndex()).toString())
@@ -539,7 +539,7 @@ public class ReturPembelianForm extends XJDialog {
 
 				purchaseReturnDetail.setQuantity(Formatter
 						.formatStringToNumber(
-								table.getValueAt(
+								table.getModel().getValueAt(
 										i,
 										tableParameters
 												.get(ColumnEnum.QUANTITY)
@@ -548,7 +548,7 @@ public class ReturPembelianForm extends XJDialog {
 
 				purchaseReturnDetail.setTotalAmount(BigDecimal
 						.valueOf(Formatter.formatStringToNumber(
-								table.getValueAt(
+								table.getModel().getValueAt(
 										i,
 										tableParameters.get(ColumnEnum.TOTAL)
 												.getColumnIndex()).toString())
@@ -596,7 +596,7 @@ public class ReturPembelianForm extends XJDialog {
 		}
 
 		int jumlah = Formatter.formatStringToNumber(
-				table.getValueAt(
+				table.getModel().getValueAt(
 						row,
 						tableParameters.get(ColumnEnum.QUANTITY)
 								.getColumnIndex()).toString()).intValue();
@@ -604,7 +604,7 @@ public class ReturPembelianForm extends XJDialog {
 				tableParameters.get(ColumnEnum.QUANTITY).getColumnIndex());
 
 		double hargaSatuan = Formatter.formatStringToNumber(
-				table.getValueAt(row,
+				table.getModel().getValueAt(row,
 						tableParameters.get(ColumnEnum.PRICE).getColumnIndex())
 						.toString()).doubleValue();
 		table.setValueAt(Formatter.formatNumberToString(hargaSatuan), row,
@@ -621,7 +621,7 @@ public class ReturPembelianForm extends XJDialog {
 		int rowCount = table.getRowCount();
 		double totalRetur = 0;
 		for (int i = 0; i < rowCount; ++i) {
-			String string = table.getValueAt(i,
+			String string = table.getModel().getValueAt(i,
 					tableParameters.get(ColumnEnum.TOTAL).getColumnIndex())
 					.toString();
 			double totalPerRow = Formatter.formatStringToNumber(string)

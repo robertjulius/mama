@@ -37,11 +37,10 @@ import com.ganesha.desktop.component.xtableutils.XTableParameter;
 import com.ganesha.desktop.component.xtableutils.XTableUtils;
 import com.ganesha.hibernate.HibernateUtils;
 import com.ganesha.minimarket.Main;
-import com.ganesha.minimarket.facade.StockFacade;
+import com.ganesha.minimarket.facade.ItemFacade;
 import com.ganesha.minimarket.facade.StockOpnameFacade;
 import com.ganesha.minimarket.facade.StockOpnameFacade.StockQueueMethod;
 import com.ganesha.minimarket.model.Item;
-import com.ganesha.minimarket.model.ItemStock;
 import com.ganesha.minimarket.model.StockOpnameDetail;
 import com.ganesha.minimarket.ui.forms.stockopname.StockOpnameConfirmationDialog.ConfirmType;
 import com.ganesha.minimarket.utils.PermissionConstants;
@@ -192,16 +191,15 @@ public class StockOpnameListDialog extends XJTableDialog {
 	public void loadData() throws AppException {
 		Session session = HibernateUtils.openSession();
 		try {
-			StockFacade facade = StockFacade.getInstance();
-			List<ItemStock> itemStocks = facade.search(null, null, null, false,
-					null, session);
+			ItemFacade facade = ItemFacade.getInstance();
+			List<Item> items = facade.search(null, null, null, false, null,
+					session);
 
 			XTableModel tableModel = (XTableModel) table.getModel();
-			tableModel.setRowCount(itemStocks.size());
+			tableModel.setRowCount(items.size());
 
-			for (int i = 0; i < itemStocks.size(); ++i) {
-				ItemStock itemStock = itemStocks.get(i);
-				Item item = itemStock.getItem();
+			for (int i = 0; i < items.size(); ++i) {
+				Item item = items.get(i);
 
 				tableModel.setValueAt(item.getId(), i,
 						tableParameters.get(ColumnEnum.ID).getColumnIndex());
@@ -270,14 +268,14 @@ public class StockOpnameListDialog extends XJTableDialog {
 									.getColumnIndex());
 
 					int quantitySistem = Formatter.formatStringToNumber(
-							(String) table.getValueAt(
+							(String) table.getModel().getValueAt(
 									i,
 									tableParameters.get(
 											ColumnEnum.QUANTITY_SISTEM)
 											.getColumnIndex())).intValue();
 
 					int quantityManual = Formatter.formatStringToNumber(
-							table.getValueAt(
+							table.getModel().getValueAt(
 									i,
 									tableParameters.get(
 											ColumnEnum.QUANTITY_MANUAL)
@@ -344,7 +342,7 @@ public class StockOpnameListDialog extends XJTableDialog {
 		}
 
 		int quantitySistem = Formatter.formatStringToNumber(
-				table.getValueAt(
+				table.getModel().getValueAt(
 						row,
 						tableParameters.get(ColumnEnum.QUANTITY_SISTEM)
 								.getColumnIndex()).toString()).intValue();
@@ -353,7 +351,7 @@ public class StockOpnameListDialog extends XJTableDialog {
 						.getColumnIndex());
 
 		int quantityManual = Formatter.formatStringToNumber(
-				table.getValueAt(
+				table.getModel().getValueAt(
 						row,
 						tableParameters.get(ColumnEnum.QUANTITY_MANUAL)
 								.getColumnIndex()).toString()).intValue();

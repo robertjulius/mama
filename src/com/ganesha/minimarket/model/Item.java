@@ -67,11 +67,6 @@ public class Item extends Inactivable {
 		return itemStocks;
 	}
 
-	public BigDecimal getLastBuyPrice() {
-		int lastIndex = itemStocks.size() - 1;
-		return itemStocks.get(lastIndex).getBuyPrice();
-	}
-
 	public Integer getMinimumStock() {
 		return minimumStock;
 	}

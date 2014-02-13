@@ -63,7 +63,7 @@ public class PurchaseReturnFacade implements TransactionFacade {
 		validatePayable(purchaseReturnHeader, session);
 		validateReceivable(purchaseReturnHeader, session);
 
-		StockFacade stockFacade = StockFacade.getInstance();
+		ItemFacade stockFacade = ItemFacade.getInstance();
 		session.saveOrUpdate(purchaseReturnHeader);
 
 		for (PurchaseReturnDetail purchaseReturnDetail : purchaseReturnDetails) {

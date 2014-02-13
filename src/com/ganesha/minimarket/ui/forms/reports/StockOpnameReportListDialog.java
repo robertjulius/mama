@@ -204,7 +204,7 @@ public class StockOpnameReportListDialog extends XJTableDialog {
 		try {
 			int row = table.getSelectedRow();
 			Date lastUpdatedTimestamp = Formatter
-					.formatStringToTimestamp((String) table.getValueAt(row,
+					.formatStringToTimestamp((String) table.getModel().getValueAt(row,
 							tableParameters.get(ColumnEnum.DATE)
 									.getColumnIndex()));
 

@@ -38,3 +38,6 @@ Smadav
 Skype
 Test Ping
 Toad
+
+
+ItemFacade.reAdjustStock()

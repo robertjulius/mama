@@ -52,7 +52,7 @@ public class DiscountForm extends XJDialog {
 	public DiscountForm(Window parent) {
 		super(parent);
 		setCloseOnEsc(false);
-		setTitle("Diskon");
+		setTitle("Diskon (%)");
 		setPermissionCode(PermissionConstants.DISCOUNT_FORM);
 		getContentPane().setLayout(
 				new MigLayout("", "[grow]", "[grow][grow][grow]"));

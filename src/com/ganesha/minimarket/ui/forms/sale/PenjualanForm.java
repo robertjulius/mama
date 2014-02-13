@@ -51,7 +51,7 @@ import com.ganesha.minimarket.facade.CustomerFacade;
 import com.ganesha.minimarket.facade.DiscountFacade;
 import com.ganesha.minimarket.facade.GlobalFacade;
 import com.ganesha.minimarket.facade.SaleFacade;
-import com.ganesha.minimarket.facade.StockFacade;
+import com.ganesha.minimarket.facade.ItemFacade;
 import com.ganesha.minimarket.model.Customer;
 import com.ganesha.minimarket.model.Item;
 import com.ganesha.minimarket.model.SaleDetail;
@@ -438,7 +438,7 @@ public class PenjualanForm extends XJDialog {
 		}
 		Session session = HibernateUtils.openSession();
 		try {
-			Item item = StockFacade.getInstance()
+			Item item = ItemFacade.getInstance()
 					.getByBarcode(barcode, session);
 
 			if (item == null) {
@@ -542,34 +542,34 @@ public class PenjualanForm extends XJDialog {
 				SaleDetail saleDetail = new SaleDetail();
 
 				saleDetail.setOrderNum(Formatter.formatStringToNumber(
-						table.getValueAt(
+						table.getModel().getValueAt(
 								i,
 								tableParameters.get(ColumnEnum.NUM)
 										.getColumnIndex()).toString())
 						.intValue());
 
-				saleDetail.setItemCode(table.getValueAt(i,
+				saleDetail.setItemCode(table.getModel().getValueAt(i,
 						tableParameters.get(ColumnEnum.CODE).getColumnIndex())
 						.toString());
 
-				saleDetail.setItemName(table.getValueAt(i,
+				saleDetail.setItemName(table.getModel().getValueAt(i,
 						tableParameters.get(ColumnEnum.NAME).getColumnIndex())
 						.toString());
 
 				saleDetail.setQuantity(Formatter.formatStringToNumber(
-						table.getValueAt(
+						table.getModel().getValueAt(
 								i,
 								tableParameters.get(ColumnEnum.QUANTITY)
 										.getColumnIndex()).toString())
 						.intValue());
 
-				saleDetail.setUnit(table.getValueAt(i,
+				saleDetail.setUnit(table.getModel().getValueAt(i,
 						tableParameters.get(ColumnEnum.UNIT).getColumnIndex())
 						.toString());
 
 				saleDetail.setPricePerUnit(BigDecimal.valueOf(Formatter
 						.formatStringToNumber(
-								table.getValueAt(
+								table.getModel().getValueAt(
 										i,
 										tableParameters.get(ColumnEnum.PRICE)
 												.getColumnIndex()).toString())
@@ -577,7 +577,7 @@ public class PenjualanForm extends XJDialog {
 
 				saleDetail.setDiscountPercent(BigDecimal.valueOf(Formatter
 						.formatStringToNumber(
-								table.getValueAt(
+								table.getModel().getValueAt(
 										i,
 										tableParameters
 												.get(ColumnEnum.DISCOUNT)
@@ -586,7 +586,7 @@ public class PenjualanForm extends XJDialog {
 
 				saleDetail.setTotalAmount(BigDecimal.valueOf(Formatter
 						.formatStringToNumber(
-								table.getValueAt(
+								table.getModel().getValueAt(
 										i,
 										tableParameters.get(ColumnEnum.TOTAL)
 												.getColumnIndex()).toString())
@@ -651,7 +651,7 @@ public class PenjualanForm extends XJDialog {
 		int rowCount = table.getRowCount();
 		double totalPenjualan = 0;
 		for (int i = 0; i < rowCount; ++i) {
-			String string = table.getValueAt(i,
+			String string = table.getModel().getValueAt(i,
 					tableParameters.get(ColumnEnum.TOTAL).getColumnIndex())
 					.toString();
 			double totalPerRow = Formatter.formatStringToNumber(string)
@@ -670,7 +670,7 @@ public class PenjualanForm extends XJDialog {
 		}
 
 		int jumlah = Formatter.formatStringToNumber(
-				table.getValueAt(
+				table.getModel().getValueAt(
 						row,
 						tableParameters.get(ColumnEnum.QUANTITY)
 								.getColumnIndex()).toString()).intValue();
@@ -678,7 +678,7 @@ public class PenjualanForm extends XJDialog {
 				tableParameters.get(ColumnEnum.QUANTITY).getColumnIndex());
 
 		double hargaSatuan = Formatter.formatStringToNumber(
-				table.getValueAt(row,
+				table.getModel().getValueAt(row,
 						tableParameters.get(ColumnEnum.PRICE).getColumnIndex())
 						.toString()).doubleValue();
 		table.setValueAt(Formatter.formatNumberToString(hargaSatuan), row,
@@ -686,7 +686,7 @@ public class PenjualanForm extends XJDialog {
 
 		double totalBeforeDiscount = jumlah * hargaSatuan;
 
-		int itemId = (int) table.getValueAt(row,
+		int itemId = (int) table.getModel().getValueAt(row,
 				tableParameters.get(ColumnEnum.ID).getColumnIndex());
 
 		double discountPercent = 0;
@@ -716,7 +716,7 @@ public class PenjualanForm extends XJDialog {
 
 		Session session = HibernateUtils.openSession();
 		try {
-			StockFacade facade = StockFacade.getInstance();
+			ItemFacade facade = ItemFacade.getInstance();
 			Item item = facade.getDetail(itemId, session);
 
 			XTableModel tableModel = (XTableModel) table.getModel();

@@ -27,7 +27,7 @@ public class Discount extends Inactivable {
 	@JoinColumn(name = "ITEM_ID", nullable = false)
 	private Item item;
 
-	@Column(name = "QUANTITY", nullable = false, unique = true)
+	@Column(name = "QUANTITY", nullable = false)
 	private Integer quantity;
 
 	@Column(name = "DISCOUNT_PERCENT")

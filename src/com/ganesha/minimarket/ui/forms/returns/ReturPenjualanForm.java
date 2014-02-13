@@ -394,14 +394,14 @@ public class ReturPenjualanForm extends XJDialog {
 				SaleReturnDetail saleReturnDetail = new SaleReturnDetail();
 
 				saleReturnDetail.setOrderNum(Formatter.formatStringToNumber(
-						table.getValueAt(
+						table.getModel().getValueAt(
 								i,
 								tableParameters.get(ColumnEnum.NUM)
 										.getColumnIndex()).toString())
 						.intValue());
 
 				saleReturnDetail.setQuantity(Formatter.formatStringToNumber(
-						table.getValueAt(
+						table.getModel().getValueAt(
 								i,
 								tableParameters.get(ColumnEnum.QUANTITY)
 										.getColumnIndex()).toString())
@@ -409,7 +409,7 @@ public class ReturPenjualanForm extends XJDialog {
 
 				saleReturnDetail.setTotalAmount(BigDecimal.valueOf(Formatter
 						.formatStringToNumber(
-								table.getValueAt(
+								table.getModel().getValueAt(
 										i,
 										tableParameters.get(ColumnEnum.TOTAL)
 												.getColumnIndex()).toString())
@@ -438,7 +438,7 @@ public class ReturPenjualanForm extends XJDialog {
 		}
 
 		int jumlah = Formatter.formatStringToNumber(
-				table.getValueAt(
+				table.getModel().getValueAt(
 						row,
 						tableParameters.get(ColumnEnum.QUANTITY)
 								.getColumnIndex()).toString()).intValue();
@@ -446,7 +446,7 @@ public class ReturPenjualanForm extends XJDialog {
 				tableParameters.get(ColumnEnum.QUANTITY).getColumnIndex());
 
 		double hargaSatuan = Formatter.formatStringToNumber(
-				table.getValueAt(row,
+				table.getModel().getValueAt(row,
 						tableParameters.get(ColumnEnum.PRICE).getColumnIndex())
 						.toString()).doubleValue();
 		table.setValueAt(Formatter.formatNumberToString(hargaSatuan), row,
@@ -455,7 +455,7 @@ public class ReturPenjualanForm extends XJDialog {
 		double totalBeforeDiscount = jumlah * hargaSatuan;
 
 		double discountPercent = Formatter.formatStringToNumber(
-				table.getValueAt(
+				table.getModel().getValueAt(
 						row,
 						tableParameters.get(ColumnEnum.DISCOUNT)
 								.getColumnIndex()).toString()).doubleValue();
@@ -472,7 +472,7 @@ public class ReturPenjualanForm extends XJDialog {
 		int rowCount = table.getRowCount();
 		double totalRetur = 0;
 		for (int i = 0; i < rowCount; ++i) {
-			String string = table.getValueAt(i,
+			String string = table.getModel().getValueAt(i,
 					tableParameters.get(ColumnEnum.TOTAL).getColumnIndex())
 					.toString();
 			double totalPerRow = Formatter.formatStringToNumber(string)

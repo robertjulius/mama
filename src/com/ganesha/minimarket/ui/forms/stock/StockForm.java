@@ -30,7 +30,7 @@ import com.ganesha.desktop.component.XJLabel;
 import com.ganesha.desktop.component.XJPanel;
 import com.ganesha.desktop.component.XJTextField;
 import com.ganesha.hibernate.HibernateUtils;
-import com.ganesha.minimarket.facade.StockFacade;
+import com.ganesha.minimarket.facade.ItemFacade;
 import com.ganesha.minimarket.model.Item;
 import com.ganesha.minimarket.utils.BarcodeUtils;
 import com.ganesha.minimarket.utils.PermissionConstants;
@@ -67,7 +67,7 @@ public class StockForm extends XJDialog {
 	private XJPanel pnlDisable;
 	private XJCheckBox chkDisabled;
 
-	private int itemId;
+	private Integer itemId;
 
 	public StockForm(Window parent, ActionType actionType) {
 		super(parent);
@@ -149,6 +149,7 @@ public class StockForm extends XJDialog {
 		lblNama.setText("Nama");
 
 		txtNama = new XJTextField();
+		txtNama.setUpperCaseOnFocusLost(true);
 		pnlKiri.add(txtNama, "cell 1 0,growx");
 
 		XJLabel lblSatuan = new XJLabel();
@@ -156,6 +157,7 @@ public class StockForm extends XJDialog {
 		lblSatuan.setText("Satuan");
 
 		txtSatuan = new XJTextField();
+		txtSatuan.setUpperCaseOnFocusLost(true);
 		pnlKiri.add(txtSatuan, "cell 1 1,growx");
 
 		lblJumlahSaatIni = new XJLabel();
@@ -267,7 +269,7 @@ public class StockForm extends XJDialog {
 		setLocationRelativeTo(null);
 	}
 
-	public int getIdBarang() {
+	public Integer getIdBarang() {
 		return itemId;
 	}
 
@@ -282,12 +284,12 @@ public class StockForm extends XJDialog {
 		txtNama.setText(item.getName());
 		txtBarcode.setText(item.getBarcode());
 		txtSatuan.setText(item.getUnit());
-		txtJumlahSaatIni.setText(Formatter.formatNumberToString(StockFacade
+		txtJumlahSaatIni.setText(Formatter.formatNumberToString(ItemFacade
 				.getInstance().calculateStock(item)));
 		txtStokMinimum.setText(Formatter.formatNumberToString(item
 				.getMinimumStock()));
-		txtHargaBeli.setText(Formatter.formatNumberToString(item
-				.getLastBuyPrice()));
+		txtHargaBeli.setText(Formatter.formatNumberToString(ItemFacade
+				.getInstance().getLastBuyPrice(item)));
 		txtHpp.setText(Formatter.formatNumberToString(item.getHpp()));
 		txtHargaJual
 				.setText(Formatter.formatNumberToString(item.getSellPrice()));
@@ -361,7 +363,7 @@ public class StockForm extends XJDialog {
 		Session session = HibernateUtils.openSession();
 		try {
 			session.beginTransaction();
-			StockFacade facade = StockFacade.getInstance();
+			ItemFacade facade = ItemFacade.getInstance();
 
 			String code = txtKode.getText();
 			String name = txtNama.getText();

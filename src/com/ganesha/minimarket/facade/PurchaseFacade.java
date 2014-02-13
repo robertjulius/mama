@@ -58,7 +58,7 @@ public class PurchaseFacade implements TransactionFacade {
 			List<PurchaseDetail> purchaseDetails, Session session)
 			throws AppException {
 
-		StockFacade stockFacade = StockFacade.getInstance();
+		ItemFacade stockFacade = ItemFacade.getInstance();
 		session.saveOrUpdate(purchaseHeader);
 
 		for (PurchaseDetail purchaseDetail : purchaseDetails) {

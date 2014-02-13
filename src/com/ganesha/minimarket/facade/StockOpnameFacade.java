@@ -54,8 +54,8 @@ public class StockOpnameFacade {
 			StockQueueMethod stockQueueMethod, Session session)
 			throws AppException {
 
-		Item item = StockFacade.getInstance().getDetail(itemId, session);
-		int quantityInThisStage = StockFacade.getInstance()
+		Item item = ItemFacade.getInstance().getDetail(itemId, session);
+		int quantityInThisStage = ItemFacade.getInstance()
 				.calculateStock(item);
 
 		BigDecimal overAmount = null;
@@ -149,7 +149,7 @@ public class StockOpnameFacade {
 		for (StockOpnameDetail stockOpname : stockOpnameDetails) {
 			Item item = stockOpname.getItem();
 
-			StockFacade.getInstance().reAdjustStock(item,
+			ItemFacade.getInstance().reAdjustStock(item,
 					stockOpname.getQuantityManual(), session);
 			session.saveOrUpdate(item);
 
@@ -182,7 +182,7 @@ public class StockOpnameFacade {
 			Session session) throws AppException {
 
 		int itemId = item.getId();
-		int stock = StockFacade.getInstance().calculateStock(item);
+		int stock = ItemFacade.getInstance().calculateStock(item);
 
 		StockOpnameHeader lastStockOpnameHeader = getLastStockOpnameHeader(session);
 		StockOpnameDetail lastStockOpnameDetail = null;

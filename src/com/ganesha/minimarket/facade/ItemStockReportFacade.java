@@ -23,7 +23,7 @@ import com.ganesha.core.exception.AppException;
 import com.ganesha.core.exception.UserException;
 import com.ganesha.core.utils.CommonUtils;
 import com.ganesha.minimarket.Main;
-import com.ganesha.minimarket.model.ItemStock;
+import com.ganesha.minimarket.model.Item;
 import com.ganesha.minimarket.ui.forms.reports.ReportViewerDialog;
 
 public class ItemStockReportFacade {
@@ -63,8 +63,8 @@ public class ItemStockReportFacade {
 		paramReport.put("reportBy", Main.getUserLogin().getName());
 		paramReport.put("reportDate", CommonUtils.getCurrentDate());
 
-		List<ItemStock> itemStocks = StockFacade.getInstance().search(null,
-				null, null, false, new String[] { orderById }, session);
+		List<Item> items = ItemFacade.getInstance().search(null, null, null,
+				false, new String[] { orderById }, session);
 
 		InputStream inputStream = null;
 		try {
@@ -78,7 +78,7 @@ public class ItemStockReportFacade {
 
 			JasperPrint jasperPrint = JasperFillManager.fillReport(
 					jasperReport, paramReport, new JRBeanCollectionDataSource(
-							itemStocks));
+							items));
 
 			return jasperPrint;
 		} catch (JRException e) {

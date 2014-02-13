@@ -55,7 +55,7 @@ public class SaleReturnFacade implements TransactionFacade {
 			List<SaleReturnDetail> saleReturnDetails, Session session)
 			throws UserException, AppException {
 
-		StockFacade stockFacade = StockFacade.getInstance();
+		ItemFacade stockFacade = ItemFacade.getInstance();
 		session.saveOrUpdate(saleReturnHeader);
 
 		for (SaleReturnDetail saleReturnDetail : saleReturnDetails) {

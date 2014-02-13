@@ -53,7 +53,7 @@ public class DiscountFacade {
 		Discount discount = getDetail(itemId, quantity, session);
 		if (discount == null) {
 			discount = new Discount();
-			Item item = StockFacade.getInstance().getDetail(itemId, session);
+			Item item = ItemFacade.getInstance().getDetail(itemId, session);
 			discount.setItem(item);
 		}
 		discount.setQuantity(quantity);

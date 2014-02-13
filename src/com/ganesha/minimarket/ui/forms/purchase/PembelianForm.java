@@ -44,8 +44,8 @@ import com.ganesha.desktop.component.xtableutils.XTableModel;
 import com.ganesha.desktop.component.xtableutils.XTableParameter;
 import com.ganesha.desktop.component.xtableutils.XTableUtils;
 import com.ganesha.hibernate.HibernateUtils;
+import com.ganesha.minimarket.facade.ItemFacade;
 import com.ganesha.minimarket.facade.PurchaseFacade;
-import com.ganesha.minimarket.facade.StockFacade;
 import com.ganesha.minimarket.model.Item;
 import com.ganesha.minimarket.model.PurchaseDetail;
 import com.ganesha.minimarket.model.PurchaseHeader;
@@ -238,7 +238,11 @@ public class PembelianForm extends XJDialog {
 		btnRegistrasi.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				registrasiBarangBaru();
+				try {
+					registrasiBarangBaru();
+				} catch (Exception ex) {
+					ExceptionHandler.handleException(PembelianForm.this, ex);
+				}
 			}
 		});
 		btnRegistrasi
@@ -477,8 +481,7 @@ public class PembelianForm extends XJDialog {
 		}
 		Session session = HibernateUtils.openSession();
 		try {
-			Item item = StockFacade.getInstance()
-					.getByBarcode(barcode, session);
+			Item item = ItemFacade.getInstance().getByBarcode(barcode, session);
 
 			if (item == null) {
 				throw new UserException("Barang dengan barcode " + barcode
@@ -530,7 +533,7 @@ public class PembelianForm extends XJDialog {
 		StockForm stockForm = new StockForm(this, ActionType.CREATE);
 		stockForm.setBarcode(txtBarcode.getText());
 		stockForm.setVisible(true);
-		int idBarang = stockForm.getIdBarang();
+		Integer idBarang = stockForm.getIdBarang();
 		tambah(idBarang);
 	}
 
@@ -591,46 +594,62 @@ public class PembelianForm extends XJDialog {
 				PurchaseDetail purchaseDetail = new PurchaseDetail();
 
 				purchaseDetail.setOrderNum(Formatter.formatStringToNumber(
-						table.getValueAt(
-								i,
-								tableParameters.get(ColumnEnum.NUM)
-										.getColumnIndex()).toString())
+						table.getModel()
+								.getValueAt(
+										i,
+										tableParameters.get(ColumnEnum.NUM)
+												.getColumnIndex()).toString())
 						.intValue());
 
-				purchaseDetail.setItemCode(table.getValueAt(i,
-						tableParameters.get(ColumnEnum.CODE).getColumnIndex())
-						.toString());
+				purchaseDetail.setItemCode(table
+						.getModel()
+						.getValueAt(
+								i,
+								tableParameters.get(ColumnEnum.CODE)
+										.getColumnIndex()).toString());
 
-				purchaseDetail.setItemName(table.getValueAt(i,
-						tableParameters.get(ColumnEnum.NAME).getColumnIndex())
-						.toString());
+				purchaseDetail.setItemName(table
+						.getModel()
+						.getValueAt(
+								i,
+								tableParameters.get(ColumnEnum.NAME)
+										.getColumnIndex()).toString());
 
 				purchaseDetail.setQuantity(Formatter.formatStringToNumber(
-						table.getValueAt(
-								i,
-								tableParameters.get(ColumnEnum.QUANTITY)
-										.getColumnIndex()).toString())
+						table.getModel()
+								.getValueAt(
+										i,
+										tableParameters
+												.get(ColumnEnum.QUANTITY)
+												.getColumnIndex()).toString())
 						.intValue());
 
-				purchaseDetail.setUnit(table.getValueAt(i,
-						tableParameters.get(ColumnEnum.UNIT).getColumnIndex())
-						.toString());
+				purchaseDetail.setUnit(table
+						.getModel()
+						.getValueAt(
+								i,
+								tableParameters.get(ColumnEnum.UNIT)
+										.getColumnIndex()).toString());
 
 				purchaseDetail.setPricePerUnit(BigDecimal.valueOf(Formatter
 						.formatStringToNumber(
-								table.getValueAt(
-										i,
-										tableParameters.get(ColumnEnum.PRICE)
-												.getColumnIndex()).toString())
-						.doubleValue()));
+								table.getModel()
+										.getValueAt(
+												i,
+												tableParameters.get(
+														ColumnEnum.PRICE)
+														.getColumnIndex())
+										.toString()).doubleValue()));
 
 				purchaseDetail.setTotalAmount(BigDecimal.valueOf(Formatter
 						.formatStringToNumber(
-								table.getValueAt(
-										i,
-										tableParameters.get(ColumnEnum.TOTAL)
-												.getColumnIndex()).toString())
-						.doubleValue()));
+								table.getModel()
+										.getValueAt(
+												i,
+												tableParameters.get(
+														ColumnEnum.TOTAL)
+														.getColumnIndex())
+										.toString()).doubleValue()));
 
 				purchaseDetails.add(purchaseDetail);
 			}
@@ -708,9 +727,12 @@ public class PembelianForm extends XJDialog {
 		int rowCount = table.getRowCount();
 		double totalPembelian = 0;
 		for (int i = 0; i < rowCount; ++i) {
-			String string = table.getValueAt(i,
-					tableParameters.get(ColumnEnum.TOTAL).getColumnIndex())
-					.toString();
+			String string = table
+					.getModel()
+					.getValueAt(
+							i,
+							tableParameters.get(ColumnEnum.TOTAL)
+									.getColumnIndex()).toString();
 			double totalPerRow = Formatter.formatStringToNumber(string)
 					.doubleValue();
 			totalPembelian += totalPerRow;
@@ -727,17 +749,22 @@ public class PembelianForm extends XJDialog {
 		}
 
 		int jumlah = Formatter.formatStringToNumber(
-				table.getValueAt(
-						row,
-						tableParameters.get(ColumnEnum.QUANTITY)
-								.getColumnIndex()).toString()).intValue();
+				table.getModel()
+						.getValueAt(
+								row,
+								tableParameters.get(ColumnEnum.QUANTITY)
+										.getColumnIndex()).toString())
+				.intValue();
 		table.setValueAt(Formatter.formatNumberToString(jumlah), row,
 				tableParameters.get(ColumnEnum.QUANTITY).getColumnIndex());
 
 		double hargaSatuan = Formatter.formatStringToNumber(
-				table.getValueAt(row,
-						tableParameters.get(ColumnEnum.PRICE).getColumnIndex())
-						.toString()).doubleValue();
+				table.getModel()
+						.getValueAt(
+								row,
+								tableParameters.get(ColumnEnum.PRICE)
+										.getColumnIndex()).toString())
+				.doubleValue();
 		table.setValueAt(Formatter.formatNumberToString(hargaSatuan), row,
 				tableParameters.get(ColumnEnum.PRICE).getColumnIndex());
 
@@ -763,7 +790,7 @@ public class PembelianForm extends XJDialog {
 			int itemId = (int) table.getModel().getValueAt(selectedRow,
 					tableParameters.get(ColumnEnum.ID).getColumnIndex());
 
-			StockFacade facade = StockFacade.getInstance();
+			ItemFacade facade = ItemFacade.getInstance();
 			Item item = facade.getDetail(itemId, session);
 
 			StockForm stockForm = new StockForm(this, ActionType.READ);
@@ -781,39 +808,37 @@ public class PembelianForm extends XJDialog {
 
 		Session session = HibernateUtils.openSession();
 		try {
-			StockFacade facade = StockFacade.getInstance();
+			ItemFacade facade = ItemFacade.getInstance();
 			Item item = facade.getDetail(itemId, session);
 
 			XTableModel tableModel = (XTableModel) table.getModel();
 			tableModel.setRowCount(tableModel.getRowCount() + 1);
 			int rowIndex = tableModel.getRowCount() - 1;
 
-			tableModel.setValueAt(item.getId(), rowIndex,
+			table.setValueAt(item.getId(), rowIndex,
 					tableParameters.get(ColumnEnum.ID).getColumnIndex());
 
-			tableModel.setValueAt(item.getCode(), rowIndex, tableParameters
-					.get(ColumnEnum.CODE).getColumnIndex());
+			table.setValueAt(item.getCode(), rowIndex,
+					tableParameters.get(ColumnEnum.CODE).getColumnIndex());
 
-			tableModel.setValueAt(item.getName(), rowIndex, tableParameters
-					.get(ColumnEnum.NAME).getColumnIndex());
+			table.setValueAt(item.getName(), rowIndex,
+					tableParameters.get(ColumnEnum.NAME).getColumnIndex());
 
-			tableModel.setValueAt(0, rowIndex,
+			table.setValueAt(0, rowIndex,
 					tableParameters.get(ColumnEnum.QUANTITY).getColumnIndex());
 
-			tableModel.setValueAt(item.getUnit(), rowIndex, tableParameters
-					.get(ColumnEnum.UNIT).getColumnIndex());
+			table.setValueAt(item.getUnit(), rowIndex,
+					tableParameters.get(ColumnEnum.UNIT).getColumnIndex());
 
-			tableModel.setValueAt(0, rowIndex,
-					tableParameters.get(ColumnEnum.PRICE).getColumnIndex());
+			table.setValueAt(0, rowIndex, tableParameters.get(ColumnEnum.PRICE)
+					.getColumnIndex());
 
-			tableModel
-					.setValueAt(Formatter.formatNumberToString(item
-							.getLastBuyPrice()), rowIndex,
-							tableParameters.get(ColumnEnum.LAST_PRICE)
-									.getColumnIndex());
+			table.setValueAt(Formatter.formatNumberToString(facade
+					.getLastBuyPrice(item)), rowIndex,
+					tableParameters.get(ColumnEnum.LAST_PRICE).getColumnIndex());
 
-			tableModel.setValueAt(0, rowIndex,
-					tableParameters.get(ColumnEnum.TOTAL).getColumnIndex());
+			table.setValueAt(0, rowIndex, tableParameters.get(ColumnEnum.TOTAL)
+					.getColumnIndex());
 
 			reorderRowNumber();
 

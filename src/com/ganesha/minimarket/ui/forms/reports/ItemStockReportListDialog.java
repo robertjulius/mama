@@ -34,10 +34,9 @@ import com.ganesha.desktop.component.xtableutils.XTableModel;
 import com.ganesha.desktop.component.xtableutils.XTableParameter;
 import com.ganesha.desktop.component.xtableutils.XTableUtils;
 import com.ganesha.hibernate.HibernateUtils;
+import com.ganesha.minimarket.facade.ItemFacade;
 import com.ganesha.minimarket.facade.ItemStockReportFacade;
-import com.ganesha.minimarket.facade.StockFacade;
 import com.ganesha.minimarket.model.Item;
-import com.ganesha.minimarket.model.ItemStock;
 import com.ganesha.minimarket.utils.PermissionConstants;
 
 public class ItemStockReportListDialog extends XJTableDialog {
@@ -185,16 +184,15 @@ public class ItemStockReportListDialog extends XJTableDialog {
 			String[] orderBy = { (String) ((ComboBoxObject) cmbOrderBy
 					.getSelectedItem()).getId() };
 
-			StockFacade facade = StockFacade.getInstance();
-			List<ItemStock> itemStocks = facade.search(null, null, null, false,
-					orderBy, session);
+			ItemFacade facade = ItemFacade.getInstance();
+			List<Item> items = facade.search(null, null, null, false, orderBy,
+					session);
 
 			XTableModel tableModel = (XTableModel) table.getModel();
-			tableModel.setRowCount(itemStocks.size());
+			tableModel.setRowCount(items.size());
 
-			for (int i = 0; i < itemStocks.size(); ++i) {
-				ItemStock itemStock = itemStocks.get(i);
-				Item item = itemStock.getItem();
+			for (int i = 0; i < items.size(); ++i) {
+				Item item = items.get(i);
 
 				tableModel.setValueAt(i + 1, i,
 						tableParameters.get(ColumnEnum.NUM).getColumnIndex());

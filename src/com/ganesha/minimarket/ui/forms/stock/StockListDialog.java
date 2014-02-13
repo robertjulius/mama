@@ -36,9 +36,8 @@ import com.ganesha.desktop.component.xtableutils.XTableModel;
 import com.ganesha.desktop.component.xtableutils.XTableParameter;
 import com.ganesha.desktop.component.xtableutils.XTableUtils;
 import com.ganesha.hibernate.HibernateUtils;
-import com.ganesha.minimarket.facade.StockFacade;
+import com.ganesha.minimarket.facade.ItemFacade;
 import com.ganesha.minimarket.model.Item;
-import com.ganesha.minimarket.model.ItemStock;
 import com.ganesha.minimarket.utils.BarcodeUtils;
 import com.ganesha.minimarket.utils.PermissionConstants;
 
@@ -287,16 +286,18 @@ public class StockListDialog extends XJTableDialog {
 			String name = txtNama.getText();
 			boolean disabled = rdBarangTidakAktif.isSelected();
 
-			StockFacade facade = StockFacade.getInstance();
-			List<ItemStock> itemStocks = facade.search(code, barcode, name,
-					disabled, null, session);
+			ItemFacade facade = ItemFacade.getInstance();
+			List<Item> items = facade.search(code, barcode, name, disabled,
+					null, session);
 
 			XTableModel tableModel = (XTableModel) table.getModel();
-			tableModel.setRowCount(itemStocks.size());
+			tableModel.setRowCount(items.size());
 
-			for (int i = 0; i < itemStocks.size(); ++i) {
-				ItemStock itemStock = itemStocks.get(i);
-				Item item = itemStock.getItem();
+			for (int i = 0; i < items.size(); ++i) {
+				Item item = items.get(i);
+
+				tableModel.setValueAt(item.getId(), i,
+						tableParameters.get(ColumnEnum.ID).getColumnIndex());
 
 				tableModel.setValueAt(item.getCode(), i,
 						tableParameters.get(ColumnEnum.CODE).getColumnIndex());
@@ -310,11 +311,10 @@ public class StockListDialog extends XJTableDialog {
 
 				tableModel.setValueAt(item.getUnit(), i,
 						tableParameters.get(ColumnEnum.UNIT).getColumnIndex());
-				tableModel
-						.setValueAt(Formatter.formatNumberToString(itemStock
-								.getBuyPrice()), i,
-								tableParameters.get(ColumnEnum.BUY_PRICE)
-										.getColumnIndex());
+				tableModel.setValueAt(Formatter.formatNumberToString(facade
+						.getLastBuyPrice(item)), i,
+						tableParameters.get(ColumnEnum.BUY_PRICE)
+								.getColumnIndex());
 
 				tableModel.setValueAt(
 						Formatter.formatNumberToString(item.getHpp()), i,
@@ -358,7 +358,7 @@ public class StockListDialog extends XJTableDialog {
 			int itemId = (int) table.getModel().getValueAt(selectedRow,
 					tableParameters.get(ColumnEnum.ID).getColumnIndex());
 
-			StockFacade facade = StockFacade.getInstance();
+			ItemFacade facade = ItemFacade.getInstance();
 			Item item = facade.getDetail(itemId, session);
 
 			String barcode = item.getBarcode();
@@ -386,7 +386,7 @@ public class StockListDialog extends XJTableDialog {
 			int itemId = (int) table.getModel().getValueAt(selectedRow,
 					tableParameters.get(ColumnEnum.ID).getColumnIndex());
 
-			StockFacade facade = StockFacade.getInstance();
+			ItemFacade facade = ItemFacade.getInstance();
 			Item item = facade.getDetail(itemId, session);
 
 			StockForm stockForm = new StockForm(this, ActionType.UPDATE);

@@ -14,18 +14,18 @@ import com.ganesha.minimarket.Main;
 import com.ganesha.minimarket.model.Item;
 import com.ganesha.minimarket.model.ItemStock;
 
-public class StockFacade {
+public class ItemFacade {
 
-	private static StockFacade instance;
+	private static ItemFacade instance;
 
-	public static StockFacade getInstance() {
+	public static ItemFacade getInstance() {
 		if (instance == null) {
-			instance = new StockFacade();
+			instance = new ItemFacade();
 		}
 		return instance;
 	}
 
-	private StockFacade() {
+	private ItemFacade() {
 	}
 
 	public void addNewItem(String code, String name, String barcode,
@@ -50,11 +50,6 @@ public class StockFacade {
 			throw new UserException("Barang dengan Barcode " + barcode
 					+ " sudah pernah didaftarkan untuk barang ["
 					+ item.getCode() + "] " + item.getName());
-		}
-
-		if (GlobalFacade.getInstance().isExists("barcode", barcode, Item.class,
-				session)) {
-
 		}
 
 		insertIntoItem(code, name, barcode, unit, buyPrice, hpp, sellPrice,
@@ -82,29 +77,40 @@ public class StockFacade {
 		return item;
 	}
 
+	public BigDecimal getLastBuyPrice(Item item) {
+		BigDecimal lastBuyPrice = null;
+		List<ItemStock> itemStocks = item.getItemStocks();
+		if (itemStocks.isEmpty()) {
+			lastBuyPrice = BigDecimal.valueOf(0);
+		} else {
+			int lastIndex = itemStocks.size() - 1;
+			lastBuyPrice = itemStocks.get(lastIndex).getBuyPrice();
+		}
+		return lastBuyPrice;
+	}
+
 	public void reAdjustStock(Item item, int stock, Session session) {
 		/*
 		 * TODO
 		 */
 	}
 
-	public List<ItemStock> search(String code, String barcode, String name,
+	public List<Item> search(String code, String barcode, String name,
 			boolean disabled, String[] orderBy, Session session) {
-		Criteria criteria = session.createCriteria(ItemStock.class);
-		criteria.createAlias("item", "item");
+		Criteria criteria = session.createCriteria(Item.class);
 
 		if (code != null && !code.trim().isEmpty()) {
-			criteria.add(Restrictions.like("item.code", "%" + code + "%")
+			criteria.add(Restrictions.like("code", "%" + code + "%")
 					.ignoreCase());
 		}
 
 		if (barcode != null && !barcode.trim().isEmpty()) {
-			criteria.add(Restrictions.like("item.barcode", "%" + barcode + "%")
+			criteria.add(Restrictions.like("barcode", "%" + barcode + "%")
 					.ignoreCase());
 		}
 
 		if (name != null && !name.trim().isEmpty()) {
-			criteria.add(Restrictions.like("item.name", "%" + name + "%")
+			criteria.add(Restrictions.like("name", "%" + name + "%")
 					.ignoreCase());
 		}
 
@@ -120,9 +126,9 @@ public class StockFacade {
 		criteria.add(Restrictions.eq("deleted", false));
 
 		@SuppressWarnings("unchecked")
-		List<ItemStock> itemStocks = criteria.list();
+		List<Item> items = criteria.list();
 
-		return itemStocks;
+		return items;
 	}
 
 	public void updateExistingItem(int id, String name, String barcode,

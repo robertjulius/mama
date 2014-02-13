@@ -54,21 +54,21 @@ public class DiscountListDialog extends XJTableDialog {
 				false, "ID", true, XTableConstants.CELL_RENDERER_LEFT,
 				Integer.class));
 
-		tableParameters.put(ColumnEnum.ITEM_CODE, new XTableParameter(0, 100,
+		tableParameters.put(ColumnEnum.ITEM_CODE, new XTableParameter(1, 100,
 				false, "Kode Barang", false,
 				XTableConstants.CELL_RENDERER_LEFT, String.class));
 
-		tableParameters.put(ColumnEnum.ITEM_NAME, new XTableParameter(1, 300,
+		tableParameters.put(ColumnEnum.ITEM_NAME, new XTableParameter(2, 300,
 				false, "Nama Barang", false,
 				XTableConstants.CELL_RENDERER_LEFT, String.class));
 
-		tableParameters.put(ColumnEnum.QUANTITY, new XTableParameter(2, 50,
+		tableParameters.put(ColumnEnum.QUANTITY, new XTableParameter(3, 50,
 				false, "Qty", false, XTableConstants.CELL_RENDERER_CENTER,
 				Integer.class));
 
-		tableParameters.put(ColumnEnum.DISCOUNT, new XTableParameter(3, 50,
-				false, "Diskon (%)", false,
-				XTableConstants.CELL_RENDERER_CENTER, Double.class));
+		tableParameters.put(ColumnEnum.DISCOUNT, new XTableParameter(4, 50,
+				false, "%", false, XTableConstants.CELL_RENDERER_CENTER,
+				Double.class));
 	}
 
 	public DiscountListDialog(Window parent) {
@@ -272,10 +272,12 @@ public class DiscountListDialog extends XJTableDialog {
 			int itemId = (int) table.getModel().getValueAt(selectedRow,
 					tableParameters.get(ColumnEnum.ITEM_ID).getColumnIndex());
 			int quantity = Formatter.formatStringToNumber(
-					table.getValueAt(
-							selectedRow,
-							tableParameters.get(ColumnEnum.QUANTITY)
-									.getColumnIndex()).toString()).intValue();
+					table.getModel()
+							.getValueAt(
+									selectedRow,
+									tableParameters.get(ColumnEnum.QUANTITY)
+											.getColumnIndex()).toString())
+					.intValue();
 
 			DiscountFacade facade = DiscountFacade.getInstance();
 			Discount discount = facade.getDetail(itemId, quantity, session);
