@@ -1,0 +1,1 @@
+INSERT INTO user_role_links (user_id, role_id) VALUES (1, 1);

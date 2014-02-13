@@ -93,35 +93,35 @@ public class PenjualanForm extends XJDialog {
 		tableParameters.put(ColumnEnum.ID, new XTableParameter(0, 0, false,
 				"ID", true, XTableConstants.CELL_RENDERER_LEFT, Integer.class));
 
-		tableParameters.put(ColumnEnum.NUM, new XTableParameter(0, 5, false,
+		tableParameters.put(ColumnEnum.NUM, new XTableParameter(1, 5, false,
 				"No", false, XTableConstants.CELL_RENDERER_CENTER,
 				Integer.class));
 
 		tableParameters.put(ColumnEnum.CODE,
-				new XTableParameter(1, 75, false, "Kode", false,
+				new XTableParameter(2, 75, false, "Kode", false,
 						XTableConstants.CELL_RENDERER_LEFT, String.class));
 
-		tableParameters.put(ColumnEnum.NAME, new XTableParameter(2, 400, false,
+		tableParameters.put(ColumnEnum.NAME, new XTableParameter(3, 400, false,
 				"Nama Barang", false, XTableConstants.CELL_RENDERER_LEFT,
 				String.class));
 
-		tableParameters.put(ColumnEnum.QUANTITY, new XTableParameter(3, 10,
+		tableParameters.put(ColumnEnum.QUANTITY, new XTableParameter(4, 10,
 				true, "Qty", false, XTableConstants.CELL_RENDERER_RIGHT,
 				Integer.class));
 
-		tableParameters.put(ColumnEnum.UNIT, new XTableParameter(4, 50, false,
+		tableParameters.put(ColumnEnum.UNIT, new XTableParameter(5, 50, false,
 				"Satuan", false, XTableConstants.CELL_RENDERER_LEFT,
 				String.class));
 
-		tableParameters.put(ColumnEnum.PRICE, new XTableParameter(5, 75, false,
+		tableParameters.put(ColumnEnum.PRICE, new XTableParameter(6, 75, false,
 				"Harga", false, XTableConstants.CELL_RENDERER_RIGHT,
 				Double.class));
 
-		tableParameters.put(ColumnEnum.DISCOUNT, new XTableParameter(6, 5,
+		tableParameters.put(ColumnEnum.DISCOUNT, new XTableParameter(7, 5,
 				false, "%", false, XTableConstants.CELL_RENDERER_CENTER,
 				Double.class));
 
-		tableParameters.put(ColumnEnum.TOTAL, new XTableParameter(7, 75, false,
+		tableParameters.put(ColumnEnum.TOTAL, new XTableParameter(8, 75, false,
 				"Total", false, XTableConstants.CELL_RENDERER_RIGHT,
 				Double.class));
 	}

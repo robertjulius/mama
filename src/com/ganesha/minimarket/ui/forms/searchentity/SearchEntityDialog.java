@@ -53,12 +53,12 @@ public class SearchEntityDialog extends XJTableDialog {
 				new XTableParameter(0, 0, false, "ID", true,
 						XTableConstants.CELL_RENDERER_CENTER, Integer.class));
 
-		tableParameters.put(ColumnEnum.CODE, new XTableParameter(0, 50, false,
+		tableParameters.put(ColumnEnum.CODE, new XTableParameter(1, 50, false,
 				"Kode", false, XTableConstants.CELL_RENDERER_CENTER,
 				String.class));
 
 		tableParameters.put(ColumnEnum.NAME,
-				new XTableParameter(1, 300, false, "Nama", false,
+				new XTableParameter(2, 300, false, "Nama", false,
 						XTableConstants.CELL_RENDERER_LEFT, String.class));
 	}
 

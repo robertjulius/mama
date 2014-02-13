@@ -186,6 +186,8 @@ public class DbSettingForm extends XJDialog {
 				.get(GeneralConstants.SYSTEM_SETTING_MYSQL_USERNAME));
 		txtMySqlPassword.setText((String) SystemSetting
 				.get(GeneralConstants.SYSTEM_SETTING_MYSQL_PASSWORD));
+		txtDbName.setText((String) SystemSetting
+				.get(GeneralConstants.SYSTEM_SETTING_DBNAME));
 		txtMySqlLocation.setText((String) SystemSetting
 				.get(GeneralConstants.SYSTEM_SETTING_MYSQL_LOCATION));
 		txtBackupLocation.setText((String) SystemSetting
@@ -210,7 +212,7 @@ public class DbSettingForm extends XJDialog {
 		File backupFile = new File(txtBackupLocation.getText(),
 				txtBackupFileName.getText());
 		BackupDB.backup(mysqldump, backupFile, txtMySqlUsername.getText(),
-				new String(txtMySqlPassword.getPassword()), "minimarketkk");
+				new String(txtMySqlPassword.getPassword()), txtDbName.getText());
 	}
 
 	private void batal() {
@@ -250,6 +252,8 @@ public class DbSettingForm extends XJDialog {
 				txtMySqlUsername.getText());
 		SystemSetting.save(GeneralConstants.SYSTEM_SETTING_MYSQL_PASSWORD,
 				new String(txtMySqlPassword.getPassword()));
+		SystemSetting.save(GeneralConstants.SYSTEM_SETTING_DBNAME,
+				txtDbName.getText());
 		SystemSetting.save(GeneralConstants.SYSTEM_SETTING_MYSQL_LOCATION,
 				txtMySqlLocation.getText());
 		SystemSetting.save(GeneralConstants.SYSTEM_SETTING_BACKUP_LOCATION,

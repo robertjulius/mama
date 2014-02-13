@@ -63,7 +63,7 @@ public class PrinterSettingForm extends XJDialog {
 		super(parent);
 		setTitle("Printer Setting");
 		setPermissionCode(PermissionConstants.SETTING_PRINTER_FORM);
-		getContentPane().setLayout(new MigLayout("", "[grow]", "[][250][][]"));
+		getContentPane().setLayout(new MigLayout("", "[grow]", "[][450][][]"));
 
 		pnlPrinter = new XJPanel();
 		pnlPrinter.setBorder(new XEtchedBorder());

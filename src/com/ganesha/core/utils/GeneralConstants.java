@@ -63,6 +63,7 @@ public class GeneralConstants {
 	public static final String SYSTEM_SETTING_PRINTER_RECEIPT = "system.setting.printer.receipt";
 	public static final String SYSTEM_SETTING_MYSQL_USERNAME = "system.setting.mysql.username";
 	public static final String SYSTEM_SETTING_MYSQL_PASSWORD = "system.setting.mysql.password";
+	public static final String SYSTEM_SETTING_DBNAME = "system.setting.dbname";
 	public static final String SYSTEM_SETTING_MYSQL_LOCATION = "system.setting.mysql.location";
 	public static final String SYSTEM_SETTING_BACKUP_LOCATION = "system.setting.backup.location";
 	public static final String SYSTEM_SETTING_BACKUP_FILENAME = "system.setting.backup.filename";
