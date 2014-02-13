@@ -45,20 +45,20 @@ public class PayableListDialog extends XJTableDialog {
 
 	private final Map<ColumnEnum, XTableParameter> tableParameters = new HashMap<>();
 	{
-		tableParameters.put(ColumnEnum.ID, new XTableParameter(0, 0, false,
-				"ID", true, XTableConstants.CELL_RENDERER_LEFT, Integer.class));
-
-		tableParameters.put(ColumnEnum.CODE, new XTableParameter(1, 30, false,
+		tableParameters.put(ColumnEnum.CODE, new XTableParameter(0, 30, false,
 				"Kode Supplier", false, XTableConstants.CELL_RENDERER_LEFT,
 				String.class));
 
-		tableParameters.put(ColumnEnum.NAME, new XTableParameter(2, 100, false,
+		tableParameters.put(ColumnEnum.NAME, new XTableParameter(1, 100, false,
 				"Nama Supplier", false, XTableConstants.CELL_RENDERER_LEFT,
 				String.class));
 
-		tableParameters.put(ColumnEnum.REMAINING_AMOUNT, new XTableParameter(3,
+		tableParameters.put(ColumnEnum.REMAINING_AMOUNT, new XTableParameter(2,
 				30, false, "Sisa Pembayaran", false,
 				XTableConstants.CELL_RENDERER_RIGHT, Double.class));
+
+		tableParameters.put(ColumnEnum.ID, new XTableParameter(3, 0, false,
+				"ID", true, XTableConstants.CELL_RENDERER_LEFT, Integer.class));
 	}
 
 	public PayableListDialog(Window parent) {
@@ -199,9 +199,6 @@ public class PayableListDialog extends XJTableDialog {
 
 				Map<String, Object> payableSummary = payableSummaries.get(i);
 
-				tableModel.setValueAt(payableSummary.get("id"), i,
-						tableParameters.get(ColumnEnum.ID).getColumnIndex());
-
 				tableModel.setValueAt(payableSummary.get("code"), i,
 						tableParameters.get(ColumnEnum.CODE).getColumnIndex());
 
@@ -211,6 +208,9 @@ public class PayableListDialog extends XJTableDialog {
 				tableModel.setValueAt(payableSummary.get("remainingAmount"), i,
 						tableParameters.get(ColumnEnum.REMAINING_AMOUNT)
 								.getColumnIndex());
+
+				tableModel.setValueAt(payableSummary.get("id"), i,
+						tableParameters.get(ColumnEnum.ID).getColumnIndex());
 			}
 		} finally {
 			session.close();
@@ -252,6 +252,6 @@ public class PayableListDialog extends XJTableDialog {
 	}
 
 	private enum ColumnEnum {
-		ID, CODE, NAME, REMAINING_AMOUNT
+		CODE, NAME, REMAINING_AMOUNT, ID
 	}
 }

@@ -88,40 +88,40 @@ public class PembelianForm extends XJDialog {
 	private Integer supplierId;
 
 	{
-		tableParameters.put(ColumnEnum.ID, new XTableParameter(0, 0, false,
-				"ID", true, XTableConstants.CELL_RENDERER_LEFT, Integer.class));
-
-		tableParameters.put(ColumnEnum.NUM, new XTableParameter(1, 5, false,
+		tableParameters.put(ColumnEnum.NUM, new XTableParameter(0, 5, false,
 				"No", false, XTableConstants.CELL_RENDERER_CENTER,
 				Integer.class));
 
 		tableParameters.put(ColumnEnum.CODE,
-				new XTableParameter(2, 50, false, "Kode", false,
+				new XTableParameter(1, 50, false, "Kode", false,
 						XTableConstants.CELL_RENDERER_LEFT, String.class));
 
-		tableParameters.put(ColumnEnum.NAME, new XTableParameter(3, 300, false,
+		tableParameters.put(ColumnEnum.NAME, new XTableParameter(2, 300, false,
 				"Nama Barang", false, XTableConstants.CELL_RENDERER_LEFT,
 				String.class));
 
-		tableParameters.put(ColumnEnum.QUANTITY, new XTableParameter(4, 10,
+		tableParameters.put(ColumnEnum.QUANTITY, new XTableParameter(3, 10,
 				true, "Qty", false, XTableConstants.CELL_RENDERER_RIGHT,
 				Integer.class));
 
-		tableParameters.put(ColumnEnum.UNIT, new XTableParameter(5, 50, false,
+		tableParameters.put(ColumnEnum.UNIT, new XTableParameter(4, 50, false,
 				"Satuan", false, XTableConstants.CELL_RENDERER_LEFT,
 				String.class));
 
-		tableParameters.put(ColumnEnum.PRICE, new XTableParameter(6, 75, true,
+		tableParameters.put(ColumnEnum.PRICE, new XTableParameter(5, 75, true,
 				"Harga Satuan", false, XTableConstants.CELL_RENDERER_RIGHT,
 				Double.class));
 
-		tableParameters.put(ColumnEnum.LAST_PRICE, new XTableParameter(7, 75,
+		tableParameters.put(ColumnEnum.LAST_PRICE, new XTableParameter(6, 75,
 				false, "Harga Terakhir", false,
 				XTableConstants.CELL_RENDERER_RIGHT, Double.class));
 
-		tableParameters.put(ColumnEnum.TOTAL, new XTableParameter(8, 75, false,
+		tableParameters.put(ColumnEnum.TOTAL, new XTableParameter(7, 75, false,
 				"Total", false, XTableConstants.CELL_RENDERER_RIGHT,
 				Double.class));
+
+		tableParameters.put(ColumnEnum.ID, new XTableParameter(8, 0, false,
+				"ID", true, XTableConstants.CELL_RENDERER_LEFT, Integer.class));
 	}
 
 	public PembelianForm(Window parent) {
@@ -815,30 +815,31 @@ public class PembelianForm extends XJDialog {
 			tableModel.setRowCount(tableModel.getRowCount() + 1);
 			int rowIndex = tableModel.getRowCount() - 1;
 
-			table.setValueAt(item.getId(), rowIndex,
-					tableParameters.get(ColumnEnum.ID).getColumnIndex());
+			tableModel.setValueAt(item.getCode(), rowIndex, tableParameters
+					.get(ColumnEnum.CODE).getColumnIndex());
 
-			table.setValueAt(item.getCode(), rowIndex,
-					tableParameters.get(ColumnEnum.CODE).getColumnIndex());
+			tableModel.setValueAt(item.getName(), rowIndex, tableParameters
+					.get(ColumnEnum.NAME).getColumnIndex());
 
-			table.setValueAt(item.getName(), rowIndex,
-					tableParameters.get(ColumnEnum.NAME).getColumnIndex());
-
-			table.setValueAt(0, rowIndex,
+			tableModel.setValueAt(0, rowIndex,
 					tableParameters.get(ColumnEnum.QUANTITY).getColumnIndex());
 
-			table.setValueAt(item.getUnit(), rowIndex,
-					tableParameters.get(ColumnEnum.UNIT).getColumnIndex());
+			tableModel.setValueAt(item.getUnit(), rowIndex, tableParameters
+					.get(ColumnEnum.UNIT).getColumnIndex());
 
-			table.setValueAt(0, rowIndex, tableParameters.get(ColumnEnum.PRICE)
-					.getColumnIndex());
+			tableModel.setValueAt(0, rowIndex,
+					tableParameters.get(ColumnEnum.PRICE).getColumnIndex());
 
-			table.setValueAt(Formatter.formatNumberToString(facade
-					.getLastBuyPrice(item)), rowIndex,
-					tableParameters.get(ColumnEnum.LAST_PRICE).getColumnIndex());
+			tableModel
+					.setValueAt(Formatter.formatNumberToString(facade
+							.getLastBuyPrice(item)), rowIndex, tableParameters
+							.get(ColumnEnum.LAST_PRICE).getColumnIndex());
 
-			table.setValueAt(0, rowIndex, tableParameters.get(ColumnEnum.TOTAL)
-					.getColumnIndex());
+			tableModel.setValueAt(0, rowIndex,
+					tableParameters.get(ColumnEnum.TOTAL).getColumnIndex());
+
+			tableModel.setValueAt(item.getId(), rowIndex,
+					tableParameters.get(ColumnEnum.ID).getColumnIndex());
 
 			reorderRowNumber();
 
@@ -855,6 +856,6 @@ public class PembelianForm extends XJDialog {
 	}
 
 	private enum ColumnEnum {
-		ID, NUM, CODE, NAME, QUANTITY, UNIT, PRICE, LAST_PRICE, TOTAL
+		NUM, CODE, NAME, QUANTITY, UNIT, PRICE, LAST_PRICE, TOTAL, ID
 	}
 }

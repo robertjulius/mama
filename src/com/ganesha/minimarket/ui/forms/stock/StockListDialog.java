@@ -62,36 +62,36 @@ public class StockListDialog extends XJTableDialog {
 	private XJTextField txtBarcode;
 	private XJButton btnPrintBarcode;
 	{
-		tableParameters.put(ColumnEnum.ID, new XTableParameter(0, 0, false,
-				"ID", true, XTableConstants.CELL_RENDERER_LEFT, Integer.class));
-
 		tableParameters.put(ColumnEnum.CODE,
-				new XTableParameter(1, 25, false, "Kode", false,
+				new XTableParameter(0, 25, false, "Kode", false,
 						XTableConstants.CELL_RENDERER_LEFT, String.class));
 
-		tableParameters.put(ColumnEnum.NAME, new XTableParameter(2, 300, false,
+		tableParameters.put(ColumnEnum.NAME, new XTableParameter(1, 300, false,
 				"Nama Barang", false, XTableConstants.CELL_RENDERER_LEFT,
 				String.class));
 
-		tableParameters.put(ColumnEnum.STOCK, new XTableParameter(3, 25, false,
+		tableParameters.put(ColumnEnum.STOCK, new XTableParameter(2, 25, false,
 				"Stok", false, XTableConstants.CELL_RENDERER_RIGHT,
 				Integer.class));
 
-		tableParameters.put(ColumnEnum.UNIT, new XTableParameter(4, 50, false,
+		tableParameters.put(ColumnEnum.UNIT, new XTableParameter(3, 50, false,
 				"Satuan", false, XTableConstants.CELL_RENDERER_CENTER,
 				String.class));
 
-		tableParameters.put(ColumnEnum.BUY_PRICE, new XTableParameter(5, 75,
+		tableParameters.put(ColumnEnum.BUY_PRICE, new XTableParameter(4, 75,
 				false, "Harga Beli", false,
 				XTableConstants.CELL_RENDERER_RIGHT, Double.class));
 
 		tableParameters.put(ColumnEnum.HPP,
-				new XTableParameter(6, 25, false, "HPP", false,
+				new XTableParameter(5, 25, false, "HPP", false,
 						XTableConstants.CELL_RENDERER_RIGHT, Double.class));
 
-		tableParameters.put(ColumnEnum.SELL_PRICE, new XTableParameter(7, 75,
+		tableParameters.put(ColumnEnum.SELL_PRICE, new XTableParameter(6, 75,
 				false, "Harga Jual", false,
 				XTableConstants.CELL_RENDERER_RIGHT, Double.class));
+
+		tableParameters.put(ColumnEnum.ID, new XTableParameter(7, 0, false,
+				"ID", true, XTableConstants.CELL_RENDERER_LEFT, Integer.class));
 	}
 
 	public StockListDialog(Window parent) {
@@ -296,9 +296,6 @@ public class StockListDialog extends XJTableDialog {
 			for (int i = 0; i < items.size(); ++i) {
 				Item item = items.get(i);
 
-				tableModel.setValueAt(item.getId(), i,
-						tableParameters.get(ColumnEnum.ID).getColumnIndex());
-
 				tableModel.setValueAt(item.getCode(), i,
 						tableParameters.get(ColumnEnum.CODE).getColumnIndex());
 
@@ -324,6 +321,9 @@ public class StockListDialog extends XJTableDialog {
 						.getSellPrice()), i,
 						tableParameters.get(ColumnEnum.SELL_PRICE)
 								.getColumnIndex());
+
+				tableModel.setValueAt(item.getId(), i,
+						tableParameters.get(ColumnEnum.ID).getColumnIndex());
 			}
 		} finally {
 			session.close();
@@ -410,6 +410,6 @@ public class StockListDialog extends XJTableDialog {
 	}
 
 	private enum ColumnEnum {
-		ID, CODE, NAME, STOCK, UNIT, BUY_PRICE, HPP, SELL_PRICE
+		CODE, NAME, STOCK, UNIT, BUY_PRICE, HPP, SELL_PRICE, ID
 	}
 }

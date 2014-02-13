@@ -50,8 +50,8 @@ import com.ganesha.hibernate.HibernateUtils;
 import com.ganesha.minimarket.facade.CustomerFacade;
 import com.ganesha.minimarket.facade.DiscountFacade;
 import com.ganesha.minimarket.facade.GlobalFacade;
-import com.ganesha.minimarket.facade.SaleFacade;
 import com.ganesha.minimarket.facade.ItemFacade;
+import com.ganesha.minimarket.facade.SaleFacade;
 import com.ganesha.minimarket.model.Customer;
 import com.ganesha.minimarket.model.Item;
 import com.ganesha.minimarket.model.SaleDetail;
@@ -90,40 +90,40 @@ public class PenjualanForm extends XJDialog {
 	private Integer customerId;
 
 	{
-		tableParameters.put(ColumnEnum.ID, new XTableParameter(0, 0, false,
-				"ID", true, XTableConstants.CELL_RENDERER_LEFT, Integer.class));
-
-		tableParameters.put(ColumnEnum.NUM, new XTableParameter(1, 5, false,
+		tableParameters.put(ColumnEnum.NUM, new XTableParameter(0, 5, false,
 				"No", false, XTableConstants.CELL_RENDERER_CENTER,
 				Integer.class));
 
 		tableParameters.put(ColumnEnum.CODE,
-				new XTableParameter(2, 75, false, "Kode", false,
+				new XTableParameter(1, 75, false, "Kode", false,
 						XTableConstants.CELL_RENDERER_LEFT, String.class));
 
-		tableParameters.put(ColumnEnum.NAME, new XTableParameter(3, 400, false,
+		tableParameters.put(ColumnEnum.NAME, new XTableParameter(2, 400, false,
 				"Nama Barang", false, XTableConstants.CELL_RENDERER_LEFT,
 				String.class));
 
-		tableParameters.put(ColumnEnum.QUANTITY, new XTableParameter(4, 10,
+		tableParameters.put(ColumnEnum.QUANTITY, new XTableParameter(3, 10,
 				true, "Qty", false, XTableConstants.CELL_RENDERER_RIGHT,
 				Integer.class));
 
-		tableParameters.put(ColumnEnum.UNIT, new XTableParameter(5, 50, false,
+		tableParameters.put(ColumnEnum.UNIT, new XTableParameter(4, 50, false,
 				"Satuan", false, XTableConstants.CELL_RENDERER_LEFT,
 				String.class));
 
-		tableParameters.put(ColumnEnum.PRICE, new XTableParameter(6, 75, false,
+		tableParameters.put(ColumnEnum.PRICE, new XTableParameter(5, 75, false,
 				"Harga", false, XTableConstants.CELL_RENDERER_RIGHT,
 				Double.class));
 
-		tableParameters.put(ColumnEnum.DISCOUNT, new XTableParameter(7, 5,
+		tableParameters.put(ColumnEnum.DISCOUNT, new XTableParameter(6, 5,
 				false, "%", false, XTableConstants.CELL_RENDERER_CENTER,
 				Double.class));
 
-		tableParameters.put(ColumnEnum.TOTAL, new XTableParameter(8, 75, false,
+		tableParameters.put(ColumnEnum.TOTAL, new XTableParameter(7, 75, false,
 				"Total", false, XTableConstants.CELL_RENDERER_RIGHT,
 				Double.class));
+
+		tableParameters.put(ColumnEnum.ID, new XTableParameter(8, 0, false,
+				"ID", true, XTableConstants.CELL_RENDERER_LEFT, Integer.class));
 	}
 
 	public PenjualanForm(Window parent) {
@@ -438,8 +438,7 @@ public class PenjualanForm extends XJDialog {
 		}
 		Session session = HibernateUtils.openSession();
 		try {
-			Item item = ItemFacade.getInstance()
-					.getByBarcode(barcode, session);
+			Item item = ItemFacade.getInstance().getByBarcode(barcode, session);
 
 			if (item == null) {
 				throw new UserException("Barang dengan barcode " + barcode
@@ -542,55 +541,72 @@ public class PenjualanForm extends XJDialog {
 				SaleDetail saleDetail = new SaleDetail();
 
 				saleDetail.setOrderNum(Formatter.formatStringToNumber(
-						table.getModel().getValueAt(
-								i,
-								tableParameters.get(ColumnEnum.NUM)
-										.getColumnIndex()).toString())
+						table.getModel()
+								.getValueAt(
+										i,
+										tableParameters.get(ColumnEnum.NUM)
+												.getColumnIndex()).toString())
 						.intValue());
 
-				saleDetail.setItemCode(table.getModel().getValueAt(i,
-						tableParameters.get(ColumnEnum.CODE).getColumnIndex())
-						.toString());
+				saleDetail.setItemCode(table
+						.getModel()
+						.getValueAt(
+								i,
+								tableParameters.get(ColumnEnum.CODE)
+										.getColumnIndex()).toString());
 
-				saleDetail.setItemName(table.getModel().getValueAt(i,
-						tableParameters.get(ColumnEnum.NAME).getColumnIndex())
-						.toString());
+				saleDetail.setItemName(table
+						.getModel()
+						.getValueAt(
+								i,
+								tableParameters.get(ColumnEnum.NAME)
+										.getColumnIndex()).toString());
 
 				saleDetail.setQuantity(Formatter.formatStringToNumber(
-						table.getModel().getValueAt(
-								i,
-								tableParameters.get(ColumnEnum.QUANTITY)
-										.getColumnIndex()).toString())
+						table.getModel()
+								.getValueAt(
+										i,
+										tableParameters
+												.get(ColumnEnum.QUANTITY)
+												.getColumnIndex()).toString())
 						.intValue());
 
-				saleDetail.setUnit(table.getModel().getValueAt(i,
-						tableParameters.get(ColumnEnum.UNIT).getColumnIndex())
-						.toString());
+				saleDetail.setUnit(table
+						.getModel()
+						.getValueAt(
+								i,
+								tableParameters.get(ColumnEnum.UNIT)
+										.getColumnIndex()).toString());
 
 				saleDetail.setPricePerUnit(BigDecimal.valueOf(Formatter
 						.formatStringToNumber(
-								table.getModel().getValueAt(
-										i,
-										tableParameters.get(ColumnEnum.PRICE)
-												.getColumnIndex()).toString())
-						.doubleValue()));
+								table.getModel()
+										.getValueAt(
+												i,
+												tableParameters.get(
+														ColumnEnum.PRICE)
+														.getColumnIndex())
+										.toString()).doubleValue()));
 
 				saleDetail.setDiscountPercent(BigDecimal.valueOf(Formatter
 						.formatStringToNumber(
-								table.getModel().getValueAt(
-										i,
-										tableParameters
-												.get(ColumnEnum.DISCOUNT)
-												.getColumnIndex()).toString())
-						.doubleValue()));
+								table.getModel()
+										.getValueAt(
+												i,
+												tableParameters.get(
+														ColumnEnum.DISCOUNT)
+														.getColumnIndex())
+										.toString()).doubleValue()));
 
 				saleDetail.setTotalAmount(BigDecimal.valueOf(Formatter
 						.formatStringToNumber(
-								table.getModel().getValueAt(
-										i,
-										tableParameters.get(ColumnEnum.TOTAL)
-												.getColumnIndex()).toString())
-						.doubleValue()));
+								table.getModel()
+										.getValueAt(
+												i,
+												tableParameters.get(
+														ColumnEnum.TOTAL)
+														.getColumnIndex())
+										.toString()).doubleValue()));
 
 				saleDetails.add(saleDetail);
 			}
@@ -651,9 +667,12 @@ public class PenjualanForm extends XJDialog {
 		int rowCount = table.getRowCount();
 		double totalPenjualan = 0;
 		for (int i = 0; i < rowCount; ++i) {
-			String string = table.getModel().getValueAt(i,
-					tableParameters.get(ColumnEnum.TOTAL).getColumnIndex())
-					.toString();
+			String string = table
+					.getModel()
+					.getValueAt(
+							i,
+							tableParameters.get(ColumnEnum.TOTAL)
+									.getColumnIndex()).toString();
 			double totalPerRow = Formatter.formatStringToNumber(string)
 					.doubleValue();
 			totalPenjualan += totalPerRow;
@@ -670,17 +689,22 @@ public class PenjualanForm extends XJDialog {
 		}
 
 		int jumlah = Formatter.formatStringToNumber(
-				table.getModel().getValueAt(
-						row,
-						tableParameters.get(ColumnEnum.QUANTITY)
-								.getColumnIndex()).toString()).intValue();
+				table.getModel()
+						.getValueAt(
+								row,
+								tableParameters.get(ColumnEnum.QUANTITY)
+										.getColumnIndex()).toString())
+				.intValue();
 		table.setValueAt(Formatter.formatNumberToString(jumlah), row,
 				tableParameters.get(ColumnEnum.QUANTITY).getColumnIndex());
 
 		double hargaSatuan = Formatter.formatStringToNumber(
-				table.getModel().getValueAt(row,
-						tableParameters.get(ColumnEnum.PRICE).getColumnIndex())
-						.toString()).doubleValue();
+				table.getModel()
+						.getValueAt(
+								row,
+								tableParameters.get(ColumnEnum.PRICE)
+										.getColumnIndex()).toString())
+				.doubleValue();
 		table.setValueAt(Formatter.formatNumberToString(hargaSatuan), row,
 				tableParameters.get(ColumnEnum.PRICE).getColumnIndex());
 
@@ -723,9 +747,6 @@ public class PenjualanForm extends XJDialog {
 			tableModel.setRowCount(tableModel.getRowCount() + 1);
 			int rowIndex = tableModel.getRowCount() - 1;
 
-			tableModel.setValueAt(item.getId(), rowIndex,
-					tableParameters.get(ColumnEnum.ID).getColumnIndex());
-
 			tableModel.setValueAt(item.getCode(), rowIndex, tableParameters
 					.get(ColumnEnum.CODE).getColumnIndex());
 
@@ -748,6 +769,9 @@ public class PenjualanForm extends XJDialog {
 			tableModel.setValueAt(0, rowIndex,
 					tableParameters.get(ColumnEnum.TOTAL).getColumnIndex());
 
+			tableModel.setValueAt(item.getId(), rowIndex,
+					tableParameters.get(ColumnEnum.ID).getColumnIndex());
+
 			reorderRowNumber();
 
 			int row = table.getRowCount() - 1;
@@ -769,6 +793,6 @@ public class PenjualanForm extends XJDialog {
 	}
 
 	private enum ColumnEnum {
-		ID, NUM, CODE, NAME, QUANTITY, UNIT, PRICE, DISCOUNT, TOTAL
+		NUM, CODE, NAME, QUANTITY, UNIT, PRICE, DISCOUNT, TOTAL, ID
 	}
 }
