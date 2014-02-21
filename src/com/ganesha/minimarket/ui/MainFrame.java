@@ -13,7 +13,6 @@ import javax.swing.JSeparator;
 
 import net.miginfocom.swing.MigLayout;
 
-import com.ganesha.desktop.exeptions.ExceptionHandler;
 import com.ganesha.core.utils.CommonUtils;
 import com.ganesha.core.utils.Formatter;
 import com.ganesha.core.utils.GeneralConstants;
@@ -23,6 +22,7 @@ import com.ganesha.desktop.component.XJLabel;
 import com.ganesha.desktop.component.XJMenu;
 import com.ganesha.desktop.component.XJMenuItem;
 import com.ganesha.desktop.component.XJPanel;
+import com.ganesha.desktop.exeptions.ExceptionHandler;
 import com.ganesha.minimarket.Main;
 import com.ganesha.minimarket.ui.forms.customer.CustomerListDialog;
 import com.ganesha.minimarket.ui.forms.discount.DiscountListDialog;
@@ -377,7 +377,7 @@ public class MainFrame extends XJFrame {
 		});
 		mnSetting.add(mntmDbConsistencyCheckerSetting);
 
-		setExtendedState(JFrame.MAXIMIZED_BOTH);
+		// setExtendedState(JFrame.MAXIMIZED_BOTH);
 		pack();
 		setLocationRelativeTo(null);
 		getContentPane().setLayout(new MigLayout("", "[grow]", "[][][][]"));

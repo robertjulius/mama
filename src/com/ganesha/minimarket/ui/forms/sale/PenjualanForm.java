@@ -534,6 +534,10 @@ public class PenjualanForm extends XJDialog {
 			double moneyChange = Formatter.formatStringToNumber(
 					txtKembalian.getText()).doubleValue();
 
+			if (pay < totalAmount) {
+				throw new UserException("Pembayaran kurang");
+			}
+
 			SaleHeader saleHeader = facade.validateForm(transactionNumber,
 					transactionTimestamp, customerId, subTotalAmount,
 					taxPercent, taxAmount, totalAmount, pay, moneyChange,

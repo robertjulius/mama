@@ -11,7 +11,6 @@ import javax.swing.JFileChooser;
 import net.miginfocom.swing.MigLayout;
 
 import com.ganesha.core.SystemSetting;
-import com.ganesha.desktop.exeptions.ExceptionHandler;
 import com.ganesha.core.exception.AppException;
 import com.ganesha.core.exception.UserException;
 import com.ganesha.core.utils.GeneralConstants;
@@ -22,6 +21,7 @@ import com.ganesha.desktop.component.XJLabel;
 import com.ganesha.desktop.component.XJPanel;
 import com.ganesha.desktop.component.XJPasswordField;
 import com.ganesha.desktop.component.XJTextField;
+import com.ganesha.desktop.exeptions.ExceptionHandler;
 import com.ganesha.minimarket.utils.BackupDB;
 import com.ganesha.minimarket.utils.PermissionConstants;
 
