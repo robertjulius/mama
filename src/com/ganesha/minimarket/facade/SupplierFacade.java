@@ -10,6 +10,7 @@ import org.hibernate.criterion.Restrictions;
 
 import com.ganesha.core.exception.UserException;
 import com.ganesha.core.utils.CommonUtils;
+import com.ganesha.core.utils.DBUtils;
 import com.ganesha.minimarket.Main;
 import com.ganesha.minimarket.model.Supplier;
 
@@ -35,13 +36,13 @@ public class SupplierFacade {
 			String phone1, String phone2, boolean disabled, boolean deleted,
 			Session session) throws UserException {
 
-		if (GlobalFacade.getInstance().isExists("code", code, Supplier.class,
+		if (DBUtils.getInstance().isExists("code", code, Supplier.class,
 				session)) {
 			throw new UserException("Supplier dengan ID " + code
 					+ " sudah pernah didaftarkan");
 		}
 
-		if (GlobalFacade.getInstance().isExists("name", name, Supplier.class,
+		if (DBUtils.getInstance().isExists("name", name, Supplier.class,
 				session)) {
 			throw new UserException("Supplier dengan Nama " + name
 					+ " sudah pernah didaftarkan");
@@ -135,8 +136,8 @@ public class SupplierFacade {
 		supplier.setEmail1(email1);
 		supplier.setEmail2(email2);
 		if (!supplier.getName().equals(name)) {
-			if (GlobalFacade.getInstance().isExists("name", name,
-					Supplier.class, session)) {
+			if (DBUtils.getInstance().isExists("name", name, Supplier.class,
+					session)) {
 				throw new UserException("Supplier dengan Nama " + name
 						+ " sudah pernah didaftarkan");
 			} else {

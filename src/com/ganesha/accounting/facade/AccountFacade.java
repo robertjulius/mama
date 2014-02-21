@@ -103,8 +103,6 @@ public class AccountFacade {
 			account.setDebit(BigDecimal.valueOf(0));
 		}
 
-		account.setDisabled(false);
-		account.setDeleted(false);
 		account.setLastUpdatedTimestamp(timestamp);
 		account.setLastUpdatedBy(Main.getUserLogin().getId());
 

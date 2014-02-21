@@ -10,6 +10,7 @@ import org.hibernate.criterion.Restrictions;
 
 import com.ganesha.core.exception.UserException;
 import com.ganesha.core.utils.CommonUtils;
+import com.ganesha.core.utils.DBUtils;
 import com.ganesha.hibernate.HqlParameter;
 import com.ganesha.minimarket.Main;
 import com.ganesha.model.Permission;
@@ -33,8 +34,7 @@ public class RoleFacade {
 	public Role addNewRole(String name, String description,
 			List<Permission> permissions, Session session) throws UserException {
 
-		if (GlobalFacade.getInstance().isExists("name", name, Role.class,
-				session)) {
+		if (DBUtils.getInstance().isExists("name", name, Role.class, session)) {
 			throw new UserException("Role dengan Nama " + name
 					+ " sudah pernah didaftarkan");
 		}
@@ -111,7 +111,7 @@ public class RoleFacade {
 		role.setName(name);
 		role.setDescription(description);
 		if (!role.getName().equals(name)) {
-			if (GlobalFacade.getInstance().isExists("name", name, Role.class,
+			if (DBUtils.getInstance().isExists("name", name, Role.class,
 					session)) {
 				throw new UserException("Role dengan Nama " + name
 						+ " sudah pernah didaftarkan");

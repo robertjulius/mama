@@ -17,6 +17,7 @@ import org.hibernate.Session;
 
 import com.ganesha.core.exception.UserException;
 import com.ganesha.core.utils.DBUtils;
+import com.ganesha.core.utils.Formatter;
 import com.ganesha.coreapps.constants.Enums.ActionType;
 import com.ganesha.coreapps.exception.ActionTypeNotSupported;
 import com.ganesha.coreapps.facade.ActivityLogFacade;
@@ -42,8 +43,6 @@ public class SupplierForm extends XJDialog {
 	private XJButton btnSimpan;
 	private XJTextField txtKode;
 	private XJTextField txtNama;
-	private XJLabel lblKodeTerakhirValue;
-	private XJLabel lblKodeTerakhir;
 	private ActionType actionType;
 	private XJLabel lblDeskripsi;
 	private XJTextField txtDeskripsi;
@@ -114,43 +113,31 @@ public class SupplierForm extends XJDialog {
 		XJPanel pnlKodeSupplier = new XJPanel();
 		pnlKodeSupplier.setBorder(new XEtchedBorder());
 		pnlKiri.add(pnlKodeSupplier, "cell 0 0,growx");
-		pnlKodeSupplier
-				.setLayout(new MigLayout("", "[150][][grow]", "[][][][]"));
+		pnlKodeSupplier.setLayout(new MigLayout("", "[150][grow]", "[][][]"));
 
 		XJLabel lblKode = new XJLabel();
 		pnlKodeSupplier.add(lblKode, "cell 0 0");
 		lblKode.setText("Kode");
 
 		txtKode = new XJTextField();
+		txtKode.setEditable(false);
 		txtKode.setUpperCaseOnFocusLost(true);
-		pnlKodeSupplier.add(txtKode, "cell 1 0 2 1,growx");
-
-		lblKodeTerakhir = new XJLabel();
-		lblKodeTerakhir.setFont(new Font("Tahoma", Font.BOLD,
-				FONT_SIZE_SMALLEST));
-		lblKodeTerakhir.setText("Kode Terakhir:");
-		pnlKodeSupplier.add(lblKodeTerakhir, "cell 1 1");
-
-		lblKodeTerakhirValue = new XJLabel();
-		lblKodeTerakhirValue.setFont(new Font("Tahoma", Font.BOLD,
-				FONT_SIZE_SMALLEST));
-		lblKodeTerakhirValue.setText("");
-		pnlKodeSupplier.add(lblKodeTerakhirValue, "cell 2 1");
+		pnlKodeSupplier.add(txtKode, "cell 1 0,growx");
 
 		XJLabel lblNama = new XJLabel();
-		pnlKodeSupplier.add(lblNama, "cell 0 2");
+		pnlKodeSupplier.add(lblNama, "cell 0 1");
 		lblNama.setText("Nama");
 
 		txtNama = new XJTextField();
 		txtNama.setUpperCaseOnFocusLost(true);
-		pnlKodeSupplier.add(txtNama, "cell 1 2 2 1,growx");
+		pnlKodeSupplier.add(txtNama, "cell 1 1,growx");
 
 		lblDeskripsi = new XJLabel();
 		lblDeskripsi.setText("Deskripsi");
-		pnlKodeSupplier.add(lblDeskripsi, "cell 0 3");
+		pnlKodeSupplier.add(lblDeskripsi, "cell 0 2");
 
 		txtDeskripsi = new XJTextField();
-		pnlKodeSupplier.add(txtDeskripsi, "cell 1 3 2 1,growx");
+		pnlKodeSupplier.add(txtDeskripsi, "cell 1 2,growx");
 
 		pnlKontakPerson1 = new XJPanel();
 		pnlKontakPerson1.setBorder(new XEtchedBorder());
@@ -331,9 +318,6 @@ public class SupplierForm extends XJDialog {
 	public void setFormDetailValue(Supplier supplier) {
 		supplierId = supplier.getId();
 
-		lblKodeTerakhir.setVisible(false);
-		lblKodeTerakhirValue.setVisible(false);
-		txtKode.setEditable(false);
 		txtKode.setText(supplier.getCode());
 		txtNama.setText(supplier.getName());
 		txtDeskripsi.setText(supplier.getDescription());
@@ -373,7 +357,10 @@ public class SupplierForm extends XJDialog {
 	private void initForm() {
 		String kodeTerakhir = DBUtils.getInstance().getLastValue("suppliers",
 				"code", String.class);
-		lblKodeTerakhirValue.setText(String.valueOf(kodeTerakhir));
+		int newCode = kodeTerakhir == null ? 1 : Formatter.formatCodeToInt(
+				kodeTerakhir).intValue() + 1;
+		String newCodeInString = Formatter.formatIntToCode(newCode);
+		txtKode.setText(newCodeInString);
 	}
 
 	private void save(boolean deleted) throws ActionTypeNotSupported,

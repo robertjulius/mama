@@ -45,10 +45,8 @@ public class StockForm extends XJDialog {
 	private XJTextField txtSatuan;
 	private XJTextField txtKode;
 	private XJTextField txtNama;
-	private XJLabel lblKodeTerakhirValue;
 	private XJLabel lblBarcode;
 	private XJTextField txtBarcode;
-	private XJLabel lblKodeTerakhir;
 	private ActionType actionType;
 	private JSeparator separator;
 	private XJPanel pnlKanan;
@@ -97,35 +95,24 @@ public class StockForm extends XJDialog {
 		pnlKode = new XJPanel();
 		pnlKode.setBorder(new XEtchedBorder());
 		getContentPane().add(pnlKode, "cell 0 0 2 1,grow");
-		pnlKode.setLayout(new MigLayout("", "[150][][100][]", "[][][][]"));
+		pnlKode.setLayout(new MigLayout("", "[150][300][]", "[][]"));
 
 		XJLabel lblKode = new XJLabel();
 		pnlKode.add(lblKode, "cell 0 0");
 		lblKode.setText("Kode");
 
 		txtKode = new XJTextField();
+		txtKode.setEditable(false);
 		txtKode.setUpperCaseOnFocusLost(true);
-		pnlKode.add(txtKode, "cell 1 0 2 1,growx");
-
-		lblKodeTerakhir = new XJLabel();
-		lblKodeTerakhir.setFont(new Font("Tahoma", Font.BOLD,
-				FONT_SIZE_SMALLEST));
-		pnlKode.add(lblKodeTerakhir, "cell 1 1");
-		lblKodeTerakhir.setText("Kode Terakhir:");
-
-		lblKodeTerakhirValue = new XJLabel();
-		lblKodeTerakhirValue.setFont(new Font("Tahoma", Font.BOLD,
-				FONT_SIZE_SMALLEST));
-		pnlKode.add(lblKodeTerakhirValue, "cell 2 1");
-		lblKodeTerakhirValue.setText("");
+		pnlKode.add(txtKode, "cell 1 0,growx");
 
 		lblBarcode = new XJLabel();
-		pnlKode.add(lblBarcode, "cell 0 2");
+		pnlKode.add(lblBarcode, "cell 0 1");
 		lblBarcode.setText("Barcode [F8]");
 
 		txtBarcode = new XJTextField();
 		txtBarcode.setUpperCaseOnFocusLost(true);
-		pnlKode.add(txtBarcode, "cell 1 2 2 1,growx");
+		pnlKode.add(txtBarcode, "cell 1 1,growx");
 
 		btnGenerateBarcode = new XJButton();
 		btnGenerateBarcode.addActionListener(new ActionListener() {
@@ -139,7 +126,7 @@ public class StockForm extends XJDialog {
 			}
 		});
 		btnGenerateBarcode.setText("Generate Barcode");
-		pnlKode.add(btnGenerateBarcode, "cell 3 2");
+		pnlKode.add(btnGenerateBarcode, "cell 2 1");
 
 		XJPanel pnlKiri = new XJPanel();
 		pnlKiri.setBorder(new XEtchedBorder());
@@ -322,7 +309,10 @@ public class StockForm extends XJDialog {
 	private void initForm() throws ActionTypeNotSupported {
 		String kodeTerakhir = DBUtils.getInstance().getLastValue("items",
 				"code", String.class);
-		lblKodeTerakhirValue.setText(String.valueOf(kodeTerakhir));
+		int newCode = kodeTerakhir == null ? 1 : Formatter.formatCodeToInt(
+				kodeTerakhir).intValue() + 1;
+		String newCodeInString = Formatter.formatIntToCode(newCode);
+		txtKode.setText(newCodeInString);
 
 		if (actionType == ActionType.CREATE) {
 			txtJumlahSaatIni.setText("0");
@@ -331,9 +321,6 @@ public class StockForm extends XJDialog {
 			txtHargaJual.setText("0");
 			btnGenerateBarcode.setVisible(true);
 		} else if (actionType == ActionType.UPDATE) {
-			lblKodeTerakhir.setVisible(false);
-			lblKodeTerakhirValue.setVisible(false);
-			txtKode.setEditable(false);
 			txtSatuan.setEditable(false);
 			if (txtBarcode.getText().trim().equals("")) {
 				txtBarcode.setEditable(true);
@@ -343,9 +330,6 @@ public class StockForm extends XJDialog {
 				btnGenerateBarcode.setVisible(false);
 			}
 		} else if (actionType == ActionType.READ) {
-			lblKodeTerakhir.setVisible(false);
-			lblKodeTerakhirValue.setVisible(false);
-			txtKode.setEditable(false);
 			txtBarcode.setEditable(false);
 			txtNama.setEditable(false);
 			txtSatuan.setEditable(false);

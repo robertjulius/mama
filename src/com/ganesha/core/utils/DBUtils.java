@@ -1,7 +1,11 @@
 package com.ganesha.core.utils;
 
+import java.util.List;
+
+import org.hibernate.Criteria;
 import org.hibernate.SQLQuery;
 import org.hibernate.Session;
+import org.hibernate.criterion.Restrictions;
 
 import com.ganesha.hibernate.HibernateUtils;
 
@@ -36,5 +40,20 @@ public class DBUtils {
 		} finally {
 			session.close();
 		}
+	}
+
+	public boolean isExists(String columName, Object columnValue,
+			Class<?> entityClass, Session session) {
+
+		boolean exists = false;
+
+		Criteria criteria = session.createCriteria(entityClass);
+		criteria.add(Restrictions.eq(columName, columnValue));
+		List<?> searchResults = criteria.list();
+
+		if (searchResults.size() > 0) {
+			exists = true;
+		}
+		return exists;
 	}
 }

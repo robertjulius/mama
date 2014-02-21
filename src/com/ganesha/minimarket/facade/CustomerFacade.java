@@ -8,6 +8,7 @@ import org.hibernate.criterion.Restrictions;
 
 import com.ganesha.core.exception.UserException;
 import com.ganesha.core.utils.CommonUtils;
+import com.ganesha.core.utils.DBUtils;
 import com.ganesha.minimarket.Main;
 import com.ganesha.minimarket.model.Customer;
 
@@ -30,7 +31,7 @@ public class CustomerFacade {
 			boolean disabled, boolean deleted, Session session)
 			throws UserException {
 
-		if (GlobalFacade.getInstance().isExists("code", code, Customer.class,
+		if (DBUtils.getInstance().isExists("code", code, Customer.class,
 				session)) {
 			throw new UserException("Customer dengan ID " + code
 					+ " sudah pernah didaftarkan");
@@ -94,8 +95,8 @@ public class CustomerFacade {
 		customer.setDescription(description);
 		customer.setEmail(email);
 		if (!customer.getName().equals(name)) {
-			if (GlobalFacade.getInstance().isExists("name", name,
-					Customer.class, session)) {
+			if (DBUtils.getInstance().isExists("name", name, Customer.class,
+					session)) {
 				throw new UserException("Customer dengan Nama " + name
 						+ " sudah pernah didaftarkan");
 			} else {

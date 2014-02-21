@@ -12,11 +12,11 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
-import com.ganesha.model.Inactivable;
+import com.ganesha.model.Trackable;
 
 @Entity
 @Table(name = "ACCOUNTS")
-public class Account extends Inactivable {
+public class Account extends Trackable {
 
 	private static final long serialVersionUID = -5372047327396271313L;
 

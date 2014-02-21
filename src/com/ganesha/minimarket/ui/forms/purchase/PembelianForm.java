@@ -1,5 +1,6 @@
 package com.ganesha.minimarket.ui.forms.purchase;
 
+import java.awt.Color;
 import java.awt.Font;
 import java.awt.Window;
 import java.awt.event.ActionEvent;
@@ -17,7 +18,6 @@ import java.util.Map;
 
 import javax.swing.JOptionPane;
 import javax.swing.JScrollPane;
-import javax.swing.JSeparator;
 import javax.swing.SwingConstants;
 import javax.swing.table.TableCellEditor;
 
@@ -88,6 +88,7 @@ public class PembelianForm extends XJDialog {
 	private XJLabel lblBarcode;
 
 	private Integer supplierId;
+	private XJPanel pnlHutang;
 
 	{
 		tableParameters.put(ColumnEnum.NUM, new XTableParameter(0, 5, false,
@@ -133,8 +134,7 @@ public class PembelianForm extends XJDialog {
 		setCloseOnEsc(false);
 
 		getContentPane().setLayout(
-				new MigLayout("", "[1200,grow]",
-						"[grow][grow][grow][grow][][grow]"));
+				new MigLayout("", "[1200,grow]", "[][][][][]"));
 
 		table = new XJTable() {
 			private static final long serialVersionUID = 1L;
@@ -168,8 +168,9 @@ public class PembelianForm extends XJDialog {
 
 		XJPanel pnlHeader = new XJPanel();
 		pnlHeader.setBorder(new XEtchedBorder());
-		getContentPane().add(pnlHeader, "cell 0 0,alignx left,growy");
-		pnlHeader.setLayout(new MigLayout("", "[150][100][200][]", "[][][]"));
+		getContentPane().add(pnlHeader, "cell 0 0,grow");
+		pnlHeader.setLayout(new MigLayout("", "[150][100][200][][grow]",
+				"[grow][][]"));
 
 		XJLabel lblNoTransaksi = new XJLabel();
 		lblNoTransaksi.setText("No. Transaksi Pembelian");
@@ -180,6 +181,19 @@ public class PembelianForm extends XJDialog {
 				+ CommonUtils.getTimestampInString());
 		txtNoTransaksi.setEditable(false);
 		pnlHeader.add(txtNoTransaksi, "cell 1 0 2 1,growx");
+
+		pnlHutang = new XJPanel();
+		pnlHutang.setBackground(Color.BLACK);
+		pnlHeader.add(pnlHutang, "cell 4 0 1 3,grow");
+		pnlHutang.setLayout(new MigLayout("", "[grow]", "[grow]"));
+
+		lblLunas = new XJLabel();
+		lblLunas.setForeground(Color.RED);
+		pnlHutang.add(lblLunas, "cell 0 0,alignx center,growy");
+
+		lblLunas.setFont(new Font("Tahoma", Font.BOLD, 50));
+		lblLunas.setText("LUNAS");
+		lblLunas.setVisible(false);
 
 		XJLabel lblTanggal = new XJLabel();
 		lblTanggal.setText("Tanggal Pembelian");
@@ -283,7 +297,7 @@ public class PembelianForm extends XJDialog {
 
 		XJPanel pnlSubTotal = new XJPanel();
 		getContentPane().add(pnlSubTotal, "cell 0 2,grow");
-		pnlSubTotal.setLayout(new MigLayout("", "[][grow][][200]", "[]"));
+		pnlSubTotal.setLayout(new MigLayout("", "[][grow][]", "[]"));
 
 		btnDetail = new XJButton();
 		btnDetail.addActionListener(new ActionListener() {
@@ -296,28 +310,24 @@ public class PembelianForm extends XJDialog {
 				.setText("<html><center>Lihat Detail<br/>[Enter]</center></html>");
 		pnlSubTotal.add(btnDetail, "cell 0 0");
 
+		XJPanel pnlBeban = new XJPanel();
+		pnlSubTotal.add(pnlBeban, "cell 2 0");
+		pnlBeban.setBorder(new XEtchedBorder());
+		pnlBeban.setLayout(new MigLayout("", "[][200]", "[][][]"));
+
 		XJLabel lblTotalPembelian = new XJLabel();
-		pnlSubTotal.add(lblTotalPembelian, "cell 2 0");
+		pnlBeban.add(lblTotalPembelian, "cell 0 0");
 		lblTotalPembelian.setText("Total Pembelian");
 
 		txtTotalPembelian = new XJTextField();
+		pnlBeban.add(txtTotalPembelian, "cell 1 0,growx");
 		txtTotalPembelian.setText("0");
 		txtTotalPembelian.setHorizontalAlignment(SwingConstants.TRAILING);
-		pnlSubTotal.add(txtTotalPembelian, "cell 3 0,growx");
 		txtTotalPembelian.setEditable(false);
-
-		XJPanel pnlPerhitungan = new XJPanel();
-		getContentPane().add(pnlPerhitungan, "cell 0 3,alignx center,growy");
-		pnlPerhitungan.setLayout(new MigLayout("", "[300][300]", "[grow]"));
-
-		XJPanel pnlBeban = new XJPanel();
-		pnlBeban.setBorder(new XEtchedBorder());
-		pnlPerhitungan.add(pnlBeban, "cell 0 0,grow");
-		pnlBeban.setLayout(new MigLayout("", "[][grow]", "[][][10][]"));
 
 		XJLabel lblBiaya = new XJLabel();
 		lblBiaya.setText("Biaya Lain-Lain (+)");
-		pnlBeban.add(lblBiaya, "cell 0 0");
+		pnlBeban.add(lblBiaya, "cell 0 1");
 
 		txtBebanLain = new XJTextField();
 		txtBebanLain.addKeyListener(new KeyAdapter() {
@@ -328,11 +338,11 @@ public class PembelianForm extends XJDialog {
 		});
 		txtBebanLain.setHorizontalAlignment(SwingConstants.TRAILING);
 		txtBebanLain.setText("0");
-		pnlBeban.add(txtBebanLain, "cell 1 0,growx");
+		pnlBeban.add(txtBebanLain, "cell 1 1,growx");
 
 		XJLabel lblDiskon = new XJLabel();
 		lblDiskon.setText("Diskon (-)");
-		pnlBeban.add(lblDiskon, "cell 0 1");
+		pnlBeban.add(lblDiskon, "cell 0 2");
 
 		txtDiskon = new XJTextField();
 		txtDiskon.addKeyListener(new KeyAdapter() {
@@ -343,31 +353,33 @@ public class PembelianForm extends XJDialog {
 		});
 		txtDiskon.setHorizontalAlignment(SwingConstants.TRAILING);
 		txtDiskon.setText("0");
-		pnlBeban.add(txtDiskon, "cell 1 1,growx");
+		pnlBeban.add(txtDiskon, "cell 1 2,growx");
 
-		JSeparator separator = new JSeparator();
-		pnlBeban.add(separator, "cell 0 2 2 1,growx,aligny center");
+		XJPanel pnlUangMuka = new XJPanel();
+		getContentPane().add(pnlUangMuka, "cell 0 3,growx");
+		pnlUangMuka.setBorder(new XEtchedBorder());
+		pnlUangMuka.setLayout(new MigLayout("",
+				"[][grow][200][grow][200][grow]", "[]"));
 
 		XJLabel lblTotal = new XJLabel();
+		lblTotal.setFont(new Font("Tahoma", Font.BOLD, 40));
+		pnlUangMuka.add(lblTotal, "cell 0 0,alignx right");
 		lblTotal.setText("TOTAL");
-		pnlBeban.add(lblTotal, "cell 0 3");
 
 		txtTotal = new XJTextField();
+		txtTotal.setFont(new Font("Tahoma", Font.BOLD, 40));
+		pnlUangMuka.add(txtTotal, "cell 1 0,growx");
 		txtTotal.setHorizontalAlignment(SwingConstants.TRAILING);
 		txtTotal.setText("0");
 		txtTotal.setEditable(false);
-		pnlBeban.add(txtTotal, "cell 1 3,growx");
-
-		XJPanel pnlUangMuka = new XJPanel();
-		pnlUangMuka.setBorder(new XEtchedBorder());
-		pnlPerhitungan.add(pnlUangMuka, "cell 1 0,grow");
-		pnlUangMuka.setLayout(new MigLayout("", "[150][grow]", "[][][]"));
 
 		lblBayar = new XJLabel();
+		lblBayar.setFont(new Font("Tahoma", Font.BOLD, 40));
 		lblBayar.setText("Bayar");
-		pnlUangMuka.add(lblBayar, "cell 0 0");
+		pnlUangMuka.add(lblBayar, "cell 2 0,alignx right");
 
 		txtBayar = new XJTextField();
+		txtBayar.setFont(new Font("Tahoma", Font.BOLD, 40));
 		txtBayar.addKeyListener(new KeyAdapter() {
 			@Override
 			public void keyReleased(KeyEvent e) {
@@ -376,30 +388,23 @@ public class PembelianForm extends XJDialog {
 		});
 		txtBayar.setHorizontalAlignment(SwingConstants.TRAILING);
 		txtBayar.setText("0");
-		pnlUangMuka.add(txtBayar, "cell 1 0,growx,aligny top");
+		pnlUangMuka.add(txtBayar, "cell 3 0,growx");
 
 		lblSisa = new XJLabel();
+		lblSisa.setFont(new Font("Tahoma", Font.BOLD, 40));
 		lblSisa.setText("Sisa");
-		pnlUangMuka.add(lblSisa, "cell 0 1");
+		pnlUangMuka.add(lblSisa, "cell 4 0,alignx right");
 
 		txtSisa = new XJTextField();
+		txtSisa.setFont(new Font("Tahoma", Font.BOLD, 40));
 		txtSisa.setHorizontalAlignment(SwingConstants.TRAILING);
 		txtSisa.setText("0");
 		txtSisa.setEditable(false);
-		pnlUangMuka.add(txtSisa, "cell 1 1,growx,aligny top");
-
-		lblLunas = new XJLabel();
-		pnlUangMuka.add(lblLunas, "cell 0 2 2 1,alignx center");
-
-		lblLunas.setFont(new Font("Tahoma", Font.BOLD, 30));
-		lblLunas.setText("LUNAS");
-		lblLunas.setVisible(false);
-
-		JSeparator separator_1 = new JSeparator();
-		getContentPane().add(separator_1, "cell 0 4,grow");
+		txtSisa.setBackground(TXT_BG_ATTENTION);
+		pnlUangMuka.add(txtSisa, "cell 5 0,growx");
 
 		XJPanel pnlButton = new XJPanel();
-		getContentPane().add(pnlButton, "cell 0 5,alignx center,growy");
+		getContentPane().add(pnlButton, "cell 0 4,alignx center,growy");
 		pnlButton.setLayout(new MigLayout("", "[][]", "[]"));
 
 		btnBatal = new XJButton();
@@ -558,6 +563,15 @@ public class PembelianForm extends XJDialog {
 					"Proses tidak dapat dilanjutkan. Anda belum memasukan item apapun untuk transaksi ini.");
 		}
 
+		if (Formatter.formatStringToNumber(txtSisa.getText()).intValue() > 0) {
+			String message = "Apakah Anda yakin untuk memasukan transaksi ini ke dalam catatan hutang?";
+			int selectedOption = JOptionPane.showConfirmDialog(this, message,
+					"Transaksi Hutang", JOptionPane.YES_NO_OPTION);
+			if (selectedOption != JOptionPane.YES_OPTION) {
+				return;
+			}
+		}
+
 		Session session = HibernateUtils.openSession();
 		try {
 			session.beginTransaction();
@@ -712,11 +726,9 @@ public class PembelianForm extends XJDialog {
 			btnSelesai.setEnabled(true);
 			lblLunas.setVisible(true);
 			if (uangMuka < total) {
-				lblSisa.setForeground(LBL_WARNING);
 				lblLunas.setText("HUTANG");
 				lblLunas.setForeground(LBL_WARNING);
 			} else {
-				lblSisa.setForeground(LBL_NORMAL);
 				lblLunas.setText("LUNAS");
 				lblLunas.setForeground(COLOR_GOOD);
 			}

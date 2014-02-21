@@ -5,8 +5,8 @@ import java.util.List;
 
 import org.hibernate.Session;
 
+import com.ganesha.core.utils.DBUtils;
 import com.ganesha.hibernate.HibernateUtils;
-import com.ganesha.minimarket.facade.GlobalFacade;
 import com.ganesha.model.Permission;
 
 public class PermissionConsistencyChecker {
@@ -183,7 +183,7 @@ public class PermissionConsistencyChecker {
 
 			for (Permission permission : permissions) {
 
-				boolean exists = GlobalFacade.getInstance().isExists("code",
+				boolean exists = DBUtils.getInstance().isExists("code",
 						permission.getCode(), Permission.class, session);
 				if (exists) {
 					session.merge(permission);

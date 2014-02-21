@@ -11,6 +11,7 @@ import org.hibernate.criterion.Restrictions;
 import com.ganesha.core.exception.AppException;
 import com.ganesha.core.exception.UserException;
 import com.ganesha.core.utils.CommonUtils;
+import com.ganesha.core.utils.DBUtils;
 import com.ganesha.core.utils.SecurityUtils;
 import com.ganesha.hibernate.HqlParameter;
 import com.ganesha.minimarket.Main;
@@ -36,8 +37,7 @@ public class UserFacade {
 			List<Role> roles, boolean disabled, boolean deleted, Session session)
 			throws UserException, AppException {
 
-		if (GlobalFacade.getInstance().isExists("login", login, User.class,
-				session)) {
+		if (DBUtils.getInstance().isExists("login", login, User.class, session)) {
 			throw new UserException("User dengan Login ID " + login
 					+ " sudah pernah didaftarkan");
 		}

@@ -47,3 +47,13 @@ Toad
 Cleansing data:
 1. ItemStock
 
+
+
+
+MIGRASI:
+========
+item_stocks
+payables
+purchases
+sales
+

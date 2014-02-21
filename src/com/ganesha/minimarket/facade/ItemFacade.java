@@ -9,6 +9,7 @@ import org.hibernate.criterion.Restrictions;
 
 import com.ganesha.core.exception.UserException;
 import com.ganesha.core.utils.CommonUtils;
+import com.ganesha.core.utils.DBUtils;
 import com.ganesha.minimarket.Main;
 import com.ganesha.minimarket.model.Item;
 import com.ganesha.minimarket.model.ItemStock;
@@ -33,14 +34,12 @@ public class ItemFacade {
 			BigDecimal sellPrice, int minimumStock, boolean disabled,
 			boolean deleted, Session session) throws UserException {
 
-		if (GlobalFacade.getInstance().isExists("code", code, Item.class,
-				session)) {
+		if (DBUtils.getInstance().isExists("code", code, Item.class, session)) {
 			throw new UserException("Barang dengan ID " + code
 					+ " sudah pernah didaftarkan");
 		}
 
-		if (GlobalFacade.getInstance().isExists("name", name, Item.class,
-				session)) {
+		if (DBUtils.getInstance().isExists("name", name, Item.class, session)) {
 			throw new UserException("Barang dengan Nama " + name
 					+ " sudah pernah didaftarkan");
 		}
@@ -167,7 +166,7 @@ public class ItemFacade {
 		item.setLastUpdatedTimestamp(CommonUtils.getCurrentTimestamp());
 
 		if (!item.getName().equals(name)) {
-			if (GlobalFacade.getInstance().isExists("name", name, Item.class,
+			if (DBUtils.getInstance().isExists("name", name, Item.class,
 					session)) {
 				throw new UserException("Barang dengan Nama " + name
 						+ " sudah pernah didaftarkan");

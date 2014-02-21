@@ -13,6 +13,7 @@ import org.hibernate.criterion.Restrictions;
 import com.ganesha.accounting.constants.Enums.AccountAction;
 import com.ganesha.core.exception.AppException;
 import com.ganesha.core.utils.CommonUtils;
+import com.ganesha.core.utils.DBUtils;
 import com.ganesha.core.utils.GeneralConstants;
 import com.ganesha.hibernate.HqlParameter;
 import com.ganesha.minimarket.Main;
@@ -50,7 +51,7 @@ public class ReceivableFacade {
 			AccountAction accountAction, Date maturityDate, BigDecimal amount,
 			String description, Session session) throws AppException {
 
-		boolean summaryExists = GlobalFacade.getInstance().isExists("clientId",
+		boolean summaryExists = DBUtils.getInstance().isExists("clientId",
 				clientId, ReceivableSummary.class, session);
 
 		if (!summaryExists) {

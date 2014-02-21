@@ -17,6 +17,8 @@ public class Formatter {
 			"dd MMM yyyy HH:mm:ss");
 	private static final DateFormat clockFormat = new SimpleDateFormat(
 			"HH:mm:ss");
+	private static final NumberFormat codeFormat = new DecimalFormat(
+			"0000000000");
 
 	public static String formatClockToString(Date date) {
 		String string = null;
@@ -28,10 +30,30 @@ public class Formatter {
 		return string;
 	}
 
+	public static Number formatCodeToInt(String code) {
+		Integer number = null;
+		try {
+			number = codeFormat.parse(code).intValue();
+		} catch (ParseException e) {
+			number = 0;
+		}
+		return number;
+	}
+
 	public static String formatDateToString(Date date) {
 		String string = null;
 		try {
 			string = dateFormat.format(date);
+		} catch (Exception e) {
+			string = null;
+		}
+		return string;
+	}
+
+	public static String formatIntToCode(Integer number) {
+		String string = null;
+		try {
+			string = codeFormat.format(number);
 		} catch (Exception e) {
 			string = null;
 		}
@@ -87,4 +109,5 @@ public class Formatter {
 		}
 		return string;
 	}
+
 }

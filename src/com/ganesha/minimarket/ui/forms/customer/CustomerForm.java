@@ -17,6 +17,7 @@ import org.hibernate.Session;
 
 import com.ganesha.core.exception.UserException;
 import com.ganesha.core.utils.DBUtils;
+import com.ganesha.core.utils.Formatter;
 import com.ganesha.coreapps.constants.Enums.ActionType;
 import com.ganesha.coreapps.exception.ActionTypeNotSupported;
 import com.ganesha.coreapps.facade.ActivityLogFacade;
@@ -42,7 +43,6 @@ public class CustomerForm extends XJDialog {
 	private XJButton btnSimpan;
 	private XJTextField txtKode;
 	private XJTextField txtNama;
-	private XJLabel lblKodeTerakhir;
 	private ActionType actionType;
 	private XJLabel lblDeskripsi;
 	private XJTextField txtDeskripsi;
@@ -55,7 +55,6 @@ public class CustomerForm extends XJDialog {
 	private XJButton btnBatal;
 	private JScrollPane scrollPane;
 	private XJTextArea txtAlamat;
-	private XJLabel lblKodeTerakhirValue;
 	private XJCheckBox chkDisabled;
 	private XJPanel pnlDisabled;
 	private JSeparator separator;
@@ -86,57 +85,46 @@ public class CustomerForm extends XJDialog {
 		XJPanel pnlKodeCustomer = new XJPanel();
 		getContentPane().add(pnlKodeCustomer, "cell 0 0,grow");
 		pnlKodeCustomer.setBorder(new XEtchedBorder());
-		pnlKodeCustomer.setLayout(new MigLayout("", "[150][][grow]",
-				"[][][][][][]"));
+		pnlKodeCustomer
+				.setLayout(new MigLayout("", "[150][grow]", "[][][][][]"));
 
 		XJLabel lblKode = new XJLabel();
 		pnlKodeCustomer.add(lblKode, "cell 0 0");
 		lblKode.setText("Kode");
 
 		txtKode = new XJTextField();
+		txtKode.setEditable(false);
 		txtKode.setUpperCaseOnFocusLost(true);
-		pnlKodeCustomer.add(txtKode, "cell 1 0 2 1,growx");
-
-		lblKodeTerakhir = new XJLabel();
-		lblKodeTerakhir.setFont(new Font("Tahoma", Font.BOLD,
-				FONT_SIZE_SMALLEST));
-		lblKodeTerakhir.setText("Kode Terakhir:");
-		pnlKodeCustomer.add(lblKodeTerakhir, "cell 1 1");
-
-		lblKodeTerakhirValue = new XJLabel();
-		lblKodeTerakhirValue.setFont(new Font("Tahoma", Font.BOLD,
-				FONT_SIZE_SMALLEST));
-		lblKodeTerakhirValue.setText("");
-		pnlKodeCustomer.add(lblKodeTerakhirValue, "cell 2 1");
+		pnlKodeCustomer.add(txtKode, "cell 1 0,growx");
 
 		XJLabel lblNama = new XJLabel();
-		pnlKodeCustomer.add(lblNama, "cell 0 2");
+		pnlKodeCustomer.add(lblNama, "cell 0 1");
 		lblNama.setText("Nama");
 
 		txtNama = new XJTextField();
 		txtNama.setUpperCaseOnFocusLost(true);
-		pnlKodeCustomer.add(txtNama, "cell 1 2 2 1,growx");
+		pnlKodeCustomer.add(txtNama, "cell 1 1,growx");
 
 		lblDeskripsi = new XJLabel();
 		lblDeskripsi.setText("Deskripsi");
-		pnlKodeCustomer.add(lblDeskripsi, "cell 0 3");
+		pnlKodeCustomer.add(lblDeskripsi, "cell 0 2");
 
 		txtDeskripsi = new XJTextField();
-		pnlKodeCustomer.add(txtDeskripsi, "cell 1 3 2 1,growx");
+		pnlKodeCustomer.add(txtDeskripsi, "cell 1 2,growx");
 
 		lblPhone = new XJLabel();
-		pnlKodeCustomer.add(lblPhone, "cell 0 4");
+		pnlKodeCustomer.add(lblPhone, "cell 0 3");
 		lblPhone.setText("Phone");
 
 		txtPhone = new XJTextField();
-		pnlKodeCustomer.add(txtPhone, "cell 1 4 2 1,growx");
+		pnlKodeCustomer.add(txtPhone, "cell 1 3,growx");
 
 		lblEmail = new XJLabel();
-		pnlKodeCustomer.add(lblEmail, "cell 0 5");
+		pnlKodeCustomer.add(lblEmail, "cell 0 4");
 		lblEmail.setText("Email");
 
 		txtEmail = new XJTextField();
-		pnlKodeCustomer.add(txtEmail, "cell 1 5 2 1,growx");
+		pnlKodeCustomer.add(txtEmail, "cell 1 4,growx");
 
 		pnlKontakPerson1 = new XJPanel();
 		getContentPane().add(pnlKontakPerson1, "cell 1 0,grow");
@@ -217,9 +205,6 @@ public class CustomerForm extends XJDialog {
 
 		customerId = customer.getId();
 
-		lblKodeTerakhir.setVisible(false);
-		lblKodeTerakhirValue.setVisible(false);
-		txtKode.setEditable(false);
 		txtKode.setText(customer.getCode());
 		txtNama.setText(customer.getName());
 		txtDeskripsi.setText(customer.getDescription());
@@ -250,7 +235,10 @@ public class CustomerForm extends XJDialog {
 	private void initForm() {
 		String kodeTerakhir = DBUtils.getInstance().getLastValue("customers",
 				"code", String.class);
-		lblKodeTerakhirValue.setText(String.valueOf(kodeTerakhir));
+		int newCode = kodeTerakhir == null ? 1 : Formatter.formatCodeToInt(
+				kodeTerakhir).intValue() + 1;
+		String newCodeInString = Formatter.formatIntToCode(newCode);
+		txtKode.setText(newCodeInString);
 	}
 
 	private void save(boolean deleted) throws ActionTypeNotSupported,
