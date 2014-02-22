@@ -6,6 +6,10 @@ public class Enums {
 		INCREASE, DECREASE
 	};
 
+	public static enum CircleUnit {
+		HOUR, DAY, WEEK, MONTH, YEAR
+	}
+
 	public static enum DebitCreditFlag {
 		DEBIT, CREDIT
 	}

@@ -21,12 +21,11 @@ public class XJComboBox extends JComboBox<ComboBoxObject> implements
 
 	@Override
 	public void setSelectedItem(Object object) {
-		ComboBoxObject objectToSet = (ComboBoxObject) object;
 		ComboBoxModel<ComboBoxObject> model = getModel();
 		int size = model.getSize();
 		for (int i = 0; i < size; ++i) {
 			ComboBoxObject comboBoxObject = model.getElementAt(i);
-			if (objectToSet.getId().equals(comboBoxObject.getId())) {
+			if (object.equals(comboBoxObject.getId())) {
 				super.setSelectedItem(comboBoxObject);
 				return;
 			}

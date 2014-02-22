@@ -73,7 +73,7 @@ public class SupplierFacade {
 		return supplier;
 	}
 
-	public Supplier getDetail(int id, Session session) {
+	public Supplier getDetail(Integer id, Session session) {
 		Supplier supplier = (Supplier) session.get(Supplier.class, id);
 		return supplier;
 	}
@@ -110,9 +110,9 @@ public class SupplierFacade {
 		criteria.add(Restrictions.eq("deleted", false));
 
 		@SuppressWarnings("unchecked")
-		List<Supplier> supplier = criteria.list();
+		List<Supplier> suppliers = criteria.list();
 
-		return supplier;
+		return suppliers;
 	}
 
 	public Supplier updateExistingSupplier(Integer id, String address1,

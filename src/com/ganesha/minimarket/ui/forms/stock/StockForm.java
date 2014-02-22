@@ -86,8 +86,6 @@ public class StockForm extends XJDialog {
 				}
 			}
 		});
-		setTitle("Form Barang");
-		setPermissionCode(PermissionConstants.STOCK_FORM);
 		getContentPane().setLayout(
 				new MigLayout("", "[400,grow][400]",
 						"[grow][grow][grow][10][grow]"));

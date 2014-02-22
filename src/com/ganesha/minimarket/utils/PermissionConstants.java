@@ -35,6 +35,16 @@ public class PermissionConstants {
 	public static final String DISCOUNT_LIST = "DiscountList";
 	public static final String DISCOUNT_FORM = "DiscountForm";
 
+	// Master Date - Circle
+	public static final String MN_MASTER_CIRCLE = "/master/circle";
+	public static final String CIRCLE_LIST = "CircleList";
+	public static final String CIRCLE_FORM = "CircleForm";
+
+	// Master Date - Expense
+	public static final String MN_MASTER_EXPENSE = "/master/expense";
+	public static final String EXPENSE_LIST = "ExpenseList";
+	public static final String EXPENSE_FORM = "ExpenseForm";
+
 	// Transaction - Pembelian
 	public static final String MN_TRX_PUR = "/transaction/purchase";
 	public static final String PUR_FORM = "PembelianForm";

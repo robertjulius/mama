@@ -73,6 +73,22 @@ public class PermissionConsistencyChecker {
 		permissions.add(createPermission(PermissionConstants.DISCOUNT_FORM,
 				"Discount Form", 342));
 
+		// Master Date - Circle
+		permissions.add(createPermission(PermissionConstants.MN_MASTER_CIRCLE,
+				"/Master Data/Circle", 350));
+		permissions.add(createPermission(PermissionConstants.CIRCLE_LIST,
+				"Circle List", 351));
+		permissions.add(createPermission(PermissionConstants.CIRCLE_FORM,
+				"Circle Form", 352));
+
+		// Master Date - Expense
+		permissions.add(createPermission(PermissionConstants.MN_MASTER_EXPENSE,
+				"/Master Data/Expense", 360));
+		permissions.add(createPermission(PermissionConstants.EXPENSE_LIST,
+				"Expense List", 361));
+		permissions.add(createPermission(PermissionConstants.EXPENSE_FORM,
+				"Expense Form", 362));
+
 		// Transaction - Pembelian
 		permissions.add(createPermission(PermissionConstants.MN_TRX_PUR,
 				"/Transaksi/Pembelian", 410));

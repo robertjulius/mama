@@ -24,8 +24,10 @@ import com.ganesha.desktop.component.XJMenuItem;
 import com.ganesha.desktop.component.XJPanel;
 import com.ganesha.desktop.exeptions.ExceptionHandler;
 import com.ganesha.minimarket.Main;
+import com.ganesha.minimarket.ui.forms.circle.CircleListDialog;
 import com.ganesha.minimarket.ui.forms.customer.CustomerListDialog;
 import com.ganesha.minimarket.ui.forms.discount.DiscountListDialog;
+import com.ganesha.minimarket.ui.forms.expense.ExpenseListDialog;
 import com.ganesha.minimarket.ui.forms.payable.PayableListDialog;
 import com.ganesha.minimarket.ui.forms.purchase.PembelianForm;
 import com.ganesha.minimarket.ui.forms.receivable.ReceivableListDialog;
@@ -172,6 +174,34 @@ public class MainFrame extends XJFrame {
 			}
 		});
 		mnMasterData.add(mntmDiskon);
+
+		XJMenuItem mntmSiklus = new XJMenuItem("Siklus",
+				PermissionConstants.MN_MASTER_CIRCLE);
+		mntmSiklus.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				try {
+					new CircleListDialog(MainFrame.this).setVisible(true);
+				} catch (Exception ex) {
+					ExceptionHandler.handleException(MainFrame.this, ex);
+				}
+			}
+		});
+		mnMasterData.add(mntmSiklus);
+
+		XJMenuItem mntmBeban = new XJMenuItem("Beban",
+				PermissionConstants.MN_MASTER_EXPENSE);
+		mntmBeban.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				try {
+					new ExpenseListDialog(MainFrame.this).setVisible(true);
+				} catch (Exception ex) {
+					ExceptionHandler.handleException(MainFrame.this, ex);
+				}
+			}
+		});
+		mnMasterData.add(mntmBeban);
 
 		XJMenu mnTransaksi = new XJMenu("Transaksi");
 		menuBar.add(mnTransaksi);

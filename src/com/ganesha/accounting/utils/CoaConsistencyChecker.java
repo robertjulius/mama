@@ -5,10 +5,10 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import org.hibernate.Query;
 import org.hibernate.Session;
 
 import com.ganesha.accounting.constants.CoaCodeConstants;
+import com.ganesha.accounting.facade.CoaFacade;
 import com.ganesha.accounting.model.Coa;
 import com.ganesha.core.exception.AppException;
 import com.ganesha.hibernate.HibernateUtils;
@@ -65,12 +65,7 @@ public class CoaConsistencyChecker {
 	private void loadListFromDB() {
 		Session session = HibernateUtils.openSession();
 		try {
-			Query query = session.createQuery("from Coa");
-
-			@SuppressWarnings("unchecked")
-			List<Coa> coaList = query.list();
-
-			coaListFromDB = coaList;
+			coaListFromDB = CoaFacade.getInstance().getAll(session);
 		} finally {
 			session.close();
 		}

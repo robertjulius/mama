@@ -2,11 +2,14 @@ package com.ganesha.core.utils;
 
 import java.text.DecimalFormat;
 import java.text.NumberFormat;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.swing.JFormattedTextField.AbstractFormatterFactory;
 import javax.swing.text.DefaultFormatterFactory;
 import javax.swing.text.NumberFormatter;
 
+import com.ganesha.accounting.constants.Enums.CircleUnit;
 import com.ganesha.desktop.component.ComboBoxObject;
 import com.ganesha.minimarket.constants.Enums.TransactionType;
 
@@ -39,15 +42,25 @@ public class GeneralConstants {
 
 	public static final ComboBoxObject[] CMB_BOX_TRX_TYPES;
 	static {
-		CMB_BOX_TRX_TYPES = new ComboBoxObject[4];
-		CMB_BOX_TRX_TYPES[0] = new ComboBoxObject(TransactionType.PURCHASE,
-				"Pembelian");
-		CMB_BOX_TRX_TYPES[1] = new ComboBoxObject(
-				TransactionType.PURCHASE_RETURN, "Retur Pembelian");
-		CMB_BOX_TRX_TYPES[2] = new ComboBoxObject(TransactionType.SALES,
-				"Penjualan");
-		CMB_BOX_TRX_TYPES[3] = new ComboBoxObject(TransactionType.SALES_RETURN,
-				"Retur Penjualan");
+		List<ComboBoxObject> cmbBoxes = new ArrayList<>();
+		cmbBoxes.add(new ComboBoxObject(TransactionType.PURCHASE, "Pembelian"));
+		cmbBoxes.add(new ComboBoxObject(TransactionType.PURCHASE_RETURN,
+				"Retur Pembelian"));
+		cmbBoxes.add(new ComboBoxObject(TransactionType.SALES, "Penjualan"));
+		cmbBoxes.add(new ComboBoxObject(TransactionType.SALES_RETURN,
+				"Retur Penjualan"));
+		CMB_BOX_TRX_TYPES = new ComboBoxObject[cmbBoxes.size()];
+	}
+
+	public static final ComboBoxObject[] CMB_BOX_CIRCLE_UNITS;
+	static {
+		List<ComboBoxObject> cmbBoxes = new ArrayList<>();
+		cmbBoxes.add(new ComboBoxObject(CircleUnit.HOUR, "Jam"));
+		cmbBoxes.add(new ComboBoxObject(CircleUnit.DAY, "Harian"));
+		cmbBoxes.add(new ComboBoxObject(CircleUnit.WEEK, "Mingguan"));
+		cmbBoxes.add(new ComboBoxObject(CircleUnit.MONTH, "Bulanan"));
+		cmbBoxes.add(new ComboBoxObject(CircleUnit.YEAR, "Tahunan"));
+		CMB_BOX_CIRCLE_UNITS = new ComboBoxObject[cmbBoxes.size()];
 	}
 
 	public static final AbstractFormatterFactory FORMATTER_FACTORY_NUMBER;

@@ -30,7 +30,6 @@ import javax.swing.JTextArea;
 import net.miginfocom.swing.MigLayout;
 
 import com.ganesha.core.SystemSetting;
-import com.ganesha.desktop.exeptions.ExceptionHandler;
 import com.ganesha.core.exception.AppException;
 import com.ganesha.core.exception.UserException;
 import com.ganesha.core.utils.CommonUtils;
@@ -43,6 +42,7 @@ import com.ganesha.desktop.component.XJComboBox;
 import com.ganesha.desktop.component.XJDialog;
 import com.ganesha.desktop.component.XJLabel;
 import com.ganesha.desktop.component.XJPanel;
+import com.ganesha.desktop.exeptions.ExceptionHandler;
 import com.ganesha.minimarket.Main;
 import com.ganesha.minimarket.utils.PermissionConstants;
 import com.ganesha.minimarket.utils.ReceiptPrinter;
@@ -143,9 +143,7 @@ public class PrinterSettingForm extends XJDialog {
 	public void initForm() throws AppException {
 		String selectedItem = (String) SystemSetting
 				.get(GeneralConstants.SYSTEM_SETTING_PRINTER_RECEIPT);
-		ComboBoxObject comboBoxObject = new ComboBoxObject(selectedItem,
-				selectedItem);
-		cmbReceiptPrinter.setSelectedItem(comboBoxObject);
+		cmbReceiptPrinter.setSelectedItem(selectedItem);
 
 		initReceiptText();
 	}

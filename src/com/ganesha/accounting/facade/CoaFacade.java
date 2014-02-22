@@ -1,8 +1,9 @@
 package com.ganesha.accounting.facade;
 
-import org.hibernate.Criteria;
+import java.util.List;
+
+import org.hibernate.Query;
 import org.hibernate.Session;
-import org.hibernate.criterion.Restrictions;
 
 import com.ganesha.accounting.model.Coa;
 
@@ -20,11 +21,17 @@ public class CoaFacade {
 	private CoaFacade() {
 	}
 
-	public Coa getDetail(int id, Session session) {
-		Criteria criteria = session.createCriteria(Coa.class);
-		criteria.add(Restrictions.eq("id", id));
+	public List<Coa> getAll(Session session) {
+		Query query = session.createQuery("from Coa");
 
-		Coa coa = (Coa) criteria.uniqueResult();
+		@SuppressWarnings("unchecked")
+		List<Coa> coaList = query.list();
+
+		return coaList;
+	}
+
+	public Coa getDetail(Integer id, Session session) {
+		Coa coa = (Coa) session.get(Coa.class, id);
 		return coa;
 	}
 }
