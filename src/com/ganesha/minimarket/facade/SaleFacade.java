@@ -278,7 +278,6 @@ public class SaleFacade implements TransactionFacade {
 				void allDone() {
 					synchronized (PrintJobWatcher.this) {
 						done = true;
-						System.out.println("Printing done ...");
 						PrintJobWatcher.this.notify();
 					}
 				}

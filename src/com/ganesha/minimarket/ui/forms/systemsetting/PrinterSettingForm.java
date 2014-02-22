@@ -293,7 +293,6 @@ public class PrinterSettingForm extends XJDialog {
 				void allDone() {
 					synchronized (PrintJobWatcher.this) {
 						done = true;
-						System.out.println("Printing done ...");
 						PrintJobWatcher.this.notify();
 					}
 				}

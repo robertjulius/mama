@@ -215,27 +215,6 @@ public class ItemFacade {
 		return item;
 	}
 
-	// private void reAdjustStockIncrease(Item item, int greaterStock,
-	// Session session) {
-	// int totalStock = calculateStock(item);
-	// int excess = greaterStock - totalStock;
-	// List<ItemStock> itemStocks = item.getItemStocks();
-	// for (int i = itemStocks.size() - 1; i >= 0 && excess > 0; --i) {
-	// ItemStock itemStock = itemStocks.get(i);
-	// int maxStock = itemStock.getPurchaseDetail().getQuantity();
-	// int stock = itemStock.getQuantity();
-	// int tempTotalStock = excess + stock;
-	// if (tempTotalStock < maxStock) {
-	// excess = 0;
-	// } else {
-	// excess = tempTotalStock - maxStock;
-	// }
-	// int newStock = tempTotalStock - excess;
-	// itemStock.setQuantity(newStock);
-	// session.saveOrUpdate(itemStock);
-	// }
-	// }
-
 	private void reAdjustStockIncrease(Item item, int greaterStock,
 			Session session) {
 		int totalStock = calculateStock(item);
