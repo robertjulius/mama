@@ -57,3 +57,5 @@ payables
 purchases
 sales
 
+Popup untuk edit value di dalam table
+Calculator untuk hitung harga satuan
