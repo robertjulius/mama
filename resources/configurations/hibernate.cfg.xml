@@ -24,6 +24,8 @@
 		<mapping class="com.ganesha.accounting.model.CoaContribution" />
 		<mapping class="com.ganesha.accounting.model.CoaGroup" />
 		<mapping class="com.ganesha.accounting.model.Account" />
+		<mapping class="com.ganesha.accounting.model.Circle" />
+		<mapping class="com.ganesha.accounting.model.Expense" />
 		<mapping class="com.ganesha.minimarket.model.Company" />
 		<mapping class="com.ganesha.minimarket.model.Item" />
 		<mapping class="com.ganesha.minimarket.model.ItemGroup" />

@@ -5,6 +5,8 @@ import org.hibernate.Session;
 import org.hibernate.criterion.Restrictions;
 
 import com.ganesha.core.utils.GeneralConstants;
+import com.ganesha.desktop.component.ComboBoxObject;
+import com.ganesha.desktop.component.XJComboBox;
 import com.ganesha.hibernate.HibernateUtils;
 import com.ganesha.minimarket.model.Tax;
 
@@ -20,6 +22,16 @@ public class GlobalFacade {
 	}
 
 	private GlobalFacade() {
+	}
+
+	public Object getComboBoxSelectedItem(XJComboBox comboBox) {
+		ComboBoxObject comboBoxObject = (ComboBoxObject) comboBox
+				.getSelectedItem();
+		Object id = null;
+		if (comboBoxObject != null) {
+			id = comboBoxObject.getId();
+		}
+		return id;
 	}
 
 	public double getTaxPercent() {

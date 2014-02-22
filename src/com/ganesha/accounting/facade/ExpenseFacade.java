@@ -1,4 +1,4 @@
-package com.ganesha.minimarket.facade;
+package com.ganesha.accounting.facade;
 
 import java.util.List;
 
@@ -6,13 +6,13 @@ import org.hibernate.Criteria;
 import org.hibernate.Session;
 import org.hibernate.criterion.Restrictions;
 
+import com.ganesha.accounting.model.Circle;
 import com.ganesha.accounting.model.Coa;
+import com.ganesha.accounting.model.Expense;
 import com.ganesha.core.exception.UserException;
 import com.ganesha.core.utils.CommonUtils;
 import com.ganesha.core.utils.DBUtils;
 import com.ganesha.minimarket.Main;
-import com.ganesha.minimarket.model.Circle;
-import com.ganesha.minimarket.model.Expense;
 
 public class ExpenseFacade {
 
@@ -56,21 +56,23 @@ public class ExpenseFacade {
 		return expense;
 	}
 
-	public List<Expense> search(String name, Integer coaId, Integer circleId,
+	public List<Expense> search(String name, Coa coa, Circle circle,
 			boolean disabled, Session session) {
 		Criteria criteria = session.createCriteria(Expense.class);
+		criteria.createAlias("coa", "coa");
+		criteria.createAlias("circle", "circle");
 
 		if (name != null && !name.trim().isEmpty()) {
 			criteria.add(Restrictions.like("name", "%" + name + "%")
 					.ignoreCase());
 		}
 
-		if (coaId != null) {
-			criteria.add(Restrictions.eq("coaId", coaId));
+		if (coa != null && coa.getId() != null) {
+			criteria.add(Restrictions.eq("coa.id", coa.getId()));
 		}
 
-		if (circleId != null) {
-			criteria.add(Restrictions.eq("circleId", circleId));
+		if (circle != null && circle.getId() != null) {
+			criteria.add(Restrictions.eq("circle.id", circle.getId()));
 		}
 
 		criteria.add(Restrictions.eq("disabled", disabled));

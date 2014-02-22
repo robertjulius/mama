@@ -1,21 +1,21 @@
-package com.ganesha.minimarket.model;
+package com.ganesha.accounting.model;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
-import com.ganesha.accounting.model.Coa;
+import com.ganesha.accounting.constants.Enums.CircleUnit;
 import com.ganesha.model.Inactivable;
 import com.ganesha.model.LogableEntity;
 
 @Entity
-@Table(name = "EXPENSES")
-public class Expense extends Inactivable implements LogableEntity {
+@Table(name = "CIRCLES")
+public class Circle extends Inactivable implements LogableEntity {
 	private static final long serialVersionUID = -7780389008755790841L;
 
 	@Id
@@ -26,20 +26,15 @@ public class Expense extends Inactivable implements LogableEntity {
 	@Column(name = "NAME", nullable = false, unique = true)
 	private String name;
 
-	@ManyToOne
-	@JoinColumn(name = "COA_ID", nullable = false)
-	private Coa coa;
+	@Enumerated(EnumType.STRING)
+	@Column(name = "UNIT")
+	private CircleUnit unit;
 
-	@ManyToOne
-	@JoinColumn(name = "CIRCLE_ID", nullable = false)
-	private Circle circle;
+	@Column(name = "DURATION")
+	private Integer duration;
 
-	public Circle getCircle() {
-		return circle;
-	}
-
-	public Coa getCoa() {
-		return coa;
+	public Integer getDuration() {
+		return duration;
 	}
 
 	@Override
@@ -51,12 +46,12 @@ public class Expense extends Inactivable implements LogableEntity {
 		return name;
 	}
 
-	public void setCircle(Circle circle) {
-		this.circle = circle;
+	public CircleUnit getUnit() {
+		return unit;
 	}
 
-	public void setCoa(Coa coa) {
-		this.coa = coa;
+	public void setDuration(Integer duration) {
+		this.duration = duration;
 	}
 
 	public void setId(Integer id) {
@@ -66,4 +61,9 @@ public class Expense extends Inactivable implements LogableEntity {
 	public void setName(String name) {
 		this.name = name;
 	}
+
+	public void setUnit(CircleUnit unit) {
+		this.unit = unit;
+	}
+
 }

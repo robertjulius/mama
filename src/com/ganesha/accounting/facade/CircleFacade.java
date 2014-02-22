@@ -7,11 +7,11 @@ import org.hibernate.Session;
 import org.hibernate.criterion.Restrictions;
 
 import com.ganesha.accounting.constants.Enums.CircleUnit;
+import com.ganesha.accounting.model.Circle;
 import com.ganesha.core.exception.UserException;
 import com.ganesha.core.utils.CommonUtils;
 import com.ganesha.core.utils.DBUtils;
 import com.ganesha.minimarket.Main;
-import com.ganesha.minimarket.model.Circle;
 
 public class CircleFacade {
 

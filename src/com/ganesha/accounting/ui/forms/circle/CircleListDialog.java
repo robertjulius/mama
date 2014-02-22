@@ -1,4 +1,4 @@
-package com.ganesha.minimarket.ui.forms.circle;
+package com.ganesha.accounting.ui.forms.circle;
 
 import java.awt.Window;
 import java.awt.event.ActionEvent;
@@ -20,10 +20,10 @@ import org.hibernate.Session;
 
 import com.ganesha.accounting.constants.Enums.CircleUnit;
 import com.ganesha.accounting.facade.CircleFacade;
+import com.ganesha.accounting.model.Circle;
 import com.ganesha.core.exception.AppException;
 import com.ganesha.core.utils.GeneralConstants;
 import com.ganesha.coreapps.constants.Enums.ActionType;
-import com.ganesha.desktop.component.ComboBoxObject;
 import com.ganesha.desktop.component.XJButton;
 import com.ganesha.desktop.component.XJComboBox;
 import com.ganesha.desktop.component.XJLabel;
@@ -38,7 +38,7 @@ import com.ganesha.desktop.component.xtableutils.XTableParameter;
 import com.ganesha.desktop.component.xtableutils.XTableUtils;
 import com.ganesha.desktop.exeptions.ExceptionHandler;
 import com.ganesha.hibernate.HibernateUtils;
-import com.ganesha.minimarket.model.Circle;
+import com.ganesha.minimarket.facade.GlobalFacade;
 import com.ganesha.minimarket.utils.PermissionConstants;
 
 public class CircleListDialog extends XJTableDialog {
@@ -80,7 +80,7 @@ public class CircleListDialog extends XJTableDialog {
 		setTitle("Master Circle");
 		setPermissionCode(PermissionConstants.SUPPLIER_LIST);
 		getContentPane().setLayout(
-				new MigLayout("", "[1000,grow]", "[][300,grow][]"));
+				new MigLayout("", "[600,grow]", "[][300,grow][]"));
 
 		table = new XJTable() {
 			private static final long serialVersionUID = 1L;
@@ -140,7 +140,7 @@ public class CircleListDialog extends XJTableDialog {
 		pnlRadioButton.setLayout(new MigLayout("", "[]", "[][]"));
 
 		rdCircleAktif = new XJRadioButton();
-		rdCircleAktif.setText("Circle Aktif");
+		rdCircleAktif.setText("Siklus Aktif");
 		pnlRadioButton.add(rdCircleAktif, "cell 0 0");
 		rdCircleAktif.setSelected(true);
 		btnGroup.add(rdCircleAktif);
@@ -156,7 +156,7 @@ public class CircleListDialog extends XJTableDialog {
 				}
 			}
 		});
-		rdCircleTidakAktif.setText("Circle Tidak Aktif");
+		rdCircleTidakAktif.setText("Siklus Tidak Aktif");
 		pnlRadioButton.add(rdCircleTidakAktif, "cell 0 1");
 		btnGroup.add(rdCircleTidakAktif);
 
@@ -201,7 +201,7 @@ public class CircleListDialog extends XJTableDialog {
 		panel.add(btnKeluar, "cell 0 0");
 		panel.add(btnTambah, "cell 1 0");
 		btnTambah
-				.setText("<html><center>Tambah Circle Baru<br/>[F5]</center><html>");
+				.setText("<html><center>Tambah Siklus Baru<br/>[F5]</center><html>");
 
 		btnDetail = new XJButton();
 		btnDetail.addActionListener(new ActionListener() {
@@ -225,8 +225,8 @@ public class CircleListDialog extends XJTableDialog {
 		Session session = HibernateUtils.openSession();
 		try {
 			String name = txtName.getText();
-			CircleUnit unit = (CircleUnit) ((ComboBoxObject) cmbUnit
-					.getSelectedItem()).getId();
+			CircleUnit unit = (CircleUnit) GlobalFacade.getInstance()
+					.getComboBoxSelectedItem(cmbUnit);
 			boolean disabled = rdCircleTidakAktif.isSelected();
 
 			CircleFacade facade = CircleFacade.getInstance();

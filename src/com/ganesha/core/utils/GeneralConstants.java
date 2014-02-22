@@ -49,18 +49,24 @@ public class GeneralConstants {
 		cmbBoxes.add(new ComboBoxObject(TransactionType.SALES, "Penjualan"));
 		cmbBoxes.add(new ComboBoxObject(TransactionType.SALES_RETURN,
 				"Retur Penjualan"));
+
 		CMB_BOX_TRX_TYPES = new ComboBoxObject[cmbBoxes.size()];
+		cmbBoxes.toArray(CMB_BOX_TRX_TYPES);
 	}
 
 	public static final ComboBoxObject[] CMB_BOX_CIRCLE_UNITS;
 	static {
 		List<ComboBoxObject> cmbBoxes = new ArrayList<>();
+		cmbBoxes.add(new ComboBoxObject(null, null));
+		cmbBoxes.add(new ComboBoxObject(CircleUnit.NONE, "<Tidak ada siklus>"));
 		cmbBoxes.add(new ComboBoxObject(CircleUnit.HOUR, "Jam"));
-		cmbBoxes.add(new ComboBoxObject(CircleUnit.DAY, "Harian"));
-		cmbBoxes.add(new ComboBoxObject(CircleUnit.WEEK, "Mingguan"));
-		cmbBoxes.add(new ComboBoxObject(CircleUnit.MONTH, "Bulanan"));
-		cmbBoxes.add(new ComboBoxObject(CircleUnit.YEAR, "Tahunan"));
+		cmbBoxes.add(new ComboBoxObject(CircleUnit.DAY, "Hari"));
+		cmbBoxes.add(new ComboBoxObject(CircleUnit.WEEK, "Minggu"));
+		cmbBoxes.add(new ComboBoxObject(CircleUnit.MONTH, "Bulan"));
+		cmbBoxes.add(new ComboBoxObject(CircleUnit.YEAR, "Tahun"));
+
 		CMB_BOX_CIRCLE_UNITS = new ComboBoxObject[cmbBoxes.size()];
+		cmbBoxes.toArray(CMB_BOX_CIRCLE_UNITS);
 	}
 
 	public static final AbstractFormatterFactory FORMATTER_FACTORY_NUMBER;

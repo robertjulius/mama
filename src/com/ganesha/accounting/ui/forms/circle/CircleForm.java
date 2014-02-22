@@ -1,4 +1,4 @@
-package com.ganesha.minimarket.ui.forms.circle;
+package com.ganesha.accounting.ui.forms.circle;
 
 import java.awt.Font;
 import java.awt.Window;
@@ -16,6 +16,7 @@ import org.hibernate.Session;
 
 import com.ganesha.accounting.constants.Enums.CircleUnit;
 import com.ganesha.accounting.facade.CircleFacade;
+import com.ganesha.accounting.model.Circle;
 import com.ganesha.core.exception.UserException;
 import com.ganesha.core.utils.Formatter;
 import com.ganesha.core.utils.GeneralConstants;
@@ -34,7 +35,6 @@ import com.ganesha.desktop.component.XJTextField;
 import com.ganesha.desktop.exeptions.ExceptionHandler;
 import com.ganesha.hibernate.HibernateUtils;
 import com.ganesha.minimarket.Main;
-import com.ganesha.minimarket.model.Circle;
 import com.ganesha.minimarket.utils.PermissionConstants;
 
 public class CircleForm extends XJDialog {
@@ -108,7 +108,7 @@ public class CircleForm extends XJDialog {
 
 		chkDisabled = new XJCheckBox();
 		chkDisabled.setFont(new Font("Tahoma", Font.BOLD, FONT_SIZE_SMALLEST));
-		chkDisabled.setText("Circle ini sudah tidak aktif lagi");
+		chkDisabled.setText("Siklus ini sudah tidak aktif lagi");
 		pnlDisable.add(chkDisabled, "cell 0 0");
 
 		separator = new JSeparator();

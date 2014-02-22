@@ -65,7 +65,8 @@ public class CoaConsistencyChecker {
 	private void loadListFromDB() {
 		Session session = HibernateUtils.openSession();
 		try {
-			coaListFromDB = CoaFacade.getInstance().getAll(session);
+			coaListFromDB = CoaFacade.getInstance().search(null, null, false,
+					session);
 		} finally {
 			session.close();
 		}

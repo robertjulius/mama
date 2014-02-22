@@ -13,6 +13,8 @@ import javax.swing.JSeparator;
 
 import net.miginfocom.swing.MigLayout;
 
+import com.ganesha.accounting.ui.forms.circle.CircleListDialog;
+import com.ganesha.accounting.ui.forms.expense.ExpenseListDialog;
 import com.ganesha.core.utils.CommonUtils;
 import com.ganesha.core.utils.Formatter;
 import com.ganesha.core.utils.GeneralConstants;
@@ -24,10 +26,8 @@ import com.ganesha.desktop.component.XJMenuItem;
 import com.ganesha.desktop.component.XJPanel;
 import com.ganesha.desktop.exeptions.ExceptionHandler;
 import com.ganesha.minimarket.Main;
-import com.ganesha.minimarket.ui.forms.circle.CircleListDialog;
 import com.ganesha.minimarket.ui.forms.customer.CustomerListDialog;
 import com.ganesha.minimarket.ui.forms.discount.DiscountListDialog;
-import com.ganesha.minimarket.ui.forms.expense.ExpenseListDialog;
 import com.ganesha.minimarket.ui.forms.payable.PayableListDialog;
 import com.ganesha.minimarket.ui.forms.purchase.PembelianForm;
 import com.ganesha.minimarket.ui.forms.receivable.ReceivableListDialog;
@@ -119,20 +119,6 @@ public class MainFrame extends XJFrame {
 		XJMenu mnMasterData = new XJMenu("Master Data");
 		menuBar.add(mnMasterData);
 
-		XJMenuItem mntmPersediaan = new XJMenuItem("Persediaan Barang",
-				PermissionConstants.MN_MASTER_STOCK);
-		mntmPersediaan.addActionListener(new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				try {
-					new StockListDialog(MainFrame.this).setVisible(true);
-				} catch (Exception ex) {
-					ExceptionHandler.handleException(MainFrame.this, ex);
-				}
-			}
-		});
-		mnMasterData.add(mntmPersediaan);
-
 		XJMenuItem mntmSupplier = new XJMenuItem("Supplier",
 				PermissionConstants.MN_MASTER_SUPPLIER);
 		mntmSupplier.addActionListener(new ActionListener() {
@@ -161,6 +147,23 @@ public class MainFrame extends XJFrame {
 		});
 		mnMasterData.add(mntmCustomer);
 
+		XJMenuItem mntmPersediaan = new XJMenuItem("Persediaan Barang",
+				PermissionConstants.MN_MASTER_STOCK);
+		mntmPersediaan.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				try {
+					new StockListDialog(MainFrame.this).setVisible(true);
+				} catch (Exception ex) {
+					ExceptionHandler.handleException(MainFrame.this, ex);
+				}
+			}
+		});
+
+		JSeparator separator_2 = new JSeparator();
+		mnMasterData.add(separator_2);
+		mnMasterData.add(mntmPersediaan);
+
 		XJMenuItem mntmDiskon = new XJMenuItem("Diskon",
 				PermissionConstants.MN_MASTER_DISCOUNT);
 		mntmDiskon.addActionListener(new ActionListener() {
@@ -187,6 +190,9 @@ public class MainFrame extends XJFrame {
 				}
 			}
 		});
+
+		JSeparator separator_3 = new JSeparator();
+		mnMasterData.add(separator_3);
 		mnMasterData.add(mntmSiklus);
 
 		XJMenuItem mntmBeban = new XJMenuItem("Beban",

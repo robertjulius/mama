@@ -1,4 +1,4 @@
-package com.ganesha.minimarket.ui.forms.expense;
+package com.ganesha.accounting.ui.forms.expense;
 
 import java.awt.Window;
 import java.awt.event.ActionEvent;
@@ -7,6 +7,7 @@ import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -19,9 +20,13 @@ import net.miginfocom.swing.MigLayout;
 
 import org.hibernate.Session;
 
+import com.ganesha.accounting.constants.CoaGroupCodeConstants;
 import com.ganesha.accounting.facade.CircleFacade;
 import com.ganesha.accounting.facade.CoaFacade;
+import com.ganesha.accounting.facade.ExpenseFacade;
+import com.ganesha.accounting.model.Circle;
 import com.ganesha.accounting.model.Coa;
+import com.ganesha.accounting.model.Expense;
 import com.ganesha.core.exception.AppException;
 import com.ganesha.coreapps.constants.Enums.ActionType;
 import com.ganesha.desktop.component.ComboBoxObject;
@@ -39,9 +44,7 @@ import com.ganesha.desktop.component.xtableutils.XTableParameter;
 import com.ganesha.desktop.component.xtableutils.XTableUtils;
 import com.ganesha.desktop.exeptions.ExceptionHandler;
 import com.ganesha.hibernate.HibernateUtils;
-import com.ganesha.minimarket.facade.ExpenseFacade;
-import com.ganesha.minimarket.model.Circle;
-import com.ganesha.minimarket.model.Expense;
+import com.ganesha.minimarket.facade.GlobalFacade;
 import com.ganesha.minimarket.utils.PermissionConstants;
 
 public class ExpenseListDialog extends XJTableDialog {
@@ -61,6 +64,39 @@ public class ExpenseListDialog extends XJTableDialog {
 	private XJRadioButton rdExpenseAktif;
 	private XJRadioButton rdExpenseTidakAktif;
 	private final Map<ColumnEnum, XTableParameter> tableParameters = new HashMap<>();
+
+	protected static void initComboBox(XJComboBox cmbCoa, XJComboBox cmbCircle) {
+		Session session = HibernateUtils.openSession();
+		try {
+			List<Coa> coaList = CoaFacade.getInstance().search(null,
+					CoaGroupCodeConstants.BEBAN, false, session);
+			{
+				List<ComboBoxObject> comboBoxObjects = new ArrayList<>();
+				for (Coa coa : coaList) {
+					comboBoxObjects.add(new ComboBoxObject(coa, coa.getName()));
+				}
+				comboBoxObjects.add(0, new ComboBoxObject(null, null));
+				cmbCoa.setModel(new DefaultComboBoxModel<ComboBoxObject>(
+						comboBoxObjects.toArray(new ComboBoxObject[0])));
+			}
+
+			List<Circle> circles = CircleFacade.getInstance().search(null,
+					null, false, session);
+			{
+				List<ComboBoxObject> comboBoxObjects = new ArrayList<>();
+				for (Circle circle : circles) {
+					comboBoxObjects.add(new ComboBoxObject(circle, circle
+							.getName()));
+				}
+				comboBoxObjects.add(0, new ComboBoxObject(null, null));
+				cmbCircle.setModel(new DefaultComboBoxModel<ComboBoxObject>(
+						comboBoxObjects.toArray(new ComboBoxObject[0])));
+			}
+		} finally {
+			session.close();
+		}
+	}
+
 	{
 		tableParameters.put(ColumnEnum.NAME, new XTableParameter(0, 50, false,
 				"Nama Expense", false, XTableConstants.CELL_RENDERER_LEFT,
@@ -227,7 +263,7 @@ public class ExpenseListDialog extends XJTableDialog {
 		panel.add(btnKeluar, "cell 0 0");
 		panel.add(btnTambah, "cell 1 0");
 		btnTambah
-				.setText("<html><center>Tambah Expense Baru<br/>[F5]</center><html>");
+				.setText("<html><center>Tambah Beban Baru<br/>[F5]</center><html>");
 
 		btnDetail = new XJButton();
 		btnDetail.addActionListener(new ActionListener() {
@@ -240,9 +276,8 @@ public class ExpenseListDialog extends XJTableDialog {
 				.setText("<html><center>Lihat Detail<br/>[Enter]</center></html>");
 		panel.add(btnDetail, "cell 2 0");
 
+		initComboBox(cmbCoa, cmbCircle);
 		btnRefresh.doClick();
-
-		initComboBox();
 
 		pack();
 		setLocationRelativeTo(null);
@@ -253,15 +288,16 @@ public class ExpenseListDialog extends XJTableDialog {
 		Session session = HibernateUtils.openSession();
 		try {
 			String name = txtName.getText();
-			Coa coa = (Coa) ((ComboBoxObject) cmbCoa.getSelectedItem()).getId();
-			Circle circle = (Circle) ((ComboBoxObject) cmbCircle
-					.getSelectedItem()).getId();
+			Coa coa = (Coa) GlobalFacade.getInstance().getComboBoxSelectedItem(
+					cmbCoa);
+			Circle circle = (Circle) GlobalFacade.getInstance()
+					.getComboBoxSelectedItem(cmbCircle);
 			boolean disabled = rdExpenseTidakAktif.isSelected();
 
 			ExpenseFacade facade = ExpenseFacade.getInstance();
 
-			List<Expense> expenses = facade.search(name, coa.getId(),
-					circle.getId(), disabled, session);
+			List<Expense> expenses = facade.search(name, coa, circle, disabled,
+					session);
 
 			XTableModel tableModel = (XTableModel) table.getModel();
 			tableModel.setRowCount(expenses.size());
@@ -272,11 +308,13 @@ public class ExpenseListDialog extends XJTableDialog {
 				tableModel.setValueAt(expense.getName(), i, tableParameters
 						.get(ColumnEnum.NAME).getColumnIndex());
 
-				tableModel.setValueAt(expense.getCoa(), i,
+				tableModel.setValueAt(expense.getCoa().getName(), i,
 						tableParameters.get(ColumnEnum.COA).getColumnIndex());
 
-				tableModel.setValueAt(expense.getCircle(), i, tableParameters
-						.get(ColumnEnum.CIRCLE).getColumnIndex());
+				tableModel
+						.setValueAt(expense.getCircle().getName(), i,
+								tableParameters.get(ColumnEnum.CIRCLE)
+										.getColumnIndex());
 
 				tableModel.setValueAt(expense.getId(), i,
 						tableParameters.get(ColumnEnum.ID).getColumnIndex());
@@ -294,39 +332,6 @@ public class ExpenseListDialog extends XJTableDialog {
 			break;
 		default:
 			break;
-		}
-	}
-
-	private void initComboBox() {
-		Session session = HibernateUtils.openSession();
-		try {
-			List<Coa> coaList = CoaFacade.getInstance().getAll(session);
-			{
-				ComboBoxObject[] comboBoxObjects = new ComboBoxObject[coaList
-						.size()];
-				for (int i = 0; i < coaList.size(); ++i) {
-					Coa coa = coaList.get(i);
-					comboBoxObjects[i] = new ComboBoxObject(coa, coa.getName());
-				}
-				cmbCoa.setModel(new DefaultComboBoxModel<ComboBoxObject>(
-						comboBoxObjects));
-			}
-
-			List<Circle> circles = CircleFacade.getInstance().search(null,
-					null, false, session);
-			{
-				ComboBoxObject[] comboBoxObjects = new ComboBoxObject[circles
-						.size()];
-				for (int i = 0; i < circles.size(); ++i) {
-					Circle circle = circles.get(i);
-					comboBoxObjects[i] = new ComboBoxObject(circle,
-							circle.getName());
-				}
-				cmbCircle.setModel(new DefaultComboBoxModel<ComboBoxObject>(
-						comboBoxObjects));
-			}
-		} finally {
-			session.close();
 		}
 	}
 

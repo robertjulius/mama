@@ -1,4 +1,4 @@
-package com.ganesha.minimarket.ui.forms.expense;
+package com.ganesha.accounting.ui.forms.expense;
 
 import java.awt.Font;
 import java.awt.Window;
@@ -7,18 +7,17 @@ import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
-import java.util.List;
 
-import javax.swing.DefaultComboBoxModel;
 import javax.swing.JSeparator;
 
 import net.miginfocom.swing.MigLayout;
 
 import org.hibernate.Session;
 
-import com.ganesha.accounting.facade.CircleFacade;
-import com.ganesha.accounting.facade.CoaFacade;
+import com.ganesha.accounting.facade.ExpenseFacade;
+import com.ganesha.accounting.model.Circle;
 import com.ganesha.accounting.model.Coa;
+import com.ganesha.accounting.model.Expense;
 import com.ganesha.core.exception.UserException;
 import com.ganesha.coreapps.constants.Enums.ActionType;
 import com.ganesha.coreapps.exception.ActionTypeNotSupported;
@@ -35,9 +34,6 @@ import com.ganesha.desktop.component.XJTextField;
 import com.ganesha.desktop.exeptions.ExceptionHandler;
 import com.ganesha.hibernate.HibernateUtils;
 import com.ganesha.minimarket.Main;
-import com.ganesha.minimarket.facade.ExpenseFacade;
-import com.ganesha.minimarket.model.Circle;
-import com.ganesha.minimarket.model.Expense;
 import com.ganesha.minimarket.utils.PermissionConstants;
 
 public class ExpenseForm extends XJDialog {
@@ -76,7 +72,7 @@ public class ExpenseForm extends XJDialog {
 			}
 		});
 		getContentPane().setLayout(
-				new MigLayout("", "[400]", "[grow][grow][10][grow]"));
+				new MigLayout("", "[600,grow]", "[grow][grow][10][grow]"));
 
 		XJPanel pnlInput = new XJPanel();
 		pnlInput.setBorder(new XEtchedBorder());
@@ -112,7 +108,7 @@ public class ExpenseForm extends XJDialog {
 
 		chkDisabled = new XJCheckBox();
 		chkDisabled.setFont(new Font("Tahoma", Font.BOLD, FONT_SIZE_SMALLEST));
-		chkDisabled.setText("Expense ini sudah tidak aktif lagi");
+		chkDisabled.setText("Beban ini sudah tidak aktif lagi");
 		pnlDisable.add(chkDisabled, "cell 0 0");
 
 		separator = new JSeparator();
@@ -196,41 +192,8 @@ public class ExpenseForm extends XJDialog {
 		dispose();
 	}
 
-	private void initComboBox() {
-		Session session = HibernateUtils.openSession();
-		try {
-			List<Coa> coaList = CoaFacade.getInstance().getAll(session);
-			{
-				ComboBoxObject[] comboBoxObjects = new ComboBoxObject[coaList
-						.size()];
-				for (int i = 0; i < coaList.size(); ++i) {
-					Coa coa = coaList.get(i);
-					comboBoxObjects[i] = new ComboBoxObject(coa, coa.getName());
-				}
-				cmbCoa.setModel(new DefaultComboBoxModel<ComboBoxObject>(
-						comboBoxObjects));
-			}
-
-			List<Circle> circles = CircleFacade.getInstance().search(null,
-					null, false, session);
-			{
-				ComboBoxObject[] comboBoxObjects = new ComboBoxObject[circles
-						.size()];
-				for (int i = 0; i < circles.size(); ++i) {
-					Circle circle = circles.get(i);
-					comboBoxObjects[i] = new ComboBoxObject(circle,
-							circle.getName());
-				}
-				cmbCircle.setModel(new DefaultComboBoxModel<ComboBoxObject>(
-						comboBoxObjects));
-			}
-		} finally {
-			session.close();
-		}
-	}
-
 	private void initForm() throws ActionTypeNotSupported {
-		initComboBox();
+		ExpenseListDialog.initComboBox(cmbCoa, cmbCircle);
 		if (actionType == ActionType.CREATE) {
 			/*
 			 * Do nothing
