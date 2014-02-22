@@ -118,6 +118,10 @@ public class ReturPembelianForm extends XJDialog {
 				"Total", false, XTableConstants.CELL_RENDERER_RIGHT,
 				Double.class));
 
+		tableParameters.put(ColumnEnum.PURCHASE_DETAIL_ID, new XTableParameter(
+				9, 0, false, "Purchase Detail ID", true,
+				XTableConstants.CELL_RENDERER_LEFT, Integer.class));
+
 	}
 
 	public ReturPembelianForm(Window parent) {
@@ -443,10 +447,11 @@ public class ReturPembelianForm extends XJDialog {
 				"Cari Daftar Transaksi Pembelian", this,
 				PurchaseFacade.getInstance());
 		searchEntityDialog.setVisible(true);
-		String noTransaksi = searchEntityDialog.getSelectedTransactionNumber();
-		Integer orderNumber = searchEntityDialog.getSelectedOrderNumber();
-		if (noTransaksi != null) {
-			tambah(noTransaksi, orderNumber);
+
+		Integer purchaseDetailId = searchEntityDialog
+				.getSelectedTransactionDetailId();
+		if (purchaseDetailId != null) {
+			tambah(purchaseDetailId);
 		}
 	}
 
@@ -529,30 +534,49 @@ public class ReturPembelianForm extends XJDialog {
 			for (int i = 0; i < rowCount; i++) {
 				PurchaseReturnDetail purchaseReturnDetail = new PurchaseReturnDetail();
 
+				Integer purchaseDetailId = Formatter.formatStringToNumber(
+						table.getModel()
+								.getValueAt(
+										i,
+										tableParameters.get(
+												ColumnEnum.PURCHASE_DETAIL_ID)
+												.getColumnIndex()).toString())
+						.intValue();
+
+				PurchaseDetail purchaseDetail = PurchaseFacade.getInstance()
+						.getDetail(purchaseDetailId, session);
+
 				purchaseReturnDetail.setOrderNum(Formatter
 						.formatStringToNumber(
-								table.getModel().getValueAt(
-										i,
-										tableParameters.get(ColumnEnum.NUM)
-												.getColumnIndex()).toString())
-						.intValue());
+								table.getModel()
+										.getValueAt(
+												i,
+												tableParameters.get(
+														ColumnEnum.NUM)
+														.getColumnIndex())
+										.toString()).intValue());
+
+				purchaseReturnDetail.setPurchaseDetail(purchaseDetail);
 
 				purchaseReturnDetail.setQuantity(Formatter
 						.formatStringToNumber(
-								table.getModel().getValueAt(
-										i,
-										tableParameters
-												.get(ColumnEnum.QUANTITY)
-												.getColumnIndex()).toString())
-						.intValue());
+								table.getModel()
+										.getValueAt(
+												i,
+												tableParameters.get(
+														ColumnEnum.QUANTITY)
+														.getColumnIndex())
+										.toString()).intValue());
 
 				purchaseReturnDetail.setTotalAmount(BigDecimal
 						.valueOf(Formatter.formatStringToNumber(
-								table.getModel().getValueAt(
-										i,
-										tableParameters.get(ColumnEnum.TOTAL)
-												.getColumnIndex()).toString())
-								.doubleValue()));
+								table.getModel()
+										.getValueAt(
+												i,
+												tableParameters.get(
+														ColumnEnum.TOTAL)
+														.getColumnIndex())
+										.toString()).doubleValue()));
 
 				purchaseReturnDetails.add(purchaseReturnDetail);
 			}
@@ -596,17 +620,22 @@ public class ReturPembelianForm extends XJDialog {
 		}
 
 		int jumlah = Formatter.formatStringToNumber(
-				table.getModel().getValueAt(
-						row,
-						tableParameters.get(ColumnEnum.QUANTITY)
-								.getColumnIndex()).toString()).intValue();
+				table.getModel()
+						.getValueAt(
+								row,
+								tableParameters.get(ColumnEnum.QUANTITY)
+										.getColumnIndex()).toString())
+				.intValue();
 		table.setValueAt(Formatter.formatNumberToString(jumlah), row,
 				tableParameters.get(ColumnEnum.QUANTITY).getColumnIndex());
 
 		double hargaSatuan = Formatter.formatStringToNumber(
-				table.getModel().getValueAt(row,
-						tableParameters.get(ColumnEnum.PRICE).getColumnIndex())
-						.toString()).doubleValue();
+				table.getModel()
+						.getValueAt(
+								row,
+								tableParameters.get(ColumnEnum.PRICE)
+										.getColumnIndex()).toString())
+				.doubleValue();
 		table.setValueAt(Formatter.formatNumberToString(hargaSatuan), row,
 				tableParameters.get(ColumnEnum.PRICE).getColumnIndex());
 
@@ -621,9 +650,12 @@ public class ReturPembelianForm extends XJDialog {
 		int rowCount = table.getRowCount();
 		double totalRetur = 0;
 		for (int i = 0; i < rowCount; ++i) {
-			String string = table.getModel().getValueAt(i,
-					tableParameters.get(ColumnEnum.TOTAL).getColumnIndex())
-					.toString();
+			String string = table
+					.getModel()
+					.getValueAt(
+							i,
+							tableParameters.get(ColumnEnum.TOTAL)
+									.getColumnIndex()).toString();
 			double totalPerRow = Formatter.formatStringToNumber(string)
 					.doubleValue();
 			totalRetur += totalPerRow;
@@ -668,16 +700,16 @@ public class ReturPembelianForm extends XJDialog {
 		}
 	}
 
-	private void tambah(String transactionNumber, Integer orderNum) {
-		if (transactionNumber.trim().equals("") || orderNum == null) {
+	private void tambah(Integer purchaseDetailId) {
+		if (purchaseDetailId == null) {
 			return;
 		}
 
 		Session session = HibernateUtils.openSession();
 		try {
 			PurchaseFacade facade = PurchaseFacade.getInstance();
-			PurchaseDetail purchaseDetail = facade.getDetail(transactionNumber,
-					orderNum, session);
+			PurchaseDetail purchaseDetail = facade.getDetail(purchaseDetailId,
+					session);
 			PurchaseHeader purchaseHeader = purchaseDetail.getPurchaseHeader();
 
 			XTableModel tableModel = (XTableModel) table.getModel();
@@ -712,6 +744,10 @@ public class ReturPembelianForm extends XJDialog {
 					.getTotalAmount()), rowIndex,
 					tableParameters.get(ColumnEnum.TOTAL).getColumnIndex());
 
+			tableModel.setValueAt(purchaseDetail.getId(), rowIndex,
+					tableParameters.get(ColumnEnum.PURCHASE_DETAIL_ID)
+							.getColumnIndex());
+
 			reorderRowNumber();
 
 			int row = table.getRowCount() - 1;
@@ -727,6 +763,6 @@ public class ReturPembelianForm extends XJDialog {
 	}
 
 	private enum ColumnEnum {
-		NUM, TRANSACTION_NUM, DATE, ITEM_CODE, ITEM_NAME, QUANTITY, UNIT, PRICE, TOTAL
+		NUM, TRANSACTION_NUM, DATE, ITEM_CODE, ITEM_NAME, QUANTITY, UNIT, PRICE, TOTAL, PURCHASE_DETAIL_ID
 	}
 }

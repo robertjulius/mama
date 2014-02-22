@@ -5,7 +5,6 @@ import java.util.List;
 
 import org.hibernate.Criteria;
 import org.hibernate.Session;
-import org.hibernate.criterion.Order;
 import org.hibernate.criterion.Restrictions;
 
 import com.ganesha.core.exception.UserException;
@@ -13,6 +12,7 @@ import com.ganesha.core.utils.CommonUtils;
 import com.ganesha.minimarket.Main;
 import com.ganesha.minimarket.model.Item;
 import com.ganesha.minimarket.model.ItemStock;
+import com.ganesha.minimarket.model.PurchaseDetail;
 
 public class ItemFacade {
 
@@ -28,7 +28,7 @@ public class ItemFacade {
 	private ItemFacade() {
 	}
 
-	public void addNewItem(String code, String name, String barcode,
+	public Item addNewItem(String code, String name, String barcode,
 			String unit, BigDecimal buyPrice, BigDecimal hpp,
 			BigDecimal sellPrice, int minimumStock, boolean disabled,
 			boolean deleted, Session session) throws UserException {
@@ -52,8 +52,28 @@ public class ItemFacade {
 					+ item.getCode() + "] " + item.getName());
 		}
 
-		insertIntoItem(code, name, barcode, unit, buyPrice, hpp, sellPrice,
-				minimumStock, disabled, deleted, session);
+		return insertIntoItem(code, name, barcode, unit, buyPrice, hpp,
+				sellPrice, minimumStock, disabled, deleted, session);
+	}
+
+	public BigDecimal calculateAmount(Item item) {
+		BigDecimal amount = BigDecimal.valueOf(0);
+		List<ItemStock> itemStocks = item.getItemStocks();
+		for (ItemStock itemStock : itemStocks) {
+			amount = amount.add(itemStock.getPurchaseDetail().getPricePerUnit()
+					.multiply(BigDecimal.valueOf(itemStock.getQuantity())));
+		}
+		return amount;
+	}
+
+	public int calculateMaxStock(Item item) {
+		int maxStock = 0;
+		List<ItemStock> itemStocks = item.getItemStocks();
+		for (ItemStock itemStock : itemStocks) {
+			PurchaseDetail purchaseDetail = itemStock.getPurchaseDetail();
+			maxStock += purchaseDetail.getQuantity();
+		}
+		return maxStock;
 	}
 
 	public int calculateStock(Item item) {
@@ -84,19 +104,27 @@ public class ItemFacade {
 			lastBuyPrice = BigDecimal.valueOf(0);
 		} else {
 			int lastIndex = itemStocks.size() - 1;
-			lastBuyPrice = itemStocks.get(lastIndex).getBuyPrice();
+			lastBuyPrice = itemStocks.get(lastIndex).getPurchaseDetail()
+					.getPricePerUnit();
 		}
 		return lastBuyPrice;
 	}
 
-	public void reAdjustStock(Item item, int stock, Session session) {
-		/*
-		 * TODO
-		 */
+	public void reAdjustStock(Item item, int newStock, Session session) {
+		int totalStock = calculateStock(item);
+		if (newStock < totalStock) {
+			reAdjustStockReduce(item, newStock, session);
+		} else if (newStock > totalStock) {
+			reAdjustStockIncrease(item, newStock, session);
+		} else {
+			/*
+			 * Do nothing
+			 */
+		}
 	}
 
 	public List<Item> search(String code, String barcode, String name,
-			boolean disabled, String[] orderBy, Session session) {
+			boolean disabled, Session session) {
 		Criteria criteria = session.createCriteria(Item.class);
 
 		if (code != null && !code.trim().isEmpty()) {
@@ -112,14 +140,6 @@ public class ItemFacade {
 		if (name != null && !name.trim().isEmpty()) {
 			criteria.add(Restrictions.like("name", "%" + name + "%")
 					.ignoreCase());
-		}
-
-		if (orderBy != null) {
-			for (String order : orderBy) {
-				if (order != null && !order.trim().isEmpty()) {
-					criteria.addOrder(Order.asc(order));
-				}
-			}
 		}
 
 		criteria.add(Restrictions.eq("disabled", disabled));
@@ -172,7 +192,7 @@ public class ItemFacade {
 		session.saveOrUpdate(item);
 	}
 
-	private void insertIntoItem(String code, String name, String barcode,
+	private Item insertIntoItem(String code, String name, String barcode,
 			String unit, BigDecimal buyPrice, BigDecimal hpp,
 			BigDecimal sellPrice, int minimumStock, boolean disabled,
 			boolean deleted, Session session) {
@@ -192,5 +212,73 @@ public class ItemFacade {
 		item.setLastUpdatedTimestamp(CommonUtils.getCurrentTimestamp());
 
 		session.saveOrUpdate(item);
+		return item;
+	}
+
+	// private void reAdjustStockIncrease(Item item, int greaterStock,
+	// Session session) {
+	// int totalStock = calculateStock(item);
+	// int excess = greaterStock - totalStock;
+	// List<ItemStock> itemStocks = item.getItemStocks();
+	// for (int i = itemStocks.size() - 1; i >= 0 && excess > 0; --i) {
+	// ItemStock itemStock = itemStocks.get(i);
+	// int maxStock = itemStock.getPurchaseDetail().getQuantity();
+	// int stock = itemStock.getQuantity();
+	// int tempTotalStock = excess + stock;
+	// if (tempTotalStock < maxStock) {
+	// excess = 0;
+	// } else {
+	// excess = tempTotalStock - maxStock;
+	// }
+	// int newStock = tempTotalStock - excess;
+	// itemStock.setQuantity(newStock);
+	// session.saveOrUpdate(itemStock);
+	// }
+	// }
+
+	private void reAdjustStockIncrease(Item item, int greaterStock,
+			Session session) {
+		int totalStock = calculateStock(item);
+		int excess = greaterStock - totalStock;
+		List<ItemStock> itemStocks = item.getItemStocks();
+		for (int i = itemStocks.size() - 1; i >= 0 && excess > 0; --i) {
+			ItemStock itemStock = itemStocks.get(i);
+			int maxStock = itemStock.getPurchaseDetail().getQuantity();
+			int stock = itemStock.getQuantity();
+			int taken;
+			if ((excess + stock) > maxStock) {
+				taken = maxStock - stock;
+			} else {
+				taken = excess;
+			}
+			int remain = excess - taken;
+			int newStock = stock + taken;
+
+			itemStock.setQuantity(newStock);
+			session.saveOrUpdate(itemStock);
+
+			excess = remain;
+		}
+	}
+
+	private void reAdjustStockReduce(Item item, int lesserStock, Session session) {
+		int totalStock = calculateStock(item);
+		int requirement = totalStock - lesserStock;
+		List<ItemStock> itemStocks = item.getItemStocks();
+		for (int i = 0; i < itemStocks.size() && requirement > 0; ++i) {
+			ItemStock itemStock = itemStocks.get(i);
+			int stock = itemStock.getQuantity();
+			int taken;
+			if (requirement > stock) {
+				taken = stock;
+				requirement -= stock;
+			} else {
+				taken = requirement;
+				requirement = 0;
+			}
+			int remain = stock - taken;
+			itemStock.setQuantity(remain);
+			session.saveOrUpdate(itemStock);
+		}
 	}
 }

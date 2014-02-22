@@ -162,7 +162,7 @@ public class PenjualanForm extends XJDialog {
 		pnlHeader.add(lblNoTransaksi, "cell 0 0,alignx trailing");
 
 		txtNoTransaksi = new XJTextField();
-		txtNoTransaksi.setText(GeneralConstants.PREFIX_TRX_NUMBER_PURCHASE
+		txtNoTransaksi.setText(GeneralConstants.PREFIX_TRX_NUMBER_SALES
 				+ CommonUtils.getTimestampInString());
 		txtNoTransaksi.setEditable(false);
 		pnlHeader.add(txtNoTransaksi, "cell 1 0 2 1,growx");
@@ -180,6 +180,7 @@ public class PenjualanForm extends XJDialog {
 		try {
 			defaultCustomer = CustomerFacade.getInstance().getDefaultCustomer(
 					session);
+			customerId = defaultCustomer.getId();
 		} finally {
 			session.close();
 		}
@@ -548,6 +549,14 @@ public class PenjualanForm extends XJDialog {
 												.getColumnIndex()).toString())
 						.intValue());
 
+				saleDetail.setItemId(Formatter.formatStringToNumber(
+						table.getModel()
+								.getValueAt(
+										i,
+										tableParameters.get(ColumnEnum.ID)
+												.getColumnIndex()).toString())
+						.intValue());
+
 				saleDetail.setItemCode(table
 						.getModel()
 						.getValueAt(
@@ -617,11 +626,11 @@ public class PenjualanForm extends XJDialog {
 			facade.cetakReceipt(saleHeader, saleDetails);
 			dispose();
 
-		} catch (AppException e) {
-			session.getTransaction().rollback();
-			throw e;
 		} catch (PrintException e) {
 			throw new AppException(e);
+		} catch (Exception e) {
+			session.getTransaction().rollback();
+			throw e;
 		} finally {
 			session.close();
 		}

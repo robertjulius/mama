@@ -13,13 +13,13 @@
 	<field name="saleReturnHeader.customer.name" class="java.lang.String"/>
 	<field name="saleReturnHeader.transactionNumber" class="java.lang.String"/>
 	<field name="saleReturnHeader.transactionTimestamp" class="java.sql.Timestamp"/>
-	<field name="orderNum" class="java.lang.Integer"/>
-	<field name="itemCode" class="java.lang.String"/>
-	<field name="itemName" class="java.lang.String"/>
+	<field name="saleDetail.orderNum" class="java.lang.Integer"/>
+	<field name="saleDetail.itemCode" class="java.lang.String"/>
+	<field name="saleDetail.itemName" class="java.lang.String"/>
 	<field name="quantity" class="java.lang.Integer"/>
-	<field name="unit" class="java.lang.String"/>
-	<field name="pricePerUnit" class="java.math.BigDecimal"/>
-	<field name="discountPercent" class="java.math.BigDecimal"/>
+	<field name="saleDetail.unit" class="java.lang.String"/>
+	<field name="saleDetail.pricePerUnit" class="java.math.BigDecimal"/>
+	<field name="saleDetail.discountPercent" class="java.math.BigDecimal"/>
 	<field name="totalAmount" class="java.math.BigDecimal"/>
 	<variable name="grandTotalReturPembelian" class="java.lang.Double" calculation="Sum">
 		<variableExpression><![CDATA[$F{totalAmount}]]></variableExpression>
@@ -304,14 +304,14 @@
 				<textElement textAlignment="Center">
 					<font fontName="Tahoma"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$F{itemCode}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{saleDetail.itemCode}]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement x="110" y="0" width="230" height="15" uuid="83ae86d9-c05c-44ff-ab9d-0722b8ff5377"/>
 				<textElement>
 					<font fontName="Tahoma"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$F{itemName}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{saleDetail.itemName}]]></textFieldExpression>
 			</textField>
 			<textField pattern="#,##0">
 				<reportElement x="294" y="0" width="35" height="15" uuid="e976445a-09d5-40db-b667-b6f1a18945c4"/>
@@ -325,14 +325,14 @@
 				<textElement textAlignment="Center">
 					<font fontName="Tahoma"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$F{unit}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{saleDetail.unit}]]></textFieldExpression>
 			</textField>
 			<textField pattern="#,##0">
 				<reportElement x="389" y="0" width="60" height="15" uuid="a643cd8f-f58d-4d5b-94b2-7e07baedae24"/>
 				<textElement textAlignment="Right">
 					<font fontName="Tahoma"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$F{pricePerUnit}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{saleDetail.pricePerUnit}]]></textFieldExpression>
 			</textField>
 			<textField pattern="#,##0">
 				<reportElement x="495" y="0" width="60" height="15" uuid="7cded633-c5b7-4f3d-8c9a-06152a06ef5a"/>
@@ -346,14 +346,14 @@
 				<textElement textAlignment="Center">
 					<font fontName="Tahoma"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$F{orderNum}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{saleDetail.orderNum}]]></textFieldExpression>
 			</textField>
 			<textField pattern="#,##0.##">
 				<reportElement x="449" y="0" width="46" height="15" uuid="cc240980-1efd-4a4b-b374-eeeb2263f01a"/>
 				<textElement textAlignment="Right">
 					<font fontName="Tahoma"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$F{discountPercent}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{saleDetail.discountPercent}]]></textFieldExpression>
 			</textField>
 		</band>
 	</detail>

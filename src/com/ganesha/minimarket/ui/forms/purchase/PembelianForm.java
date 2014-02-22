@@ -139,6 +139,10 @@ public class PembelianForm extends XJDialog {
 
 			@Override
 			public void rowSelected() {
+				boolean isFocus = table.isFocusOwner();
+				if (!isFocus) {
+					return;
+				}
 				btnDetail.doClick();
 			}
 		};
@@ -601,6 +605,14 @@ public class PembelianForm extends XJDialog {
 												.getColumnIndex()).toString())
 						.intValue());
 
+				purchaseDetail.setItemId(Formatter.formatStringToNumber(
+						table.getModel()
+								.getValueAt(
+										i,
+										tableParameters.get(ColumnEnum.ID)
+												.getColumnIndex()).toString())
+						.intValue());
+
 				purchaseDetail.setItemCode(table
 						.getModel()
 						.getValueAt(
@@ -778,11 +790,6 @@ public class PembelianForm extends XJDialog {
 	private void showDetail() {
 		Session session = HibernateUtils.openSession();
 		try {
-			boolean isFocus = table.isFocusOwner();
-			if (!isFocus) {
-				return;
-			}
-
 			int selectedRow = table.getSelectedRow();
 			if (selectedRow < 0) {
 				return;

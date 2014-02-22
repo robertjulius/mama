@@ -46,10 +46,7 @@ public class SearchTransactionDialog extends XJTableDialog {
 	private XJDateChooser dtChBegin;
 	private XJDateChooser dtChEnd;
 
-	private String selectedTransactionNumber;
-	private Integer selectedOrderNumber;
-	private String selectedItemCode;
-	private String selectedItemName;
+	private Integer selectedTransactionDetailId;
 	private TransactionFacade facade;
 
 	private final Map<ColumnEnum, XTableParameter> tableParameters = new HashMap<>();
@@ -89,6 +86,10 @@ public class SearchTransactionDialog extends XJTableDialog {
 		tableParameters.put(ColumnEnum.TOTAL, new XTableParameter(8, 50, false,
 				"Total", false, XTableConstants.CELL_RENDERER_RIGHT,
 				Double.class));
+
+		tableParameters.put(ColumnEnum.TRANSACTION_DETAIL_ID,
+				new XTableParameter(9, 0, false, "Transaction Detail ID", true,
+						XTableConstants.CELL_RENDERER_LEFT, Integer.class));
 	}
 
 	public SearchTransactionDialog(String title, Window parent,
@@ -215,20 +216,8 @@ public class SearchTransactionDialog extends XJTableDialog {
 		}
 	}
 
-	public String getSelectedItemCode() {
-		return selectedItemCode;
-	}
-
-	public String getSelectedItemName() {
-		return selectedItemName;
-	}
-
-	public Integer getSelectedOrderNumber() {
-		return selectedOrderNumber;
-	}
-
-	public String getSelectedTransactionNumber() {
-		return selectedTransactionNumber;
+	public Integer getSelectedTransactionDetailId() {
+		return selectedTransactionDetailId;
 	}
 
 	@Override
@@ -261,6 +250,8 @@ public class SearchTransactionDialog extends XJTableDialog {
 						.get("pricePerUnit");
 				BigDecimal totalAmountValue = (BigDecimal) searchResult
 						.get("totalAmount");
+				Integer transactionDetailIdValue = (Integer) searchResult
+						.get("transactionDetailId");
 
 				tableModel.setValueAt(transactionNumberValue, i,
 						tableParameters.get(ColumnEnum.TRANSACTION_NUM)
@@ -299,6 +290,10 @@ public class SearchTransactionDialog extends XJTableDialog {
 				tableModel.setValueAt(
 						Formatter.formatNumberToString(totalAmountValue), i,
 						tableParameters.get(ColumnEnum.TOTAL).getColumnIndex());
+
+				tableModel.setValueAt(transactionDetailIdValue, i,
+						tableParameters.get(ColumnEnum.TRANSACTION_DETAIL_ID)
+								.getColumnIndex());
 			}
 		} finally {
 			session.close();
@@ -318,28 +313,16 @@ public class SearchTransactionDialog extends XJTableDialog {
 		if (selectedRow < 0) {
 			return;
 		}
-		selectedTransactionNumber = (String) table.getModel().getValueAt(
+
+		selectedTransactionDetailId = (Integer) table.getModel().getValueAt(
 				selectedRow,
-				tableParameters.get(ColumnEnum.TRANSACTION_NUM)
+				tableParameters.get(ColumnEnum.TRANSACTION_DETAIL_ID)
 						.getColumnIndex());
-
-		selectedOrderNumber = Integer.parseInt(table
-				.getModel()
-				.getValueAt(
-						selectedRow,
-						tableParameters.get(ColumnEnum.ORDER_NO)
-								.getColumnIndex()).toString());
-
-		selectedItemCode = (String) table.getModel().getValueAt(selectedRow,
-				tableParameters.get(ColumnEnum.ITEM_CODE).getColumnIndex());
-
-		selectedItemName = (String) table.getModel().getValueAt(selectedRow,
-				tableParameters.get(ColumnEnum.ITEM_NAME).getColumnIndex());
 
 		dispose();
 	}
 
 	private enum ColumnEnum {
-		TRANSACTION_NUM, DATE, ORDER_NO, ITEM_CODE, ITEM_NAME, QUANTITY, UNIT, PRICE, TOTAL
+		TRANSACTION_NUM, DATE, ORDER_NO, ITEM_CODE, ITEM_NAME, QUANTITY, UNIT, PRICE, TOTAL, TRANSACTION_DETAIL_ID
 	}
 }

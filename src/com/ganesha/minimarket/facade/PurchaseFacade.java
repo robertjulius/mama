@@ -7,10 +7,8 @@ import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
-import org.hibernate.Criteria;
 import org.hibernate.Query;
 import org.hibernate.Session;
-import org.hibernate.criterion.Restrictions;
 
 import com.ganesha.accounting.constants.CoaCodeConstants;
 import com.ganesha.accounting.constants.Enums.DebitCreditFlag;
@@ -23,6 +21,7 @@ import com.ganesha.core.utils.GeneralConstants.AccountAction;
 import com.ganesha.hibernate.HqlParameter;
 import com.ganesha.minimarket.Main;
 import com.ganesha.minimarket.model.Item;
+import com.ganesha.minimarket.model.ItemStock;
 import com.ganesha.minimarket.model.PurchaseDetail;
 import com.ganesha.minimarket.model.PurchaseHeader;
 import com.ganesha.minimarket.model.Supplier;
@@ -41,16 +40,9 @@ public class PurchaseFacade implements TransactionFacade {
 	private PurchaseFacade() {
 	}
 
-	public PurchaseDetail getDetail(String transactionNumber, Integer orderNum,
-			Session session) {
-		Criteria criteria = session.createCriteria(PurchaseDetail.class);
-		criteria.createAlias("purchaseHeader", "purchaseHeader");
-		criteria.add(Restrictions.eq("purchaseHeader.transactionNumber",
-				transactionNumber));
-		criteria.add(Restrictions.eq("orderNum", orderNum));
-
-		PurchaseDetail purchaseDetail = (PurchaseDetail) criteria
-				.uniqueResult();
+	public PurchaseDetail getDetail(Integer id, Session session) {
+		PurchaseDetail purchaseDetail = (PurchaseDetail) session.get(
+				PurchaseDetail.class, id);
 		return purchaseDetail;
 	}
 
@@ -58,23 +50,21 @@ public class PurchaseFacade implements TransactionFacade {
 			List<PurchaseDetail> purchaseDetails, Session session)
 			throws AppException {
 
-		ItemFacade stockFacade = ItemFacade.getInstance();
+		ItemFacade itemFacade = ItemFacade.getInstance();
 		session.saveOrUpdate(purchaseHeader);
 
 		for (PurchaseDetail purchaseDetail : purchaseDetails) {
-			Item item = stockFacade.getDetail(purchaseDetail.getItemId(),
-					session);
-
-			int stock = stockFacade.calculateStock(item)
-					+ purchaseDetail.getQuantity();
-			stockFacade.reAdjustStock(item, stock, session);
-
-			// BigDecimal lastPrice = purchaseDetail.getPricePerUnit();
-			// item.setBuyPrice(lastPrice);
 
 			purchaseDetail.setPurchaseHeader(purchaseHeader);
 			session.saveOrUpdate(purchaseDetail);
-			session.saveOrUpdate(item);
+
+			Item item = itemFacade.getDetail(purchaseDetail.getItemId(),
+					session);
+			ItemStock itemStock = new ItemStock();
+			itemStock.setItem(item);
+			itemStock.setPurchaseDetail(purchaseDetail);
+			itemStock.setQuantity(purchaseDetail.getQuantity());
+			session.saveOrUpdate(itemStock);
 
 			AccountFacade.getInstance().insertIntoAccount(
 					CoaCodeConstants.PEMBELIAN, purchaseDetail.getId(),
@@ -96,6 +86,7 @@ public class PurchaseFacade implements TransactionFacade {
 		String sqlString = "SELECT new Map("
 				+ "header.transactionNumber AS transactionNumber"
 				+ ", header.transactionTimestamp AS transactionTimestamp"
+				+ ", detail.id AS transactionDetailId"
 				+ ", detail.orderNum AS orderNum"
 				+ ", detail.itemCode AS itemCode"
 				+ ", detail.itemName AS itemName"

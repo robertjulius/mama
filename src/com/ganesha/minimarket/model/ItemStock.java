@@ -1,7 +1,5 @@
 package com.ganesha.minimarket.model;
 
-import java.math.BigDecimal;
-
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -12,11 +10,11 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
-import com.ganesha.model.Trackable;
+import com.ganesha.model.TableEntity;
 
 @Entity
 @Table(name = "ITEM_STOCKS")
-public class ItemStock extends Trackable {
+public class ItemStock implements TableEntity {
 	private static final long serialVersionUID = -7780389008755790841L;
 
 	@Id
@@ -32,15 +30,8 @@ public class ItemStock extends Trackable {
 	@JoinColumn(name = "PURCHASE_DETAIL_ID", nullable = false)
 	private PurchaseDetail purchaseDetail;
 
-	@Column(name = "BUY_PRICE", nullable = false)
-	private BigDecimal buyPrice;
-
 	@Column(name = "QUANTITY", nullable = false)
 	private Integer quantity;
-
-	public BigDecimal getBuyPrice() {
-		return buyPrice;
-	}
 
 	public Integer getId() {
 		return id;
@@ -56,10 +47,6 @@ public class ItemStock extends Trackable {
 
 	public Integer getQuantity() {
 		return quantity;
-	}
-
-	public void setBuyPrice(BigDecimal buyPrice) {
-		this.buyPrice = buyPrice;
 	}
 
 	public void setId(Integer id) {

@@ -115,7 +115,8 @@ public class ReceivableFacade {
 			String clientName, Session session) {
 
 		String sqlString = "SELECT new Map("
-				+ "supplier.code AS code"
+				+ "supplier.id AS id"
+				+ ", supplier.code AS code"
 				+ ", supplier.name AS name"
 				+ ", summary.remainingAmount AS remainingAmount"
 				+ ") FROM ReceivableSummary summary, Supplier supplier WHERE summary.clientId = supplier.id";

@@ -384,8 +384,8 @@ public class SupplierForm extends XJDialog {
 			SupplierFacade facade = SupplierFacade.getInstance();
 
 			if (actionType == ActionType.CREATE) {
-				facade.addNewSupplier(txtAlamat1.getText(), txtAlamat2
-						.getText(), txtKode.getText().toUpperCase(),
+				Supplier supplier = facade.addNewSupplier(txtAlamat1.getText(),
+						txtAlamat2.getText(), txtKode.getText().toUpperCase(),
 						txtKontakPerson1.getText().toUpperCase(),
 						txtKontakPerson1Email.getText(), txtKontakPerson1Phone
 								.getText(), txtKontakPerson2.getText()
@@ -396,18 +396,21 @@ public class SupplierForm extends XJDialog {
 								.getText().toUpperCase(), txtPhone1.getText(),
 						txtPhone2.getText(), chkDisabled.isSelected(), deleted,
 						session);
+				supplierId = supplier.getId();
 				dispose();
 			} else if (actionType == ActionType.UPDATE) {
-				facade.updateExistingSupplier(txtAlamat1.getText(), txtAlamat2
-						.getText(), supplierId, txtKontakPerson1.getText()
-						.toUpperCase(), txtKontakPerson1Email.getText(),
-						txtKontakPerson1Phone.getText(), txtKontakPerson2
-								.getText().toUpperCase(), txtKontakPerson2Email
-								.getText(), txtKontakPerson2Phone.getText(),
-						txtDeskripsi.getText(), txtEmail1.getText(), txtEmail2
-								.getText(), txtNama.getText().toUpperCase(),
-						txtPhone1.getText(), txtPhone2.getText(), chkDisabled
-								.isSelected(), deleted, session);
+				facade.updateExistingSupplier(supplierId, txtAlamat1.getText(),
+						txtAlamat2.getText(), txtKontakPerson1.getText()
+								.toUpperCase(),
+						txtKontakPerson1Email.getText(), txtKontakPerson1Phone
+								.getText(), txtKontakPerson2.getText()
+								.toUpperCase(),
+						txtKontakPerson2Email.getText(), txtKontakPerson2Phone
+								.getText(), txtDeskripsi.getText(), txtEmail1
+								.getText(), txtEmail2.getText(), txtNama
+								.getText().toUpperCase(), txtPhone1.getText(),
+						txtPhone2.getText(), chkDisabled.isSelected(), deleted,
+						session);
 				dispose();
 			} else {
 				throw new ActionTypeNotSupported(actionType);

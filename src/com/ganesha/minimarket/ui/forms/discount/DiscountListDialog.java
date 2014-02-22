@@ -49,6 +49,8 @@ public class DiscountListDialog extends XJTableDialog {
 	private XJTextField txtNamaBarang;
 	private XJRadioButton rdPromoTidakAktif;
 	private XJRadioButton rdPromoAktif;
+	private XJButton btnDetail;
+	private XJButton btnTambah;
 	{
 		tableParameters.put(ColumnEnum.ITEM_ID, new XTableParameter(0, 0,
 				false, "ID", true, XTableConstants.CELL_RENDERER_LEFT,
@@ -83,7 +85,7 @@ public class DiscountListDialog extends XJTableDialog {
 
 			@Override
 			public void rowSelected() {
-				btnKeluar.doClick();
+				btnDetail.doClick();
 			}
 		};
 		XTableUtils.initTable(table, tableParameters);
@@ -168,7 +170,7 @@ public class DiscountListDialog extends XJTableDialog {
 		btnKeluar.setText("<html><center>Keluar<br/>[Esc]</center></html>");
 		panel.add(btnKeluar, "cell 0 0");
 
-		XJButton btnTambah = new XJButton();
+		btnTambah = new XJButton();
 		btnTambah.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
@@ -184,8 +186,8 @@ public class DiscountListDialog extends XJTableDialog {
 				.setText("<html><center>Tambah Diskon Baru<br/>[F5]</center><html>");
 		panel.add(btnTambah, "cell 1 0");
 
-		XJButton btnlihatDetailenter = new XJButton();
-		btnlihatDetailenter.addActionListener(new ActionListener() {
+		btnDetail = new XJButton();
+		btnDetail.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				try {
@@ -196,9 +198,9 @@ public class DiscountListDialog extends XJTableDialog {
 				}
 			}
 		});
-		btnlihatDetailenter
+		btnDetail
 				.setText("<html><center>Lihat Detail<br/>[Enter]</center></html>");
-		panel.add(btnlihatDetailenter, "cell 2 0");
+		panel.add(btnDetail, "cell 2 0");
 
 		try {
 			loadDataInThread();

@@ -261,13 +261,15 @@ public class CustomerForm extends XJDialog {
 			CustomerFacade facade = CustomerFacade.getInstance();
 
 			if (actionType == ActionType.CREATE) {
-				facade.addNewCustomer(txtAlamat.getText(), txtKode.getText()
-						.toUpperCase(), txtDeskripsi.getText(), txtEmail
-						.getText(), txtNama.getText().toUpperCase(), txtPhone
-						.getText(), chkDisabled.isSelected(), deleted, session);
+				Customer customer = facade.addNewCustomer(txtAlamat.getText(),
+						txtKode.getText().toUpperCase(),
+						txtDeskripsi.getText(), txtEmail.getText(), txtNama
+								.getText().toUpperCase(), txtPhone.getText(),
+						chkDisabled.isSelected(), deleted, session);
+				customerId = customer.getId();
 				dispose();
 			} else if (actionType == ActionType.UPDATE) {
-				facade.updateExistingCustomer(txtAlamat.getText(), customerId,
+				facade.updateExistingCustomer(customerId, txtAlamat.getText(),
 						txtDeskripsi.getText(), txtEmail.getText(), txtNama
 								.getText().toUpperCase(), txtPhone.getText(),
 						chkDisabled.isSelected(), deleted, session);

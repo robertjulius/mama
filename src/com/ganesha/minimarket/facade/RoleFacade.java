@@ -30,7 +30,7 @@ public class RoleFacade {
 	private RoleFacade() {
 	}
 
-	public void addNewRole(String name, String description,
+	public Role addNewRole(String name, String description,
 			List<Permission> permissions, Session session) throws UserException {
 
 		if (GlobalFacade.getInstance().isExists("name", name, Role.class,
@@ -51,6 +51,8 @@ public class RoleFacade {
 		session.saveOrUpdate(role);
 
 		updateRolePermissionLink(role.getId(), permissions, session);
+
+		return role;
 	}
 
 	public List<Role> getAll(Session session) {

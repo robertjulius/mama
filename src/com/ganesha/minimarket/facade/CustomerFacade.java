@@ -25,21 +25,16 @@ public class CustomerFacade {
 	private CustomerFacade() {
 	}
 
-	public void addNewCustomer(String address, String code, String description,
-			String email, String name, String phone, boolean disabled,
-			boolean deleted, Session session) throws UserException {
+	public Customer addNewCustomer(String address, String code,
+			String description, String email, String name, String phone,
+			boolean disabled, boolean deleted, Session session)
+			throws UserException {
 
 		if (GlobalFacade.getInstance().isExists("code", code, Customer.class,
 				session)) {
 			throw new UserException("Customer dengan ID " + code
 					+ " sudah pernah didaftarkan");
 		}
-
-		// if (GlobalFacade.getInstance().isExists("name", name, Customer.class,
-		// session)) {
-		// throw new UserException("Customer dengan Nama " + name
-		// + " sudah pernah didaftarkan");
-		// }
 
 		Customer customer = new Customer();
 		customer.setAddress(address);
@@ -54,6 +49,7 @@ public class CustomerFacade {
 		customer.setLastUpdatedTimestamp(CommonUtils.getCurrentTimestamp());
 
 		session.saveOrUpdate(customer);
+		return customer;
 	}
 
 	public Customer getDefaultCustomer(Session session) {
@@ -88,7 +84,7 @@ public class CustomerFacade {
 		return customer;
 	}
 
-	public void updateExistingCustomer(String address, int id,
+	public void updateExistingCustomer(Integer id, String address,
 			String description, String email, String name, String phone,
 			boolean disabled, boolean deleted, Session session)
 			throws UserException {

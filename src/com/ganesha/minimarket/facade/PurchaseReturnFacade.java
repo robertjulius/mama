@@ -23,6 +23,7 @@ import com.ganesha.core.utils.GeneralConstants.AccountAction;
 import com.ganesha.hibernate.HqlParameter;
 import com.ganesha.minimarket.Main;
 import com.ganesha.minimarket.model.Item;
+import com.ganesha.minimarket.model.ItemStock;
 import com.ganesha.minimarket.model.PayableSummary;
 import com.ganesha.minimarket.model.PurchaseReturnDetail;
 import com.ganesha.minimarket.model.PurchaseReturnHeader;
@@ -63,25 +64,37 @@ public class PurchaseReturnFacade implements TransactionFacade {
 		validatePayable(purchaseReturnHeader, session);
 		validateReceivable(purchaseReturnHeader, session);
 
-		ItemFacade stockFacade = ItemFacade.getInstance();
+		ItemFacade itemFacade = ItemFacade.getInstance();
 		session.saveOrUpdate(purchaseReturnHeader);
 
 		for (PurchaseReturnDetail purchaseReturnDetail : purchaseReturnDetails) {
-			Item item = stockFacade.getDetail(purchaseReturnDetail
-					.getPurchaseDetail().getItemId(), session);
-
-			int stock = stockFacade.calculateStock(item)
-					- purchaseReturnDetail.getQuantity();
-			stockFacade.reAdjustStock(item, stock, session);
-
-			// BigDecimal lastPrice = purchaseReturnDetail.getPricePerUnit();
-			// item.setBuyPrice(lastPrice);
 
 			purchaseReturnDetail.setPurchaseReturnHeader(purchaseReturnHeader);
 			session.saveOrUpdate(purchaseReturnDetail);
-			session.saveOrUpdate(item);
 
-			session.saveOrUpdate(purchaseReturnDetail);
+			Item item = itemFacade.getDetail(purchaseReturnDetail
+					.getPurchaseDetail().getItemId(), session);
+
+			List<ItemStock> itemStocks = item.getItemStocks();
+			for (ItemStock itemStock : itemStocks) {
+				if (purchaseReturnDetail.getPurchaseDetail().getId() == itemStock
+						.getPurchaseDetail().getId()) {
+					int quantityBeforeReturn = itemStock.getQuantity();
+					int quantityAfterReturn = quantityBeforeReturn
+							- purchaseReturnDetail.getQuantity();
+					if (quantityAfterReturn < 0) {
+						throw new UserException(
+								"Tidak dapat melakukan retur barang "
+										+ purchaseReturnDetail
+												.getPurchaseDetail()
+												.getItemCode() + " sebanyak "
+										+ purchaseReturnDetail.getQuantity()
+										+ " " + item.getUnit());
+					}
+					itemStock.setQuantity(quantityAfterReturn);
+					session.saveOrUpdate(itemStock);
+				}
+			}
 
 			AccountFacade.getInstance().insertIntoAccount(
 					CoaCodeConstants.RETUR_PEMBELIAN,
@@ -100,6 +113,7 @@ public class PurchaseReturnFacade implements TransactionFacade {
 		String sqlString = "SELECT new Map("
 				+ "header.transactionNumber AS transactionNumber"
 				+ ", header.transactionTimestamp AS transactionTimestamp"
+				+ ", detail.id AS transactionDetailId"
 				+ ", detail.orderNum AS orderNum"
 				+ ", detail.itemCode AS itemCode"
 				+ ", detail.itemName AS itemName"

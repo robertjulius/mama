@@ -16,12 +16,12 @@
 	<field name="purchaseReturnHeader.expenses" class="java.math.BigDecimal"/>
 	<field name="purchaseReturnHeader.discountReturned" class="java.math.BigDecimal"/>
 	<field name="purchaseReturnHeader.totalReturnAmount" class="java.math.BigDecimal"/>
-	<field name="orderNum" class="java.lang.Integer"/>
-	<field name="itemCode" class="java.lang.String"/>
-	<field name="itemName" class="java.lang.String"/>
+	<field name="purchaseDetail.orderNum" class="java.lang.Integer"/>
+	<field name="purchaseDetail.itemCode" class="java.lang.String"/>
+	<field name="purchaseDetail.itemName" class="java.lang.String"/>
 	<field name="quantity" class="java.lang.Integer"/>
-	<field name="unit" class="java.lang.String"/>
-	<field name="pricePerUnit" class="java.math.BigDecimal"/>
+	<field name="purchaseDetail.unit" class="java.lang.String"/>
+	<field name="purchaseDetail.pricePerUnit" class="java.math.BigDecimal"/>
 	<field name="totalAmount" class="java.math.BigDecimal"/>
 	<variable name="totalReturPembelian" class="java.lang.Double" calculation="Sum">
 		<variableExpression><![CDATA[$F{totalAmount}]]></variableExpression>
@@ -347,14 +347,14 @@
 				<textElement textAlignment="Center">
 					<font fontName="Tahoma"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$F{itemCode}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{purchaseDetail.itemCode}]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement x="110" y="0" width="230" height="15" uuid="83ae86d9-c05c-44ff-ab9d-0722b8ff5377"/>
 				<textElement>
 					<font fontName="Tahoma"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$F{itemName}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{purchaseDetail.itemName}]]></textFieldExpression>
 			</textField>
 			<textField pattern="#,##0">
 				<reportElement x="340" y="0" width="35" height="15" uuid="e976445a-09d5-40db-b667-b6f1a18945c4"/>
@@ -368,14 +368,14 @@
 				<textElement textAlignment="Center">
 					<font fontName="Tahoma"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$F{unit}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{purchaseDetail.unit}]]></textFieldExpression>
 			</textField>
 			<textField pattern="#,##0">
 				<reportElement x="435" y="0" width="60" height="15" uuid="a643cd8f-f58d-4d5b-94b2-7e07baedae24"/>
 				<textElement textAlignment="Right">
 					<font fontName="Tahoma"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$F{pricePerUnit}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{purchaseDetail.pricePerUnit}]]></textFieldExpression>
 			</textField>
 			<textField pattern="#,##0">
 				<reportElement x="495" y="0" width="60" height="15" uuid="7cded633-c5b7-4f3d-8c9a-06152a06ef5a"/>
@@ -389,7 +389,7 @@
 				<textElement textAlignment="Center">
 					<font fontName="Tahoma"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$F{orderNum}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{purchaseDetail.orderNum}]]></textFieldExpression>
 			</textField>
 		</band>
 	</detail>

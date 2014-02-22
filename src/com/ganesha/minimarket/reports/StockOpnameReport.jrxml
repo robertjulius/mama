@@ -8,9 +8,9 @@
 	<parameter name="performedByUserName" class="java.lang.String"/>
 	<parameter name="performedBeginTimestamp" class="java.util.Date"/>
 	<parameter name="performedEndTimestamp" class="java.util.Date"/>
-	<field name="itemStock.item.code" class="java.lang.String"/>
-	<field name="itemStock.item.name" class="java.lang.String"/>
-	<field name="itemStock.unit" class="java.lang.String"/>
+	<field name="item.code" class="java.lang.String"/>
+	<field name="item.name" class="java.lang.String"/>
+	<field name="item.unit" class="java.lang.String"/>
 	<field name="quantitySystem" class="java.lang.Integer"/>
 	<field name="quantityManual" class="java.lang.Integer"/>
 	<field name="overCount" class="java.lang.Integer"/>
@@ -117,9 +117,9 @@
 		<band splitType="Stretch"/>
 	</pageHeader>
 	<columnHeader>
-		<band height="15" splitType="Stretch">
+		<band height="30" splitType="Stretch">
 			<staticText>
-				<reportElement x="22" y="0" width="70" height="15" uuid="d7726ac3-580b-4ad7-9f82-3c05f86e1c19"/>
+				<reportElement x="22" y="0" width="70" height="30" uuid="d7726ac3-580b-4ad7-9f82-3c05f86e1c19"/>
 				<box>
 					<topPen lineWidth="1.0"/>
 					<leftPen lineWidth="1.0"/>
@@ -132,7 +132,7 @@
 				<text><![CDATA[Kode Barang]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="92" y="0" width="150" height="15" uuid="546cce36-3f6c-47c4-8b26-90de0de3b742"/>
+				<reportElement x="92" y="0" width="210" height="30" uuid="546cce36-3f6c-47c4-8b26-90de0de3b742"/>
 				<box>
 					<topPen lineWidth="1.0"/>
 					<leftPen lineWidth="1.0"/>
@@ -145,20 +145,7 @@
 				<text><![CDATA[Nama Barang]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="302" y="0" width="60" height="15" uuid="55712f51-525f-4554-9420-07b0e6926a3f"/>
-				<box>
-					<topPen lineWidth="1.0"/>
-					<leftPen lineWidth="1.0"/>
-					<bottomPen lineWidth="1.0"/>
-					<rightPen lineWidth="1.0"/>
-				</box>
-				<textElement textAlignment="Center">
-					<font fontName="Tahoma"/>
-				</textElement>
-				<text><![CDATA[Qty Sistem]]></text>
-			</staticText>
-			<staticText>
-				<reportElement x="242" y="0" width="60" height="15" uuid="a096a846-28a9-4030-8021-07d1e54cbfe7"/>
+				<reportElement x="302" y="0" width="50" height="30" uuid="a096a846-28a9-4030-8021-07d1e54cbfe7"/>
 				<box>
 					<topPen lineWidth="1.0"/>
 					<leftPen lineWidth="1.0"/>
@@ -171,7 +158,7 @@
 				<text><![CDATA[Satuan]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="0" y="0" width="22" height="15" uuid="0d4f5c85-33fd-4f3e-b80a-5445145375b4"/>
+				<reportElement x="0" y="0" width="22" height="30" uuid="0d4f5c85-33fd-4f3e-b80a-5445145375b4"/>
 				<box topPadding="0" bottomPadding="0">
 					<topPen lineWidth="1.0"/>
 					<leftPen lineWidth="1.0"/>
@@ -184,7 +171,7 @@
 				<text><![CDATA[No.]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="362" y="0" width="60" height="15" uuid="f989def2-21ad-4c5c-8339-23e9e0b0d8c0"/>
+				<reportElement x="387" y="0" width="35" height="30" uuid="f989def2-21ad-4c5c-8339-23e9e0b0d8c0"/>
 				<box>
 					<topPen lineWidth="1.0"/>
 					<leftPen lineWidth="1.0"/>
@@ -194,10 +181,11 @@
 				<textElement textAlignment="Center">
 					<font fontName="Tahoma"/>
 				</textElement>
-				<text><![CDATA[Qty Manual]]></text>
+				<text><![CDATA[Qty
+Manual]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="422" y="0" width="66" height="15" uuid="2e75e43b-c6ea-44ce-8336-7cd6efedeb6e"/>
+				<reportElement x="422" y="0" width="66" height="30" uuid="2e75e43b-c6ea-44ce-8336-7cd6efedeb6e"/>
 				<box>
 					<topPen lineWidth="1.0"/>
 					<leftPen lineWidth="1.0"/>
@@ -210,7 +198,7 @@
 				<text><![CDATA[Lebih]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="488" y="0" width="67" height="15" uuid="7846b09e-f9fa-4ba6-a884-7c6234881c6c"/>
+				<reportElement x="488" y="0" width="67" height="30" uuid="7846b09e-f9fa-4ba6-a884-7c6234881c6c"/>
 				<box>
 					<topPen lineWidth="1.0"/>
 					<leftPen lineWidth="1.0"/>
@@ -221,6 +209,20 @@
 					<font fontName="Tahoma"/>
 				</textElement>
 				<text><![CDATA[Kurang]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="352" y="0" width="35" height="30" uuid="55712f51-525f-4554-9420-07b0e6926a3f"/>
+				<box>
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement textAlignment="Center">
+					<font fontName="Tahoma"/>
+				</textElement>
+				<text><![CDATA[Qty
+Sistem]]></text>
 			</staticText>
 		</band>
 	</columnHeader>
@@ -235,21 +237,22 @@
 				<textElement textAlignment="Center">
 					<font fontName="Tahoma"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$F{itemStock.item.code}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{item.code}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="92" y="0" width="150" height="15" uuid="83ae86d9-c05c-44ff-ab9d-0722b8ff5377"/>
+				<reportElement x="92" y="0" width="210" height="15" uuid="83ae86d9-c05c-44ff-ab9d-0722b8ff5377"/>
 				<box bottomPadding="1">
 					<leftPen lineWidth="1.0"/>
 					<rightPen lineWidth="1.0"/>
 				</box>
 				<textElement>
 					<font fontName="Tahoma"/>
+					<paragraph leftIndent="3"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$F{itemStock.item.name}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{item.name}]]></textFieldExpression>
 			</textField>
 			<textField pattern="#,##0">
-				<reportElement x="302" y="0" width="60" height="15" uuid="e976445a-09d5-40db-b667-b6f1a18945c4"/>
+				<reportElement x="352" y="0" width="35" height="15" uuid="e976445a-09d5-40db-b667-b6f1a18945c4"/>
 				<box>
 					<leftPen lineWidth="1.0"/>
 					<rightPen lineWidth="1.0"/>
@@ -260,7 +263,7 @@
 				<textFieldExpression><![CDATA[$F{quantitySystem}]]></textFieldExpression>
 			</textField>
 			<textField pattern="###0">
-				<reportElement x="242" y="0" width="60" height="15" uuid="83f483f8-8043-4bfe-a859-6adfd66c87aa"/>
+				<reportElement x="302" y="0" width="50" height="15" uuid="83f483f8-8043-4bfe-a859-6adfd66c87aa"/>
 				<box>
 					<leftPen lineWidth="1.0"/>
 					<rightPen lineWidth="1.0"/>
@@ -268,7 +271,7 @@
 				<textElement textAlignment="Center">
 					<font fontName="Tahoma"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$F{itemStock.unit}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{item.unit}]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement x="0" y="0" width="22" height="15" uuid="e016726a-2a73-4275-bc1e-76d1522b2ac2"/>
@@ -282,7 +285,7 @@
 				<textFieldExpression><![CDATA[$V{REPORT_COUNT}]]></textFieldExpression>
 			</textField>
 			<textField pattern="#,##0">
-				<reportElement x="362" y="0" width="60" height="15" uuid="780a3206-a4ce-49bf-84db-ab76a027eb91"/>
+				<reportElement x="387" y="0" width="35" height="15" uuid="780a3206-a4ce-49bf-84db-ab76a027eb91"/>
 				<box bottomPadding="0" rightPadding="0">
 					<leftPen lineWidth="1.0"/>
 					<rightPen lineWidth="1.0"/>
@@ -347,7 +350,7 @@
 	<summary>
 		<band height="15" splitType="Stretch">
 			<staticText>
-				<reportElement x="362" y="0" width="60" height="15" uuid="6b1c00be-f621-44a5-98e3-8adc26e367a1"/>
+				<reportElement x="352" y="0" width="70" height="15" uuid="6b1c00be-f621-44a5-98e3-8adc26e367a1"/>
 				<box>
 					<topPen lineWidth="1.0"/>
 					<leftPen lineWidth="1.0"/>

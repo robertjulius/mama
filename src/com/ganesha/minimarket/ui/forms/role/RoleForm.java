@@ -55,8 +55,8 @@ public class RoleForm extends XJDialog {
 	private XJButton btnRemoveAll;
 	private XJLabel lblDescription;
 	private XJTextField txtDescription;
-	private XJLabel lblRoleId;
-	private XJLabel lblRoleIdValue;
+
+	private Integer roleId;
 
 	public RoleForm(Window parent, ActionType actionType) {
 		super(parent);
@@ -70,29 +70,21 @@ public class RoleForm extends XJDialog {
 
 		pnlRoleName = new XJPanel();
 		getContentPane().add(pnlRoleName, "cell 0 0 2 1,grow");
-		pnlRoleName.setLayout(new MigLayout("", "[][grow]", "[][][]"));
-
-		lblRoleId = new XJLabel();
-		lblRoleId.setText("ID");
-		pnlRoleName.add(lblRoleId, "cell 0 0");
-
-		lblRoleIdValue = new XJLabel();
-		lblRoleIdValue.setText("[Automatic Generated]");
-		pnlRoleName.add(lblRoleIdValue, "cell 1 0");
+		pnlRoleName.setLayout(new MigLayout("", "[][grow]", "[][]"));
 
 		XJLabel lblNameRole = new XJLabel();
-		pnlRoleName.add(lblNameRole, "cell 0 1");
+		pnlRoleName.add(lblNameRole, "cell 0 0");
 		lblNameRole.setText("Nama Role");
 
 		txtRoleName = new XJTextField();
-		pnlRoleName.add(txtRoleName, "cell 1 1,growx");
+		pnlRoleName.add(txtRoleName, "cell 1 0,growx");
 
 		lblDescription = new XJLabel();
 		lblDescription.setText("Deskripsi Role");
-		pnlRoleName.add(lblDescription, "cell 0 2");
+		pnlRoleName.add(lblDescription, "cell 0 1");
 
 		txtDescription = new XJTextField();
-		pnlRoleName.add(txtDescription, "cell 1 2,growx");
+		pnlRoleName.add(txtDescription, "cell 1 1,growx");
 
 		pnlPermissionList = new XJPanel();
 		getContentPane().add(pnlPermissionList, "cell 0 1 2 1,grow");
@@ -222,7 +214,7 @@ public class RoleForm extends XJDialog {
 
 	public void setFormDetailValue(Role role,
 			List<RolePermissionLink> rolePermissionLinks) {
-		lblRoleIdValue.setText(String.valueOf(role.getId()));
+		roleId = role.getId();
 		txtRoleName.setText(role.getName());
 		txtDescription.setText(role.getDescription());
 
@@ -342,14 +334,13 @@ public class RoleForm extends XJDialog {
 			}
 
 			if (actionType == ActionType.CREATE) {
-				facade.addNewRole(txtRoleName.getText(),
+				Role role = facade.addNewRole(txtRoleName.getText(),
 						txtDescription.getText(), permissions, session);
+				roleId = role.getId();
 				dispose();
 			} else if (actionType == ActionType.UPDATE) {
-				facade.updateExistingRole(
-						Integer.parseInt(lblRoleIdValue.getText()),
-						txtRoleName.getText(), txtDescription.getText(),
-						permissions, session);
+				facade.updateExistingRole(roleId, txtRoleName.getText(),
+						txtDescription.getText(), permissions, session);
 				dispose();
 			} else {
 				throw new ActionTypeNotSupported(actionType);

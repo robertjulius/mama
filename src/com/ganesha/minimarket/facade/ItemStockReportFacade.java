@@ -17,13 +17,14 @@ import net.sf.jasperreports.engine.design.JasperDesign;
 import net.sf.jasperreports.engine.xml.JRXmlLoader;
 import net.sf.jasperreports.swing.JRViewer;
 
+import org.hibernate.SQLQuery;
 import org.hibernate.Session;
+import org.hibernate.transform.AliasToEntityMapResultTransformer;
 
 import com.ganesha.core.exception.AppException;
 import com.ganesha.core.exception.UserException;
 import com.ganesha.core.utils.CommonUtils;
 import com.ganesha.minimarket.Main;
-import com.ganesha.minimarket.model.Item;
 import com.ganesha.minimarket.ui.forms.reports.ReportViewerDialog;
 
 public class ItemStockReportFacade {
@@ -53,6 +54,31 @@ public class ItemStockReportFacade {
 		ReportViewerDialog.viewReport(parent, REPORT_NAME, viewer);
 	}
 
+	public List<Map<String, Object>> search(String orderBy, Session session) {
+
+		String sql = "SELECT "
+				+ " id "
+				+ ", code "
+				+ ", name "
+				+ ", unit "
+				+ ", IF(quantity IS NULL, 0, quantity) AS quantity "
+				+ "FROM ( "
+				+ "SELECT it.id, it.code, it.name, it.unit, SUM(ist.QUANTITY) AS quantity "
+				+ "FROM items it "
+				+ "LEFT JOIN item_stocks ist ON ist.ITEM_ID = it.ID "
+				+ "WHERE it.DISABLED = false AND it.DELETED = false "
+				+ "GROUP BY it.id, it.code, it.name, it.unit " + ") myTable "
+				+ "ORDER BY " + orderBy;
+
+		SQLQuery query = session.createSQLQuery(sql);
+		query.setResultTransformer(AliasToEntityMapResultTransformer.INSTANCE);
+
+		@SuppressWarnings("unchecked")
+		List<Map<String, Object>> itemMaps = query.list();
+
+		return itemMaps;
+	}
+
 	private JasperPrint prepareJasper(String orderById, String orderByText,
 			Session session) throws AppException {
 
@@ -63,8 +89,7 @@ public class ItemStockReportFacade {
 		paramReport.put("reportBy", Main.getUserLogin().getName());
 		paramReport.put("reportDate", CommonUtils.getCurrentDate());
 
-		List<Item> items = ItemFacade.getInstance().search(null, null, null,
-				false, new String[] { orderById }, session);
+		List<Map<String, Object>> items = search(orderById, session);
 
 		InputStream inputStream = null;
 		try {

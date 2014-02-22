@@ -288,7 +288,7 @@ public class StockListDialog extends XJTableDialog {
 
 			ItemFacade facade = ItemFacade.getInstance();
 			List<Item> items = facade.search(code, barcode, name, disabled,
-					null, session);
+					session);
 
 			XTableModel tableModel = (XTableModel) table.getModel();
 			tableModel.setRowCount(items.size());

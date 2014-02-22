@@ -4,7 +4,6 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.math.BigDecimal;
 import java.sql.Timestamp;
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -28,7 +27,9 @@ import com.ganesha.core.exception.AppException;
 import com.ganesha.core.utils.CommonUtils;
 import com.ganesha.minimarket.Main;
 import com.ganesha.minimarket.model.Item;
+import com.ganesha.minimarket.model.ItemStock;
 import com.ganesha.minimarket.model.PurchaseDetail;
+import com.ganesha.minimarket.model.PurchaseReturnDetail;
 import com.ganesha.minimarket.model.StockOpnameDetail;
 import com.ganesha.minimarket.model.StockOpnameHeader;
 
@@ -50,34 +51,22 @@ public class StockOpnameFacade {
 	}
 
 	public StockOpnameDetail createStockOpnameEntity(int itemId,
-			int quantityManual, int overCount, int lossCount,
-			StockQueueMethod stockQueueMethod, Session session)
+			int quantityManual, int overCount, int lossCount, Session session)
 			throws AppException {
 
 		Item item = ItemFacade.getInstance().getDetail(itemId, session);
-		int quantityInThisStage = ItemFacade.getInstance()
-				.calculateStock(item);
+		int quantityInThisStage = ItemFacade.getInstance().calculateStock(item);
 
-		BigDecimal overAmount = null;
-		BigDecimal lossAmount = null;
+		BigDecimal overAmount = calculateOverAmount(item, overCount);
+		BigDecimal lossAmount = calculateLossAmount(item, lossCount);
 
-		if (stockQueueMethod == StockQueueMethod.FIFO) {
+		BigDecimal persediaanAkhir = ItemFacade.getInstance().calculateAmount(
+				item);
 
-			overAmount = getFifoAmount(overCount, quantityInThisStage, itemId,
-					session);
-			lossAmount = getFifoAmount(lossCount, quantityInThisStage, itemId,
-					session);
-		} else if (stockQueueMethod == StockQueueMethod.LIFO) {
-			overAmount = getLifoAmount(overCount, itemId, session);
-			lossAmount = getLifoAmount(lossCount, itemId, session);
-		} else {
-			throw new AppException("Unsupported stock queue method: "
-					+ stockQueueMethod);
-		}
-
-		BigDecimal lastStockAmount = countStockAmountEnd(item, overAmount,
-				lossAmount, stockQueueMethod, session);
-		item.setHpp(lastStockAmount);
+		BigDecimal hpp = countHpp(item, persediaanAkhir, session);
+		item.setHpp(hpp);
+		item.setLastUpdatedBy(Main.getUserLogin().getId());
+		item.setLastUpdatedTimestamp(CommonUtils.getCurrentTimestamp());
 
 		StockOpnameDetail stockOpname = new StockOpnameDetail();
 		stockOpname.setItem(item);
@@ -87,7 +76,7 @@ public class StockOpnameFacade {
 		stockOpname.setOverAmount(overAmount);
 		stockOpname.setLossCount(lossCount);
 		stockOpname.setLossAmount(lossAmount);
-		stockOpname.setLastStockAmount(lastStockAmount);
+		stockOpname.setLastStockAmount(persediaanAkhir);
 
 		return stockOpname;
 	}
@@ -148,9 +137,10 @@ public class StockOpnameFacade {
 
 		for (StockOpnameDetail stockOpname : stockOpnameDetails) {
 			Item item = stockOpname.getItem();
-
-			ItemFacade.getInstance().reAdjustStock(item,
-					stockOpname.getQuantityManual(), session);
+			List<ItemStock> itemStocks = item.getItemStocks();
+			for (ItemStock itemStock : itemStocks) {
+				session.saveOrUpdate(itemStock);
+			}
 			session.saveOrUpdate(item);
 
 			stockOpname.setStockOpnameHeader(stockOpnameHeader);
@@ -177,12 +167,60 @@ public class StockOpnameFacade {
 		return stockOpnameHeaders;
 	}
 
-	private BigDecimal countStockAmountEnd(Item item, BigDecimal overAmount,
-			BigDecimal lossAmount, StockQueueMethod stockQueueMethod,
+	private BigDecimal calculateLossAmount(Item item, int lossStock) {
+		BigDecimal amount = BigDecimal.valueOf(0);
+
+		int requirement = lossStock;
+		List<ItemStock> itemStocks = item.getItemStocks();
+		for (int i = 0; i < itemStocks.size() && requirement > 0; ++i) {
+			ItemStock itemStock = itemStocks.get(i);
+			int stock = itemStock.getQuantity();
+			int taken;
+			if (requirement > stock) {
+				taken = stock;
+				requirement -= stock;
+			} else {
+				taken = requirement;
+				requirement = 0;
+			}
+			int remain = stock - taken;
+			itemStock.setQuantity(remain);
+			amount = amount.add(BigDecimal.valueOf(taken).multiply(
+					itemStock.getPurchaseDetail().getPricePerUnit()));
+		}
+		return amount;
+	}
+
+	private BigDecimal calculateOverAmount(Item item, int overStock) {
+		BigDecimal amount = BigDecimal.valueOf(0);
+
+		int excess = overStock;
+		List<ItemStock> itemStocks = item.getItemStocks();
+		for (int i = itemStocks.size() - 1; i >= 0 && excess > 0; --i) {
+			ItemStock itemStock = itemStocks.get(i);
+			int maxStock = itemStock.getPurchaseDetail().getQuantity();
+			int stock = itemStock.getQuantity();
+			int taken;
+			if ((excess + stock) > maxStock) {
+				taken = maxStock - stock;
+			} else {
+				taken = excess;
+			}
+			int remain = excess - taken;
+			int newStock = stock + taken;
+
+			itemStock.setQuantity(newStock);
+			excess = remain;
+			amount = amount.add(BigDecimal.valueOf(taken).multiply(
+					itemStock.getPurchaseDetail().getPricePerUnit()));
+		}
+		return amount;
+	}
+
+	private BigDecimal countHpp(Item item, BigDecimal persediaanAkhir,
 			Session session) throws AppException {
 
 		int itemId = item.getId();
-		int stock = ItemFacade.getInstance().calculateStock(item);
 
 		StockOpnameHeader lastStockOpnameHeader = getLastStockOpnameHeader(session);
 		StockOpnameDetail lastStockOpnameDetail = null;
@@ -191,100 +229,79 @@ public class StockOpnameFacade {
 					lastStockOpnameHeader.getId(), itemId, session);
 		}
 
-		BigDecimal stockAmountBegin = null;
+		BigDecimal persediaanAwal = null;
 		if (lastStockOpnameDetail == null) {
-			stockAmountBegin = BigDecimal.valueOf(0);
+			persediaanAwal = BigDecimal.valueOf(0);
 		} else if (lastStockOpnameDetail.getLastStockAmount() == null) {
-			stockAmountBegin = BigDecimal.valueOf(0);
+			persediaanAwal = BigDecimal.valueOf(0);
 		} else {
-			stockAmountBegin = lastStockOpnameDetail.getLastStockAmount();
+			persediaanAwal = lastStockOpnameDetail.getLastStockAmount();
 		}
 
-		BigDecimal lastStockAmountBySystem = null;
-		if (stockQueueMethod == StockQueueMethod.FIFO) {
-			lastStockAmountBySystem = getFifoAmount(stock, stock, itemId,
-					session);
-		} else if (stockQueueMethod == StockQueueMethod.LIFO) {
-			lastStockAmountBySystem = getLifoAmount(stock, itemId, session);
-		} else {
-			throw new AppException("Unsupported stock queue method: "
-					+ stockQueueMethod);
+		Timestamp afterThisTimestamp = null;
+		if (lastStockOpnameHeader != null) {
+			afterThisTimestamp = lastStockOpnameHeader
+					.getLastUpdatedTimestamp();
 		}
+		BigDecimal pembelian = getAmountOfPembelian(afterThisTimestamp, session);
 
-		BigDecimal stockAmountEnd = stockAmountBegin
-				.add(lastStockAmountBySystem).add(overAmount)
-				.subtract(lossAmount);
+		BigDecimal returPembelian = getAmountOfReturPembelian(
+				afterThisTimestamp, session);
 
-		return stockAmountEnd;
+		BigDecimal hpp = persediaanAwal.add(pembelian).subtract(returPembelian)
+				.subtract(persediaanAkhir);
+
+		return hpp;
 	}
 
-	private BigDecimal getFifoAmount(int required, int quantityInThisStage,
-			int itemId, Session session) {
-
-		List<BigDecimal> amountContainer = new ArrayList<BigDecimal>();
-
-		Integer belowThisPurchaseDetailId = null;
-		getFifoAmountRecursive(required, quantityInThisStage, itemId,
-				amountContainer, belowThisPurchaseDetailId, session);
-
-		BigDecimal fifoAmount = BigDecimal.valueOf(0);
-		for (BigDecimal amount : amountContainer) {
-			fifoAmount.add(amount);
-		}
-		return fifoAmount;
-	}
-
-	private Integer getFifoAmountRecursive(int required,
-			int quantityInThisStage, int itemId,
-			List<BigDecimal> amountContainer,
-			Integer belowThisPurchaseDetailId, Session session) {
-
-		PurchaseDetail purchaseDetail = getLastPurchaseDetail(itemId,
-				belowThisPurchaseDetailId, session);
-
-		Integer available;
-		if (quantityInThisStage > purchaseDetail.getQuantity()) {
-			int quantityInPreviousStage = quantityInThisStage
-					- purchaseDetail.getQuantity();
-			int needMore = getFifoAmountRecursive(required,
-					quantityInPreviousStage, itemId, amountContainer,
-					purchaseDetail.getId(), session);
-			required = needMore;
-			available = purchaseDetail.getQuantity();
-
-		} else {
-			available = quantityInThisStage;
-		}
-
-		Integer taken;
-		Integer needMore;
-		if (required > available) {
-			taken = available;
-			needMore = required - taken;
-		} else {
-			taken = required;
-			needMore = 0;
-		}
-		BigDecimal amount = BigDecimal.valueOf(taken).multiply(
-				purchaseDetail.getPricePerUnit());
-		amountContainer.add(amount);
-
-		return needMore;
-	}
-
-	private PurchaseDetail getLastPurchaseDetail(int itemId,
-			Integer belowThisPurchaseDetailId, Session session) {
+	private BigDecimal getAmountOfPembelian(Timestamp afterThisTimestamp,
+			Session session) {
 		Criteria criteria = session.createCriteria(PurchaseDetail.class);
-		if (belowThisPurchaseDetailId != null) {
-			criteria.add(Restrictions.lt("id", belowThisPurchaseDetailId));
-		}
-		criteria.add(Restrictions.eq("itemId", itemId));
-		criteria.addOrder(Order.desc("id"));
-		criteria.setMaxResults(1);
+		criteria.createAlias("purchaseHeader", "purchaseHeader");
 
-		PurchaseDetail purchaseDetail = (PurchaseDetail) criteria
-				.uniqueResult();
-		return purchaseDetail;
+		if (afterThisTimestamp != null) {
+			criteria.add(Restrictions.gt("purchaseHeader.transactionTimestamp",
+					afterThisTimestamp));
+		}
+
+		@SuppressWarnings("unchecked")
+		List<PurchaseDetail> purchaseDetails = criteria.list();
+
+		BigDecimal amountOfPembelian = BigDecimal.valueOf(0);
+		for (PurchaseDetail purchaseDetail : purchaseDetails) {
+			amountOfPembelian = amountOfPembelian.add(BigDecimal.valueOf(
+					purchaseDetail.getQuantity()).multiply(
+					purchaseDetail.getPricePerUnit()));
+		}
+
+		return amountOfPembelian;
+	}
+
+	private BigDecimal getAmountOfReturPembelian(Timestamp afterThisTimestamp,
+			Session session) {
+		Criteria criteria = session.createCriteria(PurchaseReturnDetail.class);
+		criteria.createAlias("purchaseReturnHeader", "purchaseReturnHeader");
+
+		if (afterThisTimestamp != null) {
+			criteria.add(Restrictions.gt(
+					"purchaseReturnHeader.transactionTimestamp",
+					afterThisTimestamp));
+		}
+
+		@SuppressWarnings("unchecked")
+		List<PurchaseReturnDetail> purchaseReturnDetails = criteria.list();
+
+		BigDecimal amountOfReturPembelian = BigDecimal.valueOf(0);
+		for (PurchaseReturnDetail purchaseReturnDetail : purchaseReturnDetails) {
+			amountOfReturPembelian = amountOfReturPembelian.add(BigDecimal
+					.valueOf(
+							purchaseReturnDetail.getPurchaseDetail()
+									.getQuantity()).multiply(
+							purchaseReturnDetail.getPurchaseDetail()
+									.getPricePerUnit()));
+		}
+
+		return amountOfReturPembelian;
 	}
 
 	private StockOpnameHeader getLastStockOpnameHeader(Session session) {
@@ -296,48 +313,19 @@ public class StockOpnameFacade {
 		return stockOpnameHeader;
 	}
 
-	private BigDecimal getLifoAmount(int quantity, int itemId, Session session) {
-
-		Integer belowThisPurchaseDetailId = null;
-		BigDecimal amount = BigDecimal.valueOf(0);
-
-		while (quantity > 0) {
-			PurchaseDetail purchaseDetail = getLastPurchaseDetail(itemId,
-					belowThisPurchaseDetailId, session);
-
-			if (quantity > purchaseDetail.getQuantity()) {
-				amount = amount.add(purchaseDetail.getPricePerUnit().multiply(
-						BigDecimal.valueOf(purchaseDetail.getQuantity())));
-				quantity -= purchaseDetail.getQuantity();
-			} else {
-				amount = amount.add(purchaseDetail.getPricePerUnit().multiply(
-						BigDecimal.valueOf(quantity)));
-				quantity = 0;
-			}
-
-			belowThisPurchaseDetailId = purchaseDetail.getId();
-		}
-
-		return amount;
-	}
-
 	private StockOpnameDetail getStockOpnameDetail(int stockOpnameHeaderId,
 			int itemStockId, Session session) {
 
 		Criteria criteria = session.createCriteria(StockOpnameDetail.class);
 		criteria.createAlias("stockOpnameHeader", "stockOpnameHeader");
-		criteria.createAlias("itemStock", "itemStock");
+		criteria.createAlias("item", "item");
 
 		criteria.add(Restrictions.eq("stockOpnameHeader.id",
 				stockOpnameHeaderId));
-		criteria.add(Restrictions.eq("itemStock.id", itemStockId));
+		criteria.add(Restrictions.eq("item.id", itemStockId));
 
 		StockOpnameDetail stockOpnameDetail = (StockOpnameDetail) criteria
 				.uniqueResult();
 		return stockOpnameDetail;
-	}
-
-	public static enum StockQueueMethod {
-		FIFO, LIFO;
 	}
 }

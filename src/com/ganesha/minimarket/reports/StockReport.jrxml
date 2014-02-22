@@ -8,9 +8,9 @@
 	<parameter name="orderBy" class="java.lang.String"/>
 	<parameter name="reportBy" class="java.lang.String"/>
 	<parameter name="reportDate" class="java.util.Date"/>
-	<field name="item.code" class="java.lang.String"/>
-	<field name="item.name" class="java.lang.String"/>
-	<field name="stock" class="java.lang.Integer"/>
+	<field name="code" class="java.lang.String"/>
+	<field name="name" class="java.lang.String"/>
+	<field name="quantity" class="java.lang.Integer"/>
 	<field name="unit" class="java.lang.String"/>
 	<background>
 		<band splitType="Stretch"/>
@@ -113,7 +113,7 @@
 				<text><![CDATA[Kode Barang]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="110" y="0" width="184" height="15" uuid="546cce36-3f6c-47c4-8b26-90de0de3b742"/>
+				<reportElement x="110" y="0" width="350" height="15" uuid="546cce36-3f6c-47c4-8b26-90de0de3b742"/>
 				<box>
 					<topPen lineWidth="1.0"/>
 					<bottomPen lineWidth="1.0"/>
@@ -124,7 +124,7 @@
 				<text><![CDATA[Nama Barang]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="294" y="0" width="35" height="15" uuid="55712f51-525f-4554-9420-07b0e6926a3f"/>
+				<reportElement x="460" y="0" width="35" height="15" uuid="55712f51-525f-4554-9420-07b0e6926a3f"/>
 				<box>
 					<topPen lineWidth="1.0"/>
 					<bottomPen lineWidth="1.0"/>
@@ -135,7 +135,7 @@
 				<text><![CDATA[Qty]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="329" y="0" width="60" height="15" uuid="a096a846-28a9-4030-8021-07d1e54cbfe7"/>
+				<reportElement x="495" y="0" width="60" height="15" uuid="a096a846-28a9-4030-8021-07d1e54cbfe7"/>
 				<box>
 					<topPen lineWidth="1.0"/>
 					<bottomPen lineWidth="1.0"/>
@@ -165,24 +165,24 @@
 				<textElement textAlignment="Center">
 					<font fontName="Tahoma"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$F{item.code}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{code}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="110" y="0" width="230" height="15" uuid="83ae86d9-c05c-44ff-ab9d-0722b8ff5377"/>
+				<reportElement x="110" y="0" width="350" height="15" uuid="83ae86d9-c05c-44ff-ab9d-0722b8ff5377"/>
 				<textElement>
 					<font fontName="Tahoma"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$F{item.name}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{name}]]></textFieldExpression>
 			</textField>
 			<textField pattern="#,##0">
-				<reportElement x="294" y="0" width="35" height="15" uuid="e976445a-09d5-40db-b667-b6f1a18945c4"/>
+				<reportElement x="460" y="0" width="35" height="15" uuid="e976445a-09d5-40db-b667-b6f1a18945c4"/>
 				<textElement textAlignment="Center">
 					<font fontName="Tahoma"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$F{stock}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{quantity}]]></textFieldExpression>
 			</textField>
 			<textField pattern="###0">
-				<reportElement x="329" y="0" width="60" height="15" uuid="83f483f8-8043-4bfe-a859-6adfd66c87aa"/>
+				<reportElement x="495" y="0" width="60" height="15" uuid="83f483f8-8043-4bfe-a859-6adfd66c87aa"/>
 				<textElement textAlignment="Center">
 					<font fontName="Tahoma"/>
 				</textElement>

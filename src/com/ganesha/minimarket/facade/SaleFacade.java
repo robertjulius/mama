@@ -23,10 +23,8 @@ import javax.print.attribute.standard.Copies;
 import javax.print.event.PrintJobAdapter;
 import javax.print.event.PrintJobEvent;
 
-import org.hibernate.Criteria;
 import org.hibernate.Query;
 import org.hibernate.Session;
-import org.hibernate.criterion.Restrictions;
 
 import com.ganesha.accounting.constants.CoaCodeConstants;
 import com.ganesha.accounting.constants.Enums.DebitCreditFlag;
@@ -136,33 +134,38 @@ public class SaleFacade implements TransactionFacade {
 		}
 	}
 
-	public SaleDetail getDetail(String transactionNumber, Integer orderNum,
-			Session session) {
-		Criteria criteria = session.createCriteria(SaleDetail.class);
-		criteria.createAlias("saleHeader", "saleHeader");
-		criteria.add(Restrictions.eq("saleHeader.transactionNumber",
-				transactionNumber));
-		criteria.add(Restrictions.eq("orderNum", orderNum));
-
-		SaleDetail saleDetail = (SaleDetail) criteria.uniqueResult();
+	public SaleDetail getDetail(Integer id, Session session) {
+		SaleDetail saleDetail = (SaleDetail) session.get(SaleDetail.class, id);
 		return saleDetail;
 	}
 
 	public void performSale(SaleHeader saleHeader,
-			List<SaleDetail> saleDetails, Session session) throws AppException {
+			List<SaleDetail> saleDetails, Session session) throws AppException,
+			UserException {
 
-		ItemFacade stockFacade = ItemFacade.getInstance();
+		ItemFacade itemFacade = ItemFacade.getInstance();
 		session.saveOrUpdate(saleHeader);
 
 		for (SaleDetail saleDetail : saleDetails) {
-			Item item = stockFacade.getDetail(saleDetail.getItemId(), session);
-
-			int stock = stockFacade.calculateStock(item)
-					- saleDetail.getQuantity();
-			stockFacade.reAdjustStock(item, stock, session);
 
 			saleDetail.setSaleHeader(saleHeader);
 			session.saveOrUpdate(saleDetail);
+
+			Item item = itemFacade.getDetail(saleDetail.getItemId(), session);
+
+			int stockBeforeSale = itemFacade.calculateStock(item);
+			int stockAfterSale = stockBeforeSale - saleDetail.getQuantity();
+			if (stockAfterSale < 0) {
+				throw new UserException(
+						"Tidak dapat melakukan penjualan barang "
+								+ saleDetail.getItemCode() + " sebanyak "
+								+ saleDetail.getQuantity() + " "
+								+ item.getUnit()
+								+ " karena stock di sistem hanya ada "
+								+ stockBeforeSale + " " + item.getUnit());
+			}
+			itemFacade.reAdjustStock(item, stockAfterSale, session);
+
 			session.saveOrUpdate(item);
 
 			AccountFacade.getInstance().insertIntoAccount(
@@ -181,6 +184,7 @@ public class SaleFacade implements TransactionFacade {
 		String sqlString = "SELECT new Map("
 				+ "header.transactionNumber AS transactionNumber"
 				+ ", header.transactionTimestamp AS transactionTimestamp"
+				+ ", detail.id AS transactionDetailId"
 				+ ", detail.orderNum AS orderNum"
 				+ ", detail.itemCode AS itemCode"
 				+ ", detail.itemName AS itemName"

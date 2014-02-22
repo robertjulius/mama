@@ -39,7 +39,6 @@ import com.ganesha.hibernate.HibernateUtils;
 import com.ganesha.minimarket.Main;
 import com.ganesha.minimarket.facade.ItemFacade;
 import com.ganesha.minimarket.facade.StockOpnameFacade;
-import com.ganesha.minimarket.facade.StockOpnameFacade.StockQueueMethod;
 import com.ganesha.minimarket.model.Item;
 import com.ganesha.minimarket.model.StockOpnameDetail;
 import com.ganesha.minimarket.ui.forms.stockopname.StockOpnameConfirmationDialog.ConfirmType;
@@ -192,8 +191,7 @@ public class StockOpnameListDialog extends XJTableDialog {
 		Session session = HibernateUtils.openSession();
 		try {
 			ItemFacade facade = ItemFacade.getInstance();
-			List<Item> items = facade.search(null, null, null, false, null,
-					session);
+			List<Item> items = facade.search(null, null, null, false, session);
 
 			XTableModel tableModel = (XTableModel) table.getModel();
 			tableModel.setRowCount(items.size());
@@ -263,9 +261,11 @@ public class StockOpnameListDialog extends XJTableDialog {
 				int rowCount = table.getRowCount();
 
 				for (int i = 0; i < rowCount; ++i) {
-					int itemId = (int) table
-							.getValueAt(i, tableParameters.get(ColumnEnum.ID)
-									.getColumnIndex());
+					int itemId = (int) table.getModel()
+							.getValueAt(
+									i,
+									tableParameters.get(ColumnEnum.ID)
+											.getColumnIndex());
 
 					int quantitySistem = Formatter.formatStringToNumber(
 							(String) table.getModel().getValueAt(
@@ -295,7 +295,7 @@ public class StockOpnameListDialog extends XJTableDialog {
 
 					stockOpnameDetails.add(facade.createStockOpnameEntity(
 							itemId, quantityManual, overCount, lossCount,
-							StockQueueMethod.FIFO, session));
+							session));
 				}
 			} finally {
 				session.close();
@@ -325,9 +325,11 @@ public class StockOpnameListDialog extends XJTableDialog {
 				if (confirmType == ConfirmType.OK) {
 					facade.save(stockOpnames, startTimestamp, stopTimestamp,
 							session);
+					session.getTransaction().commit();
+					dispose();
+				} else {
+					session.getTransaction().rollback();
 				}
-				session.getTransaction().commit();
-				dispose();
 			} catch (RuntimeException e) {
 				session.getTransaction().rollback();
 				throw e;

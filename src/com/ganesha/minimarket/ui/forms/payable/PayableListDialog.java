@@ -17,6 +17,7 @@ import org.hibernate.Session;
 
 import com.ganesha.core.desktop.ExceptionHandler;
 import com.ganesha.core.exception.AppException;
+import com.ganesha.core.utils.Formatter;
 import com.ganesha.desktop.component.XJButton;
 import com.ganesha.desktop.component.XJLabel;
 import com.ganesha.desktop.component.XJPanel;
@@ -205,9 +206,10 @@ public class PayableListDialog extends XJTableDialog {
 				tableModel.setValueAt(payableSummary.get("name"), i,
 						tableParameters.get(ColumnEnum.NAME).getColumnIndex());
 
-				tableModel.setValueAt(payableSummary.get("remainingAmount"), i,
-						tableParameters.get(ColumnEnum.REMAINING_AMOUNT)
-								.getColumnIndex());
+				tableModel.setValueAt(Formatter
+						.formatNumberToString((Number) payableSummary
+								.get("remainingAmount")), i, tableParameters
+						.get(ColumnEnum.REMAINING_AMOUNT).getColumnIndex());
 
 				tableModel.setValueAt(payableSummary.get("id"), i,
 						tableParameters.get(ColumnEnum.ID).getColumnIndex());

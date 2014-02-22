@@ -17,6 +17,7 @@ import org.hibernate.Session;
 
 import com.ganesha.core.desktop.ExceptionHandler;
 import com.ganesha.core.exception.AppException;
+import com.ganesha.core.utils.Formatter;
 import com.ganesha.desktop.component.XJButton;
 import com.ganesha.desktop.component.XJLabel;
 import com.ganesha.desktop.component.XJPanel;
@@ -206,9 +207,10 @@ public class ReceivableListDialog extends XJTableDialog {
 				tableModel.setValueAt(receivableSummary.get("name"), i,
 						tableParameters.get(ColumnEnum.NAME).getColumnIndex());
 
-				tableModel.setValueAt(receivableSummary.get("remainingAmount"),
-						i, tableParameters.get(ColumnEnum.REMAINING_AMOUNT)
-								.getColumnIndex());
+				tableModel.setValueAt(Formatter
+						.formatNumberToString((Number) receivableSummary
+								.get("remainingAmount")), i, tableParameters
+						.get(ColumnEnum.REMAINING_AMOUNT).getColumnIndex());
 
 				tableModel.setValueAt(receivableSummary.get("id"), i,
 						tableParameters.get(ColumnEnum.ID).getColumnIndex());

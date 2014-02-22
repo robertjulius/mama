@@ -55,25 +55,31 @@ public class SaleReturnFacade implements TransactionFacade {
 			List<SaleReturnDetail> saleReturnDetails, Session session)
 			throws UserException, AppException {
 
-		ItemFacade stockFacade = ItemFacade.getInstance();
+		ItemFacade itemFacade = ItemFacade.getInstance();
 		session.saveOrUpdate(saleReturnHeader);
 
 		for (SaleReturnDetail saleReturnDetail : saleReturnDetails) {
-			Item item = stockFacade.getDetail(saleReturnDetail.getSaleDetail()
-					.getItemId(), session);
-
-			int stock = stockFacade.calculateStock(item)
-					+ saleReturnDetail.getQuantity();
-			stockFacade.reAdjustStock(item, stock, session);
-
-			// BigDecimal lastPrice = saleReturnDetail.getPricePerUnit();
-			// item.setBuyPrice(lastPrice);
 
 			saleReturnDetail.setSaleReturnHeader(saleReturnHeader);
 			session.saveOrUpdate(saleReturnDetail);
-			session.saveOrUpdate(item);
 
-			session.saveOrUpdate(saleReturnDetail);
+			Item item = itemFacade.getDetail(saleReturnDetail.getSaleDetail()
+					.getItemId(), session);
+
+			int stockBeforeReturn = itemFacade.calculateStock(item);
+			int stockAfterReturn = stockBeforeReturn
+					+ saleReturnDetail.getQuantity();
+			int maxStock = itemFacade.calculateMaxStock(item);
+			if (stockAfterReturn > maxStock) {
+				throw new UserException("Tidak dapat melakukan retur barang "
+						+ saleReturnDetail.getSaleDetail().getItemCode()
+						+ " sebanyak " + saleReturnDetail.getQuantity() + " "
+						+ item.getUnit() + ". Stock saat ini ada sebanyak "
+						+ stockBeforeReturn
+						+ ". Total modal untuk barang ini hanya sebanyak "
+						+ maxStock + " " + item.getUnit());
+			}
+			itemFacade.reAdjustStock(item, stockAfterReturn, session);
 
 			AccountFacade.getInstance().insertIntoAccount(
 					CoaCodeConstants.RETUR_PENJUALAN, saleReturnDetail.getId(),
@@ -91,6 +97,7 @@ public class SaleReturnFacade implements TransactionFacade {
 		String sqlString = "SELECT new Map("
 				+ "header.transactionNumber AS transactionNumber"
 				+ ", header.transactionTimestamp AS transactionTimestamp"
+				+ ", detail.id AS transactionDetailId"
 				+ ", detail.orderNum AS orderNum"
 				+ ", detail.itemCode AS itemCode"
 				+ ", detail.itemName AS itemName"

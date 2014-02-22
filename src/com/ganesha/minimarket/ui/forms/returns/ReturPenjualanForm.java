@@ -112,6 +112,10 @@ public class ReturPenjualanForm extends XJDialog {
 				"Total", false, XTableConstants.CELL_RENDERER_RIGHT,
 				Double.class));
 
+		tableParameters.put(ColumnEnum.SALE_DETAIL_ID, new XTableParameter(10,
+				0, false, "Sale Detail ID", true,
+				XTableConstants.CELL_RENDERER_LEFT, Integer.class));
+
 	}
 
 	public ReturPenjualanForm(Window parent) {
@@ -149,9 +153,8 @@ public class ReturPenjualanForm extends XJDialog {
 		pnlHeader.add(lblNoTransaksi, "cell 0 0");
 
 		txtNoTransaksi = new XJTextField();
-		txtNoTransaksi
-				.setText(GeneralConstants.PREFIX_TRX_NUMBER_PURCHASE_RETURN
-						+ CommonUtils.getTimestampInString());
+		txtNoTransaksi.setText(GeneralConstants.PREFIX_TRX_NUMBER_SALES_RETURN
+				+ CommonUtils.getTimestampInString());
 		txtNoTransaksi.setEditable(false);
 		pnlHeader.add(txtNoTransaksi, "cell 1 0 2 1,growx");
 
@@ -318,14 +321,14 @@ public class ReturPenjualanForm extends XJDialog {
 	}
 
 	private void cariTransaksi() {
-		SearchTransactionDialog searchEntityDialog = new SearchTransactionDialog(
+		SearchTransactionDialog searchTransactionDialog = new SearchTransactionDialog(
 				"Cari Daftar Transaksi Penjualan", this,
 				SaleFacade.getInstance());
-		searchEntityDialog.setVisible(true);
-		String noTransaksi = searchEntityDialog.getSelectedTransactionNumber();
-		Integer orderNumber = searchEntityDialog.getSelectedOrderNumber();
-		if (noTransaksi != null) {
-			tambah(noTransaksi, orderNumber);
+		searchTransactionDialog.setVisible(true);
+		Integer saleDetailId = searchTransactionDialog
+				.getSelectedTransactionDetailId();
+		if (saleDetailId != null) {
+			tambah(saleDetailId);
 		}
 	}
 
@@ -393,27 +396,46 @@ public class ReturPenjualanForm extends XJDialog {
 			for (int i = 0; i < rowCount; i++) {
 				SaleReturnDetail saleReturnDetail = new SaleReturnDetail();
 
+				Integer saleDetailId = Formatter.formatStringToNumber(
+						table.getModel()
+								.getValueAt(
+										i,
+										tableParameters.get(
+												ColumnEnum.SALE_DETAIL_ID)
+												.getColumnIndex()).toString())
+						.intValue();
+
+				SaleDetail saleDetail = SaleFacade.getInstance().getDetail(
+						saleDetailId, session);
+
 				saleReturnDetail.setOrderNum(Formatter.formatStringToNumber(
-						table.getModel().getValueAt(
-								i,
-								tableParameters.get(ColumnEnum.NUM)
-										.getColumnIndex()).toString())
+						table.getModel()
+								.getValueAt(
+										i,
+										tableParameters.get(ColumnEnum.NUM)
+												.getColumnIndex()).toString())
 						.intValue());
 
+				saleReturnDetail.setSaleDetail(saleDetail);
+
 				saleReturnDetail.setQuantity(Formatter.formatStringToNumber(
-						table.getModel().getValueAt(
-								i,
-								tableParameters.get(ColumnEnum.QUANTITY)
-										.getColumnIndex()).toString())
+						table.getModel()
+								.getValueAt(
+										i,
+										tableParameters
+												.get(ColumnEnum.QUANTITY)
+												.getColumnIndex()).toString())
 						.intValue());
 
 				saleReturnDetail.setTotalAmount(BigDecimal.valueOf(Formatter
 						.formatStringToNumber(
-								table.getModel().getValueAt(
-										i,
-										tableParameters.get(ColumnEnum.TOTAL)
-												.getColumnIndex()).toString())
-						.doubleValue()));
+								table.getModel()
+										.getValueAt(
+												i,
+												tableParameters.get(
+														ColumnEnum.TOTAL)
+														.getColumnIndex())
+										.toString()).doubleValue()));
 
 				saleReturnDetails.add(saleReturnDetail);
 			}
@@ -438,27 +460,34 @@ public class ReturPenjualanForm extends XJDialog {
 		}
 
 		int jumlah = Formatter.formatStringToNumber(
-				table.getModel().getValueAt(
-						row,
-						tableParameters.get(ColumnEnum.QUANTITY)
-								.getColumnIndex()).toString()).intValue();
+				table.getModel()
+						.getValueAt(
+								row,
+								tableParameters.get(ColumnEnum.QUANTITY)
+										.getColumnIndex()).toString())
+				.intValue();
 		table.setValueAt(Formatter.formatNumberToString(jumlah), row,
 				tableParameters.get(ColumnEnum.QUANTITY).getColumnIndex());
 
 		double hargaSatuan = Formatter.formatStringToNumber(
-				table.getModel().getValueAt(row,
-						tableParameters.get(ColumnEnum.PRICE).getColumnIndex())
-						.toString()).doubleValue();
+				table.getModel()
+						.getValueAt(
+								row,
+								tableParameters.get(ColumnEnum.PRICE)
+										.getColumnIndex()).toString())
+				.doubleValue();
 		table.setValueAt(Formatter.formatNumberToString(hargaSatuan), row,
 				tableParameters.get(ColumnEnum.PRICE).getColumnIndex());
 
 		double totalBeforeDiscount = jumlah * hargaSatuan;
 
 		double discountPercent = Formatter.formatStringToNumber(
-				table.getModel().getValueAt(
-						row,
-						tableParameters.get(ColumnEnum.DISCOUNT)
-								.getColumnIndex()).toString()).doubleValue();
+				table.getModel()
+						.getValueAt(
+								row,
+								tableParameters.get(ColumnEnum.DISCOUNT)
+										.getColumnIndex()).toString())
+				.doubleValue();
 		double diskonAmount = discountPercent / 100 * totalBeforeDiscount;
 
 		double total = Math.floor(totalBeforeDiscount - diskonAmount);
@@ -472,9 +501,12 @@ public class ReturPenjualanForm extends XJDialog {
 		int rowCount = table.getRowCount();
 		double totalRetur = 0;
 		for (int i = 0; i < rowCount; ++i) {
-			String string = table.getModel().getValueAt(i,
-					tableParameters.get(ColumnEnum.TOTAL).getColumnIndex())
-					.toString();
+			String string = table
+					.getModel()
+					.getValueAt(
+							i,
+							tableParameters.get(ColumnEnum.TOTAL)
+									.getColumnIndex()).toString();
 			double totalPerRow = Formatter.formatStringToNumber(string)
 					.doubleValue();
 			totalRetur += totalPerRow;
@@ -482,16 +514,15 @@ public class ReturPenjualanForm extends XJDialog {
 		lblTotalReturValue.setText(Formatter.formatNumberToString(totalRetur));
 	}
 
-	private void tambah(String transactionNumber, Integer orderNum) {
-		if (transactionNumber.trim().equals("") || orderNum == null) {
+	private void tambah(Integer saleDetailId) {
+		if (saleDetailId == null) {
 			return;
 		}
 
 		Session session = HibernateUtils.openSession();
 		try {
 			SaleFacade facade = SaleFacade.getInstance();
-			SaleDetail saleDetail = facade.getDetail(transactionNumber,
-					orderNum, session);
+			SaleDetail saleDetail = facade.getDetail(saleDetailId, session);
 			SaleHeader saleHeader = saleDetail.getSaleHeader();
 
 			XTableModel tableModel = (XTableModel) table.getModel();
@@ -532,6 +563,9 @@ public class ReturPenjualanForm extends XJDialog {
 							tableParameters.get(ColumnEnum.TOTAL)
 									.getColumnIndex());
 
+			tableModel.setValueAt(saleDetail.getId(), rowIndex, tableParameters
+					.get(ColumnEnum.SALE_DETAIL_ID).getColumnIndex());
+
 			reorderRowNumber();
 
 			int row = table.getRowCount() - 1;
@@ -547,6 +581,6 @@ public class ReturPenjualanForm extends XJDialog {
 	}
 
 	private enum ColumnEnum {
-		NUM, TRANSACTION_NUM, DATE, ITEM_CODE, ITEM_NAME, QUANTITY, UNIT, PRICE, DISCOUNT, TOTAL
+		NUM, TRANSACTION_NUM, DATE, ITEM_CODE, ITEM_NAME, QUANTITY, UNIT, PRICE, DISCOUNT, TOTAL, SALE_DETAIL_ID
 	}
 }

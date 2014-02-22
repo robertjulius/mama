@@ -41,3 +41,8 @@ Toad
 
 
 ItemFacade.reAdjustStock()
+
+Cleansing data:
+1. ItemStock
+
+Activity Log

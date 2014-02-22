@@ -383,9 +383,10 @@ public class StockForm extends XJDialog {
 			boolean disabled = chkDisabled.isSelected();
 
 			if (actionType == ActionType.CREATE) {
-				facade.addNewItem(code.toUpperCase(), name.toUpperCase(),
-						barcode, unit, buyPrice, hpp, sellPrice, minimumStock,
-						disabled, deleted, session);
+				Item item = facade.addNewItem(code.toUpperCase(),
+						name.toUpperCase(), barcode, unit, buyPrice, hpp,
+						sellPrice, minimumStock, disabled, deleted, session);
+				itemId = item.getId();
 				dispose();
 			} else if (actionType == ActionType.UPDATE) {
 				facade.updateExistingItem(itemId, name.toUpperCase(), barcode,

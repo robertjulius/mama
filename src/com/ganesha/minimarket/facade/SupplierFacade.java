@@ -27,8 +27,8 @@ public class SupplierFacade {
 	private SupplierFacade() {
 	}
 
-	public void addNewSupplier(String address1, String address2, String code,
-			String contackPerson1, String contackPerson1Email,
+	public Supplier addNewSupplier(String address1, String address2,
+			String code, String contackPerson1, String contackPerson1Email,
 			String contackPerson1Phone, String contackPerson2,
 			String contackPerson2Email, String contackPerson2Phone,
 			String description, String email1, String email2, String name,
@@ -69,6 +69,7 @@ public class SupplierFacade {
 		supplier.setLastUpdatedTimestamp(CommonUtils.getCurrentTimestamp());
 
 		session.saveOrUpdate(supplier);
+		return supplier;
 	}
 
 	public Supplier getDetail(int id, Session session) {
@@ -113,8 +114,8 @@ public class SupplierFacade {
 		return supplier;
 	}
 
-	public void updateExistingSupplier(String address1, String address2,
-			Integer id, String contackPerson1, String contackPerson1Email,
+	public void updateExistingSupplier(Integer id, String address1,
+			String address2, String contackPerson1, String contackPerson1Email,
 			String contackPerson1Phone, String contackPerson2,
 			String contackPerson2Email, String contackPerson2Phone,
 			String description, String email1, String email2, String name,

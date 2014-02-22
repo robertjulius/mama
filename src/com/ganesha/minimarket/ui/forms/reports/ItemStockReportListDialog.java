@@ -7,6 +7,7 @@ import java.awt.event.ActionListener;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
 import java.awt.event.KeyEvent;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -34,9 +35,7 @@ import com.ganesha.desktop.component.xtableutils.XTableModel;
 import com.ganesha.desktop.component.xtableutils.XTableParameter;
 import com.ganesha.desktop.component.xtableutils.XTableUtils;
 import com.ganesha.hibernate.HibernateUtils;
-import com.ganesha.minimarket.facade.ItemFacade;
 import com.ganesha.minimarket.facade.ItemStockReportFacade;
-import com.ganesha.minimarket.model.Item;
 import com.ganesha.minimarket.utils.PermissionConstants;
 
 public class ItemStockReportListDialog extends XJTableDialog {
@@ -44,10 +43,13 @@ public class ItemStockReportListDialog extends XJTableDialog {
 	private static final long serialVersionUID = 1452286313727721700L;
 	private static final ComboBoxObject[] CMB_ORDER_BY;
 	static {
-		CMB_ORDER_BY = new ComboBoxObject[3];
-		CMB_ORDER_BY[0] = new ComboBoxObject("item.code", "Kode Barang");
-		CMB_ORDER_BY[1] = new ComboBoxObject("item.name", "Nama Barang");
-		CMB_ORDER_BY[2] = new ComboBoxObject("stock", "Jumlah Stok");
+		List<ComboBoxObject> comboBoxObjects = new ArrayList<>();
+		comboBoxObjects.add(new ComboBoxObject("code", "Kode Barang"));
+		comboBoxObjects.add(new ComboBoxObject("name", "Nama Barang"));
+		comboBoxObjects.add(new ComboBoxObject("quantity", "Jumlah Stok"));
+
+		CMB_ORDER_BY = new ComboBoxObject[comboBoxObjects.size()];
+		comboBoxObjects.toArray(CMB_ORDER_BY);
 	}
 
 	private XJTable table;
@@ -181,34 +183,39 @@ public class ItemStockReportListDialog extends XJTableDialog {
 	public void loadData() throws AppException {
 		Session session = HibernateUtils.openSession();
 		try {
-			String[] orderBy = { (String) ((ComboBoxObject) cmbOrderBy
-					.getSelectedItem()).getId() };
+			String orderBy = (String) ((ComboBoxObject) cmbOrderBy
+					.getSelectedItem()).getId();
 
-			ItemFacade facade = ItemFacade.getInstance();
-			List<Item> items = facade.search(null, null, null, false, orderBy,
-					session);
+			ItemStockReportFacade facade = ItemStockReportFacade.getInstance();
+			List<Map<String, Object>> itemMaps = facade
+					.search(orderBy, session);
 
 			XTableModel tableModel = (XTableModel) table.getModel();
-			tableModel.setRowCount(items.size());
+			tableModel.setRowCount(itemMaps.size());
 
-			for (int i = 0; i < items.size(); ++i) {
-				Item item = items.get(i);
+			for (int i = 0; i < itemMaps.size(); ++i) {
+				Map<String, Object> itemMap = itemMaps.get(i);
+
+				String code = (String) itemMap.get("code");
+				String name = (String) itemMap.get("name");
+				String unit = (String) itemMap.get("unit");
+				Integer quantity = Formatter.formatStringToNumber(
+						itemMap.get("quantity").toString()).intValue();
 
 				tableModel.setValueAt(i + 1, i,
 						tableParameters.get(ColumnEnum.NUM).getColumnIndex());
 
-				tableModel.setValueAt(item.getCode(), i,
+				tableModel.setValueAt(code, i,
 						tableParameters.get(ColumnEnum.CODE).getColumnIndex());
 
-				tableModel.setValueAt(item.getName(), i,
+				tableModel.setValueAt(name, i,
 						tableParameters.get(ColumnEnum.NAME).getColumnIndex());
 
-				tableModel.setValueAt(item.getUnit(), i,
+				tableModel.setValueAt(unit, i,
 						tableParameters.get(ColumnEnum.UNIT).getColumnIndex());
 
-				tableModel.setValueAt(Formatter.formatNumberToString(facade
-						.calculateStock(item)), i,
-						tableParameters.get(ColumnEnum.QUANTITY)
+				tableModel.setValueAt(Formatter.formatNumberToString(quantity),
+						i, tableParameters.get(ColumnEnum.QUANTITY)
 								.getColumnIndex());
 			}
 		} finally {
