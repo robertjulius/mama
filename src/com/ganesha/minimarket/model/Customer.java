@@ -8,10 +8,11 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 
 import com.ganesha.model.Inactivable;
+import com.ganesha.model.LogableEntity;
 
 @Entity
 @Table(name = "CUSTOMERS")
-public class Customer extends Inactivable {
+public class Customer extends Inactivable implements LogableEntity {
 	private static final long serialVersionUID = -7780389008755790841L;
 
 	@Id
@@ -53,6 +54,7 @@ public class Customer extends Inactivable {
 		return email;
 	}
 
+	@Override
 	public Integer getId() {
 		return id;
 	}

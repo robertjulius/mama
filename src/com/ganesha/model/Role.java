@@ -13,7 +13,7 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name = "ROLES")
-public class Role extends Inactivable {
+public class Role extends Inactivable implements LogableEntity {
 	private static final long serialVersionUID = -7780389008755790841L;
 
 	@Id
@@ -35,6 +35,7 @@ public class Role extends Inactivable {
 		return description;
 	}
 
+	@Override
 	public Integer getId() {
 		return id;
 	}

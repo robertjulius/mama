@@ -12,7 +12,7 @@ import javax.swing.plaf.nimbus.NimbusLookAndFeel;
 import org.hibernate.Query;
 import org.hibernate.Session;
 
-import com.ganesha.core.desktop.ExceptionHandler;
+import com.ganesha.desktop.exeptions.ExceptionHandler;
 import com.ganesha.core.exception.AppException;
 import com.ganesha.core.utils.CommonUtils;
 import com.ganesha.desktop.component.permissionutils.PermissionChecker;

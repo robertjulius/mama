@@ -17,7 +17,8 @@ import javax.swing.JSeparator;
 
 import net.miginfocom.swing.MigLayout;
 
-import com.ganesha.core.desktop.ExceptionHandler;
+import org.hibernate.Session;
+
 import com.ganesha.core.exception.AppException;
 import com.ganesha.core.exception.UserException;
 import com.ganesha.core.utils.GeneralConstants;
@@ -28,6 +29,8 @@ import com.ganesha.desktop.component.XJLabel;
 import com.ganesha.desktop.component.XJPanel;
 import com.ganesha.desktop.component.XJPasswordField;
 import com.ganesha.desktop.component.XJTextField;
+import com.ganesha.desktop.exeptions.ExceptionHandler;
+import com.ganesha.hibernate.HibernateUtils;
 import com.ganesha.minimarket.Main;
 import com.ganesha.minimarket.facade.LoginFacade;
 import com.ganesha.minimarket.ui.MainFrame;
@@ -152,15 +155,20 @@ public class LoginForm extends XJFrame {
 	private void login(String loginId, String password) throws UserException,
 			AppException {
 
-		LoginFacade facade = LoginFacade.getInstance();
-		boolean success = facade.login(loginId, password);
-		if (success) {
-			setVisible(false);
-			new MainFrame().setVisible(true);
-		} else {
-			/*
-			 * TODO
-			 */
+		Session session = HibernateUtils.openSession();
+		try {
+			LoginFacade facade = LoginFacade.getInstance();
+			boolean success = facade.login(loginId, password, session);
+			if (success) {
+				setVisible(false);
+				new MainFrame().setVisible(true);
+			} else {
+				/*
+				 * TODO
+				 */
+			}
+		} finally {
+			session.close();
 		}
 	}
 }

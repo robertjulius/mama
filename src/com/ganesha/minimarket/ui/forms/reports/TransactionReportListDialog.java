@@ -20,13 +20,11 @@ import net.miginfocom.swing.MigLayout;
 
 import org.hibernate.Session;
 
-import com.ganesha.core.desktop.ExceptionHandler;
 import com.ganesha.core.exception.AppException;
 import com.ganesha.core.exception.UserException;
 import com.ganesha.core.utils.CommonUtils;
 import com.ganesha.core.utils.Formatter;
 import com.ganesha.core.utils.GeneralConstants;
-import com.ganesha.core.utils.GeneralConstants.TransactionType;
 import com.ganesha.desktop.component.ComboBoxObject;
 import com.ganesha.desktop.component.XEtchedBorder;
 import com.ganesha.desktop.component.XJButton;
@@ -41,7 +39,9 @@ import com.ganesha.desktop.component.xtableutils.XTableConstants;
 import com.ganesha.desktop.component.xtableutils.XTableModel;
 import com.ganesha.desktop.component.xtableutils.XTableParameter;
 import com.ganesha.desktop.component.xtableutils.XTableUtils;
+import com.ganesha.desktop.exeptions.ExceptionHandler;
 import com.ganesha.hibernate.HibernateUtils;
+import com.ganesha.minimarket.constants.Enums.TransactionType;
 import com.ganesha.minimarket.facade.PurchaseReportFacade;
 import com.ganesha.minimarket.facade.PurchaseReturnReportFacade;
 import com.ganesha.minimarket.facade.SaleReportFacade;

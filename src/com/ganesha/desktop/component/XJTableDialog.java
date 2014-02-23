@@ -2,7 +2,7 @@ package com.ganesha.desktop.component;
 
 import java.awt.Window;
 
-import com.ganesha.core.desktop.ExceptionHandler;
+import com.ganesha.desktop.exeptions.ExceptionHandler;
 import com.ganesha.core.exception.AppException;
 import com.ganesha.core.exception.UserException;
 

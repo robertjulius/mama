@@ -2,8 +2,10 @@ package com.ganesha.minimarket.facade;
 
 import java.util.List;
 
+import org.hibernate.Criteria;
 import org.hibernate.Query;
 import org.hibernate.Session;
+import org.hibernate.criterion.Restrictions;
 
 import com.ganesha.model.Permission;
 
@@ -29,5 +31,13 @@ public class PermissionFacade {
 		List<Permission> permissions = query.list();
 
 		return permissions;
+	}
+
+	public Permission getDetail(String code, Session session) {
+		Criteria criteria = session.createCriteria(Permission.class);
+		criteria.add(Restrictions.eq("code", code));
+
+		Permission permission = (Permission) criteria.uniqueResult();
+		return permission;
 	}
 }

@@ -11,7 +11,7 @@ import javax.swing.JFileChooser;
 import net.miginfocom.swing.MigLayout;
 
 import com.ganesha.core.SystemSetting;
-import com.ganesha.core.desktop.ExceptionHandler;
+import com.ganesha.desktop.exeptions.ExceptionHandler;
 import com.ganesha.core.exception.AppException;
 import com.ganesha.core.exception.UserException;
 import com.ganesha.core.utils.GeneralConstants;

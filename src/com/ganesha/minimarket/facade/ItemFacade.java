@@ -151,7 +151,7 @@ public class ItemFacade {
 		return items;
 	}
 
-	public void updateExistingItem(int id, String name, String barcode,
+	public Item updateExistingItem(int id, String name, String barcode,
 			String unit, BigDecimal buyPrice, BigDecimal hpp,
 			BigDecimal sellPrice, int minimumStock, boolean disabled,
 			boolean deleted, Session session) throws UserException {
@@ -190,6 +190,7 @@ public class ItemFacade {
 		item.setLastUpdatedTimestamp(CommonUtils.getCurrentTimestamp());
 
 		session.saveOrUpdate(item);
+		return item;
 	}
 
 	private Item insertIntoItem(String code, String name, String barcode,

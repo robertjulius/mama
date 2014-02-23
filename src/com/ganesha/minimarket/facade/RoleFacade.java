@@ -104,7 +104,7 @@ public class RoleFacade {
 		return role;
 	}
 
-	public void updateExistingRole(int id, String name, String description,
+	public Role updateExistingRole(int id, String name, String description,
 			List<Permission> permissions, Session session) throws UserException {
 
 		Role role = getDetail(id, session);
@@ -126,6 +126,8 @@ public class RoleFacade {
 		session.saveOrUpdate(role);
 
 		updateRolePermissionLink(role.getId(), permissions, session);
+
+		return role;
 	}
 
 	private void deleteRolePermissionLinkByRoleId(int roleId, Session session) {

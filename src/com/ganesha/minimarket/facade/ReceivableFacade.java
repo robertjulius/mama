@@ -10,10 +10,10 @@ import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.criterion.Restrictions;
 
+import com.ganesha.accounting.constants.Enums.AccountAction;
 import com.ganesha.core.exception.AppException;
 import com.ganesha.core.utils.CommonUtils;
 import com.ganesha.core.utils.GeneralConstants;
-import com.ganesha.core.utils.GeneralConstants.AccountAction;
 import com.ganesha.hibernate.HqlParameter;
 import com.ganesha.minimarket.Main;
 import com.ganesha.minimarket.model.ReceivableSummary;
@@ -33,7 +33,7 @@ public class ReceivableFacade {
 	private ReceivableFacade() {
 	}
 
-	public void addSummary(int clientId, Session session) {
+	public ReceivableSummary addSummary(int clientId, Session session) {
 		ReceivableSummary receivableSummary = new ReceivableSummary();
 		receivableSummary.setClientId(clientId);
 		receivableSummary.setRemainingAmount(BigDecimal.valueOf(0));
@@ -43,11 +43,12 @@ public class ReceivableFacade {
 				.getCurrentTimestamp());
 
 		session.saveOrUpdate(receivableSummary);
+		return receivableSummary;
 	}
 
-	public void addTransaction(int clientId, AccountAction accountAction,
-			Date maturityDate, BigDecimal amount, String description,
-			Session session) throws AppException {
+	public ReceivableSummary addTransaction(int clientId,
+			AccountAction accountAction, Date maturityDate, BigDecimal amount,
+			String description, Session session) throws AppException {
 
 		boolean summaryExists = GlobalFacade.getInstance().isExists("clientId",
 				clientId, ReceivableSummary.class, session);
@@ -101,6 +102,8 @@ public class ReceivableFacade {
 		receivableSummary.setLastUpdatedTimestamp(CommonUtils
 				.getCurrentTimestamp());
 		session.saveOrUpdate(receivableTransaction);
+
+		return receivableSummary;
 	}
 
 	public ReceivableSummary getSummary(int clientId, Session session) {

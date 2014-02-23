@@ -21,10 +21,11 @@ import net.sf.jasperreports.swing.JRViewer;
 
 import org.hibernate.Session;
 
-import com.ganesha.core.desktop.ExceptionHandler;
 import com.ganesha.core.exception.AppException;
 import com.ganesha.core.utils.CommonUtils;
 import com.ganesha.core.utils.Formatter;
+import com.ganesha.coreapps.constants.Enums.ActionType;
+import com.ganesha.coreapps.facade.ActivityLogFacade;
 import com.ganesha.desktop.component.XJButton;
 import com.ganesha.desktop.component.XJLabel;
 import com.ganesha.desktop.component.XJPanel;
@@ -35,12 +36,14 @@ import com.ganesha.desktop.component.xtableutils.XTableConstants;
 import com.ganesha.desktop.component.xtableutils.XTableModel;
 import com.ganesha.desktop.component.xtableutils.XTableParameter;
 import com.ganesha.desktop.component.xtableutils.XTableUtils;
+import com.ganesha.desktop.exeptions.ExceptionHandler;
 import com.ganesha.hibernate.HibernateUtils;
 import com.ganesha.minimarket.Main;
 import com.ganesha.minimarket.facade.ItemFacade;
 import com.ganesha.minimarket.facade.StockOpnameFacade;
 import com.ganesha.minimarket.model.Item;
 import com.ganesha.minimarket.model.StockOpnameDetail;
+import com.ganesha.minimarket.model.StockOpnameHeader;
 import com.ganesha.minimarket.ui.forms.stockopname.StockOpnameConfirmationDialog.ConfirmType;
 import com.ganesha.minimarket.utils.PermissionConstants;
 
@@ -323,9 +326,15 @@ public class StockOpnameListDialog extends XJTableDialog {
 
 				session.beginTransaction();
 				if (confirmType == ConfirmType.OK) {
-					facade.save(stockOpnames, startTimestamp, stopTimestamp,
+					StockOpnameHeader stockOpnameHeader = facade.save(
+							stockOpnames, startTimestamp, stopTimestamp,
 							session);
+
+					ActivityLogFacade.doLog(getPermissionCode(),
+							ActionType.TRANSACTION, Main.getUserLogin(),
+							stockOpnameHeader, session);
 					session.getTransaction().commit();
+
 					dispose();
 				} else {
 					session.getTransaction().rollback();

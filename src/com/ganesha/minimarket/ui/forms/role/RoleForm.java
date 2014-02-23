@@ -14,10 +14,10 @@ import net.miginfocom.swing.MigLayout;
 
 import org.hibernate.Session;
 
-import com.ganesha.core.desktop.ExceptionHandler;
-import com.ganesha.core.exception.ActionTypeNotSupported;
 import com.ganesha.core.exception.UserException;
-import com.ganesha.core.utils.GeneralConstants.ActionType;
+import com.ganesha.coreapps.constants.Enums.ActionType;
+import com.ganesha.coreapps.exception.ActionTypeNotSupported;
+import com.ganesha.coreapps.facade.ActivityLogFacade;
 import com.ganesha.desktop.component.ComboBoxObject;
 import com.ganesha.desktop.component.XJButton;
 import com.ganesha.desktop.component.XJDialog;
@@ -25,7 +25,9 @@ import com.ganesha.desktop.component.XJLabel;
 import com.ganesha.desktop.component.XJList;
 import com.ganesha.desktop.component.XJPanel;
 import com.ganesha.desktop.component.XJTextField;
+import com.ganesha.desktop.exeptions.ExceptionHandler;
 import com.ganesha.hibernate.HibernateUtils;
+import com.ganesha.minimarket.Main;
 import com.ganesha.minimarket.facade.PermissionFacade;
 import com.ganesha.minimarket.facade.RoleFacade;
 import com.ganesha.minimarket.utils.PermissionConstants;
@@ -333,19 +335,24 @@ public class RoleForm extends XJDialog {
 				permissions.add(permission);
 			}
 
+			Role role = null;
 			if (actionType == ActionType.CREATE) {
-				Role role = facade.addNewRole(txtRoleName.getText(),
+				role = facade.addNewRole(txtRoleName.getText(),
 						txtDescription.getText(), permissions, session);
 				roleId = role.getId();
 				dispose();
 			} else if (actionType == ActionType.UPDATE) {
-				facade.updateExistingRole(roleId, txtRoleName.getText(),
+				role = facade.updateExistingRole(roleId, txtRoleName.getText(),
 						txtDescription.getText(), permissions, session);
 				dispose();
 			} else {
 				throw new ActionTypeNotSupported(actionType);
 			}
+
+			ActivityLogFacade.doLog(getPermissionCode(), actionType,
+					Main.getUserLogin(), role, session);
 			session.getTransaction().commit();
+
 		} catch (Exception e) {
 			session.getTransaction().rollback();
 			throw e;

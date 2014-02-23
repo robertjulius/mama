@@ -84,7 +84,7 @@ public class CustomerFacade {
 		return customer;
 	}
 
-	public void updateExistingCustomer(Integer id, String address,
+	public Customer updateExistingCustomer(Integer id, String address,
 			String description, String email, String name, String phone,
 			boolean disabled, boolean deleted, Session session)
 			throws UserException {
@@ -116,5 +116,6 @@ public class CustomerFacade {
 		customer.setLastUpdatedTimestamp(CommonUtils.getCurrentTimestamp());
 
 		session.saveOrUpdate(customer);
+		return customer;
 	}
 }

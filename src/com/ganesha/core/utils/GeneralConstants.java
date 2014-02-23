@@ -8,6 +8,7 @@ import javax.swing.text.DefaultFormatterFactory;
 import javax.swing.text.NumberFormatter;
 
 import com.ganesha.desktop.component.ComboBoxObject;
+import com.ganesha.minimarket.constants.Enums.TransactionType;
 
 public class GeneralConstants {
 
@@ -74,16 +75,4 @@ public class GeneralConstants {
 	public static final String SYSTEM_SETTING_SMTP_ACCOUNT_LOGIN = "system.setting.smtp.account.login";
 	public static final String SYSTEM_SETTING_SMTP_ACCOUNT_PASSWORD = "system.setting.smtp.account.password";
 	public static final String SYSTEM_SETTING_EMAIL_TO = "system.setting.email.to";
-
-	public static enum AccountAction {
-		INCREASE, DECREASE
-	}
-
-	public static enum ActionType {
-		CREATE, READ, UPDATE, DELETE, OTHER
-	}
-
-	public static enum TransactionType {
-		SALES, PURCHASE, SALES_RETURN, PURCHASE_RETURN
-	}
 }

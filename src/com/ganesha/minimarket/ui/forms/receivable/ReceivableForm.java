@@ -16,11 +16,12 @@ import net.miginfocom.swing.MigLayout;
 
 import org.hibernate.Session;
 
-import com.ganesha.core.desktop.ExceptionHandler;
+import com.ganesha.accounting.constants.Enums.AccountAction;
 import com.ganesha.core.exception.UserException;
 import com.ganesha.core.utils.CommonUtils;
 import com.ganesha.core.utils.Formatter;
-import com.ganesha.core.utils.GeneralConstants.AccountAction;
+import com.ganesha.coreapps.constants.Enums.ActionType;
+import com.ganesha.coreapps.facade.ActivityLogFacade;
 import com.ganesha.desktop.component.XEtchedBorder;
 import com.ganesha.desktop.component.XJButton;
 import com.ganesha.desktop.component.XJDialog;
@@ -28,7 +29,9 @@ import com.ganesha.desktop.component.XJLabel;
 import com.ganesha.desktop.component.XJPanel;
 import com.ganesha.desktop.component.XJTextArea;
 import com.ganesha.desktop.component.XJTextField;
+import com.ganesha.desktop.exeptions.ExceptionHandler;
 import com.ganesha.hibernate.HibernateUtils;
+import com.ganesha.minimarket.Main;
 import com.ganesha.minimarket.facade.ReceivableFacade;
 import com.ganesha.minimarket.model.ReceivableSummary;
 import com.ganesha.minimarket.model.Supplier;
@@ -212,7 +215,7 @@ public class ReceivableForm extends XJDialog {
 			Date maturityDate = CommonUtils.getNextDate(1, Calendar.YEAR,
 					CommonUtils.getCurrentDate());
 
-			facade.addTransaction(
+			ReceivableSummary receivableSummary = facade.addTransaction(
 					supplier.getId(),
 					AccountAction.DECREASE,
 					maturityDate,
@@ -220,7 +223,11 @@ public class ReceivableForm extends XJDialog {
 							txtAmount.getText()).doubleValue()),
 					txtCatatan.getText(), session);
 
+			ActivityLogFacade.doLog(getPermissionCode(),
+					ActionType.TRANSACTION, Main.getUserLogin(),
+					receivableSummary, session);
 			session.getTransaction().commit();
+
 			dispose();
 		} catch (Exception e) {
 			session.getTransaction().rollback();

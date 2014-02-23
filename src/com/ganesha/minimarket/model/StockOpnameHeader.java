@@ -11,12 +11,13 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
+import com.ganesha.model.LogableEntity;
 import com.ganesha.model.Trackable;
 import com.ganesha.model.User;
 
 @Entity
 @Table(name = "STOCK_OPNAME_HEADERS")
-public class StockOpnameHeader extends Trackable {
+public class StockOpnameHeader extends Trackable implements LogableEntity {
 	private static final long serialVersionUID = -7780389008755790841L;
 
 	@Id
@@ -34,6 +35,7 @@ public class StockOpnameHeader extends Trackable {
 	@Column(name = "PERFORMED_END_TIMESTAMP", nullable = false)
 	private Timestamp performedEndTimestamp;
 
+	@Override
 	public Integer getId() {
 		return id;
 	}

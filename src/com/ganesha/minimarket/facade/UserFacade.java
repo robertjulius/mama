@@ -32,7 +32,7 @@ public class UserFacade {
 	private UserFacade() {
 	}
 
-	public void addNewUser(String login, String name, String password,
+	public User addNewUser(String login, String name, String password,
 			List<Role> roles, boolean disabled, boolean deleted, Session session)
 			throws UserException, AppException {
 
@@ -54,9 +54,11 @@ public class UserFacade {
 		session.saveOrUpdate(user);
 
 		updateUserRoleLink(user.getId(), roles, session);
+
+		return user;
 	}
 
-	public void changePassword(int userId, String oldPassword,
+	public User changePassword(int userId, String oldPassword,
 			String newPassword, Session session) throws AppException,
 			UserException {
 
@@ -74,6 +76,7 @@ public class UserFacade {
 		user.setLastUpdatedTimestamp(CommonUtils.getCurrentTimestamp());
 
 		session.saveOrUpdate(user);
+		return user;
 	}
 
 	public User getDetail(int id, Session session) {
@@ -126,7 +129,7 @@ public class UserFacade {
 		return user;
 	}
 
-	public void updateExistingUser(String login, String name, String password,
+	public User updateExistingUser(String login, String name, String password,
 			List<Role> roles, boolean disabled, boolean deleted, Session session)
 			throws UserException, AppException {
 
@@ -149,6 +152,8 @@ public class UserFacade {
 		session.saveOrUpdate(user);
 
 		updateUserRoleLink(user.getId(), roles, session);
+
+		return user;
 	}
 
 	private void deleteUserRoleLinkByUserId(int userId, Session session) {

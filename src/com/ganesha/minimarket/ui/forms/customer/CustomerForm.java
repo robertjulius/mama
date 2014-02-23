@@ -15,11 +15,11 @@ import net.miginfocom.swing.MigLayout;
 
 import org.hibernate.Session;
 
-import com.ganesha.core.desktop.ExceptionHandler;
-import com.ganesha.core.exception.ActionTypeNotSupported;
 import com.ganesha.core.exception.UserException;
 import com.ganesha.core.utils.DBUtils;
-import com.ganesha.core.utils.GeneralConstants.ActionType;
+import com.ganesha.coreapps.constants.Enums.ActionType;
+import com.ganesha.coreapps.exception.ActionTypeNotSupported;
+import com.ganesha.coreapps.facade.ActivityLogFacade;
 import com.ganesha.desktop.component.XEtchedBorder;
 import com.ganesha.desktop.component.XJButton;
 import com.ganesha.desktop.component.XJCheckBox;
@@ -28,7 +28,9 @@ import com.ganesha.desktop.component.XJLabel;
 import com.ganesha.desktop.component.XJPanel;
 import com.ganesha.desktop.component.XJTextArea;
 import com.ganesha.desktop.component.XJTextField;
+import com.ganesha.desktop.exeptions.ExceptionHandler;
 import com.ganesha.hibernate.HibernateUtils;
+import com.ganesha.minimarket.Main;
 import com.ganesha.minimarket.facade.CustomerFacade;
 import com.ganesha.minimarket.model.Customer;
 import com.ganesha.minimarket.utils.PermissionConstants;
@@ -260,23 +262,28 @@ public class CustomerForm extends XJDialog {
 			session.beginTransaction();
 			CustomerFacade facade = CustomerFacade.getInstance();
 
+			Customer customer = null;
 			if (actionType == ActionType.CREATE) {
-				Customer customer = facade.addNewCustomer(txtAlamat.getText(),
-						txtKode.getText().toUpperCase(),
-						txtDeskripsi.getText(), txtEmail.getText(), txtNama
-								.getText().toUpperCase(), txtPhone.getText(),
-						chkDisabled.isSelected(), deleted, session);
+				customer = facade.addNewCustomer(txtAlamat.getText(), txtKode
+						.getText().toUpperCase(), txtDeskripsi.getText(),
+						txtEmail.getText(), txtNama.getText().toUpperCase(),
+						txtPhone.getText(), chkDisabled.isSelected(), deleted,
+						session);
 				customerId = customer.getId();
 				dispose();
 			} else if (actionType == ActionType.UPDATE) {
-				facade.updateExistingCustomer(customerId, txtAlamat.getText(),
-						txtDeskripsi.getText(), txtEmail.getText(), txtNama
-								.getText().toUpperCase(), txtPhone.getText(),
-						chkDisabled.isSelected(), deleted, session);
+				customer = facade.updateExistingCustomer(customerId,
+						txtAlamat.getText(), txtDeskripsi.getText(),
+						txtEmail.getText(), txtNama.getText().toUpperCase(),
+						txtPhone.getText(), chkDisabled.isSelected(), deleted,
+						session);
 				dispose();
 			} else {
 				throw new ActionTypeNotSupported(actionType);
 			}
+
+			ActivityLogFacade.doLog(getPermissionCode(), actionType,
+					Main.getUserLogin(), customer, session);
 			session.getTransaction().commit();
 		} catch (Exception e) {
 			session.getTransaction().rollback();

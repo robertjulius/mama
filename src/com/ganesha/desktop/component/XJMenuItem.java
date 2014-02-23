@@ -4,7 +4,7 @@ import java.awt.Window;
 
 import javax.swing.JMenuItem;
 
-import com.ganesha.core.desktop.ExceptionHandler;
+import com.ganesha.desktop.exeptions.ExceptionHandler;
 import com.ganesha.desktop.component.permissionutils.PermissionChecker;
 import com.ganesha.desktop.component.permissionutils.PermissionControl;
 

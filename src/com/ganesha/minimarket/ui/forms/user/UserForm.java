@@ -16,11 +16,11 @@ import net.miginfocom.swing.MigLayout;
 
 import org.hibernate.Session;
 
-import com.ganesha.core.desktop.ExceptionHandler;
-import com.ganesha.core.exception.ActionTypeNotSupported;
 import com.ganesha.core.exception.AppException;
 import com.ganesha.core.exception.UserException;
-import com.ganesha.core.utils.GeneralConstants.ActionType;
+import com.ganesha.coreapps.constants.Enums.ActionType;
+import com.ganesha.coreapps.exception.ActionTypeNotSupported;
+import com.ganesha.coreapps.facade.ActivityLogFacade;
 import com.ganesha.desktop.component.ComboBoxObject;
 import com.ganesha.desktop.component.XEtchedBorder;
 import com.ganesha.desktop.component.XJButton;
@@ -30,7 +30,9 @@ import com.ganesha.desktop.component.XJLabel;
 import com.ganesha.desktop.component.XJList;
 import com.ganesha.desktop.component.XJPanel;
 import com.ganesha.desktop.component.XJTextField;
+import com.ganesha.desktop.exeptions.ExceptionHandler;
 import com.ganesha.hibernate.HibernateUtils;
+import com.ganesha.minimarket.Main;
 import com.ganesha.minimarket.facade.RoleFacade;
 import com.ganesha.minimarket.facade.UserFacade;
 import com.ganesha.minimarket.utils.PermissionConstants;
@@ -372,21 +374,26 @@ public class UserForm extends XJDialog {
 				roles.add(role);
 			}
 
+			User user = null;
 			if (actionType == ActionType.CREATE) {
-				facade.addNewUser(txtLogin.getText(), txtNama.getText(),
+				user = facade.addNewUser(txtLogin.getText(), txtNama.getText(),
 						txtPassword.getText(), roles, chkDisabled.isSelected(),
 						deleted, session);
 
 				dispose();
 			} else if (actionType == ActionType.UPDATE) {
-				facade.updateExistingUser(txtLogin.getText(),
+				user = facade.updateExistingUser(txtLogin.getText(),
 						txtNama.getText(), txtPassword.getText(), roles,
 						chkDisabled.isSelected(), deleted, session);
 				dispose();
 			} else {
 				throw new ActionTypeNotSupported(actionType);
 			}
+
+			ActivityLogFacade.doLog(getPermissionCode(), actionType,
+					Main.getUserLogin(), user, session);
 			session.getTransaction().commit();
+
 		} catch (Exception e) {
 			session.getTransaction().rollback();
 			throw e;

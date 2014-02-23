@@ -1,4 +1,4 @@
-package com.ganesha.core.desktop;
+package com.ganesha.desktop.exeptions;
 
 import java.awt.Font;
 import java.awt.Window;

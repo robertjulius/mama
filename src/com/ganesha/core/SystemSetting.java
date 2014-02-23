@@ -12,7 +12,7 @@ import java.io.OutputStream;
 import java.util.HashMap;
 import java.util.Iterator;
 
-import com.ganesha.core.desktop.ExceptionHandler;
+import com.ganesha.desktop.exeptions.ExceptionHandler;
 import com.ganesha.core.exception.AppException;
 import com.ganesha.core.utils.ResourceUtils;
 

@@ -8,7 +8,7 @@ import java.awt.event.KeyEvent;
 import net.miginfocom.swing.MigLayout;
 
 import com.ganesha.accounting.utils.CoaConsistencyChecker;
-import com.ganesha.core.desktop.ExceptionHandler;
+import com.ganesha.desktop.exeptions.ExceptionHandler;
 import com.ganesha.core.exception.AppException;
 import com.ganesha.desktop.component.XEtchedBorder;
 import com.ganesha.desktop.component.XJButton;

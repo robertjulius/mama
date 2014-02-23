@@ -4,54 +4,83 @@ import java.sql.Timestamp;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
+import com.ganesha.coreapps.constants.Enums.ActionType;
+
 @Entity
-@Table(name = "lg_activity")
+@Table(name = "ACTIVITY_LOGS")
 public class ActivityLog implements TableEntity {
 
-	private static final long serialVersionUID = 2343345295596584661L;;
-
-	@Column(name = "user_id", nullable = false)
-	private String userId;
-
-	@Column(name = "user_login_id", nullable = false)
-	private String userLoginId;
-
-	@Column(name = "user_name", nullable = false)
-	private String userName;
-
-	@Column(name = "action_url", nullable = false)
-	private String actionUrl;
-
-	@Column(name = "action_type", nullable = false)
-	private String actionType;
-
-	@Column(name = "description", nullable = false, length = 1024)
-	private String description;
+	private static final long serialVersionUID = 2343345295596584661L;
 
 	@Id
-	@Column(name = "action_date")
-	private Timestamp actionDate;
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Column(name = "ID", nullable = false)
+	private Integer id;
 
-	public Timestamp getActionDate() {
-		return actionDate;
+	@Column(name = "USER_ID", nullable = false)
+	private Integer userId;
+
+	@Column(name = "USER_LOGIN_ID", nullable = false)
+	private String userLoginId;
+
+	@Column(name = "USER_NAME", nullable = false)
+	private String userName;
+
+	@Column(name = "PERMISSION_CODE", nullable = false)
+	private String permissionCode;
+
+	@Column(name = "PERMISSION_NAME", nullable = false)
+	private String permissionName;
+
+	@Enumerated(EnumType.STRING)
+	@Column(name = "ACTION_TYPE", nullable = false)
+	private ActionType actionType;
+
+	@Column(name = "ENTITY_CLASS", nullable = false)
+	private String entityClass;
+
+	@Column(name = "ENTITY_ID", nullable = false)
+	private Integer entityId;
+
+	@Column(name = "ACTION_TIMESTAMP", nullable = false)
+	private Timestamp actionTimestamp;
+
+	public Timestamp getActionTimestamp() {
+		return actionTimestamp;
 	}
 
-	public String getActionType() {
+	public ActionType getActionType() {
 		return actionType;
 	}
 
-	public String getActionUrl() {
-		return actionUrl;
+	public String getEntityClass() {
+		return entityClass;
 	}
 
-	public String getDescription() {
-		return description;
+	public Integer getEntityId() {
+		return entityId;
 	}
 
-	public String getUserId() {
+	public Integer getId() {
+		return id;
+	}
+
+	public String getPermissionCode() {
+		return permissionCode;
+	}
+
+	public String getPermissionName() {
+		return permissionName;
+	}
+
+	public Integer getUserId() {
 		return userId;
 	}
 
@@ -63,23 +92,35 @@ public class ActivityLog implements TableEntity {
 		return userName;
 	}
 
-	public void setActionDate(Timestamp actionDate) {
-		this.actionDate = actionDate;
+	public void setActionTimestamp(Timestamp actionTimestamp) {
+		this.actionTimestamp = actionTimestamp;
 	}
 
-	public void setActionType(String actionType) {
+	public void setActionType(ActionType actionType) {
 		this.actionType = actionType;
 	}
 
-	public void setActionUrl(String actionUrl) {
-		this.actionUrl = actionUrl;
+	public void setEntityClass(String entityClass) {
+		this.entityClass = entityClass;
 	}
 
-	public void setDescription(String description) {
-		this.description = description;
+	public void setEntityId(Integer entityId) {
+		this.entityId = entityId;
 	}
 
-	public void setUserId(String userId) {
+	public void setId(Integer id) {
+		this.id = id;
+	}
+
+	public void setPermissionCode(String permissionCode) {
+		this.permissionCode = permissionCode;
+	}
+
+	public void setPermissionName(String permissionName) {
+		this.permissionName = permissionName;
+	}
+
+	public void setUserId(Integer userId) {
 		this.userId = userId;
 	}
 

@@ -10,7 +10,6 @@ import org.hibernate.criterion.Restrictions;
 import com.ganesha.core.exception.AppException;
 import com.ganesha.core.exception.UserException;
 import com.ganesha.core.utils.SecurityUtils;
-import com.ganesha.hibernate.HibernateUtils;
 import com.ganesha.minimarket.Main;
 import com.ganesha.model.User;
 import com.ganesha.model.UserRoleLink;
@@ -29,32 +28,27 @@ public class LoginFacade {
 	private LoginFacade() {
 	}
 
-	public boolean login(String loginId, String password) throws UserException,
-			AppException {
-		Session session = HibernateUtils.openSession();
-		try {
+	public boolean login(String loginId, String password, Session session)
+			throws UserException, AppException {
 
-			Criteria criteria = session.createCriteria(User.class);
-			criteria.add(Restrictions.eq("login", loginId).ignoreCase());
+		Criteria criteria = session.createCriteria(User.class);
+		criteria.add(Restrictions.eq("login", loginId).ignoreCase());
 
-			User user = (User) criteria.uniqueResult();
+		User user = (User) criteria.uniqueResult();
 
-			if (user != null) {
-				if (!validatePassword(password, user.getPassword())) {
-					throw new UserException("Login ID atau Password salah");
-				}
-				List<UserRoleLink> userRoleLinks = user.getUserRoleLinks();
-				for (UserRoleLink userRoleLink : userRoleLinks) {
-					Hibernate.initialize(userRoleLink.getPrimaryKey().getRole()
-							.getRolePermissionLinks());
-				}
-				Main.setUserLogin(user);
-				return true;
-			} else {
-				return false;
+		if (user != null) {
+			if (!validatePassword(password, user.getPassword())) {
+				throw new UserException("Login ID atau Password salah");
 			}
-		} finally {
-			session.close();
+			List<UserRoleLink> userRoleLinks = user.getUserRoleLinks();
+			for (UserRoleLink userRoleLink : userRoleLinks) {
+				Hibernate.initialize(userRoleLink.getPrimaryKey().getRole()
+						.getRolePermissionLinks());
+			}
+			Main.setUserLogin(user);
+			return true;
+		} else {
+			return false;
 		}
 	}
 

@@ -121,7 +121,7 @@ public class StockOpnameFacade {
 		}
 	}
 
-	public void save(List<StockOpnameDetail> stockOpnameDetails,
+	public StockOpnameHeader save(List<StockOpnameDetail> stockOpnameDetails,
 			Timestamp performedBeginTimestamp, Timestamp performedEndTimestamp,
 			Session session) {
 
@@ -146,6 +146,8 @@ public class StockOpnameFacade {
 			stockOpname.setStockOpnameHeader(stockOpnameHeader);
 			session.saveOrUpdate(stockOpname);
 		}
+
+		return stockOpnameHeader;
 	}
 
 	public List<StockOpnameHeader> search(Date beginDate, Date endDate,

@@ -13,7 +13,7 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name = "USERS")
-public class User extends Inactivable {
+public class User extends Inactivable implements LogableEntity {
 	private static final long serialVersionUID = -7108231842533900375L;
 
 	@Id
@@ -34,7 +34,8 @@ public class User extends Inactivable {
 	@JoinColumn(name = "USER_ID", nullable = false)
 	private List<UserRoleLink> userRoleLinks;
 
-	public int getId() {
+	@Override
+	public Integer getId() {
 		return id;
 	}
 
@@ -54,7 +55,7 @@ public class User extends Inactivable {
 		return userRoleLinks;
 	}
 
-	public void setId(int id) {
+	public void setId(Integer id) {
 		this.id = id;
 	}
 

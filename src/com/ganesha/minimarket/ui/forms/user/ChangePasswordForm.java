@@ -9,20 +9,23 @@ import net.miginfocom.swing.MigLayout;
 
 import org.hibernate.Session;
 
-import com.ganesha.core.desktop.ExceptionHandler;
-import com.ganesha.core.exception.ActionTypeNotSupported;
 import com.ganesha.core.exception.AppException;
 import com.ganesha.core.exception.UserException;
+import com.ganesha.coreapps.constants.Enums.ActionType;
+import com.ganesha.coreapps.exception.ActionTypeNotSupported;
+import com.ganesha.coreapps.facade.ActivityLogFacade;
 import com.ganesha.desktop.component.XEtchedBorder;
 import com.ganesha.desktop.component.XJButton;
 import com.ganesha.desktop.component.XJDialog;
 import com.ganesha.desktop.component.XJLabel;
 import com.ganesha.desktop.component.XJPanel;
 import com.ganesha.desktop.component.XJPasswordField;
+import com.ganesha.desktop.exeptions.ExceptionHandler;
 import com.ganesha.hibernate.HibernateUtils;
 import com.ganesha.minimarket.Main;
 import com.ganesha.minimarket.facade.UserFacade;
 import com.ganesha.minimarket.utils.PermissionConstants;
+import com.ganesha.model.User;
 
 public class ChangePasswordForm extends XJDialog {
 
@@ -130,10 +133,14 @@ public class ChangePasswordForm extends XJDialog {
 		try {
 			session.beginTransaction();
 			UserFacade facade = UserFacade.getInstance();
-			facade.changePassword(Main.getUserLogin().getId(), new String(
-					txtOldPassword.getPassword()),
-					new String(txtNewPassword.getPassword()), session);
+			User user = facade.changePassword(Main.getUserLogin().getId(),
+					new String(txtOldPassword.getPassword()), new String(
+							txtNewPassword.getPassword()), session);
+
+			ActivityLogFacade.doLog(getPermissionCode(), ActionType.UPDATE,
+					Main.getUserLogin(), user, session);
 			session.getTransaction().commit();
+
 			dispose();
 		} catch (Exception e) {
 			session.getTransaction().rollback();

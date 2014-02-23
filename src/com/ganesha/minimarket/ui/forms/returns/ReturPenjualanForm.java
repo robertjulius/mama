@@ -24,11 +24,12 @@ import net.miginfocom.swing.MigLayout;
 
 import org.hibernate.Session;
 
-import com.ganesha.core.desktop.ExceptionHandler;
 import com.ganesha.core.exception.UserException;
 import com.ganesha.core.utils.CommonUtils;
 import com.ganesha.core.utils.Formatter;
 import com.ganesha.core.utils.GeneralConstants;
+import com.ganesha.coreapps.constants.Enums.ActionType;
+import com.ganesha.coreapps.facade.ActivityLogFacade;
 import com.ganesha.desktop.component.XEtchedBorder;
 import com.ganesha.desktop.component.XJButton;
 import com.ganesha.desktop.component.XJDateChooser;
@@ -41,7 +42,9 @@ import com.ganesha.desktop.component.xtableutils.XTableConstants;
 import com.ganesha.desktop.component.xtableutils.XTableModel;
 import com.ganesha.desktop.component.xtableutils.XTableParameter;
 import com.ganesha.desktop.component.xtableutils.XTableUtils;
+import com.ganesha.desktop.exeptions.ExceptionHandler;
 import com.ganesha.hibernate.HibernateUtils;
+import com.ganesha.minimarket.Main;
 import com.ganesha.minimarket.facade.SaleFacade;
 import com.ganesha.minimarket.facade.SaleReturnFacade;
 import com.ganesha.minimarket.model.Customer;
@@ -443,7 +446,11 @@ public class ReturPenjualanForm extends XJDialog {
 			facade.performSaleReturn(saleReturnHeader, saleReturnDetails,
 					session);
 
+			ActivityLogFacade.doLog(getPermissionCode(),
+					ActionType.TRANSACTION, Main.getUserLogin(),
+					saleReturnHeader, session);
 			session.getTransaction().commit();
+
 			dispose();
 
 		} catch (Exception e) {

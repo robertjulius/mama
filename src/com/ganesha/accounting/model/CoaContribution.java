@@ -8,10 +8,11 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 
 import com.ganesha.model.Inactivable;
+import com.ganesha.model.LogableEntity;
 
 @Entity
 @Table(name = "COA_CONTRIBUTIONS")
-public class CoaContribution extends Inactivable {
+public class CoaContribution extends Inactivable implements LogableEntity {
 	private static final long serialVersionUID = -7780389008755790841L;
 
 	@Id
@@ -22,7 +23,8 @@ public class CoaContribution extends Inactivable {
 	@Column(name = "NAME", nullable = false, unique = true)
 	private String name;
 
-	public int getId() {
+	@Override
+	public Integer getId() {
 		return id;
 	}
 
@@ -30,7 +32,7 @@ public class CoaContribution extends Inactivable {
 		return name;
 	}
 
-	public void setId(int id) {
+	public void setId(Integer id) {
 		this.id = id;
 	}
 

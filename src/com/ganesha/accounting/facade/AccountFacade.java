@@ -80,9 +80,10 @@ public class AccountFacade {
 		return account;
 	}
 
-	public void insertIntoAccount(int coaId, int entityId, Timestamp timestamp,
-			String notes, String ref, DebitCreditFlag increaseOn,
-			BigDecimal amount, Session session) throws AppException {
+	public Account insertIntoAccount(int coaId, int entityId,
+			Timestamp timestamp, String notes, String ref,
+			DebitCreditFlag increaseOn, BigDecimal amount, Session session)
+			throws AppException {
 
 		Coa coa = CoaFacade.getInstance().getDetail(coaId, session);
 
@@ -108,5 +109,6 @@ public class AccountFacade {
 		account.setLastUpdatedBy(Main.getUserLogin().getId());
 
 		session.saveOrUpdate(account);
+		return account;
 	}
 }

@@ -9,11 +9,12 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
+import com.ganesha.model.LogableEntity;
 import com.ganesha.model.Trackable;
 
 @Entity
 @Table(name = "PAYABLE_SUMMARIES")
-public class PayableSummary extends Trackable {
+public class PayableSummary extends Trackable implements LogableEntity {
 	private static final long serialVersionUID = -7780389008755790841L;
 
 	@Id
@@ -34,6 +35,7 @@ public class PayableSummary extends Trackable {
 		return clientId;
 	}
 
+	@Override
 	public Integer getId() {
 		return id;
 	}

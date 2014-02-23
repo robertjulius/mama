@@ -10,10 +10,11 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 import com.ganesha.model.Inactivable;
+import com.ganesha.model.LogableEntity;
 
 @Entity
 @Table(name = "COA_GROUPS")
-public class CoaGroup extends Inactivable {
+public class CoaGroup extends Inactivable implements LogableEntity {
 	private static final long serialVersionUID = -7780389008755790841L;
 
 	@Id
@@ -32,7 +33,8 @@ public class CoaGroup extends Inactivable {
 		return coaContribution;
 	}
 
-	public int getId() {
+	@Override
+	public Integer getId() {
 		return id;
 	}
 
@@ -44,7 +46,7 @@ public class CoaGroup extends Inactivable {
 		this.coaContribution = coaContribution;
 	}
 
-	public void setId(int id) {
+	public void setId(Integer id) {
 		this.id = id;
 	}
 

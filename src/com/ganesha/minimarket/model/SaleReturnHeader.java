@@ -12,11 +12,12 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
+import com.ganesha.model.LogableEntity;
 import com.ganesha.model.Trackable;
 
 @Entity
 @Table(name = "SALE_RETURN_HEADERS")
-public class SaleReturnHeader extends Trackable {
+public class SaleReturnHeader extends Trackable implements LogableEntity {
 	private static final long serialVersionUID = -7780389008755790841L;
 
 	@Id
@@ -50,6 +51,7 @@ public class SaleReturnHeader extends Trackable {
 		return customer;
 	}
 
+	@Override
 	public Integer getId() {
 		return id;
 	}

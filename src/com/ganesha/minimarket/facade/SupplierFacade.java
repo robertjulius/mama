@@ -114,7 +114,7 @@ public class SupplierFacade {
 		return supplier;
 	}
 
-	public void updateExistingSupplier(Integer id, String address1,
+	public Supplier updateExistingSupplier(Integer id, String address1,
 			String address2, String contackPerson1, String contackPerson1Email,
 			String contackPerson1Phone, String contackPerson2,
 			String contackPerson2Email, String contackPerson2Phone,
@@ -158,5 +158,6 @@ public class SupplierFacade {
 		supplier.setLastUpdatedTimestamp(CommonUtils.getCurrentTimestamp());
 
 		session.saveOrUpdate(supplier);
+		return supplier;
 	}
 }

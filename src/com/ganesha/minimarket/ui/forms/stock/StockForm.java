@@ -15,13 +15,13 @@ import net.miginfocom.swing.MigLayout;
 
 import org.hibernate.Session;
 
-import com.ganesha.core.desktop.ExceptionHandler;
-import com.ganesha.core.exception.ActionTypeNotSupported;
 import com.ganesha.core.exception.UserException;
 import com.ganesha.core.utils.DBUtils;
 import com.ganesha.core.utils.Formatter;
 import com.ganesha.core.utils.GeneralConstants;
-import com.ganesha.core.utils.GeneralConstants.ActionType;
+import com.ganesha.coreapps.constants.Enums.ActionType;
+import com.ganesha.coreapps.exception.ActionTypeNotSupported;
+import com.ganesha.coreapps.facade.ActivityLogFacade;
 import com.ganesha.desktop.component.XEtchedBorder;
 import com.ganesha.desktop.component.XJButton;
 import com.ganesha.desktop.component.XJCheckBox;
@@ -29,7 +29,9 @@ import com.ganesha.desktop.component.XJDialog;
 import com.ganesha.desktop.component.XJLabel;
 import com.ganesha.desktop.component.XJPanel;
 import com.ganesha.desktop.component.XJTextField;
+import com.ganesha.desktop.exeptions.ExceptionHandler;
 import com.ganesha.hibernate.HibernateUtils;
+import com.ganesha.minimarket.Main;
 import com.ganesha.minimarket.facade.ItemFacade;
 import com.ganesha.minimarket.model.Item;
 import com.ganesha.minimarket.utils.BarcodeUtils;
@@ -382,21 +384,26 @@ public class StockForm extends XJDialog {
 
 			boolean disabled = chkDisabled.isSelected();
 
+			Item item = null;
 			if (actionType == ActionType.CREATE) {
-				Item item = facade.addNewItem(code.toUpperCase(),
+				item = facade.addNewItem(code.toUpperCase(),
 						name.toUpperCase(), barcode, unit, buyPrice, hpp,
 						sellPrice, minimumStock, disabled, deleted, session);
 				itemId = item.getId();
 				dispose();
 			} else if (actionType == ActionType.UPDATE) {
-				facade.updateExistingItem(itemId, name.toUpperCase(), barcode,
-						unit, buyPrice, hpp, sellPrice, minimumStock, disabled,
-						deleted, session);
+				item = facade.updateExistingItem(itemId, name.toUpperCase(),
+						barcode, unit, buyPrice, hpp, sellPrice, minimumStock,
+						disabled, deleted, session);
 				dispose();
 			} else {
 				throw new ActionTypeNotSupported(actionType);
 			}
+
+			ActivityLogFacade.doLog(getPermissionCode(), actionType,
+					Main.getUserLogin(), item, session);
 			session.getTransaction().commit();
+
 		} catch (Exception e) {
 			session.getTransaction().rollback();
 			throw e;

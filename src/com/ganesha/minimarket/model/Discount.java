@@ -12,10 +12,11 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 import com.ganesha.model.Inactivable;
+import com.ganesha.model.LogableEntity;
 
 @Entity
 @Table(name = "DISCOUNT")
-public class Discount extends Inactivable {
+public class Discount extends Inactivable implements LogableEntity {
 	private static final long serialVersionUID = -7780389008755790841L;
 
 	@Id
@@ -37,6 +38,7 @@ public class Discount extends Inactivable {
 		return discountPercent;
 	}
 
+	@Override
 	public Integer getId() {
 		return id;
 	}

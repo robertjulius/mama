@@ -10,10 +10,10 @@ import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.criterion.Restrictions;
 
+import com.ganesha.accounting.constants.Enums.AccountAction;
 import com.ganesha.core.exception.AppException;
 import com.ganesha.core.utils.CommonUtils;
 import com.ganesha.core.utils.GeneralConstants;
-import com.ganesha.core.utils.GeneralConstants.AccountAction;
 import com.ganesha.hibernate.HqlParameter;
 import com.ganesha.minimarket.Main;
 import com.ganesha.minimarket.model.PayableSummary;
@@ -33,7 +33,7 @@ public class PayableFacade {
 	private PayableFacade() {
 	}
 
-	public void addSummary(int clientId, Session session) {
+	public PayableSummary addSummary(int clientId, Session session) {
 		PayableSummary payableSummary = new PayableSummary();
 		payableSummary.setClientId(clientId);
 		payableSummary.setRemainingAmount(BigDecimal.valueOf(0));
@@ -43,11 +43,12 @@ public class PayableFacade {
 				.getCurrentTimestamp());
 
 		session.saveOrUpdate(payableSummary);
+		return payableSummary;
 	}
 
-	public void addTransaction(int clientId, AccountAction accountAction,
-			Date maturityDate, BigDecimal amount, String description,
-			Session session) throws AppException {
+	public PayableSummary addTransaction(int clientId,
+			AccountAction accountAction, Date maturityDate, BigDecimal amount,
+			String description, Session session) throws AppException {
 
 		boolean summaryExists = GlobalFacade.getInstance().isExists("clientId",
 				clientId, PayableSummary.class, session);
@@ -99,7 +100,9 @@ public class PayableFacade {
 		payableSummary.setLastUpdatedBy(Main.getUserLogin().getId());
 		payableSummary.setLastUpdatedTimestamp(CommonUtils
 				.getCurrentTimestamp());
+
 		session.saveOrUpdate(payableSummary);
+		return payableSummary;
 	}
 
 	public PayableSummary getSummary(int clientId, Session session) {

@@ -12,10 +12,11 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 import com.ganesha.model.Inactivable;
+import com.ganesha.model.LogableEntity;
 
 @Entity
 @Table(name = "ITEMS")
-public class Item extends Inactivable {
+public class Item extends Inactivable implements LogableEntity {
 	private static final long serialVersionUID = -7780389008755790841L;
 
 	@Id
@@ -59,7 +60,8 @@ public class Item extends Inactivable {
 		return hpp;
 	}
 
-	public int getId() {
+	@Override
+	public Integer getId() {
 		return id;
 	}
 
@@ -93,10 +95,6 @@ public class Item extends Inactivable {
 
 	public void setHpp(BigDecimal hpp) {
 		this.hpp = hpp;
-	}
-
-	public void setId(int id) {
-		this.id = id;
 	}
 
 	public void setId(Integer id) {

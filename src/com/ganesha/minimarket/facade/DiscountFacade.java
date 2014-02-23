@@ -46,7 +46,7 @@ public class DiscountFacade {
 		return discountPercent;
 	}
 
-	public void saveOrUpdate(Integer itemId, Integer quantity,
+	public Discount saveOrUpdate(Integer itemId, Integer quantity,
 			BigDecimal discountPercent, boolean disabled, Session session)
 			throws UserException {
 
@@ -63,6 +63,7 @@ public class DiscountFacade {
 		discount.setLastUpdatedTimestamp(CommonUtils.getCurrentTimestamp());
 
 		session.saveOrUpdate(discount);
+		return discount;
 	}
 
 	public List<Discount> search(String code, String name, boolean disabled,

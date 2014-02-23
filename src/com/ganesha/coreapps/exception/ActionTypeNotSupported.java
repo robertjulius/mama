@@ -1,6 +1,7 @@
-package com.ganesha.core.exception;
+package com.ganesha.coreapps.exception;
 
-import com.ganesha.core.utils.GeneralConstants.ActionType;
+import com.ganesha.core.exception.GaneshaException;
+import com.ganesha.coreapps.constants.Enums.ActionType;
 
 public class ActionTypeNotSupported extends GaneshaException {
 

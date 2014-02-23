@@ -25,11 +25,12 @@
 [DONE] BUGS Laporan...!!!
 
 Restore DB
-Insert ke GL
+[DONE] Insert ke GL
 Laporan Laba Rugi
-FIFO
+[DONE] FIFO
 [DONE] Pindahin System Setting, jangan dalam satu form
 [DONE] Pindahin CoaConsitencyChecker & PermissionConsistenctChecker, pindahin ke System Setting Dialog, jangan dari void main()
+[DONE] ItemFacade.reAdjustStock()
 
 
 Install:
@@ -40,7 +41,6 @@ Test Ping
 Toad
 
 
-ItemFacade.reAdjustStock()
 
 Cleansing data:
 1. ItemStock

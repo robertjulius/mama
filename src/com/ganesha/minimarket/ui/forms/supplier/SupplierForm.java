@@ -15,11 +15,11 @@ import net.miginfocom.swing.MigLayout;
 
 import org.hibernate.Session;
 
-import com.ganesha.core.desktop.ExceptionHandler;
-import com.ganesha.core.exception.ActionTypeNotSupported;
 import com.ganesha.core.exception.UserException;
 import com.ganesha.core.utils.DBUtils;
-import com.ganesha.core.utils.GeneralConstants.ActionType;
+import com.ganesha.coreapps.constants.Enums.ActionType;
+import com.ganesha.coreapps.exception.ActionTypeNotSupported;
+import com.ganesha.coreapps.facade.ActivityLogFacade;
 import com.ganesha.desktop.component.XEtchedBorder;
 import com.ganesha.desktop.component.XJButton;
 import com.ganesha.desktop.component.XJCheckBox;
@@ -28,7 +28,9 @@ import com.ganesha.desktop.component.XJLabel;
 import com.ganesha.desktop.component.XJPanel;
 import com.ganesha.desktop.component.XJTextArea;
 import com.ganesha.desktop.component.XJTextField;
+import com.ganesha.desktop.exeptions.ExceptionHandler;
 import com.ganesha.hibernate.HibernateUtils;
+import com.ganesha.minimarket.Main;
 import com.ganesha.minimarket.facade.SupplierFacade;
 import com.ganesha.minimarket.model.Supplier;
 import com.ganesha.minimarket.utils.PermissionConstants;
@@ -383,8 +385,9 @@ public class SupplierForm extends XJDialog {
 			session.beginTransaction();
 			SupplierFacade facade = SupplierFacade.getInstance();
 
+			Supplier supplier = null;
 			if (actionType == ActionType.CREATE) {
-				Supplier supplier = facade.addNewSupplier(txtAlamat1.getText(),
+				supplier = facade.addNewSupplier(txtAlamat1.getText(),
 						txtAlamat2.getText(), txtKode.getText().toUpperCase(),
 						txtKontakPerson1.getText().toUpperCase(),
 						txtKontakPerson1Email.getText(), txtKontakPerson1Phone
@@ -399,12 +402,11 @@ public class SupplierForm extends XJDialog {
 				supplierId = supplier.getId();
 				dispose();
 			} else if (actionType == ActionType.UPDATE) {
-				facade.updateExistingSupplier(supplierId, txtAlamat1.getText(),
-						txtAlamat2.getText(), txtKontakPerson1.getText()
-								.toUpperCase(),
-						txtKontakPerson1Email.getText(), txtKontakPerson1Phone
-								.getText(), txtKontakPerson2.getText()
-								.toUpperCase(),
+				supplier = facade.updateExistingSupplier(supplierId, txtAlamat1
+						.getText(), txtAlamat2.getText(), txtKontakPerson1
+						.getText().toUpperCase(), txtKontakPerson1Email
+						.getText(), txtKontakPerson1Phone.getText(),
+						txtKontakPerson2.getText().toUpperCase(),
 						txtKontakPerson2Email.getText(), txtKontakPerson2Phone
 								.getText(), txtDeskripsi.getText(), txtEmail1
 								.getText(), txtEmail2.getText(), txtNama
@@ -415,7 +417,11 @@ public class SupplierForm extends XJDialog {
 			} else {
 				throw new ActionTypeNotSupported(actionType);
 			}
+
+			ActivityLogFacade.doLog(getPermissionCode(), actionType,
+					Main.getUserLogin(), supplier, session);
 			session.getTransaction().commit();
+
 		} catch (Exception e) {
 			session.getTransaction().rollback();
 			throw e;

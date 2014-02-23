@@ -11,11 +11,12 @@ import net.miginfocom.swing.MigLayout;
 
 import org.hibernate.Session;
 
-import com.ganesha.core.desktop.ExceptionHandler;
-import com.ganesha.core.exception.ActionTypeNotSupported;
 import com.ganesha.core.exception.UserException;
 import com.ganesha.core.utils.Formatter;
 import com.ganesha.core.utils.GeneralConstants;
+import com.ganesha.coreapps.constants.Enums.ActionType;
+import com.ganesha.coreapps.exception.ActionTypeNotSupported;
+import com.ganesha.coreapps.facade.ActivityLogFacade;
 import com.ganesha.desktop.component.XEtchedBorder;
 import com.ganesha.desktop.component.XJButton;
 import com.ganesha.desktop.component.XJCheckBox;
@@ -23,7 +24,9 @@ import com.ganesha.desktop.component.XJDialog;
 import com.ganesha.desktop.component.XJLabel;
 import com.ganesha.desktop.component.XJPanel;
 import com.ganesha.desktop.component.XJTextField;
+import com.ganesha.desktop.exeptions.ExceptionHandler;
 import com.ganesha.hibernate.HibernateUtils;
+import com.ganesha.minimarket.Main;
 import com.ganesha.minimarket.facade.DiscountFacade;
 import com.ganesha.minimarket.model.Discount;
 import com.ganesha.minimarket.model.Item;
@@ -206,10 +209,13 @@ public class DiscountForm extends XJDialog {
 					.formatStringToNumber(txtDiscount.getText()).doubleValue());
 			boolean disabled = chkDisabled.isSelected();
 
-			facade.saveOrUpdate(itemId, quantity, discountPercent, disabled,
-					session);
+			Discount discount = facade.saveOrUpdate(itemId, quantity,
+					discountPercent, disabled, session);
 			dispose();
 
+			ActivityLogFacade.doLog(getPermissionCode(),
+					ActionType.CREATE_OR_UPDATE, Main.getUserLogin(), discount,
+					session);
 			session.getTransaction().commit();
 		} catch (Exception e) {
 			session.getTransaction().rollback();
