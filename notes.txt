@@ -23,14 +23,16 @@
 [DONE] Tambahin fungsi F8, maka end proses table
 [DONE] Ada bugs pas lagi delete, flagnya jangan taruh di kelas, karena bisa kacau
 [DONE] BUGS Laporan...!!!
-
-Restore DB
 [DONE] Insert ke GL
-Laporan Laba Rugi
 [DONE] FIFO
 [DONE] Pindahin System Setting, jangan dalam satu form
 [DONE] Pindahin CoaConsitencyChecker & PermissionConsistenctChecker, pindahin ke System Setting Dialog, jangan dari void main()
 [DONE] ItemFacade.reAdjustStock()
+[DONE] Activity Log
+
+Restore DB
+Laporan Laba Rugi
+Error Logging
 
 
 Install:
@@ -45,4 +47,3 @@ Toad
 Cleansing data:
 1. ItemStock
 
-Activity Log

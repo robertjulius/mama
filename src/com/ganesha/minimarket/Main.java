@@ -1,7 +1,6 @@
 package com.ganesha.minimarket;
 
 import java.awt.Color;
-import java.net.URL;
 import java.util.Date;
 import java.util.List;
 
@@ -11,11 +10,13 @@ import javax.swing.plaf.nimbus.NimbusLookAndFeel;
 
 import org.hibernate.Query;
 import org.hibernate.Session;
+import org.slf4j.LoggerFactory;
 
-import com.ganesha.desktop.exeptions.ExceptionHandler;
 import com.ganesha.core.exception.AppException;
 import com.ganesha.core.utils.CommonUtils;
+import com.ganesha.coreapps.constants.Loggers;
 import com.ganesha.desktop.component.permissionutils.PermissionChecker;
+import com.ganesha.desktop.exeptions.ExceptionHandler;
 import com.ganesha.hibernate.HibernateUtils;
 import com.ganesha.hibernate.HqlParameter;
 import com.ganesha.minimarket.model.Company;
@@ -42,6 +43,8 @@ public class Main {
 			// testHibernate2();
 			// testResource();
 			runApp();
+
+			// testLogger();
 		} catch (Exception ex) {
 			ExceptionHandler.handleException(null, ex);
 		}
@@ -141,8 +144,10 @@ public class Main {
 		}
 	}
 
-	public static void testResource() {
-		URL url = Main.class.getResource("");
-		System.out.println(url);
+	public static void testLogger() {
+		System.out.println("TEST from SysOut");
+		LoggerFactory.getLogger(Loggers.APPLICATION).debug("Test from Logger");
+		LoggerFactory.getLogger(Loggers.APPLICATION).error("Test Error",
+				new Exception("Error coy"));
 	}
 }

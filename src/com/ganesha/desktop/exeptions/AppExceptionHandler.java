@@ -15,6 +15,9 @@ import javax.swing.JTextArea;
 
 import net.miginfocom.swing.MigLayout;
 
+import org.slf4j.LoggerFactory;
+
+import com.ganesha.coreapps.constants.Loggers;
 import com.ganesha.desktop.component.XJDialog;
 import com.ganesha.desktop.component.XJPanel;
 
@@ -103,6 +106,7 @@ public class AppExceptionHandler extends XJDialog {
 		printWriter.flush();
 		txtStackTrace.setText(stringWriter.toString());
 
-		throwable.printStackTrace();
+		LoggerFactory.getLogger(Loggers.APPLICATION).error(
+				throwable.getMessage(), throwable);
 	}
 }

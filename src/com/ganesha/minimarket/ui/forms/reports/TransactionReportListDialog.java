@@ -193,6 +193,7 @@ public class TransactionReportListDialog extends XJTableDialog {
 		pnlRangeTanggal.add(dtChEnd, "cell 3 1,grow");
 
 		XJButton btnRefresh = new XJButton();
+		btnRefresh.setMnemonic('R');
 		btnRefresh.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {

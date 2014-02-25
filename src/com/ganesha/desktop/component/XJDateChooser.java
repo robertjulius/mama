@@ -1,6 +1,7 @@
 package com.ganesha.desktop.component;
 
 import java.awt.Font;
+import java.util.Date;
 
 import com.toedter.calendar.JDateChooser;
 import com.toedter.calendar.JTextFieldDateEditor;
@@ -13,5 +14,16 @@ public class XJDateChooser extends JDateChooser implements XComponentConstants {
 		JTextFieldDateEditor dateEditor = (JTextFieldDateEditor) getDateEditor();
 		dateEditor.setEditable(false);
 		dateEditor.setBackground(TXT_BG_NOTEDITABLE);
+	}
+
+	@Override
+	public Date getDate() {
+		Date date = null;
+		try {
+			date = super.getDate();
+		} catch (NumberFormatException e) {
+			date = null;
+		}
+		return date;
 	}
 }

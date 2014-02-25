@@ -296,9 +296,7 @@ public class StockOpnameFacade {
 		BigDecimal amountOfReturPembelian = BigDecimal.valueOf(0);
 		for (PurchaseReturnDetail purchaseReturnDetail : purchaseReturnDetails) {
 			amountOfReturPembelian = amountOfReturPembelian.add(BigDecimal
-					.valueOf(
-							purchaseReturnDetail.getPurchaseDetail()
-									.getQuantity()).multiply(
+					.valueOf(purchaseReturnDetail.getQuantity()).multiply(
 							purchaseReturnDetail.getPurchaseDetail()
 									.getPricePerUnit()));
 		}

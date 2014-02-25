@@ -20,7 +20,6 @@ import org.hibernate.Criteria;
 import org.hibernate.Session;
 import org.hibernate.criterion.Restrictions;
 
-import com.ganesha.desktop.exeptions.ExceptionHandler;
 import com.ganesha.core.exception.AppException;
 import com.ganesha.core.exception.UserException;
 import com.ganesha.core.utils.CommonUtils;
@@ -35,6 +34,7 @@ import com.ganesha.desktop.component.xtableutils.XTableConstants;
 import com.ganesha.desktop.component.xtableutils.XTableModel;
 import com.ganesha.desktop.component.xtableutils.XTableParameter;
 import com.ganesha.desktop.component.xtableutils.XTableUtils;
+import com.ganesha.desktop.exeptions.ExceptionHandler;
 import com.ganesha.hibernate.HibernateUtils;
 import com.ganesha.minimarket.facade.StockOpnameFacade;
 import com.ganesha.minimarket.model.StockOpnameDetail;
@@ -55,7 +55,8 @@ public class StockOpnameReportListDialog extends XJTableDialog {
 				"No", false, XTableConstants.CELL_RENDERER_LEFT, String.class));
 
 		tableParameters.put(ColumnEnum.DATE, new XTableParameter(1, 200, false,
-				"Tanggal", false, XTableConstants.CELL_RENDERER_LEFT, Date.class));
+				"Tanggal", false, XTableConstants.CELL_RENDERER_LEFT,
+				Date.class));
 	}
 
 	public StockOpnameReportListDialog(Window parent) {
@@ -202,11 +203,16 @@ public class StockOpnameReportListDialog extends XJTableDialog {
 	private void preview() throws AppException, UserException {
 		Session session = HibernateUtils.openSession();
 		try {
-			int row = table.getSelectedRow();
+			int selectedRow = table.getSelectedRow();
+			if (selectedRow < 0) {
+				return;
+			}
 			Date lastUpdatedTimestamp = Formatter
-					.formatStringToTimestamp((String) table.getModel().getValueAt(row,
-							tableParameters.get(ColumnEnum.DATE)
-									.getColumnIndex()));
+					.formatStringToTimestamp((String) table.getModel()
+							.getValueAt(
+									selectedRow,
+									tableParameters.get(ColumnEnum.DATE)
+											.getColumnIndex()));
 
 			Criteria criteria = session.createCriteria(StockOpnameDetail.class);
 			criteria.createAlias("stockOpnameHeader", "stockOpnameHeader");
