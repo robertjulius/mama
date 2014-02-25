@@ -29,10 +29,10 @@
 [DONE] Pindahin CoaConsitencyChecker & PermissionConsistenctChecker, pindahin ke System Setting Dialog, jangan dari void main()
 [DONE] ItemFacade.reAdjustStock()
 [DONE] Activity Log
+[DONE] Error Logging
 
 Restore DB
 Laporan Laba Rugi
-Error Logging
 
 
 Install:

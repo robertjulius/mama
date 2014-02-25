@@ -1,4 +1,5 @@
 /bin
 /eclipse-ant
-**hibernate.cfg.out.xml
+**.out.xml
 /bin
+/log.txt
