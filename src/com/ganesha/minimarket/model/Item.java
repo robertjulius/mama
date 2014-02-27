@@ -39,9 +39,6 @@ public class Item extends Inactivable implements LogableEntity {
 	@Column(name = "UNIT", nullable = false)
 	private String unit;
 
-	@Column(name = "HPP", nullable = false)
-	private BigDecimal hpp;
-
 	@Column(name = "SELL_PRICE", nullable = false)
 	private BigDecimal sellPrice;
 
@@ -54,10 +51,6 @@ public class Item extends Inactivable implements LogableEntity {
 
 	public String getCode() {
 		return code;
-	}
-
-	public BigDecimal getHpp() {
-		return hpp;
 	}
 
 	@Override
@@ -91,10 +84,6 @@ public class Item extends Inactivable implements LogableEntity {
 
 	public void setCode(String code) {
 		this.code = code;
-	}
-
-	public void setHpp(BigDecimal hpp) {
-		this.hpp = hpp;
 	}
 
 	public void setId(Integer id) {

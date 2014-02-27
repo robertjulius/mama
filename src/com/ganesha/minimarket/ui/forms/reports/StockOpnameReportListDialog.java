@@ -51,8 +51,9 @@ public class StockOpnameReportListDialog extends XJTableDialog {
 	private final Map<ColumnEnum, XTableParameter> tableParameters = new HashMap<>();
 	private XJButton btnPreview;
 	{
-		tableParameters.put(ColumnEnum.NUM, new XTableParameter(0, 10, false,
-				"No", false, XTableConstants.CELL_RENDERER_LEFT, String.class));
+		tableParameters.put(ColumnEnum.NUM,
+				new XTableParameter(0, 10, false, "No", false,
+						XTableConstants.CELL_RENDERER_CENTER, String.class));
 
 		tableParameters.put(ColumnEnum.DATE, new XTableParameter(1, 200, false,
 				"Tanggal", false, XTableConstants.CELL_RENDERER_LEFT,
@@ -100,6 +101,7 @@ public class StockOpnameReportListDialog extends XJTableDialog {
 		dtChBegin.getCalendarButton().setMnemonic('D');
 
 		XJButton btnRefresh = new XJButton();
+		btnRefresh.setMnemonic('R');
 		btnRefresh.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {

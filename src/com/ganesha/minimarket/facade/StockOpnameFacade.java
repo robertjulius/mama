@@ -32,7 +32,7 @@ import com.ganesha.minimarket.model.StockOpnameHeader;
 
 public class StockOpnameFacade {
 
-	private static final String REPORT_NAME = "Laporan Stok Opname";
+	private static final String REPORT_NAME = "Laporan Stock Opname";
 	private static final String REPORT_FILE = "com/ganesha/minimarket/reports/StockOpnameReport.jrxml";
 
 	private static StockOpnameFacade instance;

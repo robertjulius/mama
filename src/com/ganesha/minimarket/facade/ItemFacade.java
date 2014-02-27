@@ -30,9 +30,9 @@ public class ItemFacade {
 	}
 
 	public Item addNewItem(String code, String name, String barcode,
-			String unit, BigDecimal buyPrice, BigDecimal hpp,
-			BigDecimal sellPrice, int minimumStock, boolean disabled,
-			boolean deleted, Session session) throws UserException {
+			String unit, BigDecimal buyPrice, BigDecimal sellPrice,
+			int minimumStock, boolean disabled, boolean deleted, Session session)
+			throws UserException {
 
 		if (DBUtils.getInstance().isExists("code", code, Item.class, session)) {
 			throw new UserException("Barang dengan ID " + code
@@ -51,8 +51,8 @@ public class ItemFacade {
 					+ item.getCode() + "] " + item.getName());
 		}
 
-		return insertIntoItem(code, name, barcode, unit, buyPrice, hpp,
-				sellPrice, minimumStock, disabled, deleted, session);
+		return insertIntoItem(code, name, barcode, unit, buyPrice, sellPrice,
+				minimumStock, disabled, deleted, session);
 	}
 
 	public BigDecimal calculateAmount(Item item) {
@@ -151,13 +151,12 @@ public class ItemFacade {
 	}
 
 	public Item updateExistingItem(int id, String name, String barcode,
-			String unit, BigDecimal buyPrice, BigDecimal hpp,
-			BigDecimal sellPrice, int minimumStock, boolean disabled,
-			boolean deleted, Session session) throws UserException {
+			String unit, BigDecimal buyPrice, BigDecimal sellPrice,
+			int minimumStock, boolean disabled, boolean deleted, Session session)
+			throws UserException {
 
 		Item item = getDetail(id, session);
 		item.setUnit(unit);
-		item.setHpp(hpp);
 		item.setSellPrice(sellPrice);
 		item.setMinimumStock(minimumStock);
 		item.setDisabled(disabled);
@@ -193,9 +192,8 @@ public class ItemFacade {
 	}
 
 	private Item insertIntoItem(String code, String name, String barcode,
-			String unit, BigDecimal buyPrice, BigDecimal hpp,
-			BigDecimal sellPrice, int minimumStock, boolean disabled,
-			boolean deleted, Session session) {
+			String unit, BigDecimal buyPrice, BigDecimal sellPrice,
+			int minimumStock, boolean disabled, boolean deleted, Session session) {
 
 		Item item = new Item();
 
@@ -203,7 +201,6 @@ public class ItemFacade {
 		item.setName(name);
 		item.setBarcode(barcode);
 		item.setUnit(unit);
-		item.setHpp(hpp);
 		item.setSellPrice(sellPrice);
 		item.setMinimumStock(minimumStock);
 		item.setDisabled(disabled);

@@ -413,9 +413,14 @@ public class ReturPembelianForm extends XJDialog {
 			btnSelesai.doClick();
 			break;
 		case KeyEvent.VK_DELETE:
-			if (!table.isEditing()) {
-				btnHapus.doClick();
+			boolean isFocus = table.isFocusOwner();
+			if (!isFocus) {
+				return;
 			}
+			if (table.isEditing()) {
+				return;
+			}
+			btnHapus.doClick();
 			break;
 		default:
 			break;

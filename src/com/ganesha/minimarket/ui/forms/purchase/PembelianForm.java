@@ -250,7 +250,11 @@ public class PembelianForm extends XJDialog {
 		btnHapus.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				hapus();
+				try {
+					hapus();
+				} catch (Exception ex) {
+					ExceptionHandler.handleException(PembelianForm.this, ex);
+				}
 			}
 		});
 
@@ -308,7 +312,7 @@ public class PembelianForm extends XJDialog {
 		});
 		btnDetail
 				.setText("<html><center>Lihat Detail<br/>[Enter]</center></html>");
-		pnlSubTotal.add(btnDetail, "cell 0 0");
+		pnlSubTotal.add(btnDetail, "cell 0 0,aligny top");
 
 		XJPanel pnlBeban = new XJPanel();
 		pnlSubTotal.add(pnlBeban, "cell 2 0");
@@ -456,9 +460,14 @@ public class PembelianForm extends XJDialog {
 			btnSelesai.doClick();
 			break;
 		case KeyEvent.VK_DELETE:
-			if (!table.isEditing()) {
-				btnHapus.doClick();
+			boolean isFocus = table.isFocusOwner();
+			if (!isFocus) {
+				return;
 			}
+			if (table.isEditing()) {
+				return;
+			}
+			btnHapus.doClick();
 			break;
 		default:
 			break;

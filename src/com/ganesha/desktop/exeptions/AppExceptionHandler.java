@@ -30,8 +30,12 @@ public class AppExceptionHandler extends XJDialog {
 	private JTextArea txtStackTrace;
 	private JLabel lblMessage;
 
-	public static void handleException(Window parent, Exception ex) {
+	public static void handleException(Window parent, Throwable ex, String title) {
 		AppExceptionHandler exceptionHandler = new AppExceptionHandler(parent);
+		if (title == null) {
+			title = "ERROR";
+		}
+		exceptionHandler.setTitle(title);
 		exceptionHandler.setMessage(ex.getMessage());
 		exceptionHandler.setStackTrace(ex);
 		exceptionHandler.pack();
@@ -43,7 +47,6 @@ public class AppExceptionHandler extends XJDialog {
 		super(parent);
 		setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
 		setPermissionRequired(false);
-		setTitle("ERROR");
 		getContentPane().setLayout(
 				new MigLayout("", "[800,grow]", "[grow][400,grow][]"));
 

@@ -6,12 +6,15 @@ import com.ganesha.core.exception.UserException;
 
 public class ExceptionHandler {
 
-	public static void handleException(Window parent, Exception ex) {
+	public static void handleException(Window parent, Throwable ex) {
+		handleException(parent, ex, null);
+	}
 
+	public static void handleException(Window parent, Throwable ex, String title) {
 		if (ex instanceof UserException) {
-			UserExceptionHandler.handleException(parent, ex);
+			UserExceptionHandler.handleException(parent, ex, title);
 		} else {
-			AppExceptionHandler.handleException(parent, ex);
+			AppExceptionHandler.handleException(parent, ex, title);
 		}
 	}
 }
