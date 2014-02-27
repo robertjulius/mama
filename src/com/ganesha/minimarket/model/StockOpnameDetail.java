@@ -49,19 +49,12 @@ public class StockOpnameDetail implements TableEntity {
 	@Column(name = "LOSS_AMOUNT", nullable = false)
 	private BigDecimal lossAmount;
 
-	@Column(name = "LAST_STOCK_AMOUNT", nullable = false)
-	private BigDecimal lastStockAmount;
-
 	public Integer getId() {
 		return id;
 	}
 
 	public Item getItem() {
 		return item;
-	}
-
-	public BigDecimal getLastStockAmount() {
-		return lastStockAmount;
 	}
 
 	public BigDecimal getLossAmount() {
@@ -98,10 +91,6 @@ public class StockOpnameDetail implements TableEntity {
 
 	public void setItem(Item item) {
 		this.item = item;
-	}
-
-	public void setLastStockAmount(BigDecimal lastStockAmount) {
-		this.lastStockAmount = lastStockAmount;
 	}
 
 	public void setLossAmount(BigDecimal lossAmount) {
