@@ -1,6 +1,10 @@
 package com.ganesha.accounting.facade;
 
+import java.awt.Window;
+import java.math.BigDecimal;
+import java.util.Date;
 import java.util.List;
+import java.util.Map;
 
 import org.hibernate.Criteria;
 import org.hibernate.Session;
@@ -9,12 +13,15 @@ import org.hibernate.criterion.Restrictions;
 import com.ganesha.accounting.model.Circle;
 import com.ganesha.accounting.model.Coa;
 import com.ganesha.accounting.model.Expense;
+import com.ganesha.accounting.model.ExpenseTransaction;
+import com.ganesha.core.exception.AppException;
 import com.ganesha.core.exception.UserException;
 import com.ganesha.core.utils.CommonUtils;
 import com.ganesha.core.utils.DBUtils;
 import com.ganesha.minimarket.Main;
+import com.ganesha.minimarket.facade.TransactionReportFacade;
 
-public class ExpenseFacade {
+public class ExpenseFacade implements TransactionReportFacade {
 
 	private static ExpenseFacade instance;
 
@@ -51,9 +58,31 @@ public class ExpenseFacade {
 		return expense;
 	}
 
+	public ExpenseTransaction addTransaction(Expense expense,
+			BigDecimal amount, String notes, Session session) {
+		ExpenseTransaction expenseTransaction = new ExpenseTransaction();
+		expenseTransaction.setExpense(expense);
+		expenseTransaction.setAmount(amount);
+		expenseTransaction.setNotes(notes);
+		expenseTransaction.setLastUpdatedBy(Main.getUserLogin().getId());
+		expenseTransaction.setLastUpdatedTimestamp(CommonUtils
+				.getCurrentTimestamp());
+
+		session.saveOrUpdate(expenseTransaction);
+		return expenseTransaction;
+	}
+
 	public Expense getDetail(Integer id, Session session) {
 		Expense expense = (Expense) session.get(Expense.class, id);
 		return expense;
+	}
+
+	@Override
+	public void previewReport(Window parent, String transactionNumber,
+			Date beginDate, Date endDate, Session session) throws AppException,
+			UserException {
+		// TODO Auto-generated method stub
+
 	}
 
 	public List<Expense> search(String name, Coa coa, Circle circle,
@@ -82,6 +111,21 @@ public class ExpenseFacade {
 		List<Expense> expenses = criteria.list();
 
 		return expenses;
+	}
+
+	@Override
+	public List<Map<String, Object>> searchTransaction(
+			String transactionNumber, Date beginDate, Date endDate,
+			Session session) throws AppException, UserException {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public void showDetail(String transactionNumber) throws AppException,
+			UserException {
+		// TODO Auto-generated method stub
+
 	}
 
 	public Expense updateExistingExpense(Integer id, String name, Coa coa,

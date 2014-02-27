@@ -78,7 +78,7 @@ public class CircleListDialog extends XJTableDialog {
 		super(parent);
 
 		setTitle("Master Circle");
-		setPermissionCode(PermissionConstants.SUPPLIER_LIST);
+		setPermissionCode(PermissionConstants.CIRCLE_LIST);
 		getContentPane().setLayout(
 				new MigLayout("", "[600,grow]", "[][300,grow][]"));
 

@@ -20,6 +20,8 @@ import net.miginfocom.swing.MigLayout;
 
 import org.hibernate.Session;
 
+import com.ganesha.accounting.facade.ExpenseFacade;
+import com.ganesha.accounting.facade.RevenueFacade;
 import com.ganesha.core.exception.AppException;
 import com.ganesha.core.exception.UserException;
 import com.ganesha.core.utils.CommonUtils;
@@ -67,6 +69,8 @@ public class TransactionReportListDialog extends XJTableDialog {
 		facades.put(TransactionType.SALES, SaleReportFacade.getInstance());
 		facades.put(TransactionType.SALES_RETURN,
 				SaleReturnReportFacade.getInstance());
+		facades.put(TransactionType.EXPENSES, ExpenseFacade.getInstance());
+		facades.put(TransactionType.REVENUES, RevenueFacade.getInstance());
 	}
 
 	private final Map<ColumnEnum, XTableParameter> tableParameters = new HashMap<>();
@@ -321,7 +325,7 @@ public class TransactionReportListDialog extends XJTableDialog {
 				.getSelectedItem();
 
 		TransactionType transactionType = (TransactionType) comboBoxObject
-				.getId();
+				.getObject();
 
 		setTitle("Laporan Transaksi " + comboBoxObject.getText());
 		facade = facades.get(transactionType);

@@ -18,7 +18,6 @@ import net.miginfocom.swing.MigLayout;
 
 import org.hibernate.Session;
 
-import com.ganesha.desktop.exeptions.ExceptionHandler;
 import com.ganesha.core.exception.AppException;
 import com.ganesha.core.exception.UserException;
 import com.ganesha.core.utils.CommonUtils;
@@ -34,6 +33,7 @@ import com.ganesha.desktop.component.xtableutils.XTableConstants;
 import com.ganesha.desktop.component.xtableutils.XTableModel;
 import com.ganesha.desktop.component.xtableutils.XTableParameter;
 import com.ganesha.desktop.component.xtableutils.XTableUtils;
+import com.ganesha.desktop.exeptions.ExceptionHandler;
 import com.ganesha.hibernate.HibernateUtils;
 import com.ganesha.minimarket.facade.ItemStockReportFacade;
 import com.ganesha.minimarket.utils.PermissionConstants;
@@ -184,7 +184,7 @@ public class ItemStockReportListDialog extends XJTableDialog {
 		Session session = HibernateUtils.openSession();
 		try {
 			String orderBy = (String) ((ComboBoxObject) cmbOrderBy
-					.getSelectedItem()).getId();
+					.getSelectedItem()).getObject();
 
 			ItemStockReportFacade facade = ItemStockReportFacade.getInstance();
 			List<Map<String, Object>> itemMaps = facade
@@ -240,7 +240,7 @@ public class ItemStockReportListDialog extends XJTableDialog {
 			ComboBoxObject comboBoxObject = (ComboBoxObject) cmbOrderBy
 					.getSelectedItem();
 
-			String orderById = (String) comboBoxObject.getId();
+			String orderById = (String) comboBoxObject.getObject();
 			String orderByText = comboBoxObject.getText();
 
 			ItemStockReportFacade facade = ItemStockReportFacade.getInstance();

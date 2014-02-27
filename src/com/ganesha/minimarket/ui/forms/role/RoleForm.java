@@ -229,7 +229,7 @@ public class RoleForm extends XJDialog {
 
 			for (int i = 0; i < listModelLeft.size(); ++i) {
 				Permission permissionAtLeft = (Permission) listModelLeft
-						.getElementAt(i).getId();
+						.getElementAt(i).getObject();
 
 				if (permissionAtLeft.getCode().equals(permission.getCode())) {
 					listPermissionLeft.setSelectedIndex(i);
@@ -290,9 +290,10 @@ public class RoleForm extends XJDialog {
 		int i = 0;
 		for (; i < listModelLeft.size(); ++i) {
 			Permission permissionAtLeft = (Permission) listModelLeft
-					.getElementAt(i).getId();
+					.getElementAt(i).getObject();
 
-			Permission permissionAtRight = (Permission) comboBoxObject.getId();
+			Permission permissionAtRight = (Permission) comboBoxObject
+					.getObject();
 
 			if (permissionAtRight.getOrderNum() > permissionAtLeft
 					.getOrderNum()) {
@@ -331,7 +332,7 @@ public class RoleForm extends XJDialog {
 					.getModel();
 			for (int i = 0; i < listModelRight.size(); ++i) {
 				ComboBoxObject comboBoxObject = listModelRight.get(i);
-				Permission permission = (Permission) comboBoxObject.getId();
+				Permission permission = (Permission) comboBoxObject.getObject();
 				permissions.add(permission);
 			}
 
@@ -376,9 +377,10 @@ public class RoleForm extends XJDialog {
 		int i = 0;
 		for (; i < listModelRight.size(); ++i) {
 			Permission permissionAtRight = (Permission) listModelRight
-					.getElementAt(i).getId();
+					.getElementAt(i).getObject();
 
-			Permission permissionAtLeft = (Permission) comboBoxObject.getId();
+			Permission permissionAtLeft = (Permission) comboBoxObject
+					.getObject();
 
 			if (permissionAtLeft.getOrderNum() > permissionAtRight
 					.getOrderNum()) {

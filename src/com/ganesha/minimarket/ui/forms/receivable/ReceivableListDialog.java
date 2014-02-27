@@ -15,7 +15,6 @@ import net.miginfocom.swing.MigLayout;
 
 import org.hibernate.Session;
 
-import com.ganesha.desktop.exeptions.ExceptionHandler;
 import com.ganesha.core.exception.AppException;
 import com.ganesha.core.utils.Formatter;
 import com.ganesha.desktop.component.XJButton;
@@ -28,6 +27,7 @@ import com.ganesha.desktop.component.xtableutils.XTableConstants;
 import com.ganesha.desktop.component.xtableutils.XTableModel;
 import com.ganesha.desktop.component.xtableutils.XTableParameter;
 import com.ganesha.desktop.component.xtableutils.XTableUtils;
+import com.ganesha.desktop.exeptions.ExceptionHandler;
 import com.ganesha.hibernate.HibernateUtils;
 import com.ganesha.minimarket.facade.ReceivableFacade;
 import com.ganesha.minimarket.facade.SupplierFacade;
@@ -86,7 +86,7 @@ public class ReceivableListDialog extends XJTableDialog {
 
 		XJLabel lblKode = new XJLabel();
 		lblKode.setText("Kode");
-		pnlFilter.add(lblKode, "cell 0 0,alignx trailing");
+		pnlFilter.add(lblKode, "cell 0 0");
 
 		txtKode = new XJTextField();
 		txtKode.addKeyListener(new KeyAdapter() {
@@ -109,7 +109,7 @@ public class ReceivableListDialog extends XJTableDialog {
 
 		XJLabel lblNama = new XJLabel();
 		lblNama.setText("Nama");
-		pnlFilter.add(lblNama, "cell 0 1,alignx trailing");
+		pnlFilter.add(lblNama, "cell 0 1");
 
 		txtNama = new XJTextField();
 		txtNama.addKeyListener(new KeyAdapter() {

@@ -65,7 +65,7 @@ public class PayableFacade {
 		payableTransaction
 				.setReffNumber(GeneralConstants.PREFIX_TRX_NUMBER_PAYABLE
 						+ CommonUtils.getTimestampInString());
-		payableTransaction.setAccountAction(accountAction.name());
+		payableTransaction.setAccountAction(accountAction);
 		payableTransaction
 				.setActionTimestamp(CommonUtils.getCurrentTimestamp());
 		payableTransaction.setMaturityDate(maturityDate);

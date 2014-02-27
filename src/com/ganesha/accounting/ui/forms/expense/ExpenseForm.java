@@ -5,8 +5,6 @@ import java.awt.Window;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
-import java.awt.event.WindowAdapter;
-import java.awt.event.WindowEvent;
 
 import javax.swing.JSeparator;
 
@@ -58,19 +56,9 @@ public class ExpenseForm extends XJDialog {
 		super(parent);
 		this.actionType = actionType;
 		setTitle("Form Pengaturan Beban");
-		setPermissionCode(PermissionConstants.STOCK_FORM);
+		setPermissionCode(PermissionConstants.EXPENSE_FORM);
 		setCloseOnEsc(false);
 
-		addWindowListener(new WindowAdapter() {
-			@Override
-			public void windowOpened(WindowEvent e) {
-				try {
-					initForm();
-				} catch (Exception ex) {
-					ExceptionHandler.handleException(ExpenseForm.this, ex);
-				}
-			}
-		});
 		getContentPane().setLayout(
 				new MigLayout("", "[600,grow]", "[grow][grow][10][grow]"));
 
@@ -157,6 +145,12 @@ public class ExpenseForm extends XJDialog {
 		btnSimpan.setText("<html><center>Simpan<br/>[F12]</center></html>");
 		pnlButton.add(btnSimpan, "cell 3 0");
 
+		try {
+			initForm();
+		} catch (Exception ex) {
+			ExceptionHandler.handleException(ExpenseForm.this, ex);
+		}
+
 		pack();
 		setLocationRelativeTo(null);
 	}
@@ -217,9 +211,10 @@ public class ExpenseForm extends XJDialog {
 
 			String name = txtName.getText();
 
-			Coa coa = (Coa) ((ComboBoxObject) cmbCoa.getSelectedItem()).getId();
+			Coa coa = (Coa) ((ComboBoxObject) cmbCoa.getSelectedItem())
+					.getObject();
 			Circle circle = (Circle) ((ComboBoxObject) cmbCircle
-					.getSelectedItem()).getId();
+					.getSelectedItem()).getObject();
 
 			boolean disabled = chkDisabled.isSelected();
 
@@ -252,6 +247,17 @@ public class ExpenseForm extends XJDialog {
 	private void validateForm() throws UserException {
 		if (txtName.getText().trim().equals("")) {
 			throw new UserException("Nama Beban harus diisi");
+		}
+
+		Coa coa = (Coa) ((ComboBoxObject) cmbCoa.getSelectedItem()).getObject();
+		if (coa == null) {
+			throw new UserException("Akun Harus harus diisi");
+		}
+
+		Circle circle = (Circle) ((ComboBoxObject) cmbCircle.getSelectedItem())
+				.getObject();
+		if (circle == null) {
+			throw new UserException("Siklus harus diisi");
 		}
 	}
 }

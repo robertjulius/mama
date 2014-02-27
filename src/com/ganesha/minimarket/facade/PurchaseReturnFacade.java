@@ -95,13 +95,15 @@ public class PurchaseReturnFacade implements TransactionFacade {
 					session.saveOrUpdate(itemStock);
 				}
 			}
+		}
 
+		if (purchaseReturnHeader.getAmountReturned().doubleValue() != 0) {
 			AccountFacade.getInstance().insertIntoAccount(
 					CoaCodeConstants.RETUR_PEMBELIAN,
-					purchaseReturnDetail.getId(),
+					purchaseReturnHeader.getId(),
 					CommonUtils.getCurrentTimestamp(), "Retur Pembelian", "",
 					DebitCreditFlag.CREDIT,
-					purchaseReturnDetail.getTotalAmount(), session);
+					purchaseReturnHeader.getAmountReturned(), session);
 		}
 	}
 

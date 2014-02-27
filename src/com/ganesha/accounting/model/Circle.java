@@ -10,12 +10,13 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 
 import com.ganesha.accounting.constants.Enums.CircleUnit;
+import com.ganesha.model.Identifiable;
 import com.ganesha.model.Inactivable;
 import com.ganesha.model.LogableEntity;
 
 @Entity
 @Table(name = "CIRCLES")
-public class Circle extends Inactivable implements LogableEntity {
+public class Circle extends Inactivable implements LogableEntity, Identifiable {
 	private static final long serialVersionUID = -7780389008755790841L;
 
 	@Id

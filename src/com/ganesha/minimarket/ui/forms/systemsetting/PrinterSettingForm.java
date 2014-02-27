@@ -247,7 +247,7 @@ public class PrinterSettingForm extends XJDialog {
 		validateForm();
 		ComboBoxObject comboBoxObject = (ComboBoxObject) cmbReceiptPrinter
 				.getSelectedItem();
-		String printServiceName = (String) comboBoxObject.getId();
+		String printServiceName = (String) comboBoxObject.getObject();
 		SystemSetting.save(GeneralConstants.SYSTEM_SETTING_PRINTER_RECEIPT,
 				printServiceName);
 
@@ -257,7 +257,7 @@ public class PrinterSettingForm extends XJDialog {
 	private void validateForm() throws UserException {
 		ComboBoxObject comboBoxObject = (ComboBoxObject) cmbReceiptPrinter
 				.getSelectedItem();
-		String printServiceName = (String) comboBoxObject.getId();
+		String printServiceName = (String) comboBoxObject.getObject();
 		if (printServiceName == null) {
 			throw new UserException("Printer Receipt harus diisi");
 		}

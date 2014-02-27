@@ -101,6 +101,8 @@ public class AccountFacade {
 		} else if (increaseOn == DebitCreditFlag.CREDIT) {
 			account.setCredit(amount);
 			account.setDebit(BigDecimal.valueOf(0));
+		} else {
+			throw new AppException("Unsupported DebigCreditFlag " + increaseOn);
 		}
 
 		account.setLastUpdatedTimestamp(timestamp);

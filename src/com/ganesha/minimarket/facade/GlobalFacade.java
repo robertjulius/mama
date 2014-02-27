@@ -29,7 +29,7 @@ public class GlobalFacade {
 				.getSelectedItem();
 		Object id = null;
 		if (comboBoxObject != null) {
-			id = comboBoxObject.getId();
+			id = comboBoxObject.getObject();
 		}
 		return id;
 	}

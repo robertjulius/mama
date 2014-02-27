@@ -59,3 +59,5 @@ sales
 
 Popup untuk edit value di dalam table
 Calculator untuk hitung harga satuan
+Default siklus untuk <Tidak ada siklus>
+Warna-warni untuk return pembelian -> Warna label sisa

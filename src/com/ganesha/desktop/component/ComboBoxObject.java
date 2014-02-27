@@ -1,25 +1,26 @@
 package com.ganesha.desktop.component;
 
+
 public class ComboBoxObject {
 
-	private Object id;
+	private Object object;
 	private String text;
 
-	public ComboBoxObject(Object id, String text) {
-		this.id = id;
+	public ComboBoxObject(Object object, String text) {
+		this.object = object;
 		this.text = text;
 	}
 
-	public Object getId() {
-		return id;
+	public Object getObject() {
+		return object;
 	}
 
 	public String getText() {
 		return text;
 	}
 
-	public void setId(Object id) {
-		this.id = id;
+	public void setObject(Object object) {
+		this.object = object;
 	}
 
 	public void setText(String text) {

@@ -40,6 +40,7 @@ public class CoaCodeConstants {
 	public static final int ONGKOS_KIRIM_PEMBELIAN = 541;
 	public static final int PAJAK_PEMBELIAN = 542;
 	public static final int PEMBELIAN = 543;
+	public static final int BEBAN_PEMBELIAN_LAIN_LAIN = 549;
 	public static final int PENYUSUTAN_PERALATAN_TOKO = 551;
 	public static final int PENYUSUTAN_PERLENGKAPAN_TOKO = 552;
 	public static final int BEBAN_SEWA = 560;

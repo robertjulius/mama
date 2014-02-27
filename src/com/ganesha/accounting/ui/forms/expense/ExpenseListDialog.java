@@ -99,7 +99,7 @@ public class ExpenseListDialog extends XJTableDialog {
 
 	{
 		tableParameters.put(ColumnEnum.NAME, new XTableParameter(0, 50, false,
-				"Nama Expense", false, XTableConstants.CELL_RENDERER_LEFT,
+				"Nama Beban", false, XTableConstants.CELL_RENDERER_LEFT,
 				String.class));
 
 		tableParameters.put(ColumnEnum.COA, new XTableParameter(1, 50, false,
@@ -117,10 +117,10 @@ public class ExpenseListDialog extends XJTableDialog {
 	public ExpenseListDialog(Window parent) {
 		super(parent);
 
-		setTitle("Master Expense");
-		setPermissionCode(PermissionConstants.SUPPLIER_LIST);
+		setTitle("Master Beban");
+		setPermissionCode(PermissionConstants.EXPENSE_LIST);
 		getContentPane().setLayout(
-				new MigLayout("", "[600,grow]", "[][300,grow][]"));
+				new MigLayout("", "[1000,grow]", "[][300,grow][]"));
 
 		table = new XJTable() {
 			private static final long serialVersionUID = 1L;

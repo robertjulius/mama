@@ -262,7 +262,8 @@ public class UserForm extends XJDialog {
 			Role role = roleRoleLink.getPrimaryKey().getRole();
 
 			for (int i = 0; i < listModelTop.size(); ++i) {
-				Role roleAtTop = (Role) listModelTop.getElementAt(i).getId();
+				Role roleAtTop = (Role) listModelTop.getElementAt(i)
+						.getObject();
 
 				if (roleAtTop.getId().equals(role.getId())) {
 					listRoleTop.setSelectedIndex(i);
@@ -330,9 +331,9 @@ public class UserForm extends XJDialog {
 		ComboBoxObject comboBoxObject = listModelBottom.get(index);
 		int i = 0;
 		for (; i < listModelTop.size(); ++i) {
-			Role roleAtTop = (Role) listModelTop.getElementAt(i).getId();
+			Role roleAtTop = (Role) listModelTop.getElementAt(i).getObject();
 
-			Role roleAtBottom = (Role) comboBoxObject.getId();
+			Role roleAtBottom = (Role) comboBoxObject.getObject();
 
 			if (roleAtBottom.getId() > roleAtTop.getId()) {
 				/*
@@ -370,7 +371,7 @@ public class UserForm extends XJDialog {
 					.getModel();
 			for (int i = 0; i < listModelBottom.size(); ++i) {
 				ComboBoxObject comboBoxObject = listModelBottom.get(i);
-				Role role = (Role) comboBoxObject.getId();
+				Role role = (Role) comboBoxObject.getObject();
 				roles.add(role);
 			}
 
@@ -416,9 +417,10 @@ public class UserForm extends XJDialog {
 		ComboBoxObject comboBoxObject = listModelTop.get(index);
 		int i = 0;
 		for (; i < listModelBottom.size(); ++i) {
-			Role roleAtBottom = (Role) listModelBottom.getElementAt(i).getId();
+			Role roleAtBottom = (Role) listModelBottom.getElementAt(i)
+					.getObject();
 
-			Role roleAtTop = (Role) comboBoxObject.getId();
+			Role roleAtTop = (Role) comboBoxObject.getObject();
 
 			if (roleAtTop.getId() > roleAtBottom.getId()) {
 				/*

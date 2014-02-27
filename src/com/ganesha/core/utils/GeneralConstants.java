@@ -49,6 +49,12 @@ public class GeneralConstants {
 		cmbBoxes.add(new ComboBoxObject(TransactionType.SALES, "Penjualan"));
 		cmbBoxes.add(new ComboBoxObject(TransactionType.SALES_RETURN,
 				"Retur Penjualan"));
+		cmbBoxes.add(new ComboBoxObject(TransactionType.SALES_RETURN,
+				"Retur Penjualan"));
+		cmbBoxes.add(new ComboBoxObject(TransactionType.EXPENSES,
+				"Transaksi Beban Lain-Lain"));
+		cmbBoxes.add(new ComboBoxObject(TransactionType.REVENUES,
+				"Transaksi Pendapatan Lain-Lain"));
 
 		CMB_BOX_TRX_TYPES = new ComboBoxObject[cmbBoxes.size()];
 		cmbBoxes.toArray(CMB_BOX_TRX_TYPES);

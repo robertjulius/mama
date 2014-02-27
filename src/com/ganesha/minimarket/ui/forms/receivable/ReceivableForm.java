@@ -47,7 +47,7 @@ public class ReceivableForm extends XJDialog {
 	private XJLabel lblLastRemainingPayment;
 	private XJTextField txtLastRemainingPayment;
 	private XJLabel lblCatatan;
-	private XJPanel pnlKontakPerson1;
+	private XJPanel pnlNotes;
 	private XJLabel lblAmount;
 	private XJTextField txtAmount;
 	private XJLabel lblRemainingPayment;
@@ -122,17 +122,17 @@ public class ReceivableForm extends XJDialog {
 		lblRemainingPaymentValue.setForeground(LBL_WARNING);
 		pnlKodeReceivable.add(lblRemainingPaymentValue, "cell 1 5,growx");
 
-		pnlKontakPerson1 = new XJPanel();
-		getContentPane().add(pnlKontakPerson1, "cell 1 0,grow");
-		pnlKontakPerson1.setBorder(new XEtchedBorder());
-		pnlKontakPerson1.setLayout(new MigLayout("", "[300,grow]", "[][grow]"));
+		pnlNotes = new XJPanel();
+		getContentPane().add(pnlNotes, "cell 1 0,grow");
+		pnlNotes.setBorder(new XEtchedBorder());
+		pnlNotes.setLayout(new MigLayout("", "[300,grow]", "[][grow]"));
 
 		lblCatatan = new XJLabel();
-		pnlKontakPerson1.add(lblCatatan, "cell 0 0");
+		pnlNotes.add(lblCatatan, "cell 0 0");
 		lblCatatan.setText("Catatan");
 
 		scrollPane = new JScrollPane();
-		pnlKontakPerson1.add(scrollPane, "cell 0 1,grow");
+		pnlNotes.add(scrollPane, "cell 0 1,grow");
 
 		txtCatatan = new XJTextArea();
 		scrollPane.setViewportView(txtCatatan);

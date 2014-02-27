@@ -59,7 +59,7 @@ public class CircleForm extends XJDialog {
 		super(parent);
 		this.actionType = actionType;
 		setTitle("Form Pengaturan Siklus");
-		setPermissionCode(PermissionConstants.STOCK_FORM);
+		setPermissionCode(PermissionConstants.CIRCLE_FORM);
 		setCloseOnEsc(false);
 
 		addWindowListener(new WindowAdapter() {
@@ -217,7 +217,7 @@ public class CircleForm extends XJDialog {
 
 			String name = txtName.getText();
 			CircleUnit unit = (CircleUnit) ((ComboBoxObject) cmbUnits
-					.getSelectedItem()).getId();
+					.getSelectedItem()).getObject();
 			Integer duration = Formatter.formatStringToNumber(
 					txtDuration.getText()).intValue();
 
