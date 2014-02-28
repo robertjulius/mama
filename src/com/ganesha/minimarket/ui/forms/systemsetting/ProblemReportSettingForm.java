@@ -141,7 +141,7 @@ public class ProblemReportSettingForm extends XJDialog {
 		}
 
 		pack();
-		setLocationRelativeTo(null);
+		setLocationRelativeTo(parent);
 	}
 
 	public void initForm() throws AppException {

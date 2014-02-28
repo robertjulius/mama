@@ -76,7 +76,7 @@ public class DbConsistencyChecker extends XJDialog {
 		getContentPane().add(btnDone, "cell 0 1,alignx right");
 
 		pack();
-		setLocationRelativeTo(null);
+		setLocationRelativeTo(parent);
 	}
 
 	@Override

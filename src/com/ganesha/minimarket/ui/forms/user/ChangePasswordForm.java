@@ -101,7 +101,7 @@ public class ChangePasswordForm extends XJDialog {
 		pnlButton.add(btnSimpan, "cell 2 0");
 
 		pack();
-		setLocationRelativeTo(null);
+		setLocationRelativeTo(parent);
 	}
 
 	@Override

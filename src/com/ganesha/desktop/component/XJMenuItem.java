@@ -1,12 +1,13 @@
 package com.ganesha.desktop.component;
 
+import java.awt.Font;
 import java.awt.Window;
 
 import javax.swing.JMenuItem;
 
-import com.ganesha.desktop.exeptions.ExceptionHandler;
 import com.ganesha.desktop.component.permissionutils.PermissionChecker;
 import com.ganesha.desktop.component.permissionutils.PermissionControl;
+import com.ganesha.desktop.exeptions.ExceptionHandler;
 
 public class XJMenuItem extends JMenuItem implements XComponentConstants,
 		PermissionControl {
@@ -18,6 +19,7 @@ public class XJMenuItem extends JMenuItem implements XComponentConstants,
 	public XJMenuItem(String text, String permissionCode) {
 		super(text);
 		this.permissionCode = permissionCode;
+		setFont(new Font("Tahoma", Font.PLAIN, FONT_SIZE_NORMAL));
 		setVisible(true);
 	}
 

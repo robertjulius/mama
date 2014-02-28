@@ -39,7 +39,7 @@ public class AppExceptionHandler extends XJDialog {
 		exceptionHandler.setMessage(ex.getMessage());
 		exceptionHandler.setStackTrace(ex);
 		exceptionHandler.pack();
-		exceptionHandler.setLocationRelativeTo(null);
+		exceptionHandler.setLocationRelativeTo(parent);
 		exceptionHandler.setVisible(true);
 	}
 

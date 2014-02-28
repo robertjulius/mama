@@ -209,7 +209,7 @@ public class DiscountListDialog extends XJTableDialog {
 		}
 
 		pack();
-		setLocationRelativeTo(null);
+		setLocationRelativeTo(parent);
 	}
 
 	@Override

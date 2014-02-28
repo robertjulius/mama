@@ -178,7 +178,7 @@ public class DbSettingForm extends XJDialog {
 		}
 
 		pack();
-		setLocationRelativeTo(null);
+		setLocationRelativeTo(parent);
 	}
 
 	public void initForm() throws AppException {

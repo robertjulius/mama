@@ -387,7 +387,7 @@ public class PenjualanForm extends XJDialog {
 		pnlButton.add(btnSelesai, "cell 2 0");
 
 		pack();
-		setLocationRelativeTo(null);
+		setLocationRelativeTo(parent);
 	}
 
 	@Override

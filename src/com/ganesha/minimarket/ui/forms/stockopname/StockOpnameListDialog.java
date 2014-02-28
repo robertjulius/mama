@@ -303,7 +303,7 @@ public class StockOpnameListDialog extends XJTableDialog {
 		startTimestamp = CommonUtils.getCurrentTimestamp();
 
 		pack();
-		setLocationRelativeTo(null);
+		setLocationRelativeTo(parent);
 	}
 
 	@Override

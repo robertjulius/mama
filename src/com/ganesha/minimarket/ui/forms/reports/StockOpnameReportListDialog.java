@@ -159,7 +159,7 @@ public class StockOpnameReportListDialog extends XJTableDialog {
 		panel.add(btnPreview, "cell 1 0");
 
 		pack();
-		setLocationRelativeTo(null);
+		setLocationRelativeTo(parent);
 	}
 
 	@Override

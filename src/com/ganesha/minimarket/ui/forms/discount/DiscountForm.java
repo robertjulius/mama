@@ -144,7 +144,7 @@ public class DiscountForm extends XJDialog {
 		pnlButton.add(btnSimpan, "cell 1 0");
 
 		pack();
-		setLocationRelativeTo(null);
+		setLocationRelativeTo(parent);
 	}
 
 	public String getKodeBarang() {

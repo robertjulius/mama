@@ -245,7 +245,7 @@ public class StockForm extends XJDialog {
 		pnlButton.add(btnSimpan, "cell 3 0");
 
 		pack();
-		setLocationRelativeTo(null);
+		setLocationRelativeTo(parent);
 	}
 
 	public Integer getIdBarang() {

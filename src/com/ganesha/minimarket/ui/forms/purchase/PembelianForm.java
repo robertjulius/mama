@@ -17,8 +17,11 @@ import java.util.List;
 import java.util.Map;
 
 import javax.swing.JOptionPane;
+import javax.swing.JPopupMenu;
 import javax.swing.JScrollPane;
 import javax.swing.SwingConstants;
+import javax.swing.event.PopupMenuEvent;
+import javax.swing.event.PopupMenuListener;
 import javax.swing.table.TableCellEditor;
 
 import net.miginfocom.swing.MigLayout;
@@ -36,6 +39,7 @@ import com.ganesha.desktop.component.XJButton;
 import com.ganesha.desktop.component.XJDateChooser;
 import com.ganesha.desktop.component.XJDialog;
 import com.ganesha.desktop.component.XJLabel;
+import com.ganesha.desktop.component.XJMenuItem;
 import com.ganesha.desktop.component.XJPanel;
 import com.ganesha.desktop.component.XJTable;
 import com.ganesha.desktop.component.XJTextField;
@@ -165,6 +169,44 @@ public class PembelianForm extends XJDialog {
 				}
 			}
 		});
+
+		final XJMenuItem openCalculatorMenuItem = new XJMenuItem(
+				"Open Calculator", PembelianForm.class.getName());
+		openCalculatorMenuItem.setPermissionRequired(false);
+		openCalculatorMenuItem.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				try {
+					openCalculator();
+				} catch (Exception ex) {
+					ExceptionHandler.handleException(PembelianForm.this, ex);
+				}
+			}
+		});
+		JPopupMenu popupMenu = new JPopupMenu();
+		popupMenu.addPopupMenuListener(new PopupMenuListener() {
+
+			@Override
+			public void popupMenuCanceled(PopupMenuEvent e) {
+				/*
+				 * Do nothing
+				 */
+			}
+
+			@Override
+			public void popupMenuWillBecomeInvisible(PopupMenuEvent e) {
+				/*
+				 * Do nothing
+				 */
+			}
+
+			@Override
+			public void popupMenuWillBecomeVisible(PopupMenuEvent e) {
+				openCalculatorMenuItem.setVisible(true);
+			}
+		});
+		popupMenu.add(openCalculatorMenuItem);
+		table.setComponentPopupMenu(popupMenu);
 
 		XJPanel pnlHeader = new XJPanel();
 		pnlHeader.setBorder(new XEtchedBorder());
@@ -438,7 +480,7 @@ public class PembelianForm extends XJDialog {
 		pnlButton.add(btnSelesai, "cell 1 0,growy");
 
 		pack();
-		setLocationRelativeTo(null);
+		setLocationRelativeTo(parent);
 	}
 
 	@Override
@@ -547,6 +589,37 @@ public class PembelianForm extends XJDialog {
 		table.changeSelection(row, column, false, false);
 		setTotalPembelian();
 		reorderRowNumber();
+	}
+
+	private void openCalculator() {
+
+		int row = table.getSelectedRow();
+		XTableModel tableModel = (XTableModel) table.getModel();
+
+		int initialQuantity = Formatter.formatStringToNumber(
+				tableModel.getValueAt(
+						row,
+						tableParameters.get(ColumnEnum.QUANTITY)
+								.getColumnIndex()).toString()).intValue();
+		double initialTotalAmount = Formatter.formatStringToNumber(
+				tableModel.getValueAt(row,
+						tableParameters.get(ColumnEnum.TOTAL).getColumnIndex())
+						.toString()).doubleValue();
+
+		Calculator calculator = Calculator.openDialog(PembelianForm.this,
+				initialQuantity, initialTotalAmount);
+		int returnValue = calculator.getReturnValue();
+		if (returnValue != Calculator.DONE) {
+			return;
+		}
+		int quantity = calculator.getQuantity();
+		double pricePerUnit = calculator.getPricePerUnit();
+
+		tableModel.setValueAt(Formatter.formatNumberToString(quantity), row,
+				tableParameters.get(ColumnEnum.QUANTITY).getColumnIndex());
+		tableModel.setValueAt(Formatter.formatNumberToString(pricePerUnit),
+				row, tableParameters.get(ColumnEnum.PRICE).getColumnIndex());
+		setTotalPerRow(row);
 	}
 
 	private void registrasiBarangBaru() {
@@ -812,7 +885,7 @@ public class PembelianForm extends XJDialog {
 				tableParameters.get(ColumnEnum.TOTAL).getColumnIndex());
 
 		setTotalPembelian();
-	}
+	};
 
 	private void showDetail() {
 		Session session = HibernateUtils.openSession();
@@ -833,7 +906,7 @@ public class PembelianForm extends XJDialog {
 		} finally {
 			session.close();
 		}
-	};
+	}
 
 	private void tambah(Integer itemId) {
 		if (itemId == null) {

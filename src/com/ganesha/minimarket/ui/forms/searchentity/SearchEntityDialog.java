@@ -150,7 +150,7 @@ public class SearchEntityDialog extends XJTableDialog {
 		btnPilih.setText("<html><center>Pilih<br/>[Enter]</center><html>");
 
 		pack();
-		setLocationRelativeTo(null);
+		setLocationRelativeTo(parent);
 
 		loadDataInThread();
 	}

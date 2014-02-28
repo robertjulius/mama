@@ -270,7 +270,7 @@ public class StockListDialog extends XJTableDialog {
 		btnRefresh.doClick();
 
 		pack();
-		setLocationRelativeTo(null);
+		setLocationRelativeTo(parent);
 	}
 
 	@Override

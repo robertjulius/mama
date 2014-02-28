@@ -137,7 +137,7 @@ public class PrinterSettingForm extends XJDialog {
 		}
 
 		pack();
-		setLocationRelativeTo(null);
+		setLocationRelativeTo(parent);
 	}
 
 	public void initForm() throws AppException {

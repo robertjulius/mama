@@ -28,7 +28,7 @@ public class UserExceptionHandler extends XJDialog {
 		exceptionHandler.setMessage("<html><center>PROSES GAGAL<br/><br/>"
 				+ ex.getMessage() + "</center></html>");
 		exceptionHandler.pack();
-		exceptionHandler.setLocationRelativeTo(null);
+		exceptionHandler.setLocationRelativeTo(parent);
 		exceptionHandler.setVisible(true);
 	}
 

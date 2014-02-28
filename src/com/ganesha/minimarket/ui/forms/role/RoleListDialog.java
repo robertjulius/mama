@@ -149,7 +149,7 @@ public class RoleListDialog extends XJTableDialog {
 		}
 
 		pack();
-		setLocationRelativeTo(null);
+		setLocationRelativeTo(parent);
 	}
 
 	@Override
