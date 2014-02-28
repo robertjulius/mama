@@ -18,12 +18,20 @@ import javax.swing.table.TableCellRenderer;
 
 import com.ganesha.desktop.component.xtableutils.XCellEditor;
 import com.ganesha.desktop.component.xtableutils.XTableConstants;
+import com.ganesha.desktop.component.xtableutils.XTableModel;
 
 public class XJTable extends JTable implements XComponentConstants {
 
 	private static final long serialVersionUID = 8731044804764016513L;
 
+	private boolean requestFocusOnF1;
+
 	public XJTable() {
+		this(true);
+	}
+
+	public XJTable(boolean requestFocusOnF1) {
+		this.requestFocusOnF1 = requestFocusOnF1;
 		Font font = new Font("Tahoma", Font.PLAIN, FONT_SIZE_NORMAL);
 
 		setFont(font);
@@ -107,10 +115,12 @@ public class XJTable extends JTable implements XComponentConstants {
 		actionMap.put("selectNextEditableColumnCell",
 				new SelectNextEditableColumnCellAction());
 
-		InputMap inputMapWindow = getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW);
-		inputMapWindow.put(KeyStroke.getKeyStroke(KeyEvent.VK_F1, 0),
-				"focusOnTable");
-		actionMap.put("focusOnTable", new FocusOnTableAction());
+		if (requestFocusOnF1) {
+			InputMap inputMapWindow = getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW);
+			inputMapWindow.put(KeyStroke.getKeyStroke(KeyEvent.VK_F1, 0),
+					"focusOnTable");
+			actionMap.put("focusOnTable", new FocusOnTableAction());
+		}
 	}
 
 	public class FocusOnTableAction extends AbstractAction {
@@ -120,6 +130,16 @@ public class XJTable extends JTable implements XComponentConstants {
 		public void actionPerformed(ActionEvent e) {
 			requestFocus();
 			changeSelection(0, 0, false, false);
+
+			XTableModel tableModel = (XTableModel) getModel();
+			int columnCount = tableModel.getColumnCount();
+			for (int i = 0; i < columnCount; ++i) {
+				boolean editable = tableModel.isCellEditable(0, i);
+				if (editable) {
+					changeSelection(0, i, false, false);
+					break;
+				}
+			}
 		}
 	}
 

@@ -55,8 +55,6 @@ public class StockForm extends XJDialog {
 	private XJLabel lblHargaBeli;
 	private XJTextField txtHargaBeli;
 	private XJPanel pnlKode;
-	private XJLabel lblHpp;
-	private XJTextField txtHpp;
 	private XJLabel lblHargaJual;
 	private XJTextField txtHargaJual;
 	private XJButton btnBatal;
@@ -168,7 +166,7 @@ public class StockForm extends XJDialog {
 		pnlKanan = new XJPanel();
 		pnlKanan.setBorder(new XEtchedBorder());
 		getContentPane().add(pnlKanan, "cell 1 1,grow");
-		pnlKanan.setLayout(new MigLayout("", "[150][grow]", "[][][]"));
+		pnlKanan.setLayout(new MigLayout("", "[150][grow]", "[][]"));
 
 		lblHargaBeli = new XJLabel();
 		lblHargaBeli.setText("Harga Beli");
@@ -178,23 +176,15 @@ public class StockForm extends XJDialog {
 		txtHargaBeli.setEditable(false);
 		pnlKanan.add(txtHargaBeli, "cell 1 0,growx");
 
-		lblHpp = new XJLabel();
-		lblHpp.setText("HPP");
-		pnlKanan.add(lblHpp, "cell 0 1");
-
-		txtHpp = new XJTextField();
-		txtHpp.setEditable(false);
-		pnlKanan.add(txtHpp, "cell 1 1,growx");
-
 		lblHargaJual = new XJLabel();
 		lblHargaJual.setText("Harga Jual");
-		pnlKanan.add(lblHargaJual, "cell 0 2");
+		pnlKanan.add(lblHargaJual, "cell 0 1");
 
 		txtHargaJual = new XJTextField();
 		txtHargaJual
 				.setFormatterFactory(GeneralConstants.FORMATTER_FACTORY_NUMBER);
 		txtHargaJual.setText("0");
-		pnlKanan.add(txtHargaJual, "cell 1 2,growx");
+		pnlKanan.add(txtHargaJual, "cell 1 1,growx");
 
 		pnlDisable = new XJPanel();
 		getContentPane().add(pnlDisable, "cell 0 2 2 1,alignx right,growy");
@@ -253,7 +243,7 @@ public class StockForm extends XJDialog {
 		pnlButton.add(btnSimpan, "cell 3 0");
 
 		pack();
-		setLocationRelativeTo(null);
+		setLocationRelativeTo(parent);
 	}
 
 	public Integer getIdBarang() {
@@ -277,7 +267,6 @@ public class StockForm extends XJDialog {
 				.getMinimumStock()));
 		txtHargaBeli.setText(Formatter.formatNumberToString(ItemFacade
 				.getInstance().getLastBuyPrice(item)));
-		txtHpp.setText(Formatter.formatNumberToString(item.getHpp()));
 		txtHargaJual
 				.setText(Formatter.formatNumberToString(item.getSellPrice()));
 		chkDisabled.setSelected(item.getDisabled());
@@ -315,7 +304,6 @@ public class StockForm extends XJDialog {
 		if (actionType == ActionType.CREATE) {
 			txtJumlahSaatIni.setText("0");
 			txtHargaBeli.setText("0");
-			txtHpp.setText("0");
 			txtHargaJual.setText("0");
 			btnGenerateBarcode.setVisible(true);
 		} else if (actionType == ActionType.UPDATE) {
@@ -356,8 +344,6 @@ public class StockForm extends XJDialog {
 			BigDecimal buyPrice = BigDecimal
 					.valueOf(Formatter.formatStringToNumber(
 							txtHargaBeli.getText()).doubleValue());
-			BigDecimal hpp = BigDecimal.valueOf(Formatter.formatStringToNumber(
-					txtHpp.getText()).doubleValue());
 			BigDecimal sellPrice = BigDecimal
 					.valueOf(Formatter.formatStringToNumber(
 							txtHargaJual.getText()).doubleValue());
@@ -369,13 +355,13 @@ public class StockForm extends XJDialog {
 			Item item = null;
 			if (actionType == ActionType.CREATE) {
 				item = facade.addNewItem(code.toUpperCase(),
-						name.toUpperCase(), barcode, unit, buyPrice, hpp,
-						sellPrice, minimumStock, disabled, deleted, session);
+						name.toUpperCase(), barcode, unit, buyPrice, sellPrice,
+						minimumStock, disabled, deleted, session);
 				itemId = item.getId();
 				dispose();
 			} else if (actionType == ActionType.UPDATE) {
 				item = facade.updateExistingItem(itemId, name.toUpperCase(),
-						barcode, unit, buyPrice, hpp, sellPrice, minimumStock,
+						barcode, unit, buyPrice, sellPrice, minimumStock,
 						disabled, deleted, session);
 				dispose();
 			} else {

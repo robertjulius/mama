@@ -168,7 +168,7 @@ public class PayableForm extends XJDialog {
 		pnlButton.add(btnSelesai, "cell 1 0");
 
 		pack();
-		setLocationRelativeTo(null);
+		setLocationRelativeTo(parent);
 	}
 
 	public void setFormDetailValue(PayableSummary payableSummary,

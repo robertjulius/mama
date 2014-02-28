@@ -245,7 +245,7 @@ public class SupplierListDialog extends XJTableDialog {
 		btnRefresh.doClick();
 
 		pack();
-		setLocationRelativeTo(null);
+		setLocationRelativeTo(parent);
 	}
 
 	@Override

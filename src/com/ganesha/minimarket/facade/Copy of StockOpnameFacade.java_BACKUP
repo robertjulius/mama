@@ -20,6 +20,7 @@ import net.sf.jasperreports.engine.xml.JRXmlLoader;
 
 import org.hibernate.Criteria;
 import org.hibernate.Session;
+import org.hibernate.criterion.Order;
 import org.hibernate.criterion.Restrictions;
 
 import com.ganesha.core.exception.AppException;
@@ -27,12 +28,14 @@ import com.ganesha.core.utils.CommonUtils;
 import com.ganesha.minimarket.Main;
 import com.ganesha.minimarket.model.Item;
 import com.ganesha.minimarket.model.ItemStock;
+import com.ganesha.minimarket.model.PurchaseDetail;
+import com.ganesha.minimarket.model.PurchaseReturnDetail;
 import com.ganesha.minimarket.model.StockOpnameDetail;
 import com.ganesha.minimarket.model.StockOpnameHeader;
 
 public class StockOpnameFacade {
 
-	private static final String REPORT_NAME = "Laporan Stock Opname";
+	private static final String REPORT_NAME = "Laporan Stok Opname";
 	private static final String REPORT_FILE = "com/ganesha/minimarket/reports/StockOpnameReport.jrxml";
 
 	private static StockOpnameFacade instance;
@@ -57,6 +60,11 @@ public class StockOpnameFacade {
 		BigDecimal overAmount = calculateOverAmount(item, overCount);
 		BigDecimal lossAmount = calculateLossAmount(item, lossCount);
 
+		BigDecimal persediaanAkhir = ItemFacade.getInstance().calculateAmount(
+				item);
+
+		BigDecimal hpp = countHpp(item, persediaanAkhir, session);
+		item.setHpp(hpp);
 		item.setLastUpdatedBy(Main.getUserLogin().getId());
 		item.setLastUpdatedTimestamp(CommonUtils.getCurrentTimestamp());
 
@@ -68,6 +76,7 @@ public class StockOpnameFacade {
 		stockOpname.setOverAmount(overAmount);
 		stockOpname.setLossCount(lossCount);
 		stockOpname.setLossAmount(lossAmount);
+		stockOpname.setLastStockAmount(persediaanAkhir);
 
 		return stockOpname;
 	}
@@ -208,5 +217,115 @@ public class StockOpnameFacade {
 					itemStock.getPurchaseDetail().getPricePerUnit()));
 		}
 		return amount;
+	}
+
+	private BigDecimal countHpp(Item item, BigDecimal persediaanAkhir,
+			Session session) throws AppException {
+
+		int itemId = item.getId();
+
+		StockOpnameHeader lastStockOpnameHeader = getLastStockOpnameHeader(session);
+		StockOpnameDetail lastStockOpnameDetail = null;
+		if (lastStockOpnameHeader != null) {
+			lastStockOpnameDetail = getStockOpnameDetail(
+					lastStockOpnameHeader.getId(), itemId, session);
+		}
+
+		BigDecimal persediaanAwal = null;
+		if (lastStockOpnameDetail == null) {
+			persediaanAwal = BigDecimal.valueOf(0);
+		} else if (lastStockOpnameDetail.getLastStockAmount() == null) {
+			persediaanAwal = BigDecimal.valueOf(0);
+		} else {
+			persediaanAwal = lastStockOpnameDetail.getLastStockAmount();
+		}
+
+		Timestamp afterThisTimestamp = null;
+		if (lastStockOpnameHeader != null) {
+			afterThisTimestamp = lastStockOpnameHeader
+					.getLastUpdatedTimestamp();
+		}
+		BigDecimal pembelian = getAmountOfPembelian(afterThisTimestamp, session);
+
+		BigDecimal returPembelian = getAmountOfReturPembelian(
+				afterThisTimestamp, session);
+
+		BigDecimal hpp = persediaanAwal.add(pembelian).subtract(returPembelian)
+				.subtract(persediaanAkhir);
+
+		return hpp;
+	}
+
+	private BigDecimal getAmountOfPembelian(Timestamp afterThisTimestamp,
+			Session session) {
+		Criteria criteria = session.createCriteria(PurchaseDetail.class);
+		criteria.createAlias("purchaseHeader", "purchaseHeader");
+
+		if (afterThisTimestamp != null) {
+			criteria.add(Restrictions.gt("purchaseHeader.transactionTimestamp",
+					afterThisTimestamp));
+		}
+
+		@SuppressWarnings("unchecked")
+		List<PurchaseDetail> purchaseDetails = criteria.list();
+
+		BigDecimal amountOfPembelian = BigDecimal.valueOf(0);
+		for (PurchaseDetail purchaseDetail : purchaseDetails) {
+			amountOfPembelian = amountOfPembelian.add(BigDecimal.valueOf(
+					purchaseDetail.getQuantity()).multiply(
+					purchaseDetail.getPricePerUnit()));
+		}
+
+		return amountOfPembelian;
+	}
+
+	private BigDecimal getAmountOfReturPembelian(Timestamp afterThisTimestamp,
+			Session session) {
+		Criteria criteria = session.createCriteria(PurchaseReturnDetail.class);
+		criteria.createAlias("purchaseReturnHeader", "purchaseReturnHeader");
+
+		if (afterThisTimestamp != null) {
+			criteria.add(Restrictions.gt(
+					"purchaseReturnHeader.transactionTimestamp",
+					afterThisTimestamp));
+		}
+
+		@SuppressWarnings("unchecked")
+		List<PurchaseReturnDetail> purchaseReturnDetails = criteria.list();
+
+		BigDecimal amountOfReturPembelian = BigDecimal.valueOf(0);
+		for (PurchaseReturnDetail purchaseReturnDetail : purchaseReturnDetails) {
+			amountOfReturPembelian = amountOfReturPembelian.add(BigDecimal
+					.valueOf(purchaseReturnDetail.getQuantity()).multiply(
+							purchaseReturnDetail.getPurchaseDetail()
+									.getPricePerUnit()));
+		}
+
+		return amountOfReturPembelian;
+	}
+
+	private StockOpnameHeader getLastStockOpnameHeader(Session session) {
+		Criteria criteria = session.createCriteria(StockOpnameHeader.class);
+		criteria.addOrder(Order.desc("id"));
+		criteria.setMaxResults(1);
+		StockOpnameHeader stockOpnameHeader = (StockOpnameHeader) criteria
+				.uniqueResult();
+		return stockOpnameHeader;
+	}
+
+	private StockOpnameDetail getStockOpnameDetail(int stockOpnameHeaderId,
+			int itemStockId, Session session) {
+
+		Criteria criteria = session.createCriteria(StockOpnameDetail.class);
+		criteria.createAlias("stockOpnameHeader", "stockOpnameHeader");
+		criteria.createAlias("item", "item");
+
+		criteria.add(Restrictions.eq("stockOpnameHeader.id",
+				stockOpnameHeaderId));
+		criteria.add(Restrictions.eq("item.id", itemStockId));
+
+		StockOpnameDetail stockOpnameDetail = (StockOpnameDetail) criteria
+				.uniqueResult();
+		return stockOpnameDetail;
 	}
 }

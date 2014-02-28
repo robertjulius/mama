@@ -207,7 +207,7 @@ public class SearchTransactionDialog extends XJTableDialog {
 		panel.add(btnPilih, "cell 0 0");
 
 		pack();
-		setLocationRelativeTo(null);
+		setLocationRelativeTo(parent);
 
 		try {
 			loadDataInThread();

@@ -211,7 +211,7 @@ public class RoleForm extends XJDialog {
 		initForm();
 
 		pack();
-		setLocationRelativeTo(null);
+		setLocationRelativeTo(parent);
 	}
 
 	public void setFormDetailValue(Role role,

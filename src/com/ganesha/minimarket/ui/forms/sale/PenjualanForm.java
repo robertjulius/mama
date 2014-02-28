@@ -387,7 +387,7 @@ public class PenjualanForm extends XJDialog {
 		pnlButton.add(btnSelesai, "cell 2 0");
 
 		pack();
-		setLocationRelativeTo(null);
+		setLocationRelativeTo(parent);
 	}
 
 	@Override
@@ -406,9 +406,14 @@ public class PenjualanForm extends XJDialog {
 			btnSelesai.doClick();
 			break;
 		case KeyEvent.VK_DELETE:
-			if (!table.isEditing()) {
-				btnHapus.doClick();
+			boolean isFocus = table.isFocusOwner();
+			if (!isFocus) {
+				return;
 			}
+			if (table.isEditing()) {
+				return;
+			}
+			btnHapus.doClick();
 			break;
 		default:
 			break;

@@ -246,7 +246,7 @@ public class UserForm extends XJDialog {
 		initForm();
 
 		pack();
-		setLocationRelativeTo(null);
+		setLocationRelativeTo(parent);
 	}
 
 	public void setFormDetailValue(User user, List<UserRoleLink> roleRoleLinks) {

@@ -176,7 +176,7 @@ public class ItemStockReportListDialog extends XJTableDialog {
 		}
 
 		pack();
-		setLocationRelativeTo(null);
+		setLocationRelativeTo(parent);
 	}
 
 	@Override

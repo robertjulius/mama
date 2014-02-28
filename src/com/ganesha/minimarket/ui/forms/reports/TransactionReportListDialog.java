@@ -248,7 +248,7 @@ public class TransactionReportListDialog extends XJTableDialog {
 		cmbJenisTransaksi.setSelectedIndex(2);
 
 		pack();
-		setLocationRelativeTo(null);
+		setLocationRelativeTo(parent);
 	}
 
 	@Override

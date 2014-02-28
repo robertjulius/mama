@@ -397,7 +397,7 @@ public class ReturPembelianForm extends XJDialog {
 		pnlButton.add(btnSelesai, "cell 1 0,growy");
 
 		pack();
-		setLocationRelativeTo(null);
+		setLocationRelativeTo(parent);
 	}
 
 	@Override
@@ -413,9 +413,14 @@ public class ReturPembelianForm extends XJDialog {
 			btnSelesai.doClick();
 			break;
 		case KeyEvent.VK_DELETE:
-			if (!table.isEditing()) {
-				btnHapus.doClick();
+			boolean isFocus = table.isFocusOwner();
+			if (!isFocus) {
+				return;
 			}
+			if (table.isEditing()) {
+				return;
+			}
+			btnHapus.doClick();
 			break;
 		default:
 			break;

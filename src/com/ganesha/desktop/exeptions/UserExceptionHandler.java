@@ -19,12 +19,16 @@ public class UserExceptionHandler extends XJDialog {
 	private XJButton btnOk;
 	private XJLabel lblMessage;
 
-	public static void handleException(Window parent, Exception ex) {
+	public static void handleException(Window parent, Throwable ex, String title) {
 		UserExceptionHandler exceptionHandler = new UserExceptionHandler(parent);
+		if (title == null) {
+			title = "Peringatan";
+		}
+		exceptionHandler.setTitle(title);
 		exceptionHandler.setMessage("<html><center>PROSES GAGAL<br/><br/>"
 				+ ex.getMessage() + "</center></html>");
 		exceptionHandler.pack();
-		exceptionHandler.setLocationRelativeTo(null);
+		exceptionHandler.setLocationRelativeTo(parent);
 		exceptionHandler.setVisible(true);
 	}
 
@@ -33,7 +37,6 @@ public class UserExceptionHandler extends XJDialog {
 		setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
 		setPermissionRequired(false);
 
-		setTitle("Peringatan");
 		getContentPane().setLayout(
 				new MigLayout("", "[500,grow]", "[200px,grow][]"));
 

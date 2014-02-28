@@ -211,7 +211,7 @@ public class UserListDialog extends XJTableDialog {
 		btnRefresh.doClick();
 
 		pack();
-		setLocationRelativeTo(null);
+		setLocationRelativeTo(parent);
 	}
 
 	@Override

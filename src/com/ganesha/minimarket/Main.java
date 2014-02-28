@@ -51,6 +51,7 @@ public class Main {
 	}
 
 	public static void runApp() throws AppException {
+		setDefaultUncaughtExceptionHandler();
 		setLookAndFeel();
 
 		CompanyConsistencyChecker companyChecker = new CompanyConsistencyChecker();
@@ -73,7 +74,6 @@ public class Main {
 
 	public static void setNimbusLookAndFeel() {
 		try {
-
 			UIManager.put("control", Color.BLACK);
 			UIManager.put("text", Color.WHITE);
 			UIManager.put("nimbusBlueGrey", new Color(0, 150, 0));
@@ -149,5 +149,14 @@ public class Main {
 		LoggerFactory.getLogger(Loggers.APPLICATION).debug("Test from Logger");
 		LoggerFactory.getLogger(Loggers.APPLICATION).error("Test Error",
 				new Exception("Error coy"));
+	}
+
+	private static void setDefaultUncaughtExceptionHandler() {
+		Thread.setDefaultUncaughtExceptionHandler(new Thread.UncaughtExceptionHandler() {
+			@Override
+			public void uncaughtException(Thread t, Throwable e) {
+				ExceptionHandler.handleException(null, e, "Uncaught Exception");
+			}
+		});
 	}
 }
