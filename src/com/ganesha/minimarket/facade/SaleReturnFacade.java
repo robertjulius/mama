@@ -79,13 +79,21 @@ public class SaleReturnFacade implements TransactionFacade {
 						+ ". Total modal untuk barang ini hanya sebanyak "
 						+ maxStock + " " + item.getUnit());
 			}
+
 			itemFacade.reAdjustStock(item, stockAfterReturn, session);
+
+			Timestamp currentTimestamp = CommonUtils.getCurrentTimestamp();
 
 			AccountFacade.getInstance().insertIntoAccount(
 					CoaCodeConstants.RETUR_PENJUALAN, saleReturnDetail.getId(),
-					CommonUtils.getCurrentTimestamp(), "Retur Penjualan", "",
+					currentTimestamp, "Retur Penjualan", "",
 					DebitCreditFlag.DEBIT, saleReturnDetail.getTotalAmount(),
 					session);
+
+			AccountFacade.getInstance().insertIntoAccount(
+					CoaCodeConstants.KAS_KECIL, saleReturnDetail.getId(),
+					currentTimestamp, "Kas", "", DebitCreditFlag.CREDIT,
+					saleReturnDetail.getTotalAmount(), session);
 		}
 	}
 

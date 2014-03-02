@@ -2,14 +2,18 @@ package com.ganesha.accounting.facade;
 
 import java.awt.Window;
 import java.math.BigDecimal;
+import java.sql.Timestamp;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
 import org.hibernate.Criteria;
 import org.hibernate.Session;
+import org.hibernate.criterion.Order;
 import org.hibernate.criterion.Restrictions;
 
+import com.ganesha.accounting.constants.CoaCodeConstants;
+import com.ganesha.accounting.constants.Enums.DebitCreditFlag;
 import com.ganesha.accounting.model.Circle;
 import com.ganesha.accounting.model.Coa;
 import com.ganesha.accounting.model.Expense;
@@ -58,8 +62,14 @@ public class ExpenseFacade implements TransactionReportFacade {
 		return expense;
 	}
 
-	public ExpenseTransaction addTransaction(Expense expense,
-			BigDecimal amount, String notes, Session session) {
+	public Expense getDetail(Integer id, Session session) {
+		Expense expense = (Expense) session.get(Expense.class, id);
+		return expense;
+	}
+
+	public ExpenseTransaction performTransaction(Expense expense,
+			BigDecimal amount, String notes, Session session)
+			throws AppException {
 		ExpenseTransaction expenseTransaction = new ExpenseTransaction();
 		expenseTransaction.setExpense(expense);
 		expenseTransaction.setAmount(amount);
@@ -69,12 +79,20 @@ public class ExpenseFacade implements TransactionReportFacade {
 				.getCurrentTimestamp());
 
 		session.saveOrUpdate(expenseTransaction);
-		return expenseTransaction;
-	}
 
-	public Expense getDetail(Integer id, Session session) {
-		Expense expense = (Expense) session.get(Expense.class, id);
-		return expense;
+		Timestamp currentTimestamp = CommonUtils.getCurrentTimestamp();
+
+		AccountFacade.getInstance().insertIntoAccount(expense.getCoa().getId(),
+				expenseTransaction.getId(), currentTimestamp,
+				expense.getName(), "", DebitCreditFlag.DEBIT,
+				expenseTransaction.getAmount(), session);
+
+		AccountFacade.getInstance().insertIntoAccount(
+				CoaCodeConstants.KAS_KECIL, expenseTransaction.getId(),
+				currentTimestamp, "Kas", "", DebitCreditFlag.CREDIT,
+				expenseTransaction.getAmount(), session);
+
+		return expenseTransaction;
 	}
 
 	@Override
@@ -86,7 +104,7 @@ public class ExpenseFacade implements TransactionReportFacade {
 	}
 
 	public List<Expense> search(String name, Coa coa, Circle circle,
-			boolean disabled, Session session) {
+			String orderBy, boolean disabled, Session session) {
 		Criteria criteria = session.createCriteria(Expense.class);
 		criteria.createAlias("coa", "coa");
 		criteria.createAlias("circle", "circle");
@@ -102,6 +120,10 @@ public class ExpenseFacade implements TransactionReportFacade {
 
 		if (circle != null && circle.getId() != null) {
 			criteria.add(Restrictions.eq("circle.id", circle.getId()));
+		}
+
+		if (orderBy != null && !orderBy.trim().isEmpty()) {
+			criteria.addOrder(Order.asc(orderBy));
 		}
 
 		criteria.add(Restrictions.eq("disabled", disabled));

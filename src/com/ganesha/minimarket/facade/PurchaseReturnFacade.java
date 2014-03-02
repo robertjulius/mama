@@ -97,14 +97,36 @@ public class PurchaseReturnFacade implements TransactionFacade {
 			}
 		}
 
-		if (purchaseReturnHeader.getAmountReturned().doubleValue() != 0) {
-			AccountFacade.getInstance().insertIntoAccount(
-					CoaCodeConstants.RETUR_PEMBELIAN,
-					purchaseReturnHeader.getId(),
-					CommonUtils.getCurrentTimestamp(), "Retur Pembelian", "",
-					DebitCreditFlag.CREDIT,
-					purchaseReturnHeader.getAmountReturned(), session);
+		if (!purchaseReturnHeader.getReturnedInFullFlag()) {
+			addToReceivable(purchaseReturnHeader, session);
 		}
+
+		if (!purchaseReturnHeader.getReturnedInFullFlag()) {
+			addToPayable(purchaseReturnHeader, session);
+		}
+
+		Timestamp currentTimestamp = CommonUtils.getCurrentTimestamp();
+
+		AccountFacade.getInstance().insertIntoAccount(
+				CoaCodeConstants.RETUR_PEMBELIAN, purchaseReturnHeader.getId(),
+				currentTimestamp, "Retur Pembelian", "",
+				DebitCreditFlag.CREDIT,
+				purchaseReturnHeader.getTotalReturnAmount(), session);
+
+		AccountFacade.getInstance().insertIntoAccount(
+				CoaCodeConstants.KAS_KECIL, purchaseReturnHeader.getId(),
+				currentTimestamp, "Kas", "", DebitCreditFlag.DEBIT,
+				purchaseReturnHeader.getAmountReturned(), session);
+
+		AccountFacade.getInstance().insertIntoAccount(
+				CoaCodeConstants.PIUTANG_USAHA, purchaseReturnHeader.getId(),
+				currentTimestamp, "Piutang Usaha", "", DebitCreditFlag.DEBIT,
+				purchaseReturnHeader.getRemainingReturnAmount(), session);
+
+		AccountFacade.getInstance().insertIntoAccount(
+				CoaCodeConstants.HUTANG_USAHA, purchaseReturnHeader.getId(),
+				currentTimestamp, "Potong Hutang", "", DebitCreditFlag.DEBIT,
+				purchaseReturnHeader.getDebtCut(), session);
 	}
 
 	@Override

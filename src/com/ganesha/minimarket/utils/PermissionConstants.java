@@ -73,12 +73,10 @@ public class PermissionConstants {
 
 	// Transaction - Expense Transaction
 	public static final String MN_TRX_EXPENSE = "/transaction/expense";
-	public static final String EXPENSE_TRANSACTION_LIST = "ExpenseTransactionList";
 	public static final String EXPENSE_TRANSACTION_FORM = "ExpenseTransactionForm";
 
 	// Transaction - Revenue Transaction
 	public static final String MN_TRX_REVENUE = "/transaction/revenue";
-	public static final String REVENUE_TRANSACTION_LIST = "RevenueTransactionList";
 	public static final String REVENUE_TRANSACTION_FORM = "RevenueTransactionForm";
 
 	// Back Office - Laporan - Laporan Transaksi

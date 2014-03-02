@@ -34,11 +34,42 @@ public class PayableFacade {
 	private PayableFacade() {
 	}
 
-	public PayableSummary addSummary(int clientId, Session session) {
-		PayableSummary payableSummary = new PayableSummary();
-		payableSummary.setClientId(clientId);
-		payableSummary.setRemainingAmount(BigDecimal.valueOf(0));
-		payableSummary.setLastPayableTransactionId(-1);
+	public PayableSummary cutDebtForPurchaseReturn(int clientId,
+			Date maturityDate, BigDecimal amount, String description,
+			Session session) throws AppException {
+
+		boolean summaryExists = DBUtils.getInstance().isExists("clientId",
+				clientId, PayableSummary.class, session);
+
+		if (!summaryExists) {
+			addSummary(clientId, session);
+		}
+
+		PayableSummary payableSummary = getSummary(clientId, session);
+
+		PayableTransaction payableTransaction = new PayableTransaction();
+		payableTransaction.setPayableSummary(payableSummary);
+		payableTransaction
+				.setReffNumber(GeneralConstants.PREFIX_TRX_NUMBER_PAYABLE
+						+ CommonUtils.getTimestampInString());
+		payableTransaction.setAccountAction(AccountAction.DECREASE);
+		payableTransaction
+				.setActionTimestamp(CommonUtils.getCurrentTimestamp());
+		payableTransaction.setMaturityDate(maturityDate);
+		payableTransaction.setAmount(amount);
+		payableTransaction.setDescription(description);
+		payableTransaction.setLastUpdatedBy(Main.getUserLogin().getId());
+		payableTransaction.setLastUpdatedTimestamp(CommonUtils
+				.getCurrentTimestamp());
+
+		session.saveOrUpdate(payableTransaction);
+
+		BigDecimal lastRemainingAmount = payableSummary.getRemainingAmount();
+		lastRemainingAmount = lastRemainingAmount.subtract(payableTransaction
+				.getAmount());
+		payableSummary.setRemainingAmount(lastRemainingAmount);
+
+		payableSummary.setLastPayableTransactionId(payableTransaction.getId());
 		payableSummary.setLastUpdatedBy(Main.getUserLogin().getId());
 		payableSummary.setLastUpdatedTimestamp(CommonUtils
 				.getCurrentTimestamp());
@@ -47,7 +78,7 @@ public class PayableFacade {
 		return payableSummary;
 	}
 
-	public PayableSummary addTransaction(int clientId,
+	public PayableSummary debtForPuchase(int clientId,
 			AccountAction accountAction, Date maturityDate, BigDecimal amount,
 			String description, Session session) throws AppException {
 
@@ -114,6 +145,65 @@ public class PayableFacade {
 		return payableSummary;
 	}
 
+	public PayableSummary payFromCash(int clientId,
+			AccountAction accountAction, Date maturityDate, BigDecimal amount,
+			String description, Session session) throws AppException {
+
+		boolean summaryExists = DBUtils.getInstance().isExists("clientId",
+				clientId, PayableSummary.class, session);
+
+		if (!summaryExists) {
+			addSummary(clientId, session);
+		}
+
+		PayableSummary payableSummary = getSummary(clientId, session);
+
+		PayableTransaction payableTransaction = new PayableTransaction();
+		payableTransaction.setPayableSummary(payableSummary);
+		payableTransaction
+				.setReffNumber(GeneralConstants.PREFIX_TRX_NUMBER_PAYABLE
+						+ CommonUtils.getTimestampInString());
+		payableTransaction.setAccountAction(accountAction);
+		payableTransaction
+				.setActionTimestamp(CommonUtils.getCurrentTimestamp());
+		payableTransaction.setMaturityDate(maturityDate);
+		payableTransaction.setAmount(amount);
+		payableTransaction.setDescription(description);
+		payableTransaction.setLastUpdatedBy(Main.getUserLogin().getId());
+		payableTransaction.setLastUpdatedTimestamp(CommonUtils
+				.getCurrentTimestamp());
+
+		session.saveOrUpdate(payableTransaction);
+
+		if (accountAction == AccountAction.DECREASE) {
+
+			BigDecimal lastRemainingAmount = payableSummary
+					.getRemainingAmount();
+			lastRemainingAmount = lastRemainingAmount
+					.subtract(payableTransaction.getAmount());
+			payableSummary.setRemainingAmount(lastRemainingAmount);
+
+		} else if (accountAction == AccountAction.INCREASE) {
+
+			BigDecimal lastRemainingAmount = payableSummary
+					.getRemainingAmount();
+			lastRemainingAmount = lastRemainingAmount.add(payableTransaction
+					.getAmount());
+			payableSummary.setRemainingAmount(lastRemainingAmount);
+
+		} else {
+			throw new AppException("Unknown AccountAction " + accountAction);
+		}
+
+		payableSummary.setLastPayableTransactionId(payableTransaction.getId());
+		payableSummary.setLastUpdatedBy(Main.getUserLogin().getId());
+		payableSummary.setLastUpdatedTimestamp(CommonUtils
+				.getCurrentTimestamp());
+
+		session.saveOrUpdate(payableSummary);
+		return payableSummary;
+	}
+
 	public List<Map<String, Object>> search(String clientCode,
 			String clientName, Session session) {
 
@@ -142,5 +232,18 @@ public class PayableFacade {
 		List<Map<String, Object>> list = query.list();
 
 		return list;
+	}
+
+	private PayableSummary addSummary(int clientId, Session session) {
+		PayableSummary payableSummary = new PayableSummary();
+		payableSummary.setClientId(clientId);
+		payableSummary.setRemainingAmount(BigDecimal.valueOf(0));
+		payableSummary.setLastPayableTransactionId(-1);
+		payableSummary.setLastUpdatedBy(Main.getUserLogin().getId());
+		payableSummary.setLastUpdatedTimestamp(CommonUtils
+				.getCurrentTimestamp());
+
+		session.saveOrUpdate(payableSummary);
+		return payableSummary;
 	}
 }

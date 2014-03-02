@@ -296,8 +296,8 @@ public class ExpenseListDialog extends XJTableDialog {
 
 			ExpenseFacade facade = ExpenseFacade.getInstance();
 
-			List<Expense> expenses = facade.search(name, coa, circle, disabled,
-					session);
+			List<Expense> expenses = facade.search(name, coa, circle, "id",
+					disabled, session);
 
 			XTableModel tableModel = (XTableModel) table.getModel();
 			tableModel.setRowCount(expenses.size());

@@ -26,6 +26,8 @@
 		<mapping class="com.ganesha.accounting.model.Account" />
 		<mapping class="com.ganesha.accounting.model.Circle" />
 		<mapping class="com.ganesha.accounting.model.Expense" />
+		<mapping class="com.ganesha.accounting.model.ExpenseTransaction" />
+		<mapping class="com.ganesha.accounting.model.RevenueTransaction" />
 		<mapping class="com.ganesha.minimarket.model.Company" />
 		<mapping class="com.ganesha.minimarket.model.Item" />
 		<mapping class="com.ganesha.minimarket.model.ItemGroup" />

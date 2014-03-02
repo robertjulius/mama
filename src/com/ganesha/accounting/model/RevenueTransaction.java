@@ -1,4 +1,4 @@
-package com.ganesha.minimarket.model;
+package com.ganesha.accounting.model;
 
 import java.math.BigDecimal;
 
@@ -12,11 +12,12 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 import com.ganesha.accounting.model.Coa;
+import com.ganesha.model.LogableEntity;
 import com.ganesha.model.Trackable;
 
 @Entity
 @Table(name = "REVENUE_TRANSACTIONS")
-public class RevenueTransaction extends Trackable {
+public class RevenueTransaction extends Trackable implements LogableEntity {
 	private static final long serialVersionUID = -7780389008755790841L;
 
 	@Id
@@ -42,6 +43,7 @@ public class RevenueTransaction extends Trackable {
 		return coa;
 	}
 
+	@Override
 	public Integer getId() {
 		return id;
 	}

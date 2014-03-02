@@ -85,6 +85,10 @@ public class AccountFacade {
 			DebitCreditFlag increaseOn, BigDecimal amount, Session session)
 			throws AppException {
 
+		if (amount.doubleValue() == 0) {
+			return null;
+		}
+
 		Coa coa = CoaFacade.getInstance().getDetail(coaId, session);
 
 		Account account = new Account();

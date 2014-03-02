@@ -168,11 +168,17 @@ public class SaleFacade implements TransactionFacade {
 
 			session.saveOrUpdate(item);
 
+			Timestamp currentTimestamp = CommonUtils.getCurrentTimestamp();
+
 			AccountFacade.getInstance().insertIntoAccount(
 					CoaCodeConstants.PENJUALAN, saleDetail.getId(),
-					CommonUtils.getCurrentTimestamp(), "Penjualan", "",
-					DebitCreditFlag.CREDIT, saleDetail.getTotalAmount(),
-					session);
+					currentTimestamp, "Penjualan", "", DebitCreditFlag.CREDIT,
+					saleDetail.getTotalAmount(), session);
+
+			AccountFacade.getInstance().insertIntoAccount(
+					CoaCodeConstants.KAS_KECIL, saleDetail.getId(),
+					currentTimestamp, "Kas", "", DebitCreditFlag.DEBIT,
+					saleDetail.getTotalAmount(), session);
 		}
 	}
 

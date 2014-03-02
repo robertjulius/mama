@@ -67,6 +67,10 @@ public class PurchaseFacade implements TransactionFacade {
 			session.saveOrUpdate(itemStock);
 		}
 
+		if (!purchaseHeader.getPaidInFullFlag()) {
+			addToPayable(purchaseHeader, session);
+		}
+
 		Timestamp currentTimestamp = CommonUtils.getCurrentTimestamp();
 
 		AccountFacade.getInstance().insertIntoAccount(
@@ -74,31 +78,17 @@ public class PurchaseFacade implements TransactionFacade {
 				currentTimestamp, "Pembelian", "", DebitCreditFlag.DEBIT,
 				purchaseHeader.getTotalAmount(), session);
 
-		if (purchaseHeader.getExpenses().doubleValue() != 0) {
-			AccountFacade.getInstance().insertIntoAccount(
-					CoaCodeConstants.BEBAN_PEMBELIAN_LAIN_LAIN,
-					purchaseHeader.getId(), currentTimestamp,
-					"Beban Pembelian Lain-Lain", "", DebitCreditFlag.DEBIT,
-					purchaseHeader.getExpenses(), session);
-		}
+		AccountFacade.getInstance().insertIntoAccount(
+				CoaCodeConstants.KAS_KECIL, purchaseHeader.getId(),
+				currentTimestamp, "Kas", "", DebitCreditFlag.CREDIT,
+				purchaseHeader.getAdvancePayment(), session);
 
-		if (purchaseHeader.getDiscount().doubleValue() != 0) {
-			AccountFacade.getInstance().insertIntoAccount(
-					CoaCodeConstants.DISKON_PEMBELIAN, purchaseHeader.getId(),
-					currentTimestamp, "Diskon Pembelian", "",
-					DebitCreditFlag.CREDIT, purchaseHeader.getDiscount(),
-					session);
-		}
+		AccountFacade.getInstance().insertIntoAccount(
+				CoaCodeConstants.HUTANG_USAHA, purchaseHeader.getId(),
+				currentTimestamp, "Hutang Pembelian", "",
+				DebitCreditFlag.CREDIT, purchaseHeader.getRemainingPayment(),
+				session);
 
-		if (!purchaseHeader.getPaidInFullFlag()) {
-			addToPayable(purchaseHeader, session);
-
-			AccountFacade.getInstance().insertIntoAccount(
-					CoaCodeConstants.HUTANG_USAHA, purchaseHeader.getId(),
-					currentTimestamp, "Hutang Pembelian", "",
-					DebitCreditFlag.CREDIT,
-					purchaseHeader.getRemainingPayment(), session);
-		}
 	}
 
 	@Override

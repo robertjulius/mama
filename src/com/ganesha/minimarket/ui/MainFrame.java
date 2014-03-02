@@ -28,6 +28,7 @@ import com.ganesha.desktop.exeptions.ExceptionHandler;
 import com.ganesha.minimarket.Main;
 import com.ganesha.minimarket.ui.forms.customer.CustomerListDialog;
 import com.ganesha.minimarket.ui.forms.discount.DiscountListDialog;
+import com.ganesha.minimarket.ui.forms.expense.ExpenseTransactionForm;
 import com.ganesha.minimarket.ui.forms.payable.PayableListDialog;
 import com.ganesha.minimarket.ui.forms.purchase.PembelianForm;
 import com.ganesha.minimarket.ui.forms.receivable.ReceivableListDialog;
@@ -36,6 +37,7 @@ import com.ganesha.minimarket.ui.forms.reports.StockOpnameReportListDialog;
 import com.ganesha.minimarket.ui.forms.reports.TransactionReportListDialog;
 import com.ganesha.minimarket.ui.forms.returns.ReturPembelianForm;
 import com.ganesha.minimarket.ui.forms.returns.ReturPenjualanForm;
+import com.ganesha.minimarket.ui.forms.revenue.RevenueTransactionForm;
 import com.ganesha.minimarket.ui.forms.role.RoleListDialog;
 import com.ganesha.minimarket.ui.forms.sale.PenjualanForm;
 import com.ganesha.minimarket.ui.forms.stock.StockListDialog;
@@ -301,6 +303,39 @@ public class MainFrame extends XJFrame {
 			}
 		});
 		mnTransaksi.add(mntmPiutang);
+
+		JSeparator separator_4 = new JSeparator();
+		mnTransaksi.add(separator_4);
+
+		XJMenuItem mntmTrxExpense = new XJMenuItem(
+				"Pembayaran Beban Lain-Lain",
+				PermissionConstants.MN_TRX_EXPENSE);
+		mntmTrxExpense.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				try {
+					new ExpenseTransactionForm(MainFrame.this).setVisible(true);
+				} catch (Exception ex) {
+					ExceptionHandler.handleException(MainFrame.this, ex);
+				}
+			}
+		});
+		mnTransaksi.add(mntmTrxExpense);
+
+		XJMenuItem mntmTrxRevenue = new XJMenuItem(
+				"Input Pendapatan Lain-Lain",
+				PermissionConstants.MN_TRX_REVENUE);
+		mntmTrxRevenue.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				try {
+					new RevenueTransactionForm(MainFrame.this).setVisible(true);
+				} catch (Exception ex) {
+					ExceptionHandler.handleException(MainFrame.this, ex);
+				}
+			}
+		});
+		mnTransaksi.add(mntmTrxRevenue);
 
 		XJMenu mnBackOffice = new XJMenu("Back Office");
 		menuBar.add(mnBackOffice);

@@ -129,6 +129,20 @@ public class PermissionConsistencyChecker {
 		permissions.add(createPermission(PermissionConstants.RECEIVABLE_FORM,
 				"Receivable Form", 462));
 
+		// Transaction - Expense Transaction
+		permissions.add(createPermission(PermissionConstants.MN_TRX_EXPENSE,
+				"/Transaksi/Pembayaran Beban Lain-Lain", 470));
+		permissions.add(createPermission(
+				PermissionConstants.EXPENSE_TRANSACTION_FORM,
+				"Expense Transaction Form", 471));
+
+		// Transaction - Revenue Transaction
+		permissions.add(createPermission(PermissionConstants.MN_TRX_REVENUE,
+				"/Transaksi/Input Pendapatan Lain-Lain", 480));
+		permissions.add(createPermission(
+				PermissionConstants.REVENUE_TRANSACTION_FORM,
+				"Revenue Transaction Form", 481));
+
 		// Back Office - Laporan - Laporan Transaksi
 		permissions.add(createPermission(PermissionConstants.MN_REPORT_TRX,
 				"/Back Office/Laporan/Laporan Transaksi", 510));
