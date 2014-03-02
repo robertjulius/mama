@@ -34,6 +34,50 @@ public class PayableFacade {
 	private PayableFacade() {
 	}
 
+	public PayableSummary addDebtForPuchase(int clientId, Date maturityDate,
+			BigDecimal amount, String description, Session session)
+			throws AppException {
+
+		boolean summaryExists = DBUtils.getInstance().isExists("clientId",
+				clientId, PayableSummary.class, session);
+
+		if (!summaryExists) {
+			addSummary(clientId, session);
+		}
+
+		PayableSummary payableSummary = getSummary(clientId, session);
+
+		PayableTransaction payableTransaction = new PayableTransaction();
+		payableTransaction.setPayableSummary(payableSummary);
+		payableTransaction
+				.setReffNumber(GeneralConstants.PREFIX_TRX_NUMBER_PAYABLE
+						+ CommonUtils.getTimestampInString());
+		payableTransaction.setAccountAction(AccountAction.INCREASE);
+		payableTransaction
+				.setActionTimestamp(CommonUtils.getCurrentTimestamp());
+		payableTransaction.setMaturityDate(maturityDate);
+		payableTransaction.setAmount(amount);
+		payableTransaction.setDescription(description);
+		payableTransaction.setLastUpdatedBy(Main.getUserLogin().getId());
+		payableTransaction.setLastUpdatedTimestamp(CommonUtils
+				.getCurrentTimestamp());
+
+		session.saveOrUpdate(payableTransaction);
+
+		BigDecimal lastRemainingAmount = payableSummary.getRemainingAmount();
+		lastRemainingAmount = lastRemainingAmount.add(payableTransaction
+				.getAmount());
+		payableSummary.setRemainingAmount(lastRemainingAmount);
+
+		payableSummary.setLastPayableTransactionId(payableTransaction.getId());
+		payableSummary.setLastUpdatedBy(Main.getUserLogin().getId());
+		payableSummary.setLastUpdatedTimestamp(CommonUtils
+				.getCurrentTimestamp());
+
+		session.saveOrUpdate(payableSummary);
+		return payableSummary;
+	}
+
 	public PayableSummary cutDebtForPurchaseReturn(int clientId,
 			Date maturityDate, BigDecimal amount, String description,
 			Session session) throws AppException {
@@ -78,65 +122,6 @@ public class PayableFacade {
 		return payableSummary;
 	}
 
-	public PayableSummary debtForPuchase(int clientId,
-			AccountAction accountAction, Date maturityDate, BigDecimal amount,
-			String description, Session session) throws AppException {
-
-		boolean summaryExists = DBUtils.getInstance().isExists("clientId",
-				clientId, PayableSummary.class, session);
-
-		if (!summaryExists) {
-			addSummary(clientId, session);
-		}
-
-		PayableSummary payableSummary = getSummary(clientId, session);
-
-		PayableTransaction payableTransaction = new PayableTransaction();
-		payableTransaction.setPayableSummary(payableSummary);
-		payableTransaction
-				.setReffNumber(GeneralConstants.PREFIX_TRX_NUMBER_PAYABLE
-						+ CommonUtils.getTimestampInString());
-		payableTransaction.setAccountAction(accountAction);
-		payableTransaction
-				.setActionTimestamp(CommonUtils.getCurrentTimestamp());
-		payableTransaction.setMaturityDate(maturityDate);
-		payableTransaction.setAmount(amount);
-		payableTransaction.setDescription(description);
-		payableTransaction.setLastUpdatedBy(Main.getUserLogin().getId());
-		payableTransaction.setLastUpdatedTimestamp(CommonUtils
-				.getCurrentTimestamp());
-
-		session.saveOrUpdate(payableTransaction);
-
-		if (accountAction == AccountAction.DECREASE) {
-
-			BigDecimal lastRemainingAmount = payableSummary
-					.getRemainingAmount();
-			lastRemainingAmount = lastRemainingAmount
-					.subtract(payableTransaction.getAmount());
-			payableSummary.setRemainingAmount(lastRemainingAmount);
-
-		} else if (accountAction == AccountAction.INCREASE) {
-
-			BigDecimal lastRemainingAmount = payableSummary
-					.getRemainingAmount();
-			lastRemainingAmount = lastRemainingAmount.add(payableTransaction
-					.getAmount());
-			payableSummary.setRemainingAmount(lastRemainingAmount);
-
-		} else {
-			throw new AppException("Unknown AccountAction " + accountAction);
-		}
-
-		payableSummary.setLastPayableTransactionId(payableTransaction.getId());
-		payableSummary.setLastUpdatedBy(Main.getUserLogin().getId());
-		payableSummary.setLastUpdatedTimestamp(CommonUtils
-				.getCurrentTimestamp());
-
-		session.saveOrUpdate(payableSummary);
-		return payableSummary;
-	}
-
 	public PayableSummary getSummary(int clientId, Session session) {
 		Criteria criteria = session.createCriteria(PayableSummary.class);
 		criteria.add(Restrictions.eq("clientId", clientId));
@@ -145,9 +130,9 @@ public class PayableFacade {
 		return payableSummary;
 	}
 
-	public PayableSummary payFromCash(int clientId,
-			AccountAction accountAction, Date maturityDate, BigDecimal amount,
-			String description, Session session) throws AppException {
+	public PayableSummary payDebtFromCash(int clientId, Date maturityDate,
+			BigDecimal amount, String description, Session session)
+			throws AppException {
 
 		boolean summaryExists = DBUtils.getInstance().isExists("clientId",
 				clientId, PayableSummary.class, session);
@@ -163,7 +148,7 @@ public class PayableFacade {
 		payableTransaction
 				.setReffNumber(GeneralConstants.PREFIX_TRX_NUMBER_PAYABLE
 						+ CommonUtils.getTimestampInString());
-		payableTransaction.setAccountAction(accountAction);
+		payableTransaction.setAccountAction(AccountAction.DECREASE);
 		payableTransaction
 				.setActionTimestamp(CommonUtils.getCurrentTimestamp());
 		payableTransaction.setMaturityDate(maturityDate);
@@ -175,25 +160,10 @@ public class PayableFacade {
 
 		session.saveOrUpdate(payableTransaction);
 
-		if (accountAction == AccountAction.DECREASE) {
-
-			BigDecimal lastRemainingAmount = payableSummary
-					.getRemainingAmount();
-			lastRemainingAmount = lastRemainingAmount
-					.subtract(payableTransaction.getAmount());
-			payableSummary.setRemainingAmount(lastRemainingAmount);
-
-		} else if (accountAction == AccountAction.INCREASE) {
-
-			BigDecimal lastRemainingAmount = payableSummary
-					.getRemainingAmount();
-			lastRemainingAmount = lastRemainingAmount.add(payableTransaction
-					.getAmount());
-			payableSummary.setRemainingAmount(lastRemainingAmount);
-
-		} else {
-			throw new AppException("Unknown AccountAction " + accountAction);
-		}
+		BigDecimal lastRemainingAmount = payableSummary.getRemainingAmount();
+		lastRemainingAmount = lastRemainingAmount.subtract(payableTransaction
+				.getAmount());
+		payableSummary.setRemainingAmount(lastRemainingAmount);
 
 		payableSummary.setLastPayableTransactionId(payableTransaction.getId());
 		payableSummary.setLastUpdatedBy(Main.getUserLogin().getId());
@@ -239,6 +209,50 @@ public class PayableFacade {
 		payableSummary.setClientId(clientId);
 		payableSummary.setRemainingAmount(BigDecimal.valueOf(0));
 		payableSummary.setLastPayableTransactionId(-1);
+		payableSummary.setLastUpdatedBy(Main.getUserLogin().getId());
+		payableSummary.setLastUpdatedTimestamp(CommonUtils
+				.getCurrentTimestamp());
+
+		session.saveOrUpdate(payableSummary);
+		return payableSummary;
+	}
+
+	private PayableSummary addTransaction(int clientId, Date maturityDate,
+			BigDecimal amount, String description, Session session)
+			throws AppException {
+
+		boolean summaryExists = DBUtils.getInstance().isExists("clientId",
+				clientId, PayableSummary.class, session);
+
+		if (!summaryExists) {
+			addSummary(clientId, session);
+		}
+
+		PayableSummary payableSummary = getSummary(clientId, session);
+
+		PayableTransaction payableTransaction = new PayableTransaction();
+		payableTransaction.setPayableSummary(payableSummary);
+		payableTransaction
+				.setReffNumber(GeneralConstants.PREFIX_TRX_NUMBER_PAYABLE
+						+ CommonUtils.getTimestampInString());
+		payableTransaction.setAccountAction(AccountAction.INCREASE);
+		payableTransaction
+				.setActionTimestamp(CommonUtils.getCurrentTimestamp());
+		payableTransaction.setMaturityDate(maturityDate);
+		payableTransaction.setAmount(amount);
+		payableTransaction.setDescription(description);
+		payableTransaction.setLastUpdatedBy(Main.getUserLogin().getId());
+		payableTransaction.setLastUpdatedTimestamp(CommonUtils
+				.getCurrentTimestamp());
+
+		session.saveOrUpdate(payableTransaction);
+
+		BigDecimal lastRemainingAmount = payableSummary.getRemainingAmount();
+		lastRemainingAmount = lastRemainingAmount.add(payableTransaction
+				.getAmount());
+		payableSummary.setRemainingAmount(lastRemainingAmount);
+
+		payableSummary.setLastPayableTransactionId(payableTransaction.getId());
 		payableSummary.setLastUpdatedBy(Main.getUserLogin().getId());
 		payableSummary.setLastUpdatedTimestamp(CommonUtils
 				.getCurrentTimestamp());

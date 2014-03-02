@@ -11,7 +11,6 @@ import org.hibernate.Query;
 import org.hibernate.Session;
 
 import com.ganesha.accounting.constants.CoaCodeConstants;
-import com.ganesha.accounting.constants.Enums.AccountAction;
 import com.ganesha.accounting.constants.Enums.DebitCreditFlag;
 import com.ganesha.accounting.facade.AccountFacade;
 import com.ganesha.core.exception.AppException;
@@ -176,7 +175,7 @@ public class PurchaseFacade implements TransactionFacade {
 				+ ": " + purchaseHeader.getTransactionNumber();
 
 		PayableFacade payableFacade = PayableFacade.getInstance();
-		payableFacade.addTransaction(clientId, AccountAction.INCREASE,
-				maturityDate, amount, description, session);
+		payableFacade.addDebtForPuchase(clientId, maturityDate, amount,
+				description, session);
 	}
 }
