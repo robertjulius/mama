@@ -653,7 +653,10 @@ public class PenjualanForm extends XJDialog {
 	}
 
 	private void setFocusToBarcodeField() {
-		table.getCellEditor().stopCellEditing();
+		TableCellEditor cellEditor = table.getCellEditor();
+		if (cellEditor != null) {
+			cellEditor.stopCellEditing();
+		}
 		txtBarcode.setText("");
 		txtBarcode.requestFocus();
 	}

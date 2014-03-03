@@ -15,7 +15,7 @@ import com.ganesha.minimarket.constants.Enums.TransactionType;
 
 public class GeneralConstants {
 
-	public static final String VERSION = "v1.4.0";
+	public static final String VERSION = "v1.4.1";
 
 	public static final String USER_SESSION = "userSession";
 

@@ -448,7 +448,7 @@ public class MainFrame extends XJFrame {
 		});
 		mnSetting.add(mntmDbConsistencyCheckerSetting);
 
-		// setExtendedState(JFrame.MAXIMIZED_BOTH);
+		setExtendedState(JFrame.MAXIMIZED_BOTH);
 		pack();
 		setLocationRelativeTo(null);
 		getContentPane().setLayout(new MigLayout("", "[grow]", "[][][][]"));
