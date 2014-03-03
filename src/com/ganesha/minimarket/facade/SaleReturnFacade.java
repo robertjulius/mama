@@ -11,8 +11,6 @@ import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.criterion.Restrictions;
 
-import com.ganesha.accounting.constants.CoaCodeConstants;
-import com.ganesha.accounting.constants.Enums.DebitCreditFlag;
 import com.ganesha.accounting.facade.AccountFacade;
 import com.ganesha.core.exception.AppException;
 import com.ganesha.core.exception.UserException;
@@ -81,20 +79,10 @@ public class SaleReturnFacade implements TransactionFacade {
 			}
 
 			itemFacade.reAdjustStock(item, stockAfterReturn, session);
-
-			Timestamp currentTimestamp = CommonUtils.getCurrentTimestamp();
-
-			AccountFacade.getInstance().insertIntoAccount(
-					CoaCodeConstants.RETUR_PENJUALAN, saleReturnDetail.getId(),
-					currentTimestamp, "Retur Penjualan", "",
-					DebitCreditFlag.DEBIT, saleReturnDetail.getTotalAmount(),
-					session);
-
-			AccountFacade.getInstance().insertIntoAccount(
-					CoaCodeConstants.KAS_KECIL, saleReturnDetail.getId(),
-					currentTimestamp, "Kas", "", DebitCreditFlag.CREDIT,
-					saleReturnDetail.getTotalAmount(), session);
 		}
+
+		AccountFacade.getInstance().handleSaleReturn(saleReturnHeader.getId(),
+				saleReturnHeader.getTotalReturnAmount(), session);
 	}
 
 	@Override

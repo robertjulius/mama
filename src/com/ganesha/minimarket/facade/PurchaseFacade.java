@@ -10,8 +10,6 @@ import java.util.Map;
 import org.hibernate.Query;
 import org.hibernate.Session;
 
-import com.ganesha.accounting.constants.CoaCodeConstants;
-import com.ganesha.accounting.constants.Enums.DebitCreditFlag;
 import com.ganesha.accounting.facade.AccountFacade;
 import com.ganesha.core.exception.AppException;
 import com.ganesha.core.exception.UserException;
@@ -70,24 +68,10 @@ public class PurchaseFacade implements TransactionFacade {
 			addToPayable(purchaseHeader, session);
 		}
 
-		Timestamp currentTimestamp = CommonUtils.getCurrentTimestamp();
-
-		AccountFacade.getInstance().insertIntoAccount(
-				CoaCodeConstants.PEMBELIAN, purchaseHeader.getId(),
-				currentTimestamp, "Pembelian", "", DebitCreditFlag.DEBIT,
-				purchaseHeader.getTotalAmount(), session);
-
-		AccountFacade.getInstance().insertIntoAccount(
-				CoaCodeConstants.KAS_KECIL, purchaseHeader.getId(),
-				currentTimestamp, "Kas", "", DebitCreditFlag.CREDIT,
-				purchaseHeader.getAdvancePayment(), session);
-
-		AccountFacade.getInstance().insertIntoAccount(
-				CoaCodeConstants.HUTANG_USAHA, purchaseHeader.getId(),
-				currentTimestamp, "Hutang Pembelian", "",
-				DebitCreditFlag.CREDIT, purchaseHeader.getRemainingPayment(),
-				session);
-
+		AccountFacade.getInstance().handlePurchase(purchaseHeader.getId(),
+				purchaseHeader.getTotalAmount(),
+				purchaseHeader.getAdvancePayment(),
+				purchaseHeader.getRemainingPayment(), session);
 	}
 
 	@Override

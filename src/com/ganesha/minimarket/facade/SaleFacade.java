@@ -26,8 +26,6 @@ import javax.print.event.PrintJobEvent;
 import org.hibernate.Query;
 import org.hibernate.Session;
 
-import com.ganesha.accounting.constants.CoaCodeConstants;
-import com.ganesha.accounting.constants.Enums.DebitCreditFlag;
 import com.ganesha.accounting.facade.AccountFacade;
 import com.ganesha.core.SystemSetting;
 import com.ganesha.core.exception.AppException;
@@ -167,19 +165,10 @@ public class SaleFacade implements TransactionFacade {
 			itemFacade.reAdjustStock(item, stockAfterSale, session);
 
 			session.saveOrUpdate(item);
-
-			Timestamp currentTimestamp = CommonUtils.getCurrentTimestamp();
-
-			AccountFacade.getInstance().insertIntoAccount(
-					CoaCodeConstants.PENJUALAN, saleDetail.getId(),
-					currentTimestamp, "Penjualan", "", DebitCreditFlag.CREDIT,
-					saleDetail.getTotalAmount(), session);
-
-			AccountFacade.getInstance().insertIntoAccount(
-					CoaCodeConstants.KAS_KECIL, saleDetail.getId(),
-					currentTimestamp, "Kas", "", DebitCreditFlag.DEBIT,
-					saleDetail.getTotalAmount(), session);
 		}
+
+		AccountFacade.getInstance().handleSale(saleHeader.getId(),
+				saleHeader.getTotalAmount(), session);
 	}
 
 	@Override

@@ -11,6 +11,7 @@ import org.hibernate.Session;
 import org.hibernate.criterion.Restrictions;
 
 import com.ganesha.accounting.constants.Enums.AccountAction;
+import com.ganesha.accounting.facade.AccountFacade;
 import com.ganesha.core.exception.AppException;
 import com.ganesha.core.utils.CommonUtils;
 import com.ganesha.core.utils.DBUtils;
@@ -171,6 +172,10 @@ public class PayableFacade {
 				.getCurrentTimestamp());
 
 		session.saveOrUpdate(payableSummary);
+
+		AccountFacade.getInstance().handlePayableTransaction(
+				payableTransaction.getId(), lastRemainingAmount, session);
+
 		return payableSummary;
 	}
 
@@ -209,50 +214,6 @@ public class PayableFacade {
 		payableSummary.setClientId(clientId);
 		payableSummary.setRemainingAmount(BigDecimal.valueOf(0));
 		payableSummary.setLastPayableTransactionId(-1);
-		payableSummary.setLastUpdatedBy(Main.getUserLogin().getId());
-		payableSummary.setLastUpdatedTimestamp(CommonUtils
-				.getCurrentTimestamp());
-
-		session.saveOrUpdate(payableSummary);
-		return payableSummary;
-	}
-
-	private PayableSummary addTransaction(int clientId, Date maturityDate,
-			BigDecimal amount, String description, Session session)
-			throws AppException {
-
-		boolean summaryExists = DBUtils.getInstance().isExists("clientId",
-				clientId, PayableSummary.class, session);
-
-		if (!summaryExists) {
-			addSummary(clientId, session);
-		}
-
-		PayableSummary payableSummary = getSummary(clientId, session);
-
-		PayableTransaction payableTransaction = new PayableTransaction();
-		payableTransaction.setPayableSummary(payableSummary);
-		payableTransaction
-				.setReffNumber(GeneralConstants.PREFIX_TRX_NUMBER_PAYABLE
-						+ CommonUtils.getTimestampInString());
-		payableTransaction.setAccountAction(AccountAction.INCREASE);
-		payableTransaction
-				.setActionTimestamp(CommonUtils.getCurrentTimestamp());
-		payableTransaction.setMaturityDate(maturityDate);
-		payableTransaction.setAmount(amount);
-		payableTransaction.setDescription(description);
-		payableTransaction.setLastUpdatedBy(Main.getUserLogin().getId());
-		payableTransaction.setLastUpdatedTimestamp(CommonUtils
-				.getCurrentTimestamp());
-
-		session.saveOrUpdate(payableTransaction);
-
-		BigDecimal lastRemainingAmount = payableSummary.getRemainingAmount();
-		lastRemainingAmount = lastRemainingAmount.add(payableTransaction
-				.getAmount());
-		payableSummary.setRemainingAmount(lastRemainingAmount);
-
-		payableSummary.setLastPayableTransactionId(payableTransaction.getId());
 		payableSummary.setLastUpdatedBy(Main.getUserLogin().getId());
 		payableSummary.setLastUpdatedTimestamp(CommonUtils
 				.getCurrentTimestamp());

@@ -12,9 +12,7 @@ import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.criterion.Restrictions;
 
-import com.ganesha.accounting.constants.CoaCodeConstants;
 import com.ganesha.accounting.constants.Enums.AccountAction;
-import com.ganesha.accounting.constants.Enums.DebitCreditFlag;
 import com.ganesha.accounting.facade.AccountFacade;
 import com.ganesha.core.exception.AppException;
 import com.ganesha.core.exception.UserException;
@@ -105,27 +103,11 @@ public class PurchaseReturnFacade implements TransactionFacade {
 			addToPayable(purchaseReturnHeader, session);
 		}
 
-		Timestamp currentTimestamp = CommonUtils.getCurrentTimestamp();
-
-		AccountFacade.getInstance().insertIntoAccount(
-				CoaCodeConstants.RETUR_PEMBELIAN, purchaseReturnHeader.getId(),
-				currentTimestamp, "Retur Pembelian", "",
-				DebitCreditFlag.CREDIT,
-				purchaseReturnHeader.getTotalReturnAmount(), session);
-
-		AccountFacade.getInstance().insertIntoAccount(
-				CoaCodeConstants.KAS_KECIL, purchaseReturnHeader.getId(),
-				currentTimestamp, "Kas", "", DebitCreditFlag.DEBIT,
-				purchaseReturnHeader.getAmountReturned(), session);
-
-		AccountFacade.getInstance().insertIntoAccount(
-				CoaCodeConstants.PIUTANG_USAHA, purchaseReturnHeader.getId(),
-				currentTimestamp, "Piutang Usaha", "", DebitCreditFlag.DEBIT,
-				purchaseReturnHeader.getRemainingReturnAmount(), session);
-
-		AccountFacade.getInstance().insertIntoAccount(
-				CoaCodeConstants.HUTANG_USAHA, purchaseReturnHeader.getId(),
-				currentTimestamp, "Potong Hutang", "", DebitCreditFlag.DEBIT,
+		AccountFacade.getInstance().handlePurchaseReturn(
+				purchaseReturnHeader.getId(),
+				purchaseReturnHeader.getTotalReturnAmount(),
+				purchaseReturnHeader.getAmountReturned(),
+				purchaseReturnHeader.getRemainingReturnAmount(),
 				purchaseReturnHeader.getDebtCut(), session);
 	}
 
@@ -217,8 +199,8 @@ public class PurchaseReturnFacade implements TransactionFacade {
 				+ ": " + purchaseReturnHeader.getTransactionNumber();
 
 		PayableFacade payableFacade = PayableFacade.getInstance();
-		payableFacade.addTransaction(clientId, AccountAction.DECREASE,
-				maturityDate, amount, description, session);
+		payableFacade.cutDebtForPurchaseReturn(clientId, maturityDate, amount,
+				description, session);
 	}
 
 	private void addToReceivable(PurchaseReturnHeader purchaseReturnHeader,

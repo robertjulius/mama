@@ -10,10 +10,12 @@ import org.hibernate.Session;
 import org.hibernate.criterion.Order;
 import org.hibernate.criterion.Restrictions;
 
+import com.ganesha.accounting.constants.CoaCodeConstants;
 import com.ganesha.accounting.constants.Enums.DebitCreditFlag;
 import com.ganesha.accounting.model.Account;
 import com.ganesha.accounting.model.Coa;
 import com.ganesha.core.exception.AppException;
+import com.ganesha.core.utils.CommonUtils;
 import com.ganesha.hibernate.HqlParameter;
 import com.ganesha.minimarket.Main;
 
@@ -80,7 +82,143 @@ public class AccountFacade {
 		return account;
 	}
 
-	public Account insertIntoAccount(int coaId, int entityId,
+	public void handleExpenseTransaction(Integer coaId, Integer entityId,
+			String notes, BigDecimal amount, Session session)
+			throws AppException {
+
+		Timestamp currentTimestamp = CommonUtils.getCurrentTimestamp();
+
+		AccountFacade.getInstance().insertIntoAccount(coaId, entityId,
+				currentTimestamp, notes, "", DebitCreditFlag.DEBIT, amount,
+				session);
+
+		AccountFacade.getInstance().insertIntoAccount(
+				CoaCodeConstants.KAS_KECIL, entityId, currentTimestamp, "Kas",
+				"", DebitCreditFlag.CREDIT, amount, session);
+	}
+
+	public void handlePayableTransaction(Integer entityId, BigDecimal amount,
+			Session session) throws AppException {
+
+		Timestamp currentTimestamp = CommonUtils.getCurrentTimestamp();
+		String notes = "Pembarayan Hutang";
+
+		AccountFacade.getInstance().insertIntoAccount(
+				CoaCodeConstants.HUTANG_USAHA, entityId, currentTimestamp,
+				notes, "", DebitCreditFlag.DEBIT, amount, session);
+
+		AccountFacade.getInstance().insertIntoAccount(
+				CoaCodeConstants.KAS_KECIL, entityId, currentTimestamp, notes,
+				"", DebitCreditFlag.CREDIT, amount, session);
+	}
+
+	public void handlePurchase(Integer entityId, BigDecimal totalAmount,
+			BigDecimal advancePayment, BigDecimal remainingPayment,
+			Session session) throws AppException {
+
+		Timestamp currentTimestamp = CommonUtils.getCurrentTimestamp();
+
+		AccountFacade.getInstance().insertIntoAccount(
+				CoaCodeConstants.PEMBELIAN, entityId, currentTimestamp,
+				"Pembelian", "", DebitCreditFlag.DEBIT, totalAmount, session);
+
+		AccountFacade.getInstance().insertIntoAccount(
+				CoaCodeConstants.KAS_KECIL, entityId, currentTimestamp, "Kas",
+				"", DebitCreditFlag.CREDIT, advancePayment, session);
+
+		AccountFacade.getInstance().insertIntoAccount(
+				CoaCodeConstants.HUTANG_USAHA, entityId, currentTimestamp,
+				"Hutang Pembelian", "", DebitCreditFlag.CREDIT,
+				remainingPayment, session);
+	}
+
+	public void handlePurchaseReturn(Integer entityId,
+			BigDecimal totalReturnAmount, BigDecimal amountReturned,
+			BigDecimal remainingReturnAmount, BigDecimal debtCut,
+			Session session) throws AppException {
+
+		Timestamp currentTimestamp = CommonUtils.getCurrentTimestamp();
+
+		AccountFacade.getInstance().insertIntoAccount(
+				CoaCodeConstants.RETUR_PEMBELIAN, entityId, currentTimestamp,
+				"Retur Pembelian", "", DebitCreditFlag.CREDIT,
+				totalReturnAmount, session);
+
+		AccountFacade.getInstance().insertIntoAccount(
+				CoaCodeConstants.KAS_KECIL, entityId, currentTimestamp, "Kas",
+				"", DebitCreditFlag.DEBIT, amountReturned, session);
+
+		AccountFacade.getInstance().insertIntoAccount(
+				CoaCodeConstants.PIUTANG_USAHA, entityId, currentTimestamp,
+				"Piutang Usaha", "", DebitCreditFlag.DEBIT,
+				remainingReturnAmount, session);
+
+		AccountFacade.getInstance().insertIntoAccount(
+				CoaCodeConstants.HUTANG_USAHA, entityId, currentTimestamp,
+				"Potong Hutang", "", DebitCreditFlag.DEBIT, debtCut, session);
+	}
+
+	public void handleReceivableTransaction(Integer entityId,
+			BigDecimal amount, Session session) throws AppException {
+
+		Timestamp currentTimestamp = CommonUtils.getCurrentTimestamp();
+		String notes = "Penerimaan Piutang";
+
+		AccountFacade.getInstance().insertIntoAccount(
+				CoaCodeConstants.PIUTANG_USAHA, entityId, currentTimestamp,
+				notes, "", DebitCreditFlag.CREDIT, amount, session);
+
+		AccountFacade.getInstance().insertIntoAccount(
+				CoaCodeConstants.KAS_KECIL, entityId, currentTimestamp, notes,
+				"", DebitCreditFlag.DEBIT, amount, session);
+	}
+
+	public void handleRevenueTransaction(Integer coaId, Integer entityId,
+			String notes, BigDecimal amount, Session session)
+			throws AppException {
+
+		Timestamp currentTimestamp = CommonUtils.getCurrentTimestamp();
+
+		AccountFacade.getInstance().insertIntoAccount(coaId, entityId,
+				currentTimestamp, notes, "", DebitCreditFlag.CREDIT, amount,
+				session);
+
+		AccountFacade.getInstance().insertIntoAccount(
+				CoaCodeConstants.KAS_KECIL, entityId, currentTimestamp, "Kas",
+				"", DebitCreditFlag.DEBIT, amount, session);
+
+	}
+
+	public void handleSale(Integer entityId, BigDecimal totalAmount,
+			Session session) throws AppException {
+
+		Timestamp currentTimestamp = CommonUtils.getCurrentTimestamp();
+
+		AccountFacade.getInstance().insertIntoAccount(
+				CoaCodeConstants.PENJUALAN, entityId, currentTimestamp,
+				"Penjualan", "", DebitCreditFlag.CREDIT, totalAmount, session);
+
+		AccountFacade.getInstance().insertIntoAccount(
+				CoaCodeConstants.KAS_KECIL, entityId, currentTimestamp, "Kas",
+				"", DebitCreditFlag.DEBIT, totalAmount, session);
+	}
+
+	public void handleSaleReturn(Integer entityId,
+			BigDecimal totalReturnAmount, Session session) throws AppException {
+
+		Timestamp currentTimestamp = CommonUtils.getCurrentTimestamp();
+
+		AccountFacade.getInstance().insertIntoAccount(
+				CoaCodeConstants.RETUR_PENJUALAN, entityId, currentTimestamp,
+				"Retur Penjualan", "", DebitCreditFlag.DEBIT,
+				totalReturnAmount, session);
+
+		AccountFacade.getInstance().insertIntoAccount(
+				CoaCodeConstants.KAS_KECIL, entityId, currentTimestamp, "Kas",
+				"", DebitCreditFlag.CREDIT, totalReturnAmount, session);
+	}
+
+	private Account insertIntoAccount(int coaId, int entityId,
 			Timestamp timestamp, String notes, String ref,
 			DebitCreditFlag increaseOn, BigDecimal amount, Session session)
 			throws AppException {

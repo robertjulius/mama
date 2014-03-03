@@ -2,7 +2,6 @@ package com.ganesha.accounting.facade;
 
 import java.awt.Window;
 import java.math.BigDecimal;
-import java.sql.Timestamp;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
@@ -12,8 +11,6 @@ import org.hibernate.Session;
 import org.hibernate.criterion.Order;
 import org.hibernate.criterion.Restrictions;
 
-import com.ganesha.accounting.constants.CoaCodeConstants;
-import com.ganesha.accounting.constants.Enums.DebitCreditFlag;
 import com.ganesha.accounting.model.Circle;
 import com.ganesha.accounting.model.Coa;
 import com.ganesha.accounting.model.Expense;
@@ -80,17 +77,9 @@ public class ExpenseFacade implements TransactionReportFacade {
 
 		session.saveOrUpdate(expenseTransaction);
 
-		Timestamp currentTimestamp = CommonUtils.getCurrentTimestamp();
-
-		AccountFacade.getInstance().insertIntoAccount(expense.getCoa().getId(),
-				expenseTransaction.getId(), currentTimestamp,
-				expense.getName(), "", DebitCreditFlag.DEBIT,
-				expenseTransaction.getAmount(), session);
-
-		AccountFacade.getInstance().insertIntoAccount(
-				CoaCodeConstants.KAS_KECIL, expenseTransaction.getId(),
-				currentTimestamp, "Kas", "", DebitCreditFlag.CREDIT,
-				expenseTransaction.getAmount(), session);
+		AccountFacade.getInstance().handleExpenseTransaction(
+				expense.getCoa().getId(), expenseTransaction.getId(),
+				expense.getName(), expenseTransaction.getAmount(), session);
 
 		return expenseTransaction;
 	}

@@ -2,15 +2,12 @@ package com.ganesha.accounting.facade;
 
 import java.awt.Window;
 import java.math.BigDecimal;
-import java.sql.Timestamp;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
 import org.hibernate.Session;
 
-import com.ganesha.accounting.constants.CoaCodeConstants;
-import com.ganesha.accounting.constants.Enums.DebitCreditFlag;
 import com.ganesha.accounting.model.Coa;
 import com.ganesha.accounting.model.RevenueTransaction;
 import com.ganesha.core.exception.AppException;
@@ -45,16 +42,8 @@ public class RevenueFacade implements TransactionReportFacade {
 
 		session.saveOrUpdate(revenueTransaction);
 
-		Timestamp currentTimestamp = CommonUtils.getCurrentTimestamp();
-
-		AccountFacade.getInstance().insertIntoAccount(coa.getId(),
-				revenueTransaction.getId(), currentTimestamp, coa.getName(),
-				"", DebitCreditFlag.CREDIT, revenueTransaction.getAmount(),
-				session);
-
-		AccountFacade.getInstance().insertIntoAccount(
-				CoaCodeConstants.KAS_KECIL, revenueTransaction.getId(),
-				currentTimestamp, "Kas", "", DebitCreditFlag.DEBIT,
+		AccountFacade.getInstance().handleRevenueTransaction(coa.getId(),
+				revenueTransaction.getId(), coa.getName(),
 				revenueTransaction.getAmount(), session);
 
 		return revenueTransaction;
