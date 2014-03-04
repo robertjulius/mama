@@ -19,6 +19,7 @@ import com.ganesha.core.exception.AppException;
 import com.ganesha.core.exception.UserException;
 import com.ganesha.core.utils.CommonUtils;
 import com.ganesha.core.utils.DBUtils;
+import com.ganesha.core.utils.StringUtils;
 import com.ganesha.minimarket.Main;
 import com.ganesha.minimarket.facade.TransactionReportFacade;
 
@@ -79,7 +80,8 @@ public class ExpenseFacade implements TransactionReportFacade {
 
 		AccountFacade.getInstance().handleExpenseTransaction(
 				expense.getCoa().getId(), expenseTransaction.getId(),
-				expense.getName(), expenseTransaction.getAmount(), session);
+				StringUtils.properCase(expense.getName()),
+				expenseTransaction.getAmount(), session);
 
 		return expenseTransaction;
 	}

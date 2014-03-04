@@ -13,6 +13,7 @@ import com.ganesha.accounting.model.RevenueTransaction;
 import com.ganesha.core.exception.AppException;
 import com.ganesha.core.exception.UserException;
 import com.ganesha.core.utils.CommonUtils;
+import com.ganesha.core.utils.StringUtils;
 import com.ganesha.minimarket.Main;
 import com.ganesha.minimarket.facade.TransactionReportFacade;
 
@@ -43,7 +44,8 @@ public class RevenueFacade implements TransactionReportFacade {
 		session.saveOrUpdate(revenueTransaction);
 
 		AccountFacade.getInstance().handleRevenueTransaction(coa.getId(),
-				revenueTransaction.getId(), coa.getName(),
+				revenueTransaction.getId(),
+				StringUtils.properCase(coa.getName()),
 				revenueTransaction.getAmount(), session);
 
 		return revenueTransaction;

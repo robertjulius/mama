@@ -101,7 +101,7 @@ public class AccountFacade {
 			Session session) throws AppException {
 
 		Timestamp currentTimestamp = CommonUtils.getCurrentTimestamp();
-		String notes = "Pembarayan Hutang";
+		String notes = "Pembayaran Hutang";
 
 		AccountFacade.getInstance().insertIntoAccount(
 				CoaCodeConstants.HUTANG_USAHA, entityId, currentTimestamp,

@@ -89,7 +89,7 @@ public class ReturPenjualanForm extends XJDialog {
 
 		tableParameters.put(ColumnEnum.ITEM_CODE, new XTableParameter(3, 100,
 				false, "Kode Barang", false,
-				XTableConstants.CELL_RENDERER_LEFT, String.class));
+				XTableConstants.CELL_RENDERER_CENTER, String.class));
 
 		tableParameters.put(ColumnEnum.ITEM_NAME, new XTableParameter(4, 300,
 				false, "Nama Barang", false,
@@ -107,9 +107,9 @@ public class ReturPenjualanForm extends XJDialog {
 				"Harga", false, XTableConstants.CELL_RENDERER_RIGHT,
 				Double.class));
 
-		tableParameters.put(ColumnEnum.DISCOUNT, new XTableParameter(8, 100,
-				false, "Discount (%)", false,
-				XTableConstants.CELL_RENDERER_CENTER, Double.class));
+		tableParameters.put(ColumnEnum.DISCOUNT, new XTableParameter(8, 30,
+				false, "(%)", false, XTableConstants.CELL_RENDERER_CENTER,
+				Double.class));
 
 		tableParameters.put(ColumnEnum.TOTAL, new XTableParameter(9, 50, false,
 				"Total", false, XTableConstants.CELL_RENDERER_RIGHT,

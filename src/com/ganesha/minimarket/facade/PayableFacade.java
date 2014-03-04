@@ -174,7 +174,8 @@ public class PayableFacade {
 		session.saveOrUpdate(payableSummary);
 
 		AccountFacade.getInstance().handlePayableTransaction(
-				payableTransaction.getId(), lastRemainingAmount, session);
+				payableTransaction.getId(), payableTransaction.getAmount(),
+				session);
 
 		return payableSummary;
 	}

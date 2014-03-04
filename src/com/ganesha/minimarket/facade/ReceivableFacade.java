@@ -11,6 +11,7 @@ import org.hibernate.Session;
 import org.hibernate.criterion.Restrictions;
 
 import com.ganesha.accounting.constants.Enums.AccountAction;
+import com.ganesha.accounting.facade.AccountFacade;
 import com.ganesha.core.exception.AppException;
 import com.ganesha.core.utils.CommonUtils;
 import com.ganesha.core.utils.DBUtils;
@@ -128,6 +129,10 @@ public class ReceivableFacade {
 		receivableSummary.setLastUpdatedTimestamp(CommonUtils
 				.getCurrentTimestamp());
 		session.saveOrUpdate(receivableTransaction);
+
+		AccountFacade.getInstance().handleReceivableTransaction(
+				receivableTransaction.getId(),
+				receivableTransaction.getAmount(), session);
 
 		return receivableSummary;
 	}
