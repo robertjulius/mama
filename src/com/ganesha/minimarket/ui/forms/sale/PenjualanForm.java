@@ -324,7 +324,7 @@ public class PenjualanForm extends XJDialog {
 		lblBayar = new XJLabel();
 		lblBayar.setForeground(Color.WHITE);
 		lblBayar.setFont(new Font("Tahoma", Font.BOLD, 40));
-		lblBayar.setText("Bayar");
+		lblBayar.setText("Bayar [F11]");
 		pnlKembalian.add(lblBayar, "cell 2 0,alignx right");
 
 		txtBayar = new XJTextField();
@@ -401,6 +401,9 @@ public class PenjualanForm extends XJDialog {
 			break;
 		case KeyEvent.VK_F8:
 			setFocusToBarcodeField();
+			break;
+		case KeyEvent.VK_F11:
+			setFocusToFieldBayar();
 			break;
 		case KeyEvent.VK_F12:
 			btnSelesai.doClick();
@@ -659,6 +662,15 @@ public class PenjualanForm extends XJDialog {
 		}
 		txtBarcode.setText("");
 		txtBarcode.requestFocus();
+	}
+
+	private void setFocusToFieldBayar() {
+		TableCellEditor cellEditor = table.getCellEditor();
+		if (cellEditor != null) {
+			cellEditor.stopCellEditing();
+		}
+		txtBayar.setText("");
+		txtBayar.requestFocus();
 	}
 
 	private void setTotalBayarDanKembalian() {
