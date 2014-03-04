@@ -23,6 +23,7 @@ import org.hibernate.Session;
 import org.hibernate.criterion.Restrictions;
 
 import com.ganesha.core.exception.AppException;
+import com.ganesha.core.exception.UserException;
 import com.ganesha.core.utils.CommonUtils;
 import com.ganesha.minimarket.Main;
 import com.ganesha.minimarket.model.Item;
@@ -49,7 +50,7 @@ public class StockOpnameFacade {
 
 	public StockOpnameDetail createStockOpnameEntity(int itemId,
 			int quantityManual, int overCount, int lossCount, Session session)
-			throws AppException {
+			throws AppException, UserException {
 
 		Item item = ItemFacade.getInstance().getDetail(itemId, session);
 		int quantityInThisStage = ItemFacade.getInstance().calculateStock(item);
@@ -184,7 +185,8 @@ public class StockOpnameFacade {
 		return amount;
 	}
 
-	private BigDecimal calculateOverAmount(Item item, int overStock) {
+	private BigDecimal calculateOverAmount(Item item, int overStock)
+			throws UserException {
 		BigDecimal amount = BigDecimal.valueOf(0);
 
 		int excess = overStock;
@@ -207,6 +209,18 @@ public class StockOpnameFacade {
 			amount = amount.add(BigDecimal.valueOf(taken).multiply(
 					itemStock.getPurchaseDetail().getPricePerUnit()));
 		}
+
+		if (excess > 0) {
+			int maxStockLimit = ItemFacade.getInstance()
+					.calculateMaxStock(item);
+			throw new UserException("Batas penyesuaian stock untuk item "
+					+ item.getCode() + " " + item.getName()
+					+ " hanya bisa disesuaikan hingga " + maxStockLimit + " "
+					+ item.getUnit() + ".<br/><br/>" + "Kelebihan " + excess
+					+ " " + item.getUnit()
+					+ " harus dilakukan melalui menu Transaksi Pembelian.");
+		}
+
 		return amount;
 	}
 }

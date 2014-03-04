@@ -304,28 +304,34 @@ public class PenjualanForm extends XJDialog {
 		pnlKembalian.setBackground(Color.BLACK);
 		getContentPane().add(pnlKembalian, "cell 0 3,growx");
 		pnlKembalian.setBorder(new XEtchedBorder());
-		pnlKembalian.setLayout(new MigLayout("",
-				"[][grow][200][grow][200][grow]", "[grow]"));
+		pnlKembalian.setLayout(new MigLayout("", "[300][grow][300][grow][300]",
+				"[][grow]"));
 
 		XJLabel lblTotal = new XJLabel();
 		lblTotal.setForeground(Color.WHITE);
 		lblTotal.setFont(new Font("Tahoma", Font.BOLD, 40));
-		pnlKembalian.add(lblTotal, "cell 0 0,alignx right");
+		pnlKembalian.add(lblTotal, "cell 0 0");
 		lblTotal.setText("TOTAL");
-
-		txtTotal = new JTextField();
-		txtTotal.setBackground(Color.YELLOW);
-		txtTotal.setEditable(false);
-		txtTotal.setFont(new Font("Tahoma", Font.BOLD, 40));
-		pnlKembalian.add(txtTotal, "cell 1 0,growx");
-		txtTotal.setHorizontalAlignment(SwingConstants.TRAILING);
-		txtTotal.setText("0");
 
 		lblBayar = new XJLabel();
 		lblBayar.setForeground(Color.WHITE);
 		lblBayar.setFont(new Font("Tahoma", Font.BOLD, 40));
 		lblBayar.setText("Bayar [F11]");
-		pnlKembalian.add(lblBayar, "cell 2 0,alignx right");
+		pnlKembalian.add(lblBayar, "cell 2 0");
+
+		lblKembali = new XJLabel();
+		lblKembali.setForeground(Color.WHITE);
+		lblKembali.setFont(new Font("Tahoma", Font.BOLD, 40));
+		lblKembali.setText("Kembali");
+		pnlKembalian.add(lblKembali, "cell 4 0");
+
+		txtTotal = new JTextField();
+		txtTotal.setBackground(Color.YELLOW);
+		txtTotal.setEditable(false);
+		txtTotal.setFont(new Font("Tahoma", Font.BOLD, 40));
+		pnlKembalian.add(txtTotal, "cell 0 1,growx");
+		txtTotal.setHorizontalAlignment(SwingConstants.TRAILING);
+		txtTotal.setText("0");
 
 		txtBayar = new XJTextField();
 		txtBayar.setFont(new Font("Tahoma", Font.BOLD, 40));
@@ -337,13 +343,7 @@ public class PenjualanForm extends XJDialog {
 		});
 		txtBayar.setHorizontalAlignment(SwingConstants.TRAILING);
 		txtBayar.setText("0");
-		pnlKembalian.add(txtBayar, "cell 3 0,growx");
-
-		lblKembali = new XJLabel();
-		lblKembali.setForeground(Color.WHITE);
-		lblKembali.setFont(new Font("Tahoma", Font.BOLD, 40));
-		lblKembali.setText("Kembali");
-		pnlKembalian.add(lblKembali, "cell 4 0,alignx right");
+		pnlKembalian.add(txtBayar, "cell 2 1,growx");
 
 		txtKembalian = new JTextField();
 		txtKembalian.setBackground(Color.PINK);
@@ -351,7 +351,7 @@ public class PenjualanForm extends XJDialog {
 		txtKembalian.setHorizontalAlignment(SwingConstants.TRAILING);
 		txtKembalian.setText("0");
 		txtKembalian.setEditable(false);
-		pnlKembalian.add(txtKembalian, "cell 5 0,growx");
+		pnlKembalian.add(txtKembalian, "cell 4 1,growx");
 
 		JSeparator separator_1 = new JSeparator();
 		getContentPane().add(separator_1, "cell 0 4,grow");
@@ -669,7 +669,7 @@ public class PenjualanForm extends XJDialog {
 		if (cellEditor != null) {
 			cellEditor.stopCellEditing();
 		}
-		txtBayar.setText("");
+		txtBayar.selectAll();
 		txtBayar.requestFocus();
 	}
 

@@ -416,7 +416,8 @@ public class StockOpnameListDialog extends XJTableDialog {
 		txtBarcode.setText("");
 	}
 
-	private List<StockOpnameDetail> createStockOpnameList() throws AppException {
+	private List<StockOpnameDetail> createStockOpnameList()
+			throws AppException, UserException {
 		List<StockOpnameDetail> stockOpnameDetails = new ArrayList<>();
 		StockOpnameFacade facade = StockOpnameFacade.getInstance();
 		{

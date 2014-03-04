@@ -270,8 +270,8 @@ public class PembelianForm extends XJDialog {
 
 		XJPanel pnlPembelian = new XJPanel();
 		getContentPane().add(pnlPembelian, "cell 0 1,grow");
-		pnlPembelian.setLayout(new MigLayout("", "[612px,grow]",
-				"[grow][::200,baseline]"));
+		pnlPembelian
+				.setLayout(new MigLayout("", "[612px,grow]", "[grow][150]"));
 
 		XJPanel pnlSearchItem = new XJPanel();
 		pnlPembelian.add(pnlSearchItem, "cell 0 0,grow");
@@ -404,25 +404,30 @@ public class PembelianForm extends XJDialog {
 		XJPanel pnlUangMuka = new XJPanel();
 		getContentPane().add(pnlUangMuka, "cell 0 3,growx");
 		pnlUangMuka.setBorder(new XEtchedBorder());
-		pnlUangMuka.setLayout(new MigLayout("",
-				"[][grow][200][grow][200][grow]", "[]"));
+		pnlUangMuka.setLayout(new MigLayout("", "[300][grow][300][grow][300]",
+				"[][]"));
 
 		XJLabel lblTotal = new XJLabel();
 		lblTotal.setFont(new Font("Tahoma", Font.BOLD, 40));
-		pnlUangMuka.add(lblTotal, "cell 0 0,alignx right");
+		pnlUangMuka.add(lblTotal, "cell 0 0");
 		lblTotal.setText("TOTAL");
-
-		txtTotal = new XJTextField();
-		txtTotal.setFont(new Font("Tahoma", Font.BOLD, 40));
-		pnlUangMuka.add(txtTotal, "cell 1 0,growx");
-		txtTotal.setHorizontalAlignment(SwingConstants.TRAILING);
-		txtTotal.setText("0");
-		txtTotal.setEditable(false);
 
 		lblBayar = new XJLabel();
 		lblBayar.setFont(new Font("Tahoma", Font.BOLD, 40));
-		lblBayar.setText("Bayar");
-		pnlUangMuka.add(lblBayar, "cell 2 0,alignx right");
+		lblBayar.setText("Bayar [F11]");
+		pnlUangMuka.add(lblBayar, "cell 2 0");
+
+		lblSisa = new XJLabel();
+		lblSisa.setFont(new Font("Tahoma", Font.BOLD, 40));
+		lblSisa.setText("Sisa");
+		pnlUangMuka.add(lblSisa, "cell 4 0");
+
+		txtTotal = new XJTextField();
+		txtTotal.setFont(new Font("Tahoma", Font.BOLD, 40));
+		pnlUangMuka.add(txtTotal, "cell 0 1,growx");
+		txtTotal.setHorizontalAlignment(SwingConstants.TRAILING);
+		txtTotal.setText("0");
+		txtTotal.setEditable(false);
 
 		txtBayar = new XJTextField();
 		txtBayar.setFont(new Font("Tahoma", Font.BOLD, 40));
@@ -434,12 +439,7 @@ public class PembelianForm extends XJDialog {
 		});
 		txtBayar.setHorizontalAlignment(SwingConstants.TRAILING);
 		txtBayar.setText("0");
-		pnlUangMuka.add(txtBayar, "cell 3 0,growx");
-
-		lblSisa = new XJLabel();
-		lblSisa.setFont(new Font("Tahoma", Font.BOLD, 40));
-		lblSisa.setText("Sisa");
-		pnlUangMuka.add(lblSisa, "cell 4 0,alignx right");
+		pnlUangMuka.add(txtBayar, "cell 2 1,growx");
 
 		txtSisa = new XJTextField();
 		txtSisa.setFont(new Font("Tahoma", Font.BOLD, 40));
@@ -447,7 +447,7 @@ public class PembelianForm extends XJDialog {
 		txtSisa.setText("0");
 		txtSisa.setEditable(false);
 		txtSisa.setBackground(TXT_BG_ATTENTION);
-		pnlUangMuka.add(txtSisa, "cell 5 0,growx");
+		pnlUangMuka.add(txtSisa, "cell 4 1,growx");
 
 		XJPanel pnlButton = new XJPanel();
 		getContentPane().add(pnlButton, "cell 0 4,alignx center,growy");
@@ -497,6 +497,9 @@ public class PembelianForm extends XJDialog {
 			break;
 		case KeyEvent.VK_F8:
 			setFocusToBarcodeField();
+			break;
+		case KeyEvent.VK_F11:
+			setFocusToFieldBayar();
 			break;
 		case KeyEvent.VK_F12:
 			btnSelesai.doClick();
@@ -761,6 +764,7 @@ public class PembelianForm extends XJDialog {
 														.getColumnIndex())
 										.toString()).doubleValue()));
 
+				validateRow(purchaseDetail);
 				purchaseDetails.add(purchaseDetail);
 			}
 
@@ -788,6 +792,15 @@ public class PembelianForm extends XJDialog {
 		}
 		txtBarcode.setText("");
 		txtBarcode.requestFocus();
+	}
+
+	private void setFocusToFieldBayar() {
+		TableCellEditor cellEditor = table.getCellEditor();
+		if (cellEditor != null) {
+			cellEditor.stopCellEditing();
+		}
+		txtBayar.selectAll();
+		txtBayar.requestFocus();
 	}
 
 	private void setTotalBayarDanHutang() {
@@ -959,6 +972,23 @@ public class PembelianForm extends XJDialog {
 
 		} finally {
 			session.close();
+		}
+	}
+
+	private void validateRow(PurchaseDetail purchaseDetail)
+			throws UserException {
+		if (purchaseDetail.getQuantity() == 0) {
+			throw new UserException("Quantity untuk item "
+					+ purchaseDetail.getItemName() + " tidak boleh berjumlah "
+					+ purchaseDetail.getQuantity() + " "
+					+ purchaseDetail.getUnit());
+		}
+
+		if (purchaseDetail.getPricePerUnit().doubleValue() == 0) {
+			throw new UserException("Quantity untuk item "
+					+ purchaseDetail.getItemName() + " tidak boleh berjumlah "
+					+ purchaseDetail.getQuantity() + " "
+					+ purchaseDetail.getUnit());
 		}
 	}
 
