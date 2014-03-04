@@ -34,22 +34,9 @@ public class ReceivableFacade {
 	private ReceivableFacade() {
 	}
 
-	public ReceivableSummary addSummary(int clientId, Session session) {
-		ReceivableSummary receivableSummary = new ReceivableSummary();
-		receivableSummary.setClientId(clientId);
-		receivableSummary.setRemainingAmount(BigDecimal.valueOf(0));
-		receivableSummary.setLastReceivableTransactionId(-1);
-		receivableSummary.setLastUpdatedBy(Main.getUserLogin().getId());
-		receivableSummary.setLastUpdatedTimestamp(CommonUtils
-				.getCurrentTimestamp());
-
-		session.saveOrUpdate(receivableSummary);
-		return receivableSummary;
-	}
-
-	public ReceivableSummary addTransaction(int clientId,
-			AccountAction accountAction, Date maturityDate, BigDecimal amount,
-			String description, Session session) throws AppException {
+	public ReceivableSummary addReceivableForPurchaseReturn(int clientId,
+			Date maturityDate, BigDecimal amount, String description,
+			Session session) throws AppException {
 
 		boolean summaryExists = DBUtils.getInstance().isExists("clientId",
 				clientId, ReceivableSummary.class, session);
@@ -65,7 +52,7 @@ public class ReceivableFacade {
 		receivableTransaction
 				.setReffNumber(GeneralConstants.PREFIX_TRX_NUMBER_RECEIVABLE
 						+ CommonUtils.getTimestampInString());
-		receivableTransaction.setAccountAction(accountAction.name());
+		receivableTransaction.setAccountAction(AccountAction.INCREASE);
 		receivableTransaction.setActionTimestamp(CommonUtils
 				.getCurrentTimestamp());
 		receivableTransaction.setMaturityDate(maturityDate);
@@ -77,25 +64,10 @@ public class ReceivableFacade {
 
 		session.saveOrUpdate(receivableTransaction);
 
-		if (accountAction == AccountAction.DECREASE) {
-
-			BigDecimal lastRemainingAmount = receivableSummary
-					.getRemainingAmount();
-			lastRemainingAmount = lastRemainingAmount
-					.subtract(receivableTransaction.getAmount());
-			receivableSummary.setRemainingAmount(lastRemainingAmount);
-
-		} else if (accountAction == AccountAction.INCREASE) {
-
-			BigDecimal lastRemainingAmount = receivableSummary
-					.getRemainingAmount();
-			lastRemainingAmount = lastRemainingAmount.add(receivableTransaction
-					.getAmount());
-			receivableSummary.setRemainingAmount(lastRemainingAmount);
-
-		} else {
-			throw new AppException("Unknown AccountAction " + accountAction);
-		}
+		BigDecimal lastRemainingAmount = receivableSummary.getRemainingAmount();
+		lastRemainingAmount = lastRemainingAmount.add(receivableTransaction
+				.getAmount());
+		receivableSummary.setRemainingAmount(lastRemainingAmount);
 
 		receivableSummary.setLastReceivableTransactionId(receivableTransaction
 				.getId());
@@ -112,6 +84,51 @@ public class ReceivableFacade {
 		criteria.add(Restrictions.eq("clientId", clientId));
 		ReceivableSummary receivableSummary = (ReceivableSummary) criteria
 				.uniqueResult();
+		return receivableSummary;
+	}
+
+	public ReceivableSummary receiveAndStoreToCash(int clientId,
+			Date maturityDate, BigDecimal amount, String description,
+			Session session) throws AppException {
+
+		boolean summaryExists = DBUtils.getInstance().isExists("clientId",
+				clientId, ReceivableSummary.class, session);
+
+		if (!summaryExists) {
+			addSummary(clientId, session);
+		}
+
+		ReceivableSummary receivableSummary = getSummary(clientId, session);
+
+		ReceivableTransaction receivableTransaction = new ReceivableTransaction();
+		receivableTransaction.setReceivableSummary(receivableSummary);
+		receivableTransaction
+				.setReffNumber(GeneralConstants.PREFIX_TRX_NUMBER_RECEIVABLE
+						+ CommonUtils.getTimestampInString());
+		receivableTransaction.setAccountAction(AccountAction.DECREASE);
+		receivableTransaction.setActionTimestamp(CommonUtils
+				.getCurrentTimestamp());
+		receivableTransaction.setMaturityDate(maturityDate);
+		receivableTransaction.setAmount(amount);
+		receivableTransaction.setDescription(description);
+		receivableTransaction.setLastUpdatedBy(Main.getUserLogin().getId());
+		receivableTransaction.setLastUpdatedTimestamp(CommonUtils
+				.getCurrentTimestamp());
+
+		session.saveOrUpdate(receivableTransaction);
+
+		BigDecimal lastRemainingAmount = receivableSummary.getRemainingAmount();
+		lastRemainingAmount = lastRemainingAmount
+				.subtract(receivableTransaction.getAmount());
+		receivableSummary.setRemainingAmount(lastRemainingAmount);
+
+		receivableSummary.setLastReceivableTransactionId(receivableTransaction
+				.getId());
+		receivableSummary.setLastUpdatedBy(Main.getUserLogin().getId());
+		receivableSummary.setLastUpdatedTimestamp(CommonUtils
+				.getCurrentTimestamp());
+		session.saveOrUpdate(receivableTransaction);
+
 		return receivableSummary;
 	}
 
@@ -143,5 +160,18 @@ public class ReceivableFacade {
 		List<Map<String, Object>> list = query.list();
 
 		return list;
+	}
+
+	private ReceivableSummary addSummary(int clientId, Session session) {
+		ReceivableSummary receivableSummary = new ReceivableSummary();
+		receivableSummary.setClientId(clientId);
+		receivableSummary.setRemainingAmount(BigDecimal.valueOf(0));
+		receivableSummary.setLastReceivableTransactionId(-1);
+		receivableSummary.setLastUpdatedBy(Main.getUserLogin().getId());
+		receivableSummary.setLastUpdatedTimestamp(CommonUtils
+				.getCurrentTimestamp());
+
+		session.saveOrUpdate(receivableSummary);
+		return receivableSummary;
 	}
 }

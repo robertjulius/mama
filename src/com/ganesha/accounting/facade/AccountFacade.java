@@ -93,7 +93,7 @@ public class AccountFacade {
 				session);
 
 		AccountFacade.getInstance().insertIntoAccount(
-				CoaCodeConstants.KAS_KECIL, entityId, currentTimestamp, "Kas",
+				CoaCodeConstants.KAS_KECIL, entityId, currentTimestamp, notes,
 				"", DebitCreditFlag.CREDIT, amount, session);
 	}
 
@@ -117,19 +117,19 @@ public class AccountFacade {
 			Session session) throws AppException {
 
 		Timestamp currentTimestamp = CommonUtils.getCurrentTimestamp();
+		String notes = "Pembelian";
 
 		AccountFacade.getInstance().insertIntoAccount(
-				CoaCodeConstants.PEMBELIAN, entityId, currentTimestamp,
-				"Pembelian", "", DebitCreditFlag.DEBIT, totalAmount, session);
+				CoaCodeConstants.PEMBELIAN, entityId, currentTimestamp, notes,
+				"", DebitCreditFlag.DEBIT, totalAmount, session);
 
 		AccountFacade.getInstance().insertIntoAccount(
-				CoaCodeConstants.KAS_KECIL, entityId, currentTimestamp, "Kas",
+				CoaCodeConstants.KAS_KECIL, entityId, currentTimestamp, notes,
 				"", DebitCreditFlag.CREDIT, advancePayment, session);
 
 		AccountFacade.getInstance().insertIntoAccount(
 				CoaCodeConstants.HUTANG_USAHA, entityId, currentTimestamp,
-				"Hutang Pembelian", "", DebitCreditFlag.CREDIT,
-				remainingPayment, session);
+				notes, "", DebitCreditFlag.CREDIT, remainingPayment, session);
 	}
 
 	public void handlePurchaseReturn(Integer entityId,
@@ -138,24 +138,24 @@ public class AccountFacade {
 			Session session) throws AppException {
 
 		Timestamp currentTimestamp = CommonUtils.getCurrentTimestamp();
+		String notes = "Retur Pembelian";
 
 		AccountFacade.getInstance().insertIntoAccount(
-				CoaCodeConstants.RETUR_PEMBELIAN, entityId, currentTimestamp,
-				"Retur Pembelian", "", DebitCreditFlag.CREDIT,
-				totalReturnAmount, session);
-
-		AccountFacade.getInstance().insertIntoAccount(
-				CoaCodeConstants.KAS_KECIL, entityId, currentTimestamp, "Kas",
+				CoaCodeConstants.KAS_KECIL, entityId, currentTimestamp, notes,
 				"", DebitCreditFlag.DEBIT, amountReturned, session);
 
 		AccountFacade.getInstance().insertIntoAccount(
 				CoaCodeConstants.PIUTANG_USAHA, entityId, currentTimestamp,
-				"Piutang Usaha", "", DebitCreditFlag.DEBIT,
-				remainingReturnAmount, session);
+				notes, "", DebitCreditFlag.DEBIT, remainingReturnAmount,
+				session);
 
 		AccountFacade.getInstance().insertIntoAccount(
 				CoaCodeConstants.HUTANG_USAHA, entityId, currentTimestamp,
-				"Potong Hutang", "", DebitCreditFlag.DEBIT, debtCut, session);
+				notes, "", DebitCreditFlag.DEBIT, debtCut, session);
+
+		AccountFacade.getInstance().insertIntoAccount(
+				CoaCodeConstants.RETUR_PEMBELIAN, entityId, currentTimestamp,
+				notes, "", DebitCreditFlag.CREDIT, totalReturnAmount, session);
 	}
 
 	public void handleReceivableTransaction(Integer entityId,
@@ -165,12 +165,12 @@ public class AccountFacade {
 		String notes = "Penerimaan Piutang";
 
 		AccountFacade.getInstance().insertIntoAccount(
-				CoaCodeConstants.PIUTANG_USAHA, entityId, currentTimestamp,
-				notes, "", DebitCreditFlag.CREDIT, amount, session);
-
-		AccountFacade.getInstance().insertIntoAccount(
 				CoaCodeConstants.KAS_KECIL, entityId, currentTimestamp, notes,
 				"", DebitCreditFlag.DEBIT, amount, session);
+
+		AccountFacade.getInstance().insertIntoAccount(
+				CoaCodeConstants.PIUTANG_USAHA, entityId, currentTimestamp,
+				notes, "", DebitCreditFlag.CREDIT, amount, session);
 	}
 
 	public void handleRevenueTransaction(Integer coaId, Integer entityId,
@@ -179,13 +179,13 @@ public class AccountFacade {
 
 		Timestamp currentTimestamp = CommonUtils.getCurrentTimestamp();
 
+		AccountFacade.getInstance().insertIntoAccount(
+				CoaCodeConstants.KAS_KECIL, entityId, currentTimestamp, notes,
+				"", DebitCreditFlag.DEBIT, amount, session);
+
 		AccountFacade.getInstance().insertIntoAccount(coaId, entityId,
 				currentTimestamp, notes, "", DebitCreditFlag.CREDIT, amount,
 				session);
-
-		AccountFacade.getInstance().insertIntoAccount(
-				CoaCodeConstants.KAS_KECIL, entityId, currentTimestamp, "Kas",
-				"", DebitCreditFlag.DEBIT, amount, session);
 
 	}
 
@@ -193,28 +193,29 @@ public class AccountFacade {
 			Session session) throws AppException {
 
 		Timestamp currentTimestamp = CommonUtils.getCurrentTimestamp();
+		String notes = "Penjualan";
 
 		AccountFacade.getInstance().insertIntoAccount(
-				CoaCodeConstants.PENJUALAN, entityId, currentTimestamp,
-				"Penjualan", "", DebitCreditFlag.CREDIT, totalAmount, session);
-
-		AccountFacade.getInstance().insertIntoAccount(
-				CoaCodeConstants.KAS_KECIL, entityId, currentTimestamp, "Kas",
+				CoaCodeConstants.KAS_KECIL, entityId, currentTimestamp, notes,
 				"", DebitCreditFlag.DEBIT, totalAmount, session);
+
+		AccountFacade.getInstance().insertIntoAccount(
+				CoaCodeConstants.PENJUALAN, entityId, currentTimestamp, notes,
+				"", DebitCreditFlag.CREDIT, totalAmount, session);
 	}
 
 	public void handleSaleReturn(Integer entityId,
 			BigDecimal totalReturnAmount, Session session) throws AppException {
 
 		Timestamp currentTimestamp = CommonUtils.getCurrentTimestamp();
+		String notes = "Retur Penjualan";
 
 		AccountFacade.getInstance().insertIntoAccount(
 				CoaCodeConstants.RETUR_PENJUALAN, entityId, currentTimestamp,
-				"Retur Penjualan", "", DebitCreditFlag.DEBIT,
-				totalReturnAmount, session);
+				notes, "", DebitCreditFlag.DEBIT, totalReturnAmount, session);
 
 		AccountFacade.getInstance().insertIntoAccount(
-				CoaCodeConstants.KAS_KECIL, entityId, currentTimestamp, "Kas",
+				CoaCodeConstants.KAS_KECIL, entityId, currentTimestamp, notes,
 				"", DebitCreditFlag.CREDIT, totalReturnAmount, session);
 	}
 

@@ -16,7 +16,6 @@ import net.miginfocom.swing.MigLayout;
 
 import org.hibernate.Session;
 
-import com.ganesha.accounting.constants.Enums.AccountAction;
 import com.ganesha.core.exception.UserException;
 import com.ganesha.core.utils.CommonUtils;
 import com.ganesha.core.utils.Formatter;
@@ -215,9 +214,8 @@ public class ReceivableForm extends XJDialog {
 			Date maturityDate = CommonUtils.getNextDate(1, Calendar.YEAR,
 					CommonUtils.getCurrentDate());
 
-			ReceivableSummary receivableSummary = facade.addTransaction(
+			ReceivableSummary receivableSummary = facade.receiveAndStoreToCash(
 					supplier.getId(),
-					AccountAction.DECREASE,
 					maturityDate,
 					BigDecimal.valueOf(Formatter.formatStringToNumber(
 							txtAmount.getText()).doubleValue()),

@@ -6,6 +6,8 @@ import java.util.Date;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -13,6 +15,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
+import com.ganesha.accounting.constants.Enums.AccountAction;
 import com.ganesha.model.Trackable;
 
 @Entity
@@ -32,8 +35,9 @@ public class ReceivableTransaction extends Trackable {
 	@Column(name = "REFF_NUMBER", nullable = false, unique = true)
 	private String reffNumber;
 
+	@Enumerated(EnumType.STRING)
 	@Column(name = "ACCOUNT_ACTION", nullable = false)
-	private String accountAction;
+	private AccountAction accountAction;
 
 	@Column(name = "ACTION_TIMESTAMP", nullable = false)
 	private Timestamp actionTimestamp;
@@ -47,7 +51,7 @@ public class ReceivableTransaction extends Trackable {
 	@Column(name = "DESCRIPTION", nullable = false)
 	private String description;
 
-	public String getAccountAction() {
+	public AccountAction getAccountAction() {
 		return accountAction;
 	}
 
@@ -79,7 +83,7 @@ public class ReceivableTransaction extends Trackable {
 		return reffNumber;
 	}
 
-	public void setAccountAction(String accountAction) {
+	public void setAccountAction(AccountAction accountAction) {
 		this.accountAction = accountAction;
 	}
 

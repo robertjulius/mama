@@ -402,6 +402,9 @@ public class PenjualanForm extends XJDialog {
 		case KeyEvent.VK_F8:
 			setFocusToBarcodeField();
 			break;
+		case KeyEvent.VK_F11:
+			setFocusToFieldBayar();
+			break;
 		case KeyEvent.VK_F12:
 			btnSelesai.doClick();
 			break;
@@ -659,6 +662,15 @@ public class PenjualanForm extends XJDialog {
 		}
 		txtBarcode.setText("");
 		txtBarcode.requestFocus();
+	}
+
+	private void setFocusToFieldBayar() {
+		TableCellEditor cellEditor = table.getCellEditor();
+		if (cellEditor != null) {
+			cellEditor.stopCellEditing();
+		}
+		txtBayar.setText("");
+		txtBayar.requestFocus();
 	}
 
 	private void setTotalBayarDanKembalian() {

@@ -12,7 +12,6 @@ import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.criterion.Restrictions;
 
-import com.ganesha.accounting.constants.Enums.AccountAction;
 import com.ganesha.accounting.facade.AccountFacade;
 import com.ganesha.core.exception.AppException;
 import com.ganesha.core.exception.UserException;
@@ -93,14 +92,6 @@ public class PurchaseReturnFacade implements TransactionFacade {
 					session.saveOrUpdate(itemStock);
 				}
 			}
-		}
-
-		if (!purchaseReturnHeader.getReturnedInFullFlag()) {
-			addToReceivable(purchaseReturnHeader, session);
-		}
-
-		if (!purchaseReturnHeader.getReturnedInFullFlag()) {
-			addToPayable(purchaseReturnHeader, session);
 		}
 
 		AccountFacade.getInstance().handlePurchaseReturn(
@@ -213,8 +204,8 @@ public class PurchaseReturnFacade implements TransactionFacade {
 				+ ": " + purchaseReturnHeader.getTransactionNumber();
 
 		ReceivableFacade receivableFacade = ReceivableFacade.getInstance();
-		receivableFacade.addTransaction(clientId, AccountAction.INCREASE,
-				maturityDate, amount, description, session);
+		receivableFacade.addReceivableForPurchaseReturn(clientId, maturityDate,
+				amount, description, session);
 	}
 
 	private void validatePayable(PurchaseReturnHeader purchaseReturnHeader,
