@@ -19,17 +19,23 @@ public class UserExceptionHandler extends XJDialog {
 	private XJButton btnOk;
 	private XJLabel lblMessage;
 
-	public static void handleException(Window parent, Throwable ex, String title) {
+	public static void handleException(Window parent, String message,
+			String title) {
 		UserExceptionHandler exceptionHandler = new UserExceptionHandler(parent);
 		if (title == null) {
 			title = "Peringatan";
 		}
 		exceptionHandler.setTitle(title);
 		exceptionHandler.setMessage("<html><center>PROSES GAGAL<br/><br/>"
-				+ ex.getMessage() + "</center></html>");
+				+ message + "</center></html>");
+
 		exceptionHandler.pack();
 		exceptionHandler.setLocationRelativeTo(parent);
 		exceptionHandler.setVisible(true);
+	}
+
+	public static void handleException(Window parent, Throwable ex, String title) {
+		handleException(parent, ex.getMessage(), title);
 	}
 
 	private UserExceptionHandler(Window parent) {
