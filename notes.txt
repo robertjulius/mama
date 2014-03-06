@@ -30,6 +30,8 @@
 [DONE] ItemFacade.reAdjustStock()
 [DONE] Activity Log
 [DONE] Error Logging
+[DONE] Calculator untuk hitung harga satuan
+[DONE] Popup untuk edit value di dalam table
 
 Restore DB
 Laporan Laba Rugi
@@ -57,7 +59,7 @@ payables
 purchases
 sales
 
-Popup untuk edit value di dalam table
-Calculator untuk hitung harga satuan
 Default siklus untuk <Tidak ada siklus>
 Warna-warni untuk return pembelian -> Warna label sisa
+
+

@@ -18,7 +18,7 @@ public class ReportViewerDialog extends XJDialog {
 		dialog.setVisible(true);
 	}
 
-	public ReportViewerDialog(Window parent, String title, JRViewer viewer) {
+	private ReportViewerDialog(Window parent, String title, JRViewer viewer) {
 		super(parent);
 		setTitle(title);
 		setPermissionCode(PermissionConstants.REPORT_VIEWER);

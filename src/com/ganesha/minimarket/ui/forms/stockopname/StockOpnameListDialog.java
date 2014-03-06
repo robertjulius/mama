@@ -5,8 +5,6 @@ import java.awt.Window;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
-import java.beans.PropertyChangeEvent;
-import java.beans.PropertyChangeListener;
 import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -150,21 +148,19 @@ public class StockOpnameListDialog extends XJTableDialog {
 				new MigLayout("", "[800][300][grow][]", "[][150][][350][]"));
 		setCloseOnEsc(false);
 
-		tblStockOpname = new XJTable(false);
-		XTableUtils.initTable(tblStockOpname, tableParametersForStockOpname);
-		tblStockOpname.addPropertyChangeListener(new PropertyChangeListener() {
+		tblStockOpname = new XJTable() {
+			private static final long serialVersionUID = 6822394065886587363L;
+
 			@Override
-			public void propertyChange(PropertyChangeEvent evt) {
-				if (evt.getPropertyName().equals("tableCellEditor")) {
-					int row = tblStockOpname.getEditingRow();
-					int column = tblStockOpname.getEditingColumn();
-					if (column == tableParametersForStockOpname.get(
-							ColumnEnum.QUANTITY_MANUAL).getColumnIndex()) {
-						setTotalPerRow(row);
-					}
+			public void cellValueChanged(int row, int column, Object oldValue,
+					Object newValue) {
+				if (column == tableParametersForStockOpname.get(
+						ColumnEnum.QUANTITY_MANUAL).getColumnIndex()) {
+					setTotalPerRow(row);
 				}
 			}
-		});
+		};
+		XTableUtils.initTable(tblStockOpname, tableParametersForStockOpname);
 
 		pnlInformation = new XJPanel();
 		getContentPane().add(pnlInformation, "cell 0 0");

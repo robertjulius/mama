@@ -7,8 +7,6 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
-import java.beans.PropertyChangeEvent;
-import java.beans.PropertyChangeListener;
 import java.math.BigDecimal;
 import java.sql.Timestamp;
 import java.util.ArrayList;
@@ -138,21 +136,19 @@ public class PenjualanForm extends XJDialog {
 		getContentPane().setLayout(
 				new MigLayout("", "[1200,grow]", "[][][][][][]"));
 
-		table = new XJTable();
-		XTableUtils.initTable(table, tableParameters);
-		table.addPropertyChangeListener(new PropertyChangeListener() {
+		table = new XJTable() {
+			private static final long serialVersionUID = 6822394065886587363L;
+
 			@Override
-			public void propertyChange(PropertyChangeEvent evt) {
-				if (evt.getPropertyName().equals("tableCellEditor")) {
-					int row = table.getEditingRow();
-					int column = table.getEditingColumn();
-					if (column == tableParameters.get(ColumnEnum.QUANTITY)
-							.getColumnIndex()) {
-						setTotalPerRow(row);
-					}
+			public void cellValueChanged(int row, int column, Object oldValue,
+					Object newValue) {
+				if (column == tableParameters.get(ColumnEnum.QUANTITY)
+						.getColumnIndex()) {
+					setTotalPerRow(row);
 				}
 			}
-		});
+		};
+		XTableUtils.initTable(table, tableParameters);
 
 		XJPanel pnlHeader = new XJPanel();
 		pnlHeader.setBorder(new XEtchedBorder());

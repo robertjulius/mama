@@ -11,6 +11,19 @@ import com.ganesha.desktop.component.XJTable;
 
 public class XTableUtils {
 
+	public static Class<?>[] composeColumnClasses(
+			Map<?, XTableParameter> tableParameters) {
+		Class<?>[] columnClasses = new Class<?>[tableParameters.size()];
+		Iterator<?> iterator = tableParameters.keySet().iterator();
+		while (iterator.hasNext()) {
+			Object key = iterator.next();
+			XTableParameter tableParameter = tableParameters.get(key);
+			columnClasses[tableParameter.getColumnIndex()] = tableParameter
+					.getColumnClass();
+		}
+		return columnClasses;
+	}
+
 	public static boolean[] composeColumnEditable(
 			Map<?, XTableParameter> tableParameters) {
 		boolean[] columnEditables = new boolean[tableParameters.size()];
@@ -43,7 +56,8 @@ public class XTableUtils {
 		XTableModel tableModel = new XTableModel();
 		tableModel
 				.setColumnIdentifiers(composeColumnIdentifiers(tableParameters));
-		tableModel.setColumnEditable(composeColumnEditable(tableParameters));
+		tableModel.setXColumnEditable(composeColumnEditable(tableParameters));
+		tableModel.setColumnClasses(composeColumnClasses(tableParameters));
 		table.setModel(tableModel);
 
 		TableColumnModel columnModel = table.getColumnModel();

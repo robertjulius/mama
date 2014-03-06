@@ -1,8 +1,10 @@
 package com.ganesha.desktop.component;
 
 import java.awt.Component;
+import java.awt.Container;
 import java.awt.Dimension;
 import java.awt.Font;
+import java.awt.Window;
 import java.awt.event.ActionEvent;
 import java.awt.event.KeyEvent;
 
@@ -16,7 +18,9 @@ import javax.swing.KeyStroke;
 import javax.swing.table.TableCellEditor;
 import javax.swing.table.TableCellRenderer;
 
+import com.ganesha.core.utils.Formatter;
 import com.ganesha.desktop.component.xtableutils.XCellEditor;
+import com.ganesha.desktop.component.xtableutils.XCellValueEditor;
 import com.ganesha.desktop.component.xtableutils.XTableConstants;
 import com.ganesha.desktop.component.xtableutils.XTableModel;
 
@@ -53,11 +57,16 @@ public class XJTable extends JTable implements XComponentConstants {
 		setIntercellSpacing(new Dimension(5, 0));
 	}
 
+	public void cellValueChanged(int row, int column, Object oldValue,
+			Object newValue) {
+	}
+
 	@Override
 	public Component prepareRenderer(TableCellRenderer renderer, int row,
 			int column) {
 		Component component = super.prepareRenderer(renderer, row, column);
-		boolean editable = isCellEditable(row, column);
+		boolean editable = ((XTableModel) getModel()).isXCellEditable(row,
+				column);
 		boolean rowSelected = isRowSelected(row);
 		if (rowSelected) {
 
@@ -107,6 +116,10 @@ public class XJTable extends JTable implements XComponentConstants {
 		InputMap inputMap = getInputMap(JComponent.WHEN_ANCESTOR_OF_FOCUSED_COMPONENT);
 		ActionMap actionMap = getActionMap();
 
+		inputMap.put(KeyStroke.getKeyStroke(KeyEvent.VK_F2, 0),
+				"openCellValueEditor");
+		actionMap.put("openCellValueEditor", new OpenCellValueEditorAction());
+
 		inputMap.put(KeyStroke.getKeyStroke(KeyEvent.VK_ENTER, 0), "selectRow");
 		actionMap.put("selectRow", new SelectRowAction());
 
@@ -134,11 +147,45 @@ public class XJTable extends JTable implements XComponentConstants {
 			XTableModel tableModel = (XTableModel) getModel();
 			int columnCount = tableModel.getColumnCount();
 			for (int i = 0; i < columnCount; ++i) {
-				boolean editable = tableModel.isCellEditable(0, i);
+				boolean editable = tableModel.isXCellEditable(0, i);
 				if (editable) {
 					changeSelection(0, i, false, false);
 					break;
 				}
+			}
+		}
+	}
+
+	public class OpenCellValueEditorAction extends AbstractAction {
+		private static final long serialVersionUID = 913188132447616512L;
+
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			XTableModel tableModel = (XTableModel) getModel();
+			int row = getSelectedRow();
+			int column = getSelectedColumn();
+
+			String initialValue = tableModel.getValueAt(row, column).toString();
+			String title = tableModel.getColumnName(column);
+			Container parent = getParent();
+			while (!(parent instanceof Window)) {
+				parent = parent.getParent();
+			}
+
+			XCellValueEditor valueEditor = new XCellValueEditor(
+					(Window) parent, title, initialValue);
+			valueEditor.setVisible(true);
+
+			int returnValue = valueEditor.getReturnValue();
+			if (returnValue == XCellValueEditor.OK) {
+				String newValue = valueEditor.getValue();
+				Class<?> clazz = tableModel.getColumnClass(column);
+				if (Number.class.isAssignableFrom(clazz)) {
+					newValue = Formatter.formatNumberToString(Formatter
+							.formatStringToNumber(newValue));
+				}
+				tableModel.setValueAt(newValue, row, column);
+				cellValueChanged(row, column, initialValue, newValue);
 			}
 		}
 	}
@@ -167,7 +214,8 @@ public class XJTable extends JTable implements XComponentConstants {
 			int col = (startedColumn + 1) % columnCount;
 			int row = startedRow % rowCount;
 			do {
-				editable = isCellEditable(startedRow, col);
+				editable = ((XTableModel) getModel()).isXCellEditable(
+						startedRow, col);
 				if (editable) {
 					changeSelection(row, col, false, false);
 				}
@@ -194,7 +242,13 @@ public class XJTable extends JTable implements XComponentConstants {
 
 		@Override
 		public void actionPerformed(ActionEvent e) {
-			rowSelected();
+			XTableModel tableModel = (XTableModel) getModel();
+			int row = getSelectedRow();
+			int column = getSelectedColumn();
+			boolean editable = tableModel.isXCellEditable(row, column);
+			if (!editable) {
+				rowSelected();
+			}
 		}
 	}
 }

@@ -7,8 +7,6 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
-import java.beans.PropertyChangeEvent;
-import java.beans.PropertyChangeListener;
 import java.math.BigDecimal;
 import java.sql.Timestamp;
 import java.util.ArrayList;
@@ -144,6 +142,18 @@ public class PembelianForm extends XJDialog {
 			private static final long serialVersionUID = 1L;
 
 			@Override
+			public void cellValueChanged(int row, int column, Object oldValue,
+					Object newValue) {
+				if (column == tableParameters.get(ColumnEnum.QUANTITY)
+						.getColumnIndex()) {
+					setTotalPerRow(row);
+				} else if (column == tableParameters.get(ColumnEnum.PRICE)
+						.getColumnIndex()) {
+					setTotalPerRow(row);
+				}
+			}
+
+			@Override
 			public void rowSelected() {
 				boolean isFocus = table.isFocusOwner();
 				if (!isFocus) {
@@ -153,22 +163,6 @@ public class PembelianForm extends XJDialog {
 			}
 		};
 		XTableUtils.initTable(table, tableParameters);
-		table.addPropertyChangeListener(new PropertyChangeListener() {
-			@Override
-			public void propertyChange(PropertyChangeEvent evt) {
-				if (evt.getPropertyName().equals("tableCellEditor")) {
-					int row = table.getEditingRow();
-					int column = table.getEditingColumn();
-					if (column == tableParameters.get(ColumnEnum.QUANTITY)
-							.getColumnIndex()) {
-						setTotalPerRow(row);
-					} else if (column == tableParameters.get(ColumnEnum.PRICE)
-							.getColumnIndex()) {
-						setTotalPerRow(row);
-					}
-				}
-			}
-		});
 
 		final XJMenuItem openCalculatorMenuItem = new XJMenuItem(
 				"Open Calculator", PembelianForm.class.getName());
