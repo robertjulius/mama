@@ -25,6 +25,7 @@ import javax.swing.table.TableCellEditor;
 import net.miginfocom.swing.MigLayout;
 
 import org.hibernate.Session;
+import org.slf4j.LoggerFactory;
 
 import com.ganesha.core.exception.AppException;
 import com.ganesha.core.exception.UserException;
@@ -32,6 +33,7 @@ import com.ganesha.core.utils.CommonUtils;
 import com.ganesha.core.utils.Formatter;
 import com.ganesha.core.utils.GeneralConstants;
 import com.ganesha.coreapps.constants.Enums.ActionType;
+import com.ganesha.coreapps.constants.Loggers;
 import com.ganesha.coreapps.facade.ActivityLogFacade;
 import com.ganesha.desktop.component.XEtchedBorder;
 import com.ganesha.desktop.component.XJButton;
@@ -46,6 +48,7 @@ import com.ganesha.desktop.component.xtableutils.XTableModel;
 import com.ganesha.desktop.component.xtableutils.XTableParameter;
 import com.ganesha.desktop.component.xtableutils.XTableUtils;
 import com.ganesha.desktop.exeptions.ExceptionHandler;
+import com.ganesha.desktop.exeptions.UserExceptionHandler;
 import com.ganesha.hibernate.HibernateUtils;
 import com.ganesha.minimarket.Main;
 import com.ganesha.minimarket.facade.CustomerFacade;
@@ -638,14 +641,20 @@ public class PenjualanForm extends XJDialog {
 					session);
 			session.getTransaction().commit();
 
-			facade.cetakReceipt(saleHeader, saleDetails);
+			try {
+				facade.cetakReceipt(saleHeader, saleDetails);
+			} catch (PrintException e) {
+				LoggerFactory.getLogger(Loggers.APPLICATION).error(
+						e.getMessage(), e);
+				String message = "Transaksi ini sudah selesai, tapi struk tidak dapat dicetak karena ada masalah dengan printer.<br/><br/>"
+						+ "Ucapkan mohon maaf atas tidak adanya struk ini kepada Customer.<br/><br/>"
+						+ "Selanjutnya coba periksa semua koneksi ke printer dan pastikan printer dalam keadaan menyala.<br/>"
+						+ "Bila masalah ini masih terulang lagi, laporkan ke Robert.";
+				UserExceptionHandler.handleException(this, message, null);
+			}
+
 			dispose();
 
-		} catch (PrintException e) {
-			throw new AppException(e);
-		} catch (Exception e) {
-			session.getTransaction().rollback();
-			throw e;
 		} finally {
 			session.close();
 		}
