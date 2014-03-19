@@ -511,6 +511,9 @@ public class PenjualanForm extends XJDialog {
 
 	private void selesaiDanSimpan() throws AppException, UserException {
 
+		LoggerFactory.getLogger(Loggers.SALE).debug(
+				"Starting function selesaiDanSimpan()");
+
 		if (!(table.getRowCount() > 0)) {
 			throw new UserException(
 					"Proses tidak dapat dilanjutkan. Anda belum memasukan item apapun untuk transaksi ini.");
@@ -549,10 +552,18 @@ public class PenjualanForm extends XJDialog {
 				throw new UserException("Pembayaran kurang");
 			}
 
+			LoggerFactory.getLogger(Loggers.SALE).debug(
+					"Starting validation for transaction number "
+							+ transactionNumber);
+
 			SaleHeader saleHeader = facade.validateForm(transactionNumber,
 					transactionTimestamp, customerId, subTotalAmount,
 					taxPercent, taxAmount, totalAmount, pay, moneyChange,
 					session);
+
+			LoggerFactory.getLogger(Loggers.SALE).debug(
+					"Finished validation for transaction number "
+							+ transactionNumber);
 
 			List<SaleDetail> saleDetails = new ArrayList<>();
 			int rowCount = table.getRowCount();
@@ -635,18 +646,50 @@ public class PenjualanForm extends XJDialog {
 														.getColumnIndex())
 										.toString()).doubleValue()));
 
+				LoggerFactory
+						.getLogger(Loggers.SALE)
+						.debug("Preparation for item {"
+								+ saleDetail.getItemCode() + "|"
+								+ saleDetail.getItemName() + "|"
+								+ saleDetail.getPricePerUnit() + "|"
+								+ saleDetail.getQuantity() + "|"
+								+ saleDetail.getDiscountPercent() + "|"
+								+ saleDetail.getTotalAmount() + "} is finished");
+
 				saleDetails.add(saleDetail);
 			}
 
+			LoggerFactory.getLogger(Loggers.SALE).debug(
+					"Starting to insert SaleHeader {"
+							+ saleHeader.getTransactionNumber() + "|"
+							+ saleHeader.getSubTotalAmount() + "|"
+							+ saleHeader.getTaxAmount() + "|"
+							+ saleHeader.getTotalAmount() + "|"
+							+ saleHeader.getPay() + "|"
+							+ saleHeader.getMoneyChange() + "} into database");
+
 			facade.performSale(saleHeader, saleDetails, session);
+
+			LoggerFactory.getLogger(Loggers.SALE).debug(
+					"Finished inserting SaleHeader into database, the generated id is "
+							+ saleHeader.getId());
 
 			ActivityLogFacade.doLog(getPermissionCode(),
 					ActionType.TRANSACTION, Main.getUserLogin(), saleHeader,
 					session);
+
+			LoggerFactory.getLogger(Loggers.SALE).debug(
+					"Logging to ActivityLog is done");
+
 			session.getTransaction().commit();
+
+			LoggerFactory.getLogger(Loggers.SALE).debug(
+					"Transaction is commited succesfully");
 
 			try {
 				facade.cetakReceipt(saleHeader, saleDetails);
+				LoggerFactory.getLogger(Loggers.SALE).debug(
+						"Receipt printer is worked fine.");
 			} catch (PrintException e) {
 				LoggerFactory.getLogger(Loggers.APPLICATION).error(
 						e.getMessage(), e);
@@ -658,6 +701,8 @@ public class PenjualanForm extends XJDialog {
 			}
 
 			dispose();
+			LoggerFactory.getLogger(Loggers.SALE).debug(
+					"Transaction finished. The window is closed.");
 
 		} finally {
 			session.close();
