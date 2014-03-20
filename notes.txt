@@ -59,3 +59,7 @@ sales
 
 Popup untuk edit value di dalam table
 Calculator untuk hitung harga satuan
+
+
+Untuk form retur pembelian, tampilkan quantity pembelian & stock
+Font laporan terlalu besar
