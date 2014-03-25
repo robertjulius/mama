@@ -14,7 +14,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import javax.print.PrintException;
 import javax.swing.JOptionPane;
 import javax.swing.JScrollPane;
 import javax.swing.JSeparator;
@@ -497,6 +496,23 @@ public class PenjualanForm extends XJDialog {
 		reorderRowNumber();
 	}
 
+	private void printReceipt(SaleFacade facade, SaleHeader saleHeader,
+			List<SaleDetail> saleDetails) {
+		try {
+			facade.cetakReceipt(saleHeader, saleDetails);
+			LoggerFactory.getLogger(Loggers.SALE).debug(
+					"Receipt printer is worked fine.");
+		} catch (Exception e) {
+			LoggerFactory.getLogger(Loggers.APPLICATION).error(e.getMessage(),
+					e);
+			String message = "Transaksi ini sudah selesai, tapi struk tidak dapat dicetak karena ada masalah dengan printer.<br/><br/>"
+					+ "Ucapkan mohon maaf atas tidak adanya struk ini kepada Customer.<br/><br/>"
+					+ "Selanjutnya coba periksa semua koneksi ke printer dan pastikan printer dalam keadaan menyala.<br/>"
+					+ "Bila masalah ini masih terulang lagi, laporkan ke Robert.";
+			UserExceptionHandler.handleException(this, message, null);
+		}
+	}
+
 	private void reorderRowNumber() {
 		int rowCount = table.getRowCount();
 		for (int i = 0; i < rowCount; i++) {
@@ -558,8 +574,7 @@ public class PenjualanForm extends XJDialog {
 					session);
 
 			LoggerFactory.getLogger(Loggers.SALE).debug(
-					"Finished validation for transaction number "
-							+ transactionNumber);
+					"Validation finished");
 
 			List<SaleDetail> saleDetails = new ArrayList<>();
 			int rowCount = table.getRowCount();
@@ -682,24 +697,15 @@ public class PenjualanForm extends XJDialog {
 			LoggerFactory.getLogger(Loggers.SALE).debug(
 					"Transaction is commited succesfully");
 
-			try {
-				facade.cetakReceipt(saleHeader, saleDetails);
-				LoggerFactory.getLogger(Loggers.SALE).debug(
-						"Receipt printer is worked fine.");
-			} catch (PrintException e) {
-				LoggerFactory.getLogger(Loggers.APPLICATION).error(
-						e.getMessage(), e);
-				String message = "Transaksi ini sudah selesai, tapi struk tidak dapat dicetak karena ada masalah dengan printer.<br/><br/>"
-						+ "Ucapkan mohon maaf atas tidak adanya struk ini kepada Customer.<br/><br/>"
-						+ "Selanjutnya coba periksa semua koneksi ke printer dan pastikan printer dalam keadaan menyala.<br/>"
-						+ "Bila masalah ini masih terulang lagi, laporkan ke Robert.";
-				UserExceptionHandler.handleException(this, message, null);
-			}
+			printReceipt(facade, saleHeader, saleDetails);
 
 			dispose();
 			LoggerFactory.getLogger(Loggers.SALE).debug(
 					"Transaction finished. The window is closed.");
 
+		} catch (Exception e) {
+			session.getTransaction().rollback();
+			throw e;
 		} finally {
 			session.close();
 		}

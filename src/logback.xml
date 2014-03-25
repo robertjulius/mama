@@ -14,6 +14,14 @@
 	</appender>
 
 	<logger name="application" level="DEBUG" />
+	<logger name="application.sale" level="DEBUG" />
+	<logger name="application.window" level="TRACE" />
+	<!-- 
+	<logger name="application.window.form" level="DEBUG" />
+	<logger name="application.window.list" level="DEBUG" />
+	<logger name="application.window.button" level="DEBUG" />
+	 -->
+
 	<logger name="org.hibernate.transaction" level="DEBUG" />
 
 	<root level="WARN">
