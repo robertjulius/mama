@@ -9,10 +9,13 @@ import java.awt.event.WindowFocusListener;
 
 import javax.swing.JDialog;
 
-import com.ganesha.desktop.exeptions.ExceptionHandler;
+import org.slf4j.LoggerFactory;
+
 import com.ganesha.core.exception.UserException;
+import com.ganesha.coreapps.constants.Loggers;
 import com.ganesha.desktop.component.permissionutils.PermissionChecker;
 import com.ganesha.desktop.component.permissionutils.PermissionControl;
+import com.ganesha.desktop.exeptions.ExceptionHandler;
 
 public abstract class XJDialog extends JDialog implements XComponentConstants,
 		PermissionControl {
@@ -73,13 +76,20 @@ public abstract class XJDialog extends JDialog implements XComponentConstants,
 			super.setVisible(visible);
 			return;
 		}
+
+		String windowName = this.getClass().getName();
 		try {
 			boolean permitted = PermissionChecker.checkPermission(this);
 			if (!permitted) {
+				LoggerFactory.getLogger(Loggers.WINDOW).trace(
+						"Access to open " + windowName + " is not permitted");
 				super.setVisible(false);
 				throw new UserException(
 						"Anda tidak mempunyai ijin untuk mengakses form ini");
 			} else {
+				LoggerFactory.getLogger(Loggers.WINDOW).trace(
+						"Access to open " + windowName
+								+ " is permitted, the window will open");
 				super.setVisible(visible);
 			}
 		} catch (Exception ex) {

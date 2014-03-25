@@ -1,0 +1,674 @@
+2014-03-24 15:26:13.258 [AWT-EventQueue-0] DEBUG application.sale - Starting function selesaiDanSimpan()
+2014-03-24 15:26:13.258 [AWT-EventQueue-0] DEBUG o.h.transaction.JDBCTransaction - begin
+2014-03-24 15:26:13.259 [AWT-EventQueue-0] DEBUG o.h.transaction.JDBCTransaction - current autocommit status: false
+2014-03-24 15:26:13.259 [AWT-EventQueue-0] DEBUG application.sale - Starting validation for transaction number SAL20140324145918
+2014-03-24 15:26:13.260 [AWT-EventQueue-0] DEBUG application.sale - Finished validation for transaction number SAL20140324145918
+2014-03-24 15:26:13.260 [AWT-EventQueue-0] DEBUG application.sale - Preparation for item {0000000455|NII GREEN TEA HIJAU|6000.0|1|0.0|6000.0} is finished
+2014-03-24 15:26:13.260 [AWT-EventQueue-0] DEBUG application.sale - Preparation for item {0000000193|KOREK API TOKAI|3000.0|1|0.0|3000.0} is finished
+2014-03-24 15:26:13.260 [AWT-EventQueue-0] DEBUG application.sale - Preparation for item {0000000376|PROMAN ENERGENESIS|7000.0|1|0.0|7000.0} is finished
+2014-03-24 15:26:13.260 [AWT-EventQueue-0] DEBUG application.sale - Starting to insert SaleHeader {SAL20140324145918|16000.0|0.0|16000.0|16000.0|0.0} into database
+2014-03-24 15:26:13.275 [AWT-EventQueue-0] DEBUG application.sale - Finished inserting SaleHeader into database, the generated id is 715
+2014-03-24 15:26:13.275 [AWT-EventQueue-0] DEBUG application.sale - Logging to ActivityLog is done
+2014-03-24 15:26:13.275 [AWT-EventQueue-0] DEBUG o.h.transaction.JDBCTransaction - commit
+2014-03-24 15:26:13.307 [AWT-EventQueue-0] DEBUG o.h.transaction.JDBCTransaction - committed JDBC Connection
+2014-03-24 15:26:13.307 [AWT-EventQueue-0] DEBUG application.sale - Transaction is commited succesfully
+2014-03-24 15:26:13.431 [AWT-EventQueue-0] DEBUG application.sale - Receipt printer is worked fine.
+2014-03-24 15:26:13.431 [AWT-EventQueue-0] DEBUG application.sale - Transaction finished. The window is closed.
+2014-03-24 15:42:39.429 [AWT-EventQueue-0] DEBUG application.sale - Starting function selesaiDanSimpan()
+2014-03-24 15:42:39.429 [AWT-EventQueue-0] DEBUG o.h.transaction.JDBCTransaction - begin
+2014-03-24 15:42:39.430 [AWT-EventQueue-0] DEBUG o.h.transaction.JDBCTransaction - current autocommit status: false
+2014-03-24 15:42:39.430 [AWT-EventQueue-0] DEBUG application.sale - Starting validation for transaction number SAL20140324154154
+2014-03-24 15:42:39.431 [AWT-EventQueue-0] DEBUG application.sale - Finished validation for transaction number SAL20140324154154
+2014-03-24 15:42:39.431 [AWT-EventQueue-0] DEBUG application.sale - Preparation for item {0000000375|COOLANT|6000.0|1|0.0|6000.0} is finished
+2014-03-24 15:42:39.431 [AWT-EventQueue-0] DEBUG application.sale - Preparation for item {0000000081|AQUA 600 ML|3500.0|1|0.0|3500.0} is finished
+2014-03-24 15:42:39.431 [AWT-EventQueue-0] DEBUG application.sale - Starting to insert SaleHeader {SAL20140324154154|9500.0|0.0|9500.0|9500.0|0.0} into database
+2014-03-24 15:42:39.447 [AWT-EventQueue-0] DEBUG application.sale - Finished inserting SaleHeader into database, the generated id is 716
+2014-03-24 15:42:39.447 [AWT-EventQueue-0] DEBUG application.sale - Logging to ActivityLog is done
+2014-03-24 15:42:39.447 [AWT-EventQueue-0] DEBUG o.h.transaction.JDBCTransaction - commit
+2014-03-24 15:42:39.478 [AWT-EventQueue-0] DEBUG o.h.transaction.JDBCTransaction - committed JDBC Connection
+2014-03-24 15:42:39.478 [AWT-EventQueue-0] DEBUG application.sale - Transaction is commited succesfully
+2014-03-24 15:42:39.649 [AWT-EventQueue-0] DEBUG application.sale - Receipt printer is worked fine.
+2014-03-24 15:42:39.649 [AWT-EventQueue-0] DEBUG application.sale - Transaction finished. The window is closed.
+2014-03-24 15:50:27.108 [AWT-EventQueue-0] DEBUG application.sale - Starting function selesaiDanSimpan()
+2014-03-24 15:50:27.108 [AWT-EventQueue-0] DEBUG o.h.transaction.JDBCTransaction - begin
+2014-03-24 15:50:27.109 [AWT-EventQueue-0] DEBUG o.h.transaction.JDBCTransaction - current autocommit status: false
+2014-03-24 15:50:27.109 [AWT-EventQueue-0] DEBUG application.sale - Starting validation for transaction number SAL20140324155002
+2014-03-24 15:50:27.110 [AWT-EventQueue-0] DEBUG application.sale - Finished validation for transaction number SAL20140324155002
+2014-03-24 15:50:27.110 [AWT-EventQueue-0] DEBUG application.sale - Preparation for item {0000000455|NII GREEN TEA HIJAU|6000.0|1|0.0|6000.0} is finished
+2014-03-24 15:50:27.110 [AWT-EventQueue-0] DEBUG application.sale - Starting to insert SaleHeader {SAL20140324155002|6000.0|0.0|6000.0|6000.0|0.0} into database
+2014-03-24 15:50:27.110 [AWT-EventQueue-0] DEBUG application.sale - Finished inserting SaleHeader into database, the generated id is 717
+2014-03-24 15:50:27.110 [AWT-EventQueue-0] DEBUG application.sale - Logging to ActivityLog is done
+2014-03-24 15:50:27.110 [AWT-EventQueue-0] DEBUG o.h.transaction.JDBCTransaction - commit
+2014-03-24 15:50:27.141 [AWT-EventQueue-0] DEBUG o.h.transaction.JDBCTransaction - committed JDBC Connection
+2014-03-24 15:50:27.141 [AWT-EventQueue-0] DEBUG application.sale - Transaction is commited succesfully
+2014-03-24 15:50:27.250 [AWT-EventQueue-0] DEBUG application.sale - Receipt printer is worked fine.
+2014-03-24 15:50:27.250 [AWT-EventQueue-0] DEBUG application.sale - Transaction finished. The window is closed.
+2014-03-24 15:55:38.958 [AWT-EventQueue-0] DEBUG application.sale - Starting function selesaiDanSimpan()
+2014-03-24 15:55:38.958 [AWT-EventQueue-0] DEBUG o.h.transaction.JDBCTransaction - begin
+2014-03-24 15:55:38.959 [AWT-EventQueue-0] DEBUG o.h.transaction.JDBCTransaction - current autocommit status: false
+2014-03-24 15:55:38.959 [AWT-EventQueue-0] DEBUG application.sale - Starting validation for transaction number SAL20140324155509
+2014-03-24 15:55:38.960 [AWT-EventQueue-0] DEBUG application.sale - Finished validation for transaction number SAL20140324155509
+2014-03-24 15:55:38.960 [AWT-EventQueue-0] DEBUG application.sale - Preparation for item {0000000375|COOLANT|6000.0|1|0.0|6000.0} is finished
+2014-03-24 15:55:38.960 [AWT-EventQueue-0] DEBUG application.sale - Starting to insert SaleHeader {SAL20140324155509|6000.0|0.0|6000.0|6000.0|0.0} into database
+2014-03-24 15:55:38.960 [AWT-EventQueue-0] DEBUG application.sale - Finished inserting SaleHeader into database, the generated id is 718
+2014-03-24 15:55:38.960 [AWT-EventQueue-0] DEBUG application.sale - Logging to ActivityLog is done
+2014-03-24 15:55:38.960 [AWT-EventQueue-0] DEBUG o.h.transaction.JDBCTransaction - commit
+2014-03-24 15:55:38.991 [AWT-EventQueue-0] DEBUG o.h.transaction.JDBCTransaction - committed JDBC Connection
+2014-03-24 15:55:38.991 [AWT-EventQueue-0] DEBUG application.sale - Transaction is commited succesfully
+2014-03-24 15:55:38.991 [AWT-EventQueue-0] ERROR application - Printer is not accepting job.
+javax.print.PrintException: Printer is not accepting job.
+	at sun.print.Win32PrintJob.print(Unknown Source) ~[na:1.7.0_45]
+	at com.ganesha.minimarket.facade.SaleFacade.cetakReceipt(Unknown Source) ~[MiniMarketKK.jar:na]
+	at com.ganesha.minimarket.ui.forms.sale.PenjualanForm.selesaiDanSimpan(Unknown Source) [MiniMarketKK.jar:na]
+	at com.ganesha.minimarket.ui.forms.sale.PenjualanForm.access$900(Unknown Source) [MiniMarketKK.jar:na]
+	at com.ganesha.minimarket.ui.forms.sale.PenjualanForm$8.actionPerformed(Unknown Source) [MiniMarketKK.jar:na]
+	at javax.swing.AbstractButton.fireActionPerformed(Unknown Source) [na:1.7.0_45]
+	at javax.swing.AbstractButton$Handler.actionPerformed(Unknown Source) [na:1.7.0_45]
+	at javax.swing.DefaultButtonModel.fireActionPerformed(Unknown Source) [na:1.7.0_45]
+	at javax.swing.DefaultButtonModel.setPressed(Unknown Source) [na:1.7.0_45]
+	at javax.swing.AbstractButton.doClick(Unknown Source) [na:1.7.0_45]
+	at javax.swing.AbstractButton.doClick(Unknown Source) [na:1.7.0_45]
+	at com.ganesha.minimarket.ui.forms.sale.PenjualanForm.keyEventListener(Unknown Source) [MiniMarketKK.jar:na]
+	at com.ganesha.desktop.component.XJDialog$MyDispatcher.dispatchKeyEvent(Unknown Source) [MiniMarketKK.jar:na]
+	at java.awt.DefaultKeyboardFocusManager.preDispatchKeyEvent(Unknown Source) [na:1.7.0_45]
+	at java.awt.DefaultKeyboardFocusManager.typeAheadAssertions(Unknown Source) [na:1.7.0_45]
+	at java.awt.DefaultKeyboardFocusManager.dispatchEvent(Unknown Source) [na:1.7.0_45]
+	at java.awt.Component.dispatchEventImpl(Unknown Source) [na:1.7.0_45]
+	at java.awt.Container.dispatchEventImpl(Unknown Source) [na:1.7.0_45]
+	at java.awt.Window.dispatchEventImpl(Unknown Source) [na:1.7.0_45]
+	at java.awt.Component.dispatchEvent(Unknown Source) [na:1.7.0_45]
+	at java.awt.EventQueue.dispatchEventImpl(Unknown Source) [na:1.7.0_45]
+	at java.awt.EventQueue.access$200(Unknown Source) [na:1.7.0_45]
+	at java.awt.EventQueue$3.run(Unknown Source) [na:1.7.0_45]
+	at java.awt.EventQueue$3.run(Unknown Source) [na:1.7.0_45]
+	at java.security.AccessController.doPrivileged(Native Method) [na:1.7.0_45]
+	at java.security.ProtectionDomain$1.doIntersectionPrivilege(Unknown Source) [na:1.7.0_45]
+	at java.security.ProtectionDomain$1.doIntersectionPrivilege(Unknown Source) [na:1.7.0_45]
+	at java.awt.EventQueue$4.run(Unknown Source) [na:1.7.0_45]
+	at java.awt.EventQueue$4.run(Unknown Source) [na:1.7.0_45]
+	at java.security.AccessController.doPrivileged(Native Method) [na:1.7.0_45]
+	at java.security.ProtectionDomain$1.doIntersectionPrivilege(Unknown Source) [na:1.7.0_45]
+	at java.awt.EventQueue.dispatchEvent(Unknown Source) [na:1.7.0_45]
+	at java.awt.EventDispatchThread.pumpOneEventForFilters(Unknown Source) [na:1.7.0_45]
+	at java.awt.EventDispatchThread.pumpEventsForFilter(Unknown Source) [na:1.7.0_45]
+	at java.awt.EventDispatchThread.pumpEventsForFilter(Unknown Source) [na:1.7.0_45]
+	at java.awt.WaitDispatchSupport$2.run(Unknown Source) [na:1.7.0_45]
+	at java.awt.WaitDispatchSupport$4.run(Unknown Source) [na:1.7.0_45]
+	at java.security.AccessController.doPrivileged(Native Method) [na:1.7.0_45]
+	at java.awt.WaitDispatchSupport.enter(Unknown Source) [na:1.7.0_45]
+	at java.awt.Dialog.show(Unknown Source) [na:1.7.0_45]
+	at java.awt.Component.show(Unknown Source) [na:1.7.0_45]
+	at java.awt.Component.setVisible(Unknown Source) [na:1.7.0_45]
+	at java.awt.Window.setVisible(Unknown Source) [na:1.7.0_45]
+	at java.awt.Dialog.setVisible(Unknown Source) [na:1.7.0_45]
+	at com.ganesha.desktop.component.XJDialog.setVisible(Unknown Source) [MiniMarketKK.jar:na]
+	at com.ganesha.minimarket.ui.MainFrame$10.actionPerformed(Unknown Source) [MiniMarketKK.jar:na]
+	at javax.swing.AbstractButton.fireActionPerformed(Unknown Source) [na:1.7.0_45]
+	at javax.swing.AbstractButton$Handler.actionPerformed(Unknown Source) [na:1.7.0_45]
+	at javax.swing.DefaultButtonModel.fireActionPerformed(Unknown Source) [na:1.7.0_45]
+	at javax.swing.DefaultButtonModel.setPressed(Unknown Source) [na:1.7.0_45]
+	at javax.swing.AbstractButton.doClick(Unknown Source) [na:1.7.0_45]
+	at javax.swing.AbstractButton.doClick(Unknown Source) [na:1.7.0_45]
+	at com.ganesha.minimarket.ui.MainFrame$21.actionPerformed(Unknown Source) [MiniMarketKK.jar:na]
+	at javax.swing.AbstractButton.fireActionPerformed(Unknown Source) [na:1.7.0_45]
+	at javax.swing.AbstractButton$Handler.actionPerformed(Unknown Source) [na:1.7.0_45]
+	at javax.swing.DefaultButtonModel.fireActionPerformed(Unknown Source) [na:1.7.0_45]
+	at javax.swing.DefaultButtonModel.setPressed(Unknown Source) [na:1.7.0_45]
+	at javax.swing.AbstractButton.doClick(Unknown Source) [na:1.7.0_45]
+	at javax.swing.AbstractButton.doClick(Unknown Source) [na:1.7.0_45]
+	at com.ganesha.minimarket.ui.MainFrame.keyEventListener(Unknown Source) [MiniMarketKK.jar:na]
+	at com.ganesha.desktop.component.XJFrame$MyDispatcher.dispatchKeyEvent(Unknown Source) [MiniMarketKK.jar:na]
+	at java.awt.DefaultKeyboardFocusManager.preDispatchKeyEvent(Unknown Source) [na:1.7.0_45]
+	at java.awt.DefaultKeyboardFocusManager.typeAheadAssertions(Unknown Source) [na:1.7.0_45]
+	at java.awt.DefaultKeyboardFocusManager.dispatchEvent(Unknown Source) [na:1.7.0_45]
+	at java.awt.Component.dispatchEventImpl(Unknown Source) [na:1.7.0_45]
+	at java.awt.Container.dispatchEventImpl(Unknown Source) [na:1.7.0_45]
+	at java.awt.Window.dispatchEventImpl(Unknown Source) [na:1.7.0_45]
+	at java.awt.Component.dispatchEvent(Unknown Source) [na:1.7.0_45]
+	at java.awt.EventQueue.dispatchEventImpl(Unknown Source) [na:1.7.0_45]
+	at java.awt.EventQueue.access$200(Unknown Source) [na:1.7.0_45]
+	at java.awt.EventQueue$3.run(Unknown Source) [na:1.7.0_45]
+	at java.awt.EventQueue$3.run(Unknown Source) [na:1.7.0_45]
+	at java.security.AccessController.doPrivileged(Native Method) [na:1.7.0_45]
+	at java.security.ProtectionDomain$1.doIntersectionPrivilege(Unknown Source) [na:1.7.0_45]
+	at java.security.ProtectionDomain$1.doIntersectionPrivilege(Unknown Source) [na:1.7.0_45]
+	at java.awt.EventQueue$4.run(Unknown Source) [na:1.7.0_45]
+	at java.awt.EventQueue$4.run(Unknown Source) [na:1.7.0_45]
+	at java.security.AccessController.doPrivileged(Native Method) [na:1.7.0_45]
+	at java.security.ProtectionDomain$1.doIntersectionPrivilege(Unknown Source) [na:1.7.0_45]
+	at java.awt.EventQueue.dispatchEvent(Unknown Source) [na:1.7.0_45]
+	at java.awt.EventDispatchThread.pumpOneEventForFilters(Unknown Source) [na:1.7.0_45]
+	at java.awt.EventDispatchThread.pumpEventsForFilter(Unknown Source) [na:1.7.0_45]
+	at java.awt.EventDispatchThread.pumpEventsForHierarchy(Unknown Source) [na:1.7.0_45]
+	at java.awt.EventDispatchThread.pumpEvents(Unknown Source) [na:1.7.0_45]
+	at java.awt.EventDispatchThread.pumpEvents(Unknown Source) [na:1.7.0_45]
+	at java.awt.EventDispatchThread.run(Unknown Source) [na:1.7.0_45]
+2014-03-24 15:56:37.133 [AWT-EventQueue-0] DEBUG application.sale - Transaction finished. The window is closed.
+2014-03-24 15:59:13.948 [AWT-EventQueue-0] DEBUG application.sale - Starting function selesaiDanSimpan()
+2014-03-24 15:59:13.948 [AWT-EventQueue-0] DEBUG o.h.transaction.JDBCTransaction - begin
+2014-03-24 15:59:13.949 [AWT-EventQueue-0] DEBUG o.h.transaction.JDBCTransaction - current autocommit status: false
+2014-03-24 15:59:13.949 [AWT-EventQueue-0] DEBUG application.sale - Starting validation for transaction number SAL20140324155839
+2014-03-24 15:59:13.950 [AWT-EventQueue-0] DEBUG application.sale - Finished validation for transaction number SAL20140324155839
+2014-03-24 15:59:13.950 [AWT-EventQueue-0] DEBUG application.sale - Preparation for item {0000000404|ROKOK CLASMILD|14000.0|1|0.0|14000.0} is finished
+2014-03-24 15:59:13.950 [AWT-EventQueue-0] DEBUG application.sale - Starting to insert SaleHeader {SAL20140324155839|14000.0|0.0|14000.0|14000.0|0.0} into database
+2014-03-24 15:59:13.950 [AWT-EventQueue-0] DEBUG application.sale - Finished inserting SaleHeader into database, the generated id is 719
+2014-03-24 15:59:13.950 [AWT-EventQueue-0] DEBUG application.sale - Logging to ActivityLog is done
+2014-03-24 15:59:13.950 [AWT-EventQueue-0] DEBUG o.h.transaction.JDBCTransaction - commit
+2014-03-24 15:59:13.981 [AWT-EventQueue-0] DEBUG o.h.transaction.JDBCTransaction - committed JDBC Connection
+2014-03-24 15:59:13.981 [AWT-EventQueue-0] DEBUG application.sale - Transaction is commited succesfully
+2014-03-24 15:59:13.981 [AWT-EventQueue-0] ERROR application - Printer is not accepting job.
+javax.print.PrintException: Printer is not accepting job.
+	at sun.print.Win32PrintJob.print(Unknown Source) ~[na:1.7.0_45]
+	at com.ganesha.minimarket.facade.SaleFacade.cetakReceipt(Unknown Source) ~[MiniMarketKK.jar:na]
+	at com.ganesha.minimarket.ui.forms.sale.PenjualanForm.selesaiDanSimpan(Unknown Source) [MiniMarketKK.jar:na]
+	at com.ganesha.minimarket.ui.forms.sale.PenjualanForm.access$900(Unknown Source) [MiniMarketKK.jar:na]
+	at com.ganesha.minimarket.ui.forms.sale.PenjualanForm$8.actionPerformed(Unknown Source) [MiniMarketKK.jar:na]
+	at javax.swing.AbstractButton.fireActionPerformed(Unknown Source) [na:1.7.0_45]
+	at javax.swing.AbstractButton$Handler.actionPerformed(Unknown Source) [na:1.7.0_45]
+	at javax.swing.DefaultButtonModel.fireActionPerformed(Unknown Source) [na:1.7.0_45]
+	at javax.swing.DefaultButtonModel.setPressed(Unknown Source) [na:1.7.0_45]
+	at javax.swing.AbstractButton.doClick(Unknown Source) [na:1.7.0_45]
+	at javax.swing.AbstractButton.doClick(Unknown Source) [na:1.7.0_45]
+	at com.ganesha.minimarket.ui.forms.sale.PenjualanForm.keyEventListener(Unknown Source) [MiniMarketKK.jar:na]
+	at com.ganesha.desktop.component.XJDialog$MyDispatcher.dispatchKeyEvent(Unknown Source) [MiniMarketKK.jar:na]
+	at java.awt.DefaultKeyboardFocusManager.preDispatchKeyEvent(Unknown Source) [na:1.7.0_45]
+	at java.awt.DefaultKeyboardFocusManager.typeAheadAssertions(Unknown Source) [na:1.7.0_45]
+	at java.awt.DefaultKeyboardFocusManager.dispatchEvent(Unknown Source) [na:1.7.0_45]
+	at java.awt.Component.dispatchEventImpl(Unknown Source) [na:1.7.0_45]
+	at java.awt.Container.dispatchEventImpl(Unknown Source) [na:1.7.0_45]
+	at java.awt.Window.dispatchEventImpl(Unknown Source) [na:1.7.0_45]
+	at java.awt.Component.dispatchEvent(Unknown Source) [na:1.7.0_45]
+	at java.awt.EventQueue.dispatchEventImpl(Unknown Source) [na:1.7.0_45]
+	at java.awt.EventQueue.access$200(Unknown Source) [na:1.7.0_45]
+	at java.awt.EventQueue$3.run(Unknown Source) [na:1.7.0_45]
+	at java.awt.EventQueue$3.run(Unknown Source) [na:1.7.0_45]
+	at java.security.AccessController.doPrivileged(Native Method) [na:1.7.0_45]
+	at java.security.ProtectionDomain$1.doIntersectionPrivilege(Unknown Source) [na:1.7.0_45]
+	at java.security.ProtectionDomain$1.doIntersectionPrivilege(Unknown Source) [na:1.7.0_45]
+	at java.awt.EventQueue$4.run(Unknown Source) [na:1.7.0_45]
+	at java.awt.EventQueue$4.run(Unknown Source) [na:1.7.0_45]
+	at java.security.AccessController.doPrivileged(Native Method) [na:1.7.0_45]
+	at java.security.ProtectionDomain$1.doIntersectionPrivilege(Unknown Source) [na:1.7.0_45]
+	at java.awt.EventQueue.dispatchEvent(Unknown Source) [na:1.7.0_45]
+	at java.awt.EventDispatchThread.pumpOneEventForFilters(Unknown Source) [na:1.7.0_45]
+	at java.awt.EventDispatchThread.pumpEventsForFilter(Unknown Source) [na:1.7.0_45]
+	at java.awt.EventDispatchThread.pumpEventsForFilter(Unknown Source) [na:1.7.0_45]
+	at java.awt.WaitDispatchSupport$2.run(Unknown Source) [na:1.7.0_45]
+	at java.awt.WaitDispatchSupport$4.run(Unknown Source) [na:1.7.0_45]
+	at java.security.AccessController.doPrivileged(Native Method) [na:1.7.0_45]
+	at java.awt.WaitDispatchSupport.enter(Unknown Source) [na:1.7.0_45]
+	at java.awt.Dialog.show(Unknown Source) [na:1.7.0_45]
+	at java.awt.Component.show(Unknown Source) [na:1.7.0_45]
+	at java.awt.Component.setVisible(Unknown Source) [na:1.7.0_45]
+	at java.awt.Window.setVisible(Unknown Source) [na:1.7.0_45]
+	at java.awt.Dialog.setVisible(Unknown Source) [na:1.7.0_45]
+	at com.ganesha.desktop.component.XJDialog.setVisible(Unknown Source) [MiniMarketKK.jar:na]
+	at com.ganesha.minimarket.ui.MainFrame$10.actionPerformed(Unknown Source) [MiniMarketKK.jar:na]
+	at javax.swing.AbstractButton.fireActionPerformed(Unknown Source) [na:1.7.0_45]
+	at javax.swing.AbstractButton$Handler.actionPerformed(Unknown Source) [na:1.7.0_45]
+	at javax.swing.DefaultButtonModel.fireActionPerformed(Unknown Source) [na:1.7.0_45]
+	at javax.swing.DefaultButtonModel.setPressed(Unknown Source) [na:1.7.0_45]
+	at javax.swing.AbstractButton.doClick(Unknown Source) [na:1.7.0_45]
+	at javax.swing.AbstractButton.doClick(Unknown Source) [na:1.7.0_45]
+	at com.ganesha.minimarket.ui.MainFrame$21.actionPerformed(Unknown Source) [MiniMarketKK.jar:na]
+	at javax.swing.AbstractButton.fireActionPerformed(Unknown Source) [na:1.7.0_45]
+	at javax.swing.AbstractButton$Handler.actionPerformed(Unknown Source) [na:1.7.0_45]
+	at javax.swing.DefaultButtonModel.fireActionPerformed(Unknown Source) [na:1.7.0_45]
+	at javax.swing.DefaultButtonModel.setPressed(Unknown Source) [na:1.7.0_45]
+	at javax.swing.AbstractButton.doClick(Unknown Source) [na:1.7.0_45]
+	at javax.swing.AbstractButton.doClick(Unknown Source) [na:1.7.0_45]
+	at com.ganesha.minimarket.ui.MainFrame.keyEventListener(Unknown Source) [MiniMarketKK.jar:na]
+	at com.ganesha.desktop.component.XJFrame$MyDispatcher.dispatchKeyEvent(Unknown Source) [MiniMarketKK.jar:na]
+	at java.awt.DefaultKeyboardFocusManager.preDispatchKeyEvent(Unknown Source) [na:1.7.0_45]
+	at java.awt.DefaultKeyboardFocusManager.typeAheadAssertions(Unknown Source) [na:1.7.0_45]
+	at java.awt.DefaultKeyboardFocusManager.dispatchEvent(Unknown Source) [na:1.7.0_45]
+	at java.awt.Component.dispatchEventImpl(Unknown Source) [na:1.7.0_45]
+	at java.awt.Container.dispatchEventImpl(Unknown Source) [na:1.7.0_45]
+	at java.awt.Window.dispatchEventImpl(Unknown Source) [na:1.7.0_45]
+	at java.awt.Component.dispatchEvent(Unknown Source) [na:1.7.0_45]
+	at java.awt.EventQueue.dispatchEventImpl(Unknown Source) [na:1.7.0_45]
+	at java.awt.EventQueue.access$200(Unknown Source) [na:1.7.0_45]
+	at java.awt.EventQueue$3.run(Unknown Source) [na:1.7.0_45]
+	at java.awt.EventQueue$3.run(Unknown Source) [na:1.7.0_45]
+	at java.security.AccessController.doPrivileged(Native Method) [na:1.7.0_45]
+	at java.security.ProtectionDomain$1.doIntersectionPrivilege(Unknown Source) [na:1.7.0_45]
+	at java.security.ProtectionDomain$1.doIntersectionPrivilege(Unknown Source) [na:1.7.0_45]
+	at java.awt.EventQueue$4.run(Unknown Source) [na:1.7.0_45]
+	at java.awt.EventQueue$4.run(Unknown Source) [na:1.7.0_45]
+	at java.security.AccessController.doPrivileged(Native Method) [na:1.7.0_45]
+	at java.security.ProtectionDomain$1.doIntersectionPrivilege(Unknown Source) [na:1.7.0_45]
+	at java.awt.EventQueue.dispatchEvent(Unknown Source) [na:1.7.0_45]
+	at java.awt.EventDispatchThread.pumpOneEventForFilters(Unknown Source) [na:1.7.0_45]
+	at java.awt.EventDispatchThread.pumpEventsForFilter(Unknown Source) [na:1.7.0_45]
+	at java.awt.EventDispatchThread.pumpEventsForHierarchy(Unknown Source) [na:1.7.0_45]
+	at java.awt.EventDispatchThread.pumpEvents(Unknown Source) [na:1.7.0_45]
+	at java.awt.EventDispatchThread.pumpEvents(Unknown Source) [na:1.7.0_45]
+	at java.awt.EventDispatchThread.run(Unknown Source) [na:1.7.0_45]
+2014-03-24 16:00:15.164 [AWT-EventQueue-0] DEBUG application.sale - Transaction finished. The window is closed.
+2014-03-24 16:46:07.278 [AWT-EventQueue-0] DEBUG application.sale - Starting function selesaiDanSimpan()
+2014-03-24 16:46:07.278 [AWT-EventQueue-0] DEBUG o.h.transaction.JDBCTransaction - begin
+2014-03-24 16:46:07.278 [AWT-EventQueue-0] DEBUG o.h.transaction.JDBCTransaction - current autocommit status: false
+2014-03-24 16:46:07.279 [AWT-EventQueue-0] DEBUG application.sale - Starting validation for transaction number SAL20140324160016
+2014-03-24 16:46:07.280 [AWT-EventQueue-0] DEBUG application.sale - Finished validation for transaction number SAL20140324160016
+2014-03-24 16:46:07.280 [AWT-EventQueue-0] DEBUG application.sale - Preparation for item {0000000429|KACANG TELUR|1000.0|1|0.0|1000.0} is finished
+2014-03-24 16:46:07.280 [AWT-EventQueue-0] DEBUG application.sale - Starting to insert SaleHeader {SAL20140324160016|1000.0|0.0|1000.0|1000.0|0.0} into database
+2014-03-24 16:46:07.280 [AWT-EventQueue-0] DEBUG application.sale - Finished inserting SaleHeader into database, the generated id is 720
+2014-03-24 16:46:07.280 [AWT-EventQueue-0] DEBUG application.sale - Logging to ActivityLog is done
+2014-03-24 16:46:07.280 [AWT-EventQueue-0] DEBUG o.h.transaction.JDBCTransaction - commit
+2014-03-24 16:46:07.311 [AWT-EventQueue-0] DEBUG o.h.transaction.JDBCTransaction - committed JDBC Connection
+2014-03-24 16:46:07.311 [AWT-EventQueue-0] DEBUG application.sale - Transaction is commited succesfully
+2014-03-24 16:46:07.436 [AWT-EventQueue-0] DEBUG application.sale - Receipt printer is worked fine.
+2014-03-24 16:46:07.436 [AWT-EventQueue-0] DEBUG application.sale - Transaction finished. The window is closed.
+2014-03-24 16:47:24.925 [AWT-EventQueue-0] DEBUG application.sale - Starting function selesaiDanSimpan()
+2014-03-24 16:47:24.925 [AWT-EventQueue-0] DEBUG o.h.transaction.JDBCTransaction - begin
+2014-03-24 16:47:24.926 [AWT-EventQueue-0] DEBUG o.h.transaction.JDBCTransaction - current autocommit status: false
+2014-03-24 16:47:24.926 [AWT-EventQueue-0] DEBUG application.sale - Starting validation for transaction number SAL20140324164610
+2014-03-24 16:47:24.927 [AWT-EventQueue-0] DEBUG application.sale - Finished validation for transaction number SAL20140324164610
+2014-03-24 16:47:24.927 [AWT-EventQueue-0] DEBUG application.sale - Preparation for item {0000000081|AQUA 600 ML|3500.0|2|0.0|7000.0} is finished
+2014-03-24 16:47:24.927 [AWT-EventQueue-0] DEBUG application.sale - Preparation for item {0000000376|PROMAN ENERGENESIS|7000.0|2|0.0|14000.0} is finished
+2014-03-24 16:47:24.927 [AWT-EventQueue-0] DEBUG application.sale - Preparation for item {0000000115|NEO NAPACIN|3000.0|1|0.0|3000.0} is finished
+2014-03-24 16:47:24.927 [AWT-EventQueue-0] DEBUG application.sale - Starting to insert SaleHeader {SAL20140324164610|24000.0|0.0|24000.0|50000.0|26000.0} into database
+2014-03-24 16:47:24.942 [AWT-EventQueue-0] DEBUG application.sale - Finished inserting SaleHeader into database, the generated id is 721
+2014-03-24 16:47:24.942 [AWT-EventQueue-0] DEBUG application.sale - Logging to ActivityLog is done
+2014-03-24 16:47:24.942 [AWT-EventQueue-0] DEBUG o.h.transaction.JDBCTransaction - commit
+2014-03-24 16:47:24.974 [AWT-EventQueue-0] DEBUG o.h.transaction.JDBCTransaction - committed JDBC Connection
+2014-03-24 16:47:24.974 [AWT-EventQueue-0] DEBUG application.sale - Transaction is commited succesfully
+2014-03-24 16:47:25.083 [AWT-EventQueue-0] DEBUG application.sale - Receipt printer is worked fine.
+2014-03-24 16:47:25.083 [AWT-EventQueue-0] DEBUG application.sale - Transaction finished. The window is closed.
+2014-03-24 16:54:42.308 [AWT-EventQueue-0] DEBUG application.sale - Starting function selesaiDanSimpan()
+2014-03-24 16:54:42.308 [AWT-EventQueue-0] DEBUG o.h.transaction.JDBCTransaction - begin
+2014-03-24 16:54:42.309 [AWT-EventQueue-0] DEBUG o.h.transaction.JDBCTransaction - current autocommit status: false
+2014-03-24 16:54:42.309 [AWT-EventQueue-0] DEBUG application.sale - Starting validation for transaction number SAL20140324165356
+2014-03-24 16:54:42.310 [AWT-EventQueue-0] DEBUG application.sale - Finished validation for transaction number SAL20140324165356
+2014-03-24 16:54:42.310 [AWT-EventQueue-0] DEBUG application.sale - Preparation for item {0000000355|NII GREEN TEA MADU 500 ML|6000.0|2|0.0|12000.0} is finished
+2014-03-24 16:54:42.310 [AWT-EventQueue-0] DEBUG application.sale - Starting to insert SaleHeader {SAL20140324165356|12000.0|0.0|12000.0|12000.0|0.0} into database
+2014-03-24 16:54:42.310 [AWT-EventQueue-0] DEBUG application.sale - Finished inserting SaleHeader into database, the generated id is 722
+2014-03-24 16:54:42.310 [AWT-EventQueue-0] DEBUG application.sale - Logging to ActivityLog is done
+2014-03-24 16:54:42.310 [AWT-EventQueue-0] DEBUG o.h.transaction.JDBCTransaction - commit
+2014-03-24 16:54:42.342 [AWT-EventQueue-0] DEBUG o.h.transaction.JDBCTransaction - committed JDBC Connection
+2014-03-24 16:54:42.342 [AWT-EventQueue-0] DEBUG application.sale - Transaction is commited succesfully
+2014-03-24 16:54:42.466 [AWT-EventQueue-0] DEBUG application.sale - Receipt printer is worked fine.
+2014-03-24 16:54:42.466 [AWT-EventQueue-0] DEBUG application.sale - Transaction finished. The window is closed.
+2014-03-24 18:35:29.025 [AWT-EventQueue-0] DEBUG application.sale - Starting function selesaiDanSimpan()
+2014-03-24 18:35:29.025 [AWT-EventQueue-0] DEBUG o.h.transaction.JDBCTransaction - begin
+2014-03-24 18:35:29.026 [AWT-EventQueue-0] DEBUG o.h.transaction.JDBCTransaction - current autocommit status: false
+2014-03-24 18:35:29.026 [AWT-EventQueue-0] DEBUG application.sale - Starting validation for transaction number SAL20140324182159
+2014-03-24 18:35:29.027 [AWT-EventQueue-0] DEBUG application.sale - Finished validation for transaction number SAL20140324182159
+2014-03-24 18:35:29.027 [AWT-EventQueue-0] DEBUG application.sale - Preparation for item {0000000405|ROKOK SAMPOERNA 16|15000.0|1|0.0|15000.0} is finished
+2014-03-24 18:35:29.027 [AWT-EventQueue-0] DEBUG application.sale - Preparation for item {0000000193|KOREK API TOKAI|3000.0|1|0.0|3000.0} is finished
+2014-03-24 18:35:29.027 [AWT-EventQueue-0] DEBUG application.sale - Preparation for item {0000000080|ALFA ONE 600 ML|3000.0|1|0.0|3000.0} is finished
+2014-03-24 18:35:29.027 [AWT-EventQueue-0] DEBUG application.sale - Starting to insert SaleHeader {SAL20140324182159|21000.0|0.0|21000.0|21000.0|0.0} into database
+2014-03-24 18:35:29.043 [AWT-EventQueue-0] DEBUG application.sale - Finished inserting SaleHeader into database, the generated id is 723
+2014-03-24 18:35:29.058 [AWT-EventQueue-0] DEBUG application.sale - Logging to ActivityLog is done
+2014-03-24 18:35:29.058 [AWT-EventQueue-0] DEBUG o.h.transaction.JDBCTransaction - commit
+2014-03-24 18:35:29.121 [AWT-EventQueue-0] DEBUG o.h.transaction.JDBCTransaction - committed JDBC Connection
+2014-03-24 18:35:29.121 [AWT-EventQueue-0] DEBUG application.sale - Transaction is commited succesfully
+2014-03-24 18:35:29.245 [AWT-EventQueue-0] DEBUG application.sale - Receipt printer is worked fine.
+2014-03-24 18:35:29.245 [AWT-EventQueue-0] DEBUG application.sale - Transaction finished. The window is closed.
+2014-03-24 19:21:03.031 [AWT-EventQueue-0] DEBUG application.sale - Starting function selesaiDanSimpan()
+2014-03-24 19:21:03.031 [AWT-EventQueue-0] DEBUG o.h.transaction.JDBCTransaction - begin
+2014-03-24 19:21:03.032 [AWT-EventQueue-0] DEBUG o.h.transaction.JDBCTransaction - current autocommit status: false
+2014-03-24 19:21:03.032 [AWT-EventQueue-0] DEBUG application.sale - Starting validation for transaction number SAL20140324191934
+2014-03-24 19:21:03.033 [AWT-EventQueue-0] DEBUG application.sale - Finished validation for transaction number SAL20140324191934
+2014-03-24 19:21:03.033 [AWT-EventQueue-0] DEBUG application.sale - Preparation for item {0000000188|SAGON KELAPA|12000.0|1|0.0|12000.0} is finished
+2014-03-24 19:21:03.033 [AWT-EventQueue-0] DEBUG application.sale - Starting to insert SaleHeader {SAL20140324191934|12000.0|0.0|12000.0|12000.0|0.0} into database
+2014-03-24 19:21:03.033 [AWT-EventQueue-0] DEBUG application.sale - Finished inserting SaleHeader into database, the generated id is 724
+2014-03-24 19:21:03.033 [AWT-EventQueue-0] DEBUG application.sale - Logging to ActivityLog is done
+2014-03-24 19:21:03.049 [AWT-EventQueue-0] DEBUG o.h.transaction.JDBCTransaction - commit
+2014-03-24 19:21:03.064 [AWT-EventQueue-0] DEBUG o.h.transaction.JDBCTransaction - committed JDBC Connection
+2014-03-24 19:21:03.064 [AWT-EventQueue-0] DEBUG application.sale - Transaction is commited succesfully
+2014-03-24 19:21:03.236 [AWT-EventQueue-0] DEBUG application.sale - Receipt printer is worked fine.
+2014-03-24 19:21:03.236 [AWT-EventQueue-0] DEBUG application.sale - Transaction finished. The window is closed.
+2014-03-24 20:26:49.415 [AWT-EventQueue-0] DEBUG application.sale - Starting function selesaiDanSimpan()
+2014-03-24 20:26:49.415 [AWT-EventQueue-0] DEBUG o.h.transaction.JDBCTransaction - begin
+2014-03-24 20:26:49.416 [AWT-EventQueue-0] DEBUG o.h.transaction.JDBCTransaction - current autocommit status: false
+2014-03-24 20:26:59.734 [AWT-EventQueue-0] DEBUG application.sale - Starting function selesaiDanSimpan()
+2014-03-24 20:26:59.734 [AWT-EventQueue-0] DEBUG o.h.transaction.JDBCTransaction - begin
+2014-03-24 20:26:59.735 [AWT-EventQueue-0] DEBUG o.h.transaction.JDBCTransaction - current autocommit status: false
+2014-03-24 20:26:59.735 [AWT-EventQueue-0] DEBUG application.sale - Starting validation for transaction number SAL20140324202515
+2014-03-24 20:26:59.736 [AWT-EventQueue-0] DEBUG application.sale - Finished validation for transaction number SAL20140324202515
+2014-03-24 20:26:59.736 [AWT-EventQueue-0] DEBUG application.sale - Preparation for item {0000000083|ALFA ONE 1500 ML|5000.0|1|0.0|5000.0} is finished
+2014-03-24 20:26:59.736 [AWT-EventQueue-0] DEBUG application.sale - Preparation for item {0000000487|TEH PUCUK HARUM 480ML|5500.0|2|0.0|11000.0} is finished
+2014-03-24 20:26:59.736 [AWT-EventQueue-0] DEBUG application.sale - Starting to insert SaleHeader {SAL20140324202515|16000.0|0.0|16000.0|16000.0|0.0} into database
+2014-03-24 20:26:59.752 [AWT-EventQueue-0] DEBUG application.sale - Finished inserting SaleHeader into database, the generated id is 725
+2014-03-24 20:26:59.752 [AWT-EventQueue-0] DEBUG application.sale - Logging to ActivityLog is done
+2014-03-24 20:26:59.752 [AWT-EventQueue-0] DEBUG o.h.transaction.JDBCTransaction - commit
+2014-03-24 20:26:59.783 [AWT-EventQueue-0] DEBUG o.h.transaction.JDBCTransaction - committed JDBC Connection
+2014-03-24 20:26:59.783 [AWT-EventQueue-0] DEBUG application.sale - Transaction is commited succesfully
+2014-03-24 20:26:59.908 [AWT-EventQueue-0] DEBUG application.sale - Receipt printer is worked fine.
+2014-03-24 20:26:59.908 [AWT-EventQueue-0] DEBUG application.sale - Transaction finished. The window is closed.
+2014-03-25 06:17:49.657 [main] WARN  org.hibernate.mapping.RootClass - composite-id class does not override equals(): com.ganesha.model.UserRoleLinkPK
+2014-03-25 06:17:49.657 [main] WARN  org.hibernate.mapping.RootClass - composite-id class does not override hashCode(): com.ganesha.model.UserRoleLinkPK
+2014-03-25 06:17:49.657 [main] WARN  org.hibernate.mapping.RootClass - composite-id class does not override equals(): com.ganesha.model.RolePermissionLinkPK
+2014-03-25 06:17:49.657 [main] WARN  org.hibernate.mapping.RootClass - composite-id class does not override hashCode(): com.ganesha.model.RolePermissionLinkPK
+2014-03-25 06:17:49.672 [main] WARN  o.h.c.DriverManagerConnectionProvider - no JDBC Driver class was specified by property hibernate.connection.driver_class
+2014-03-25 06:17:49.938 [main] INFO  o.h.t.TransactionFactoryFactory - Using default transaction strategy (direct JDBC transactions)
+2014-03-25 06:17:49.938 [main] INFO  o.h.t.TransactionManagerLookupFactory - No TransactionManagerLookup configured (in JTA environment, use of read-write or transactional second-level cache is not recommended)
+2014-03-25 06:19:14.345 [AWT-EventQueue-0] DEBUG application.sale - Starting function selesaiDanSimpan()
+2014-03-25 06:19:14.363 [AWT-EventQueue-0] DEBUG o.h.transaction.JDBCTransaction - begin
+2014-03-25 06:19:14.363 [AWT-EventQueue-0] DEBUG o.h.transaction.JDBCTransaction - current autocommit status: false
+2014-03-25 06:19:14.394 [AWT-EventQueue-0] DEBUG application.sale - Starting validation for transaction number SAL20140325061817
+2014-03-25 06:19:14.394 [AWT-EventQueue-0] DEBUG application.sale - Finished validation for transaction number SAL20140325061817
+2014-03-25 06:19:14.394 [AWT-EventQueue-0] DEBUG application.sale - Preparation for item {0000000461|ROTI SISIR FADEIUS|10000.0|1|0.0|10000.0} is finished
+2014-03-25 06:19:14.394 [AWT-EventQueue-0] DEBUG application.sale - Preparation for item {0000000138|SALE PISANG ORIGINAL|10000.0|1|0.0|10000.0} is finished
+2014-03-25 06:19:14.394 [AWT-EventQueue-0] DEBUG application.sale - Preparation for item {0000000404|ROKOK CLASMILD|14000.0|1|0.0|14000.0} is finished
+2014-03-25 06:19:14.394 [AWT-EventQueue-0] DEBUG application.sale - Preparation for item {0000000405|ROKOK SAMPOERNA 16|15000.0|1|0.0|15000.0} is finished
+2014-03-25 06:19:14.394 [AWT-EventQueue-0] DEBUG application.sale - Starting to insert SaleHeader {SAL20140325061817|49000.0|0.0|49000.0|49000.0|0.0} into database
+2014-03-25 06:19:14.519 [AWT-EventQueue-0] DEBUG application.sale - Finished inserting SaleHeader into database, the generated id is 726
+2014-03-25 06:19:14.519 [AWT-EventQueue-0] DEBUG application.sale - Logging to ActivityLog is done
+2014-03-25 06:19:14.519 [AWT-EventQueue-0] DEBUG o.h.transaction.JDBCTransaction - commit
+2014-03-25 06:19:14.550 [AWT-EventQueue-0] DEBUG o.h.transaction.JDBCTransaction - committed JDBC Connection
+2014-03-25 06:19:14.550 [AWT-EventQueue-0] DEBUG application.sale - Transaction is commited succesfully
+2014-03-25 06:19:14.909 [AWT-EventQueue-0] DEBUG application.sale - Receipt printer is worked fine.
+2014-03-25 06:19:14.909 [AWT-EventQueue-0] DEBUG application.sale - Transaction finished. The window is closed.
+2014-03-25 06:58:01.830 [AWT-EventQueue-0] DEBUG application.sale - Starting function selesaiDanSimpan()
+2014-03-25 06:58:01.830 [AWT-EventQueue-0] DEBUG o.h.transaction.JDBCTransaction - begin
+2014-03-25 06:58:01.831 [AWT-EventQueue-0] DEBUG o.h.transaction.JDBCTransaction - current autocommit status: false
+2014-03-25 06:58:01.831 [AWT-EventQueue-0] DEBUG application.sale - Starting validation for transaction number SAL20140325065655
+2014-03-25 06:58:01.832 [AWT-EventQueue-0] DEBUG application.sale - Finished validation for transaction number SAL20140325065655
+2014-03-25 06:58:01.832 [AWT-EventQueue-0] DEBUG application.sale - Preparation for item {0000000205|HOCK SEN SEE HONG PUFF 210 GR|6500.0|1|0.0|6500.0} is finished
+2014-03-25 06:58:01.832 [AWT-EventQueue-0] DEBUG application.sale - Preparation for item {0000000376|PROMAN ENERGENESIS|7000.0|1|0.0|7000.0} is finished
+2014-03-25 06:58:01.832 [AWT-EventQueue-0] DEBUG application.sale - Preparation for item {0000000460|ROTI MANIS FADEIUS|12000.0|1|0.0|12000.0} is finished
+2014-03-25 06:58:01.832 [AWT-EventQueue-0] DEBUG application.sale - Starting to insert SaleHeader {SAL20140325065655|25500.0|0.0|25500.0|50000.0|24500.0} into database
+2014-03-25 06:58:01.848 [AWT-EventQueue-0] DEBUG application.sale - Finished inserting SaleHeader into database, the generated id is 727
+2014-03-25 06:58:01.863 [AWT-EventQueue-0] DEBUG application.sale - Logging to ActivityLog is done
+2014-03-25 06:58:01.863 [AWT-EventQueue-0] DEBUG o.h.transaction.JDBCTransaction - commit
+2014-03-25 06:58:01.879 [AWT-EventQueue-0] DEBUG o.h.transaction.JDBCTransaction - committed JDBC Connection
+2014-03-25 06:58:01.879 [AWT-EventQueue-0] DEBUG application.sale - Transaction is commited succesfully
+2014-03-25 06:58:01.988 [AWT-EventQueue-0] DEBUG application.sale - Receipt printer is worked fine.
+2014-03-25 06:58:01.988 [AWT-EventQueue-0] DEBUG application.sale - Transaction finished. The window is closed.
+2014-03-25 07:24:09.602 [AWT-EventQueue-0] DEBUG application.sale - Starting function selesaiDanSimpan()
+2014-03-25 07:24:09.602 [AWT-EventQueue-0] DEBUG o.h.transaction.JDBCTransaction - begin
+2014-03-25 07:24:09.603 [AWT-EventQueue-0] DEBUG o.h.transaction.JDBCTransaction - current autocommit status: false
+2014-03-25 07:24:09.603 [AWT-EventQueue-0] DEBUG application.sale - Starting validation for transaction number SAL20140325071009
+2014-03-25 07:24:09.604 [AWT-EventQueue-0] DEBUG application.sale - Finished validation for transaction number SAL20140325071009
+2014-03-25 07:24:09.604 [AWT-EventQueue-0] DEBUG application.sale - Preparation for item {0000000009|HEXOX MINT 12,5 GR|2000.0|2|0.0|4000.0} is finished
+2014-03-25 07:24:09.604 [AWT-EventQueue-0] DEBUG application.sale - Preparation for item {0000000084|AQUA 1500 ML |6000.0|2|0.0|12000.0} is finished
+2014-03-25 07:24:09.604 [AWT-EventQueue-0] DEBUG application.sale - Preparation for item {0000000055|OT TANGO STRAWBERRY 171 GR|10000.0|1|0.0|10000.0} is finished
+2014-03-25 07:24:09.604 [AWT-EventQueue-0] DEBUG application.sale - Preparation for item {0000000410|ROKOK MARLBORO PUTIH|17000.0|1|0.0|17000.0} is finished
+2014-03-25 07:24:09.604 [AWT-EventQueue-0] DEBUG application.sale - Starting to insert SaleHeader {SAL20140325071009|43000.0|0.0|43000.0|100000.0|57000.0} into database
+2014-03-25 07:24:09.635 [AWT-EventQueue-0] DEBUG application.sale - Finished inserting SaleHeader into database, the generated id is 728
+2014-03-25 07:24:09.635 [AWT-EventQueue-0] DEBUG application.sale - Logging to ActivityLog is done
+2014-03-25 07:24:09.635 [AWT-EventQueue-0] DEBUG o.h.transaction.JDBCTransaction - commit
+2014-03-25 07:24:09.666 [AWT-EventQueue-0] DEBUG o.h.transaction.JDBCTransaction - committed JDBC Connection
+2014-03-25 07:24:09.666 [AWT-EventQueue-0] DEBUG application.sale - Transaction is commited succesfully
+2014-03-25 07:24:09.775 [AWT-EventQueue-0] DEBUG application.sale - Receipt printer is worked fine.
+2014-03-25 07:24:09.775 [AWT-EventQueue-0] DEBUG application.sale - Transaction finished. The window is closed.
+2014-03-25 07:25:36.812 [AWT-EventQueue-0] DEBUG application.sale - Starting function selesaiDanSimpan()
+2014-03-25 07:25:36.812 [AWT-EventQueue-0] DEBUG o.h.transaction.JDBCTransaction - begin
+2014-03-25 07:25:36.813 [AWT-EventQueue-0] DEBUG o.h.transaction.JDBCTransaction - current autocommit status: false
+2014-03-25 07:25:36.813 [AWT-EventQueue-0] DEBUG application.sale - Starting validation for transaction number SAL20140325072520
+2014-03-25 07:25:36.814 [AWT-EventQueue-0] DEBUG application.sale - Finished validation for transaction number SAL20140325072520
+2014-03-25 07:25:36.814 [AWT-EventQueue-0] DEBUG application.sale - Preparation for item {0000000105|BODREX PE 4 TABLET|3000.0|1|0.0|3000.0} is finished
+2014-03-25 07:25:36.814 [AWT-EventQueue-0] DEBUG application.sale - Starting to insert SaleHeader {SAL20140325072520|3000.0|0.0|3000.0|5000.0|2000.0} into database
+2014-03-25 07:26:02.981 [AWT-EventQueue-0] DEBUG application.sale - Starting function selesaiDanSimpan()
+2014-03-25 07:26:02.981 [AWT-EventQueue-0] DEBUG o.h.transaction.JDBCTransaction - begin
+2014-03-25 07:26:02.982 [AWT-EventQueue-0] DEBUG o.h.transaction.JDBCTransaction - current autocommit status: false
+2014-03-25 07:26:02.982 [AWT-EventQueue-0] DEBUG application.sale - Starting validation for transaction number SAL20140325072520
+2014-03-25 07:26:02.983 [AWT-EventQueue-0] DEBUG application.sale - Finished validation for transaction number SAL20140325072520
+2014-03-25 07:26:02.983 [AWT-EventQueue-0] DEBUG application.sale - Preparation for item {0000000105|BODREX PE 4 TABLET|3000.0|1|0.0|3000.0} is finished
+2014-03-25 07:26:02.983 [AWT-EventQueue-0] DEBUG application.sale - Starting to insert SaleHeader {SAL20140325072520|3000.0|0.0|3000.0|5000.0|2000.0} into database
+2014-03-25 07:26:02.983 [AWT-EventQueue-0] WARN  o.h.util.JDBCExceptionReporter - SQL Error: 1062, SQLState: 23000
+2014-03-25 07:26:02.983 [AWT-EventQueue-0] ERROR o.h.util.JDBCExceptionReporter - Duplicate entry 'SAL20140325072520' for key 'TRANSACTION_NUMBER'
+2014-03-25 07:26:03.014 [AWT-EventQueue-0] ERROR application - could not insert: [com.ganesha.minimarket.model.SaleHeader]
+org.hibernate.exception.ConstraintViolationException: could not insert: [com.ganesha.minimarket.model.SaleHeader]
+	at org.hibernate.exception.SQLStateConverter.convert(SQLStateConverter.java:94) ~[hibernate-core-3.3.0.SP1.jar:3.3.0.SP1]
+	at org.hibernate.exception.JDBCExceptionHelper.convert(JDBCExceptionHelper.java:66) ~[hibernate-core-3.3.0.SP1.jar:3.3.0.SP1]
+	at org.hibernate.id.insert.AbstractReturningDelegate.performInsert(AbstractReturningDelegate.java:64) ~[hibernate-core-3.3.0.SP1.jar:3.3.0.SP1]
+	at org.hibernate.persister.entity.AbstractEntityPersister.insert(AbstractEntityPersister.java:2186) ~[hibernate-core-3.3.0.SP1.jar:3.3.0.SP1]
+	at org.hibernate.persister.entity.AbstractEntityPersister.insert(AbstractEntityPersister.java:2666) ~[hibernate-core-3.3.0.SP1.jar:3.3.0.SP1]
+	at org.hibernate.action.EntityIdentityInsertAction.execute(EntityIdentityInsertAction.java:71) ~[hibernate-core-3.3.0.SP1.jar:3.3.0.SP1]
+	at org.hibernate.engine.ActionQueue.execute(ActionQueue.java:279) ~[hibernate-core-3.3.0.SP1.jar:3.3.0.SP1]
+	at org.hibernate.event.def.AbstractSaveEventListener.performSaveOrReplicate(AbstractSaveEventListener.java:321) ~[hibernate-core-3.3.0.SP1.jar:3.3.0.SP1]
+	at org.hibernate.event.def.AbstractSaveEventListener.performSave(AbstractSaveEventListener.java:204) ~[hibernate-core-3.3.0.SP1.jar:3.3.0.SP1]
+	at org.hibernate.event.def.AbstractSaveEventListener.saveWithGeneratedId(AbstractSaveEventListener.java:130) ~[hibernate-core-3.3.0.SP1.jar:3.3.0.SP1]
+	at org.hibernate.event.def.DefaultSaveOrUpdateEventListener.saveWithGeneratedOrRequestedId(DefaultSaveOrUpdateEventListener.java:210) ~[hibernate-core-3.3.0.SP1.jar:3.3.0.SP1]
+	at org.hibernate.event.def.DefaultSaveOrUpdateEventListener.entityIsTransient(DefaultSaveOrUpdateEventListener.java:195) ~[hibernate-core-3.3.0.SP1.jar:3.3.0.SP1]
+	at org.hibernate.event.def.DefaultSaveOrUpdateEventListener.performSaveOrUpdate(DefaultSaveOrUpdateEventListener.java:117) ~[hibernate-core-3.3.0.SP1.jar:3.3.0.SP1]
+	at org.hibernate.event.def.DefaultSaveOrUpdateEventListener.onSaveOrUpdate(DefaultSaveOrUpdateEventListener.java:93) ~[hibernate-core-3.3.0.SP1.jar:3.3.0.SP1]
+	at org.hibernate.impl.SessionImpl.fireSaveOrUpdate(SessionImpl.java:534) ~[hibernate-core-3.3.0.SP1.jar:3.3.0.SP1]
+	at org.hibernate.impl.SessionImpl.saveOrUpdate(SessionImpl.java:526) ~[hibernate-core-3.3.0.SP1.jar:3.3.0.SP1]
+	at org.hibernate.impl.SessionImpl.saveOrUpdate(SessionImpl.java:522) ~[hibernate-core-3.3.0.SP1.jar:3.3.0.SP1]
+	at com.ganesha.minimarket.facade.SaleFacade.performSale(Unknown Source) ~[MiniMarketKK.jar:na]
+	at com.ganesha.minimarket.ui.forms.sale.PenjualanForm.selesaiDanSimpan(Unknown Source) [MiniMarketKK.jar:na]
+	at com.ganesha.minimarket.ui.forms.sale.PenjualanForm.access$900(Unknown Source) [MiniMarketKK.jar:na]
+	at com.ganesha.minimarket.ui.forms.sale.PenjualanForm$8.actionPerformed(Unknown Source) [MiniMarketKK.jar:na]
+	at javax.swing.AbstractButton.fireActionPerformed(Unknown Source) [na:1.7.0_45]
+	at javax.swing.AbstractButton$Handler.actionPerformed(Unknown Source) [na:1.7.0_45]
+	at javax.swing.DefaultButtonModel.fireActionPerformed(Unknown Source) [na:1.7.0_45]
+	at javax.swing.DefaultButtonModel.setPressed(Unknown Source) [na:1.7.0_45]
+	at javax.swing.AbstractButton.doClick(Unknown Source) [na:1.7.0_45]
+	at javax.swing.AbstractButton.doClick(Unknown Source) [na:1.7.0_45]
+	at com.ganesha.minimarket.ui.forms.sale.PenjualanForm.keyEventListener(Unknown Source) [MiniMarketKK.jar:na]
+	at com.ganesha.desktop.component.XJDialog$MyDispatcher.dispatchKeyEvent(Unknown Source) [MiniMarketKK.jar:na]
+	at java.awt.DefaultKeyboardFocusManager.preDispatchKeyEvent(Unknown Source) [na:1.7.0_45]
+	at java.awt.DefaultKeyboardFocusManager.typeAheadAssertions(Unknown Source) [na:1.7.0_45]
+	at java.awt.DefaultKeyboardFocusManager.dispatchEvent(Unknown Source) [na:1.7.0_45]
+	at java.awt.Component.dispatchEventImpl(Unknown Source) [na:1.7.0_45]
+	at java.awt.Container.dispatchEventImpl(Unknown Source) [na:1.7.0_45]
+	at java.awt.Window.dispatchEventImpl(Unknown Source) [na:1.7.0_45]
+	at java.awt.Component.dispatchEvent(Unknown Source) [na:1.7.0_45]
+	at java.awt.EventQueue.dispatchEventImpl(Unknown Source) [na:1.7.0_45]
+	at java.awt.EventQueue.access$200(Unknown Source) [na:1.7.0_45]
+	at java.awt.EventQueue$3.run(Unknown Source) [na:1.7.0_45]
+	at java.awt.EventQueue$3.run(Unknown Source) [na:1.7.0_45]
+	at java.security.AccessController.doPrivileged(Native Method) [na:1.7.0_45]
+	at java.security.ProtectionDomain$1.doIntersectionPrivilege(Unknown Source) [na:1.7.0_45]
+	at java.security.ProtectionDomain$1.doIntersectionPrivilege(Unknown Source) [na:1.7.0_45]
+	at java.awt.EventQueue$4.run(Unknown Source) [na:1.7.0_45]
+	at java.awt.EventQueue$4.run(Unknown Source) [na:1.7.0_45]
+	at java.security.AccessController.doPrivileged(Native Method) [na:1.7.0_45]
+	at java.security.ProtectionDomain$1.doIntersectionPrivilege(Unknown Source) [na:1.7.0_45]
+	at java.awt.EventQueue.dispatchEvent(Unknown Source) [na:1.7.0_45]
+	at java.awt.EventDispatchThread.pumpOneEventForFilters(Unknown Source) [na:1.7.0_45]
+	at java.awt.EventDispatchThread.pumpEventsForFilter(Unknown Source) [na:1.7.0_45]
+	at java.awt.EventDispatchThread.pumpEventsForFilter(Unknown Source) [na:1.7.0_45]
+	at java.awt.WaitDispatchSupport$2.run(Unknown Source) [na:1.7.0_45]
+	at java.awt.WaitDispatchSupport$4.run(Unknown Source) [na:1.7.0_45]
+	at java.security.AccessController.doPrivileged(Native Method) [na:1.7.0_45]
+	at java.awt.WaitDispatchSupport.enter(Unknown Source) [na:1.7.0_45]
+	at java.awt.Dialog.show(Unknown Source) [na:1.7.0_45]
+	at java.awt.Component.show(Unknown Source) [na:1.7.0_45]
+	at java.awt.Component.setVisible(Unknown Source) [na:1.7.0_45]
+	at java.awt.Window.setVisible(Unknown Source) [na:1.7.0_45]
+	at java.awt.Dialog.setVisible(Unknown Source) [na:1.7.0_45]
+	at com.ganesha.desktop.component.XJDialog.setVisible(Unknown Source) [MiniMarketKK.jar:na]
+	at com.ganesha.minimarket.ui.MainFrame$10.actionPerformed(Unknown Source) [MiniMarketKK.jar:na]
+	at javax.swing.AbstractButton.fireActionPerformed(Unknown Source) [na:1.7.0_45]
+	at javax.swing.AbstractButton$Handler.actionPerformed(Unknown Source) [na:1.7.0_45]
+	at javax.swing.DefaultButtonModel.fireActionPerformed(Unknown Source) [na:1.7.0_45]
+	at javax.swing.DefaultButtonModel.setPressed(Unknown Source) [na:1.7.0_45]
+	at javax.swing.AbstractButton.doClick(Unknown Source) [na:1.7.0_45]
+	at javax.swing.AbstractButton.doClick(Unknown Source) [na:1.7.0_45]
+	at com.ganesha.minimarket.ui.MainFrame$21.actionPerformed(Unknown Source) [MiniMarketKK.jar:na]
+	at javax.swing.AbstractButton.fireActionPerformed(Unknown Source) [na:1.7.0_45]
+	at javax.swing.AbstractButton$Handler.actionPerformed(Unknown Source) [na:1.7.0_45]
+	at javax.swing.DefaultButtonModel.fireActionPerformed(Unknown Source) [na:1.7.0_45]
+	at javax.swing.DefaultButtonModel.setPressed(Unknown Source) [na:1.7.0_45]
+	at javax.swing.AbstractButton.doClick(Unknown Source) [na:1.7.0_45]
+	at javax.swing.AbstractButton.doClick(Unknown Source) [na:1.7.0_45]
+	at com.ganesha.minimarket.ui.MainFrame.keyEventListener(Unknown Source) [MiniMarketKK.jar:na]
+	at com.ganesha.desktop.component.XJFrame$MyDispatcher.dispatchKeyEvent(Unknown Source) [MiniMarketKK.jar:na]
+	at java.awt.DefaultKeyboardFocusManager.preDispatchKeyEvent(Unknown Source) [na:1.7.0_45]
+	at java.awt.DefaultKeyboardFocusManager.typeAheadAssertions(Unknown Source) [na:1.7.0_45]
+	at java.awt.DefaultKeyboardFocusManager.dispatchEvent(Unknown Source) [na:1.7.0_45]
+	at java.awt.Component.dispatchEventImpl(Unknown Source) [na:1.7.0_45]
+	at java.awt.Container.dispatchEventImpl(Unknown Source) [na:1.7.0_45]
+	at java.awt.Window.dispatchEventImpl(Unknown Source) [na:1.7.0_45]
+	at java.awt.Component.dispatchEvent(Unknown Source) [na:1.7.0_45]
+	at java.awt.EventQueue.dispatchEventImpl(Unknown Source) [na:1.7.0_45]
+	at java.awt.EventQueue.access$200(Unknown Source) [na:1.7.0_45]
+	at java.awt.EventQueue$3.run(Unknown Source) [na:1.7.0_45]
+	at java.awt.EventQueue$3.run(Unknown Source) [na:1.7.0_45]
+	at java.security.AccessController.doPrivileged(Native Method) [na:1.7.0_45]
+	at java.security.ProtectionDomain$1.doIntersectionPrivilege(Unknown Source) [na:1.7.0_45]
+	at java.security.ProtectionDomain$1.doIntersectionPrivilege(Unknown Source) [na:1.7.0_45]
+	at java.awt.EventQueue$4.run(Unknown Source) [na:1.7.0_45]
+	at java.awt.EventQueue$4.run(Unknown Source) [na:1.7.0_45]
+	at java.security.AccessController.doPrivileged(Native Method) [na:1.7.0_45]
+	at java.security.ProtectionDomain$1.doIntersectionPrivilege(Unknown Source) [na:1.7.0_45]
+	at java.awt.EventQueue.dispatchEvent(Unknown Source) [na:1.7.0_45]
+	at java.awt.EventDispatchThread.pumpOneEventForFilters(Unknown Source) [na:1.7.0_45]
+	at java.awt.EventDispatchThread.pumpEventsForFilter(Unknown Source) [na:1.7.0_45]
+	at java.awt.EventDispatchThread.pumpEventsForHierarchy(Unknown Source) [na:1.7.0_45]
+	at java.awt.EventDispatchThread.pumpEvents(Unknown Source) [na:1.7.0_45]
+	at java.awt.EventDispatchThread.pumpEvents(Unknown Source) [na:1.7.0_45]
+	at java.awt.EventDispatchThread.run(Unknown Source) [na:1.7.0_45]
+Caused by: com.mysql.jdbc.exceptions.jdbc4.MySQLIntegrityConstraintViolationException: Duplicate entry 'SAL20140325072520' for key 'TRANSACTION_NUMBER'
+	at sun.reflect.NativeConstructorAccessorImpl.newInstance0(Native Method) ~[na:1.7.0_45]
+	at sun.reflect.NativeConstructorAccessorImpl.newInstance(Unknown Source) ~[na:1.7.0_45]
+	at sun.reflect.DelegatingConstructorAccessorImpl.newInstance(Unknown Source) ~[na:1.7.0_45]
+	at java.lang.reflect.Constructor.newInstance(Unknown Source) ~[na:1.7.0_45]
+	at com.mysql.jdbc.Util.handleNewInstance(Util.java:406) ~[mysql-connector-java-5.1.9.jar:na]
+	at com.mysql.jdbc.Util.getInstance(Util.java:381) ~[mysql-connector-java-5.1.9.jar:na]
+	at com.mysql.jdbc.SQLError.createSQLException(SQLError.java:1015) ~[mysql-connector-java-5.1.9.jar:na]
+	at com.mysql.jdbc.SQLError.createSQLException(SQLError.java:956) ~[mysql-connector-java-5.1.9.jar:na]
+	at com.mysql.jdbc.MysqlIO.checkErrorPacket(MysqlIO.java:3558) ~[mysql-connector-java-5.1.9.jar:na]
+	at com.mysql.jdbc.MysqlIO.checkErrorPacket(MysqlIO.java:3490) ~[mysql-connector-java-5.1.9.jar:na]
+	at com.mysql.jdbc.MysqlIO.sendCommand(MysqlIO.java:1959) ~[mysql-connector-java-5.1.9.jar:na]
+	at com.mysql.jdbc.MysqlIO.sqlQueryDirect(MysqlIO.java:2109) ~[mysql-connector-java-5.1.9.jar:na]
+	at com.mysql.jdbc.ConnectionImpl.execSQL(ConnectionImpl.java:2643) ~[mysql-connector-java-5.1.9.jar:na]
+	at com.mysql.jdbc.PreparedStatement.executeInternal(PreparedStatement.java:2077) ~[mysql-connector-java-5.1.9.jar:na]
+	at com.mysql.jdbc.PreparedStatement.executeUpdate(PreparedStatement.java:2362) ~[mysql-connector-java-5.1.9.jar:na]
+	at com.mysql.jdbc.PreparedStatement.executeUpdate(PreparedStatement.java:2280) ~[mysql-connector-java-5.1.9.jar:na]
+	at com.mysql.jdbc.PreparedStatement.executeUpdate(PreparedStatement.java:2265) ~[mysql-connector-java-5.1.9.jar:na]
+	at org.hibernate.id.IdentityGenerator$GetGeneratedKeysDelegate.executeAndExtract(IdentityGenerator.java:94) ~[hibernate-core-3.3.0.SP1.jar:3.3.0.SP1]
+	at org.hibernate.id.insert.AbstractReturningDelegate.performInsert(AbstractReturningDelegate.java:57) ~[hibernate-core-3.3.0.SP1.jar:3.3.0.SP1]
+	... 99 common frames omitted
+2014-03-25 07:26:10.471 [AWT-EventQueue-0] DEBUG application.sale - Starting function selesaiDanSimpan()
+2014-03-25 07:26:10.471 [AWT-EventQueue-0] DEBUG o.h.transaction.JDBCTransaction - begin
+2014-03-25 07:26:10.471 [AWT-EventQueue-0] DEBUG o.h.transaction.JDBCTransaction - current autocommit status: false
+2014-03-25 07:26:10.471 [AWT-EventQueue-0] DEBUG application.sale - Starting validation for transaction number SAL20140325072520
+2014-03-25 07:26:10.471 [AWT-EventQueue-0] DEBUG application.sale - Finished validation for transaction number SAL20140325072520
+2014-03-25 07:26:10.471 [AWT-EventQueue-0] DEBUG application.sale - Preparation for item {0000000105|BODREX PE 4 TABLET|3000.0|1|0.0|3000.0} is finished
+2014-03-25 07:26:10.471 [AWT-EventQueue-0] DEBUG application.sale - Starting to insert SaleHeader {SAL20140325072520|3000.0|0.0|3000.0|5000.0|2000.0} into database
+2014-03-25 07:26:10.471 [AWT-EventQueue-0] WARN  o.h.util.JDBCExceptionReporter - SQL Error: 1062, SQLState: 23000
+2014-03-25 07:26:10.471 [AWT-EventQueue-0] ERROR o.h.util.JDBCExceptionReporter - Duplicate entry 'SAL20140325072520' for key 'TRANSACTION_NUMBER'
+2014-03-25 07:26:10.471 [AWT-EventQueue-0] ERROR application - could not insert: [com.ganesha.minimarket.model.SaleHeader]
+org.hibernate.exception.ConstraintViolationException: could not insert: [com.ganesha.minimarket.model.SaleHeader]
+	at org.hibernate.exception.SQLStateConverter.convert(SQLStateConverter.java:94) ~[hibernate-core-3.3.0.SP1.jar:3.3.0.SP1]
+	at org.hibernate.exception.JDBCExceptionHelper.convert(JDBCExceptionHelper.java:66) ~[hibernate-core-3.3.0.SP1.jar:3.3.0.SP1]
+	at org.hibernate.id.insert.AbstractReturningDelegate.performInsert(AbstractReturningDelegate.java:64) ~[hibernate-core-3.3.0.SP1.jar:3.3.0.SP1]
+	at org.hibernate.persister.entity.AbstractEntityPersister.insert(AbstractEntityPersister.java:2186) ~[hibernate-core-3.3.0.SP1.jar:3.3.0.SP1]
+	at org.hibernate.persister.entity.AbstractEntityPersister.insert(AbstractEntityPersister.java:2666) ~[hibernate-core-3.3.0.SP1.jar:3.3.0.SP1]
+	at org.hibernate.action.EntityIdentityInsertAction.execute(EntityIdentityInsertAction.java:71) ~[hibernate-core-3.3.0.SP1.jar:3.3.0.SP1]
+	at org.hibernate.engine.ActionQueue.execute(ActionQueue.java:279) ~[hibernate-core-3.3.0.SP1.jar:3.3.0.SP1]
+	at org.hibernate.event.def.AbstractSaveEventListener.performSaveOrReplicate(AbstractSaveEventListener.java:321) ~[hibernate-core-3.3.0.SP1.jar:3.3.0.SP1]
+	at org.hibernate.event.def.AbstractSaveEventListener.performSave(AbstractSaveEventListener.java:204) ~[hibernate-core-3.3.0.SP1.jar:3.3.0.SP1]
+	at org.hibernate.event.def.AbstractSaveEventListener.saveWithGeneratedId(AbstractSaveEventListener.java:130) ~[hibernate-core-3.3.0.SP1.jar:3.3.0.SP1]
+	at org.hibernate.event.def.DefaultSaveOrUpdateEventListener.saveWithGeneratedOrRequestedId(DefaultSaveOrUpdateEventListener.java:210) ~[hibernate-core-3.3.0.SP1.jar:3.3.0.SP1]
+	at org.hibernate.event.def.DefaultSaveOrUpdateEventListener.entityIsTransient(DefaultSaveOrUpdateEventListener.java:195) ~[hibernate-core-3.3.0.SP1.jar:3.3.0.SP1]
+	at org.hibernate.event.def.DefaultSaveOrUpdateEventListener.performSaveOrUpdate(DefaultSaveOrUpdateEventListener.java:117) ~[hibernate-core-3.3.0.SP1.jar:3.3.0.SP1]
+	at org.hibernate.event.def.DefaultSaveOrUpdateEventListener.onSaveOrUpdate(DefaultSaveOrUpdateEventListener.java:93) ~[hibernate-core-3.3.0.SP1.jar:3.3.0.SP1]
+	at org.hibernate.impl.SessionImpl.fireSaveOrUpdate(SessionImpl.java:534) ~[hibernate-core-3.3.0.SP1.jar:3.3.0.SP1]
+	at org.hibernate.impl.SessionImpl.saveOrUpdate(SessionImpl.java:526) ~[hibernate-core-3.3.0.SP1.jar:3.3.0.SP1]
+	at org.hibernate.impl.SessionImpl.saveOrUpdate(SessionImpl.java:522) ~[hibernate-core-3.3.0.SP1.jar:3.3.0.SP1]
+	at com.ganesha.minimarket.facade.SaleFacade.performSale(Unknown Source) ~[MiniMarketKK.jar:na]
+	at com.ganesha.minimarket.ui.forms.sale.PenjualanForm.selesaiDanSimpan(Unknown Source) ~[MiniMarketKK.jar:na]
+	at com.ganesha.minimarket.ui.forms.sale.PenjualanForm.access$900(Unknown Source) ~[MiniMarketKK.jar:na]
+	at com.ganesha.minimarket.ui.forms.sale.PenjualanForm$8.actionPerformed(Unknown Source) [MiniMarketKK.jar:na]
+	at javax.swing.AbstractButton.fireActionPerformed(Unknown Source) [na:1.7.0_45]
+	at javax.swing.AbstractButton$Handler.actionPerformed(Unknown Source) [na:1.7.0_45]
+	at javax.swing.DefaultButtonModel.fireActionPerformed(Unknown Source) [na:1.7.0_45]
+	at javax.swing.DefaultButtonModel.setPressed(Unknown Source) [na:1.7.0_45]
+	at javax.swing.plaf.basic.BasicButtonListener.mouseReleased(Unknown Source) [na:1.7.0_45]
+	at java.awt.Component.processMouseEvent(Unknown Source) [na:1.7.0_45]
+	at javax.swing.JComponent.processMouseEvent(Unknown Source) [na:1.7.0_45]
+	at java.awt.Component.processEvent(Unknown Source) [na:1.7.0_45]
+	at java.awt.Container.processEvent(Unknown Source) [na:1.7.0_45]
+	at java.awt.Component.dispatchEventImpl(Unknown Source) [na:1.7.0_45]
+	at java.awt.Container.dispatchEventImpl(Unknown Source) [na:1.7.0_45]
+	at java.awt.Component.dispatchEvent(Unknown Source) [na:1.7.0_45]
+	at java.awt.LightweightDispatcher.retargetMouseEvent(Unknown Source) [na:1.7.0_45]
+	at java.awt.LightweightDispatcher.processMouseEvent(Unknown Source) [na:1.7.0_45]
+	at java.awt.LightweightDispatcher.dispatchEvent(Unknown Source) [na:1.7.0_45]
+	at java.awt.Container.dispatchEventImpl(Unknown Source) [na:1.7.0_45]
+	at java.awt.Window.dispatchEventImpl(Unknown Source) [na:1.7.0_45]
+	at java.awt.Component.dispatchEvent(Unknown Source) [na:1.7.0_45]
+	at java.awt.EventQueue.dispatchEventImpl(Unknown Source) [na:1.7.0_45]
+	at java.awt.EventQueue.access$200(Unknown Source) [na:1.7.0_45]
+	at java.awt.EventQueue$3.run(Unknown Source) [na:1.7.0_45]
+	at java.awt.EventQueue$3.run(Unknown Source) [na:1.7.0_45]
+	at java.security.AccessController.doPrivileged(Native Method) [na:1.7.0_45]
+	at java.security.ProtectionDomain$1.doIntersectionPrivilege(Unknown Source) [na:1.7.0_45]
+	at java.security.ProtectionDomain$1.doIntersectionPrivilege(Unknown Source) [na:1.7.0_45]
+	at java.awt.EventQueue$4.run(Unknown Source) [na:1.7.0_45]
+	at java.awt.EventQueue$4.run(Unknown Source) [na:1.7.0_45]
+	at java.security.AccessController.doPrivileged(Native Method) [na:1.7.0_45]
+	at java.security.ProtectionDomain$1.doIntersectionPrivilege(Unknown Source) [na:1.7.0_45]
+	at java.awt.EventQueue.dispatchEvent(Unknown Source) [na:1.7.0_45]
+	at java.awt.EventDispatchThread.pumpOneEventForFilters(Unknown Source) [na:1.7.0_45]
+	at java.awt.EventDispatchThread.pumpEventsForFilter(Unknown Source) [na:1.7.0_45]
+	at java.awt.EventDispatchThread.pumpEventsForFilter(Unknown Source) [na:1.7.0_45]
+	at java.awt.WaitDispatchSupport$2.run(Unknown Source) [na:1.7.0_45]
+	at java.awt.WaitDispatchSupport$4.run(Unknown Source) [na:1.7.0_45]
+	at java.security.AccessController.doPrivileged(Native Method) [na:1.7.0_45]
+	at java.awt.WaitDispatchSupport.enter(Unknown Source) [na:1.7.0_45]
+	at java.awt.Dialog.show(Unknown Source) [na:1.7.0_45]
+	at java.awt.Component.show(Unknown Source) [na:1.7.0_45]
+	at java.awt.Component.setVisible(Unknown Source) [na:1.7.0_45]
+	at java.awt.Window.setVisible(Unknown Source) [na:1.7.0_45]
+	at java.awt.Dialog.setVisible(Unknown Source) [na:1.7.0_45]
+	at com.ganesha.desktop.component.XJDialog.setVisible(Unknown Source) [MiniMarketKK.jar:na]
+	at com.ganesha.minimarket.ui.MainFrame$10.actionPerformed(Unknown Source) [MiniMarketKK.jar:na]
+	at javax.swing.AbstractButton.fireActionPerformed(Unknown Source) [na:1.7.0_45]
+	at javax.swing.AbstractButton$Handler.actionPerformed(Unknown Source) [na:1.7.0_45]
+	at javax.swing.DefaultButtonModel.fireActionPerformed(Unknown Source) [na:1.7.0_45]
+	at javax.swing.DefaultButtonModel.setPressed(Unknown Source) [na:1.7.0_45]
+	at javax.swing.AbstractButton.doClick(Unknown Source) [na:1.7.0_45]
+	at javax.swing.AbstractButton.doClick(Unknown Source) [na:1.7.0_45]
+	at com.ganesha.minimarket.ui.MainFrame$21.actionPerformed(Unknown Source) [MiniMarketKK.jar:na]
+	at javax.swing.AbstractButton.fireActionPerformed(Unknown Source) [na:1.7.0_45]
+	at javax.swing.AbstractButton$Handler.actionPerformed(Unknown Source) [na:1.7.0_45]
+	at javax.swing.DefaultButtonModel.fireActionPerformed(Unknown Source) [na:1.7.0_45]
+	at javax.swing.DefaultButtonModel.setPressed(Unknown Source) [na:1.7.0_45]
+	at javax.swing.AbstractButton.doClick(Unknown Source) [na:1.7.0_45]
+	at javax.swing.AbstractButton.doClick(Unknown Source) [na:1.7.0_45]
+	at com.ganesha.minimarket.ui.MainFrame.keyEventListener(Unknown Source) [MiniMarketKK.jar:na]
+	at com.ganesha.desktop.component.XJFrame$MyDispatcher.dispatchKeyEvent(Unknown Source) [MiniMarketKK.jar:na]
+	at java.awt.DefaultKeyboardFocusManager.preDispatchKeyEvent(Unknown Source) [na:1.7.0_45]
+	at java.awt.DefaultKeyboardFocusManager.typeAheadAssertions(Unknown Source) [na:1.7.0_45]
+	at java.awt.DefaultKeyboardFocusManager.dispatchEvent(Unknown Source) [na:1.7.0_45]
+	at java.awt.Component.dispatchEventImpl(Unknown Source) [na:1.7.0_45]
+	at java.awt.Container.dispatchEventImpl(Unknown Source) [na:1.7.0_45]
+	at java.awt.Window.dispatchEventImpl(Unknown Source) [na:1.7.0_45]
+	at java.awt.Component.dispatchEvent(Unknown Source) [na:1.7.0_45]
+	at java.awt.EventQueue.dispatchEventImpl(Unknown Source) [na:1.7.0_45]
+	at java.awt.EventQueue.access$200(Unknown Source) [na:1.7.0_45]
+	at java.awt.EventQueue$3.run(Unknown Source) [na:1.7.0_45]
+	at java.awt.EventQueue$3.run(Unknown Source) [na:1.7.0_45]
+	at java.security.AccessController.doPrivileged(Native Method) [na:1.7.0_45]
+	at java.security.ProtectionDomain$1.doIntersectionPrivilege(Unknown Source) [na:1.7.0_45]
+	at java.security.ProtectionDomain$1.doIntersectionPrivilege(Unknown Source) [na:1.7.0_45]
+	at java.awt.EventQueue$4.run(Unknown Source) [na:1.7.0_45]
+	at java.awt.EventQueue$4.run(Unknown Source) [na:1.7.0_45]
+	at java.security.AccessController.doPrivileged(Native Method) [na:1.7.0_45]
+	at java.security.ProtectionDomain$1.doIntersectionPrivilege(Unknown Source) [na:1.7.0_45]
+	at java.awt.EventQueue.dispatchEvent(Unknown Source) [na:1.7.0_45]
+	at java.awt.EventDispatchThread.pumpOneEventForFilters(Unknown Source) [na:1.7.0_45]
+	at java.awt.EventDispatchThread.pumpEventsForFilter(Unknown Source) [na:1.7.0_45]
+	at java.awt.EventDispatchThread.pumpEventsForHierarchy(Unknown Source) [na:1.7.0_45]
+	at java.awt.EventDispatchThread.pumpEvents(Unknown Source) [na:1.7.0_45]
+	at java.awt.EventDispatchThread.pumpEvents(Unknown Source) [na:1.7.0_45]
+	at java.awt.EventDispatchThread.run(Unknown Source) [na:1.7.0_45]
+Caused by: com.mysql.jdbc.exceptions.jdbc4.MySQLIntegrityConstraintViolationException: Duplicate entry 'SAL20140325072520' for key 'TRANSACTION_NUMBER'
+	at sun.reflect.NativeConstructorAccessorImpl.newInstance0(Native Method) ~[na:1.7.0_45]
+	at sun.reflect.NativeConstructorAccessorImpl.newInstance(Unknown Source) ~[na:1.7.0_45]
+	at sun.reflect.DelegatingConstructorAccessorImpl.newInstance(Unknown Source) ~[na:1.7.0_45]
+	at java.lang.reflect.Constructor.newInstance(Unknown Source) ~[na:1.7.0_45]
+	at com.mysql.jdbc.Util.handleNewInstance(Util.java:406) ~[mysql-connector-java-5.1.9.jar:na]
+	at com.mysql.jdbc.Util.getInstance(Util.java:381) ~[mysql-connector-java-5.1.9.jar:na]
+	at com.mysql.jdbc.SQLError.createSQLException(SQLError.java:1015) ~[mysql-connector-java-5.1.9.jar:na]
+	at com.mysql.jdbc.SQLError.createSQLException(SQLError.java:956) ~[mysql-connector-java-5.1.9.jar:na]
+	at com.mysql.jdbc.MysqlIO.checkErrorPacket(MysqlIO.java:3558) ~[mysql-connector-java-5.1.9.jar:na]
+	at com.mysql.jdbc.MysqlIO.checkErrorPacket(MysqlIO.java:3490) ~[mysql-connector-java-5.1.9.jar:na]
+	at com.mysql.jdbc.MysqlIO.sendCommand(MysqlIO.java:1959) ~[mysql-connector-java-5.1.9.jar:na]
+	at com.mysql.jdbc.MysqlIO.sqlQueryDirect(MysqlIO.java:2109) ~[mysql-connector-java-5.1.9.jar:na]
+	at com.mysql.jdbc.ConnectionImpl.execSQL(ConnectionImpl.java:2643) ~[mysql-connector-java-5.1.9.jar:na]
+	at com.mysql.jdbc.PreparedStatement.executeInternal(PreparedStatement.java:2077) ~[mysql-connector-java-5.1.9.jar:na]
+	at com.mysql.jdbc.PreparedStatement.executeUpdate(PreparedStatement.java:2362) ~[mysql-connector-java-5.1.9.jar:na]
+	at com.mysql.jdbc.PreparedStatement.executeUpdate(PreparedStatement.java:2280) ~[mysql-connector-java-5.1.9.jar:na]
+	at com.mysql.jdbc.PreparedStatement.executeUpdate(PreparedStatement.java:2265) ~[mysql-connector-java-5.1.9.jar:na]
+	at org.hibernate.id.IdentityGenerator$GetGeneratedKeysDelegate.executeAndExtract(IdentityGenerator.java:94) ~[hibernate-core-3.3.0.SP1.jar:3.3.0.SP1]
+	at org.hibernate.id.insert.AbstractReturningDelegate.performInsert(AbstractReturningDelegate.java:57) ~[hibernate-core-3.3.0.SP1.jar:3.3.0.SP1]
+	... 102 common frames omitted

@@ -1,0 +1,923 @@
+2014-03-23 07:50:13.968 [AWT-EventQueue-0] DEBUG o.h.transaction.JDBCTransaction - begin
+2014-03-23 07:50:13.968 [AWT-EventQueue-0] DEBUG o.h.transaction.JDBCTransaction - current autocommit status: false
+2014-03-23 07:50:13.984 [AWT-EventQueue-0] DEBUG o.h.transaction.JDBCTransaction - commit
+2014-03-23 07:50:14.000 [AWT-EventQueue-0] DEBUG o.h.transaction.JDBCTransaction - committed JDBC Connection
+2014-03-23 07:50:33.443 [AWT-EventQueue-0] DEBUG application.sale - Starting function selesaiDanSimpan()
+2014-03-23 07:50:33.443 [AWT-EventQueue-0] DEBUG o.h.transaction.JDBCTransaction - begin
+2014-03-23 07:50:33.444 [AWT-EventQueue-0] DEBUG o.h.transaction.JDBCTransaction - current autocommit status: false
+2014-03-23 07:50:33.444 [AWT-EventQueue-0] DEBUG application.sale - Starting validation for transaction number SAL20140323075015
+2014-03-23 07:50:33.445 [AWT-EventQueue-0] DEBUG application.sale - Finished validation for transaction number SAL20140323075015
+2014-03-23 07:50:33.445 [AWT-EventQueue-0] DEBUG application.sale - Preparation for item {0000000357|MIZONE LYCHEE LEMON 500 ML|6000.0|1|0.0|6000.0} is finished
+2014-03-23 07:50:33.445 [AWT-EventQueue-0] DEBUG application.sale - Preparation for item {0000000035|PULPY ORANGE 350 ML|7000.0|2|0.0|14000.0} is finished
+2014-03-23 07:50:33.445 [AWT-EventQueue-0] DEBUG application.sale - Starting to insert SaleHeader {SAL20140323075015|20000.0|0.0|20000.0|20000.0|0.0} into database
+2014-03-23 07:50:33.461 [AWT-EventQueue-0] DEBUG application.sale - Finished inserting SaleHeader into database, the generated id is 661
+2014-03-23 07:50:33.461 [AWT-EventQueue-0] DEBUG application.sale - Logging to ActivityLog is done
+2014-03-23 07:50:33.461 [AWT-EventQueue-0] DEBUG o.h.transaction.JDBCTransaction - commit
+2014-03-23 07:50:33.492 [AWT-EventQueue-0] DEBUG o.h.transaction.JDBCTransaction - committed JDBC Connection
+2014-03-23 07:50:33.492 [AWT-EventQueue-0] DEBUG application.sale - Transaction is commited succesfully
+2014-03-23 07:50:33.601 [AWT-EventQueue-0] DEBUG application.sale - Receipt printer is worked fine.
+2014-03-23 07:50:33.601 [AWT-EventQueue-0] DEBUG application.sale - Transaction finished. The window is closed.
+2014-03-23 08:18:31.312 [AWT-EventQueue-0] DEBUG application.sale - Starting function selesaiDanSimpan()
+2014-03-23 08:18:31.312 [AWT-EventQueue-0] DEBUG o.h.transaction.JDBCTransaction - begin
+2014-03-23 08:18:31.313 [AWT-EventQueue-0] DEBUG o.h.transaction.JDBCTransaction - current autocommit status: false
+2014-03-23 08:18:31.313 [AWT-EventQueue-0] DEBUG application.sale - Starting validation for transaction number SAL20140323081757
+2014-03-23 08:18:31.314 [AWT-EventQueue-0] DEBUG application.sale - Finished validation for transaction number SAL20140323081757
+2014-03-23 08:18:31.314 [AWT-EventQueue-0] DEBUG application.sale - Preparation for item {0000000500|ROTI CAKRA KECIL|8000.0|1|0.0|8000.0} is finished
+2014-03-23 08:18:31.314 [AWT-EventQueue-0] DEBUG application.sale - Preparation for item {0000000081|AQUA 600 ML|3500.0|1|0.0|3500.0} is finished
+2014-03-23 08:18:31.314 [AWT-EventQueue-0] DEBUG application.sale - Starting to insert SaleHeader {SAL20140323081757|11500.0|0.0|11500.0|11500.0|0.0} into database
+2014-03-23 08:18:31.329 [AWT-EventQueue-0] DEBUG application.sale - Finished inserting SaleHeader into database, the generated id is 662
+2014-03-23 08:18:31.329 [AWT-EventQueue-0] DEBUG application.sale - Logging to ActivityLog is done
+2014-03-23 08:18:31.329 [AWT-EventQueue-0] DEBUG o.h.transaction.JDBCTransaction - commit
+2014-03-23 08:18:31.345 [AWT-EventQueue-0] DEBUG o.h.transaction.JDBCTransaction - committed JDBC Connection
+2014-03-23 08:18:31.345 [AWT-EventQueue-0] DEBUG application.sale - Transaction is commited succesfully
+2014-03-23 08:18:31.470 [AWT-EventQueue-0] DEBUG application.sale - Receipt printer is worked fine.
+2014-03-23 08:18:31.470 [AWT-EventQueue-0] DEBUG application.sale - Transaction finished. The window is closed.
+2014-03-23 08:24:24.939 [AWT-EventQueue-0] DEBUG application.sale - Starting function selesaiDanSimpan()
+2014-03-23 08:24:24.939 [AWT-EventQueue-0] DEBUG o.h.transaction.JDBCTransaction - begin
+2014-03-23 08:24:24.939 [AWT-EventQueue-0] DEBUG o.h.transaction.JDBCTransaction - current autocommit status: false
+2014-03-23 08:24:24.940 [AWT-EventQueue-0] DEBUG application.sale - Starting validation for transaction number SAL20140323082258
+2014-03-23 08:24:24.941 [AWT-EventQueue-0] DEBUG application.sale - Finished validation for transaction number SAL20140323082258
+2014-03-23 08:24:24.941 [AWT-EventQueue-0] DEBUG application.sale - Preparation for item {0000000081|AQUA 600 ML|3500.0|1|0.0|3500.0} is finished
+2014-03-23 08:24:24.941 [AWT-EventQueue-0] DEBUG application.sale - Preparation for item {0000000087|FRISIAN FLAG COKELAT 190 ML|4000.0|1|0.0|4000.0} is finished
+2014-03-23 08:24:24.941 [AWT-EventQueue-0] DEBUG application.sale - Starting to insert SaleHeader {SAL20140323082258|7500.0|0.0|7500.0|7500.0|0.0} into database
+2014-03-23 08:24:24.941 [AWT-EventQueue-0] DEBUG application.sale - Finished inserting SaleHeader into database, the generated id is 663
+2014-03-23 08:24:24.941 [AWT-EventQueue-0] DEBUG application.sale - Logging to ActivityLog is done
+2014-03-23 08:24:24.941 [AWT-EventQueue-0] DEBUG o.h.transaction.JDBCTransaction - commit
+2014-03-23 08:24:24.988 [AWT-EventQueue-0] DEBUG o.h.transaction.JDBCTransaction - committed JDBC Connection
+2014-03-23 08:24:24.988 [AWT-EventQueue-0] DEBUG application.sale - Transaction is commited succesfully
+2014-03-23 08:24:25.113 [AWT-EventQueue-0] DEBUG application.sale - Receipt printer is worked fine.
+2014-03-23 08:24:25.113 [AWT-EventQueue-0] DEBUG application.sale - Transaction finished. The window is closed.
+2014-03-23 08:42:45.901 [AWT-EventQueue-0] DEBUG application.sale - Starting function selesaiDanSimpan()
+2014-03-23 08:42:45.901 [AWT-EventQueue-0] DEBUG o.h.transaction.JDBCTransaction - begin
+2014-03-23 08:42:45.902 [AWT-EventQueue-0] DEBUG o.h.transaction.JDBCTransaction - current autocommit status: false
+2014-03-23 08:42:45.902 [AWT-EventQueue-0] DEBUG application.sale - Starting validation for transaction number SAL20140323082514
+2014-03-23 08:42:45.903 [AWT-EventQueue-0] DEBUG application.sale - Finished validation for transaction number SAL20140323082514
+2014-03-23 08:42:45.903 [AWT-EventQueue-0] DEBUG application.sale - Preparation for item {0000000498|MILO UHT 115ML|3000.0|1|0.0|3000.0} is finished
+2014-03-23 08:42:45.903 [AWT-EventQueue-0] DEBUG application.sale - Preparation for item {0000000328|GOOD TIME TRIPLE CHOCOCHIPS 45 GR|6500.0|1|0.0|6500.0} is finished
+2014-03-23 08:42:45.903 [AWT-EventQueue-0] DEBUG application.sale - Starting to insert SaleHeader {SAL20140323082514|9500.0|0.0|9500.0|10000.0|500.0} into database
+2014-03-23 08:42:45.918 [AWT-EventQueue-0] DEBUG application.sale - Finished inserting SaleHeader into database, the generated id is 664
+2014-03-23 08:42:45.918 [AWT-EventQueue-0] DEBUG application.sale - Logging to ActivityLog is done
+2014-03-23 08:42:45.918 [AWT-EventQueue-0] DEBUG o.h.transaction.JDBCTransaction - commit
+2014-03-23 08:42:45.934 [AWT-EventQueue-0] DEBUG o.h.transaction.JDBCTransaction - committed JDBC Connection
+2014-03-23 08:42:45.934 [AWT-EventQueue-0] DEBUG application.sale - Transaction is commited succesfully
+2014-03-23 08:42:46.059 [AWT-EventQueue-0] DEBUG application.sale - Receipt printer is worked fine.
+2014-03-23 08:42:46.059 [AWT-EventQueue-0] DEBUG application.sale - Transaction finished. The window is closed.
+2014-03-23 08:47:17.472 [AWT-EventQueue-0] DEBUG application.sale - Starting function selesaiDanSimpan()
+2014-03-23 08:47:17.472 [AWT-EventQueue-0] DEBUG o.h.transaction.JDBCTransaction - begin
+2014-03-23 08:47:17.473 [AWT-EventQueue-0] DEBUG o.h.transaction.JDBCTransaction - current autocommit status: false
+2014-03-23 08:47:17.473 [AWT-EventQueue-0] DEBUG application.sale - Starting validation for transaction number SAL20140323084247
+2014-03-23 08:47:17.474 [AWT-EventQueue-0] DEBUG application.sale - Finished validation for transaction number SAL20140323084247
+2014-03-23 08:47:17.474 [AWT-EventQueue-0] DEBUG application.sale - Preparation for item {0000000486|BIG ORANGE FLAVOUR|4000.0|1|0.0|4000.0} is finished
+2014-03-23 08:47:17.474 [AWT-EventQueue-0] DEBUG application.sale - Preparation for item {0000000447|NICE FACIAL TISSUE|3500.0|1|0.0|3500.0} is finished
+2014-03-23 08:47:17.474 [AWT-EventQueue-0] DEBUG application.sale - Preparation for item {0000000217|QTELA SINGKONG RS ORIGINAL 60 GR|5000.0|1|0.0|5000.0} is finished
+2014-03-23 08:47:17.474 [AWT-EventQueue-0] DEBUG application.sale - Preparation for item {0000000218|LAYS RS RUMPUT LAUT 750 GR|9000.0|1|0.0|9000.0} is finished
+2014-03-23 08:47:17.474 [AWT-EventQueue-0] DEBUG application.sale - Preparation for item {0000000397|NESACAFE MOCHA 240ML|9500.0|1|0.0|9500.0} is finished
+2014-03-23 08:47:17.474 [AWT-EventQueue-0] DEBUG application.sale - Starting to insert SaleHeader {SAL20140323084247|31000.0|0.0|31000.0|50000.0|19000.0} into database
+2014-03-23 08:47:17.505 [AWT-EventQueue-0] DEBUG application.sale - Finished inserting SaleHeader into database, the generated id is 665
+2014-03-23 08:47:17.505 [AWT-EventQueue-0] DEBUG application.sale - Logging to ActivityLog is done
+2014-03-23 08:47:17.521 [AWT-EventQueue-0] DEBUG o.h.transaction.JDBCTransaction - commit
+2014-03-23 08:47:17.536 [AWT-EventQueue-0] DEBUG o.h.transaction.JDBCTransaction - committed JDBC Connection
+2014-03-23 08:47:17.536 [AWT-EventQueue-0] DEBUG application.sale - Transaction is commited succesfully
+2014-03-23 08:47:17.661 [AWT-EventQueue-0] DEBUG application.sale - Receipt printer is worked fine.
+2014-03-23 08:47:17.661 [AWT-EventQueue-0] DEBUG application.sale - Transaction finished. The window is closed.
+2014-03-23 09:50:08.472 [AWT-EventQueue-0] DEBUG application.sale - Starting function selesaiDanSimpan()
+2014-03-23 09:50:08.472 [AWT-EventQueue-0] DEBUG o.h.transaction.JDBCTransaction - begin
+2014-03-23 09:50:08.473 [AWT-EventQueue-0] DEBUG o.h.transaction.JDBCTransaction - current autocommit status: false
+2014-03-23 09:50:08.473 [AWT-EventQueue-0] DEBUG application.sale - Starting validation for transaction number SAL20140323084944
+2014-03-23 09:50:13.753 [AWT-EventQueue-0] DEBUG application.sale - Starting function selesaiDanSimpan()
+2014-03-23 09:50:13.753 [AWT-EventQueue-0] DEBUG o.h.transaction.JDBCTransaction - begin
+2014-03-23 09:50:13.754 [AWT-EventQueue-0] DEBUG o.h.transaction.JDBCTransaction - current autocommit status: false
+2014-03-23 09:50:13.754 [AWT-EventQueue-0] DEBUG application.sale - Starting validation for transaction number SAL20140323084944
+2014-03-23 09:50:13.755 [AWT-EventQueue-0] DEBUG application.sale - Finished validation for transaction number SAL20140323084944
+2014-03-23 09:50:13.755 [AWT-EventQueue-0] DEBUG application.sale - Preparation for item {0000000375|COOLANT|6000.0|1|0.0|6000.0} is finished
+2014-03-23 09:50:13.755 [AWT-EventQueue-0] DEBUG application.sale - Preparation for item {0000000087|FRISIAN FLAG COKELAT 190 ML|4000.0|1|0.0|4000.0} is finished
+2014-03-23 09:50:13.755 [AWT-EventQueue-0] DEBUG application.sale - Preparation for item {0000000195|NESTLE KITKAT 17 GR|4000.0|1|0.0|4000.0} is finished
+2014-03-23 09:50:13.755 [AWT-EventQueue-0] DEBUG application.sale - Starting to insert SaleHeader {SAL20140323084944|14000.0|0.0|14000.0|14000.0|0.0} into database
+2014-03-23 09:50:13.770 [AWT-EventQueue-0] DEBUG application.sale - Finished inserting SaleHeader into database, the generated id is 666
+2014-03-23 09:50:13.786 [AWT-EventQueue-0] DEBUG application.sale - Logging to ActivityLog is done
+2014-03-23 09:50:13.786 [AWT-EventQueue-0] DEBUG o.h.transaction.JDBCTransaction - commit
+2014-03-23 09:50:13.864 [AWT-EventQueue-0] DEBUG o.h.transaction.JDBCTransaction - committed JDBC Connection
+2014-03-23 09:50:13.864 [AWT-EventQueue-0] DEBUG application.sale - Transaction is commited succesfully
+2014-03-23 09:50:13.989 [AWT-EventQueue-0] DEBUG application.sale - Receipt printer is worked fine.
+2014-03-23 09:50:13.989 [AWT-EventQueue-0] DEBUG application.sale - Transaction finished. The window is closed.
+2014-03-23 10:03:54.092 [AWT-EventQueue-0] DEBUG application.sale - Starting function selesaiDanSimpan()
+2014-03-23 10:03:54.110 [AWT-EventQueue-0] DEBUG o.h.transaction.JDBCTransaction - begin
+2014-03-23 10:03:54.110 [AWT-EventQueue-0] DEBUG o.h.transaction.JDBCTransaction - current autocommit status: false
+2014-03-23 10:03:54.110 [AWT-EventQueue-0] DEBUG application.sale - Starting validation for transaction number SAL20140323100207
+2014-03-23 10:03:59.934 [AWT-EventQueue-0] DEBUG application.sale - Starting function selesaiDanSimpan()
+2014-03-23 10:03:59.934 [AWT-EventQueue-0] DEBUG o.h.transaction.JDBCTransaction - begin
+2014-03-23 10:03:59.935 [AWT-EventQueue-0] DEBUG o.h.transaction.JDBCTransaction - current autocommit status: false
+2014-03-23 10:03:59.935 [AWT-EventQueue-0] DEBUG application.sale - Starting validation for transaction number SAL20140323100207
+2014-03-23 10:03:59.936 [AWT-EventQueue-0] DEBUG application.sale - Finished validation for transaction number SAL20140323100207
+2014-03-23 10:03:59.936 [AWT-EventQueue-0] DEBUG application.sale - Preparation for item {0000000081|AQUA 600 ML|3500.0|1|0.0|3500.0} is finished
+2014-03-23 10:03:59.936 [AWT-EventQueue-0] DEBUG application.sale - Preparation for item {0000000490|POCARI SWEAT 350ML|6000.0|1|0.0|6000.0} is finished
+2014-03-23 10:03:59.936 [AWT-EventQueue-0] DEBUG application.sale - Preparation for item {0000000499|ROTI CAKRA BESAR|11000.0|1|0.0|11000.0} is finished
+2014-03-23 10:03:59.936 [AWT-EventQueue-0] DEBUG application.sale - Preparation for item {0000000080|ALFA ONE 600 ML|3000.0|2|0.0|6000.0} is finished
+2014-03-23 10:03:59.936 [AWT-EventQueue-0] DEBUG application.sale - Starting to insert SaleHeader {SAL20140323100207|26500.0|0.0|26500.0|50000.0|23500.0} into database
+2014-03-23 10:04:00.030 [AWT-EventQueue-0] DEBUG application.sale - Finished inserting SaleHeader into database, the generated id is 667
+2014-03-23 10:04:00.030 [AWT-EventQueue-0] DEBUG application.sale - Logging to ActivityLog is done
+2014-03-23 10:04:00.030 [AWT-EventQueue-0] DEBUG o.h.transaction.JDBCTransaction - commit
+2014-03-23 10:04:00.061 [AWT-EventQueue-0] DEBUG o.h.transaction.JDBCTransaction - committed JDBC Connection
+2014-03-23 10:04:00.061 [AWT-EventQueue-0] DEBUG application.sale - Transaction is commited succesfully
+2014-03-23 10:04:00.264 [AWT-EventQueue-0] DEBUG application.sale - Receipt printer is worked fine.
+2014-03-23 10:04:00.280 [AWT-EventQueue-0] DEBUG application.sale - Transaction finished. The window is closed.
+2014-03-23 10:18:18.693 [AWT-EventQueue-0] DEBUG application.sale - Starting function selesaiDanSimpan()
+2014-03-23 10:18:18.693 [AWT-EventQueue-0] DEBUG o.h.transaction.JDBCTransaction - begin
+2014-03-23 10:18:18.694 [AWT-EventQueue-0] DEBUG o.h.transaction.JDBCTransaction - current autocommit status: false
+2014-03-23 10:18:18.694 [AWT-EventQueue-0] DEBUG application.sale - Starting validation for transaction number SAL20140323101753
+2014-03-23 10:18:24.488 [AWT-EventQueue-0] DEBUG application.sale - Starting function selesaiDanSimpan()
+2014-03-23 10:18:24.488 [AWT-EventQueue-0] DEBUG o.h.transaction.JDBCTransaction - begin
+2014-03-23 10:18:24.489 [AWT-EventQueue-0] DEBUG o.h.transaction.JDBCTransaction - current autocommit status: false
+2014-03-23 10:18:24.489 [AWT-EventQueue-0] DEBUG application.sale - Starting validation for transaction number SAL20140323101753
+2014-03-23 10:18:24.490 [AWT-EventQueue-0] DEBUG application.sale - Finished validation for transaction number SAL20140323101753
+2014-03-23 10:18:24.490 [AWT-EventQueue-0] DEBUG application.sale - Preparation for item {0000000429|KACANG TELUR|1000.0|5|0.0|5000.0} is finished
+2014-03-23 10:18:24.490 [AWT-EventQueue-0] DEBUG application.sale - Starting to insert SaleHeader {SAL20140323101753|5000.0|0.0|5000.0|5000.0|0.0} into database
+2014-03-23 10:18:24.630 [AWT-EventQueue-0] DEBUG application.sale - Finished inserting SaleHeader into database, the generated id is 668
+2014-03-23 10:18:24.630 [AWT-EventQueue-0] DEBUG application.sale - Logging to ActivityLog is done
+2014-03-23 10:18:24.630 [AWT-EventQueue-0] DEBUG o.h.transaction.JDBCTransaction - commit
+2014-03-23 10:18:24.662 [AWT-EventQueue-0] DEBUG o.h.transaction.JDBCTransaction - committed JDBC Connection
+2014-03-23 10:18:24.662 [AWT-EventQueue-0] DEBUG application.sale - Transaction is commited succesfully
+2014-03-23 10:18:24.786 [AWT-EventQueue-0] DEBUG application.sale - Receipt printer is worked fine.
+2014-03-23 10:18:24.786 [AWT-EventQueue-0] DEBUG application.sale - Transaction finished. The window is closed.
+2014-03-23 10:35:58.993 [AWT-EventQueue-0] DEBUG application.sale - Starting function selesaiDanSimpan()
+2014-03-23 10:35:58.993 [AWT-EventQueue-0] DEBUG o.h.transaction.JDBCTransaction - begin
+2014-03-23 10:35:58.994 [AWT-EventQueue-0] DEBUG o.h.transaction.JDBCTransaction - current autocommit status: false
+2014-03-23 10:35:58.994 [AWT-EventQueue-0] DEBUG application.sale - Starting validation for transaction number SAL20140323103509
+2014-03-23 10:35:58.995 [AWT-EventQueue-0] DEBUG application.sale - Finished validation for transaction number SAL20140323103509
+2014-03-23 10:35:58.995 [AWT-EventQueue-0] DEBUG application.sale - Preparation for item {0000000429|KACANG TELUR|1000.0|6|0.0|6000.0} is finished
+2014-03-23 10:35:58.995 [AWT-EventQueue-0] DEBUG application.sale - Starting to insert SaleHeader {SAL20140323103509|6000.0|0.0|6000.0|6000.0|0.0} into database
+2014-03-23 10:35:58.995 [AWT-EventQueue-0] DEBUG application.sale - Finished inserting SaleHeader into database, the generated id is 669
+2014-03-23 10:35:58.995 [AWT-EventQueue-0] DEBUG application.sale - Logging to ActivityLog is done
+2014-03-23 10:35:58.995 [AWT-EventQueue-0] DEBUG o.h.transaction.JDBCTransaction - commit
+2014-03-23 10:35:59.026 [AWT-EventQueue-0] DEBUG o.h.transaction.JDBCTransaction - committed JDBC Connection
+2014-03-23 10:35:59.026 [AWT-EventQueue-0] DEBUG application.sale - Transaction is commited succesfully
+2014-03-23 10:35:59.167 [AWT-EventQueue-0] DEBUG application.sale - Receipt printer is worked fine.
+2014-03-23 10:35:59.167 [AWT-EventQueue-0] DEBUG application.sale - Transaction finished. The window is closed.
+2014-03-23 10:48:29.672 [AWT-EventQueue-0] DEBUG application.sale - Starting function selesaiDanSimpan()
+2014-03-23 10:48:29.672 [AWT-EventQueue-0] DEBUG o.h.transaction.JDBCTransaction - begin
+2014-03-23 10:48:29.673 [AWT-EventQueue-0] DEBUG o.h.transaction.JDBCTransaction - current autocommit status: false
+2014-03-23 10:48:29.673 [AWT-EventQueue-0] DEBUG application.sale - Starting validation for transaction number SAL20140323104741
+2014-03-23 10:48:29.674 [AWT-EventQueue-0] DEBUG application.sale - Finished validation for transaction number SAL20140323104741
+2014-03-23 10:48:29.674 [AWT-EventQueue-0] DEBUG application.sale - Preparation for item {0000000056|OT TANGO VANILLA BLACK 171 gr|10000.0|1|0.0|10000.0} is finished
+2014-03-23 10:48:29.674 [AWT-EventQueue-0] DEBUG application.sale - Preparation for item {0000000447|NICE FACIAL TISSUE|3500.0|1|0.0|3500.0} is finished
+2014-03-23 10:48:29.674 [AWT-EventQueue-0] DEBUG application.sale - Starting to insert SaleHeader {SAL20140323104741|13500.0|0.0|13500.0|50000.0|36500.0} into database
+2014-03-23 10:48:29.690 [AWT-EventQueue-0] DEBUG application.sale - Finished inserting SaleHeader into database, the generated id is 670
+2014-03-23 10:48:29.690 [AWT-EventQueue-0] DEBUG application.sale - Logging to ActivityLog is done
+2014-03-23 10:48:29.690 [AWT-EventQueue-0] DEBUG o.h.transaction.JDBCTransaction - commit
+2014-03-23 10:48:29.721 [AWT-EventQueue-0] DEBUG o.h.transaction.JDBCTransaction - committed JDBC Connection
+2014-03-23 10:48:29.721 [AWT-EventQueue-0] DEBUG application.sale - Transaction is commited succesfully
+2014-03-23 10:48:29.830 [AWT-EventQueue-0] DEBUG application.sale - Receipt printer is worked fine.
+2014-03-23 10:48:29.830 [AWT-EventQueue-0] DEBUG application.sale - Transaction finished. The window is closed.
+2014-03-23 11:27:38.903 [AWT-EventQueue-0] DEBUG application.sale - Starting function selesaiDanSimpan()
+2014-03-23 11:27:38.936 [AWT-EventQueue-0] DEBUG o.h.transaction.JDBCTransaction - begin
+2014-03-23 11:27:38.936 [AWT-EventQueue-0] DEBUG o.h.transaction.JDBCTransaction - current autocommit status: false
+2014-03-23 11:27:38.936 [AWT-EventQueue-0] DEBUG application.sale - Starting validation for transaction number SAL20140323112645
+2014-03-23 11:27:38.936 [AWT-EventQueue-0] DEBUG application.sale - Finished validation for transaction number SAL20140323112645
+2014-03-23 11:27:38.936 [AWT-EventQueue-0] DEBUG application.sale - Preparation for item {0000000384|FANTA STROBERI 425ML|7000.0|1|0.0|7000.0} is finished
+2014-03-23 11:27:38.936 [AWT-EventQueue-0] DEBUG application.sale - Preparation for item {0000000137|PEYEK IKAN TERI |15000.0|1|0.0|15000.0} is finished
+2014-03-23 11:27:38.936 [AWT-EventQueue-0] DEBUG application.sale - Starting to insert SaleHeader {SAL20140323112645|22000.0|0.0|22000.0|25000.0|3000.0} into database
+2014-03-23 11:27:39.076 [AWT-EventQueue-0] DEBUG application.sale - Finished inserting SaleHeader into database, the generated id is 671
+2014-03-23 11:27:39.076 [AWT-EventQueue-0] DEBUG application.sale - Logging to ActivityLog is done
+2014-03-23 11:27:39.076 [AWT-EventQueue-0] DEBUG o.h.transaction.JDBCTransaction - commit
+2014-03-23 11:27:39.139 [AWT-EventQueue-0] DEBUG o.h.transaction.JDBCTransaction - committed JDBC Connection
+2014-03-23 11:27:39.139 [AWT-EventQueue-0] DEBUG application.sale - Transaction is commited succesfully
+2014-03-23 11:27:39.357 [AWT-EventQueue-0] DEBUG application.sale - Receipt printer is worked fine.
+2014-03-23 11:27:39.357 [AWT-EventQueue-0] DEBUG application.sale - Transaction finished. The window is closed.
+2014-03-23 11:28:12.277 [AWT-EventQueue-0] DEBUG application.sale - Starting function selesaiDanSimpan()
+2014-03-23 11:28:12.277 [AWT-EventQueue-0] DEBUG o.h.transaction.JDBCTransaction - begin
+2014-03-23 11:28:12.278 [AWT-EventQueue-0] DEBUG o.h.transaction.JDBCTransaction - current autocommit status: false
+2014-03-23 11:28:12.278 [AWT-EventQueue-0] DEBUG application.sale - Starting validation for transaction number SAL20140323112748
+2014-03-23 11:28:12.279 [AWT-EventQueue-0] DEBUG application.sale - Finished validation for transaction number SAL20140323112748
+2014-03-23 11:28:12.279 [AWT-EventQueue-0] DEBUG application.sale - Preparation for item {0000000144|KERIPIK PISANG |12000.0|1|0.0|12000.0} is finished
+2014-03-23 11:28:12.279 [AWT-EventQueue-0] DEBUG application.sale - Starting to insert SaleHeader {SAL20140323112748|12000.0|0.0|12000.0|100000.0|88000.0} into database
+2014-03-23 11:28:12.372 [AWT-EventQueue-0] DEBUG application.sale - Finished inserting SaleHeader into database, the generated id is 672
+2014-03-23 11:28:12.372 [AWT-EventQueue-0] DEBUG application.sale - Logging to ActivityLog is done
+2014-03-23 11:28:12.372 [AWT-EventQueue-0] DEBUG o.h.transaction.JDBCTransaction - commit
+2014-03-23 11:28:12.435 [AWT-EventQueue-0] DEBUG o.h.transaction.JDBCTransaction - committed JDBC Connection
+2014-03-23 11:28:12.435 [AWT-EventQueue-0] DEBUG application.sale - Transaction is commited succesfully
+2014-03-23 11:28:12.560 [AWT-EventQueue-0] DEBUG application.sale - Receipt printer is worked fine.
+2014-03-23 11:28:12.560 [AWT-EventQueue-0] DEBUG application.sale - Transaction finished. The window is closed.
+2014-03-23 11:38:09.857 [AWT-EventQueue-0] DEBUG application.sale - Starting function selesaiDanSimpan()
+2014-03-23 11:38:09.857 [AWT-EventQueue-0] DEBUG o.h.transaction.JDBCTransaction - begin
+2014-03-23 11:38:09.858 [AWT-EventQueue-0] DEBUG o.h.transaction.JDBCTransaction - current autocommit status: false
+2014-03-23 11:38:09.858 [AWT-EventQueue-0] DEBUG application.sale - Starting validation for transaction number SAL20140323113506
+2014-03-23 11:38:09.859 [AWT-EventQueue-0] DEBUG application.sale - Finished validation for transaction number SAL20140323113506
+2014-03-23 11:38:09.859 [AWT-EventQueue-0] DEBUG application.sale - Preparation for item {0000000129|ANTIMO DIMENHYDRINATE 1 STRIP@10TABLET|6000.0|1|0.0|6000.0} is finished
+2014-03-23 11:38:09.859 [AWT-EventQueue-0] DEBUG application.sale - Preparation for item {0000000037|FANTA STROBERI 250 ML|5500.0|3|0.0|16500.0} is finished
+2014-03-23 11:38:09.859 [AWT-EventQueue-0] DEBUG application.sale - Preparation for item {0000000490|POCARI SWEAT 350ML|6000.0|1|0.0|6000.0} is finished
+2014-03-23 11:38:09.859 [AWT-EventQueue-0] DEBUG application.sale - Preparation for item {0000000058|OT TANGO CHOCOLATE 171 GR|10000.0|1|0.0|10000.0} is finished
+2014-03-23 11:38:09.859 [AWT-EventQueue-0] DEBUG application.sale - Preparation for item {0000000142|KERIPIK SINGKONG PEDAS|11000.0|1|0.0|11000.0} is finished
+2014-03-23 11:38:09.859 [AWT-EventQueue-0] DEBUG application.sale - Preparation for item {0000000003|FROZZ BARLEY MINT 15 GR|7000.0|1|0.0|7000.0} is finished
+2014-03-23 11:38:09.859 [AWT-EventQueue-0] DEBUG application.sale - Starting to insert SaleHeader {SAL20140323113506|56500.0|0.0|56500.0|60000.0|3500.0} into database
+2014-03-23 11:38:10.046 [AWT-EventQueue-0] DEBUG application.sale - Finished inserting SaleHeader into database, the generated id is 673
+2014-03-23 11:38:10.046 [AWT-EventQueue-0] DEBUG application.sale - Logging to ActivityLog is done
+2014-03-23 11:38:10.046 [AWT-EventQueue-0] DEBUG o.h.transaction.JDBCTransaction - commit
+2014-03-23 11:38:10.109 [AWT-EventQueue-0] DEBUG o.h.transaction.JDBCTransaction - committed JDBC Connection
+2014-03-23 11:38:10.109 [AWT-EventQueue-0] DEBUG application.sale - Transaction is commited succesfully
+2014-03-23 11:38:10.218 [AWT-EventQueue-0] DEBUG application.sale - Receipt printer is worked fine.
+2014-03-23 11:38:10.218 [AWT-EventQueue-0] DEBUG application.sale - Transaction finished. The window is closed.
+2014-03-23 12:10:43.479 [main] WARN  org.hibernate.mapping.RootClass - composite-id class does not override equals(): com.ganesha.model.UserRoleLinkPK
+2014-03-23 12:10:43.494 [main] WARN  org.hibernate.mapping.RootClass - composite-id class does not override hashCode(): com.ganesha.model.UserRoleLinkPK
+2014-03-23 12:10:43.494 [main] WARN  org.hibernate.mapping.RootClass - composite-id class does not override equals(): com.ganesha.model.RolePermissionLinkPK
+2014-03-23 12:10:43.494 [main] WARN  org.hibernate.mapping.RootClass - composite-id class does not override hashCode(): com.ganesha.model.RolePermissionLinkPK
+2014-03-23 12:10:43.510 [main] WARN  o.h.c.DriverManagerConnectionProvider - no JDBC Driver class was specified by property hibernate.connection.driver_class
+2014-03-23 12:10:43.760 [main] INFO  o.h.t.TransactionFactoryFactory - Using default transaction strategy (direct JDBC transactions)
+2014-03-23 12:10:43.760 [main] INFO  o.h.t.TransactionManagerLookupFactory - No TransactionManagerLookup configured (in JTA environment, use of read-write or transactional second-level cache is not recommended)
+2014-03-23 12:43:45.441 [AWT-EventQueue-0] DEBUG application.sale - Starting function selesaiDanSimpan()
+2014-03-23 12:43:45.459 [AWT-EventQueue-0] DEBUG o.h.transaction.JDBCTransaction - begin
+2014-03-23 12:43:45.459 [AWT-EventQueue-0] DEBUG o.h.transaction.JDBCTransaction - current autocommit status: false
+2014-03-23 12:43:45.474 [AWT-EventQueue-0] DEBUG application.sale - Starting validation for transaction number SAL20140323123556
+2014-03-23 12:43:45.490 [AWT-EventQueue-0] DEBUG application.sale - Finished validation for transaction number SAL20140323123556
+2014-03-23 12:43:45.490 [AWT-EventQueue-0] DEBUG application.sale - Preparation for item {0000000423|KERIPIK SANJAI KCL|8000.0|2|0.0|16000.0} is finished
+2014-03-23 12:43:45.490 [AWT-EventQueue-0] DEBUG application.sale - Starting to insert SaleHeader {SAL20140323123556|16000.0|0.0|16000.0|16000.0|0.0} into database
+2014-03-23 12:43:45.521 [AWT-EventQueue-0] DEBUG application.sale - Finished inserting SaleHeader into database, the generated id is 674
+2014-03-23 12:43:45.537 [AWT-EventQueue-0] DEBUG application.sale - Logging to ActivityLog is done
+2014-03-23 12:43:45.537 [AWT-EventQueue-0] DEBUG o.h.transaction.JDBCTransaction - commit
+2014-03-23 12:43:45.568 [AWT-EventQueue-0] DEBUG o.h.transaction.JDBCTransaction - committed JDBC Connection
+2014-03-23 12:43:45.568 [AWT-EventQueue-0] DEBUG application.sale - Transaction is commited succesfully
+2014-03-23 12:43:45.771 [AWT-EventQueue-0] DEBUG application.sale - Receipt printer is worked fine.
+2014-03-23 12:43:45.771 [AWT-EventQueue-0] DEBUG application.sale - Transaction finished. The window is closed.
+2014-03-23 16:00:39.839 [main] WARN  org.hibernate.mapping.RootClass - composite-id class does not override equals(): com.ganesha.model.UserRoleLinkPK
+2014-03-23 16:00:39.870 [main] WARN  org.hibernate.mapping.RootClass - composite-id class does not override hashCode(): com.ganesha.model.UserRoleLinkPK
+2014-03-23 16:00:39.870 [main] WARN  org.hibernate.mapping.RootClass - composite-id class does not override equals(): com.ganesha.model.RolePermissionLinkPK
+2014-03-23 16:00:39.870 [main] WARN  org.hibernate.mapping.RootClass - composite-id class does not override hashCode(): com.ganesha.model.RolePermissionLinkPK
+2014-03-23 16:00:39.870 [main] WARN  o.h.c.DriverManagerConnectionProvider - no JDBC Driver class was specified by property hibernate.connection.driver_class
+2014-03-23 16:00:40.182 [main] INFO  o.h.t.TransactionFactoryFactory - Using default transaction strategy (direct JDBC transactions)
+2014-03-23 16:00:40.182 [main] INFO  o.h.t.TransactionManagerLookupFactory - No TransactionManagerLookup configured (in JTA environment, use of read-write or transactional second-level cache is not recommended)
+2014-03-23 16:10:08.130 [AWT-EventQueue-0] DEBUG application.sale - Starting function selesaiDanSimpan()
+2014-03-23 16:10:08.132 [AWT-EventQueue-0] DEBUG o.h.transaction.JDBCTransaction - begin
+2014-03-23 16:10:08.132 [AWT-EventQueue-0] DEBUG o.h.transaction.JDBCTransaction - current autocommit status: false
+2014-03-23 16:10:08.148 [AWT-EventQueue-0] DEBUG application.sale - Starting validation for transaction number SAL20140323160337
+2014-03-23 16:10:08.148 [AWT-EventQueue-0] DEBUG application.sale - Finished validation for transaction number SAL20140323160337
+2014-03-23 16:10:08.148 [AWT-EventQueue-0] DEBUG application.sale - Preparation for item {0000000405|ROKOK SAMPOERNA 16|15000.0|1|0.0|15000.0} is finished
+2014-03-23 16:10:08.148 [AWT-EventQueue-0] DEBUG application.sale - Preparation for item {0000000397|NESACAFE MOCHA 240ML|9500.0|2|0.0|19000.0} is finished
+2014-03-23 16:10:08.148 [AWT-EventQueue-0] DEBUG application.sale - Preparation for item {0000000490|POCARI SWEAT 350ML|6000.0|1|0.0|6000.0} is finished
+2014-03-23 16:10:08.148 [AWT-EventQueue-0] DEBUG application.sale - Preparation for item {0000000489|LASEGAR RASA STAWBERI|6000.0|1|0.0|6000.0} is finished
+2014-03-23 16:10:08.148 [AWT-EventQueue-0] DEBUG application.sale - Preparation for item {0000000510|KEMPLANG PANGGANG PECAH|4000.0|2|0.0|8000.0} is finished
+2014-03-23 16:10:08.148 [AWT-EventQueue-0] DEBUG application.sale - Preparation for item {0000000429|KACANG TELUR|1000.0|2|0.0|2000.0} is finished
+2014-03-23 16:10:08.148 [AWT-EventQueue-0] DEBUG application.sale - Preparation for item {0000000141|AKAR KELAPA|12000.0|2|0.0|24000.0} is finished
+2014-03-23 16:10:08.148 [AWT-EventQueue-0] DEBUG application.sale - Preparation for item {0000000427|OPAK UBI MEDAN|12000.0|1|0.0|12000.0} is finished
+2014-03-23 16:10:08.148 [AWT-EventQueue-0] DEBUG application.sale - Preparation for item {0000000086|ULTRA MILK STROBERI 125 ML|3500.0|4|0.0|14000.0} is finished
+2014-03-23 16:10:08.148 [AWT-EventQueue-0] DEBUG application.sale - Preparation for item {0000000080|ALFA ONE 600 ML|3000.0|3|0.0|9000.0} is finished
+2014-03-23 16:10:08.148 [AWT-EventQueue-0] DEBUG application.sale - Preparation for item {0000000330|NYAM NYAM BUBLE PUFF STRAWBERRY 18 GR|3500.0|1|0.0|3500.0} is finished
+2014-03-23 16:10:08.148 [AWT-EventQueue-0] DEBUG application.sale - Preparation for item {0000000467|KEMPLANG GORENG SUPER 500GR|39000.0|1|0.0|39000.0} is finished
+2014-03-23 16:10:08.148 [AWT-EventQueue-0] DEBUG application.sale - Preparation for item {0000000422|KEMPLANG PANGGANG BESAR|20000.0|2|0.0|40000.0} is finished
+2014-03-23 16:10:08.148 [AWT-EventQueue-0] DEBUG application.sale - Preparation for item {0000000456|KOKO KRUNCH|8000.0|1|0.0|8000.0} is finished
+2014-03-23 16:10:08.148 [AWT-EventQueue-0] DEBUG application.sale - Preparation for item {0000000457|NESTLE HONEY STAR|8000.0|2|0.0|16000.0} is finished
+2014-03-23 16:10:08.148 [AWT-EventQueue-0] DEBUG application.sale - Preparation for item {0000000328|GOOD TIME TRIPLE CHOCOCHIPS 45 GR|6500.0|2|0.0|13000.0} is finished
+2014-03-23 16:10:08.148 [AWT-EventQueue-0] DEBUG application.sale - Preparation for item {0000000142|KERIPIK SINGKONG PEDAS|11000.0|1|0.0|11000.0} is finished
+2014-03-23 16:10:08.148 [AWT-EventQueue-0] DEBUG application.sale - Preparation for item {0000000421|KEMPLANG PANGGANG KECIL|8000.0|1|0.0|8000.0} is finished
+2014-03-23 16:10:08.148 [AWT-EventQueue-0] DEBUG application.sale - Preparation for item {0000000074|KHONG GUAN CLASSIC CHOCOLATE 350 GR|17500.0|1|0.0|17500.0} is finished
+2014-03-23 16:10:08.148 [AWT-EventQueue-0] DEBUG application.sale - Preparation for item {0000000327|GOOD TIME CLASSIC CHOCOCHIP 45 GR|6500.0|1|0.0|6500.0} is finished
+2014-03-23 16:10:08.148 [AWT-EventQueue-0] DEBUG application.sale - Preparation for item {0000000007|LOTTE FUSEN NO MI STRAW 15 GR|5000.0|1|0.0|5000.0} is finished
+2014-03-23 16:10:08.148 [AWT-EventQueue-0] DEBUG application.sale - Preparation for item {0000000008|LOTTE FUSEN NO MI BLUBER 15 GR|5000.0|1|0.0|5000.0} is finished
+2014-03-23 16:10:08.148 [AWT-EventQueue-0] DEBUG application.sale - Starting to insert SaleHeader {SAL20140323160337|287500.0|0.0|287500.0|287500.0|0.0} into database
+2014-03-23 16:10:08.320 [AWT-EventQueue-0] DEBUG application.sale - Finished inserting SaleHeader into database, the generated id is 675
+2014-03-23 16:10:08.320 [AWT-EventQueue-0] DEBUG application.sale - Logging to ActivityLog is done
+2014-03-23 16:10:08.320 [AWT-EventQueue-0] DEBUG o.h.transaction.JDBCTransaction - commit
+2014-03-23 16:10:08.398 [AWT-EventQueue-0] DEBUG o.h.transaction.JDBCTransaction - committed JDBC Connection
+2014-03-23 16:10:08.398 [AWT-EventQueue-0] DEBUG application.sale - Transaction is commited succesfully
+2014-03-23 16:10:08.694 [AWT-EventQueue-0] DEBUG application.sale - Receipt printer is worked fine.
+2014-03-23 16:10:08.694 [AWT-EventQueue-0] DEBUG application.sale - Transaction finished. The window is closed.
+2014-03-23 16:21:37.158 [AWT-EventQueue-0] DEBUG application.sale - Starting function selesaiDanSimpan()
+2014-03-23 16:21:37.158 [AWT-EventQueue-0] DEBUG o.h.transaction.JDBCTransaction - begin
+2014-03-23 16:21:37.159 [AWT-EventQueue-0] DEBUG o.h.transaction.JDBCTransaction - current autocommit status: false
+2014-03-23 16:21:37.159 [AWT-EventQueue-0] DEBUG application.sale - Starting validation for transaction number SAL20140323161955
+2014-03-23 16:21:37.160 [AWT-EventQueue-0] DEBUG application.sale - Finished validation for transaction number SAL20140323161955
+2014-03-23 16:21:37.160 [AWT-EventQueue-0] DEBUG application.sale - Preparation for item {0000000352|KRATINGDAENG 150 ML|5000.0|3|0.0|15000.0} is finished
+2014-03-23 16:21:37.160 [AWT-EventQueue-0] DEBUG application.sale - Starting to insert SaleHeader {SAL20140323161955|15000.0|0.0|15000.0|15000.0|0.0} into database
+2014-03-23 16:21:37.160 [AWT-EventQueue-0] DEBUG application.sale - Finished inserting SaleHeader into database, the generated id is 676
+2014-03-23 16:21:37.160 [AWT-EventQueue-0] DEBUG application.sale - Logging to ActivityLog is done
+2014-03-23 16:21:37.160 [AWT-EventQueue-0] DEBUG o.h.transaction.JDBCTransaction - commit
+2014-03-23 16:21:37.191 [AWT-EventQueue-0] DEBUG o.h.transaction.JDBCTransaction - committed JDBC Connection
+2014-03-23 16:21:37.191 [AWT-EventQueue-0] DEBUG application.sale - Transaction is commited succesfully
+2014-03-23 16:21:37.300 [AWT-EventQueue-0] DEBUG application.sale - Receipt printer is worked fine.
+2014-03-23 16:21:37.300 [AWT-EventQueue-0] DEBUG application.sale - Transaction finished. The window is closed.
+2014-03-23 16:22:48.819 [AWT-EventQueue-0] DEBUG application.sale - Starting function selesaiDanSimpan()
+2014-03-23 16:23:40.741 [AWT-EventQueue-0] DEBUG application.sale - Starting function selesaiDanSimpan()
+2014-03-23 16:23:40.741 [AWT-EventQueue-0] DEBUG o.h.transaction.JDBCTransaction - begin
+2014-03-23 16:23:40.741 [AWT-EventQueue-0] DEBUG o.h.transaction.JDBCTransaction - current autocommit status: false
+2014-03-23 16:23:40.742 [AWT-EventQueue-0] DEBUG application.sale - Starting validation for transaction number SAL20140323162328
+2014-03-23 16:23:40.743 [AWT-EventQueue-0] DEBUG application.sale - Finished validation for transaction number SAL20140323162328
+2014-03-23 16:23:40.743 [AWT-EventQueue-0] DEBUG application.sale - Preparation for item {0000000455|NII GREEN TEA HIJAU|6000.0|1|0.0|6000.0} is finished
+2014-03-23 16:23:40.743 [AWT-EventQueue-0] DEBUG application.sale - Starting to insert SaleHeader {SAL20140323162328|6000.0|0.0|6000.0|6000.0|0.0} into database
+2014-03-23 16:23:40.743 [AWT-EventQueue-0] DEBUG application.sale - Finished inserting SaleHeader into database, the generated id is 677
+2014-03-23 16:23:40.743 [AWT-EventQueue-0] DEBUG application.sale - Logging to ActivityLog is done
+2014-03-23 16:23:40.743 [AWT-EventQueue-0] DEBUG o.h.transaction.JDBCTransaction - commit
+2014-03-23 16:23:40.790 [AWT-EventQueue-0] DEBUG o.h.transaction.JDBCTransaction - committed JDBC Connection
+2014-03-23 16:23:40.790 [AWT-EventQueue-0] DEBUG application.sale - Transaction is commited succesfully
+2014-03-23 16:23:40.915 [AWT-EventQueue-0] DEBUG application.sale - Receipt printer is worked fine.
+2014-03-23 16:23:40.915 [AWT-EventQueue-0] DEBUG application.sale - Transaction finished. The window is closed.
+2014-03-23 16:26:35.425 [AWT-EventQueue-0] DEBUG o.h.transaction.JDBCTransaction - begin
+2014-03-23 16:26:35.425 [AWT-EventQueue-0] DEBUG o.h.transaction.JDBCTransaction - current autocommit status: false
+2014-03-23 16:26:35.456 [AWT-EventQueue-0] DEBUG o.h.transaction.JDBCTransaction - commit
+2014-03-23 16:26:35.503 [AWT-EventQueue-0] DEBUG o.h.transaction.JDBCTransaction - committed JDBC Connection
+2014-03-23 16:27:37.950 [AWT-EventQueue-0] DEBUG o.h.transaction.JDBCTransaction - begin
+2014-03-23 16:27:37.950 [AWT-EventQueue-0] DEBUG o.h.transaction.JDBCTransaction - current autocommit status: false
+2014-03-23 16:27:37.965 [AWT-EventQueue-0] DEBUG o.h.transaction.JDBCTransaction - commit
+2014-03-23 16:27:37.981 [AWT-EventQueue-0] DEBUG o.h.transaction.JDBCTransaction - committed JDBC Connection
+2014-03-23 16:29:14.529 [main] WARN  org.hibernate.mapping.RootClass - composite-id class does not override equals(): com.ganesha.model.UserRoleLinkPK
+2014-03-23 16:29:14.529 [main] WARN  org.hibernate.mapping.RootClass - composite-id class does not override hashCode(): com.ganesha.model.UserRoleLinkPK
+2014-03-23 16:29:14.529 [main] WARN  org.hibernate.mapping.RootClass - composite-id class does not override equals(): com.ganesha.model.RolePermissionLinkPK
+2014-03-23 16:29:14.529 [main] WARN  org.hibernate.mapping.RootClass - composite-id class does not override hashCode(): com.ganesha.model.RolePermissionLinkPK
+2014-03-23 16:29:14.529 [main] WARN  o.h.c.DriverManagerConnectionProvider - no JDBC Driver class was specified by property hibernate.connection.driver_class
+2014-03-23 16:29:14.732 [main] INFO  o.h.t.TransactionFactoryFactory - Using default transaction strategy (direct JDBC transactions)
+2014-03-23 16:29:14.732 [main] INFO  o.h.t.TransactionManagerLookupFactory - No TransactionManagerLookup configured (in JTA environment, use of read-write or transactional second-level cache is not recommended)
+2014-03-23 16:33:38.410 [AWT-EventQueue-0] DEBUG application.sale - Starting function selesaiDanSimpan()
+2014-03-23 16:33:38.412 [AWT-EventQueue-0] DEBUG o.h.transaction.JDBCTransaction - begin
+2014-03-23 16:33:38.412 [AWT-EventQueue-0] DEBUG o.h.transaction.JDBCTransaction - current autocommit status: false
+2014-03-23 16:33:38.412 [AWT-EventQueue-0] DEBUG application.sale - Starting validation for transaction number SAL20140323163305
+2014-03-23 16:33:38.412 [AWT-EventQueue-0] DEBUG application.sale - Finished validation for transaction number SAL20140323163305
+2014-03-23 16:33:38.412 [AWT-EventQueue-0] DEBUG application.sale - Preparation for item {0000000384|FANTA STROBERI 425ML|7000.0|1|0.0|7000.0} is finished
+2014-03-23 16:33:38.412 [AWT-EventQueue-0] DEBUG application.sale - Starting to insert SaleHeader {SAL20140323163305|7000.0|0.0|7000.0|7000.0|0.0} into database
+2014-03-23 16:33:38.443 [AWT-EventQueue-0] DEBUG application.sale - Finished inserting SaleHeader into database, the generated id is 678
+2014-03-23 16:33:38.443 [AWT-EventQueue-0] DEBUG application.sale - Logging to ActivityLog is done
+2014-03-23 16:33:38.443 [AWT-EventQueue-0] DEBUG o.h.transaction.JDBCTransaction - commit
+2014-03-23 16:33:38.474 [AWT-EventQueue-0] DEBUG o.h.transaction.JDBCTransaction - committed JDBC Connection
+2014-03-23 16:33:38.474 [AWT-EventQueue-0] DEBUG application.sale - Transaction is commited succesfully
+2014-03-23 16:33:38.599 [AWT-EventQueue-0] DEBUG application.sale - Receipt printer is worked fine.
+2014-03-23 16:33:38.599 [AWT-EventQueue-0] DEBUG application.sale - Transaction finished. The window is closed.
+2014-03-23 16:35:35.308 [AWT-EventQueue-0] DEBUG o.h.transaction.JDBCTransaction - begin
+2014-03-23 16:35:35.309 [AWT-EventQueue-0] DEBUG o.h.transaction.JDBCTransaction - current autocommit status: false
+2014-03-23 16:35:35.310 [AWT-EventQueue-0] DEBUG o.h.transaction.JDBCTransaction - commit
+2014-03-23 16:35:35.357 [AWT-EventQueue-0] DEBUG o.h.transaction.JDBCTransaction - committed JDBC Connection
+2014-03-23 16:35:40.365 [main] WARN  org.hibernate.mapping.RootClass - composite-id class does not override equals(): com.ganesha.model.UserRoleLinkPK
+2014-03-23 16:35:40.365 [main] WARN  org.hibernate.mapping.RootClass - composite-id class does not override hashCode(): com.ganesha.model.UserRoleLinkPK
+2014-03-23 16:35:40.365 [main] WARN  org.hibernate.mapping.RootClass - composite-id class does not override equals(): com.ganesha.model.RolePermissionLinkPK
+2014-03-23 16:35:40.365 [main] WARN  org.hibernate.mapping.RootClass - composite-id class does not override hashCode(): com.ganesha.model.RolePermissionLinkPK
+2014-03-23 16:35:40.365 [main] WARN  o.h.c.DriverManagerConnectionProvider - no JDBC Driver class was specified by property hibernate.connection.driver_class
+2014-03-23 16:35:40.568 [main] INFO  o.h.t.TransactionFactoryFactory - Using default transaction strategy (direct JDBC transactions)
+2014-03-23 16:35:40.568 [main] INFO  o.h.t.TransactionManagerLookupFactory - No TransactionManagerLookup configured (in JTA environment, use of read-write or transactional second-level cache is not recommended)
+2014-03-23 16:36:46.610 [main] WARN  org.hibernate.mapping.RootClass - composite-id class does not override equals(): com.ganesha.model.UserRoleLinkPK
+2014-03-23 16:36:46.610 [main] WARN  org.hibernate.mapping.RootClass - composite-id class does not override hashCode(): com.ganesha.model.UserRoleLinkPK
+2014-03-23 16:36:46.610 [main] WARN  org.hibernate.mapping.RootClass - composite-id class does not override equals(): com.ganesha.model.RolePermissionLinkPK
+2014-03-23 16:36:46.610 [main] WARN  org.hibernate.mapping.RootClass - composite-id class does not override hashCode(): com.ganesha.model.RolePermissionLinkPK
+2014-03-23 16:36:46.626 [main] WARN  o.h.c.DriverManagerConnectionProvider - no JDBC Driver class was specified by property hibernate.connection.driver_class
+2014-03-23 16:36:46.813 [main] INFO  o.h.t.TransactionFactoryFactory - Using default transaction strategy (direct JDBC transactions)
+2014-03-23 16:36:46.813 [main] INFO  o.h.t.TransactionManagerLookupFactory - No TransactionManagerLookup configured (in JTA environment, use of read-write or transactional second-level cache is not recommended)
+2014-03-23 17:01:35.584 [AWT-EventQueue-0] DEBUG application.sale - Starting function selesaiDanSimpan()
+2014-03-23 17:01:35.586 [AWT-EventQueue-0] DEBUG o.h.transaction.JDBCTransaction - begin
+2014-03-23 17:01:35.586 [AWT-EventQueue-0] DEBUG o.h.transaction.JDBCTransaction - current autocommit status: false
+2014-03-23 17:01:35.586 [AWT-EventQueue-0] DEBUG application.sale - Starting validation for transaction number SAL20140323163726
+2014-03-23 17:01:35.586 [AWT-EventQueue-0] DEBUG application.sale - Finished validation for transaction number SAL20140323163726
+2014-03-23 17:01:35.586 [AWT-EventQueue-0] DEBUG application.sale - Preparation for item {0000000081|AQUA 600 ML|3500.0|3|0.0|10500.0} is finished
+2014-03-23 17:01:35.586 [AWT-EventQueue-0] DEBUG application.sale - Preparation for item {0000000401|SOURSOP FLAVOURED DRINK|6000.0|1|0.0|6000.0} is finished
+2014-03-23 17:01:35.586 [AWT-EventQueue-0] DEBUG application.sale - Preparation for item {0000000374|ADEM SARI CHING KU|6500.0|1|0.0|6500.0} is finished
+2014-03-23 17:01:35.586 [AWT-EventQueue-0] DEBUG application.sale - Preparation for item {0000000393|LASEGAR JAMBU 320ML|6000.0|1|0.0|6000.0} is finished
+2014-03-23 17:01:35.586 [AWT-EventQueue-0] DEBUG application.sale - Preparation for item {0000000510|KEMPLANG PANGGANG PECAH|4000.0|1|0.0|4000.0} is finished
+2014-03-23 17:01:35.586 [AWT-EventQueue-0] DEBUG application.sale - Starting to insert SaleHeader {SAL20140323163726|33000.0|0.0|33000.0|33000.0|0.0} into database
+2014-03-23 17:01:35.649 [AWT-EventQueue-0] DEBUG application.sale - Finished inserting SaleHeader into database, the generated id is 679
+2014-03-23 17:01:35.664 [AWT-EventQueue-0] DEBUG application.sale - Logging to ActivityLog is done
+2014-03-23 17:01:35.664 [AWT-EventQueue-0] DEBUG o.h.transaction.JDBCTransaction - commit
+2014-03-23 17:01:35.742 [AWT-EventQueue-0] DEBUG o.h.transaction.JDBCTransaction - committed JDBC Connection
+2014-03-23 17:01:35.742 [AWT-EventQueue-0] DEBUG application.sale - Transaction is commited succesfully
+2014-03-23 17:01:35.883 [AWT-EventQueue-0] DEBUG application.sale - Receipt printer is worked fine.
+2014-03-23 17:01:35.883 [AWT-EventQueue-0] DEBUG application.sale - Transaction finished. The window is closed.
+2014-03-23 17:18:45.660 [AWT-EventQueue-0] DEBUG application.sale - Starting function selesaiDanSimpan()
+2014-03-23 17:18:45.660 [AWT-EventQueue-0] DEBUG o.h.transaction.JDBCTransaction - begin
+2014-03-23 17:18:45.661 [AWT-EventQueue-0] DEBUG o.h.transaction.JDBCTransaction - current autocommit status: false
+2014-03-23 17:18:45.661 [AWT-EventQueue-0] DEBUG application.sale - Starting validation for transaction number SAL20140323171819
+2014-03-23 17:18:45.662 [AWT-EventQueue-0] DEBUG application.sale - Finished validation for transaction number SAL20140323171819
+2014-03-23 17:18:45.662 [AWT-EventQueue-0] DEBUG application.sale - Preparation for item {0000000487|TEH PUCUK HARUM 480ML|5500.0|1|0.0|5500.0} is finished
+2014-03-23 17:18:45.662 [AWT-EventQueue-0] DEBUG application.sale - Starting to insert SaleHeader {SAL20140323171819|5500.0|0.0|5500.0|5500.0|0.0} into database
+2014-03-23 17:18:45.677 [AWT-EventQueue-0] DEBUG application.sale - Finished inserting SaleHeader into database, the generated id is 680
+2014-03-23 17:18:45.677 [AWT-EventQueue-0] DEBUG application.sale - Logging to ActivityLog is done
+2014-03-23 17:18:45.677 [AWT-EventQueue-0] DEBUG o.h.transaction.JDBCTransaction - commit
+2014-03-23 17:18:45.708 [AWT-EventQueue-0] DEBUG o.h.transaction.JDBCTransaction - committed JDBC Connection
+2014-03-23 17:18:45.708 [AWT-EventQueue-0] DEBUG application.sale - Transaction is commited succesfully
+2014-03-23 17:18:45.818 [AWT-EventQueue-0] DEBUG application.sale - Receipt printer is worked fine.
+2014-03-23 17:18:45.818 [AWT-EventQueue-0] DEBUG application.sale - Transaction finished. The window is closed.
+2014-03-23 17:57:57.213 [AWT-EventQueue-0] DEBUG application.sale - Starting function selesaiDanSimpan()
+2014-03-23 17:57:57.213 [AWT-EventQueue-0] DEBUG o.h.transaction.JDBCTransaction - begin
+2014-03-23 17:57:57.214 [AWT-EventQueue-0] DEBUG o.h.transaction.JDBCTransaction - current autocommit status: false
+2014-03-23 17:57:57.214 [AWT-EventQueue-0] DEBUG application.sale - Starting validation for transaction number SAL20140323175643
+2014-03-23 17:57:57.215 [AWT-EventQueue-0] DEBUG application.sale - Finished validation for transaction number SAL20140323175643
+2014-03-23 17:57:57.215 [AWT-EventQueue-0] DEBUG application.sale - Preparation for item {0000000377|GUDANG GARAM FILTER 12|13000.0|2|0.0|26000.0} is finished
+2014-03-23 17:57:57.215 [AWT-EventQueue-0] DEBUG application.sale - Preparation for item {0000000379|GUDANG GARAM SURYA 16|15500.0|1|0.0|15500.0} is finished
+2014-03-23 17:57:57.215 [AWT-EventQueue-0] DEBUG application.sale - Starting to insert SaleHeader {SAL20140323175643|41500.0|0.0|41500.0|41500.0|0.0} into database
+2014-03-23 17:57:57.293 [AWT-EventQueue-0] DEBUG application.sale - Finished inserting SaleHeader into database, the generated id is 681
+2014-03-23 17:57:57.293 [AWT-EventQueue-0] DEBUG application.sale - Logging to ActivityLog is done
+2014-03-23 17:57:57.293 [AWT-EventQueue-0] DEBUG o.h.transaction.JDBCTransaction - commit
+2014-03-23 17:57:57.325 [AWT-EventQueue-0] DEBUG o.h.transaction.JDBCTransaction - committed JDBC Connection
+2014-03-23 17:57:57.325 [AWT-EventQueue-0] DEBUG application.sale - Transaction is commited succesfully
+2014-03-23 17:57:57.434 [AWT-EventQueue-0] DEBUG application.sale - Receipt printer is worked fine.
+2014-03-23 17:57:57.434 [AWT-EventQueue-0] DEBUG application.sale - Transaction finished. The window is closed.
+2014-03-23 18:08:28.022 [AWT-EventQueue-0] DEBUG application.sale - Starting function selesaiDanSimpan()
+2014-03-23 18:08:28.022 [AWT-EventQueue-0] DEBUG o.h.transaction.JDBCTransaction - begin
+2014-03-23 18:08:28.023 [AWT-EventQueue-0] DEBUG o.h.transaction.JDBCTransaction - current autocommit status: false
+2014-03-23 18:08:28.023 [AWT-EventQueue-0] DEBUG application.sale - Starting validation for transaction number SAL20140323180753
+2014-03-23 18:08:28.024 [AWT-EventQueue-0] DEBUG application.sale - Finished validation for transaction number SAL20140323180753
+2014-03-23 18:08:28.024 [AWT-EventQueue-0] DEBUG application.sale - Preparation for item {0000000080|ALFA ONE 600 ML|3000.0|1|0.0|3000.0} is finished
+2014-03-23 18:08:28.024 [AWT-EventQueue-0] DEBUG application.sale - Preparation for item {0000000035|PULPY ORANGE 350 ML|7000.0|2|0.0|14000.0} is finished
+2014-03-23 18:08:28.024 [AWT-EventQueue-0] DEBUG application.sale - Preparation for item {0000000345|TEH KOTAK MELATI 200 ML|4000.0|1|0.0|4000.0} is finished
+2014-03-23 18:08:28.024 [AWT-EventQueue-0] DEBUG application.sale - Starting to insert SaleHeader {SAL20140323180753|21000.0|0.0|21000.0|22000.0|1000.0} into database
+2014-03-23 18:08:28.055 [AWT-EventQueue-0] DEBUG application.sale - Finished inserting SaleHeader into database, the generated id is 682
+2014-03-23 18:08:28.055 [AWT-EventQueue-0] DEBUG application.sale - Logging to ActivityLog is done
+2014-03-23 18:08:28.055 [AWT-EventQueue-0] DEBUG o.h.transaction.JDBCTransaction - commit
+2014-03-23 18:08:28.071 [AWT-EventQueue-0] DEBUG o.h.transaction.JDBCTransaction - committed JDBC Connection
+2014-03-23 18:08:28.071 [AWT-EventQueue-0] DEBUG application.sale - Transaction is commited succesfully
+2014-03-23 18:08:28.195 [AWT-EventQueue-0] DEBUG application.sale - Receipt printer is worked fine.
+2014-03-23 18:08:28.195 [AWT-EventQueue-0] DEBUG application.sale - Transaction finished. The window is closed.
+2014-03-23 18:09:36.699 [AWT-EventQueue-0] DEBUG application.sale - Starting function selesaiDanSimpan()
+2014-03-23 18:09:36.699 [AWT-EventQueue-0] DEBUG o.h.transaction.JDBCTransaction - begin
+2014-03-23 18:09:36.700 [AWT-EventQueue-0] DEBUG o.h.transaction.JDBCTransaction - current autocommit status: false
+2014-03-23 18:09:36.700 [AWT-EventQueue-0] DEBUG application.sale - Starting validation for transaction number SAL20140323180915
+2014-03-23 18:09:36.701 [AWT-EventQueue-0] DEBUG application.sale - Finished validation for transaction number SAL20140323180915
+2014-03-23 18:09:36.701 [AWT-EventQueue-0] DEBUG application.sale - Preparation for item {0000000151|CAP LANG MINYAK KAYU PUTIH 15 ML|6000.0|1|0.0|6000.0} is finished
+2014-03-23 18:09:36.701 [AWT-EventQueue-0] DEBUG application.sale - Starting to insert SaleHeader {SAL20140323180915|6000.0|0.0|6000.0|6000.0|0.0} into database
+2014-03-23 18:09:36.701 [AWT-EventQueue-0] DEBUG application.sale - Finished inserting SaleHeader into database, the generated id is 683
+2014-03-23 18:09:36.701 [AWT-EventQueue-0] DEBUG application.sale - Logging to ActivityLog is done
+2014-03-23 18:09:36.701 [AWT-EventQueue-0] DEBUG o.h.transaction.JDBCTransaction - commit
+2014-03-23 18:09:36.732 [AWT-EventQueue-0] DEBUG o.h.transaction.JDBCTransaction - committed JDBC Connection
+2014-03-23 18:09:36.732 [AWT-EventQueue-0] DEBUG application.sale - Transaction is commited succesfully
+2014-03-23 18:09:36.857 [AWT-EventQueue-0] DEBUG application.sale - Receipt printer is worked fine.
+2014-03-23 18:09:36.857 [AWT-EventQueue-0] DEBUG application.sale - Transaction finished. The window is closed.
+2014-03-23 19:46:23.581 [AWT-EventQueue-0] DEBUG application.sale - Starting function selesaiDanSimpan()
+2014-03-23 19:46:23.581 [AWT-EventQueue-0] DEBUG o.h.transaction.JDBCTransaction - begin
+2014-03-23 19:46:23.582 [AWT-EventQueue-0] DEBUG o.h.transaction.JDBCTransaction - current autocommit status: false
+2014-03-23 19:46:23.582 [AWT-EventQueue-0] DEBUG application.sale - Starting validation for transaction number SAL20140323194528
+2014-03-23 19:46:23.583 [AWT-EventQueue-0] DEBUG application.sale - Finished validation for transaction number SAL20140323194528
+2014-03-23 19:46:23.583 [AWT-EventQueue-0] DEBUG application.sale - Preparation for item {0000000429|KACANG TELUR|1000.0|5|0.0|5000.0} is finished
+2014-03-23 19:46:23.583 [AWT-EventQueue-0] DEBUG application.sale - Preparation for item {0000000500|ROTI CAKRA KECIL|8000.0|1|0.0|8000.0} is finished
+2014-03-23 19:46:23.583 [AWT-EventQueue-0] DEBUG application.sale - Starting to insert SaleHeader {SAL20140323194528|13000.0|0.0|13000.0|13000.0|0.0} into database
+2014-03-23 19:46:23.598 [AWT-EventQueue-0] DEBUG application.sale - Finished inserting SaleHeader into database, the generated id is 684
+2014-03-23 19:46:23.598 [AWT-EventQueue-0] DEBUG application.sale - Logging to ActivityLog is done
+2014-03-23 19:46:23.598 [AWT-EventQueue-0] DEBUG o.h.transaction.JDBCTransaction - commit
+2014-03-23 19:46:23.629 [AWT-EventQueue-0] DEBUG o.h.transaction.JDBCTransaction - committed JDBC Connection
+2014-03-23 19:46:23.629 [AWT-EventQueue-0] DEBUG application.sale - Transaction is commited succesfully
+2014-03-23 19:46:23.754 [AWT-EventQueue-0] DEBUG application.sale - Receipt printer is worked fine.
+2014-03-23 19:46:23.754 [AWT-EventQueue-0] DEBUG application.sale - Transaction finished. The window is closed.
+2014-03-23 20:46:11.706 [AWT-EventQueue-0] DEBUG application.sale - Starting function selesaiDanSimpan()
+2014-03-23 20:46:11.723 [AWT-EventQueue-0] DEBUG o.h.transaction.JDBCTransaction - begin
+2014-03-23 20:46:11.723 [AWT-EventQueue-0] DEBUG o.h.transaction.JDBCTransaction - current autocommit status: false
+2014-03-23 20:46:11.723 [AWT-EventQueue-0] DEBUG application.sale - Starting validation for transaction number SAL20140323204529
+2014-03-23 20:46:11.723 [AWT-EventQueue-0] DEBUG application.sale - Finished validation for transaction number SAL20140323204529
+2014-03-23 20:46:11.723 [AWT-EventQueue-0] DEBUG application.sale - Preparation for item {0000000405|ROKOK SAMPOERNA 16|15000.0|1|0.0|15000.0} is finished
+2014-03-23 20:46:11.723 [AWT-EventQueue-0] DEBUG application.sale - Starting to insert SaleHeader {SAL20140323204529|15000.0|0.0|15000.0|15000.0|0.0} into database
+2014-03-23 20:46:12.004 [AWT-EventQueue-0] DEBUG application.sale - Finished inserting SaleHeader into database, the generated id is 685
+2014-03-23 20:46:12.035 [AWT-EventQueue-0] DEBUG application.sale - Logging to ActivityLog is done
+2014-03-23 20:46:12.035 [AWT-EventQueue-0] DEBUG o.h.transaction.JDBCTransaction - commit
+2014-03-23 20:46:12.160 [AWT-EventQueue-0] DEBUG o.h.transaction.JDBCTransaction - committed JDBC Connection
+2014-03-23 20:46:12.160 [AWT-EventQueue-0] DEBUG application.sale - Transaction is commited succesfully
+2014-03-23 20:46:12.831 [AWT-EventQueue-0] DEBUG application.sale - Receipt printer is worked fine.
+2014-03-23 20:46:12.847 [AWT-EventQueue-0] DEBUG application.sale - Transaction finished. The window is closed.
+2014-03-24 06:52:18.190 [main] WARN  org.hibernate.mapping.RootClass - composite-id class does not override equals(): com.ganesha.model.UserRoleLinkPK
+2014-03-24 06:52:18.206 [main] WARN  org.hibernate.mapping.RootClass - composite-id class does not override hashCode(): com.ganesha.model.UserRoleLinkPK
+2014-03-24 06:52:18.206 [main] WARN  org.hibernate.mapping.RootClass - composite-id class does not override equals(): com.ganesha.model.RolePermissionLinkPK
+2014-03-24 06:52:18.206 [main] WARN  org.hibernate.mapping.RootClass - composite-id class does not override hashCode(): com.ganesha.model.RolePermissionLinkPK
+2014-03-24 06:52:18.222 [main] WARN  o.h.c.DriverManagerConnectionProvider - no JDBC Driver class was specified by property hibernate.connection.driver_class
+2014-03-24 06:52:18.424 [main] INFO  o.h.t.TransactionFactoryFactory - Using default transaction strategy (direct JDBC transactions)
+2014-03-24 06:52:18.424 [main] INFO  o.h.t.TransactionManagerLookupFactory - No TransactionManagerLookup configured (in JTA environment, use of read-write or transactional second-level cache is not recommended)
+2014-03-24 06:53:35.760 [AWT-EventQueue-0] DEBUG application.sale - Starting function selesaiDanSimpan()
+2014-03-24 06:53:35.762 [AWT-EventQueue-0] DEBUG o.h.transaction.JDBCTransaction - begin
+2014-03-24 06:53:35.762 [AWT-EventQueue-0] DEBUG o.h.transaction.JDBCTransaction - current autocommit status: false
+2014-03-24 06:53:35.762 [AWT-EventQueue-0] DEBUG application.sale - Starting validation for transaction number SAL20140324065235
+2014-03-24 06:53:35.762 [AWT-EventQueue-0] DEBUG application.sale - Finished validation for transaction number SAL20140324065235
+2014-03-24 06:53:35.762 [AWT-EventQueue-0] DEBUG application.sale - Preparation for item {0000000492|ULTRA MILK MOKA|5000.0|1|0.0|5000.0} is finished
+2014-03-24 06:53:35.762 [AWT-EventQueue-0] DEBUG application.sale - Preparation for item {0000000500|ROTI CAKRA KECIL|8000.0|1|0.0|8000.0} is finished
+2014-03-24 06:53:35.762 [AWT-EventQueue-0] DEBUG application.sale - Preparation for item {0000000071|MONDE GENJI ORIGINAL 70 GR|7000.0|1|0.0|7000.0} is finished
+2014-03-24 06:53:35.762 [AWT-EventQueue-0] DEBUG application.sale - Starting to insert SaleHeader {SAL20140324065235|20000.0|0.0|20000.0|20000.0|0.0} into database
+2014-03-24 06:53:35.824 [AWT-EventQueue-0] DEBUG application.sale - Finished inserting SaleHeader into database, the generated id is 686
+2014-03-24 06:53:35.824 [AWT-EventQueue-0] DEBUG application.sale - Logging to ActivityLog is done
+2014-03-24 06:53:35.824 [AWT-EventQueue-0] DEBUG o.h.transaction.JDBCTransaction - commit
+2014-03-24 06:53:35.855 [AWT-EventQueue-0] DEBUG o.h.transaction.JDBCTransaction - committed JDBC Connection
+2014-03-24 06:53:35.855 [AWT-EventQueue-0] DEBUG application.sale - Transaction is commited succesfully
+2014-03-24 06:53:36.214 [AWT-EventQueue-0] DEBUG application.sale - Receipt printer is worked fine.
+2014-03-24 06:53:36.214 [AWT-EventQueue-0] DEBUG application.sale - Transaction finished. The window is closed.
+2014-03-24 07:10:22.653 [AWT-EventQueue-0] DEBUG application.sale - Starting function selesaiDanSimpan()
+2014-03-24 07:10:22.653 [AWT-EventQueue-0] DEBUG o.h.transaction.JDBCTransaction - begin
+2014-03-24 07:10:22.654 [AWT-EventQueue-0] DEBUG o.h.transaction.JDBCTransaction - current autocommit status: false
+2014-03-24 07:10:22.654 [AWT-EventQueue-0] DEBUG application.sale - Starting validation for transaction number SAL20140324070332
+2014-03-24 07:10:22.655 [AWT-EventQueue-0] DEBUG application.sale - Finished validation for transaction number SAL20140324070332
+2014-03-24 07:10:22.655 [AWT-EventQueue-0] DEBUG application.sale - Preparation for item {0000000490|POCARI SWEAT 350ML|6000.0|1|0.0|6000.0} is finished
+2014-03-24 07:10:22.655 [AWT-EventQueue-0] DEBUG application.sale - Preparation for item {0000000081|AQUA 600 ML|3500.0|1|0.0|3500.0} is finished
+2014-03-24 07:10:22.655 [AWT-EventQueue-0] DEBUG application.sale - Preparation for item {0000000426|PEYEK KACANG|15000.0|1|0.0|15000.0} is finished
+2014-03-24 07:10:22.655 [AWT-EventQueue-0] DEBUG application.sale - Starting to insert SaleHeader {SAL20140324070332|24500.0|0.0|24500.0|24500.0|0.0} into database
+2014-03-24 07:10:22.687 [AWT-EventQueue-0] DEBUG application.sale - Finished inserting SaleHeader into database, the generated id is 687
+2014-03-24 07:10:22.687 [AWT-EventQueue-0] DEBUG application.sale - Logging to ActivityLog is done
+2014-03-24 07:10:22.687 [AWT-EventQueue-0] DEBUG o.h.transaction.JDBCTransaction - commit
+2014-03-24 07:10:22.718 [AWT-EventQueue-0] DEBUG o.h.transaction.JDBCTransaction - committed JDBC Connection
+2014-03-24 07:10:22.718 [AWT-EventQueue-0] DEBUG application.sale - Transaction is commited succesfully
+2014-03-24 07:10:22.843 [AWT-EventQueue-0] DEBUG application.sale - Receipt printer is worked fine.
+2014-03-24 07:10:22.843 [AWT-EventQueue-0] DEBUG application.sale - Transaction finished. The window is closed.
+2014-03-24 07:12:42.544 [AWT-EventQueue-0] DEBUG application.sale - Starting function selesaiDanSimpan()
+2014-03-24 07:12:42.544 [AWT-EventQueue-0] DEBUG o.h.transaction.JDBCTransaction - begin
+2014-03-24 07:12:42.545 [AWT-EventQueue-0] DEBUG o.h.transaction.JDBCTransaction - current autocommit status: false
+2014-03-24 07:12:42.545 [AWT-EventQueue-0] DEBUG application.sale - Starting validation for transaction number SAL20140324071120
+2014-03-24 07:12:42.546 [AWT-EventQueue-0] DEBUG application.sale - Finished validation for transaction number SAL20140324071120
+2014-03-24 07:12:42.546 [AWT-EventQueue-0] DEBUG application.sale - Preparation for item {0000000405|ROKOK SAMPOERNA 16|15000.0|1|0.0|15000.0} is finished
+2014-03-24 07:12:42.546 [AWT-EventQueue-0] DEBUG application.sale - Preparation for item {0000000355|NII GREEN TEA MADU 500 ML|6000.0|4|0.0|24000.0} is finished
+2014-03-24 07:12:42.546 [AWT-EventQueue-0] DEBUG application.sale - Starting to insert SaleHeader {SAL20140324071120|39000.0|0.0|39000.0|50000.0|11000.0} into database
+2014-03-24 07:12:42.562 [AWT-EventQueue-0] DEBUG application.sale - Finished inserting SaleHeader into database, the generated id is 688
+2014-03-24 07:12:42.562 [AWT-EventQueue-0] DEBUG application.sale - Logging to ActivityLog is done
+2014-03-24 07:12:42.562 [AWT-EventQueue-0] DEBUG o.h.transaction.JDBCTransaction - commit
+2014-03-24 07:12:42.578 [AWT-EventQueue-0] DEBUG o.h.transaction.JDBCTransaction - committed JDBC Connection
+2014-03-24 07:12:42.578 [AWT-EventQueue-0] DEBUG application.sale - Transaction is commited succesfully
+2014-03-24 07:12:42.702 [AWT-EventQueue-0] DEBUG application.sale - Receipt printer is worked fine.
+2014-03-24 07:12:42.702 [AWT-EventQueue-0] DEBUG application.sale - Transaction finished. The window is closed.
+2014-03-24 07:21:15.136 [AWT-EventQueue-0] DEBUG application.sale - Starting function selesaiDanSimpan()
+2014-03-24 07:21:15.136 [AWT-EventQueue-0] DEBUG o.h.transaction.JDBCTransaction - begin
+2014-03-24 07:21:15.137 [AWT-EventQueue-0] DEBUG o.h.transaction.JDBCTransaction - current autocommit status: false
+2014-03-24 07:21:15.137 [AWT-EventQueue-0] DEBUG application.sale - Starting validation for transaction number SAL20140324072009
+2014-03-24 07:21:15.138 [AWT-EventQueue-0] DEBUG application.sale - Finished validation for transaction number SAL20140324072009
+2014-03-24 07:21:15.138 [AWT-EventQueue-0] DEBUG application.sale - Preparation for item {0000000405|ROKOK SAMPOERNA 16|15000.0|1|0.0|15000.0} is finished
+2014-03-24 07:21:15.138 [AWT-EventQueue-0] DEBUG application.sale - Preparation for item {0000000081|AQUA 600 ML|3500.0|1|0.0|3500.0} is finished
+2014-03-24 07:21:15.138 [AWT-EventQueue-0] DEBUG application.sale - Preparation for item {0000000084|AQUA 1500 ML |6000.0|2|0.0|12000.0} is finished
+2014-03-24 07:21:15.138 [AWT-EventQueue-0] DEBUG application.sale - Starting to insert SaleHeader {SAL20140324072009|30500.0|0.0|30500.0|50000.0|19500.0} into database
+2014-03-24 07:21:15.153 [AWT-EventQueue-0] DEBUG application.sale - Finished inserting SaleHeader into database, the generated id is 689
+2014-03-24 07:21:15.169 [AWT-EventQueue-0] DEBUG application.sale - Logging to ActivityLog is done
+2014-03-24 07:21:15.169 [AWT-EventQueue-0] DEBUG o.h.transaction.JDBCTransaction - commit
+2014-03-24 07:21:15.278 [AWT-EventQueue-0] DEBUG o.h.transaction.JDBCTransaction - committed JDBC Connection
+2014-03-24 07:21:15.278 [AWT-EventQueue-0] DEBUG application.sale - Transaction is commited succesfully
+2014-03-24 07:21:15.387 [AWT-EventQueue-0] DEBUG application.sale - Receipt printer is worked fine.
+2014-03-24 07:21:15.387 [AWT-EventQueue-0] DEBUG application.sale - Transaction finished. The window is closed.
+2014-03-24 07:21:51.723 [AWT-EventQueue-0] DEBUG application.sale - Starting function selesaiDanSimpan()
+2014-03-24 07:21:51.723 [AWT-EventQueue-0] DEBUG o.h.transaction.JDBCTransaction - begin
+2014-03-24 07:21:51.724 [AWT-EventQueue-0] DEBUG o.h.transaction.JDBCTransaction - current autocommit status: false
+2014-03-24 07:21:51.724 [AWT-EventQueue-0] DEBUG application.sale - Starting validation for transaction number SAL20140324072118
+2014-03-24 07:21:51.725 [AWT-EventQueue-0] DEBUG application.sale - Finished validation for transaction number SAL20140324072118
+2014-03-24 07:21:51.725 [AWT-EventQueue-0] DEBUG application.sale - Preparation for item {0000000490|POCARI SWEAT 350ML|6000.0|3|0.0|18000.0} is finished
+2014-03-24 07:21:51.725 [AWT-EventQueue-0] DEBUG application.sale - Starting to insert SaleHeader {SAL20140324072118|18000.0|0.0|18000.0|20000.0|2000.0} into database
+2014-03-24 07:21:51.725 [AWT-EventQueue-0] DEBUG application.sale - Finished inserting SaleHeader into database, the generated id is 690
+2014-03-24 07:21:51.725 [AWT-EventQueue-0] DEBUG application.sale - Logging to ActivityLog is done
+2014-03-24 07:21:51.725 [AWT-EventQueue-0] DEBUG o.h.transaction.JDBCTransaction - commit
+2014-03-24 07:21:51.772 [AWT-EventQueue-0] DEBUG o.h.transaction.JDBCTransaction - committed JDBC Connection
+2014-03-24 07:21:51.772 [AWT-EventQueue-0] DEBUG application.sale - Transaction is commited succesfully
+2014-03-24 07:21:51.897 [AWT-EventQueue-0] DEBUG application.sale - Receipt printer is worked fine.
+2014-03-24 07:21:51.897 [AWT-EventQueue-0] DEBUG application.sale - Transaction finished. The window is closed.
+2014-03-24 07:31:48.711 [AWT-EventQueue-0] DEBUG application.sale - Starting function selesaiDanSimpan()
+2014-03-24 07:31:48.711 [AWT-EventQueue-0] DEBUG o.h.transaction.JDBCTransaction - begin
+2014-03-24 07:31:48.712 [AWT-EventQueue-0] DEBUG o.h.transaction.JDBCTransaction - current autocommit status: false
+2014-03-24 07:31:48.712 [AWT-EventQueue-0] DEBUG application.sale - Starting validation for transaction number SAL20140324072222
+2014-03-24 07:31:48.713 [AWT-EventQueue-0] DEBUG application.sale - Finished validation for transaction number SAL20140324072222
+2014-03-24 07:31:48.713 [AWT-EventQueue-0] DEBUG application.sale - Preparation for item {0000000080|ALFA ONE 600 ML|3000.0|1|0.0|3000.0} is finished
+2014-03-24 07:31:48.713 [AWT-EventQueue-0] DEBUG application.sale - Preparation for item {0000000270|CLEAR SHAMPO ANTI KETOMBE 10 ML|2500.0|1|0.0|2500.0} is finished
+2014-03-24 07:31:48.713 [AWT-EventQueue-0] DEBUG application.sale - Starting to insert SaleHeader {SAL20140324072222|5500.0|0.0|5500.0|5500.0|0.0} into database
+2014-03-24 07:31:48.728 [AWT-EventQueue-0] DEBUG application.sale - Finished inserting SaleHeader into database, the generated id is 691
+2014-03-24 07:31:48.728 [AWT-EventQueue-0] DEBUG application.sale - Logging to ActivityLog is done
+2014-03-24 07:31:48.728 [AWT-EventQueue-0] DEBUG o.h.transaction.JDBCTransaction - commit
+2014-03-24 07:31:48.760 [AWT-EventQueue-0] DEBUG o.h.transaction.JDBCTransaction - committed JDBC Connection
+2014-03-24 07:31:48.760 [AWT-EventQueue-0] DEBUG application.sale - Transaction is commited succesfully
+2014-03-24 07:31:48.884 [AWT-EventQueue-0] DEBUG application.sale - Receipt printer is worked fine.
+2014-03-24 07:31:48.884 [AWT-EventQueue-0] DEBUG application.sale - Transaction finished. The window is closed.
+2014-03-24 07:38:37.968 [AWT-EventQueue-0] DEBUG application.sale - Starting function selesaiDanSimpan()
+2014-03-24 07:38:37.968 [AWT-EventQueue-0] DEBUG o.h.transaction.JDBCTransaction - begin
+2014-03-24 07:38:37.969 [AWT-EventQueue-0] DEBUG o.h.transaction.JDBCTransaction - current autocommit status: false
+2014-03-24 07:38:37.969 [AWT-EventQueue-0] DEBUG application.sale - Starting validation for transaction number SAL20140324073645
+2014-03-24 07:38:37.970 [AWT-EventQueue-0] DEBUG application.sale - Finished validation for transaction number SAL20140324073645
+2014-03-24 07:38:37.970 [AWT-EventQueue-0] DEBUG application.sale - Preparation for item {0000000081|AQUA 600 ML|3500.0|2|0.0|7000.0} is finished
+2014-03-24 07:38:37.970 [AWT-EventQueue-0] DEBUG application.sale - Starting to insert SaleHeader {SAL20140324073645|7000.0|0.0|7000.0|7000.0|0.0} into database
+2014-03-24 07:38:37.970 [AWT-EventQueue-0] DEBUG application.sale - Finished inserting SaleHeader into database, the generated id is 692
+2014-03-24 07:38:37.970 [AWT-EventQueue-0] DEBUG application.sale - Logging to ActivityLog is done
+2014-03-24 07:38:37.970 [AWT-EventQueue-0] DEBUG o.h.transaction.JDBCTransaction - commit
+2014-03-24 07:38:38.001 [AWT-EventQueue-0] DEBUG o.h.transaction.JDBCTransaction - committed JDBC Connection
+2014-03-24 07:38:38.001 [AWT-EventQueue-0] DEBUG application.sale - Transaction is commited succesfully
+2014-03-24 07:38:38.110 [AWT-EventQueue-0] DEBUG application.sale - Receipt printer is worked fine.
+2014-03-24 07:38:38.110 [AWT-EventQueue-0] DEBUG application.sale - Transaction finished. The window is closed.
+2014-03-24 07:44:01.580 [AWT-EventQueue-0] DEBUG application.sale - Starting function selesaiDanSimpan()
+2014-03-24 07:44:01.580 [AWT-EventQueue-0] DEBUG o.h.transaction.JDBCTransaction - begin
+2014-03-24 07:44:01.581 [AWT-EventQueue-0] DEBUG o.h.transaction.JDBCTransaction - current autocommit status: false
+2014-03-24 07:44:01.581 [AWT-EventQueue-0] DEBUG application.sale - Starting validation for transaction number SAL20140324073839
+2014-03-24 07:44:01.582 [AWT-EventQueue-0] DEBUG application.sale - Finished validation for transaction number SAL20140324073839
+2014-03-24 07:44:01.582 [AWT-EventQueue-0] DEBUG application.sale - Preparation for item {0000000216|QTELA SINGKONG RS KEJU PANGGANG 60 GR|4000.0|1|0.0|4000.0} is finished
+2014-03-24 07:44:01.582 [AWT-EventQueue-0] DEBUG application.sale - Preparation for item {0000000447|NICE FACIAL TISSUE|3500.0|1|0.0|3500.0} is finished
+2014-03-24 07:44:01.582 [AWT-EventQueue-0] DEBUG application.sale - Preparation for item {0000000508|SGF BAGUS CONTURA|3000.0|2|0.0|6000.0} is finished
+2014-03-24 07:44:01.582 [AWT-EventQueue-0] DEBUG application.sale - Starting to insert SaleHeader {SAL20140324073839|13500.0|0.0|13500.0|13500.0|0.0} into database
+2014-03-24 07:44:01.598 [AWT-EventQueue-0] DEBUG application.sale - Finished inserting SaleHeader into database, the generated id is 693
+2014-03-24 07:44:01.613 [AWT-EventQueue-0] DEBUG application.sale - Logging to ActivityLog is done
+2014-03-24 07:44:01.613 [AWT-EventQueue-0] DEBUG o.h.transaction.JDBCTransaction - commit
+2014-03-24 07:44:01.645 [AWT-EventQueue-0] DEBUG o.h.transaction.JDBCTransaction - committed JDBC Connection
+2014-03-24 07:44:01.645 [AWT-EventQueue-0] DEBUG application.sale - Transaction is commited succesfully
+2014-03-24 07:44:01.769 [AWT-EventQueue-0] DEBUG application.sale - Receipt printer is worked fine.
+2014-03-24 07:44:01.769 [AWT-EventQueue-0] DEBUG application.sale - Transaction finished. The window is closed.
+2014-03-24 08:31:40.738 [AWT-EventQueue-0] DEBUG application.sale - Starting function selesaiDanSimpan()
+2014-03-24 08:31:40.738 [AWT-EventQueue-0] DEBUG o.h.transaction.JDBCTransaction - begin
+2014-03-24 08:31:40.739 [AWT-EventQueue-0] DEBUG o.h.transaction.JDBCTransaction - current autocommit status: false
+2014-03-24 08:31:40.739 [AWT-EventQueue-0] DEBUG application.sale - Starting validation for transaction number SAL20140324080744
+2014-03-24 08:31:40.740 [AWT-EventQueue-0] DEBUG application.sale - Finished validation for transaction number SAL20140324080744
+2014-03-24 08:31:40.740 [AWT-EventQueue-0] DEBUG application.sale - Preparation for item {0000000375|COOLANT|6000.0|1|0.0|6000.0} is finished
+2014-03-24 08:31:40.740 [AWT-EventQueue-0] DEBUG application.sale - Starting to insert SaleHeader {SAL20140324080744|6000.0|0.0|6000.0|50000.0|44000.0} into database
+2014-03-24 08:31:40.740 [AWT-EventQueue-0] DEBUG application.sale - Finished inserting SaleHeader into database, the generated id is 694
+2014-03-24 08:31:40.755 [AWT-EventQueue-0] DEBUG application.sale - Logging to ActivityLog is done
+2014-03-24 08:31:40.755 [AWT-EventQueue-0] DEBUG o.h.transaction.JDBCTransaction - commit
+2014-03-24 08:31:40.771 [AWT-EventQueue-0] DEBUG o.h.transaction.JDBCTransaction - committed JDBC Connection
+2014-03-24 08:31:40.771 [AWT-EventQueue-0] DEBUG application.sale - Transaction is commited succesfully
+2014-03-24 08:31:40.896 [AWT-EventQueue-0] DEBUG application.sale - Receipt printer is worked fine.
+2014-03-24 08:31:40.896 [AWT-EventQueue-0] DEBUG application.sale - Transaction finished. The window is closed.
+2014-03-24 08:50:18.743 [AWT-EventQueue-0] DEBUG application.sale - Starting function selesaiDanSimpan()
+2014-03-24 08:50:18.743 [AWT-EventQueue-0] DEBUG o.h.transaction.JDBCTransaction - begin
+2014-03-24 08:50:18.744 [AWT-EventQueue-0] DEBUG o.h.transaction.JDBCTransaction - current autocommit status: false
+2014-03-24 08:50:18.744 [AWT-EventQueue-0] DEBUG application.sale - Starting validation for transaction number SAL20140324083145
+2014-03-24 08:50:24.585 [AWT-EventQueue-0] DEBUG application.sale - Starting function selesaiDanSimpan()
+2014-03-24 08:50:24.585 [AWT-EventQueue-0] DEBUG o.h.transaction.JDBCTransaction - begin
+2014-03-24 08:50:24.586 [AWT-EventQueue-0] DEBUG o.h.transaction.JDBCTransaction - current autocommit status: false
+2014-03-24 08:50:24.586 [AWT-EventQueue-0] DEBUG application.sale - Starting validation for transaction number SAL20140324083145
+2014-03-24 08:50:24.587 [AWT-EventQueue-0] DEBUG application.sale - Finished validation for transaction number SAL20140324083145
+2014-03-24 08:50:24.587 [AWT-EventQueue-0] DEBUG application.sale - Preparation for item {0000000084|AQUA 1500 ML |6000.0|1|0.0|6000.0} is finished
+2014-03-24 08:50:24.587 [AWT-EventQueue-0] DEBUG application.sale - Starting to insert SaleHeader {SAL20140324083145|6000.0|0.0|6000.0|6000.0|0.0} into database
+2014-03-24 08:50:24.587 [AWT-EventQueue-0] DEBUG application.sale - Finished inserting SaleHeader into database, the generated id is 695
+2014-03-24 08:50:24.602 [AWT-EventQueue-0] DEBUG application.sale - Logging to ActivityLog is done
+2014-03-24 08:50:24.602 [AWT-EventQueue-0] DEBUG o.h.transaction.JDBCTransaction - commit
+2014-03-24 08:50:24.618 [AWT-EventQueue-0] DEBUG o.h.transaction.JDBCTransaction - committed JDBC Connection
+2014-03-24 08:50:24.618 [AWT-EventQueue-0] DEBUG application.sale - Transaction is commited succesfully
+2014-03-24 08:50:24.743 [AWT-EventQueue-0] DEBUG application.sale - Receipt printer is worked fine.
+2014-03-24 08:50:24.743 [AWT-EventQueue-0] DEBUG application.sale - Transaction finished. The window is closed.
+2014-03-24 08:53:02.369 [AWT-EventQueue-0] DEBUG application.sale - Starting function selesaiDanSimpan()
+2014-03-24 08:53:02.369 [AWT-EventQueue-0] DEBUG o.h.transaction.JDBCTransaction - begin
+2014-03-24 08:53:02.370 [AWT-EventQueue-0] DEBUG o.h.transaction.JDBCTransaction - current autocommit status: false
+2014-03-24 08:53:02.370 [AWT-EventQueue-0] DEBUG application.sale - Starting validation for transaction number SAL20140324085025
+2014-03-24 08:56:44.147 [AWT-EventQueue-0] DEBUG application.sale - Starting function selesaiDanSimpan()
+2014-03-24 08:56:44.147 [AWT-EventQueue-0] DEBUG o.h.transaction.JDBCTransaction - begin
+2014-03-24 08:56:44.148 [AWT-EventQueue-0] DEBUG o.h.transaction.JDBCTransaction - current autocommit status: false
+2014-03-24 08:56:44.148 [AWT-EventQueue-0] DEBUG application.sale - Starting validation for transaction number SAL20140324085025
+2014-03-24 08:57:06.244 [AWT-EventQueue-0] DEBUG application.sale - Starting function selesaiDanSimpan()
+2014-03-24 08:57:06.244 [AWT-EventQueue-0] DEBUG o.h.transaction.JDBCTransaction - begin
+2014-03-24 08:57:06.245 [AWT-EventQueue-0] DEBUG o.h.transaction.JDBCTransaction - current autocommit status: false
+2014-03-24 08:57:06.245 [AWT-EventQueue-0] DEBUG application.sale - Starting validation for transaction number SAL20140324085025
+2014-03-24 08:57:06.246 [AWT-EventQueue-0] DEBUG application.sale - Finished validation for transaction number SAL20140324085025
+2014-03-24 08:57:06.246 [AWT-EventQueue-0] DEBUG application.sale - Preparation for item {0000000355|NII GREEN TEA MADU 500 ML|6000.0|1|0.0|6000.0} is finished
+2014-03-24 08:57:06.246 [AWT-EventQueue-0] DEBUG application.sale - Preparation for item {0000000422|KEMPLANG PANGGANG BESAR|20000.0|1|0.0|20000.0} is finished
+2014-03-24 08:57:06.246 [AWT-EventQueue-0] DEBUG application.sale - Preparation for item {0000000196|MENTOS RASA BUAH 37 GR|3500.0|1|0.0|3500.0} is finished
+2014-03-24 08:57:06.246 [AWT-EventQueue-0] DEBUG application.sale - Preparation for item {0000000080|ALFA ONE 600 ML|3000.0|3|0.0|9000.0} is finished
+2014-03-24 08:57:06.246 [AWT-EventQueue-0] DEBUG application.sale - Preparation for item {0000000084|AQUA 1500 ML |6000.0|2|0.0|12000.0} is finished
+2014-03-24 08:57:06.246 [AWT-EventQueue-0] DEBUG application.sale - Preparation for item {0000000384|FANTA STROBERI 425ML|7000.0|1|0.0|7000.0} is finished
+2014-03-24 08:57:06.246 [AWT-EventQueue-0] DEBUG application.sale - Starting to insert SaleHeader {SAL20140324085025|57500.0|0.0|57500.0|100000.0|42500.0} into database
+2014-03-24 08:57:28.482 [AWT-EventQueue-0] DEBUG application.sale - Starting function selesaiDanSimpan()
+2014-03-24 08:57:28.482 [AWT-EventQueue-0] DEBUG o.h.transaction.JDBCTransaction - begin
+2014-03-24 08:57:28.483 [AWT-EventQueue-0] DEBUG o.h.transaction.JDBCTransaction - current autocommit status: false
+2014-03-24 08:57:28.483 [AWT-EventQueue-0] DEBUG application.sale - Starting validation for transaction number SAL20140324085025
+2014-03-24 08:57:28.484 [AWT-EventQueue-0] DEBUG application.sale - Finished validation for transaction number SAL20140324085025
+2014-03-24 08:57:28.484 [AWT-EventQueue-0] DEBUG application.sale - Preparation for item {0000000355|NII GREEN TEA MADU 500 ML|6000.0|1|0.0|6000.0} is finished
+2014-03-24 08:57:28.484 [AWT-EventQueue-0] DEBUG application.sale - Preparation for item {0000000422|KEMPLANG PANGGANG BESAR|20000.0|1|0.0|20000.0} is finished
+2014-03-24 08:57:28.484 [AWT-EventQueue-0] DEBUG application.sale - Preparation for item {0000000080|ALFA ONE 600 ML|3000.0|3|0.0|9000.0} is finished
+2014-03-24 08:57:28.484 [AWT-EventQueue-0] DEBUG application.sale - Preparation for item {0000000084|AQUA 1500 ML |6000.0|2|0.0|12000.0} is finished
+2014-03-24 08:57:28.484 [AWT-EventQueue-0] DEBUG application.sale - Preparation for item {0000000384|FANTA STROBERI 425ML|7000.0|1|0.0|7000.0} is finished
+2014-03-24 08:57:28.484 [AWT-EventQueue-0] DEBUG application.sale - Starting to insert SaleHeader {SAL20140324085025|54000.0|0.0|54000.0|100000.0|46000.0} into database
+2014-03-24 08:57:28.484 [AWT-EventQueue-0] WARN  o.h.util.JDBCExceptionReporter - SQL Error: 1062, SQLState: 23000
+2014-03-24 08:57:28.484 [AWT-EventQueue-0] ERROR o.h.util.JDBCExceptionReporter - Duplicate entry 'SAL20140324085025' for key 'TRANSACTION_NUMBER'
+2014-03-24 08:57:28.531 [AWT-EventQueue-0] ERROR application - could not insert: [com.ganesha.minimarket.model.SaleHeader]
+org.hibernate.exception.ConstraintViolationException: could not insert: [com.ganesha.minimarket.model.SaleHeader]
+	at org.hibernate.exception.SQLStateConverter.convert(SQLStateConverter.java:94) ~[hibernate-core-3.3.0.SP1.jar:3.3.0.SP1]
+	at org.hibernate.exception.JDBCExceptionHelper.convert(JDBCExceptionHelper.java:66) ~[hibernate-core-3.3.0.SP1.jar:3.3.0.SP1]
+	at org.hibernate.id.insert.AbstractReturningDelegate.performInsert(AbstractReturningDelegate.java:64) ~[hibernate-core-3.3.0.SP1.jar:3.3.0.SP1]
+	at org.hibernate.persister.entity.AbstractEntityPersister.insert(AbstractEntityPersister.java:2186) ~[hibernate-core-3.3.0.SP1.jar:3.3.0.SP1]
+	at org.hibernate.persister.entity.AbstractEntityPersister.insert(AbstractEntityPersister.java:2666) ~[hibernate-core-3.3.0.SP1.jar:3.3.0.SP1]
+	at org.hibernate.action.EntityIdentityInsertAction.execute(EntityIdentityInsertAction.java:71) ~[hibernate-core-3.3.0.SP1.jar:3.3.0.SP1]
+	at org.hibernate.engine.ActionQueue.execute(ActionQueue.java:279) ~[hibernate-core-3.3.0.SP1.jar:3.3.0.SP1]
+	at org.hibernate.event.def.AbstractSaveEventListener.performSaveOrReplicate(AbstractSaveEventListener.java:321) ~[hibernate-core-3.3.0.SP1.jar:3.3.0.SP1]
+	at org.hibernate.event.def.AbstractSaveEventListener.performSave(AbstractSaveEventListener.java:204) ~[hibernate-core-3.3.0.SP1.jar:3.3.0.SP1]
+	at org.hibernate.event.def.AbstractSaveEventListener.saveWithGeneratedId(AbstractSaveEventListener.java:130) ~[hibernate-core-3.3.0.SP1.jar:3.3.0.SP1]
+	at org.hibernate.event.def.DefaultSaveOrUpdateEventListener.saveWithGeneratedOrRequestedId(DefaultSaveOrUpdateEventListener.java:210) ~[hibernate-core-3.3.0.SP1.jar:3.3.0.SP1]
+	at org.hibernate.event.def.DefaultSaveOrUpdateEventListener.entityIsTransient(DefaultSaveOrUpdateEventListener.java:195) ~[hibernate-core-3.3.0.SP1.jar:3.3.0.SP1]
+	at org.hibernate.event.def.DefaultSaveOrUpdateEventListener.performSaveOrUpdate(DefaultSaveOrUpdateEventListener.java:117) ~[hibernate-core-3.3.0.SP1.jar:3.3.0.SP1]
+	at org.hibernate.event.def.DefaultSaveOrUpdateEventListener.onSaveOrUpdate(DefaultSaveOrUpdateEventListener.java:93) ~[hibernate-core-3.3.0.SP1.jar:3.3.0.SP1]
+	at org.hibernate.impl.SessionImpl.fireSaveOrUpdate(SessionImpl.java:534) ~[hibernate-core-3.3.0.SP1.jar:3.3.0.SP1]
+	at org.hibernate.impl.SessionImpl.saveOrUpdate(SessionImpl.java:526) ~[hibernate-core-3.3.0.SP1.jar:3.3.0.SP1]
+	at org.hibernate.impl.SessionImpl.saveOrUpdate(SessionImpl.java:522) ~[hibernate-core-3.3.0.SP1.jar:3.3.0.SP1]
+	at com.ganesha.minimarket.facade.SaleFacade.performSale(Unknown Source) ~[MiniMarketKK.jar:na]
+	at com.ganesha.minimarket.ui.forms.sale.PenjualanForm.selesaiDanSimpan(Unknown Source) [MiniMarketKK.jar:na]
+	at com.ganesha.minimarket.ui.forms.sale.PenjualanForm.access$900(Unknown Source) [MiniMarketKK.jar:na]
+	at com.ganesha.minimarket.ui.forms.sale.PenjualanForm$8.actionPerformed(Unknown Source) [MiniMarketKK.jar:na]
+	at javax.swing.AbstractButton.fireActionPerformed(Unknown Source) [na:1.7.0_45]
+	at javax.swing.AbstractButton$Handler.actionPerformed(Unknown Source) [na:1.7.0_45]
+	at javax.swing.DefaultButtonModel.fireActionPerformed(Unknown Source) [na:1.7.0_45]
+	at javax.swing.DefaultButtonModel.setPressed(Unknown Source) [na:1.7.0_45]
+	at javax.swing.AbstractButton.doClick(Unknown Source) [na:1.7.0_45]
+	at javax.swing.AbstractButton.doClick(Unknown Source) [na:1.7.0_45]
+	at com.ganesha.minimarket.ui.forms.sale.PenjualanForm.keyEventListener(Unknown Source) [MiniMarketKK.jar:na]
+	at com.ganesha.desktop.component.XJDialog$MyDispatcher.dispatchKeyEvent(Unknown Source) [MiniMarketKK.jar:na]
+	at java.awt.DefaultKeyboardFocusManager.preDispatchKeyEvent(Unknown Source) [na:1.7.0_45]
+	at java.awt.DefaultKeyboardFocusManager.typeAheadAssertions(Unknown Source) [na:1.7.0_45]
+	at java.awt.DefaultKeyboardFocusManager.dispatchEvent(Unknown Source) [na:1.7.0_45]
+	at java.awt.Component.dispatchEventImpl(Unknown Source) [na:1.7.0_45]
+	at java.awt.Container.dispatchEventImpl(Unknown Source) [na:1.7.0_45]
+	at java.awt.Window.dispatchEventImpl(Unknown Source) [na:1.7.0_45]
+	at java.awt.Component.dispatchEvent(Unknown Source) [na:1.7.0_45]
+	at java.awt.EventQueue.dispatchEventImpl(Unknown Source) [na:1.7.0_45]
+	at java.awt.EventQueue.access$200(Unknown Source) [na:1.7.0_45]
+	at java.awt.EventQueue$3.run(Unknown Source) [na:1.7.0_45]
+	at java.awt.EventQueue$3.run(Unknown Source) [na:1.7.0_45]
+	at java.security.AccessController.doPrivileged(Native Method) [na:1.7.0_45]
+	at java.security.ProtectionDomain$1.doIntersectionPrivilege(Unknown Source) [na:1.7.0_45]
+	at java.security.ProtectionDomain$1.doIntersectionPrivilege(Unknown Source) [na:1.7.0_45]
+	at java.awt.EventQueue$4.run(Unknown Source) [na:1.7.0_45]
+	at java.awt.EventQueue$4.run(Unknown Source) [na:1.7.0_45]
+	at java.security.AccessController.doPrivileged(Native Method) [na:1.7.0_45]
+	at java.security.ProtectionDomain$1.doIntersectionPrivilege(Unknown Source) [na:1.7.0_45]
+	at java.awt.EventQueue.dispatchEvent(Unknown Source) [na:1.7.0_45]
+	at java.awt.EventDispatchThread.pumpOneEventForFilters(Unknown Source) [na:1.7.0_45]
+	at java.awt.EventDispatchThread.pumpEventsForFilter(Unknown Source) [na:1.7.0_45]
+	at java.awt.EventDispatchThread.pumpEventsForFilter(Unknown Source) [na:1.7.0_45]
+	at java.awt.WaitDispatchSupport$2.run(Unknown Source) [na:1.7.0_45]
+	at java.awt.WaitDispatchSupport$4.run(Unknown Source) [na:1.7.0_45]
+	at java.security.AccessController.doPrivileged(Native Method) [na:1.7.0_45]
+	at java.awt.WaitDispatchSupport.enter(Unknown Source) [na:1.7.0_45]
+	at java.awt.Dialog.show(Unknown Source) [na:1.7.0_45]
+	at java.awt.Component.show(Unknown Source) [na:1.7.0_45]
+	at java.awt.Component.setVisible(Unknown Source) [na:1.7.0_45]
+	at java.awt.Window.setVisible(Unknown Source) [na:1.7.0_45]
+	at java.awt.Dialog.setVisible(Unknown Source) [na:1.7.0_45]
+	at com.ganesha.desktop.component.XJDialog.setVisible(Unknown Source) [MiniMarketKK.jar:na]
+	at com.ganesha.minimarket.ui.MainFrame$10.actionPerformed(Unknown Source) [MiniMarketKK.jar:na]
+	at javax.swing.AbstractButton.fireActionPerformed(Unknown Source) [na:1.7.0_45]
+	at javax.swing.AbstractButton$Handler.actionPerformed(Unknown Source) [na:1.7.0_45]
+	at javax.swing.DefaultButtonModel.fireActionPerformed(Unknown Source) [na:1.7.0_45]
+	at javax.swing.DefaultButtonModel.setPressed(Unknown Source) [na:1.7.0_45]
+	at javax.swing.AbstractButton.doClick(Unknown Source) [na:1.7.0_45]
+	at javax.swing.AbstractButton.doClick(Unknown Source) [na:1.7.0_45]
+	at com.ganesha.minimarket.ui.MainFrame$21.actionPerformed(Unknown Source) [MiniMarketKK.jar:na]
+	at javax.swing.AbstractButton.fireActionPerformed(Unknown Source) [na:1.7.0_45]
+	at javax.swing.AbstractButton$Handler.actionPerformed(Unknown Source) [na:1.7.0_45]
+	at javax.swing.DefaultButtonModel.fireActionPerformed(Unknown Source) [na:1.7.0_45]
+	at javax.swing.DefaultButtonModel.setPressed(Unknown Source) [na:1.7.0_45]
+	at javax.swing.AbstractButton.doClick(Unknown Source) [na:1.7.0_45]
+	at javax.swing.AbstractButton.doClick(Unknown Source) [na:1.7.0_45]
+	at com.ganesha.minimarket.ui.MainFrame.keyEventListener(Unknown Source) [MiniMarketKK.jar:na]
+	at com.ganesha.desktop.component.XJFrame$MyDispatcher.dispatchKeyEvent(Unknown Source) [MiniMarketKK.jar:na]
+	at java.awt.DefaultKeyboardFocusManager.preDispatchKeyEvent(Unknown Source) [na:1.7.0_45]
+	at java.awt.DefaultKeyboardFocusManager.typeAheadAssertions(Unknown Source) [na:1.7.0_45]
+	at java.awt.DefaultKeyboardFocusManager.dispatchEvent(Unknown Source) [na:1.7.0_45]
+	at java.awt.Component.dispatchEventImpl(Unknown Source) [na:1.7.0_45]
+	at java.awt.Container.dispatchEventImpl(Unknown Source) [na:1.7.0_45]
+	at java.awt.Window.dispatchEventImpl(Unknown Source) [na:1.7.0_45]
+	at java.awt.Component.dispatchEvent(Unknown Source) [na:1.7.0_45]
+	at java.awt.EventQueue.dispatchEventImpl(Unknown Source) [na:1.7.0_45]
+	at java.awt.EventQueue.access$200(Unknown Source) [na:1.7.0_45]
+	at java.awt.EventQueue$3.run(Unknown Source) [na:1.7.0_45]
+	at java.awt.EventQueue$3.run(Unknown Source) [na:1.7.0_45]
+	at java.security.AccessController.doPrivileged(Native Method) [na:1.7.0_45]
+	at java.security.ProtectionDomain$1.doIntersectionPrivilege(Unknown Source) [na:1.7.0_45]
+	at java.security.ProtectionDomain$1.doIntersectionPrivilege(Unknown Source) [na:1.7.0_45]
+	at java.awt.EventQueue$4.run(Unknown Source) [na:1.7.0_45]
+	at java.awt.EventQueue$4.run(Unknown Source) [na:1.7.0_45]
+	at java.security.AccessController.doPrivileged(Native Method) [na:1.7.0_45]
+	at java.security.ProtectionDomain$1.doIntersectionPrivilege(Unknown Source) [na:1.7.0_45]
+	at java.awt.EventQueue.dispatchEvent(Unknown Source) [na:1.7.0_45]
+	at java.awt.EventDispatchThread.pumpOneEventForFilters(Unknown Source) [na:1.7.0_45]
+	at java.awt.EventDispatchThread.pumpEventsForFilter(Unknown Source) [na:1.7.0_45]
+	at java.awt.EventDispatchThread.pumpEventsForHierarchy(Unknown Source) [na:1.7.0_45]
+	at java.awt.EventDispatchThread.pumpEvents(Unknown Source) [na:1.7.0_45]
+	at java.awt.EventDispatchThread.pumpEvents(Unknown Source) [na:1.7.0_45]
+	at java.awt.EventDispatchThread.run(Unknown Source) [na:1.7.0_45]
+Caused by: com.mysql.jdbc.exceptions.jdbc4.MySQLIntegrityConstraintViolationException: Duplicate entry 'SAL20140324085025' for key 'TRANSACTION_NUMBER'
+	at sun.reflect.NativeConstructorAccessorImpl.newInstance0(Native Method) ~[na:1.7.0_45]
+	at sun.reflect.NativeConstructorAccessorImpl.newInstance(Unknown Source) ~[na:1.7.0_45]
+	at sun.reflect.DelegatingConstructorAccessorImpl.newInstance(Unknown Source) ~[na:1.7.0_45]
+	at java.lang.reflect.Constructor.newInstance(Unknown Source) ~[na:1.7.0_45]
+	at com.mysql.jdbc.Util.handleNewInstance(Util.java:406) ~[mysql-connector-java-5.1.9.jar:na]
+	at com.mysql.jdbc.Util.getInstance(Util.java:381) ~[mysql-connector-java-5.1.9.jar:na]
+	at com.mysql.jdbc.SQLError.createSQLException(SQLError.java:1015) ~[mysql-connector-java-5.1.9.jar:na]
+	at com.mysql.jdbc.SQLError.createSQLException(SQLError.java:956) ~[mysql-connector-java-5.1.9.jar:na]
+	at com.mysql.jdbc.MysqlIO.checkErrorPacket(MysqlIO.java:3558) ~[mysql-connector-java-5.1.9.jar:na]
+	at com.mysql.jdbc.MysqlIO.checkErrorPacket(MysqlIO.java:3490) ~[mysql-connector-java-5.1.9.jar:na]
+	at com.mysql.jdbc.MysqlIO.sendCommand(MysqlIO.java:1959) ~[mysql-connector-java-5.1.9.jar:na]
+	at com.mysql.jdbc.MysqlIO.sqlQueryDirect(MysqlIO.java:2109) ~[mysql-connector-java-5.1.9.jar:na]
+	at com.mysql.jdbc.ConnectionImpl.execSQL(ConnectionImpl.java:2643) ~[mysql-connector-java-5.1.9.jar:na]
+	at com.mysql.jdbc.PreparedStatement.executeInternal(PreparedStatement.java:2077) ~[mysql-connector-java-5.1.9.jar:na]
+	at com.mysql.jdbc.PreparedStatement.executeUpdate(PreparedStatement.java:2362) ~[mysql-connector-java-5.1.9.jar:na]
+	at com.mysql.jdbc.PreparedStatement.executeUpdate(PreparedStatement.java:2280) ~[mysql-connector-java-5.1.9.jar:na]
+	at com.mysql.jdbc.PreparedStatement.executeUpdate(PreparedStatement.java:2265) ~[mysql-connector-java-5.1.9.jar:na]
+	at org.hibernate.id.IdentityGenerator$GetGeneratedKeysDelegate.executeAndExtract(IdentityGenerator.java:94) ~[hibernate-core-3.3.0.SP1.jar:3.3.0.SP1]
+	at org.hibernate.id.insert.AbstractReturningDelegate.performInsert(AbstractReturningDelegate.java:57) ~[hibernate-core-3.3.0.SP1.jar:3.3.0.SP1]
+	... 99 common frames omitted
+2014-03-24 08:57:53.897 [AWT-EventQueue-0] DEBUG application.sale - Starting function selesaiDanSimpan()
+2014-03-24 08:57:53.897 [AWT-EventQueue-0] DEBUG o.h.transaction.JDBCTransaction - begin
+2014-03-24 08:57:53.897 [AWT-EventQueue-0] DEBUG o.h.transaction.JDBCTransaction - current autocommit status: false
+2014-03-24 08:57:53.897 [AWT-EventQueue-0] DEBUG application.sale - Starting validation for transaction number SAL20140324085025
+2014-03-24 08:57:53.897 [AWT-EventQueue-0] DEBUG application.sale - Finished validation for transaction number SAL20140324085025
+2014-03-24 08:57:53.897 [AWT-EventQueue-0] DEBUG application.sale - Preparation for item {0000000355|NII GREEN TEA MADU 500 ML|6000.0|1|0.0|6000.0} is finished
+2014-03-24 08:57:53.897 [AWT-EventQueue-0] DEBUG application.sale - Preparation for item {0000000422|KEMPLANG PANGGANG BESAR|20000.0|1|0.0|20000.0} is finished
+2014-03-24 08:57:53.897 [AWT-EventQueue-0] DEBUG application.sale - Preparation for item {0000000080|ALFA ONE 600 ML|3000.0|3|0.0|9000.0} is finished
+2014-03-24 08:57:53.897 [AWT-EventQueue-0] DEBUG application.sale - Preparation for item {0000000084|AQUA 1500 ML |6000.0|2|0.0|12000.0} is finished
+2014-03-24 08:57:53.897 [AWT-EventQueue-0] DEBUG application.sale - Preparation for item {0000000384|FANTA STROBERI 425ML|7000.0|1|0.0|7000.0} is finished
+2014-03-24 08:57:53.897 [AWT-EventQueue-0] DEBUG application.sale - Starting to insert SaleHeader {SAL20140324085025|54000.0|0.0|54000.0|100000.0|46000.0} into database
+2014-03-24 08:57:53.897 [AWT-EventQueue-0] WARN  o.h.util.JDBCExceptionReporter - SQL Error: 1062, SQLState: 23000
+2014-03-24 08:57:53.897 [AWT-EventQueue-0] ERROR o.h.util.JDBCExceptionReporter - Duplicate entry 'SAL20140324085025' for key 'TRANSACTION_NUMBER'
+2014-03-24 08:57:53.912 [AWT-EventQueue-0] ERROR application - could not insert: [com.ganesha.minimarket.model.SaleHeader]
+org.hibernate.exception.ConstraintViolationException: could not insert: [com.ganesha.minimarket.model.SaleHeader]
+	at org.hibernate.exception.SQLStateConverter.convert(SQLStateConverter.java:94) ~[hibernate-core-3.3.0.SP1.jar:3.3.0.SP1]
+	at org.hibernate.exception.JDBCExceptionHelper.convert(JDBCExceptionHelper.java:66) ~[hibernate-core-3.3.0.SP1.jar:3.3.0.SP1]
+	at org.hibernate.id.insert.AbstractReturningDelegate.performInsert(AbstractReturningDelegate.java:64) ~[hibernate-core-3.3.0.SP1.jar:3.3.0.SP1]
+	at org.hibernate.persister.entity.AbstractEntityPersister.insert(AbstractEntityPersister.java:2186) ~[hibernate-core-3.3.0.SP1.jar:3.3.0.SP1]
+	at org.hibernate.persister.entity.AbstractEntityPersister.insert(AbstractEntityPersister.java:2666) ~[hibernate-core-3.3.0.SP1.jar:3.3.0.SP1]
+	at org.hibernate.action.EntityIdentityInsertAction.execute(EntityIdentityInsertAction.java:71) ~[hibernate-core-3.3.0.SP1.jar:3.3.0.SP1]
+	at org.hibernate.engine.ActionQueue.execute(ActionQueue.java:279) ~[hibernate-core-3.3.0.SP1.jar:3.3.0.SP1]
+	at org.hibernate.event.def.AbstractSaveEventListener.performSaveOrReplicate(AbstractSaveEventListener.java:321) ~[hibernate-core-3.3.0.SP1.jar:3.3.0.SP1]
+	at org.hibernate.event.def.AbstractSaveEventListener.performSave(AbstractSaveEventListener.java:204) ~[hibernate-core-3.3.0.SP1.jar:3.3.0.SP1]
+	at org.hibernate.event.def.AbstractSaveEventListener.saveWithGeneratedId(AbstractSaveEventListener.java:130) ~[hibernate-core-3.3.0.SP1.jar:3.3.0.SP1]
+	at org.hibernate.event.def.DefaultSaveOrUpdateEventListener.saveWithGeneratedOrRequestedId(DefaultSaveOrUpdateEventListener.java:210) ~[hibernate-core-3.3.0.SP1.jar:3.3.0.SP1]
+	at org.hibernate.event.def.DefaultSaveOrUpdateEventListener.entityIsTransient(DefaultSaveOrUpdateEventListener.java:195) ~[hibernate-core-3.3.0.SP1.jar:3.3.0.SP1]
+	at org.hibernate.event.def.DefaultSaveOrUpdateEventListener.performSaveOrUpdate(DefaultSaveOrUpdateEventListener.java:117) ~[hibernate-core-3.3.0.SP1.jar:3.3.0.SP1]
+	at org.hibernate.event.def.DefaultSaveOrUpdateEventListener.onSaveOrUpdate(DefaultSaveOrUpdateEventListener.java:93) ~[hibernate-core-3.3.0.SP1.jar:3.3.0.SP1]
+	at org.hibernate.impl.SessionImpl.fireSaveOrUpdate(SessionImpl.java:534) ~[hibernate-core-3.3.0.SP1.jar:3.3.0.SP1]
+	at org.hibernate.impl.SessionImpl.saveOrUpdate(SessionImpl.java:526) ~[hibernate-core-3.3.0.SP1.jar:3.3.0.SP1]
+	at org.hibernate.impl.SessionImpl.saveOrUpdate(SessionImpl.java:522) ~[hibernate-core-3.3.0.SP1.jar:3.3.0.SP1]
+	at com.ganesha.minimarket.facade.SaleFacade.performSale(Unknown Source) ~[MiniMarketKK.jar:na]
+	at com.ganesha.minimarket.ui.forms.sale.PenjualanForm.selesaiDanSimpan(Unknown Source) ~[MiniMarketKK.jar:na]
+	at com.ganesha.minimarket.ui.forms.sale.PenjualanForm.access$900(Unknown Source) ~[MiniMarketKK.jar:na]
+	at com.ganesha.minimarket.ui.forms.sale.PenjualanForm$8.actionPerformed(Unknown Source) [MiniMarketKK.jar:na]
+	at javax.swing.AbstractButton.fireActionPerformed(Unknown Source) [na:1.7.0_45]
+	at javax.swing.AbstractButton$Handler.actionPerformed(Unknown Source) [na:1.7.0_45]
+	at javax.swing.DefaultButtonModel.fireActionPerformed(Unknown Source) [na:1.7.0_45]
+	at javax.swing.DefaultButtonModel.setPressed(Unknown Source) [na:1.7.0_45]
+	at javax.swing.plaf.basic.BasicButtonListener.mouseReleased(Unknown Source) [na:1.7.0_45]
+	at java.awt.Component.processMouseEvent(Unknown Source) [na:1.7.0_45]
+	at javax.swing.JComponent.processMouseEvent(Unknown Source) [na:1.7.0_45]
+	at java.awt.Component.processEvent(Unknown Source) [na:1.7.0_45]
+	at java.awt.Container.processEvent(Unknown Source) [na:1.7.0_45]
+	at java.awt.Component.dispatchEventImpl(Unknown Source) [na:1.7.0_45]
+	at java.awt.Container.dispatchEventImpl(Unknown Source) [na:1.7.0_45]
+	at java.awt.Component.dispatchEvent(Unknown Source) [na:1.7.0_45]
+	at java.awt.LightweightDispatcher.retargetMouseEvent(Unknown Source) [na:1.7.0_45]
+	at java.awt.LightweightDispatcher.processMouseEvent(Unknown Source) [na:1.7.0_45]
+	at java.awt.LightweightDispatcher.dispatchEvent(Unknown Source) [na:1.7.0_45]
+	at java.awt.Container.dispatchEventImpl(Unknown Source) [na:1.7.0_45]
+	at java.awt.Window.dispatchEventImpl(Unknown Source) [na:1.7.0_45]
+	at java.awt.Component.dispatchEvent(Unknown Source) [na:1.7.0_45]
+	at java.awt.EventQueue.dispatchEventImpl(Unknown Source) [na:1.7.0_45]
+	at java.awt.EventQueue.access$200(Unknown Source) [na:1.7.0_45]
+	at java.awt.EventQueue$3.run(Unknown Source) [na:1.7.0_45]
+	at java.awt.EventQueue$3.run(Unknown Source) [na:1.7.0_45]
+	at java.security.AccessController.doPrivileged(Native Method) [na:1.7.0_45]
+	at java.security.ProtectionDomain$1.doIntersectionPrivilege(Unknown Source) [na:1.7.0_45]
+	at java.security.ProtectionDomain$1.doIntersectionPrivilege(Unknown Source) [na:1.7.0_45]
+	at java.awt.EventQueue$4.run(Unknown Source) [na:1.7.0_45]
+	at java.awt.EventQueue$4.run(Unknown Source) [na:1.7.0_45]
+	at java.security.AccessController.doPrivileged(Native Method) [na:1.7.0_45]
+	at java.security.ProtectionDomain$1.doIntersectionPrivilege(Unknown Source) [na:1.7.0_45]
+	at java.awt.EventQueue.dispatchEvent(Unknown Source) [na:1.7.0_45]
+	at java.awt.EventDispatchThread.pumpOneEventForFilters(Unknown Source) [na:1.7.0_45]
+	at java.awt.EventDispatchThread.pumpEventsForFilter(Unknown Source) [na:1.7.0_45]
+	at java.awt.EventDispatchThread.pumpEventsForFilter(Unknown Source) [na:1.7.0_45]
+	at java.awt.WaitDispatchSupport$2.run(Unknown Source) [na:1.7.0_45]
+	at java.awt.WaitDispatchSupport$4.run(Unknown Source) [na:1.7.0_45]
+	at java.security.AccessController.doPrivileged(Native Method) [na:1.7.0_45]
+	at java.awt.WaitDispatchSupport.enter(Unknown Source) [na:1.7.0_45]
+	at java.awt.Dialog.show(Unknown Source) [na:1.7.0_45]
+	at java.awt.Component.show(Unknown Source) [na:1.7.0_45]
+	at java.awt.Component.setVisible(Unknown Source) [na:1.7.0_45]
+	at java.awt.Window.setVisible(Unknown Source) [na:1.7.0_45]
+	at java.awt.Dialog.setVisible(Unknown Source) [na:1.7.0_45]
+	at com.ganesha.desktop.component.XJDialog.setVisible(Unknown Source) [MiniMarketKK.jar:na]
+	at com.ganesha.minimarket.ui.MainFrame$10.actionPerformed(Unknown Source) [MiniMarketKK.jar:na]
+	at javax.swing.AbstractButton.fireActionPerformed(Unknown Source) [na:1.7.0_45]
+	at javax.swing.AbstractButton$Handler.actionPerformed(Unknown Source) [na:1.7.0_45]
+	at javax.swing.DefaultButtonModel.fireActionPerformed(Unknown Source) [na:1.7.0_45]
+	at javax.swing.DefaultButtonModel.setPressed(Unknown Source) [na:1.7.0_45]
+	at javax.swing.AbstractButton.doClick(Unknown Source) [na:1.7.0_45]
+	at javax.swing.AbstractButton.doClick(Unknown Source) [na:1.7.0_45]
+	at com.ganesha.minimarket.ui.MainFrame$21.actionPerformed(Unknown Source) [MiniMarketKK.jar:na]
+	at javax.swing.AbstractButton.fireActionPerformed(Unknown Source) [na:1.7.0_45]
+	at javax.swing.AbstractButton$Handler.actionPerformed(Unknown Source) [na:1.7.0_45]
+	at javax.swing.DefaultButtonModel.fireActionPerformed(Unknown Source) [na:1.7.0_45]
+	at javax.swing.DefaultButtonModel.setPressed(Unknown Source) [na:1.7.0_45]
+	at javax.swing.AbstractButton.doClick(Unknown Source) [na:1.7.0_45]
+	at javax.swing.AbstractButton.doClick(Unknown Source) [na:1.7.0_45]
+	at com.ganesha.minimarket.ui.MainFrame.keyEventListener(Unknown Source) [MiniMarketKK.jar:na]
+	at com.ganesha.desktop.component.XJFrame$MyDispatcher.dispatchKeyEvent(Unknown Source) [MiniMarketKK.jar:na]
+	at java.awt.DefaultKeyboardFocusManager.preDispatchKeyEvent(Unknown Source) [na:1.7.0_45]
+	at java.awt.DefaultKeyboardFocusManager.typeAheadAssertions(Unknown Source) [na:1.7.0_45]
+	at java.awt.DefaultKeyboardFocusManager.dispatchEvent(Unknown Source) [na:1.7.0_45]
+	at java.awt.Component.dispatchEventImpl(Unknown Source) [na:1.7.0_45]
+	at java.awt.Container.dispatchEventImpl(Unknown Source) [na:1.7.0_45]
+	at java.awt.Window.dispatchEventImpl(Unknown Source) [na:1.7.0_45]
+	at java.awt.Component.dispatchEvent(Unknown Source) [na:1.7.0_45]
+	at java.awt.EventQueue.dispatchEventImpl(Unknown Source) [na:1.7.0_45]
+	at java.awt.EventQueue.access$200(Unknown Source) [na:1.7.0_45]
+	at java.awt.EventQueue$3.run(Unknown Source) [na:1.7.0_45]
+	at java.awt.EventQueue$3.run(Unknown Source) [na:1.7.0_45]
+	at java.security.AccessController.doPrivileged(Native Method) [na:1.7.0_45]
+	at java.security.ProtectionDomain$1.doIntersectionPrivilege(Unknown Source) [na:1.7.0_45]
+	at java.security.ProtectionDomain$1.doIntersectionPrivilege(Unknown Source) [na:1.7.0_45]
+	at java.awt.EventQueue$4.run(Unknown Source) [na:1.7.0_45]
+	at java.awt.EventQueue$4.run(Unknown Source) [na:1.7.0_45]
+	at java.security.AccessController.doPrivileged(Native Method) [na:1.7.0_45]
+	at java.security.ProtectionDomain$1.doIntersectionPrivilege(Unknown Source) [na:1.7.0_45]
+	at java.awt.EventQueue.dispatchEvent(Unknown Source) [na:1.7.0_45]
+	at java.awt.EventDispatchThread.pumpOneEventForFilters(Unknown Source) [na:1.7.0_45]
+	at java.awt.EventDispatchThread.pumpEventsForFilter(Unknown Source) [na:1.7.0_45]
+	at java.awt.EventDispatchThread.pumpEventsForHierarchy(Unknown Source) [na:1.7.0_45]
+	at java.awt.EventDispatchThread.pumpEvents(Unknown Source) [na:1.7.0_45]
+	at java.awt.EventDispatchThread.pumpEvents(Unknown Source) [na:1.7.0_45]
+	at java.awt.EventDispatchThread.run(Unknown Source) [na:1.7.0_45]
+Caused by: com.mysql.jdbc.exceptions.jdbc4.MySQLIntegrityConstraintViolationException: Duplicate entry 'SAL20140324085025' for key 'TRANSACTION_NUMBER'
+	at sun.reflect.NativeConstructorAccessorImpl.newInstance0(Native Method) ~[na:1.7.0_45]
+	at sun.reflect.NativeConstructorAccessorImpl.newInstance(Unknown Source) ~[na:1.7.0_45]
+	at sun.reflect.DelegatingConstructorAccessorImpl.newInstance(Unknown Source) ~[na:1.7.0_45]
+	at java.lang.reflect.Constructor.newInstance(Unknown Source) ~[na:1.7.0_45]
+	at com.mysql.jdbc.Util.handleNewInstance(Util.java:406) ~[mysql-connector-java-5.1.9.jar:na]
+	at com.mysql.jdbc.Util.getInstance(Util.java:381) ~[mysql-connector-java-5.1.9.jar:na]
+	at com.mysql.jdbc.SQLError.createSQLException(SQLError.java:1015) ~[mysql-connector-java-5.1.9.jar:na]
+	at com.mysql.jdbc.SQLError.createSQLException(SQLError.java:956) ~[mysql-connector-java-5.1.9.jar:na]
+	at com.mysql.jdbc.MysqlIO.checkErrorPacket(MysqlIO.java:3558) ~[mysql-connector-java-5.1.9.jar:na]
+	at com.mysql.jdbc.MysqlIO.checkErrorPacket(MysqlIO.java:3490) ~[mysql-connector-java-5.1.9.jar:na]
+	at com.mysql.jdbc.MysqlIO.sendCommand(MysqlIO.java:1959) ~[mysql-connector-java-5.1.9.jar:na]
+	at com.mysql.jdbc.MysqlIO.sqlQueryDirect(MysqlIO.java:2109) ~[mysql-connector-java-5.1.9.jar:na]
+	at com.mysql.jdbc.ConnectionImpl.execSQL(ConnectionImpl.java:2643) ~[mysql-connector-java-5.1.9.jar:na]
+	at com.mysql.jdbc.PreparedStatement.executeInternal(PreparedStatement.java:2077) ~[mysql-connector-java-5.1.9.jar:na]
+	at com.mysql.jdbc.PreparedStatement.executeUpdate(PreparedStatement.java:2362) ~[mysql-connector-java-5.1.9.jar:na]
+	at com.mysql.jdbc.PreparedStatement.executeUpdate(PreparedStatement.java:2280) ~[mysql-connector-java-5.1.9.jar:na]
+	at com.mysql.jdbc.PreparedStatement.executeUpdate(PreparedStatement.java:2265) ~[mysql-connector-java-5.1.9.jar:na]
+	at org.hibernate.id.IdentityGenerator$GetGeneratedKeysDelegate.executeAndExtract(IdentityGenerator.java:94) ~[hibernate-core-3.3.0.SP1.jar:3.3.0.SP1]
+	at org.hibernate.id.insert.AbstractReturningDelegate.performInsert(AbstractReturningDelegate.java:57) ~[hibernate-core-3.3.0.SP1.jar:3.3.0.SP1]
+	... 102 common frames omitted
