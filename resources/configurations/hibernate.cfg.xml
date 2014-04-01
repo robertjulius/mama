@@ -50,5 +50,8 @@
 		<mapping class="com.ganesha.minimarket.model.PayableTransaction" />
 		<mapping class="com.ganesha.minimarket.model.ReceivableSummary" />
 		<mapping class="com.ganesha.minimarket.model.ReceivableTransaction" />
+		<mapping class="com.ganesha.minimarket.model.SaleConstraintHeader" />
+		<mapping class="com.ganesha.minimarket.model.SaleConstraintDetail" />
+		<mapping class="com.ganesha.minimarket.model.SaleConstraintLog" />
 	</session-factory>
 </hibernate-configuration>

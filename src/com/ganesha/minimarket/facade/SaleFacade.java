@@ -146,7 +146,6 @@ public class SaleFacade implements TransactionFacade {
 
 		for (SaleDetail saleDetail : saleDetails) {
 
-			saleDetail.setSaleHeader(saleHeader);
 			session.saveOrUpdate(saleDetail);
 
 			Item item = itemFacade.getDetail(saleDetail.getItemId(), session);
@@ -245,7 +244,7 @@ public class SaleFacade implements TransactionFacade {
 		return header;
 	}
 
-	class PrintJobWatcher {
+	private class PrintJobWatcher {
 		boolean done = false;
 
 		PrintJobWatcher(DocPrintJob job) {

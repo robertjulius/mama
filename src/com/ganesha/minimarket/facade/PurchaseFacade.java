@@ -52,7 +52,6 @@ public class PurchaseFacade implements TransactionFacade {
 
 		for (PurchaseDetail purchaseDetail : purchaseDetails) {
 
-			purchaseDetail.setPurchaseHeader(purchaseHeader);
 			session.saveOrUpdate(purchaseDetail);
 
 			Item item = itemFacade.getDetail(purchaseDetail.getItemId(),

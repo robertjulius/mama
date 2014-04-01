@@ -538,6 +538,9 @@ public class ReturPembelianForm extends XJDialog {
 			for (int i = 0; i < rowCount; i++) {
 				PurchaseReturnDetail purchaseReturnDetail = new PurchaseReturnDetail();
 
+				purchaseReturnDetail
+						.setPurchaseReturnHeader(purchaseReturnHeader);
+
 				Integer purchaseDetailId = Formatter.formatStringToNumber(
 						table.getModel()
 								.getValueAt(
@@ -697,11 +700,9 @@ public class ReturPembelianForm extends XJDialog {
 			btnSelesai.setEnabled(true);
 			lblLunas.setVisible(true);
 			if (jumlahYangSudahDibereskan < total) {
-				lblSisa.setForeground(LBL_WARNING);
 				lblLunas.setText("PIUTANG");
 				lblLunas.setForeground(LBL_WARNING);
 			} else {
-				lblSisa.setForeground(LBL_NORMAL);
 				lblLunas.setText("LUNAS");
 				lblLunas.setForeground(COLOR_GOOD);
 			}

@@ -31,7 +31,12 @@
 [DONE] Activity Log
 [DONE] Error Logging
 [DONE] Calculator untuk hitung harga satuan
+[DONE] Default siklus untuk <Tidak ada siklus>
 [DONE] Popup untuk edit value di dalam table
+[DONE] Calculator untuk hitung harga satuan
+[DONE] Bikin Catatan Penjualan Temporer untuk handle stock yang kosong
+[DONE] ON/OFF receipt printer
+[DONE] Warna-warni untuk return pembelian -> Warna label sisa
 
 Restore DB
 Laporan Laba Rugi
@@ -59,12 +64,4 @@ payables
 purchases
 sales
 
-Default siklus untuk <Tidak ada siklus>
-Warna-warni untuk return pembelian -> Warna label sisa
-
-Popup untuk edit value di dalam table
-Calculator untuk hitung harga satuan
-
-
-Untuk form retur pembelian, tampilkan quantity pembelian & stock
 Font laporan terlalu besar

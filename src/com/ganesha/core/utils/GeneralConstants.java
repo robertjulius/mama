@@ -15,7 +15,7 @@ import com.ganesha.minimarket.constants.Enums.TransactionType;
 
 public class GeneralConstants {
 
-	public static final String VERSION = "v1.4.4";
+	public static final String VERSION = "v1.4.6";
 
 	public static final String USER_SESSION = "userSession";
 
@@ -87,6 +87,7 @@ public class GeneralConstants {
 	public static final String DECRIPTION_RECEIVABLE_PURCHASE_RETURN = "Piutang supplier untuk retur pembelian";
 
 	public static final String SYSTEM_SETTING_PRINTER_RECEIPT = "system.setting.printer.receipt";
+	public static final String SYSTEM_SETTING_PRINTER_RECEIPT_STATUS = "system.setting.printer.receipt.status";
 	public static final String SYSTEM_SETTING_MYSQL_USERNAME = "system.setting.mysql.username";
 	public static final String SYSTEM_SETTING_MYSQL_PASSWORD = "system.setting.mysql.password";
 	public static final String SYSTEM_SETTING_DBNAME = "system.setting.dbname";

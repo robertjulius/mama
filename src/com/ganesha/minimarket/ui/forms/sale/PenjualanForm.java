@@ -26,6 +26,7 @@ import net.miginfocom.swing.MigLayout;
 import org.hibernate.Session;
 import org.slf4j.LoggerFactory;
 
+import com.ganesha.core.SystemSetting;
 import com.ganesha.core.exception.AppException;
 import com.ganesha.core.exception.UserException;
 import com.ganesha.core.utils.CommonUtils;
@@ -421,6 +422,32 @@ public class PenjualanForm extends XJDialog {
 		}
 	}
 
+	protected void performSale(SaleHeader saleHeader,
+			List<SaleDetail> saleDetails, Session session) throws AppException,
+			UserException {
+
+		LoggerFactory.getLogger(Loggers.SALE).debug(
+				"Starting to insert SaleHeader {"
+						+ saleHeader.getTransactionNumber() + "|"
+						+ saleHeader.getSubTotalAmount() + "|"
+						+ saleHeader.getTaxAmount() + "|"
+						+ saleHeader.getTotalAmount() + "|"
+						+ saleHeader.getPay() + "|"
+						+ saleHeader.getMoneyChange() + "} into database");
+
+		SaleFacade.getInstance().performSale(saleHeader, saleDetails, session);
+
+		LoggerFactory.getLogger(Loggers.SALE).debug(
+				"Finished inserting SaleHeader into database, the generated id is "
+						+ saleHeader.getId());
+
+		ActivityLogFacade.doLog(getPermissionCode(), ActionType.TRANSACTION,
+				Main.getUserLogin(), saleHeader, session);
+
+		LoggerFactory.getLogger(Loggers.SALE).debug(
+				"Logging to ActivityLog is done");
+	}
+
 	private void batal() {
 		String message = "Apakah Anda yakin ingin membatalkan transaksi penjualan ini?";
 		int selectedOption = JOptionPane.showConfirmDialog(this, message,
@@ -497,7 +524,21 @@ public class PenjualanForm extends XJDialog {
 	}
 
 	private void printReceipt(SaleFacade facade, SaleHeader saleHeader,
-			List<SaleDetail> saleDetails) {
+			List<SaleDetail> saleDetails) throws UserException, AppException {
+
+		Boolean statusOn = (Boolean) SystemSetting
+				.get(GeneralConstants.SYSTEM_SETTING_PRINTER_RECEIPT_STATUS);
+		if (statusOn == null) {
+			String message = "Status Receipt Printer belum disetting. Lakukang setting terlebih dahulu melalui menu Setting > Receipt Printer Status";
+			UserExceptionHandler.handleException(this, message, null);
+			return;
+		}
+		if (!statusOn) {
+			String message = "Printer stuck tidak dilakukan karena settingnya diatur menjadi OFF";
+			UserExceptionHandler.handleException(this, message, null);
+			return;
+		}
+
 		try {
 			facade.cetakReceipt(saleHeader, saleDetails);
 			LoggerFactory.getLogger(Loggers.SALE).debug(
@@ -573,13 +614,14 @@ public class PenjualanForm extends XJDialog {
 					taxPercent, taxAmount, totalAmount, pay, moneyChange,
 					session);
 
-			LoggerFactory.getLogger(Loggers.SALE).debug(
-					"Validation finished");
+			LoggerFactory.getLogger(Loggers.SALE).debug("Validation finished");
 
 			List<SaleDetail> saleDetails = new ArrayList<>();
 			int rowCount = table.getRowCount();
 			for (int i = 0; i < rowCount; i++) {
 				SaleDetail saleDetail = new SaleDetail();
+
+				saleDetail.setSaleHeader(saleHeader);
 
 				saleDetail.setOrderNum(Formatter.formatStringToNumber(
 						table.getModel()
@@ -670,27 +712,7 @@ public class PenjualanForm extends XJDialog {
 				saleDetails.add(saleDetail);
 			}
 
-			LoggerFactory.getLogger(Loggers.SALE).debug(
-					"Starting to insert SaleHeader {"
-							+ saleHeader.getTransactionNumber() + "|"
-							+ saleHeader.getSubTotalAmount() + "|"
-							+ saleHeader.getTaxAmount() + "|"
-							+ saleHeader.getTotalAmount() + "|"
-							+ saleHeader.getPay() + "|"
-							+ saleHeader.getMoneyChange() + "} into database");
-
-			facade.performSale(saleHeader, saleDetails, session);
-
-			LoggerFactory.getLogger(Loggers.SALE).debug(
-					"Finished inserting SaleHeader into database, the generated id is "
-							+ saleHeader.getId());
-
-			ActivityLogFacade.doLog(getPermissionCode(),
-					ActionType.TRANSACTION, Main.getUserLogin(), saleHeader,
-					session);
-
-			LoggerFactory.getLogger(Loggers.SALE).debug(
-					"Logging to ActivityLog is done");
+			performSale(saleHeader, saleDetails, session);
 
 			session.getTransaction().commit();
 

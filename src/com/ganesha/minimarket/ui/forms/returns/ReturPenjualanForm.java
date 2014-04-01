@@ -400,6 +400,8 @@ public class ReturPenjualanForm extends XJDialog {
 			for (int i = 0; i < rowCount; i++) {
 				SaleReturnDetail saleReturnDetail = new SaleReturnDetail();
 
+				saleReturnDetail.setSaleReturnHeader(saleReturnHeader);
+
 				Integer saleDetailId = Formatter.formatStringToNumber(
 						table.getModel()
 								.getValueAt(

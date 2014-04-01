@@ -66,7 +66,6 @@ public class PurchaseReturnFacade implements TransactionFacade {
 
 		for (PurchaseReturnDetail purchaseReturnDetail : purchaseReturnDetails) {
 
-			purchaseReturnDetail.setPurchaseReturnHeader(purchaseReturnHeader);
 			session.saveOrUpdate(purchaseReturnDetail);
 
 			Item item = itemFacade.getDetail(purchaseReturnDetail

@@ -143,6 +143,22 @@ public class PermissionConsistencyChecker {
 				PermissionConstants.REVENUE_TRANSACTION_FORM,
 				"Revenue Transaction Form", 481));
 
+		// Transaction - Constraint - Penjualan
+		permissions.add(createPermission(
+				PermissionConstants.MN_TRX_CONSTRAINT_SAL,
+				"/Transaksi/Constraint/Transaksi Penjualan Constraint", 490));
+		permissions.add(createPermission(
+				PermissionConstants.CONSTRAINT_SAL_FORM,
+				"Sale Constraint Form", 491));
+
+		// Transaction - Constraint - Penjualan
+		permissions.add(createPermission(
+				PermissionConstants.MN_TRX_CONSTRAINT_SAL,
+				"/Transaksi/Constraint/Transaksi Penjualan Constraint", 490));
+		permissions.add(createPermission(
+				PermissionConstants.CONSTRAINT_SAL_FORM,
+				"Sale Constraint Form", 491));
+
 		// Back Office - Laporan - Laporan Transaksi
 		permissions.add(createPermission(PermissionConstants.MN_REPORT_TRX,
 				"/Back Office/Laporan/Laporan Transaksi", 510));
@@ -175,6 +191,25 @@ public class PermissionConsistencyChecker {
 				PermissionConstants.STOCKOPNAME_CONFIRM,
 				"Stock Opname Confirmation", 542));
 
+		// Back Office - Laporan - Laporan Penjualan Constraint
+		permissions.add(createPermission(
+				PermissionConstants.MN_REPORT_CONSTRAINT_SALE,
+				"/Back Office/Laporan/Laporan Penjualan Constraint", 550));
+		permissions.add(createPermission(
+				PermissionConstants.REPORT_CONSTRAINTSALE_LIST,
+				"Sale Constraint Report List", 551));
+
+		// Service Monitoring - Sale Constraint Posting Scheduler
+		permissions.add(createPermission(
+				PermissionConstants.MN_MON_SALCONSTRAINT_POSTING,
+				"/Service Monitoring/Posting Penjualan Constraint", 590));
+		permissions.add(createPermission(
+				PermissionConstants.SALECONSTRAINT_POSTINGMONITORING_LIST,
+				"Sale Constraint Posting Monitoring List", 591));
+		permissions.add(createPermission(
+				PermissionConstants.SALECONSTRAINT_POSTINGMONITORING_FORM,
+				"Sale Constraint Posting Monitoring Form", 592));
+
 		// Setting - Setting Database
 		permissions.add(createPermission(PermissionConstants.MN_SETTING_DB,
 				"/Setting/Database", 610));
@@ -189,7 +224,7 @@ public class PermissionConsistencyChecker {
 				PermissionConstants.SETTING_PRINTER_FORM,
 				"Setting Printer Form", 621));
 
-		// Setting - Setting Printer
+		// Setting - Problem Report Setting
 		permissions.add(createPermission(
 				PermissionConstants.MN_SETTING_PROBLEMREPORT,
 				"/Setting/Problem Report", 630));
@@ -197,13 +232,21 @@ public class PermissionConsistencyChecker {
 				PermissionConstants.SETTING_PROBLEMREPORT_FORM,
 				"Setting Problem Report Form", 631));
 
-		// Setting - Setting Printer
+		// Setting - DB Consistency Checker
 		permissions.add(createPermission(
 				PermissionConstants.MN_SETTING_DBCONSISTENCY,
 				"/Setting/Database Consistency", 640));
 		permissions.add(createPermission(
 				PermissionConstants.SETTING_DBCONSISTENCY,
 				"Database Consistency Checker", 641));
+
+		// Setting - Receipt Printer Status
+		permissions.add(createPermission(
+				PermissionConstants.MN_SETTING_RECEIPTPRINTERSTATUS,
+				"/Setting/Receipt Printer Status", 650));
+		permissions.add(createPermission(
+				PermissionConstants.SETTING_RECEIPTPRINTERSTATUS,
+				"Receipt Printer Status", 651));
 	}
 
 	public void initDB() {

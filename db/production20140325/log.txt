@@ -262,3 +262,1050 @@ Caused by: com.mysql.jdbc.exceptions.jdbc4.MySQLIntegrityConstraintViolationExce
 2014-03-25 14:02:31.107 [AWT-EventQueue-0] TRACE application.window.button - Button com.ganesha.minimarket.ui.forms.login.LoginForm_Login is clicked
 2014-03-25 14:02:40.296 [AWT-EventQueue-0] TRACE application.window - Access to open com.ganesha.minimarket.ui.forms.sale.PenjualanForm is permitted, the window will open
 2014-03-25 14:02:43.634 [AWT-EventQueue-0] TRACE application.window.button - Button com.ganesha.minimarket.ui.forms.sale.PenjualanForm_<html><center>Batal<br/>[Alt+Q]</center></html> is clicked
+2014-03-25 14:03:49.123 [main] WARN  org.hibernate.mapping.RootClass - composite-id class does not override equals(): com.ganesha.model.UserRoleLinkPK
+2014-03-25 14:03:49.123 [main] WARN  org.hibernate.mapping.RootClass - composite-id class does not override hashCode(): com.ganesha.model.UserRoleLinkPK
+2014-03-25 14:03:49.123 [main] WARN  org.hibernate.mapping.RootClass - composite-id class does not override equals(): com.ganesha.model.RolePermissionLinkPK
+2014-03-25 14:03:49.123 [main] WARN  org.hibernate.mapping.RootClass - composite-id class does not override hashCode(): com.ganesha.model.RolePermissionLinkPK
+2014-03-25 14:03:49.123 [main] WARN  o.h.c.DriverManagerConnectionProvider - no JDBC Driver class was specified by property hibernate.connection.driver_class
+2014-03-25 14:03:49.326 [main] INFO  o.h.t.TransactionFactoryFactory - Using default transaction strategy (direct JDBC transactions)
+2014-03-25 14:03:49.326 [main] INFO  o.h.t.TransactionManagerLookupFactory - No TransactionManagerLookup configured (in JTA environment, use of read-write or transactional second-level cache is not recommended)
+2014-03-25 14:12:37.418 [main] WARN  org.hibernate.mapping.RootClass - composite-id class does not override equals(): com.ganesha.model.UserRoleLinkPK
+2014-03-25 14:12:37.418 [main] WARN  org.hibernate.mapping.RootClass - composite-id class does not override hashCode(): com.ganesha.model.UserRoleLinkPK
+2014-03-25 14:12:37.418 [main] WARN  org.hibernate.mapping.RootClass - composite-id class does not override equals(): com.ganesha.model.RolePermissionLinkPK
+2014-03-25 14:12:37.418 [main] WARN  org.hibernate.mapping.RootClass - composite-id class does not override hashCode(): com.ganesha.model.RolePermissionLinkPK
+2014-03-25 14:12:37.418 [main] WARN  o.h.c.DriverManagerConnectionProvider - no JDBC Driver class was specified by property hibernate.connection.driver_class
+2014-03-25 14:12:37.621 [main] INFO  o.h.t.TransactionFactoryFactory - Using default transaction strategy (direct JDBC transactions)
+2014-03-25 14:12:37.621 [main] INFO  o.h.t.TransactionManagerLookupFactory - No TransactionManagerLookup configured (in JTA environment, use of read-write or transactional second-level cache is not recommended)
+2014-03-25 14:12:48.375 [AWT-EventQueue-0] TRACE application.window.button - Button com.ganesha.minimarket.ui.forms.login.LoginForm_Login is clicked
+2014-03-25 14:12:50.021 [AWT-EventQueue-0] TRACE application.window.button - Button com.ganesha.minimarket.ui.MainFrame_<html><center>Transaksi Penjualan<br/>[F5]</center></html> is clicked
+2014-03-25 14:12:50.247 [AWT-EventQueue-0] TRACE application.window - Access to open com.ganesha.minimarket.ui.forms.sale.PenjualanForm is permitted, the window will open
+2014-03-25 14:13:14.402 [AWT-EventQueue-0] TRACE application.window.button - Button com.ganesha.minimarket.ui.forms.sale.PenjualanForm_<html><center>Selesai & Simpan Data<br/>[F12]</center></html> is clicked
+2014-03-25 14:13:14.402 [AWT-EventQueue-0] DEBUG application.sale - Starting function selesaiDanSimpan()
+2014-03-25 14:13:14.404 [AWT-EventQueue-0] DEBUG o.h.transaction.JDBCTransaction - begin
+2014-03-25 14:13:14.404 [AWT-EventQueue-0] DEBUG o.h.transaction.JDBCTransaction - current autocommit status: false
+2014-03-25 14:13:14.404 [AWT-EventQueue-0] DEBUG application.sale - Starting validation for transaction number SAL20140325141250
+2014-03-25 14:13:14.404 [AWT-EventQueue-0] DEBUG application.sale - Validation finished
+2014-03-25 14:13:14.404 [AWT-EventQueue-0] DEBUG application.sale - Preparation for item {0000000355|NII GREEN TEA MADU 500 ML|6000.0|1|0.0|6000.0} is finished
+2014-03-25 14:13:14.404 [AWT-EventQueue-0] DEBUG application.sale - Starting to insert SaleHeader {SAL20140325141250|6000.0|0.0|6000.0|50000.0|44000.0} into database
+2014-03-25 14:13:14.435 [AWT-EventQueue-0] DEBUG application.sale - Finished inserting SaleHeader into database, the generated id is 755
+2014-03-25 14:13:14.435 [AWT-EventQueue-0] DEBUG application.sale - Logging to ActivityLog is done
+2014-03-25 14:13:14.435 [AWT-EventQueue-0] DEBUG o.h.transaction.JDBCTransaction - commit
+2014-03-25 14:13:14.466 [AWT-EventQueue-0] DEBUG o.h.transaction.JDBCTransaction - committed JDBC Connection
+2014-03-25 14:13:14.466 [AWT-EventQueue-0] DEBUG application.sale - Transaction is commited succesfully
+2014-03-25 14:13:14.606 [AWT-EventQueue-0] DEBUG application.sale - Receipt printer is worked fine.
+2014-03-25 14:13:14.606 [AWT-EventQueue-0] DEBUG application.sale - Transaction finished. The window is closed.
+2014-03-25 14:14:12.208 [AWT-EventQueue-0] TRACE application.window.button - Button com.ganesha.minimarket.ui.MainFrame_<html><center>Transaksi Penjualan<br/>[F5]</center></html> is clicked
+2014-03-25 14:14:12.371 [AWT-EventQueue-0] TRACE application.window - Access to open com.ganesha.minimarket.ui.forms.sale.PenjualanForm is permitted, the window will open
+2014-03-25 14:15:02.110 [AWT-EventQueue-0] TRACE application.window.button - Button com.ganesha.minimarket.ui.MainFrame_<html><center>Cari Barang<br/>[F6]</center></html> is clicked
+2014-03-25 14:15:05.175 [AWT-EventQueue-0] TRACE application.window.button - Button com.ganesha.minimarket.ui.forms.searchentity.SearchEntityDialog_<html><center>Pilih<br/>[Enter]</center><html> is clicked
+2014-03-25 14:15:07.741 [AWT-EventQueue-0] TRACE application.window.button - Button com.ganesha.minimarket.ui.MainFrame_<html><center>Cari Barang<br/>[F6]</center></html> is clicked
+2014-03-25 14:15:11.431 [AWT-EventQueue-0] TRACE application.window.button - Button com.ganesha.minimarket.ui.forms.searchentity.SearchEntityDialog_<html><center>Pilih<br/>[Enter]</center><html> is clicked
+2014-03-25 14:15:49.534 [AWT-EventQueue-0] TRACE application.window.button - Button com.ganesha.minimarket.ui.forms.sale.PenjualanForm_<html><center>Selesai & Simpan Data<br/>[F12]</center></html> is clicked
+2014-03-25 14:15:49.534 [AWT-EventQueue-0] DEBUG application.sale - Starting function selesaiDanSimpan()
+2014-03-25 14:15:49.534 [AWT-EventQueue-0] DEBUG o.h.transaction.JDBCTransaction - begin
+2014-03-25 14:15:49.535 [AWT-EventQueue-0] DEBUG o.h.transaction.JDBCTransaction - current autocommit status: false
+2014-03-25 14:15:49.535 [AWT-EventQueue-0] DEBUG application.sale - Starting validation for transaction number SAL20140325141412
+2014-03-25 14:15:49.536 [AWT-EventQueue-0] DEBUG application.sale - Validation finished
+2014-03-25 14:15:49.536 [AWT-EventQueue-0] DEBUG application.sale - Preparation for item {0000000405|ROKOK SAMPOERNA 16|15000.0|1|0.0|15000.0} is finished
+2014-03-25 14:15:49.536 [AWT-EventQueue-0] DEBUG application.sale - Preparation for item {0000000352|KRATINGDAENG 150 ML|5000.0|1|0.0|5000.0} is finished
+2014-03-25 14:15:49.536 [AWT-EventQueue-0] DEBUG application.sale - Preparation for item {0000000035|PULPY ORANGE 350 ML|7000.0|1|0.0|7000.0} is finished
+2014-03-25 14:15:49.536 [AWT-EventQueue-0] DEBUG application.sale - Preparation for item {0000000084|AQUA 1500 ML |6000.0|2|0.0|12000.0} is finished
+2014-03-25 14:15:49.536 [AWT-EventQueue-0] DEBUG application.sale - Preparation for item {0000000193|KOREK API TOKAI|3000.0|1|0.0|3000.0} is finished
+2014-03-25 14:15:49.536 [AWT-EventQueue-0] DEBUG application.sale - Starting to insert SaleHeader {SAL20140325141412|42000.0|0.0|42000.0|100000.0|58000.0} into database
+2014-03-25 14:15:49.583 [AWT-EventQueue-0] DEBUG application.sale - Finished inserting SaleHeader into database, the generated id is 756
+2014-03-25 14:15:49.583 [AWT-EventQueue-0] DEBUG application.sale - Logging to ActivityLog is done
+2014-03-25 14:15:49.583 [AWT-EventQueue-0] DEBUG o.h.transaction.JDBCTransaction - commit
+2014-03-25 14:15:49.614 [AWT-EventQueue-0] DEBUG o.h.transaction.JDBCTransaction - committed JDBC Connection
+2014-03-25 14:15:49.614 [AWT-EventQueue-0] DEBUG application.sale - Transaction is commited succesfully
+2014-03-25 14:15:49.723 [AWT-EventQueue-0] DEBUG application.sale - Receipt printer is worked fine.
+2014-03-25 14:15:49.723 [AWT-EventQueue-0] DEBUG application.sale - Transaction finished. The window is closed.
+2014-03-25 14:15:50.993 [AWT-EventQueue-0] TRACE application.window.button - Button com.ganesha.minimarket.ui.MainFrame_<html><center>Transaksi Penjualan<br/>[F5]</center></html> is clicked
+2014-03-25 14:15:51.125 [AWT-EventQueue-0] TRACE application.window - Access to open com.ganesha.minimarket.ui.forms.sale.PenjualanForm is permitted, the window will open
+2014-03-25 14:16:31.753 [AWT-EventQueue-0] TRACE application.window.button - Button com.ganesha.minimarket.ui.MainFrame_<html><center>Cari Barang<br/>[F6]</center></html> is clicked
+2014-03-25 14:16:59.233 [AWT-EventQueue-0] TRACE application.window.button - Button com.ganesha.minimarket.ui.forms.searchentity.SearchEntityDialog_<html><center>Pilih<br/>[Enter]</center><html> is clicked
+2014-03-25 14:18:10.033 [AWT-EventQueue-0] TRACE application.window.button - Button com.ganesha.minimarket.ui.forms.sale.PenjualanForm_<html><center>Selesai & Simpan Data<br/>[F12]</center></html> is clicked
+2014-03-25 14:18:10.033 [AWT-EventQueue-0] DEBUG application.sale - Starting function selesaiDanSimpan()
+2014-03-25 14:18:10.033 [AWT-EventQueue-0] DEBUG o.h.transaction.JDBCTransaction - begin
+2014-03-25 14:18:10.034 [AWT-EventQueue-0] DEBUG o.h.transaction.JDBCTransaction - current autocommit status: false
+2014-03-25 14:18:10.034 [AWT-EventQueue-0] DEBUG application.sale - Starting validation for transaction number SAL20140325141551
+2014-03-25 14:18:10.035 [AWT-EventQueue-0] DEBUG application.sale - Validation finished
+2014-03-25 14:18:10.035 [AWT-EventQueue-0] DEBUG application.sale - Preparation for item {0000000470|KEMPLANG BOLA KERITING|20000.0|3|0.0|60000.0} is finished
+2014-03-25 14:18:10.035 [AWT-EventQueue-0] DEBUG application.sale - Preparation for item {0000000489|LASEGAR RASA STAWBERI|6000.0|1|0.0|6000.0} is finished
+2014-03-25 14:18:10.035 [AWT-EventQueue-0] DEBUG application.sale - Starting to insert SaleHeader {SAL20140325141551|66000.0|0.0|66000.0|66000.0|0.0} into database
+2014-03-25 14:18:10.051 [AWT-EventQueue-0] DEBUG application.sale - Finished inserting SaleHeader into database, the generated id is 757
+2014-03-25 14:18:10.051 [AWT-EventQueue-0] DEBUG application.sale - Logging to ActivityLog is done
+2014-03-25 14:18:10.051 [AWT-EventQueue-0] DEBUG o.h.transaction.JDBCTransaction - commit
+2014-03-25 14:18:10.082 [AWT-EventQueue-0] DEBUG o.h.transaction.JDBCTransaction - committed JDBC Connection
+2014-03-25 14:18:10.082 [AWT-EventQueue-0] DEBUG application.sale - Transaction is commited succesfully
+2014-03-25 14:18:10.191 [AWT-EventQueue-0] DEBUG application.sale - Receipt printer is worked fine.
+2014-03-25 14:18:10.191 [AWT-EventQueue-0] DEBUG application.sale - Transaction finished. The window is closed.
+2014-03-25 14:18:11.383 [AWT-EventQueue-0] TRACE application.window.button - Button com.ganesha.minimarket.ui.MainFrame_<html><center>Transaksi Penjualan<br/>[F5]</center></html> is clicked
+2014-03-25 14:18:11.515 [AWT-EventQueue-0] TRACE application.window - Access to open com.ganesha.minimarket.ui.forms.sale.PenjualanForm is permitted, the window will open
+2014-03-25 14:18:53.563 [AWT-EventQueue-0] TRACE application.window.button - Button com.ganesha.minimarket.ui.forms.sale.PenjualanForm_<html><center>Selesai & Simpan Data<br/>[F12]</center></html> is clicked
+2014-03-25 14:18:53.563 [AWT-EventQueue-0] DEBUG application.sale - Starting function selesaiDanSimpan()
+2014-03-25 14:18:53.563 [AWT-EventQueue-0] DEBUG o.h.transaction.JDBCTransaction - begin
+2014-03-25 14:18:53.564 [AWT-EventQueue-0] DEBUG o.h.transaction.JDBCTransaction - current autocommit status: false
+2014-03-25 14:18:53.564 [AWT-EventQueue-0] DEBUG application.sale - Starting validation for transaction number SAL20140325141811
+2014-03-25 14:18:53.565 [AWT-EventQueue-0] DEBUG application.sale - Validation finished
+2014-03-25 14:18:53.565 [AWT-EventQueue-0] DEBUG application.sale - Preparation for item {0000000509|MIZONE ORANG|6000.0|1|0.0|6000.0} is finished
+2014-03-25 14:18:53.565 [AWT-EventQueue-0] DEBUG application.sale - Preparation for item {0000000404|ROKOK CLASMILD|14000.0|1|0.0|14000.0} is finished
+2014-03-25 14:18:53.565 [AWT-EventQueue-0] DEBUG application.sale - Starting to insert SaleHeader {SAL20140325141811|20000.0|0.0|20000.0|100000.0|80000.0} into database
+2014-03-25 14:18:53.581 [AWT-EventQueue-0] DEBUG application.sale - Finished inserting SaleHeader into database, the generated id is 758
+2014-03-25 14:18:53.581 [AWT-EventQueue-0] DEBUG application.sale - Logging to ActivityLog is done
+2014-03-25 14:18:53.581 [AWT-EventQueue-0] DEBUG o.h.transaction.JDBCTransaction - commit
+2014-03-25 14:18:53.612 [AWT-EventQueue-0] DEBUG o.h.transaction.JDBCTransaction - committed JDBC Connection
+2014-03-25 14:18:53.612 [AWT-EventQueue-0] DEBUG application.sale - Transaction is commited succesfully
+2014-03-25 14:18:53.737 [AWT-EventQueue-0] DEBUG application.sale - Receipt printer is worked fine.
+2014-03-25 14:18:53.737 [AWT-EventQueue-0] DEBUG application.sale - Transaction finished. The window is closed.
+2014-03-25 14:28:35.499 [AWT-EventQueue-0] TRACE application.window.button - Button com.ganesha.minimarket.ui.MainFrame_<html><center>Transaksi Penjualan<br/>[F5]</center></html> is clicked
+2014-03-25 14:28:35.631 [AWT-EventQueue-0] TRACE application.window - Access to open com.ganesha.minimarket.ui.forms.sale.PenjualanForm is permitted, the window will open
+2014-03-25 14:33:02.600 [AWT-EventQueue-0] TRACE application.window.button - Button com.ganesha.minimarket.ui.MainFrame_<html><center>Cari Barang<br/>[F6]</center></html> is clicked
+2014-03-25 14:33:08.786 [AWT-EventQueue-0] TRACE application.window.button - Button com.ganesha.minimarket.ui.forms.searchentity.SearchEntityDialog_<html><center>Pilih<br/>[Enter]</center><html> is clicked
+2014-03-25 14:33:14.690 [AWT-EventQueue-0] TRACE application.window.button - Button com.ganesha.minimarket.ui.forms.sale.PenjualanForm_<html><center>Selesai & Simpan Data<br/>[F12]</center></html> is clicked
+2014-03-25 14:33:14.690 [AWT-EventQueue-0] DEBUG application.sale - Starting function selesaiDanSimpan()
+2014-03-25 14:33:14.690 [AWT-EventQueue-0] DEBUG o.h.transaction.JDBCTransaction - begin
+2014-03-25 14:33:14.691 [AWT-EventQueue-0] DEBUG o.h.transaction.JDBCTransaction - current autocommit status: false
+2014-03-25 14:33:14.691 [AWT-EventQueue-0] DEBUG application.sale - Starting validation for transaction number SAL20140325142835
+2014-03-25 14:33:14.692 [AWT-EventQueue-0] DEBUG application.sale - Validation finished
+2014-03-25 14:33:14.692 [AWT-EventQueue-0] DEBUG application.sale - Preparation for item {0000000059|OT TANGO CRUNCH CAKE 80 GR|6000.0|1|0.0|6000.0} is finished
+2014-03-25 14:33:14.692 [AWT-EventQueue-0] DEBUG application.sale - Preparation for item {0000000429|KACANG TELUR|1000.0|2|0.0|2000.0} is finished
+2014-03-25 14:33:14.692 [AWT-EventQueue-0] DEBUG application.sale - Starting to insert SaleHeader {SAL20140325142835|8000.0|0.0|8000.0|8000.0|0.0} into database
+2014-03-25 14:33:14.708 [AWT-EventQueue-0] DEBUG application.sale - Finished inserting SaleHeader into database, the generated id is 759
+2014-03-25 14:33:14.708 [AWT-EventQueue-0] DEBUG application.sale - Logging to ActivityLog is done
+2014-03-25 14:33:14.708 [AWT-EventQueue-0] DEBUG o.h.transaction.JDBCTransaction - commit
+2014-03-25 14:33:14.739 [AWT-EventQueue-0] DEBUG o.h.transaction.JDBCTransaction - committed JDBC Connection
+2014-03-25 14:33:14.739 [AWT-EventQueue-0] DEBUG application.sale - Transaction is commited succesfully
+2014-03-25 14:33:14.739 [AWT-EventQueue-0] ERROR application - Printer is not accepting job.
+javax.print.PrintException: Printer is not accepting job.
+	at sun.print.Win32PrintJob.print(Unknown Source) ~[na:1.7.0_45]
+	at com.ganesha.minimarket.facade.SaleFacade.cetakReceipt(Unknown Source) ~[MiniMarketKK.jar:na]
+	at com.ganesha.minimarket.ui.forms.sale.PenjualanForm.printReceipt(Unknown Source) [MiniMarketKK.jar:na]
+	at com.ganesha.minimarket.ui.forms.sale.PenjualanForm.selesaiDanSimpan(Unknown Source) [MiniMarketKK.jar:na]
+	at com.ganesha.minimarket.ui.forms.sale.PenjualanForm.access$900(Unknown Source) [MiniMarketKK.jar:na]
+	at com.ganesha.minimarket.ui.forms.sale.PenjualanForm$8.actionPerformed(Unknown Source) [MiniMarketKK.jar:na]
+	at com.ganesha.desktop.component.XJButton.fireActionPerformed(Unknown Source) [MiniMarketKK.jar:na]
+	at javax.swing.AbstractButton$Handler.actionPerformed(Unknown Source) [na:1.7.0_45]
+	at javax.swing.DefaultButtonModel.fireActionPerformed(Unknown Source) [na:1.7.0_45]
+	at javax.swing.DefaultButtonModel.setPressed(Unknown Source) [na:1.7.0_45]
+	at javax.swing.AbstractButton.doClick(Unknown Source) [na:1.7.0_45]
+	at javax.swing.AbstractButton.doClick(Unknown Source) [na:1.7.0_45]
+	at com.ganesha.minimarket.ui.forms.sale.PenjualanForm.keyEventListener(Unknown Source) [MiniMarketKK.jar:na]
+	at com.ganesha.desktop.component.XJDialog$MyDispatcher.dispatchKeyEvent(Unknown Source) [MiniMarketKK.jar:na]
+	at java.awt.DefaultKeyboardFocusManager.preDispatchKeyEvent(Unknown Source) [na:1.7.0_45]
+	at java.awt.DefaultKeyboardFocusManager.typeAheadAssertions(Unknown Source) [na:1.7.0_45]
+	at java.awt.DefaultKeyboardFocusManager.dispatchEvent(Unknown Source) [na:1.7.0_45]
+	at java.awt.Component.dispatchEventImpl(Unknown Source) [na:1.7.0_45]
+	at java.awt.Container.dispatchEventImpl(Unknown Source) [na:1.7.0_45]
+	at java.awt.Window.dispatchEventImpl(Unknown Source) [na:1.7.0_45]
+	at java.awt.Component.dispatchEvent(Unknown Source) [na:1.7.0_45]
+	at java.awt.EventQueue.dispatchEventImpl(Unknown Source) [na:1.7.0_45]
+	at java.awt.EventQueue.access$200(Unknown Source) [na:1.7.0_45]
+	at java.awt.EventQueue$3.run(Unknown Source) [na:1.7.0_45]
+	at java.awt.EventQueue$3.run(Unknown Source) [na:1.7.0_45]
+	at java.security.AccessController.doPrivileged(Native Method) [na:1.7.0_45]
+	at java.security.ProtectionDomain$1.doIntersectionPrivilege(Unknown Source) [na:1.7.0_45]
+	at java.security.ProtectionDomain$1.doIntersectionPrivilege(Unknown Source) [na:1.7.0_45]
+	at java.awt.EventQueue$4.run(Unknown Source) [na:1.7.0_45]
+	at java.awt.EventQueue$4.run(Unknown Source) [na:1.7.0_45]
+	at java.security.AccessController.doPrivileged(Native Method) [na:1.7.0_45]
+	at java.security.ProtectionDomain$1.doIntersectionPrivilege(Unknown Source) [na:1.7.0_45]
+	at java.awt.EventQueue.dispatchEvent(Unknown Source) [na:1.7.0_45]
+	at java.awt.EventDispatchThread.pumpOneEventForFilters(Unknown Source) [na:1.7.0_45]
+	at java.awt.EventDispatchThread.pumpEventsForFilter(Unknown Source) [na:1.7.0_45]
+	at java.awt.EventDispatchThread.pumpEventsForFilter(Unknown Source) [na:1.7.0_45]
+	at java.awt.WaitDispatchSupport$2.run(Unknown Source) [na:1.7.0_45]
+	at java.awt.WaitDispatchSupport$4.run(Unknown Source) [na:1.7.0_45]
+	at java.security.AccessController.doPrivileged(Native Method) [na:1.7.0_45]
+	at java.awt.WaitDispatchSupport.enter(Unknown Source) [na:1.7.0_45]
+	at java.awt.Dialog.show(Unknown Source) [na:1.7.0_45]
+	at java.awt.Component.show(Unknown Source) [na:1.7.0_45]
+	at java.awt.Component.setVisible(Unknown Source) [na:1.7.0_45]
+	at java.awt.Window.setVisible(Unknown Source) [na:1.7.0_45]
+	at java.awt.Dialog.setVisible(Unknown Source) [na:1.7.0_45]
+	at com.ganesha.desktop.component.XJDialog.setVisible(Unknown Source) [MiniMarketKK.jar:na]
+	at com.ganesha.minimarket.ui.MainFrame$10.actionPerformed(Unknown Source) [MiniMarketKK.jar:na]
+	at javax.swing.AbstractButton.fireActionPerformed(Unknown Source) [na:1.7.0_45]
+	at javax.swing.AbstractButton$Handler.actionPerformed(Unknown Source) [na:1.7.0_45]
+	at javax.swing.DefaultButtonModel.fireActionPerformed(Unknown Source) [na:1.7.0_45]
+	at javax.swing.DefaultButtonModel.setPressed(Unknown Source) [na:1.7.0_45]
+	at javax.swing.AbstractButton.doClick(Unknown Source) [na:1.7.0_45]
+	at javax.swing.AbstractButton.doClick(Unknown Source) [na:1.7.0_45]
+	at com.ganesha.minimarket.ui.MainFrame$21.actionPerformed(Unknown Source) [MiniMarketKK.jar:na]
+	at com.ganesha.desktop.component.XJButton.fireActionPerformed(Unknown Source) [MiniMarketKK.jar:na]
+	at javax.swing.AbstractButton$Handler.actionPerformed(Unknown Source) [na:1.7.0_45]
+	at javax.swing.DefaultButtonModel.fireActionPerformed(Unknown Source) [na:1.7.0_45]
+	at javax.swing.DefaultButtonModel.setPressed(Unknown Source) [na:1.7.0_45]
+	at javax.swing.AbstractButton.doClick(Unknown Source) [na:1.7.0_45]
+	at javax.swing.AbstractButton.doClick(Unknown Source) [na:1.7.0_45]
+	at com.ganesha.minimarket.ui.MainFrame.keyEventListener(Unknown Source) [MiniMarketKK.jar:na]
+	at com.ganesha.desktop.component.XJFrame$MyDispatcher.dispatchKeyEvent(Unknown Source) [MiniMarketKK.jar:na]
+	at java.awt.DefaultKeyboardFocusManager.preDispatchKeyEvent(Unknown Source) [na:1.7.0_45]
+	at java.awt.DefaultKeyboardFocusManager.typeAheadAssertions(Unknown Source) [na:1.7.0_45]
+	at java.awt.DefaultKeyboardFocusManager.dispatchEvent(Unknown Source) [na:1.7.0_45]
+	at java.awt.Component.dispatchEventImpl(Unknown Source) [na:1.7.0_45]
+	at java.awt.Container.dispatchEventImpl(Unknown Source) [na:1.7.0_45]
+	at java.awt.Window.dispatchEventImpl(Unknown Source) [na:1.7.0_45]
+	at java.awt.Component.dispatchEvent(Unknown Source) [na:1.7.0_45]
+	at java.awt.EventQueue.dispatchEventImpl(Unknown Source) [na:1.7.0_45]
+	at java.awt.EventQueue.access$200(Unknown Source) [na:1.7.0_45]
+	at java.awt.EventQueue$3.run(Unknown Source) [na:1.7.0_45]
+	at java.awt.EventQueue$3.run(Unknown Source) [na:1.7.0_45]
+	at java.security.AccessController.doPrivileged(Native Method) [na:1.7.0_45]
+	at java.security.ProtectionDomain$1.doIntersectionPrivilege(Unknown Source) [na:1.7.0_45]
+	at java.security.ProtectionDomain$1.doIntersectionPrivilege(Unknown Source) [na:1.7.0_45]
+	at java.awt.EventQueue$4.run(Unknown Source) [na:1.7.0_45]
+	at java.awt.EventQueue$4.run(Unknown Source) [na:1.7.0_45]
+	at java.security.AccessController.doPrivileged(Native Method) [na:1.7.0_45]
+	at java.security.ProtectionDomain$1.doIntersectionPrivilege(Unknown Source) [na:1.7.0_45]
+	at java.awt.EventQueue.dispatchEvent(Unknown Source) [na:1.7.0_45]
+	at java.awt.EventDispatchThread.pumpOneEventForFilters(Unknown Source) [na:1.7.0_45]
+	at java.awt.EventDispatchThread.pumpEventsForFilter(Unknown Source) [na:1.7.0_45]
+	at java.awt.EventDispatchThread.pumpEventsForHierarchy(Unknown Source) [na:1.7.0_45]
+	at java.awt.EventDispatchThread.pumpEvents(Unknown Source) [na:1.7.0_45]
+	at java.awt.EventDispatchThread.pumpEvents(Unknown Source) [na:1.7.0_45]
+	at java.awt.EventDispatchThread.run(Unknown Source) [na:1.7.0_45]
+2014-03-25 14:33:18.202 [AWT-EventQueue-0] TRACE application.window.button - Button com.ganesha.desktop.exeptions.UserExceptionHandler_OK is clicked
+2014-03-25 14:33:18.218 [AWT-EventQueue-0] DEBUG application.sale - Transaction finished. The window is closed.
+2014-03-25 14:48:01.710 [AWT-EventQueue-0] TRACE application.window.button - Button com.ganesha.minimarket.ui.MainFrame_<html><center>Transaksi Penjualan<br/>[F5]</center></html> is clicked
+2014-03-25 14:48:01.842 [AWT-EventQueue-0] TRACE application.window - Access to open com.ganesha.minimarket.ui.forms.sale.PenjualanForm is permitted, the window will open
+2014-03-25 14:48:29.133 [AWT-EventQueue-0] TRACE application.window.button - Button com.ganesha.minimarket.ui.MainFrame_<html><center>Cari Barang<br/>[F6]</center></html> is clicked
+2014-03-25 14:48:33.384 [AWT-EventQueue-0] TRACE application.window.button - Button com.ganesha.minimarket.ui.forms.searchentity.SearchEntityDialog_<html><center>Pilih<br/>[Enter]</center><html> is clicked
+2014-03-25 14:48:37.603 [AWT-EventQueue-0] TRACE application.window.button - Button com.ganesha.minimarket.ui.forms.sale.PenjualanForm_<html><center>Selesai & Simpan Data<br/>[F12]</center></html> is clicked
+2014-03-25 14:48:37.603 [AWT-EventQueue-0] DEBUG application.sale - Starting function selesaiDanSimpan()
+2014-03-25 14:48:37.603 [AWT-EventQueue-0] DEBUG o.h.transaction.JDBCTransaction - begin
+2014-03-25 14:48:37.604 [AWT-EventQueue-0] DEBUG o.h.transaction.JDBCTransaction - current autocommit status: false
+2014-03-25 14:48:37.604 [AWT-EventQueue-0] DEBUG application.sale - Starting validation for transaction number SAL20140325144801
+2014-03-25 14:48:37.605 [AWT-EventQueue-0] DEBUG application.sale - Validation finished
+2014-03-25 14:48:37.605 [AWT-EventQueue-0] DEBUG application.sale - Preparation for item {0000000405|ROKOK SAMPOERNA 16|15000.0|1|0.0|15000.0} is finished
+2014-03-25 14:48:37.605 [AWT-EventQueue-0] DEBUG application.sale - Starting to insert SaleHeader {SAL20140325144801|15000.0|0.0|15000.0|100000.0|85000.0} into database
+2014-03-25 14:48:37.605 [AWT-EventQueue-0] DEBUG application.sale - Finished inserting SaleHeader into database, the generated id is 760
+2014-03-25 14:48:37.621 [AWT-EventQueue-0] DEBUG application.sale - Logging to ActivityLog is done
+2014-03-25 14:48:37.621 [AWT-EventQueue-0] DEBUG o.h.transaction.JDBCTransaction - commit
+2014-03-25 14:48:37.683 [AWT-EventQueue-0] DEBUG o.h.transaction.JDBCTransaction - committed JDBC Connection
+2014-03-25 14:48:37.683 [AWT-EventQueue-0] DEBUG application.sale - Transaction is commited succesfully
+2014-03-25 14:48:37.808 [AWT-EventQueue-0] DEBUG application.sale - Receipt printer is worked fine.
+2014-03-25 14:48:37.808 [AWT-EventQueue-0] DEBUG application.sale - Transaction finished. The window is closed.
+2014-03-25 14:54:49.937 [AWT-EventQueue-0] TRACE application.window.button - Button com.ganesha.minimarket.ui.MainFrame_<html><center>Transaksi Penjualan<br/>[F5]</center></html> is clicked
+2014-03-25 14:54:50.069 [AWT-EventQueue-0] TRACE application.window - Access to open com.ganesha.minimarket.ui.forms.sale.PenjualanForm is permitted, the window will open
+2014-03-25 14:55:08.795 [AWT-EventQueue-0] TRACE application.window.button - Button com.ganesha.minimarket.ui.forms.sale.PenjualanForm_<html><center>Selesai & Simpan Data<br/>[F12]</center></html> is clicked
+2014-03-25 14:55:08.795 [AWT-EventQueue-0] DEBUG application.sale - Starting function selesaiDanSimpan()
+2014-03-25 14:55:08.795 [AWT-EventQueue-0] DEBUG o.h.transaction.JDBCTransaction - begin
+2014-03-25 14:55:08.796 [AWT-EventQueue-0] DEBUG o.h.transaction.JDBCTransaction - current autocommit status: false
+2014-03-25 14:55:08.796 [AWT-EventQueue-0] DEBUG application.sale - Starting validation for transaction number SAL20140325145450
+2014-03-25 14:55:08.797 [AWT-EventQueue-0] DEBUG application.sale - Validation finished
+2014-03-25 14:55:08.797 [AWT-EventQueue-0] DEBUG application.sale - Preparation for item {0000000401|SOURSOP FLAVOURED DRINK|6000.0|1|0.0|6000.0} is finished
+2014-03-25 14:55:08.797 [AWT-EventQueue-0] DEBUG application.sale - Starting to insert SaleHeader {SAL20140325145450|6000.0|0.0|6000.0|6000.0|0.0} into database
+2014-03-25 14:55:08.797 [AWT-EventQueue-0] DEBUG application.sale - Finished inserting SaleHeader into database, the generated id is 761
+2014-03-25 14:55:08.797 [AWT-EventQueue-0] DEBUG application.sale - Logging to ActivityLog is done
+2014-03-25 14:55:08.797 [AWT-EventQueue-0] DEBUG o.h.transaction.JDBCTransaction - commit
+2014-03-25 14:55:08.844 [AWT-EventQueue-0] DEBUG o.h.transaction.JDBCTransaction - committed JDBC Connection
+2014-03-25 14:55:08.844 [AWT-EventQueue-0] DEBUG application.sale - Transaction is commited succesfully
+2014-03-25 14:55:08.953 [AWT-EventQueue-0] DEBUG application.sale - Receipt printer is worked fine.
+2014-03-25 14:55:08.953 [AWT-EventQueue-0] DEBUG application.sale - Transaction finished. The window is closed.
+2014-03-25 14:55:11.580 [AWT-EventQueue-0] TRACE application.window.button - Button com.ganesha.minimarket.ui.MainFrame_<html><center>Transaksi Penjualan<br/>[F5]</center></html> is clicked
+2014-03-25 14:55:11.712 [AWT-EventQueue-0] TRACE application.window - Access to open com.ganesha.minimarket.ui.forms.sale.PenjualanForm is permitted, the window will open
+2014-03-25 14:57:08.625 [AWT-EventQueue-0] TRACE application.window.button - Button com.ganesha.minimarket.ui.forms.sale.PenjualanForm_<html><center>Selesai & Simpan Data<br/>[F12]</center></html> is clicked
+2014-03-25 14:57:08.625 [AWT-EventQueue-0] DEBUG application.sale - Starting function selesaiDanSimpan()
+2014-03-25 14:57:08.625 [AWT-EventQueue-0] DEBUG o.h.transaction.JDBCTransaction - begin
+2014-03-25 14:57:08.626 [AWT-EventQueue-0] DEBUG o.h.transaction.JDBCTransaction - current autocommit status: false
+2014-03-25 14:57:08.626 [AWT-EventQueue-0] DEBUG application.sale - Starting validation for transaction number SAL20140325145511
+2014-03-25 14:57:08.627 [AWT-EventQueue-0] DEBUG application.sale - Validation finished
+2014-03-25 14:57:08.627 [AWT-EventQueue-0] DEBUG application.sale - Preparation for item {0000000401|SOURSOP FLAVOURED DRINK|6000.0|1|0.0|6000.0} is finished
+2014-03-25 14:57:08.627 [AWT-EventQueue-0] DEBUG application.sale - Preparation for item {0000000043|LARUTAN CAP KAKI TIGA 200 ML|3000.0|1|0.0|3000.0} is finished
+2014-03-25 14:57:08.627 [AWT-EventQueue-0] DEBUG application.sale - Starting to insert SaleHeader {SAL20140325145511|9000.0|0.0|9000.0|50000.0|41000.0} into database
+2014-03-25 14:57:08.642 [AWT-EventQueue-0] DEBUG application.sale - Finished inserting SaleHeader into database, the generated id is 762
+2014-03-25 14:57:08.642 [AWT-EventQueue-0] DEBUG application.sale - Logging to ActivityLog is done
+2014-03-25 14:57:08.642 [AWT-EventQueue-0] DEBUG o.h.transaction.JDBCTransaction - commit
+2014-03-25 14:57:08.658 [AWT-EventQueue-0] DEBUG o.h.transaction.JDBCTransaction - committed JDBC Connection
+2014-03-25 14:57:08.658 [AWT-EventQueue-0] DEBUG application.sale - Transaction is commited succesfully
+2014-03-25 14:57:08.783 [AWT-EventQueue-0] DEBUG application.sale - Receipt printer is worked fine.
+2014-03-25 14:57:08.783 [AWT-EventQueue-0] DEBUG application.sale - Transaction finished. The window is closed.
+2014-03-25 14:57:17.113 [AWT-EventQueue-0] TRACE application.window.button - Button com.ganesha.minimarket.ui.MainFrame_<html><center>Transaksi Penjualan<br/>[F5]</center></html> is clicked
+2014-03-25 14:57:17.246 [AWT-EventQueue-0] TRACE application.window - Access to open com.ganesha.minimarket.ui.forms.sale.PenjualanForm is permitted, the window will open
+2014-03-25 14:57:19.211 [AWT-EventQueue-0] TRACE application.window.button - Button com.ganesha.minimarket.ui.MainFrame_<html><center>Cari Barang<br/>[F6]</center></html> is clicked
+2014-03-25 14:57:28.961 [AWT-EventQueue-0] TRACE application.window.button - Button com.ganesha.minimarket.ui.MainFrame_<html><center>Cari Barang<br/>[F6]</center></html> is clicked
+2014-03-25 15:02:10.495 [AWT-EventQueue-0] TRACE application.window.button - Button com.ganesha.minimarket.ui.MainFrame_<html><center>Hapus<br/>[Delete]</center></html> is clicked
+2014-03-25 15:02:23.152 [AWT-EventQueue-0] TRACE application.window.button - Button com.ganesha.minimarket.ui.forms.sale.PenjualanForm_<html><center>Selesai & Simpan Data<br/>[F12]</center></html> is clicked
+2014-03-25 15:02:23.152 [AWT-EventQueue-0] DEBUG application.sale - Starting function selesaiDanSimpan()
+2014-03-25 15:02:23.152 [AWT-EventQueue-0] DEBUG o.h.transaction.JDBCTransaction - begin
+2014-03-25 15:02:23.153 [AWT-EventQueue-0] DEBUG o.h.transaction.JDBCTransaction - current autocommit status: false
+2014-03-25 15:02:23.153 [AWT-EventQueue-0] DEBUG application.sale - Starting validation for transaction number SAL20140325145717
+2014-03-25 15:02:23.154 [AWT-EventQueue-0] DEBUG application.sale - Validation finished
+2014-03-25 15:02:23.154 [AWT-EventQueue-0] DEBUG application.sale - Preparation for item {0000000352|KRATINGDAENG 150 ML|5000.0|1|0.0|5000.0} is finished
+2014-03-25 15:02:23.154 [AWT-EventQueue-0] DEBUG application.sale - Starting to insert SaleHeader {SAL20140325145717|5000.0|0.0|5000.0|5000.0|0.0} into database
+2014-03-25 15:02:23.154 [AWT-EventQueue-0] DEBUG application.sale - Finished inserting SaleHeader into database, the generated id is 763
+2014-03-25 15:02:23.170 [AWT-EventQueue-0] DEBUG application.sale - Logging to ActivityLog is done
+2014-03-25 15:02:23.170 [AWT-EventQueue-0] DEBUG o.h.transaction.JDBCTransaction - commit
+2014-03-25 15:02:23.186 [AWT-EventQueue-0] DEBUG o.h.transaction.JDBCTransaction - committed JDBC Connection
+2014-03-25 15:02:23.186 [AWT-EventQueue-0] DEBUG application.sale - Transaction is commited succesfully
+2014-03-25 15:02:23.310 [AWT-EventQueue-0] DEBUG application.sale - Receipt printer is worked fine.
+2014-03-25 15:02:23.310 [AWT-EventQueue-0] DEBUG application.sale - Transaction finished. The window is closed.
+2014-03-25 15:11:07.789 [AWT-EventQueue-0] TRACE application.window.button - Button com.ganesha.minimarket.ui.MainFrame_<html><center>Transaksi Penjualan<br/>[F5]</center></html> is clicked
+2014-03-25 15:11:07.906 [AWT-EventQueue-0] TRACE application.window - Access to open com.ganesha.minimarket.ui.forms.sale.PenjualanForm is permitted, the window will open
+2014-03-25 15:11:15.774 [AWT-EventQueue-0] TRACE application.window.button - Button com.ganesha.minimarket.ui.MainFrame_<html><center>Cari Barang<br/>[F6]</center></html> is clicked
+2014-03-25 15:11:19.588 [AWT-EventQueue-0] TRACE application.window.button - Button com.ganesha.minimarket.ui.forms.searchentity.SearchEntityDialog_<html><center>Pilih<br/>[Enter]</center><html> is clicked
+2014-03-25 15:12:06.833 [AWT-EventQueue-0] TRACE application.window.button - Button com.ganesha.minimarket.ui.forms.sale.PenjualanForm_<html><center>Selesai & Simpan Data<br/>[F12]</center></html> is clicked
+2014-03-25 15:12:06.833 [AWT-EventQueue-0] DEBUG application.sale - Starting function selesaiDanSimpan()
+2014-03-25 15:12:06.833 [AWT-EventQueue-0] DEBUG o.h.transaction.JDBCTransaction - begin
+2014-03-25 15:12:06.834 [AWT-EventQueue-0] DEBUG o.h.transaction.JDBCTransaction - current autocommit status: false
+2014-03-25 15:12:06.834 [AWT-EventQueue-0] DEBUG application.sale - Starting validation for transaction number SAL20140325151107
+2014-03-25 15:12:06.835 [AWT-EventQueue-0] DEBUG application.sale - Validation finished
+2014-03-25 15:12:06.835 [AWT-EventQueue-0] DEBUG application.sale - Preparation for item {0000000375|COOLANT|6000.0|2|0.0|12000.0} is finished
+2014-03-25 15:12:06.835 [AWT-EventQueue-0] DEBUG application.sale - Preparation for item {0000000393|LASEGAR JAMBU 320ML|6000.0|1|0.0|6000.0} is finished
+2014-03-25 15:12:06.835 [AWT-EventQueue-0] DEBUG application.sale - Starting to insert SaleHeader {SAL20140325151107|18000.0|0.0|18000.0|20000.0|2000.0} into database
+2014-03-25 15:12:06.851 [AWT-EventQueue-0] DEBUG application.sale - Finished inserting SaleHeader into database, the generated id is 764
+2014-03-25 15:12:06.851 [AWT-EventQueue-0] DEBUG application.sale - Logging to ActivityLog is done
+2014-03-25 15:12:06.851 [AWT-EventQueue-0] DEBUG o.h.transaction.JDBCTransaction - commit
+2014-03-25 15:12:06.882 [AWT-EventQueue-0] DEBUG o.h.transaction.JDBCTransaction - committed JDBC Connection
+2014-03-25 15:12:06.882 [AWT-EventQueue-0] DEBUG application.sale - Transaction is commited succesfully
+2014-03-25 15:12:06.991 [AWT-EventQueue-0] DEBUG application.sale - Receipt printer is worked fine.
+2014-03-25 15:12:06.991 [AWT-EventQueue-0] DEBUG application.sale - Transaction finished. The window is closed.
+2014-03-25 15:27:03.218 [AWT-EventQueue-0] TRACE application.window.button - Button com.ganesha.minimarket.ui.MainFrame_<html><center>Transaksi Penjualan<br/>[F5]</center></html> is clicked
+2014-03-25 15:27:03.335 [AWT-EventQueue-0] TRACE application.window - Access to open com.ganesha.minimarket.ui.forms.sale.PenjualanForm is permitted, the window will open
+2014-03-25 15:27:06.165 [AWT-EventQueue-0] TRACE application.window.button - Button com.ganesha.minimarket.ui.MainFrame_<html><center>Cari Barang<br/>[F6]</center></html> is clicked
+2014-03-25 15:27:08.372 [AWT-EventQueue-0] TRACE application.window.button - Button com.ganesha.minimarket.ui.forms.sale.PenjualanForm_Cari Customer [F5] is clicked
+2014-03-25 15:27:13.200 [AWT-EventQueue-0] TRACE application.window.button - Button com.ganesha.minimarket.ui.MainFrame_<html><center>Cari Barang<br/>[F6]</center></html> is clicked
+2014-03-25 15:27:15.798 [AWT-EventQueue-0] TRACE application.window.button - Button com.ganesha.minimarket.ui.forms.searchentity.SearchEntityDialog_<html><center>Pilih<br/>[Enter]</center><html> is clicked
+2014-03-25 15:28:32.589 [AWT-EventQueue-0] TRACE application.window.button - Button com.ganesha.minimarket.ui.forms.sale.PenjualanForm_<html><center>Selesai & Simpan Data<br/>[F12]</center></html> is clicked
+2014-03-25 15:28:32.589 [AWT-EventQueue-0] DEBUG application.sale - Starting function selesaiDanSimpan()
+2014-03-25 15:28:32.589 [AWT-EventQueue-0] DEBUG o.h.transaction.JDBCTransaction - begin
+2014-03-25 15:28:32.590 [AWT-EventQueue-0] DEBUG o.h.transaction.JDBCTransaction - current autocommit status: false
+2014-03-25 15:28:32.590 [AWT-EventQueue-0] DEBUG application.sale - Starting validation for transaction number SAL20140325152703
+2014-03-25 15:28:32.590 [AWT-EventQueue-0] DEBUG o.h.transaction.JDBCTransaction - rollback
+2014-03-25 15:28:32.591 [AWT-EventQueue-0] DEBUG o.h.transaction.JDBCTransaction - rolled back JDBC Connection
+2014-03-25 15:29:27.909 [AWT-EventQueue-0] TRACE application.window.button - Button com.ganesha.minimarket.ui.forms.sale.PenjualanForm_Cari Customer [F5] is clicked
+2014-03-25 15:29:30.108 [AWT-EventQueue-0] TRACE application.window.button - Button com.ganesha.minimarket.ui.forms.searchentity.SearchEntityDialog_<html><center>Pilih<br/>[Enter]</center><html> is clicked
+2014-03-25 15:29:31.471 [AWT-EventQueue-0] TRACE application.window.button - Button com.ganesha.minimarket.ui.forms.sale.PenjualanForm_<html><center>Selesai & Simpan Data<br/>[F12]</center></html> is clicked
+2014-03-25 15:29:31.471 [AWT-EventQueue-0] DEBUG application.sale - Starting function selesaiDanSimpan()
+2014-03-25 15:29:31.471 [AWT-EventQueue-0] DEBUG o.h.transaction.JDBCTransaction - begin
+2014-03-25 15:29:31.472 [AWT-EventQueue-0] DEBUG o.h.transaction.JDBCTransaction - current autocommit status: false
+2014-03-25 15:29:31.472 [AWT-EventQueue-0] DEBUG application.sale - Starting validation for transaction number SAL20140325152703
+2014-03-25 15:29:31.473 [AWT-EventQueue-0] DEBUG application.sale - Validation finished
+2014-03-25 15:29:31.473 [AWT-EventQueue-0] DEBUG application.sale - Preparation for item {0000000379|GUDANG GARAM SURYA 16|15500.0|1|0.0|15500.0} is finished
+2014-03-25 15:29:31.473 [AWT-EventQueue-0] DEBUG application.sale - Preparation for item {0000000081|AQUA 600 ML|3500.0|1|0.0|3500.0} is finished
+2014-03-25 15:29:31.473 [AWT-EventQueue-0] DEBUG application.sale - Starting to insert SaleHeader {SAL20140325152703|19000.0|0.0|19000.0|19000.0|0.0} into database
+2014-03-25 15:29:31.489 [AWT-EventQueue-0] DEBUG application.sale - Finished inserting SaleHeader into database, the generated id is 765
+2014-03-25 15:29:31.489 [AWT-EventQueue-0] DEBUG application.sale - Logging to ActivityLog is done
+2014-03-25 15:29:31.489 [AWT-EventQueue-0] DEBUG o.h.transaction.JDBCTransaction - commit
+2014-03-25 15:29:31.520 [AWT-EventQueue-0] DEBUG o.h.transaction.JDBCTransaction - committed JDBC Connection
+2014-03-25 15:29:31.520 [AWT-EventQueue-0] DEBUG application.sale - Transaction is commited succesfully
+2014-03-25 15:29:31.645 [AWT-EventQueue-0] DEBUG application.sale - Receipt printer is worked fine.
+2014-03-25 15:29:31.645 [AWT-EventQueue-0] DEBUG application.sale - Transaction finished. The window is closed.
+2014-03-25 15:29:36.112 [AWT-EventQueue-0] TRACE application.window.button - Button com.ganesha.minimarket.ui.MainFrame_<html><center>Transaksi Penjualan<br/>[F5]</center></html> is clicked
+2014-03-25 15:29:36.229 [AWT-EventQueue-0] TRACE application.window - Access to open com.ganesha.minimarket.ui.forms.sale.PenjualanForm is permitted, the window will open
+2014-03-25 15:29:56.983 [AWT-EventQueue-0] TRACE application.window.button - Button com.ganesha.minimarket.ui.MainFrame_<html><center>Cari Barang<br/>[F6]</center></html> is clicked
+2014-03-25 15:30:00.454 [AWT-EventQueue-0] TRACE application.window.button - Button com.ganesha.minimarket.ui.forms.searchentity.SearchEntityDialog_<html><center>Pilih<br/>[Enter]</center><html> is clicked
+2014-03-25 15:31:01.739 [AWT-EventQueue-0] TRACE application.window.button - Button com.ganesha.minimarket.ui.forms.sale.PenjualanForm_<html><center>Selesai & Simpan Data<br/>[F12]</center></html> is clicked
+2014-03-25 15:31:01.739 [AWT-EventQueue-0] DEBUG application.sale - Starting function selesaiDanSimpan()
+2014-03-25 15:31:01.739 [AWT-EventQueue-0] DEBUG o.h.transaction.JDBCTransaction - begin
+2014-03-25 15:31:01.740 [AWT-EventQueue-0] DEBUG o.h.transaction.JDBCTransaction - current autocommit status: false
+2014-03-25 15:31:01.740 [AWT-EventQueue-0] DEBUG application.sale - Starting validation for transaction number SAL20140325152936
+2014-03-25 15:31:01.741 [AWT-EventQueue-0] DEBUG application.sale - Validation finished
+2014-03-25 15:31:01.741 [AWT-EventQueue-0] DEBUG application.sale - Preparation for item {0000000376|PROMAN ENERGENESIS|7000.0|1|0.0|7000.0} is finished
+2014-03-25 15:31:01.741 [AWT-EventQueue-0] DEBUG application.sale - Preparation for item {0000000081|AQUA 600 ML|3500.0|1|0.0|3500.0} is finished
+2014-03-25 15:31:01.741 [AWT-EventQueue-0] DEBUG application.sale - Preparation for item {0000000484|KUE BANGKIT DAN SEMPRONGKCL|7000.0|1|0.0|7000.0} is finished
+2014-03-25 15:31:01.741 [AWT-EventQueue-0] DEBUG application.sale - Starting to insert SaleHeader {SAL20140325152936|17500.0|0.0|17500.0|100000.0|82500.0} into database
+2014-03-25 15:31:01.756 [AWT-EventQueue-0] DEBUG application.sale - Finished inserting SaleHeader into database, the generated id is 766
+2014-03-25 15:31:01.756 [AWT-EventQueue-0] DEBUG application.sale - Logging to ActivityLog is done
+2014-03-25 15:31:01.756 [AWT-EventQueue-0] DEBUG o.h.transaction.JDBCTransaction - commit
+2014-03-25 15:31:01.803 [AWT-EventQueue-0] DEBUG o.h.transaction.JDBCTransaction - committed JDBC Connection
+2014-03-25 15:31:01.803 [AWT-EventQueue-0] DEBUG application.sale - Transaction is commited succesfully
+2014-03-25 15:31:01.912 [AWT-EventQueue-0] DEBUG application.sale - Receipt printer is worked fine.
+2014-03-25 15:31:01.912 [AWT-EventQueue-0] DEBUG application.sale - Transaction finished. The window is closed.
+2014-03-25 15:31:06.333 [AWT-EventQueue-0] TRACE application.window.button - Button com.ganesha.minimarket.ui.MainFrame_<html><center>Transaksi Penjualan<br/>[F5]</center></html> is clicked
+2014-03-25 15:31:06.450 [AWT-EventQueue-0] TRACE application.window - Access to open com.ganesha.minimarket.ui.forms.sale.PenjualanForm is permitted, the window will open
+2014-03-25 15:32:19.042 [AWT-EventQueue-0] TRACE application.window.button - Button com.ganesha.minimarket.ui.forms.sale.PenjualanForm_<html><center>Selesai & Simpan Data<br/>[F12]</center></html> is clicked
+2014-03-25 15:32:19.042 [AWT-EventQueue-0] DEBUG application.sale - Starting function selesaiDanSimpan()
+2014-03-25 15:32:19.042 [AWT-EventQueue-0] DEBUG o.h.transaction.JDBCTransaction - begin
+2014-03-25 15:32:19.043 [AWT-EventQueue-0] DEBUG o.h.transaction.JDBCTransaction - current autocommit status: false
+2014-03-25 15:32:19.043 [AWT-EventQueue-0] DEBUG application.sale - Starting validation for transaction number SAL20140325153106
+2014-03-25 15:32:19.044 [AWT-EventQueue-0] DEBUG application.sale - Validation finished
+2014-03-25 15:32:19.044 [AWT-EventQueue-0] DEBUG application.sale - Preparation for item {0000000059|OT TANGO CRUNCH CAKE 80 GR|6000.0|1|0.0|6000.0} is finished
+2014-03-25 15:32:19.044 [AWT-EventQueue-0] DEBUG application.sale - Preparation for item {0000000326|GOOD TIME MINI DOUBLE CHOC CHOCOCHIPS 45 GR|6500.0|2|0.0|13000.0} is finished
+2014-03-25 15:32:19.044 [AWT-EventQueue-0] DEBUG application.sale - Preparation for item {0000000490|POCARI SWEAT 350ML|6000.0|1|0.0|6000.0} is finished
+2014-03-25 15:32:19.044 [AWT-EventQueue-0] DEBUG application.sale - Starting to insert SaleHeader {SAL20140325153106|25000.0|0.0|25000.0|25000.0|0.0} into database
+2014-03-25 15:32:19.060 [AWT-EventQueue-0] DEBUG application.sale - Finished inserting SaleHeader into database, the generated id is 767
+2014-03-25 15:32:19.060 [AWT-EventQueue-0] DEBUG application.sale - Logging to ActivityLog is done
+2014-03-25 15:32:19.060 [AWT-EventQueue-0] DEBUG o.h.transaction.JDBCTransaction - commit
+2014-03-25 15:32:19.091 [AWT-EventQueue-0] DEBUG o.h.transaction.JDBCTransaction - committed JDBC Connection
+2014-03-25 15:32:19.091 [AWT-EventQueue-0] DEBUG application.sale - Transaction is commited succesfully
+2014-03-25 15:32:19.216 [AWT-EventQueue-0] DEBUG application.sale - Receipt printer is worked fine.
+2014-03-25 15:32:19.216 [AWT-EventQueue-0] DEBUG application.sale - Transaction finished. The window is closed.
+2014-03-25 15:32:25.602 [AWT-EventQueue-0] TRACE application.window.button - Button com.ganesha.minimarket.ui.MainFrame_<html><center>Transaksi Penjualan<br/>[F5]</center></html> is clicked
+2014-03-25 15:32:25.719 [AWT-EventQueue-0] TRACE application.window - Access to open com.ganesha.minimarket.ui.forms.sale.PenjualanForm is permitted, the window will open
+2014-03-25 15:33:29.934 [AWT-EventQueue-0] TRACE application.window.button - Button com.ganesha.minimarket.ui.forms.sale.PenjualanForm_<html><center>Selesai & Simpan Data<br/>[F12]</center></html> is clicked
+2014-03-25 15:33:29.934 [AWT-EventQueue-0] DEBUG application.sale - Starting function selesaiDanSimpan()
+2014-03-25 15:33:29.934 [AWT-EventQueue-0] DEBUG o.h.transaction.JDBCTransaction - begin
+2014-03-25 15:33:29.935 [AWT-EventQueue-0] DEBUG o.h.transaction.JDBCTransaction - current autocommit status: false
+2014-03-25 15:33:29.935 [AWT-EventQueue-0] DEBUG application.sale - Starting validation for transaction number SAL20140325153225
+2014-03-25 15:33:29.936 [AWT-EventQueue-0] DEBUG application.sale - Validation finished
+2014-03-25 15:33:29.936 [AWT-EventQueue-0] DEBUG application.sale - Preparation for item {0000000517|SAMPOERNAN HIJAU|8500.0|2|0.0|17000.0} is finished
+2014-03-25 15:33:29.936 [AWT-EventQueue-0] DEBUG application.sale - Preparation for item {0000000029|CRISPY CRACKERS 225 GR|8500.0|1|0.0|8500.0} is finished
+2014-03-25 15:33:29.936 [AWT-EventQueue-0] DEBUG application.sale - Starting to insert SaleHeader {SAL20140325153225|25500.0|0.0|25500.0|25500.0|0.0} into database
+2014-03-25 15:33:29.952 [AWT-EventQueue-0] DEBUG application.sale - Finished inserting SaleHeader into database, the generated id is 768
+2014-03-25 15:33:29.952 [AWT-EventQueue-0] DEBUG application.sale - Logging to ActivityLog is done
+2014-03-25 15:33:29.952 [AWT-EventQueue-0] DEBUG o.h.transaction.JDBCTransaction - commit
+2014-03-25 15:33:29.968 [AWT-EventQueue-0] DEBUG o.h.transaction.JDBCTransaction - committed JDBC Connection
+2014-03-25 15:33:29.968 [AWT-EventQueue-0] DEBUG application.sale - Transaction is commited succesfully
+2014-03-25 15:33:29.983 [AWT-EventQueue-0] ERROR application - Printer is not accepting job.
+javax.print.PrintException: Printer is not accepting job.
+	at sun.print.Win32PrintJob.print(Unknown Source) ~[na:1.7.0_45]
+	at com.ganesha.minimarket.facade.SaleFacade.cetakReceipt(Unknown Source) ~[MiniMarketKK.jar:na]
+	at com.ganesha.minimarket.ui.forms.sale.PenjualanForm.printReceipt(Unknown Source) [MiniMarketKK.jar:na]
+	at com.ganesha.minimarket.ui.forms.sale.PenjualanForm.selesaiDanSimpan(Unknown Source) [MiniMarketKK.jar:na]
+	at com.ganesha.minimarket.ui.forms.sale.PenjualanForm.access$900(Unknown Source) [MiniMarketKK.jar:na]
+	at com.ganesha.minimarket.ui.forms.sale.PenjualanForm$8.actionPerformed(Unknown Source) [MiniMarketKK.jar:na]
+	at com.ganesha.desktop.component.XJButton.fireActionPerformed(Unknown Source) [MiniMarketKK.jar:na]
+	at javax.swing.AbstractButton$Handler.actionPerformed(Unknown Source) [na:1.7.0_45]
+	at javax.swing.DefaultButtonModel.fireActionPerformed(Unknown Source) [na:1.7.0_45]
+	at javax.swing.DefaultButtonModel.setPressed(Unknown Source) [na:1.7.0_45]
+	at javax.swing.AbstractButton.doClick(Unknown Source) [na:1.7.0_45]
+	at javax.swing.AbstractButton.doClick(Unknown Source) [na:1.7.0_45]
+	at com.ganesha.minimarket.ui.forms.sale.PenjualanForm.keyEventListener(Unknown Source) [MiniMarketKK.jar:na]
+	at com.ganesha.desktop.component.XJDialog$MyDispatcher.dispatchKeyEvent(Unknown Source) [MiniMarketKK.jar:na]
+	at java.awt.DefaultKeyboardFocusManager.preDispatchKeyEvent(Unknown Source) [na:1.7.0_45]
+	at java.awt.DefaultKeyboardFocusManager.typeAheadAssertions(Unknown Source) [na:1.7.0_45]
+	at java.awt.DefaultKeyboardFocusManager.dispatchEvent(Unknown Source) [na:1.7.0_45]
+	at java.awt.Component.dispatchEventImpl(Unknown Source) [na:1.7.0_45]
+	at java.awt.Container.dispatchEventImpl(Unknown Source) [na:1.7.0_45]
+	at java.awt.Window.dispatchEventImpl(Unknown Source) [na:1.7.0_45]
+	at java.awt.Component.dispatchEvent(Unknown Source) [na:1.7.0_45]
+	at java.awt.EventQueue.dispatchEventImpl(Unknown Source) [na:1.7.0_45]
+	at java.awt.EventQueue.access$200(Unknown Source) [na:1.7.0_45]
+	at java.awt.EventQueue$3.run(Unknown Source) [na:1.7.0_45]
+	at java.awt.EventQueue$3.run(Unknown Source) [na:1.7.0_45]
+	at java.security.AccessController.doPrivileged(Native Method) [na:1.7.0_45]
+	at java.security.ProtectionDomain$1.doIntersectionPrivilege(Unknown Source) [na:1.7.0_45]
+	at java.security.ProtectionDomain$1.doIntersectionPrivilege(Unknown Source) [na:1.7.0_45]
+	at java.awt.EventQueue$4.run(Unknown Source) [na:1.7.0_45]
+	at java.awt.EventQueue$4.run(Unknown Source) [na:1.7.0_45]
+	at java.security.AccessController.doPrivileged(Native Method) [na:1.7.0_45]
+	at java.security.ProtectionDomain$1.doIntersectionPrivilege(Unknown Source) [na:1.7.0_45]
+	at java.awt.EventQueue.dispatchEvent(Unknown Source) [na:1.7.0_45]
+	at java.awt.EventDispatchThread.pumpOneEventForFilters(Unknown Source) [na:1.7.0_45]
+	at java.awt.EventDispatchThread.pumpEventsForFilter(Unknown Source) [na:1.7.0_45]
+	at java.awt.EventDispatchThread.pumpEventsForFilter(Unknown Source) [na:1.7.0_45]
+	at java.awt.WaitDispatchSupport$2.run(Unknown Source) [na:1.7.0_45]
+	at java.awt.WaitDispatchSupport$4.run(Unknown Source) [na:1.7.0_45]
+	at java.security.AccessController.doPrivileged(Native Method) [na:1.7.0_45]
+	at java.awt.WaitDispatchSupport.enter(Unknown Source) [na:1.7.0_45]
+	at java.awt.Dialog.show(Unknown Source) [na:1.7.0_45]
+	at java.awt.Component.show(Unknown Source) [na:1.7.0_45]
+	at java.awt.Component.setVisible(Unknown Source) [na:1.7.0_45]
+	at java.awt.Window.setVisible(Unknown Source) [na:1.7.0_45]
+	at java.awt.Dialog.setVisible(Unknown Source) [na:1.7.0_45]
+	at com.ganesha.desktop.component.XJDialog.setVisible(Unknown Source) [MiniMarketKK.jar:na]
+	at com.ganesha.minimarket.ui.MainFrame$10.actionPerformed(Unknown Source) [MiniMarketKK.jar:na]
+	at javax.swing.AbstractButton.fireActionPerformed(Unknown Source) [na:1.7.0_45]
+	at javax.swing.AbstractButton$Handler.actionPerformed(Unknown Source) [na:1.7.0_45]
+	at javax.swing.DefaultButtonModel.fireActionPerformed(Unknown Source) [na:1.7.0_45]
+	at javax.swing.DefaultButtonModel.setPressed(Unknown Source) [na:1.7.0_45]
+	at javax.swing.AbstractButton.doClick(Unknown Source) [na:1.7.0_45]
+	at javax.swing.AbstractButton.doClick(Unknown Source) [na:1.7.0_45]
+	at com.ganesha.minimarket.ui.MainFrame$21.actionPerformed(Unknown Source) [MiniMarketKK.jar:na]
+	at com.ganesha.desktop.component.XJButton.fireActionPerformed(Unknown Source) [MiniMarketKK.jar:na]
+	at javax.swing.AbstractButton$Handler.actionPerformed(Unknown Source) [na:1.7.0_45]
+	at javax.swing.DefaultButtonModel.fireActionPerformed(Unknown Source) [na:1.7.0_45]
+	at javax.swing.DefaultButtonModel.setPressed(Unknown Source) [na:1.7.0_45]
+	at javax.swing.AbstractButton.doClick(Unknown Source) [na:1.7.0_45]
+	at javax.swing.AbstractButton.doClick(Unknown Source) [na:1.7.0_45]
+	at com.ganesha.minimarket.ui.MainFrame.keyEventListener(Unknown Source) [MiniMarketKK.jar:na]
+	at com.ganesha.desktop.component.XJFrame$MyDispatcher.dispatchKeyEvent(Unknown Source) [MiniMarketKK.jar:na]
+	at java.awt.DefaultKeyboardFocusManager.preDispatchKeyEvent(Unknown Source) [na:1.7.0_45]
+	at java.awt.DefaultKeyboardFocusManager.typeAheadAssertions(Unknown Source) [na:1.7.0_45]
+	at java.awt.DefaultKeyboardFocusManager.dispatchEvent(Unknown Source) [na:1.7.0_45]
+	at java.awt.Component.dispatchEventImpl(Unknown Source) [na:1.7.0_45]
+	at java.awt.Container.dispatchEventImpl(Unknown Source) [na:1.7.0_45]
+	at java.awt.Window.dispatchEventImpl(Unknown Source) [na:1.7.0_45]
+	at java.awt.Component.dispatchEvent(Unknown Source) [na:1.7.0_45]
+	at java.awt.EventQueue.dispatchEventImpl(Unknown Source) [na:1.7.0_45]
+	at java.awt.EventQueue.access$200(Unknown Source) [na:1.7.0_45]
+	at java.awt.EventQueue$3.run(Unknown Source) [na:1.7.0_45]
+	at java.awt.EventQueue$3.run(Unknown Source) [na:1.7.0_45]
+	at java.security.AccessController.doPrivileged(Native Method) [na:1.7.0_45]
+	at java.security.ProtectionDomain$1.doIntersectionPrivilege(Unknown Source) [na:1.7.0_45]
+	at java.security.ProtectionDomain$1.doIntersectionPrivilege(Unknown Source) [na:1.7.0_45]
+	at java.awt.EventQueue$4.run(Unknown Source) [na:1.7.0_45]
+	at java.awt.EventQueue$4.run(Unknown Source) [na:1.7.0_45]
+	at java.security.AccessController.doPrivileged(Native Method) [na:1.7.0_45]
+	at java.security.ProtectionDomain$1.doIntersectionPrivilege(Unknown Source) [na:1.7.0_45]
+	at java.awt.EventQueue.dispatchEvent(Unknown Source) [na:1.7.0_45]
+	at java.awt.EventDispatchThread.pumpOneEventForFilters(Unknown Source) [na:1.7.0_45]
+	at java.awt.EventDispatchThread.pumpEventsForFilter(Unknown Source) [na:1.7.0_45]
+	at java.awt.EventDispatchThread.pumpEventsForHierarchy(Unknown Source) [na:1.7.0_45]
+	at java.awt.EventDispatchThread.pumpEvents(Unknown Source) [na:1.7.0_45]
+	at java.awt.EventDispatchThread.pumpEvents(Unknown Source) [na:1.7.0_45]
+	at java.awt.EventDispatchThread.run(Unknown Source) [na:1.7.0_45]
+2014-03-25 15:50:05.002 [main] WARN  org.hibernate.mapping.RootClass - composite-id class does not override equals(): com.ganesha.model.UserRoleLinkPK
+2014-03-25 15:50:05.049 [main] WARN  org.hibernate.mapping.RootClass - composite-id class does not override hashCode(): com.ganesha.model.UserRoleLinkPK
+2014-03-25 15:50:05.049 [main] WARN  org.hibernate.mapping.RootClass - composite-id class does not override equals(): com.ganesha.model.RolePermissionLinkPK
+2014-03-25 15:50:05.049 [main] WARN  org.hibernate.mapping.RootClass - composite-id class does not override hashCode(): com.ganesha.model.RolePermissionLinkPK
+2014-03-25 15:50:05.049 [main] WARN  o.h.c.DriverManagerConnectionProvider - no JDBC Driver class was specified by property hibernate.connection.driver_class
+2014-03-25 15:50:05.376 [main] INFO  o.h.t.TransactionFactoryFactory - Using default transaction strategy (direct JDBC transactions)
+2014-03-25 15:50:05.376 [main] INFO  o.h.t.TransactionManagerLookupFactory - No TransactionManagerLookup configured (in JTA environment, use of read-write or transactional second-level cache is not recommended)
+2014-03-25 15:50:14.992 [AWT-EventQueue-0] TRACE application.window.button - Button com.ganesha.minimarket.ui.forms.login.LoginForm_Login is clicked
+2014-03-25 15:50:18.229 [AWT-EventQueue-0] TRACE application.window.button - Button com.ganesha.minimarket.ui.MainFrame_<html><center>Transaksi Penjualan<br/>[F5]</center></html> is clicked
+2014-03-25 15:50:18.642 [AWT-EventQueue-0] TRACE application.window - Access to open com.ganesha.minimarket.ui.forms.sale.PenjualanForm is permitted, the window will open
+2014-03-25 15:50:20.255 [AWT-EventQueue-0] TRACE application.window.button - Button com.ganesha.minimarket.ui.MainFrame_<html><center>Cari Barang<br/>[F6]</center></html> is clicked
+2014-03-25 15:50:25.442 [AWT-EventQueue-0] TRACE application.window.button - Button com.ganesha.minimarket.ui.forms.searchentity.SearchEntityDialog_<html><center>Pilih<br/>[Enter]</center><html> is clicked
+2014-03-25 15:50:30.441 [AWT-EventQueue-0] TRACE application.window.button - Button com.ganesha.minimarket.ui.MainFrame_<html><center>Cari Barang<br/>[F6]</center></html> is clicked
+2014-03-25 15:50:34.537 [AWT-EventQueue-0] TRACE application.window.button - Button com.ganesha.minimarket.ui.forms.searchentity.SearchEntityDialog_<html><center>Pilih<br/>[Enter]</center><html> is clicked
+2014-03-25 15:51:31.640 [AWT-EventQueue-0] TRACE application.window.button - Button com.ganesha.minimarket.ui.forms.sale.PenjualanForm_<html><center>Selesai & Simpan Data<br/>[F12]</center></html> is clicked
+2014-03-25 15:51:31.640 [AWT-EventQueue-0] DEBUG application.sale - Starting function selesaiDanSimpan()
+2014-03-25 15:51:31.674 [AWT-EventQueue-0] DEBUG o.h.transaction.JDBCTransaction - begin
+2014-03-25 15:51:31.674 [AWT-EventQueue-0] DEBUG o.h.transaction.JDBCTransaction - current autocommit status: false
+2014-03-25 15:51:31.705 [AWT-EventQueue-0] DEBUG application.sale - Starting validation for transaction number SAL20140325155018
+2014-03-25 15:51:31.705 [AWT-EventQueue-0] DEBUG application.sale - Validation finished
+2014-03-25 15:51:31.705 [AWT-EventQueue-0] DEBUG application.sale - Preparation for item {0000000467|KEMPLANG GORENG SUPER 500GR|39000.0|3|0.0|117000.0} is finished
+2014-03-25 15:51:31.705 [AWT-EventQueue-0] DEBUG application.sale - Preparation for item {0000000144|KERIPIK PISANG |12000.0|1|0.0|12000.0} is finished
+2014-03-25 15:51:31.705 [AWT-EventQueue-0] DEBUG application.sale - Preparation for item {0000000080|ALFA ONE 600 ML|3000.0|2|0.0|6000.0} is finished
+2014-03-25 15:51:31.705 [AWT-EventQueue-0] DEBUG application.sale - Preparation for item {0000000399|TEH PUCUK HARUM 350ML|4500.0|2|0.0|9000.0} is finished
+2014-03-25 15:51:31.705 [AWT-EventQueue-0] DEBUG application.sale - Starting to insert SaleHeader {SAL20140325155018|144000.0|0.0|144000.0|200000.0|56000.0} into database
+2014-03-25 15:51:31.814 [AWT-EventQueue-0] DEBUG application.sale - Finished inserting SaleHeader into database, the generated id is 769
+2014-03-25 15:51:31.814 [AWT-EventQueue-0] DEBUG application.sale - Logging to ActivityLog is done
+2014-03-25 15:51:31.814 [AWT-EventQueue-0] DEBUG o.h.transaction.JDBCTransaction - commit
+2014-03-25 15:51:31.845 [AWT-EventQueue-0] DEBUG o.h.transaction.JDBCTransaction - committed JDBC Connection
+2014-03-25 15:51:31.845 [AWT-EventQueue-0] DEBUG application.sale - Transaction is commited succesfully
+2014-03-25 15:51:32.204 [AWT-EventQueue-0] DEBUG application.sale - Receipt printer is worked fine.
+2014-03-25 15:51:32.204 [AWT-EventQueue-0] DEBUG application.sale - Transaction finished. The window is closed.
+2014-03-25 15:51:35.392 [AWT-EventQueue-0] TRACE application.window.button - Button com.ganesha.minimarket.ui.MainFrame_<html><center>Transaksi Penjualan<br/>[F5]</center></html> is clicked
+2014-03-25 15:51:35.540 [AWT-EventQueue-0] TRACE application.window - Access to open com.ganesha.minimarket.ui.forms.sale.PenjualanForm is permitted, the window will open
+2014-03-25 15:52:16.886 [AWT-EventQueue-0] TRACE application.window.button - Button com.ganesha.minimarket.ui.forms.sale.PenjualanForm_<html><center>Selesai & Simpan Data<br/>[F12]</center></html> is clicked
+2014-03-25 15:52:16.886 [AWT-EventQueue-0] DEBUG application.sale - Starting function selesaiDanSimpan()
+2014-03-25 15:52:16.886 [AWT-EventQueue-0] DEBUG o.h.transaction.JDBCTransaction - begin
+2014-03-25 15:52:16.886 [AWT-EventQueue-0] DEBUG o.h.transaction.JDBCTransaction - current autocommit status: false
+2014-03-25 15:52:16.887 [AWT-EventQueue-0] DEBUG application.sale - Starting validation for transaction number SAL20140325155135
+2014-03-25 15:52:16.888 [AWT-EventQueue-0] DEBUG application.sale - Validation finished
+2014-03-25 15:52:16.888 [AWT-EventQueue-0] DEBUG application.sale - Preparation for item {0000000357|MIZONE LYCHEE LEMON 500 ML|6000.0|1|0.0|6000.0} is finished
+2014-03-25 15:52:16.888 [AWT-EventQueue-0] DEBUG application.sale - Preparation for item {0000000010|HEXOX BARLEY MINT 12,5 GR|2000.0|1|0.0|2000.0} is finished
+2014-03-25 15:52:16.888 [AWT-EventQueue-0] DEBUG application.sale - Starting to insert SaleHeader {SAL20140325155135|8000.0|0.0|8000.0|20000.0|12000.0} into database
+2014-03-25 15:52:16.888 [AWT-EventQueue-0] DEBUG application.sale - Finished inserting SaleHeader into database, the generated id is 770
+2014-03-25 15:52:16.888 [AWT-EventQueue-0] DEBUG application.sale - Logging to ActivityLog is done
+2014-03-25 15:52:16.888 [AWT-EventQueue-0] DEBUG o.h.transaction.JDBCTransaction - commit
+2014-03-25 15:52:16.950 [AWT-EventQueue-0] DEBUG o.h.transaction.JDBCTransaction - committed JDBC Connection
+2014-03-25 15:52:16.950 [AWT-EventQueue-0] DEBUG application.sale - Transaction is commited succesfully
+2014-03-25 15:52:17.075 [AWT-EventQueue-0] DEBUG application.sale - Receipt printer is worked fine.
+2014-03-25 15:52:17.075 [AWT-EventQueue-0] DEBUG application.sale - Transaction finished. The window is closed.
+2014-03-25 16:02:36.053 [AWT-EventQueue-0] TRACE application.window.button - Button com.ganesha.minimarket.ui.MainFrame_<html><center>Transaksi Penjualan<br/>[F5]</center></html> is clicked
+2014-03-25 16:02:36.186 [AWT-EventQueue-0] TRACE application.window - Access to open com.ganesha.minimarket.ui.forms.sale.PenjualanForm is permitted, the window will open
+2014-03-25 16:05:03.924 [AWT-EventQueue-0] TRACE application.window.button - Button com.ganesha.minimarket.ui.forms.sale.PenjualanForm_<html><center>Selesai & Simpan Data<br/>[F12]</center></html> is clicked
+2014-03-25 16:05:03.924 [AWT-EventQueue-0] DEBUG application.sale - Starting function selesaiDanSimpan()
+2014-03-25 16:05:03.924 [AWT-EventQueue-0] DEBUG o.h.transaction.JDBCTransaction - begin
+2014-03-25 16:05:03.925 [AWT-EventQueue-0] DEBUG o.h.transaction.JDBCTransaction - current autocommit status: false
+2014-03-25 16:05:03.925 [AWT-EventQueue-0] DEBUG application.sale - Starting validation for transaction number SAL20140325160236
+2014-03-25 16:05:03.926 [AWT-EventQueue-0] DEBUG application.sale - Validation finished
+2014-03-25 16:05:03.926 [AWT-EventQueue-0] DEBUG application.sale - Preparation for item {0000000218|LAYS RS RUMPUT LAUT 750 GR|9000.0|1|0.0|9000.0} is finished
+2014-03-25 16:05:03.926 [AWT-EventQueue-0] DEBUG application.sale - Preparation for item {0000000081|AQUA 600 ML|3500.0|2|0.0|7000.0} is finished
+2014-03-25 16:05:03.926 [AWT-EventQueue-0] DEBUG application.sale - Preparation for item {0000000455|NII GREEN TEA HIJAU|6000.0|2|0.0|12000.0} is finished
+2014-03-25 16:05:03.926 [AWT-EventQueue-0] DEBUG application.sale - Preparation for item {0000000052|OT OOPS HOTSA 100 GR|6000.0|1|0.0|6000.0} is finished
+2014-03-25 16:05:03.926 [AWT-EventQueue-0] DEBUG application.sale - Preparation for item {0000000073|MONDE GENJI STRAWBERRY PIE 85 GR|7500.0|1|0.0|7500.0} is finished
+2014-03-25 16:05:03.926 [AWT-EventQueue-0] DEBUG application.sale - Starting to insert SaleHeader {SAL20140325160236|41500.0|0.0|41500.0|100000.0|58500.0} into database
+2014-03-25 16:05:03.973 [AWT-EventQueue-0] DEBUG application.sale - Finished inserting SaleHeader into database, the generated id is 771
+2014-03-25 16:05:03.973 [AWT-EventQueue-0] DEBUG application.sale - Logging to ActivityLog is done
+2014-03-25 16:05:03.973 [AWT-EventQueue-0] DEBUG o.h.transaction.JDBCTransaction - commit
+2014-03-25 16:05:04.004 [AWT-EventQueue-0] DEBUG o.h.transaction.JDBCTransaction - committed JDBC Connection
+2014-03-25 16:05:04.004 [AWT-EventQueue-0] DEBUG application.sale - Transaction is commited succesfully
+2014-03-25 16:05:04.113 [AWT-EventQueue-0] DEBUG application.sale - Receipt printer is worked fine.
+2014-03-25 16:05:04.113 [AWT-EventQueue-0] DEBUG application.sale - Transaction finished. The window is closed.
+2014-03-25 16:08:50.881 [AWT-EventQueue-0] TRACE application.window.button - Button com.ganesha.minimarket.ui.MainFrame_<html><center>Transaksi Penjualan<br/>[F5]</center></html> is clicked
+2014-03-25 16:08:51.029 [AWT-EventQueue-0] TRACE application.window - Access to open com.ganesha.minimarket.ui.forms.sale.PenjualanForm is permitted, the window will open
+2014-03-25 16:10:00.470 [AWT-EventQueue-0] TRACE application.window.button - Button com.ganesha.minimarket.ui.forms.sale.PenjualanForm_<html><center>Selesai & Simpan Data<br/>[F12]</center></html> is clicked
+2014-03-25 16:10:00.470 [AWT-EventQueue-0] DEBUG application.sale - Starting function selesaiDanSimpan()
+2014-03-25 16:10:00.470 [AWT-EventQueue-0] DEBUG o.h.transaction.JDBCTransaction - begin
+2014-03-25 16:10:00.471 [AWT-EventQueue-0] DEBUG o.h.transaction.JDBCTransaction - current autocommit status: false
+2014-03-25 16:10:00.471 [AWT-EventQueue-0] DEBUG application.sale - Starting validation for transaction number SAL20140325160850
+2014-03-25 16:10:00.472 [AWT-EventQueue-0] DEBUG application.sale - Validation finished
+2014-03-25 16:10:00.472 [AWT-EventQueue-0] DEBUG application.sale - Preparation for item {0000000404|ROKOK CLASMILD|14000.0|1|0.0|14000.0} is finished
+2014-03-25 16:10:00.472 [AWT-EventQueue-0] DEBUG application.sale - Starting to insert SaleHeader {SAL20140325160850|14000.0|0.0|14000.0|15000.0|1000.0} into database
+2014-03-25 16:10:00.472 [AWT-EventQueue-0] DEBUG application.sale - Finished inserting SaleHeader into database, the generated id is 772
+2014-03-25 16:10:00.488 [AWT-EventQueue-0] DEBUG application.sale - Logging to ActivityLog is done
+2014-03-25 16:10:00.488 [AWT-EventQueue-0] DEBUG o.h.transaction.JDBCTransaction - commit
+2014-03-25 16:10:00.519 [AWT-EventQueue-0] DEBUG o.h.transaction.JDBCTransaction - committed JDBC Connection
+2014-03-25 16:10:00.519 [AWT-EventQueue-0] DEBUG application.sale - Transaction is commited succesfully
+2014-03-25 16:10:00.628 [AWT-EventQueue-0] DEBUG application.sale - Receipt printer is worked fine.
+2014-03-25 16:10:00.628 [AWT-EventQueue-0] DEBUG application.sale - Transaction finished. The window is closed.
+2014-03-25 16:10:06.625 [AWT-EventQueue-0] TRACE application.window.button - Button com.ganesha.minimarket.ui.MainFrame_<html><center>Transaksi Penjualan<br/>[F5]</center></html> is clicked
+2014-03-25 16:10:06.757 [AWT-EventQueue-0] TRACE application.window - Access to open com.ganesha.minimarket.ui.forms.sale.PenjualanForm is permitted, the window will open
+2014-03-25 16:10:53.734 [AWT-EventQueue-0] TRACE application.window.button - Button com.ganesha.minimarket.ui.MainFrame_<html><center>Cari Barang<br/>[F6]</center></html> is clicked
+2014-03-25 16:11:01.027 [AWT-EventQueue-0] TRACE application.window.button - Button com.ganesha.minimarket.ui.forms.searchentity.SearchEntityDialog_<html><center>Pilih<br/>[Enter]</center><html> is clicked
+2014-03-25 16:11:40.420 [AWT-EventQueue-0] TRACE application.window.button - Button com.ganesha.minimarket.ui.MainFrame_<html><center>Cari Barang<br/>[F6]</center></html> is clicked
+2014-03-25 16:11:43.982 [AWT-EventQueue-0] TRACE application.window.button - Button com.ganesha.minimarket.ui.forms.searchentity.SearchEntityDialog_<html><center>Pilih<br/>[Enter]</center><html> is clicked
+2014-03-25 16:12:07.468 [AWT-EventQueue-0] TRACE application.window.button - Button com.ganesha.minimarket.ui.forms.sale.PenjualanForm_<html><center>Selesai & Simpan Data<br/>[F12]</center></html> is clicked
+2014-03-25 16:12:07.468 [AWT-EventQueue-0] DEBUG application.sale - Starting function selesaiDanSimpan()
+2014-03-25 16:12:07.468 [AWT-EventQueue-0] DEBUG o.h.transaction.JDBCTransaction - begin
+2014-03-25 16:12:07.469 [AWT-EventQueue-0] DEBUG o.h.transaction.JDBCTransaction - current autocommit status: false
+2014-03-25 16:12:07.469 [AWT-EventQueue-0] DEBUG application.sale - Starting validation for transaction number SAL20140325161006
+2014-03-25 16:12:07.470 [AWT-EventQueue-0] DEBUG application.sale - Validation finished
+2014-03-25 16:12:07.470 [AWT-EventQueue-0] DEBUG application.sale - Preparation for item {0000000352|KRATINGDAENG 150 ML|5000.0|3|0.0|15000.0} is finished
+2014-03-25 16:12:07.470 [AWT-EventQueue-0] DEBUG application.sale - Preparation for item {0000000046|YOU C1000 ORANGE 140 ML|7000.0|1|0.0|7000.0} is finished
+2014-03-25 16:12:07.470 [AWT-EventQueue-0] DEBUG application.sale - Preparation for item {0000000355|NII GREEN TEA MADU 500 ML|6000.0|1|0.0|6000.0} is finished
+2014-03-25 16:12:07.470 [AWT-EventQueue-0] DEBUG application.sale - Preparation for item {0000000081|AQUA 600 ML|3500.0|1|0.0|3500.0} is finished
+2014-03-25 16:12:07.470 [AWT-EventQueue-0] DEBUG application.sale - Preparation for item {0000000385|COCA COLA 425ML|7000.0|1|0.0|7000.0} is finished
+2014-03-25 16:12:07.470 [AWT-EventQueue-0] DEBUG application.sale - Preparation for item {0000000066|KHONG GUAN CREAM WAFERS 240 GR|12500.0|1|0.0|12500.0} is finished
+2014-03-25 16:12:07.470 [AWT-EventQueue-0] DEBUG application.sale - Preparation for item {0000000487|TEH PUCUK HARUM 480ML|5500.0|1|0.0|5500.0} is finished
+2014-03-25 16:12:07.470 [AWT-EventQueue-0] DEBUG application.sale - Preparation for item {0000000029|CRISPY CRACKERS 225 GR|8500.0|1|0.0|8500.0} is finished
+2014-03-25 16:12:07.470 [AWT-EventQueue-0] DEBUG application.sale - Preparation for item {0000000456|KOKO KRUNCH|8000.0|1|0.0|8000.0} is finished
+2014-03-25 16:12:07.470 [AWT-EventQueue-0] DEBUG application.sale - Preparation for item {0000000460|ROTI MANIS FADEIUS|12000.0|1|0.0|12000.0} is finished
+2014-03-25 16:12:07.470 [AWT-EventQueue-0] DEBUG application.sale - Starting to insert SaleHeader {SAL20140325161006|85000.0|0.0|85000.0|100000.0|15000.0} into database
+2014-03-25 16:12:07.548 [AWT-EventQueue-0] DEBUG application.sale - Finished inserting SaleHeader into database, the generated id is 773
+2014-03-25 16:12:07.548 [AWT-EventQueue-0] DEBUG application.sale - Logging to ActivityLog is done
+2014-03-25 16:12:07.548 [AWT-EventQueue-0] DEBUG o.h.transaction.JDBCTransaction - commit
+2014-03-25 16:12:07.579 [AWT-EventQueue-0] DEBUG o.h.transaction.JDBCTransaction - committed JDBC Connection
+2014-03-25 16:12:07.579 [AWT-EventQueue-0] DEBUG application.sale - Transaction is commited succesfully
+2014-03-25 16:12:07.688 [AWT-EventQueue-0] DEBUG application.sale - Receipt printer is worked fine.
+2014-03-25 16:12:07.688 [AWT-EventQueue-0] DEBUG application.sale - Transaction finished. The window is closed.
+2014-03-25 16:12:17.709 [AWT-EventQueue-0] TRACE application.window.button - Button com.ganesha.minimarket.ui.MainFrame_<html><center>Transaksi Penjualan<br/>[F5]</center></html> is clicked
+2014-03-25 16:12:17.842 [AWT-EventQueue-0] TRACE application.window - Access to open com.ganesha.minimarket.ui.forms.sale.PenjualanForm is permitted, the window will open
+2014-03-25 16:12:52.386 [AWT-EventQueue-0] TRACE application.window.button - Button com.ganesha.minimarket.ui.forms.sale.PenjualanForm_<html><center>Selesai & Simpan Data<br/>[F12]</center></html> is clicked
+2014-03-25 16:12:52.386 [AWT-EventQueue-0] DEBUG application.sale - Starting function selesaiDanSimpan()
+2014-03-25 16:12:52.386 [AWT-EventQueue-0] DEBUG o.h.transaction.JDBCTransaction - begin
+2014-03-25 16:12:52.387 [AWT-EventQueue-0] DEBUG o.h.transaction.JDBCTransaction - current autocommit status: false
+2014-03-25 16:12:52.387 [AWT-EventQueue-0] DEBUG application.sale - Starting validation for transaction number SAL20140325161217
+2014-03-25 16:12:52.388 [AWT-EventQueue-0] DEBUG application.sale - Validation finished
+2014-03-25 16:12:52.388 [AWT-EventQueue-0] DEBUG application.sale - Preparation for item {0000000375|COOLANT|6000.0|1|0.0|6000.0} is finished
+2014-03-25 16:12:52.388 [AWT-EventQueue-0] DEBUG application.sale - Starting to insert SaleHeader {SAL20140325161217|6000.0|0.0|6000.0|6000.0|0.0} into database
+2014-03-25 16:12:52.388 [AWT-EventQueue-0] DEBUG application.sale - Finished inserting SaleHeader into database, the generated id is 774
+2014-03-25 16:12:52.388 [AWT-EventQueue-0] DEBUG application.sale - Logging to ActivityLog is done
+2014-03-25 16:12:52.388 [AWT-EventQueue-0] DEBUG o.h.transaction.JDBCTransaction - commit
+2014-03-25 16:12:52.419 [AWT-EventQueue-0] DEBUG o.h.transaction.JDBCTransaction - committed JDBC Connection
+2014-03-25 16:12:52.419 [AWT-EventQueue-0] DEBUG application.sale - Transaction is commited succesfully
+2014-03-25 16:12:52.544 [AWT-EventQueue-0] DEBUG application.sale - Receipt printer is worked fine.
+2014-03-25 16:12:52.544 [AWT-EventQueue-0] DEBUG application.sale - Transaction finished. The window is closed.
+2014-03-25 16:13:02.138 [AWT-EventQueue-0] TRACE application.window - Access to open com.ganesha.minimarket.ui.forms.reports.TransactionReportListDialog is permitted, the window will open
+2014-03-25 16:13:03.807 [AWT-EventQueue-0] TRACE application.window.button - Button com.ganesha.minimarket.ui.forms.reports.TransactionReportListDialog_<html><center>Preview Laporan<br/>[F12]</center></html> is clicked
+2014-03-25 16:13:05.820 [AWT-EventQueue-0] TRACE application.window - Access to open com.ganesha.minimarket.ui.forms.reports.ReportViewerDialog is permitted, the window will open
+2014-03-25 16:16:01.279 [AWT-EventQueue-0] TRACE application.window.button - Button com.ganesha.minimarket.ui.MainFrame_<html><center>Transaksi Penjualan<br/>[F5]</center></html> is clicked
+2014-03-25 16:16:01.411 [AWT-EventQueue-0] TRACE application.window - Access to open com.ganesha.minimarket.ui.forms.sale.PenjualanForm is permitted, the window will open
+2014-03-25 16:16:03.960 [AWT-EventQueue-0] TRACE application.window.button - Button com.ganesha.minimarket.ui.MainFrame_<html><center>Cari Barang<br/>[F6]</center></html> is clicked
+2014-03-25 16:16:11.752 [AWT-EventQueue-0] TRACE application.window.button - Button com.ganesha.minimarket.ui.forms.searchentity.SearchEntityDialog_<html><center>Pilih<br/>[Enter]</center><html> is clicked
+2014-03-25 16:16:17.563 [AWT-EventQueue-0] TRACE application.window.button - Button com.ganesha.minimarket.ui.forms.sale.PenjualanForm_<html><center>Selesai & Simpan Data<br/>[F12]</center></html> is clicked
+2014-03-25 16:16:17.563 [AWT-EventQueue-0] DEBUG application.sale - Starting function selesaiDanSimpan()
+2014-03-25 16:16:17.563 [AWT-EventQueue-0] DEBUG o.h.transaction.JDBCTransaction - begin
+2014-03-25 16:16:17.564 [AWT-EventQueue-0] DEBUG o.h.transaction.JDBCTransaction - current autocommit status: false
+2014-03-25 16:16:17.564 [AWT-EventQueue-0] DEBUG application.sale - Starting validation for transaction number SAL20140325161601
+2014-03-25 16:16:17.565 [AWT-EventQueue-0] DEBUG application.sale - Validation finished
+2014-03-25 16:16:17.565 [AWT-EventQueue-0] DEBUG application.sale - Preparation for item {0000000487|TEH PUCUK HARUM 480ML|5500.0|1|0.0|5500.0} is finished
+2014-03-25 16:16:17.565 [AWT-EventQueue-0] DEBUG application.sale - Starting to insert SaleHeader {SAL20140325161601|5500.0|0.0|5500.0|10000.0|4500.0} into database
+2014-03-25 16:16:17.565 [AWT-EventQueue-0] DEBUG application.sale - Finished inserting SaleHeader into database, the generated id is 775
+2014-03-25 16:16:17.565 [AWT-EventQueue-0] DEBUG application.sale - Logging to ActivityLog is done
+2014-03-25 16:16:17.565 [AWT-EventQueue-0] DEBUG o.h.transaction.JDBCTransaction - commit
+2014-03-25 16:16:17.596 [AWT-EventQueue-0] DEBUG o.h.transaction.JDBCTransaction - committed JDBC Connection
+2014-03-25 16:16:17.596 [AWT-EventQueue-0] DEBUG application.sale - Transaction is commited succesfully
+2014-03-25 16:16:17.721 [AWT-EventQueue-0] DEBUG application.sale - Receipt printer is worked fine.
+2014-03-25 16:16:17.721 [AWT-EventQueue-0] DEBUG application.sale - Transaction finished. The window is closed.
+2014-03-25 16:17:40.095 [AWT-EventQueue-0] TRACE application.window.button - Button com.ganesha.minimarket.ui.MainFrame_<html><center>Transaksi Penjualan<br/>[F5]</center></html> is clicked
+2014-03-25 16:17:40.228 [AWT-EventQueue-0] TRACE application.window - Access to open com.ganesha.minimarket.ui.forms.sale.PenjualanForm is permitted, the window will open
+2014-03-25 16:18:39.326 [AWT-EventQueue-0] TRACE application.window.button - Button com.ganesha.minimarket.ui.forms.sale.PenjualanForm_<html><center>Selesai & Simpan Data<br/>[F12]</center></html> is clicked
+2014-03-25 16:18:39.326 [AWT-EventQueue-0] DEBUG application.sale - Starting function selesaiDanSimpan()
+2014-03-25 16:18:39.326 [AWT-EventQueue-0] DEBUG o.h.transaction.JDBCTransaction - begin
+2014-03-25 16:18:39.327 [AWT-EventQueue-0] DEBUG o.h.transaction.JDBCTransaction - current autocommit status: false
+2014-03-25 16:18:39.327 [AWT-EventQueue-0] DEBUG application.sale - Starting validation for transaction number SAL20140325161740
+2014-03-25 16:18:39.328 [AWT-EventQueue-0] DEBUG application.sale - Validation finished
+2014-03-25 16:18:39.328 [AWT-EventQueue-0] DEBUG application.sale - Preparation for item {0000000405|ROKOK SAMPOERNA 16|15000.0|1|0.0|15000.0} is finished
+2014-03-25 16:18:39.328 [AWT-EventQueue-0] DEBUG application.sale - Starting to insert SaleHeader {SAL20140325161740|15000.0|0.0|15000.0|15000.0|0.0} into database
+2014-03-25 16:18:39.328 [AWT-EventQueue-0] DEBUG application.sale - Finished inserting SaleHeader into database, the generated id is 776
+2014-03-25 16:18:39.328 [AWT-EventQueue-0] DEBUG application.sale - Logging to ActivityLog is done
+2014-03-25 16:18:39.344 [AWT-EventQueue-0] DEBUG o.h.transaction.JDBCTransaction - commit
+2014-03-25 16:18:39.360 [AWT-EventQueue-0] DEBUG o.h.transaction.JDBCTransaction - committed JDBC Connection
+2014-03-25 16:18:39.360 [AWT-EventQueue-0] DEBUG application.sale - Transaction is commited succesfully
+2014-03-25 16:18:39.360 [AWT-EventQueue-0] ERROR application - Printer is not accepting job.
+javax.print.PrintException: Printer is not accepting job.
+	at sun.print.Win32PrintJob.print(Unknown Source) ~[na:1.7.0_45]
+	at com.ganesha.minimarket.facade.SaleFacade.cetakReceipt(Unknown Source) ~[MiniMarketKK.jar:na]
+	at com.ganesha.minimarket.ui.forms.sale.PenjualanForm.printReceipt(Unknown Source) [MiniMarketKK.jar:na]
+	at com.ganesha.minimarket.ui.forms.sale.PenjualanForm.selesaiDanSimpan(Unknown Source) [MiniMarketKK.jar:na]
+	at com.ganesha.minimarket.ui.forms.sale.PenjualanForm.access$900(Unknown Source) [MiniMarketKK.jar:na]
+	at com.ganesha.minimarket.ui.forms.sale.PenjualanForm$8.actionPerformed(Unknown Source) [MiniMarketKK.jar:na]
+	at com.ganesha.desktop.component.XJButton.fireActionPerformed(Unknown Source) [MiniMarketKK.jar:na]
+	at javax.swing.AbstractButton$Handler.actionPerformed(Unknown Source) [na:1.7.0_45]
+	at javax.swing.DefaultButtonModel.fireActionPerformed(Unknown Source) [na:1.7.0_45]
+	at javax.swing.DefaultButtonModel.setPressed(Unknown Source) [na:1.7.0_45]
+	at javax.swing.AbstractButton.doClick(Unknown Source) [na:1.7.0_45]
+	at javax.swing.AbstractButton.doClick(Unknown Source) [na:1.7.0_45]
+	at com.ganesha.minimarket.ui.forms.sale.PenjualanForm.keyEventListener(Unknown Source) [MiniMarketKK.jar:na]
+	at com.ganesha.desktop.component.XJDialog$MyDispatcher.dispatchKeyEvent(Unknown Source) [MiniMarketKK.jar:na]
+	at java.awt.DefaultKeyboardFocusManager.preDispatchKeyEvent(Unknown Source) [na:1.7.0_45]
+	at java.awt.DefaultKeyboardFocusManager.typeAheadAssertions(Unknown Source) [na:1.7.0_45]
+	at java.awt.DefaultKeyboardFocusManager.dispatchEvent(Unknown Source) [na:1.7.0_45]
+	at java.awt.Component.dispatchEventImpl(Unknown Source) [na:1.7.0_45]
+	at java.awt.Container.dispatchEventImpl(Unknown Source) [na:1.7.0_45]
+	at java.awt.Window.dispatchEventImpl(Unknown Source) [na:1.7.0_45]
+	at java.awt.Component.dispatchEvent(Unknown Source) [na:1.7.0_45]
+	at java.awt.EventQueue.dispatchEventImpl(Unknown Source) [na:1.7.0_45]
+	at java.awt.EventQueue.access$200(Unknown Source) [na:1.7.0_45]
+	at java.awt.EventQueue$3.run(Unknown Source) [na:1.7.0_45]
+	at java.awt.EventQueue$3.run(Unknown Source) [na:1.7.0_45]
+	at java.security.AccessController.doPrivileged(Native Method) [na:1.7.0_45]
+	at java.security.ProtectionDomain$1.doIntersectionPrivilege(Unknown Source) [na:1.7.0_45]
+	at java.security.ProtectionDomain$1.doIntersectionPrivilege(Unknown Source) [na:1.7.0_45]
+	at java.awt.EventQueue$4.run(Unknown Source) [na:1.7.0_45]
+	at java.awt.EventQueue$4.run(Unknown Source) [na:1.7.0_45]
+	at java.security.AccessController.doPrivileged(Native Method) [na:1.7.0_45]
+	at java.security.ProtectionDomain$1.doIntersectionPrivilege(Unknown Source) [na:1.7.0_45]
+	at java.awt.EventQueue.dispatchEvent(Unknown Source) [na:1.7.0_45]
+	at java.awt.EventDispatchThread.pumpOneEventForFilters(Unknown Source) [na:1.7.0_45]
+	at java.awt.EventDispatchThread.pumpEventsForFilter(Unknown Source) [na:1.7.0_45]
+	at java.awt.EventDispatchThread.pumpEventsForFilter(Unknown Source) [na:1.7.0_45]
+	at java.awt.WaitDispatchSupport$2.run(Unknown Source) [na:1.7.0_45]
+	at java.awt.WaitDispatchSupport$4.run(Unknown Source) [na:1.7.0_45]
+	at java.security.AccessController.doPrivileged(Native Method) [na:1.7.0_45]
+	at java.awt.WaitDispatchSupport.enter(Unknown Source) [na:1.7.0_45]
+	at java.awt.Dialog.show(Unknown Source) [na:1.7.0_45]
+	at java.awt.Component.show(Unknown Source) [na:1.7.0_45]
+	at java.awt.Component.setVisible(Unknown Source) [na:1.7.0_45]
+	at java.awt.Window.setVisible(Unknown Source) [na:1.7.0_45]
+	at java.awt.Dialog.setVisible(Unknown Source) [na:1.7.0_45]
+	at com.ganesha.desktop.component.XJDialog.setVisible(Unknown Source) [MiniMarketKK.jar:na]
+	at com.ganesha.minimarket.ui.MainFrame$10.actionPerformed(Unknown Source) [MiniMarketKK.jar:na]
+	at javax.swing.AbstractButton.fireActionPerformed(Unknown Source) [na:1.7.0_45]
+	at javax.swing.AbstractButton$Handler.actionPerformed(Unknown Source) [na:1.7.0_45]
+	at javax.swing.DefaultButtonModel.fireActionPerformed(Unknown Source) [na:1.7.0_45]
+	at javax.swing.DefaultButtonModel.setPressed(Unknown Source) [na:1.7.0_45]
+	at javax.swing.AbstractButton.doClick(Unknown Source) [na:1.7.0_45]
+	at javax.swing.AbstractButton.doClick(Unknown Source) [na:1.7.0_45]
+	at com.ganesha.minimarket.ui.MainFrame$21.actionPerformed(Unknown Source) [MiniMarketKK.jar:na]
+	at com.ganesha.desktop.component.XJButton.fireActionPerformed(Unknown Source) [MiniMarketKK.jar:na]
+	at javax.swing.AbstractButton$Handler.actionPerformed(Unknown Source) [na:1.7.0_45]
+	at javax.swing.DefaultButtonModel.fireActionPerformed(Unknown Source) [na:1.7.0_45]
+	at javax.swing.DefaultButtonModel.setPressed(Unknown Source) [na:1.7.0_45]
+	at javax.swing.AbstractButton.doClick(Unknown Source) [na:1.7.0_45]
+	at javax.swing.AbstractButton.doClick(Unknown Source) [na:1.7.0_45]
+	at com.ganesha.minimarket.ui.MainFrame.keyEventListener(Unknown Source) [MiniMarketKK.jar:na]
+	at com.ganesha.desktop.component.XJFrame$MyDispatcher.dispatchKeyEvent(Unknown Source) [MiniMarketKK.jar:na]
+	at java.awt.DefaultKeyboardFocusManager.preDispatchKeyEvent(Unknown Source) [na:1.7.0_45]
+	at java.awt.DefaultKeyboardFocusManager.typeAheadAssertions(Unknown Source) [na:1.7.0_45]
+	at java.awt.DefaultKeyboardFocusManager.dispatchEvent(Unknown Source) [na:1.7.0_45]
+	at java.awt.Component.dispatchEventImpl(Unknown Source) [na:1.7.0_45]
+	at java.awt.Container.dispatchEventImpl(Unknown Source) [na:1.7.0_45]
+	at java.awt.Window.dispatchEventImpl(Unknown Source) [na:1.7.0_45]
+	at java.awt.Component.dispatchEvent(Unknown Source) [na:1.7.0_45]
+	at java.awt.EventQueue.dispatchEventImpl(Unknown Source) [na:1.7.0_45]
+	at java.awt.EventQueue.access$200(Unknown Source) [na:1.7.0_45]
+	at java.awt.EventQueue$3.run(Unknown Source) [na:1.7.0_45]
+	at java.awt.EventQueue$3.run(Unknown Source) [na:1.7.0_45]
+	at java.security.AccessController.doPrivileged(Native Method) [na:1.7.0_45]
+	at java.security.ProtectionDomain$1.doIntersectionPrivilege(Unknown Source) [na:1.7.0_45]
+	at java.security.ProtectionDomain$1.doIntersectionPrivilege(Unknown Source) [na:1.7.0_45]
+	at java.awt.EventQueue$4.run(Unknown Source) [na:1.7.0_45]
+	at java.awt.EventQueue$4.run(Unknown Source) [na:1.7.0_45]
+	at java.security.AccessController.doPrivileged(Native Method) [na:1.7.0_45]
+	at java.security.ProtectionDomain$1.doIntersectionPrivilege(Unknown Source) [na:1.7.0_45]
+	at java.awt.EventQueue.dispatchEvent(Unknown Source) [na:1.7.0_45]
+	at java.awt.EventDispatchThread.pumpOneEventForFilters(Unknown Source) [na:1.7.0_45]
+	at java.awt.EventDispatchThread.pumpEventsForFilter(Unknown Source) [na:1.7.0_45]
+	at java.awt.EventDispatchThread.pumpEventsForHierarchy(Unknown Source) [na:1.7.0_45]
+	at java.awt.EventDispatchThread.pumpEvents(Unknown Source) [na:1.7.0_45]
+	at java.awt.EventDispatchThread.pumpEvents(Unknown Source) [na:1.7.0_45]
+	at java.awt.EventDispatchThread.run(Unknown Source) [na:1.7.0_45]
+2014-03-25 16:19:05.848 [AWT-EventQueue-0] TRACE application.window.button - Button com.ganesha.desktop.exeptions.UserExceptionHandler_OK is clicked
+2014-03-25 16:19:05.864 [AWT-EventQueue-0] DEBUG application.sale - Transaction finished. The window is closed.
+2014-03-25 16:50:28.200 [AWT-EventQueue-0] TRACE application.window.button - Button com.ganesha.minimarket.ui.MainFrame_<html><center>Transaksi Penjualan<br/>[F5]</center></html> is clicked
+2014-03-25 16:50:28.317 [AWT-EventQueue-0] TRACE application.window - Access to open com.ganesha.minimarket.ui.forms.sale.PenjualanForm is permitted, the window will open
+2014-03-25 16:51:00.163 [AWT-EventQueue-0] TRACE application.window.button - Button com.ganesha.minimarket.ui.MainFrame_<html><center>Cari Barang<br/>[F6]</center></html> is clicked
+2014-03-25 16:51:03.010 [AWT-EventQueue-0] TRACE application.window.button - Button com.ganesha.minimarket.ui.forms.searchentity.SearchEntityDialog_<html><center>Pilih<br/>[Enter]</center><html> is clicked
+2014-03-25 16:51:06.449 [AWT-EventQueue-0] TRACE application.window.button - Button com.ganesha.minimarket.ui.forms.sale.PenjualanForm_<html><center>Selesai & Simpan Data<br/>[F12]</center></html> is clicked
+2014-03-25 16:51:06.449 [AWT-EventQueue-0] DEBUG application.sale - Starting function selesaiDanSimpan()
+2014-03-25 16:51:06.449 [AWT-EventQueue-0] DEBUG o.h.transaction.JDBCTransaction - begin
+2014-03-25 16:51:06.450 [AWT-EventQueue-0] DEBUG o.h.transaction.JDBCTransaction - current autocommit status: false
+2014-03-25 16:51:06.450 [AWT-EventQueue-0] DEBUG application.sale - Starting validation for transaction number SAL20140325165028
+2014-03-25 16:51:06.451 [AWT-EventQueue-0] DEBUG application.sale - Validation finished
+2014-03-25 16:51:06.451 [AWT-EventQueue-0] DEBUG application.sale - Preparation for item {0000000406|ROKOK DUNHIL|15500.0|2|0.0|31000.0} is finished
+2014-03-25 16:51:06.451 [AWT-EventQueue-0] DEBUG application.sale - Preparation for item {0000000081|AQUA 600 ML|3500.0|1|0.0|3500.0} is finished
+2014-03-25 16:51:06.451 [AWT-EventQueue-0] DEBUG application.sale - Starting to insert SaleHeader {SAL20140325165028|34500.0|0.0|34500.0|34500.0|0.0} into database
+2014-03-25 16:51:06.467 [AWT-EventQueue-0] DEBUG application.sale - Finished inserting SaleHeader into database, the generated id is 777
+2014-03-25 16:51:06.467 [AWT-EventQueue-0] DEBUG application.sale - Logging to ActivityLog is done
+2014-03-25 16:51:06.467 [AWT-EventQueue-0] DEBUG o.h.transaction.JDBCTransaction - commit
+2014-03-25 16:51:06.498 [AWT-EventQueue-0] DEBUG o.h.transaction.JDBCTransaction - committed JDBC Connection
+2014-03-25 16:51:06.498 [AWT-EventQueue-0] DEBUG application.sale - Transaction is commited succesfully
+2014-03-25 16:51:06.623 [AWT-EventQueue-0] DEBUG application.sale - Receipt printer is worked fine.
+2014-03-25 16:51:06.623 [AWT-EventQueue-0] DEBUG application.sale - Transaction finished. The window is closed.
+2014-03-25 16:55:56.274 [AWT-EventQueue-0] TRACE application.window.button - Button com.ganesha.minimarket.ui.MainFrame_<html><center>Transaksi Penjualan<br/>[F5]</center></html> is clicked
+2014-03-25 16:55:56.407 [AWT-EventQueue-0] TRACE application.window - Access to open com.ganesha.minimarket.ui.forms.sale.PenjualanForm is permitted, the window will open
+2014-03-25 16:57:35.176 [AWT-EventQueue-0] TRACE application.window.button - Button com.ganesha.minimarket.ui.forms.sale.PenjualanForm_<html><center>Selesai & Simpan Data<br/>[F12]</center></html> is clicked
+2014-03-25 16:57:35.176 [AWT-EventQueue-0] DEBUG application.sale - Starting function selesaiDanSimpan()
+2014-03-25 16:57:35.176 [AWT-EventQueue-0] DEBUG o.h.transaction.JDBCTransaction - begin
+2014-03-25 16:57:35.177 [AWT-EventQueue-0] DEBUG o.h.transaction.JDBCTransaction - current autocommit status: false
+2014-03-25 16:57:35.177 [AWT-EventQueue-0] DEBUG application.sale - Starting validation for transaction number SAL20140325165556
+2014-03-25 16:57:35.178 [AWT-EventQueue-0] DEBUG application.sale - Validation finished
+2014-03-25 16:57:35.178 [AWT-EventQueue-0] DEBUG application.sale - Preparation for item {0000000040|DAY DAY SARANG WALET 320 ML|6000.0|1|0.0|6000.0} is finished
+2014-03-25 16:57:35.178 [AWT-EventQueue-0] DEBUG application.sale - Starting to insert SaleHeader {SAL20140325165556|6000.0|0.0|6000.0|10000.0|4000.0} into database
+2014-03-25 16:57:35.178 [AWT-EventQueue-0] DEBUG application.sale - Finished inserting SaleHeader into database, the generated id is 778
+2014-03-25 16:57:35.178 [AWT-EventQueue-0] DEBUG application.sale - Logging to ActivityLog is done
+2014-03-25 16:57:35.194 [AWT-EventQueue-0] DEBUG o.h.transaction.JDBCTransaction - commit
+2014-03-25 16:57:35.225 [AWT-EventQueue-0] DEBUG o.h.transaction.JDBCTransaction - committed JDBC Connection
+2014-03-25 16:57:35.225 [AWT-EventQueue-0] DEBUG application.sale - Transaction is commited succesfully
+2014-03-25 16:57:35.334 [AWT-EventQueue-0] DEBUG application.sale - Receipt printer is worked fine.
+2014-03-25 16:57:35.334 [AWT-EventQueue-0] DEBUG application.sale - Transaction finished. The window is closed.
+2014-03-25 17:10:13.231 [AWT-EventQueue-0] TRACE application.window.button - Button com.ganesha.minimarket.ui.MainFrame_<html><center>Transaksi Penjualan<br/>[F5]</center></html> is clicked
+2014-03-25 17:10:13.348 [AWT-EventQueue-0] TRACE application.window - Access to open com.ganesha.minimarket.ui.forms.sale.PenjualanForm is permitted, the window will open
+2014-03-25 17:10:17.363 [AWT-EventQueue-0] TRACE application.window.button - Button com.ganesha.minimarket.ui.MainFrame_<html><center>Cari Barang<br/>[F6]</center></html> is clicked
+2014-03-25 17:10:21.707 [AWT-EventQueue-0] TRACE application.window.button - Button com.ganesha.minimarket.ui.forms.searchentity.SearchEntityDialog_<html><center>Pilih<br/>[Enter]</center><html> is clicked
+2014-03-25 17:10:22.635 [AWT-EventQueue-0] TRACE application.window.button - Button com.ganesha.minimarket.ui.MainFrame_<html><center>Cari Barang<br/>[F6]</center></html> is clicked
+2014-03-25 17:10:24.390 [AWT-EventQueue-0] TRACE application.window.button - Button com.ganesha.minimarket.ui.forms.searchentity.SearchEntityDialog_<html><center>Pilih<br/>[Enter]</center><html> is clicked
+2014-03-25 17:10:25.381 [AWT-EventQueue-0] TRACE application.window.button - Button com.ganesha.minimarket.ui.MainFrame_<html><center>Cari Barang<br/>[F6]</center></html> is clicked
+2014-03-25 17:10:28.977 [AWT-EventQueue-0] TRACE application.window.button - Button com.ganesha.minimarket.ui.forms.searchentity.SearchEntityDialog_<html><center>Pilih<br/>[Enter]</center><html> is clicked
+2014-03-25 17:12:48.964 [AWT-EventQueue-0] TRACE application.window.button - Button com.ganesha.minimarket.ui.forms.sale.PenjualanForm_<html><center>Selesai & Simpan Data<br/>[F12]</center></html> is clicked
+2014-03-25 17:12:48.964 [AWT-EventQueue-0] DEBUG application.sale - Starting function selesaiDanSimpan()
+2014-03-25 17:12:48.964 [AWT-EventQueue-0] DEBUG o.h.transaction.JDBCTransaction - begin
+2014-03-25 17:12:48.965 [AWT-EventQueue-0] DEBUG o.h.transaction.JDBCTransaction - current autocommit status: false
+2014-03-25 17:12:48.965 [AWT-EventQueue-0] DEBUG application.sale - Starting validation for transaction number SAL20140325171013
+2014-03-25 17:12:48.966 [AWT-EventQueue-0] DEBUG application.sale - Validation finished
+2014-03-25 17:12:48.966 [AWT-EventQueue-0] DEBUG application.sale - Preparation for item {0000000035|PULPY ORANGE 350 ML|7000.0|1|0.0|7000.0} is finished
+2014-03-25 17:12:48.966 [AWT-EventQueue-0] DEBUG application.sale - Preparation for item {0000000081|AQUA 600 ML|3500.0|1|0.0|3500.0} is finished
+2014-03-25 17:12:48.966 [AWT-EventQueue-0] DEBUG application.sale - Preparation for item {0000000455|NII GREEN TEA HIJAU|6000.0|1|0.0|6000.0} is finished
+2014-03-25 17:12:48.966 [AWT-EventQueue-0] DEBUG application.sale - Starting to insert SaleHeader {SAL20140325171013|16500.0|0.0|16500.0|16500.0|0.0} into database
+2014-03-25 17:12:48.981 [AWT-EventQueue-0] DEBUG application.sale - Finished inserting SaleHeader into database, the generated id is 779
+2014-03-25 17:12:48.981 [AWT-EventQueue-0] DEBUG application.sale - Logging to ActivityLog is done
+2014-03-25 17:12:48.981 [AWT-EventQueue-0] DEBUG o.h.transaction.JDBCTransaction - commit
+2014-03-25 17:12:49.044 [AWT-EventQueue-0] DEBUG o.h.transaction.JDBCTransaction - committed JDBC Connection
+2014-03-25 17:12:49.044 [AWT-EventQueue-0] DEBUG application.sale - Transaction is commited succesfully
+2014-03-25 17:12:49.168 [AWT-EventQueue-0] DEBUG application.sale - Receipt printer is worked fine.
+2014-03-25 17:12:49.168 [AWT-EventQueue-0] DEBUG application.sale - Transaction finished. The window is closed.
+2014-03-25 17:37:24.843 [AWT-EventQueue-0] TRACE application.window.button - Button com.ganesha.minimarket.ui.MainFrame_<html><center>Transaksi Penjualan<br/>[F5]</center></html> is clicked
+2014-03-25 17:37:24.976 [AWT-EventQueue-0] TRACE application.window - Access to open com.ganesha.minimarket.ui.forms.sale.PenjualanForm is permitted, the window will open
+2014-03-25 17:37:26.682 [AWT-EventQueue-0] TRACE application.window.button - Button com.ganesha.minimarket.ui.MainFrame_<html><center>Cari Barang<br/>[F6]</center></html> is clicked
+2014-03-25 17:37:32.586 [AWT-EventQueue-0] TRACE application.window.button - Button com.ganesha.minimarket.ui.forms.searchentity.SearchEntityDialog_<html><center>Pilih<br/>[Enter]</center><html> is clicked
+2014-03-25 17:43:34.540 [AWT-EventQueue-0] TRACE application.window.button - Button com.ganesha.minimarket.ui.MainFrame_<html><center>Hapus<br/>[Delete]</center></html> is clicked
+2014-03-25 17:43:55.169 [AWT-EventQueue-0] TRACE application.window.button - Button com.ganesha.minimarket.ui.MainFrame_<html><center>Cari Barang<br/>[F6]</center></html> is clicked
+2014-03-25 17:45:57.591 [AWT-EventQueue-0] TRACE application.window.button - Button com.ganesha.minimarket.ui.forms.sale.PenjualanForm_<html><center>Selesai & Simpan Data<br/>[F12]</center></html> is clicked
+2014-03-25 17:45:57.591 [AWT-EventQueue-0] DEBUG application.sale - Starting function selesaiDanSimpan()
+2014-03-25 17:45:57.591 [AWT-EventQueue-0] DEBUG o.h.transaction.JDBCTransaction - begin
+2014-03-25 17:45:57.592 [AWT-EventQueue-0] DEBUG o.h.transaction.JDBCTransaction - current autocommit status: false
+2014-03-25 17:45:57.592 [AWT-EventQueue-0] DEBUG o.h.transaction.JDBCTransaction - rollback
+2014-03-25 17:45:57.593 [AWT-EventQueue-0] DEBUG o.h.transaction.JDBCTransaction - rolled back JDBC Connection
+2014-03-25 17:45:59.745 [AWT-EventQueue-0] TRACE application.window.button - Button com.ganesha.desktop.exeptions.UserExceptionHandler_OK is clicked
+2014-03-25 17:46:31.107 [AWT-EventQueue-0] TRACE application.window.button - Button com.ganesha.minimarket.ui.forms.sale.PenjualanForm_<html><center>Selesai & Simpan Data<br/>[F12]</center></html> is clicked
+2014-03-25 17:46:31.107 [AWT-EventQueue-0] DEBUG application.sale - Starting function selesaiDanSimpan()
+2014-03-25 17:46:31.107 [AWT-EventQueue-0] DEBUG o.h.transaction.JDBCTransaction - begin
+2014-03-25 17:46:31.108 [AWT-EventQueue-0] DEBUG o.h.transaction.JDBCTransaction - current autocommit status: false
+2014-03-25 17:46:31.108 [AWT-EventQueue-0] DEBUG application.sale - Starting validation for transaction number SAL20140325173724
+2014-03-25 17:46:31.109 [AWT-EventQueue-0] DEBUG application.sale - Validation finished
+2014-03-25 17:46:31.109 [AWT-EventQueue-0] DEBUG application.sale - Preparation for item {0000000328|GOOD TIME TRIPLE CHOCOCHIPS 45 GR|6500.0|1|0.0|6500.0} is finished
+2014-03-25 17:46:31.109 [AWT-EventQueue-0] DEBUG application.sale - Preparation for item {0000000275|LUX AQUA SPARKLY 85 GR|3000.0|1|0.0|3000.0} is finished
+2014-03-25 17:46:31.109 [AWT-EventQueue-0] DEBUG application.sale - Preparation for item {0000000291|LUX MAGICAL SPELL 85 G|3000.0|1|0.0|3000.0} is finished
+2014-03-25 17:46:31.109 [AWT-EventQueue-0] DEBUG application.sale - Preparation for item {0000000363|MOLTO PEWNANGI FLOWER SHOWER 450 ML |6500.0|1|0.0|6500.0} is finished
+2014-03-25 17:46:31.109 [AWT-EventQueue-0] DEBUG application.sale - Preparation for item {0000000081|AQUA 600 ML|3500.0|1|0.0|3500.0} is finished
+2014-03-25 17:46:31.109 [AWT-EventQueue-0] DEBUG application.sale - Preparation for item {0000000218|LAYS RS RUMPUT LAUT 750 GR|9000.0|1|0.0|9000.0} is finished
+2014-03-25 17:46:31.109 [AWT-EventQueue-0] DEBUG application.sale - Preparation for item {0000000190|MY JELLY 70 GR|3000.0|2|0.0|6000.0} is finished
+2014-03-25 17:46:31.109 [AWT-EventQueue-0] DEBUG application.sale - Preparation for item {0000000096|OT OOPS WAFER KEJU 24 GR|1500.0|1|0.0|1500.0} is finished
+2014-03-25 17:46:31.109 [AWT-EventQueue-0] DEBUG application.sale - Starting to insert SaleHeader {SAL20140325173724|39000.0|0.0|39000.0|50000.0|11000.0} into database
+2014-03-25 17:46:31.156 [AWT-EventQueue-0] DEBUG application.sale - Finished inserting SaleHeader into database, the generated id is 780
+2014-03-25 17:46:31.187 [AWT-EventQueue-0] DEBUG application.sale - Logging to ActivityLog is done
+2014-03-25 17:46:31.187 [AWT-EventQueue-0] DEBUG o.h.transaction.JDBCTransaction - commit
+2014-03-25 17:46:31.218 [AWT-EventQueue-0] DEBUG o.h.transaction.JDBCTransaction - committed JDBC Connection
+2014-03-25 17:46:31.218 [AWT-EventQueue-0] DEBUG application.sale - Transaction is commited succesfully
+2014-03-25 17:46:31.328 [AWT-EventQueue-0] DEBUG application.sale - Receipt printer is worked fine.
+2014-03-25 17:46:31.328 [AWT-EventQueue-0] DEBUG application.sale - Transaction finished. The window is closed.
+2014-03-25 17:47:01.332 [AWT-EventQueue-0] TRACE application.window.button - Button com.ganesha.minimarket.ui.MainFrame_<html><center>Transaksi Penjualan<br/>[F5]</center></html> is clicked
+2014-03-25 17:47:01.465 [AWT-EventQueue-0] TRACE application.window - Access to open com.ganesha.minimarket.ui.forms.sale.PenjualanForm is permitted, the window will open
+2014-03-25 17:47:20.487 [AWT-EventQueue-0] TRACE application.window.button - Button com.ganesha.minimarket.ui.forms.sale.PenjualanForm_<html><center>Selesai & Simpan Data<br/>[F12]</center></html> is clicked
+2014-03-25 17:47:20.487 [AWT-EventQueue-0] DEBUG application.sale - Starting function selesaiDanSimpan()
+2014-03-25 17:47:20.487 [AWT-EventQueue-0] DEBUG o.h.transaction.JDBCTransaction - begin
+2014-03-25 17:47:20.488 [AWT-EventQueue-0] DEBUG o.h.transaction.JDBCTransaction - current autocommit status: false
+2014-03-25 17:47:20.488 [AWT-EventQueue-0] DEBUG application.sale - Starting validation for transaction number SAL20140325174701
+2014-03-25 17:47:20.489 [AWT-EventQueue-0] DEBUG application.sale - Validation finished
+2014-03-25 17:47:20.489 [AWT-EventQueue-0] DEBUG application.sale - Preparation for item {0000000352|KRATINGDAENG 150 ML|5000.0|1|0.0|5000.0} is finished
+2014-03-25 17:47:20.489 [AWT-EventQueue-0] DEBUG application.sale - Starting to insert SaleHeader {SAL20140325174701|5000.0|0.0|5000.0|5000.0|0.0} into database
+2014-03-25 17:47:20.489 [AWT-EventQueue-0] DEBUG application.sale - Finished inserting SaleHeader into database, the generated id is 781
+2014-03-25 17:47:20.489 [AWT-EventQueue-0] DEBUG application.sale - Logging to ActivityLog is done
+2014-03-25 17:47:20.489 [AWT-EventQueue-0] DEBUG o.h.transaction.JDBCTransaction - commit
+2014-03-25 17:47:20.520 [AWT-EventQueue-0] DEBUG o.h.transaction.JDBCTransaction - committed JDBC Connection
+2014-03-25 17:47:20.520 [AWT-EventQueue-0] DEBUG application.sale - Transaction is commited succesfully
+2014-03-25 17:47:20.645 [AWT-EventQueue-0] DEBUG application.sale - Receipt printer is worked fine.
+2014-03-25 17:47:20.645 [AWT-EventQueue-0] DEBUG application.sale - Transaction finished. The window is closed.
+2014-03-25 17:49:07.433 [AWT-EventQueue-0] TRACE application.window.button - Button com.ganesha.minimarket.ui.MainFrame_<html><center>Transaksi Penjualan<br/>[F5]</center></html> is clicked
+2014-03-25 17:49:07.565 [AWT-EventQueue-0] TRACE application.window - Access to open com.ganesha.minimarket.ui.forms.sale.PenjualanForm is permitted, the window will open
+2014-03-25 17:49:10.691 [AWT-EventQueue-0] TRACE application.window.button - Button com.ganesha.minimarket.ui.MainFrame_<html><center>Cari Barang<br/>[F6]</center></html> is clicked
+2014-03-25 17:49:16.377 [AWT-EventQueue-0] TRACE application.window.button - Button com.ganesha.minimarket.ui.forms.searchentity.SearchEntityDialog_<html><center>Pilih<br/>[Enter]</center><html> is clicked
+2014-03-25 17:50:19.955 [AWT-EventQueue-0] TRACE application.window.button - Button com.ganesha.minimarket.ui.MainFrame_<html><center>Cari Barang<br/>[F6]</center></html> is clicked
+2014-03-25 17:50:26.811 [AWT-EventQueue-0] TRACE application.window.button - Button com.ganesha.minimarket.ui.forms.searchentity.SearchEntityDialog_<html><center>Pilih<br/>[Enter]</center><html> is clicked
+2014-03-25 17:51:50.560 [AWT-EventQueue-0] TRACE application.window.button - Button com.ganesha.minimarket.ui.forms.sale.PenjualanForm_<html><center>Selesai & Simpan Data<br/>[F12]</center></html> is clicked
+2014-03-25 17:51:50.560 [AWT-EventQueue-0] DEBUG application.sale - Starting function selesaiDanSimpan()
+2014-03-25 17:51:50.560 [AWT-EventQueue-0] DEBUG o.h.transaction.JDBCTransaction - begin
+2014-03-25 17:51:50.561 [AWT-EventQueue-0] DEBUG o.h.transaction.JDBCTransaction - current autocommit status: false
+2014-03-25 17:51:50.561 [AWT-EventQueue-0] DEBUG application.sale - Starting validation for transaction number SAL20140325174907
+2014-03-25 17:51:50.562 [AWT-EventQueue-0] DEBUG application.sale - Validation finished
+2014-03-25 17:51:50.562 [AWT-EventQueue-0] DEBUG application.sale - Preparation for item {0000000141|AKAR KELAPA|12000.0|4|0.0|48000.0} is finished
+2014-03-25 17:51:50.562 [AWT-EventQueue-0] DEBUG application.sale - Preparation for item {0000000138|SALE PISANG ORIGINAL|10000.0|2|0.0|20000.0} is finished
+2014-03-25 17:51:50.562 [AWT-EventQueue-0] DEBUG application.sale - Starting to insert SaleHeader {SAL20140325174907|68000.0|0.0|68000.0|70000.0|2000.0} into database
+2014-03-25 17:51:50.578 [AWT-EventQueue-0] DEBUG application.sale - Finished inserting SaleHeader into database, the generated id is 782
+2014-03-25 17:51:50.578 [AWT-EventQueue-0] DEBUG application.sale - Logging to ActivityLog is done
+2014-03-25 17:51:50.578 [AWT-EventQueue-0] DEBUG o.h.transaction.JDBCTransaction - commit
+2014-03-25 17:51:50.609 [AWT-EventQueue-0] DEBUG o.h.transaction.JDBCTransaction - committed JDBC Connection
+2014-03-25 17:51:50.609 [AWT-EventQueue-0] DEBUG application.sale - Transaction is commited succesfully
+2014-03-25 17:51:50.734 [AWT-EventQueue-0] DEBUG application.sale - Receipt printer is worked fine.
+2014-03-25 17:51:50.734 [AWT-EventQueue-0] DEBUG application.sale - Transaction finished. The window is closed.
+2014-03-25 17:56:33.428 [AWT-EventQueue-0] TRACE application.window.button - Button com.ganesha.minimarket.ui.MainFrame_<html><center>Transaksi Penjualan<br/>[F5]</center></html> is clicked
+2014-03-25 17:56:33.560 [AWT-EventQueue-0] TRACE application.window - Access to open com.ganesha.minimarket.ui.forms.sale.PenjualanForm is permitted, the window will open
+2014-03-25 17:59:10.689 [AWT-EventQueue-0] TRACE application.window.button - Button com.ganesha.minimarket.ui.forms.sale.PenjualanForm_<html><center>Selesai & Simpan Data<br/>[F12]</center></html> is clicked
+2014-03-25 17:59:10.689 [AWT-EventQueue-0] DEBUG application.sale - Starting function selesaiDanSimpan()
+2014-03-25 17:59:10.689 [AWT-EventQueue-0] DEBUG o.h.transaction.JDBCTransaction - begin
+2014-03-25 17:59:10.690 [AWT-EventQueue-0] DEBUG o.h.transaction.JDBCTransaction - current autocommit status: false
+2014-03-25 17:59:10.690 [AWT-EventQueue-0] DEBUG application.sale - Starting validation for transaction number SAL20140325175633
+2014-03-25 17:59:10.691 [AWT-EventQueue-0] DEBUG application.sale - Validation finished
+2014-03-25 17:59:10.691 [AWT-EventQueue-0] DEBUG application.sale - Preparation for item {0000000398|POCARI SWEAT 330ML|6000.0|1|0.0|6000.0} is finished
+2014-03-25 17:59:10.691 [AWT-EventQueue-0] DEBUG application.sale - Starting to insert SaleHeader {SAL20140325175633|6000.0|0.0|6000.0|6000.0|0.0} into database
+2014-03-25 17:59:10.691 [AWT-EventQueue-0] DEBUG application.sale - Finished inserting SaleHeader into database, the generated id is 783
+2014-03-25 17:59:10.691 [AWT-EventQueue-0] DEBUG application.sale - Logging to ActivityLog is done
+2014-03-25 17:59:10.707 [AWT-EventQueue-0] DEBUG o.h.transaction.JDBCTransaction - commit
+2014-03-25 17:59:10.738 [AWT-EventQueue-0] DEBUG o.h.transaction.JDBCTransaction - committed JDBC Connection
+2014-03-25 17:59:10.738 [AWT-EventQueue-0] DEBUG application.sale - Transaction is commited succesfully
+2014-03-25 17:59:10.847 [AWT-EventQueue-0] DEBUG application.sale - Receipt printer is worked fine.
+2014-03-25 17:59:10.847 [AWT-EventQueue-0] DEBUG application.sale - Transaction finished. The window is closed.
+2014-03-25 18:05:03.242 [AWT-EventQueue-0] TRACE application.window.button - Button com.ganesha.minimarket.ui.MainFrame_<html><center>Transaksi Penjualan<br/>[F5]</center></html> is clicked
+2014-03-25 18:05:03.375 [AWT-EventQueue-0] TRACE application.window - Access to open com.ganesha.minimarket.ui.forms.sale.PenjualanForm is permitted, the window will open
+2014-03-25 18:05:04.753 [AWT-EventQueue-0] TRACE application.window.button - Button com.ganesha.minimarket.ui.MainFrame_<html><center>Cari Barang<br/>[F6]</center></html> is clicked
+2014-03-25 18:05:09.145 [AWT-EventQueue-0] TRACE application.window.button - Button com.ganesha.minimarket.ui.forms.searchentity.SearchEntityDialog_<html><center>Pilih<br/>[Enter]</center><html> is clicked
+2014-03-25 18:05:48.543 [AWT-EventQueue-0] TRACE application.window.button - Button com.ganesha.minimarket.ui.forms.sale.PenjualanForm_<html><center>Selesai & Simpan Data<br/>[F12]</center></html> is clicked
+2014-03-25 18:05:48.543 [AWT-EventQueue-0] DEBUG application.sale - Starting function selesaiDanSimpan()
+2014-03-25 18:05:48.543 [AWT-EventQueue-0] DEBUG o.h.transaction.JDBCTransaction - begin
+2014-03-25 18:05:48.544 [AWT-EventQueue-0] DEBUG o.h.transaction.JDBCTransaction - current autocommit status: false
+2014-03-25 18:05:48.544 [AWT-EventQueue-0] DEBUG application.sale - Starting validation for transaction number SAL20140325180503
+2014-03-25 18:05:48.545 [AWT-EventQueue-0] DEBUG application.sale - Validation finished
+2014-03-25 18:05:48.545 [AWT-EventQueue-0] DEBUG application.sale - Preparation for item {0000000081|AQUA 600 ML|3500.0|1|0.0|3500.0} is finished
+2014-03-25 18:05:48.545 [AWT-EventQueue-0] DEBUG application.sale - Preparation for item {0000000459|FOX SPRING TEA|7000.0|1|0.0|7000.0} is finished
+2014-03-25 18:05:48.545 [AWT-EventQueue-0] DEBUG application.sale - Starting to insert SaleHeader {SAL20140325180503|10500.0|0.0|10500.0|10500.0|0.0} into database
+2014-03-25 18:05:48.560 [AWT-EventQueue-0] DEBUG application.sale - Finished inserting SaleHeader into database, the generated id is 784
+2014-03-25 18:05:48.560 [AWT-EventQueue-0] DEBUG application.sale - Logging to ActivityLog is done
+2014-03-25 18:05:48.560 [AWT-EventQueue-0] DEBUG o.h.transaction.JDBCTransaction - commit
+2014-03-25 18:05:48.591 [AWT-EventQueue-0] DEBUG o.h.transaction.JDBCTransaction - committed JDBC Connection
+2014-03-25 18:05:48.591 [AWT-EventQueue-0] DEBUG application.sale - Transaction is commited succesfully
+2014-03-25 18:05:48.716 [AWT-EventQueue-0] DEBUG application.sale - Receipt printer is worked fine.
+2014-03-25 18:05:48.716 [AWT-EventQueue-0] DEBUG application.sale - Transaction finished. The window is closed.
+2014-03-25 18:10:15.155 [AWT-EventQueue-0] TRACE application.window.button - Button com.ganesha.minimarket.ui.MainFrame_<html><center>Transaksi Penjualan<br/>[F5]</center></html> is clicked
+2014-03-25 18:10:15.287 [AWT-EventQueue-0] TRACE application.window - Access to open com.ganesha.minimarket.ui.forms.sale.PenjualanForm is permitted, the window will open
+2014-03-25 18:10:17.009 [AWT-EventQueue-0] TRACE application.window.button - Button com.ganesha.minimarket.ui.MainFrame_<html><center>Cari Barang<br/>[F6]</center></html> is clicked
+2014-03-25 18:10:19.357 [AWT-EventQueue-0] TRACE application.window.button - Button com.ganesha.minimarket.ui.forms.searchentity.SearchEntityDialog_<html><center>Pilih<br/>[Enter]</center><html> is clicked
+2014-03-25 18:10:20.379 [AWT-EventQueue-0] TRACE application.window.button - Button com.ganesha.minimarket.ui.MainFrame_<html><center>Cari Barang<br/>[F6]</center></html> is clicked
+2014-03-25 18:10:34.754 [AWT-EventQueue-0] TRACE application.window.button - Button com.ganesha.minimarket.ui.forms.searchentity.SearchEntityDialog_<html><center>Pilih<br/>[Enter]</center><html> is clicked
+2014-03-25 18:10:37.751 [AWT-EventQueue-0] TRACE application.window.button - Button com.ganesha.minimarket.ui.MainFrame_<html><center>Hapus<br/>[Delete]</center></html> is clicked
+2014-03-25 18:11:59.277 [AWT-EventQueue-0] TRACE application.window.button - Button com.ganesha.minimarket.ui.MainFrame_<html><center>Cari Barang<br/>[F6]</center></html> is clicked
+2014-03-25 18:12:05.382 [AWT-EventQueue-0] TRACE application.window.button - Button com.ganesha.minimarket.ui.forms.searchentity.SearchEntityDialog_<html><center>Pilih<br/>[Enter]</center><html> is clicked
+2014-03-25 18:12:10.601 [AWT-EventQueue-0] TRACE application.window.button - Button com.ganesha.minimarket.ui.forms.sale.PenjualanForm_<html><center>Selesai & Simpan Data<br/>[F12]</center></html> is clicked
+2014-03-25 18:12:10.601 [AWT-EventQueue-0] DEBUG application.sale - Starting function selesaiDanSimpan()
+2014-03-25 18:12:10.601 [AWT-EventQueue-0] DEBUG o.h.transaction.JDBCTransaction - begin
+2014-03-25 18:12:10.602 [AWT-EventQueue-0] DEBUG o.h.transaction.JDBCTransaction - current autocommit status: false
+2014-03-25 18:12:10.602 [AWT-EventQueue-0] DEBUG application.sale - Starting validation for transaction number SAL20140325181015
+2014-03-25 18:12:10.603 [AWT-EventQueue-0] DEBUG application.sale - Validation finished
+2014-03-25 18:12:10.603 [AWT-EventQueue-0] DEBUG application.sale - Preparation for item {0000000355|NII GREEN TEA MADU 500 ML|6000.0|1|0.0|6000.0} is finished
+2014-03-25 18:12:10.603 [AWT-EventQueue-0] DEBUG application.sale - Preparation for item {0000000043|LARUTAN CAP KAKI TIGA 200 ML|3000.0|1|0.0|3000.0} is finished
+2014-03-25 18:12:10.603 [AWT-EventQueue-0] DEBUG application.sale - Starting to insert SaleHeader {SAL20140325181015|9000.0|0.0|9000.0|9000.0|0.0} into database
+2014-03-25 18:12:10.618 [AWT-EventQueue-0] DEBUG application.sale - Finished inserting SaleHeader into database, the generated id is 785
+2014-03-25 18:12:10.618 [AWT-EventQueue-0] DEBUG application.sale - Logging to ActivityLog is done
+2014-03-25 18:12:10.618 [AWT-EventQueue-0] DEBUG o.h.transaction.JDBCTransaction - commit
+2014-03-25 18:12:10.649 [AWT-EventQueue-0] DEBUG o.h.transaction.JDBCTransaction - committed JDBC Connection
+2014-03-25 18:12:10.649 [AWT-EventQueue-0] DEBUG application.sale - Transaction is commited succesfully
+2014-03-25 18:12:10.649 [AWT-EventQueue-0] ERROR application - Printer is not accepting job.
+javax.print.PrintException: Printer is not accepting job.
+	at sun.print.Win32PrintJob.print(Unknown Source) ~[na:1.7.0_45]
+	at com.ganesha.minimarket.facade.SaleFacade.cetakReceipt(Unknown Source) ~[MiniMarketKK.jar:na]
+	at com.ganesha.minimarket.ui.forms.sale.PenjualanForm.printReceipt(Unknown Source) [MiniMarketKK.jar:na]
+	at com.ganesha.minimarket.ui.forms.sale.PenjualanForm.selesaiDanSimpan(Unknown Source) [MiniMarketKK.jar:na]
+	at com.ganesha.minimarket.ui.forms.sale.PenjualanForm.access$900(Unknown Source) [MiniMarketKK.jar:na]
+	at com.ganesha.minimarket.ui.forms.sale.PenjualanForm$8.actionPerformed(Unknown Source) [MiniMarketKK.jar:na]
+	at com.ganesha.desktop.component.XJButton.fireActionPerformed(Unknown Source) [MiniMarketKK.jar:na]
+	at javax.swing.AbstractButton$Handler.actionPerformed(Unknown Source) [na:1.7.0_45]
+	at javax.swing.DefaultButtonModel.fireActionPerformed(Unknown Source) [na:1.7.0_45]
+	at javax.swing.DefaultButtonModel.setPressed(Unknown Source) [na:1.7.0_45]
+	at javax.swing.AbstractButton.doClick(Unknown Source) [na:1.7.0_45]
+	at javax.swing.AbstractButton.doClick(Unknown Source) [na:1.7.0_45]
+	at com.ganesha.minimarket.ui.forms.sale.PenjualanForm.keyEventListener(Unknown Source) [MiniMarketKK.jar:na]
+	at com.ganesha.desktop.component.XJDialog$MyDispatcher.dispatchKeyEvent(Unknown Source) [MiniMarketKK.jar:na]
+	at java.awt.DefaultKeyboardFocusManager.preDispatchKeyEvent(Unknown Source) [na:1.7.0_45]
+	at java.awt.DefaultKeyboardFocusManager.typeAheadAssertions(Unknown Source) [na:1.7.0_45]
+	at java.awt.DefaultKeyboardFocusManager.dispatchEvent(Unknown Source) [na:1.7.0_45]
+	at java.awt.Component.dispatchEventImpl(Unknown Source) [na:1.7.0_45]
+	at java.awt.Container.dispatchEventImpl(Unknown Source) [na:1.7.0_45]
+	at java.awt.Window.dispatchEventImpl(Unknown Source) [na:1.7.0_45]
+	at java.awt.Component.dispatchEvent(Unknown Source) [na:1.7.0_45]
+	at java.awt.EventQueue.dispatchEventImpl(Unknown Source) [na:1.7.0_45]
+	at java.awt.EventQueue.access$200(Unknown Source) [na:1.7.0_45]
+	at java.awt.EventQueue$3.run(Unknown Source) [na:1.7.0_45]
+	at java.awt.EventQueue$3.run(Unknown Source) [na:1.7.0_45]
+	at java.security.AccessController.doPrivileged(Native Method) [na:1.7.0_45]
+	at java.security.ProtectionDomain$1.doIntersectionPrivilege(Unknown Source) [na:1.7.0_45]
+	at java.security.ProtectionDomain$1.doIntersectionPrivilege(Unknown Source) [na:1.7.0_45]
+	at java.awt.EventQueue$4.run(Unknown Source) [na:1.7.0_45]
+	at java.awt.EventQueue$4.run(Unknown Source) [na:1.7.0_45]
+	at java.security.AccessController.doPrivileged(Native Method) [na:1.7.0_45]
+	at java.security.ProtectionDomain$1.doIntersectionPrivilege(Unknown Source) [na:1.7.0_45]
+	at java.awt.EventQueue.dispatchEvent(Unknown Source) [na:1.7.0_45]
+	at java.awt.EventDispatchThread.pumpOneEventForFilters(Unknown Source) [na:1.7.0_45]
+	at java.awt.EventDispatchThread.pumpEventsForFilter(Unknown Source) [na:1.7.0_45]
+	at java.awt.EventDispatchThread.pumpEventsForFilter(Unknown Source) [na:1.7.0_45]
+	at java.awt.WaitDispatchSupport$2.run(Unknown Source) [na:1.7.0_45]
+	at java.awt.WaitDispatchSupport$4.run(Unknown Source) [na:1.7.0_45]
+	at java.security.AccessController.doPrivileged(Native Method) [na:1.7.0_45]
+	at java.awt.WaitDispatchSupport.enter(Unknown Source) [na:1.7.0_45]
+	at java.awt.Dialog.show(Unknown Source) [na:1.7.0_45]
+	at java.awt.Component.show(Unknown Source) [na:1.7.0_45]
+	at java.awt.Component.setVisible(Unknown Source) [na:1.7.0_45]
+	at java.awt.Window.setVisible(Unknown Source) [na:1.7.0_45]
+	at java.awt.Dialog.setVisible(Unknown Source) [na:1.7.0_45]
+	at com.ganesha.desktop.component.XJDialog.setVisible(Unknown Source) [MiniMarketKK.jar:na]
+	at com.ganesha.minimarket.ui.MainFrame$10.actionPerformed(Unknown Source) [MiniMarketKK.jar:na]
+	at javax.swing.AbstractButton.fireActionPerformed(Unknown Source) [na:1.7.0_45]
+	at javax.swing.AbstractButton$Handler.actionPerformed(Unknown Source) [na:1.7.0_45]
+	at javax.swing.DefaultButtonModel.fireActionPerformed(Unknown Source) [na:1.7.0_45]
+	at javax.swing.DefaultButtonModel.setPressed(Unknown Source) [na:1.7.0_45]
+	at javax.swing.AbstractButton.doClick(Unknown Source) [na:1.7.0_45]
+	at javax.swing.AbstractButton.doClick(Unknown Source) [na:1.7.0_45]
+	at com.ganesha.minimarket.ui.MainFrame$21.actionPerformed(Unknown Source) [MiniMarketKK.jar:na]
+	at com.ganesha.desktop.component.XJButton.fireActionPerformed(Unknown Source) [MiniMarketKK.jar:na]
+	at javax.swing.AbstractButton$Handler.actionPerformed(Unknown Source) [na:1.7.0_45]
+	at javax.swing.DefaultButtonModel.fireActionPerformed(Unknown Source) [na:1.7.0_45]
+	at javax.swing.DefaultButtonModel.setPressed(Unknown Source) [na:1.7.0_45]
+	at javax.swing.AbstractButton.doClick(Unknown Source) [na:1.7.0_45]
+	at javax.swing.AbstractButton.doClick(Unknown Source) [na:1.7.0_45]
+	at com.ganesha.minimarket.ui.MainFrame.keyEventListener(Unknown Source) [MiniMarketKK.jar:na]
+	at com.ganesha.desktop.component.XJFrame$MyDispatcher.dispatchKeyEvent(Unknown Source) [MiniMarketKK.jar:na]
+	at java.awt.DefaultKeyboardFocusManager.preDispatchKeyEvent(Unknown Source) [na:1.7.0_45]
+	at java.awt.DefaultKeyboardFocusManager.typeAheadAssertions(Unknown Source) [na:1.7.0_45]
+	at java.awt.DefaultKeyboardFocusManager.dispatchEvent(Unknown Source) [na:1.7.0_45]
+	at java.awt.Component.dispatchEventImpl(Unknown Source) [na:1.7.0_45]
+	at java.awt.Container.dispatchEventImpl(Unknown Source) [na:1.7.0_45]
+	at java.awt.Window.dispatchEventImpl(Unknown Source) [na:1.7.0_45]
+	at java.awt.Component.dispatchEvent(Unknown Source) [na:1.7.0_45]
+	at java.awt.EventQueue.dispatchEventImpl(Unknown Source) [na:1.7.0_45]
+	at java.awt.EventQueue.access$200(Unknown Source) [na:1.7.0_45]
+	at java.awt.EventQueue$3.run(Unknown Source) [na:1.7.0_45]
+	at java.awt.EventQueue$3.run(Unknown Source) [na:1.7.0_45]
+	at java.security.AccessController.doPrivileged(Native Method) [na:1.7.0_45]
+	at java.security.ProtectionDomain$1.doIntersectionPrivilege(Unknown Source) [na:1.7.0_45]
+	at java.security.ProtectionDomain$1.doIntersectionPrivilege(Unknown Source) [na:1.7.0_45]
+	at java.awt.EventQueue$4.run(Unknown Source) [na:1.7.0_45]
+	at java.awt.EventQueue$4.run(Unknown Source) [na:1.7.0_45]
+	at java.security.AccessController.doPrivileged(Native Method) [na:1.7.0_45]
+	at java.security.ProtectionDomain$1.doIntersectionPrivilege(Unknown Source) [na:1.7.0_45]
+	at java.awt.EventQueue.dispatchEvent(Unknown Source) [na:1.7.0_45]
+	at java.awt.EventDispatchThread.pumpOneEventForFilters(Unknown Source) [na:1.7.0_45]
+	at java.awt.EventDispatchThread.pumpEventsForFilter(Unknown Source) [na:1.7.0_45]
+	at java.awt.EventDispatchThread.pumpEventsForHierarchy(Unknown Source) [na:1.7.0_45]
+	at java.awt.EventDispatchThread.pumpEvents(Unknown Source) [na:1.7.0_45]
+	at java.awt.EventDispatchThread.pumpEvents(Unknown Source) [na:1.7.0_45]
+	at java.awt.EventDispatchThread.run(Unknown Source) [na:1.7.0_45]
+2014-03-25 18:12:45.999 [AWT-EventQueue-0] TRACE application.window.button - Button com.ganesha.desktop.exeptions.UserExceptionHandler_OK is clicked
+2014-03-25 18:12:46.015 [AWT-EventQueue-0] DEBUG application.sale - Transaction finished. The window is closed.
+2014-03-25 18:25:02.976 [AWT-EventQueue-0] TRACE application.window.button - Button com.ganesha.minimarket.ui.MainFrame_<html><center>Transaksi Penjualan<br/>[F5]</center></html> is clicked
+2014-03-25 18:25:03.093 [AWT-EventQueue-0] TRACE application.window - Access to open com.ganesha.minimarket.ui.forms.sale.PenjualanForm is permitted, the window will open
+2014-03-25 18:25:39.078 [AWT-EventQueue-0] TRACE application.window.button - Button com.ganesha.minimarket.ui.forms.sale.PenjualanForm_<html><center>Batal<br/>[Alt+Q]</center></html> is clicked
+2014-03-25 18:26:29.843 [AWT-EventQueue-0] TRACE application.window.button - Button com.ganesha.minimarket.ui.MainFrame_<html><center>Transaksi Penjualan<br/>[F5]</center></html> is clicked
+2014-03-25 18:26:29.971 [AWT-EventQueue-0] TRACE application.window - Access to open com.ganesha.minimarket.ui.forms.sale.PenjualanForm is permitted, the window will open
+2014-03-25 18:27:08.057 [AWT-EventQueue-0] TRACE application.window.button - Button com.ganesha.minimarket.ui.forms.sale.PenjualanForm_<html><center>Selesai & Simpan Data<br/>[F12]</center></html> is clicked
+2014-03-25 18:27:08.057 [AWT-EventQueue-0] DEBUG application.sale - Starting function selesaiDanSimpan()
+2014-03-25 18:27:08.057 [AWT-EventQueue-0] DEBUG o.h.transaction.JDBCTransaction - begin
+2014-03-25 18:27:08.058 [AWT-EventQueue-0] DEBUG o.h.transaction.JDBCTransaction - current autocommit status: false
+2014-03-25 18:27:08.058 [AWT-EventQueue-0] DEBUG application.sale - Starting validation for transaction number SAL20140325182629
+2014-03-25 18:27:08.059 [AWT-EventQueue-0] DEBUG application.sale - Validation finished
+2014-03-25 18:27:08.059 [AWT-EventQueue-0] DEBUG application.sale - Preparation for item {0000000375|COOLANT|6000.0|1|0.0|6000.0} is finished
+2014-03-25 18:27:08.059 [AWT-EventQueue-0] DEBUG application.sale - Starting to insert SaleHeader {SAL20140325182629|6000.0|0.0|6000.0|50000.0|44000.0} into database
+2014-03-25 18:27:08.059 [AWT-EventQueue-0] DEBUG application.sale - Finished inserting SaleHeader into database, the generated id is 786
+2014-03-25 18:27:08.075 [AWT-EventQueue-0] DEBUG application.sale - Logging to ActivityLog is done
+2014-03-25 18:27:08.075 [AWT-EventQueue-0] DEBUG o.h.transaction.JDBCTransaction - commit
+2014-03-25 18:27:08.091 [AWT-EventQueue-0] DEBUG o.h.transaction.JDBCTransaction - committed JDBC Connection
+2014-03-25 18:27:08.091 [AWT-EventQueue-0] DEBUG application.sale - Transaction is commited succesfully
+2014-03-25 18:27:08.231 [AWT-EventQueue-0] DEBUG application.sale - Receipt printer is worked fine.
+2014-03-25 18:27:08.231 [AWT-EventQueue-0] DEBUG application.sale - Transaction finished. The window is closed.
+2014-03-25 18:40:43.457 [AWT-EventQueue-0] TRACE application.window.button - Button com.ganesha.minimarket.ui.MainFrame_<html><center>Transaksi Penjualan<br/>[F5]</center></html> is clicked
+2014-03-25 18:40:48.738 [AWT-EventQueue-0] TRACE application.window - Access to open com.ganesha.minimarket.ui.forms.sale.PenjualanForm is permitted, the window will open
+2014-03-25 18:40:48.947 [AWT-EventQueue-0] TRACE application.window.button - Button com.ganesha.minimarket.ui.forms.sale.PenjualanForm_Cari Customer [F5] is clicked

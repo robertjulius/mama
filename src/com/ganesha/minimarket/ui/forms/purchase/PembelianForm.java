@@ -692,6 +692,8 @@ public class PembelianForm extends XJDialog {
 			for (int i = 0; i < rowCount; i++) {
 				PurchaseDetail purchaseDetail = new PurchaseDetail();
 
+				purchaseDetail.setPurchaseHeader(purchaseHeader);
+
 				purchaseDetail.setOrderNum(Formatter.formatStringToNumber(
 						table.getModel()
 								.getValueAt(

@@ -15,6 +15,7 @@
 
 	<logger name="application" level="DEBUG" />
 	<logger name="application.sale" level="DEBUG" />
+	<logger name="application.scheduler" level="DEBUG" />
 	<logger name="application.window" level="TRACE" />
 	<!-- 
 	<logger name="application.window.form" level="DEBUG" />

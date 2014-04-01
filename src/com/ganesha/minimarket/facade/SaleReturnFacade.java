@@ -58,7 +58,6 @@ public class SaleReturnFacade implements TransactionFacade {
 
 		for (SaleReturnDetail saleReturnDetail : saleReturnDetails) {
 
-			saleReturnDetail.setSaleReturnHeader(saleReturnHeader);
 			session.saveOrUpdate(saleReturnDetail);
 
 			Item item = itemFacade.getDetail(saleReturnDetail.getSaleDetail()

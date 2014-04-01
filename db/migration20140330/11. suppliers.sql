@@ -1,0 +1,1 @@
+INSERT INTO `suppliers` VALUES (1,1,'2014-01-26 12:09:57','\0','\0','','','SU-001','','','','','','','BELI SENDIRI TANPA SUPPLIER','','','<TIDAK ADA>','','');

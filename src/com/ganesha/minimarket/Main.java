@@ -10,6 +10,10 @@ import javax.swing.plaf.nimbus.NimbusLookAndFeel;
 
 import org.hibernate.Query;
 import org.hibernate.Session;
+import org.quartz.Scheduler;
+import org.quartz.SchedulerException;
+import org.quartz.SchedulerFactory;
+import org.quartz.impl.StdSchedulerFactory;
 import org.slf4j.LoggerFactory;
 
 import com.ganesha.core.exception.AppException;
@@ -50,7 +54,7 @@ public class Main {
 		}
 	}
 
-	public static void runApp() throws AppException {
+	public static void runApp() throws AppException, SchedulerException {
 		setDefaultUncaughtExceptionHandler();
 		setLookAndFeel();
 
@@ -59,8 +63,17 @@ public class Main {
 		company = companyChecker.getCompany();
 
 		PermissionChecker.register(new SimplePermissionChecker());
+		runQuartz();
 
 		new LoginForm().setVisible(true);
+	}
+
+	public static void runQuartz() throws SchedulerException {
+		// Creating scheduler factory and scheduler
+		SchedulerFactory factory = new StdSchedulerFactory("quartz.properties");
+		Scheduler scheduler = factory.getScheduler();
+		// Start scheduler
+		scheduler.start();
 	}
 
 	public static void setLookAndFeel() {

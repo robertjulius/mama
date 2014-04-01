@@ -33,6 +33,7 @@ import com.ganesha.minimarket.ui.forms.payable.PayableListDialog;
 import com.ganesha.minimarket.ui.forms.purchase.PembelianForm;
 import com.ganesha.minimarket.ui.forms.receivable.ReceivableListDialog;
 import com.ganesha.minimarket.ui.forms.reports.ItemStockReportListDialog;
+import com.ganesha.minimarket.ui.forms.reports.SaleConstraintReportListDialog;
 import com.ganesha.minimarket.ui.forms.reports.StockOpnameReportListDialog;
 import com.ganesha.minimarket.ui.forms.reports.TransactionReportListDialog;
 import com.ganesha.minimarket.ui.forms.returns.ReturPembelianForm;
@@ -40,12 +41,15 @@ import com.ganesha.minimarket.ui.forms.returns.ReturPenjualanForm;
 import com.ganesha.minimarket.ui.forms.revenue.RevenueTransactionForm;
 import com.ganesha.minimarket.ui.forms.role.RoleListDialog;
 import com.ganesha.minimarket.ui.forms.sale.PenjualanForm;
+import com.ganesha.minimarket.ui.forms.sale.SaleConstraintForm;
+import com.ganesha.minimarket.ui.forms.servicemonitoring.saleconstraintpostingmonitoring.SaleConstraintPostingMonitoringListDialog;
 import com.ganesha.minimarket.ui.forms.stock.StockListDialog;
 import com.ganesha.minimarket.ui.forms.stockopname.StockOpnameListDialog;
 import com.ganesha.minimarket.ui.forms.supplier.SupplierListDialog;
 import com.ganesha.minimarket.ui.forms.systemsetting.DbConsistencyChecker;
 import com.ganesha.minimarket.ui.forms.systemsetting.DbSettingForm;
 import com.ganesha.minimarket.ui.forms.systemsetting.PrinterSettingForm;
+import com.ganesha.minimarket.ui.forms.systemsetting.ReceiptPrinterStatusForm;
 import com.ganesha.minimarket.ui.forms.user.ChangePasswordForm;
 import com.ganesha.minimarket.ui.forms.user.UserListDialog;
 import com.ganesha.minimarket.utils.PermissionConstants;
@@ -337,6 +341,28 @@ public class MainFrame extends XJFrame {
 		});
 		mnTransaksi.add(mntmTrxRevenue);
 
+		JSeparator separator_5 = new JSeparator();
+		mnTransaksi.add(separator_5);
+
+		XJMenu mnConstraint = new XJMenu((String) null);
+		mnConstraint.setText("Constraint");
+		mnTransaksi.add(mnConstraint);
+
+		XJMenuItem mntmTrxConstraintSale = new XJMenuItem(
+				"Transaksi Penjualan Constraint",
+				PermissionConstants.MN_TRX_CONSTRAINT_SAL);
+		mnConstraint.add(mntmTrxConstraintSale);
+		mntmTrxConstraintSale.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				try {
+					new SaleConstraintForm(MainFrame.this).setVisible(true);
+				} catch (Exception ex) {
+					ExceptionHandler.handleException(MainFrame.this, ex);
+				}
+			}
+		});
+
 		XJMenu mnBackOffice = new XJMenu("Back Office");
 		menuBar.add(mnBackOffice);
 
@@ -389,6 +415,22 @@ public class MainFrame extends XJFrame {
 		});
 		mnReport.add(mntmLaporanStockOpname);
 
+		XJMenuItem mntmSaleConstraintReport = new XJMenuItem(
+				"Laporan Penjualan Constraint",
+				PermissionConstants.MN_REPORT_CONSTRAINT_SALE);
+		mntmSaleConstraintReport.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				try {
+					new SaleConstraintReportListDialog(MainFrame.this)
+							.setVisible(true);
+				} catch (Exception ex) {
+					ExceptionHandler.handleException(MainFrame.this, ex);
+				}
+			}
+		});
+		mnReport.add(mntmSaleConstraintReport);
+
 		XJMenuItem mntmStockOpname = new XJMenuItem("Stock Opname",
 				PermissionConstants.MN_BO_STOCKOPNAME);
 		mntmStockOpname.addActionListener(new ActionListener() {
@@ -402,6 +444,28 @@ public class MainFrame extends XJFrame {
 			}
 		});
 		mnBackOffice.add(mntmStockOpname);
+
+		XJMenu mnMonitoring = new XJMenu((String) null);
+		mnMonitoring.setText("Monitoring");
+		menuBar.add(mnMonitoring);
+
+		XJMenuItem mntmMonitoringPostingSaleConstraint = new XJMenuItem(
+				"Posting Penjualan Constraint",
+				PermissionConstants.MN_MON_SALCONSTRAINT_POSTING);
+		mnMonitoring.add(mntmMonitoringPostingSaleConstraint);
+		mntmMonitoringPostingSaleConstraint
+				.addActionListener(new ActionListener() {
+					@Override
+					public void actionPerformed(ActionEvent e) {
+						try {
+							new SaleConstraintPostingMonitoringListDialog(
+									MainFrame.this).setVisible(true);
+						} catch (Exception ex) {
+							ExceptionHandler
+									.handleException(MainFrame.this, ex);
+						}
+					}
+				});
 
 		XJMenu mnSetting = new XJMenu("Setting");
 		menuBar.add(mnSetting);
@@ -448,7 +512,23 @@ public class MainFrame extends XJFrame {
 		});
 		mnSetting.add(mntmDbConsistencyCheckerSetting);
 
-		// setExtendedState(JFrame.MAXIMIZED_BOTH);
+		XJMenuItem mntmReceiptPrinterStatus = new XJMenuItem(
+				"Receipt Printer Status",
+				PermissionConstants.MN_SETTING_RECEIPTPRINTERSTATUS);
+		mntmReceiptPrinterStatus.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				try {
+					new ReceiptPrinterStatusForm(MainFrame.this)
+							.setVisible(true);
+				} catch (Exception ex) {
+					ExceptionHandler.handleException(MainFrame.this, ex);
+				}
+			}
+		});
+		mnSetting.add(mntmReceiptPrinterStatus);
+
+		setExtendedState(JFrame.MAXIMIZED_BOTH);
 		pack();
 		setLocationRelativeTo(null);
 		getContentPane().setLayout(new MigLayout("", "[grow]", "[][][][]"));
