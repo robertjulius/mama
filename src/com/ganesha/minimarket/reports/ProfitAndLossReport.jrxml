@@ -1,0 +1,409 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="mama" language="groovy" pageWidth="595" pageHeight="842" whenNoDataType="AllSectionsNoDetail" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="3775a679-a6b7-44c4-87dd-e79bf8fc1599">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="92"/>
+	<parameter name="companyName" class="java.lang.String"/>
+	<parameter name="reportName" class="java.lang.String"/>
+	<parameter name="month" class="java.lang.String"/>
+	<parameter name="year" class="java.lang.String"/>
+	<parameter name="reportBy" class="java.lang.String"/>
+	<parameter name="reportDate" class="java.util.Date"/>
+	<parameter name="penjualan" class="java.math.BigDecimal"/>
+	<parameter name="potonganPenjualan" class="java.math.BigDecimal"/>
+	<parameter name="returPenjualan" class="java.math.BigDecimal"/>
+	<parameter name="penjualanBersih" class="java.math.BigDecimal"/>
+	<parameter name="persediaanAwal" class="java.math.BigDecimal"/>
+	<parameter name="pembelian" class="java.math.BigDecimal"/>
+	<parameter name="potonganPembelian" class="java.math.BigDecimal"/>
+	<parameter name="returPembelian" class="java.math.BigDecimal"/>
+	<parameter name="persediaanTotal" class="java.math.BigDecimal"/>
+	<parameter name="persediaanAkhir" class="java.math.BigDecimal"/>
+	<parameter name="hpp" class="java.math.BigDecimal"/>
+	<parameter name="labaKotor" class="java.math.BigDecimal"/>
+	<parameter name="bebanOperasi" class="java.math.BigDecimal"/>
+	<parameter name="labaBersih" class="java.math.BigDecimal"/>
+	<field name="orderNum" class="java.lang.Integer"/>
+	<field name="itemCode" class="java.lang.String"/>
+	<field name="itemName" class="java.lang.String"/>
+	<field name="quantity" class="java.lang.Integer"/>
+	<field name="unit" class="java.lang.String"/>
+	<field name="pricePerUnit" class="java.math.BigDecimal"/>
+	<field name="totalAmount" class="java.math.BigDecimal"/>
+	<title>
+		<band height="120" splitType="Stretch">
+			<textField>
+				<reportElement x="0" y="0" width="555" height="30" uuid="28341c86-98ce-44d6-913a-e42b406443dd"/>
+				<textElement>
+					<font fontName="Tahoma" size="22" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{reportName}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="0" y="30" width="555" height="20" uuid="3f49179d-7304-40fe-a702-36f6e771ffa7"/>
+				<textElement>
+					<font fontName="Tahoma" size="14" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{companyName}]]></textFieldExpression>
+			</textField>
+			<textField pattern="dd MMM yyyy">
+				<reportElement x="105" y="50" width="450" height="15" uuid="8f22e5b1-6f1c-4aea-bda9-2336e68f6854"/>
+				<textElement>
+					<font fontName="Tahoma"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{month} + " " + $P{year}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="0" y="65" width="95" height="15" uuid="1e020876-fb0b-4778-8328-09c40c4ca6ae"/>
+				<textElement>
+					<font fontName="Tahoma"/>
+				</textElement>
+				<text><![CDATA[Dipersiapkan oleh]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="80" width="95" height="15" uuid="d46d3583-3bc8-4043-9f2b-efa3e2fb2d21"/>
+				<textElement>
+					<font fontName="Tahoma"/>
+				</textElement>
+				<text><![CDATA[Tanggal]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="95" y="50" width="10" height="15" uuid="7209f8c2-1d9a-4bda-b28b-dd6caefddb38"/>
+				<textElement>
+					<font fontName="Tahoma"/>
+				</textElement>
+				<text><![CDATA[:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="95" y="65" width="10" height="15" uuid="ba74ec20-ec36-467b-a2c7-9c1f56516bdb"/>
+				<textElement>
+					<font fontName="Tahoma"/>
+				</textElement>
+				<text><![CDATA[:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="95" y="80" width="10" height="15" uuid="6f9767cc-4840-4cfc-97a4-6d322dc5f342"/>
+				<textElement>
+					<font fontName="Tahoma"/>
+				</textElement>
+				<text><![CDATA[:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="50" width="95" height="15" uuid="20c29916-3f03-4394-98ff-c14cc3480066"/>
+				<textElement>
+					<font fontName="Tahoma"/>
+				</textElement>
+				<text><![CDATA[Periode]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="105" y="65" width="450" height="15" uuid="67fb182f-dd64-41e3-bc2a-5f936083a25f"/>
+				<textElement>
+					<font fontName="Tahoma"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{reportBy}]]></textFieldExpression>
+			</textField>
+			<textField pattern="dd MMM yyyy">
+				<reportElement x="105" y="80" width="450" height="15" uuid="9000ed04-4652-4d9d-9281-0249b008b1f1"/>
+				<textElement>
+					<font fontName="Tahoma"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{reportDate}]]></textFieldExpression>
+			</textField>
+		</band>
+	</title>
+	<pageHeader>
+		<band height="300">
+			<staticText>
+				<reportElement x="100" y="0" width="200" height="15" uuid="d05dcd0a-ea65-490e-b1bd-054aa824d3f6"/>
+				<textElement>
+					<font fontName="Tahoma"/>
+				</textElement>
+				<text><![CDATA[Penjualan]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="100" y="15" width="200" height="15" uuid="dd0a8eac-09ea-4ea5-9e56-0da2e73c5156"/>
+				<textElement>
+					<font fontName="Tahoma"/>
+				</textElement>
+				<text><![CDATA[Potongan Penjualan (-)]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="100" y="30" width="200" height="15" uuid="1f131b20-06c5-4419-8dce-4ce15fbcf3a1"/>
+				<textElement>
+					<font fontName="Tahoma"/>
+				</textElement>
+				<text><![CDATA[Retur Penjualan (-)]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="300" y="0" width="10" height="15" uuid="5b0ca2e8-7aa5-45be-b048-f8640848d4ec"/>
+				<textElement>
+					<font fontName="Tahoma"/>
+				</textElement>
+				<text><![CDATA[:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="300" y="15" width="10" height="15" uuid="a04c9846-b242-4db5-b702-b35fd0e6a3bb"/>
+				<textElement>
+					<font fontName="Tahoma"/>
+				</textElement>
+				<text><![CDATA[:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="300" y="30" width="10" height="15" uuid="4a0df30c-1726-4184-914e-05f3ffd974f8"/>
+				<textElement>
+					<font fontName="Tahoma"/>
+				</textElement>
+				<text><![CDATA[:]]></text>
+			</staticText>
+			<textField pattern="#,##0">
+				<reportElement x="310" y="0" width="50" height="15" uuid="ba1ca230-85b9-4c16-bdfa-b6a5f20e2c40"/>
+				<textElement textAlignment="Right"/>
+				<textFieldExpression><![CDATA[$P{penjualan}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="100" y="45" width="200" height="15" uuid="4f4d05f9-44c9-459a-8063-60f50c614fc2"/>
+				<textElement>
+					<font fontName="Tahoma" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Penjualan Bersih]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="300" y="45" width="10" height="15" uuid="a9ad6b70-206b-4297-bfba-5473a1a868cc"/>
+				<textElement>
+					<font fontName="Tahoma" isBold="true"/>
+				</textElement>
+				<text><![CDATA[:]]></text>
+			</staticText>
+			<textField pattern="#,##0">
+				<reportElement x="310" y="15" width="50" height="15" uuid="6c165402-cc1d-4b91-bb85-c9a94a3c3278"/>
+				<textElement textAlignment="Right"/>
+				<textFieldExpression><![CDATA[$P{potonganPenjualan}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0">
+				<reportElement x="310" y="30" width="50" height="15" uuid="90e94f89-6275-4bc7-9c9e-5d3c30d2aef5"/>
+				<textElement textAlignment="Right"/>
+				<textFieldExpression><![CDATA[$P{returPenjualan}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0">
+				<reportElement x="360" y="45" width="50" height="15" uuid="585e5347-5bc7-444a-ba79-93fb09cf2750"/>
+				<textElement textAlignment="Right">
+					<font isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{penjualanBersih}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0">
+				<reportElement x="310" y="125" width="50" height="15" uuid="8d2ba88b-28c3-4609-972d-55af4ae7b23f"/>
+				<textElement textAlignment="Right"/>
+				<textFieldExpression><![CDATA[$P{potonganPembelian}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="300" y="200" width="10" height="15" uuid="6af44a1a-b558-450e-9c01-f6767663a1ee"/>
+				<textElement>
+					<font fontName="Tahoma" isBold="true"/>
+				</textElement>
+				<text><![CDATA[:]]></text>
+			</staticText>
+			<textField pattern="#,##0">
+				<reportElement x="310" y="110" width="50" height="15" uuid="a33b5460-219a-4776-86c5-666a90ad5a60"/>
+				<textElement textAlignment="Right"/>
+				<textFieldExpression><![CDATA[$P{pembelian}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="100" y="125" width="200" height="15" uuid="910c6e24-1b92-4805-b9be-ce4ad4aaf282"/>
+				<textElement>
+					<font fontName="Tahoma"/>
+				</textElement>
+				<text><![CDATA[Potongan Pembelian (-)]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="100" y="95" width="200" height="15" uuid="3469f9ac-f27b-4bbc-aae9-539736fe21d0"/>
+				<textElement>
+					<font fontName="Tahoma"/>
+				</textElement>
+				<text><![CDATA[Persediaan Awal]]></text>
+			</staticText>
+			<textField pattern="#,##0">
+				<reportElement x="360" y="185" width="50" height="15" uuid="8ab1cd78-a923-4e97-b157-2cf07e3b9de4"/>
+				<textElement textAlignment="Right">
+					<font isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{hpp}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="300" y="125" width="10" height="15" uuid="fdcb0380-c61b-4383-aa8a-94c2239df187"/>
+				<textElement>
+					<font fontName="Tahoma"/>
+				</textElement>
+				<text><![CDATA[:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="100" y="110" width="200" height="15" uuid="492fd621-21e9-4a90-a889-7f82ff666215"/>
+				<textElement>
+					<font fontName="Tahoma"/>
+				</textElement>
+				<text><![CDATA[Pembelian]]></text>
+			</staticText>
+			<textField pattern="#,##0">
+				<reportElement x="310" y="95" width="50" height="15" uuid="2acfd444-260d-49d9-9023-a480b0781f49"/>
+				<textElement textAlignment="Right"/>
+				<textFieldExpression><![CDATA[$P{persediaanAwal}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="300" y="110" width="10" height="15" uuid="16c11c95-ab7f-4215-891b-2cca555a671d"/>
+				<textElement>
+					<font fontName="Tahoma"/>
+				</textElement>
+				<text><![CDATA[:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="100" y="200" width="200" height="15" uuid="d542ad79-122e-4f2b-af2f-90e390f14ecf"/>
+				<textElement>
+					<font fontName="Tahoma" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Laba Kotor]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="300" y="95" width="10" height="15" uuid="c0f3988b-161f-4c04-b6c6-c4f441aaceeb"/>
+				<textElement>
+					<font fontName="Tahoma"/>
+				</textElement>
+				<text><![CDATA[:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="100" y="140" width="200" height="15" uuid="197b8d75-7975-4077-87d1-3192dd94f316"/>
+				<textElement>
+					<font fontName="Tahoma"/>
+				</textElement>
+				<text><![CDATA[Retur Pembelian (-)]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="300" y="155" width="10" height="15" uuid="991a8f62-f25a-4d36-9d52-d8a3f68bb95b"/>
+				<textElement>
+					<font fontName="Tahoma" isBold="true"/>
+				</textElement>
+				<text><![CDATA[:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="300" y="140" width="10" height="15" uuid="9c1702e5-9581-47c0-8a05-6bd347a37785"/>
+				<textElement>
+					<font fontName="Tahoma"/>
+				</textElement>
+				<text><![CDATA[:]]></text>
+			</staticText>
+			<textField pattern="#,##0">
+				<reportElement x="310" y="155" width="50" height="15" uuid="8ccd46c8-2843-4688-932c-993ac852be8b"/>
+				<textElement textAlignment="Right">
+					<font isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{persediaanTotal}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="100" y="155" width="200" height="15" uuid="2c155b5a-63cf-4eba-a423-0fc50d26b527"/>
+				<textElement>
+					<font fontName="Tahoma" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Persediaan Total]]></text>
+			</staticText>
+			<textField pattern="#,##0">
+				<reportElement x="310" y="140" width="50" height="15" uuid="2c34ca17-9aa1-4f2b-8e9d-98365dcdac97"/>
+				<textElement textAlignment="Right"/>
+				<textFieldExpression><![CDATA[$P{returPembelian}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="100" y="185" width="200" height="15" uuid="567ff8d6-d4c8-45b4-8d30-b21c77743542"/>
+				<textElement>
+					<font fontName="Tahoma" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Harga Pokok Penjualan]]></text>
+			</staticText>
+			<textField pattern="#,##0">
+				<reportElement x="310" y="170" width="50" height="15" uuid="8b172591-437f-417b-a39e-ff11bf0e48f2"/>
+				<textElement textAlignment="Right"/>
+				<textFieldExpression><![CDATA[$P{persediaanAkhir}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="300" y="170" width="10" height="15" uuid="c0cf35e4-07fb-4d68-8f1a-849b6633b3c8"/>
+				<textElement>
+					<font fontName="Tahoma"/>
+				</textElement>
+				<text><![CDATA[:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="100" y="170" width="200" height="15" uuid="4bdf6fe3-6127-4bf0-b32e-8403d5677292"/>
+				<textElement>
+					<font fontName="Tahoma"/>
+				</textElement>
+				<text><![CDATA[Persediaan Akhir]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="300" y="185" width="10" height="15" uuid="0793c962-0c07-435f-bc20-e2a861c306db"/>
+				<textElement>
+					<font fontName="Tahoma" isBold="true"/>
+				</textElement>
+				<text><![CDATA[:]]></text>
+			</staticText>
+			<textField pattern="#,##0">
+				<reportElement x="360" y="200" width="50" height="15" uuid="054dc65d-5713-451d-ac27-23d14050d57f"/>
+				<textElement textAlignment="Right">
+					<font isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{labaKotor}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="300" y="250" width="10" height="15" uuid="03556a8a-7fd6-490a-9452-bcb6141d17dd"/>
+				<textElement>
+					<font fontName="Tahoma"/>
+				</textElement>
+				<text><![CDATA[:]]></text>
+			</staticText>
+			<textField pattern="#,##0">
+				<reportElement x="360" y="250" width="50" height="15" uuid="2a8c3b0f-ca95-47d3-b59f-7e8fbde2b28a"/>
+				<textElement textAlignment="Right"/>
+				<textFieldExpression><![CDATA[$P{bebanOperasi}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="100" y="250" width="200" height="15" uuid="a63779c0-d97c-4f8e-a2a6-f04d7f221a88"/>
+				<textElement>
+					<font fontName="Tahoma"/>
+				</textElement>
+				<text><![CDATA[Beban Operasi]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="100" y="266" width="200" height="15" uuid="1e4f23f8-3233-4ca5-8d23-1f4e96be6018"/>
+				<textElement>
+					<font fontName="Tahoma" isBold="true"/>
+				</textElement>
+				<text><![CDATA[LABA BERSIH]]></text>
+			</staticText>
+			<textField pattern="#,##0">
+				<reportElement x="360" y="266" width="50" height="15" uuid="01627267-c087-4e69-bb1a-aacf712439a9"/>
+				<textElement textAlignment="Right">
+					<font isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{labaBersih}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="300" y="266" width="10" height="15" uuid="f77e2872-04b1-4f09-b841-ca39bd80c25b"/>
+				<textElement>
+					<font fontName="Tahoma" isBold="true"/>
+				</textElement>
+				<text><![CDATA[:]]></text>
+			</staticText>
+			<line>
+				<reportElement x="100" y="265" width="310" height="1" uuid="dacfd7c4-e53c-4699-bf4a-80f7ca2b48ba"/>
+			</line>
+			<line>
+				<reportElement x="100" y="280" width="310" height="1" uuid="6af9381d-2822-401a-b156-07c8925f104e"/>
+			</line>
+			<line>
+				<reportElement x="100" y="45" width="310" height="1" uuid="fe353d0f-74bd-40f4-a377-7c29165cb08e"/>
+			</line>
+			<line>
+				<reportElement x="100" y="185" width="310" height="1" uuid="a7819773-81bb-4a48-886f-17f1d46695b6"/>
+			</line>
+			<line>
+				<reportElement x="310" y="155" width="50" height="1" uuid="299d6bfc-ae20-4c5c-ba4b-1402e85a8ebb"/>
+			</line>
+		</band>
+	</pageHeader>
+</jasperReport>

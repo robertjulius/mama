@@ -179,6 +179,14 @@ public class PermissionConsistencyChecker {
 				PermissionConstants.REPORT_STOCKOPNAME_LIST,
 				"Stock Opname Report List", 531));
 
+		// Back Office - Laporan - Laporan Profit and Loss
+		permissions.add(createPermission(
+				PermissionConstants.MN_REPORT_PROFITANDLOSS,
+				"/Back Office/Laporan/Laporan Laba Rugi", 535));
+		permissions.add(createPermission(
+				PermissionConstants.REPORT_PROFITANDLOSS_LIST,
+				"Profit and Lost Report List", 536));
+
 		permissions.add(createPermission(PermissionConstants.REPORT_VIEWER,
 				"Report Viewer", 539));
 

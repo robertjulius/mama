@@ -72,6 +72,58 @@ public class AccountFacade {
 		return amountSum;
 	}
 
+	public BigDecimal getAccountSum(int coaId, Integer entityId,
+			Timestamp beginTimestamp, Timestamp endTimestamp,
+			DebitCreditFlag increaseOn, Session session) throws AppException {
+
+		String sqlString = "SELECT new Map(SUM(a.debit) AS debit, SUM(a.credit) AS credit) FROM Account a WHERE a.coa.id = :coaId";
+
+		if (entityId != null) {
+			sqlString += " AND a.entityId = :entityId";
+		}
+
+		if (beginTimestamp != null) {
+			sqlString += " AND a.timestamp >= :beginTimestamp";
+		}
+
+		if (endTimestamp != null) {
+			sqlString += " AND a.timestamp < :endTimestamp";
+		}
+
+		Query query = session.createQuery(sqlString);
+		HqlParameter param = new HqlParameter(query);
+		param.put("coaId", coaId);
+		param.put("entityId", entityId);
+		param.put("beginTimestamp", beginTimestamp);
+		param.put("endTimestamp", endTimestamp);
+		param.validate();
+
+		@SuppressWarnings("unchecked")
+		Map<String, Object> list = (Map<String, Object>) query.uniqueResult();
+
+		BigDecimal debit = (BigDecimal) list.get("debit");
+		if (debit == null) {
+			debit = BigDecimal.valueOf(0);
+		}
+
+		BigDecimal credit = (BigDecimal) list.get("credit");
+		if (credit == null) {
+			credit = BigDecimal.valueOf(0);
+		}
+
+		BigDecimal amountSum = null;
+
+		if (increaseOn == DebitCreditFlag.DEBIT) {
+			amountSum = debit.subtract(credit);
+		} else if (increaseOn == DebitCreditFlag.CREDIT) {
+			amountSum = credit.subtract(debit);
+		} else {
+			throw new AppException("Unsupported DebitCreditCode: " + increaseOn);
+		}
+
+		return amountSum;
+	}
+
 	public Account getLastAccount(int coaId, Session session) {
 		Criteria criteria = session.createCriteria(Account.class);
 		criteria.add(Restrictions.eq("coaId", coaId));

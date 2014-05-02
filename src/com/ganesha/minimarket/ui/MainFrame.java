@@ -33,6 +33,7 @@ import com.ganesha.minimarket.ui.forms.payable.PayableListDialog;
 import com.ganesha.minimarket.ui.forms.purchase.PembelianForm;
 import com.ganesha.minimarket.ui.forms.receivable.ReceivableListDialog;
 import com.ganesha.minimarket.ui.forms.reports.ItemStockReportListDialog;
+import com.ganesha.minimarket.ui.forms.reports.ProfitAndLossReportListDialog;
 import com.ganesha.minimarket.ui.forms.reports.SaleConstraintReportListDialog;
 import com.ganesha.minimarket.ui.forms.reports.StockOpnameReportListDialog;
 import com.ganesha.minimarket.ui.forms.reports.TransactionReportListDialog;
@@ -414,6 +415,21 @@ public class MainFrame extends XJFrame {
 			}
 		});
 		mnReport.add(mntmLaporanStockOpname);
+
+		XJMenuItem mntmLaporanLabaRugi = new XJMenuItem("Laporan Laba Rugi",
+				PermissionConstants.MN_REPORT_PROFITANDLOSS);
+		mntmLaporanLabaRugi.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				try {
+					new ProfitAndLossReportListDialog(MainFrame.this)
+							.setVisible(true);
+				} catch (Exception ex) {
+					ExceptionHandler.handleException(MainFrame.this, ex);
+				}
+			}
+		});
+		mnReport.add(mntmLaporanLabaRugi);
 
 		XJMenuItem mntmSaleConstraintReport = new XJMenuItem(
 				"Laporan Penjualan Constraint",

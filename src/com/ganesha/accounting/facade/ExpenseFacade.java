@@ -2,6 +2,7 @@ package com.ganesha.accounting.facade;
 
 import java.awt.Window;
 import java.math.BigDecimal;
+import java.sql.Timestamp;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
@@ -63,6 +64,26 @@ public class ExpenseFacade implements TransactionReportFacade {
 	public Expense getDetail(Integer id, Session session) {
 		Expense expense = (Expense) session.get(Expense.class, id);
 		return expense;
+	}
+
+	public List<ExpenseTransaction> getTransactionListByTimestamp(
+			Timestamp beginTimestamp, Timestamp endTimestamp, Session session) {
+
+		Criteria criteria = session.createCriteria(Expense.class);
+
+		if (beginTimestamp != null) {
+			criteria.add(Restrictions
+					.ge("lastUpdatedTimestamp", beginTimestamp));
+		}
+
+		if (endTimestamp != null) {
+			criteria.add(Restrictions.lt("lastUpdatedTimestamp", endTimestamp));
+		}
+
+		@SuppressWarnings("unchecked")
+		List<ExpenseTransaction> expenseTransactions = criteria.list();
+
+		return expenseTransactions;
 	}
 
 	public ExpenseTransaction performTransaction(Expense expense,

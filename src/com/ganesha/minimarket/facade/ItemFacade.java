@@ -65,6 +65,15 @@ public class ItemFacade {
 		return amount;
 	}
 
+	public BigDecimal calculateAmountOfAllItem(Session session) {
+		BigDecimal amountOfAllItem = BigDecimal.valueOf(0);
+		List<Item> allItem = search(null, null, null, false, session);
+		for (Item item : allItem) {
+			amountOfAllItem = amountOfAllItem.add(calculateAmount(item));
+		}
+		return amountOfAllItem;
+	}
+
 	public int calculateMaxStock(Item item) {
 		int maxStock = 0;
 		List<ItemStock> itemStocks = item.getItemStocks();

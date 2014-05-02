@@ -95,6 +95,10 @@ public class PermissionConstants {
 	public static final String MN_REPORT_STOCKOPNAME = "/backoffice/report/stockopname";
 	public static final String REPORT_STOCKOPNAME_LIST = "StockOpnameReportList";
 
+	// Back Office - Laporan - Laporan Profit and Loss
+	public static final String MN_REPORT_PROFITANDLOSS = "/backoffice/report/lossandprofit";
+	public static final String REPORT_PROFITANDLOSS_LIST = "ProfitAndLossReportList";
+
 	public static final String REPORT_VIEWER = "ReportViewer";
 
 	// Back Office - Stock Opname

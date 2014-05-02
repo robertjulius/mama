@@ -45,6 +45,22 @@ public class CommonUtils {
 		return timestampInString;
 	}
 
+	public static void setCalendarMonthAndYearOnly(Calendar calendar) {
+		setCalendarMonthAndYearOnly(calendar, calendar.get(Calendar.MONTH),
+				calendar.get(Calendar.YEAR));
+	}
+
+	public static void setCalendarMonthAndYearOnly(Calendar calendar,
+			int month, int year) {
+		calendar.set(Calendar.YEAR, year);
+		calendar.set(Calendar.MONTH, month);
+		calendar.set(Calendar.DATE, 1);
+		calendar.set(Calendar.HOUR_OF_DAY, 0);
+		calendar.set(Calendar.MINUTE, 0);
+		calendar.set(Calendar.SECOND, 0);
+		calendar.set(Calendar.MILLISECOND, 0);
+	}
+
 	public static Date validateDateBegin(Date date) {
 		if (date == null) {
 			return null;
