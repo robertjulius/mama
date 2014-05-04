@@ -54,5 +54,8 @@
 		<mapping class="com.ganesha.minimarket.model.SaleConstraintHeader" />
 		<mapping class="com.ganesha.minimarket.model.SaleConstraintDetail" />
 		<mapping class="com.ganesha.minimarket.model.SaleConstraintLog" />
+		<mapping class="com.ganesha.prepaid.model.Provider" />
+		<mapping class="com.ganesha.prepaid.model.Voucher" />
+		<mapping class="com.ganesha.prepaid.model.VoucherType" />
 	</session-factory>
 </hibernate-configuration>

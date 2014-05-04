@@ -1,6 +1,5 @@
 package com.ganesha.desktop.component;
 
-
 public class ComboBoxObject {
 
 	private Object object;
@@ -29,6 +28,6 @@ public class ComboBoxObject {
 
 	@Override
 	public String toString() {
-		return text;
+		return text == null ? "" : text;
 	}
 }

@@ -1,0 +1,5 @@
+insert into `roles`(`ID`,`LAST_UPDATED_BY`,`LAST_UPDATED_TIMESTAMP`,`DELETED`,`DISABLED`,`DESCRIPTION`,`NAME`) values (1,1,'2014-02-23 12:26:45',0,0,'Role yang bisa melakukan apa saja','ADMINISTRATOR');
+insert into `roles`(`ID`,`LAST_UPDATED_BY`,`LAST_UPDATED_TIMESTAMP`,`DELETED`,`DISABLED`,`DESCRIPTION`,`NAME`) values (7,1,'2014-02-13 08:50:11',0,0,'Role ini cuma bisa melakukan transaksi penjualan','KASIR JUNIOR');
+insert into `roles`(`ID`,`LAST_UPDATED_BY`,`LAST_UPDATED_TIMESTAMP`,`DELETED`,`DISABLED`,`DESCRIPTION`,`NAME`) values (8,1,'2014-02-13 08:50:33',0,0,'Role ini bisa melakukan transaksi penjualan dan pembelian, dan juga retur','KASIR SENIOR');
+insert into `roles`(`ID`,`LAST_UPDATED_BY`,`LAST_UPDATED_TIMESTAMP`,`DELETED`,`DISABLED`,`DESCRIPTION`,`NAME`) values (9,1,'2014-02-13 08:50:48',0,0,'Role ini fungsinya untuk melakukan stock opname','STOCK OPNAME');
+insert into `roles`(`ID`,`LAST_UPDATED_BY`,`LAST_UPDATED_TIMESTAMP`,`DELETED`,`DISABLED`,`DESCRIPTION`,`NAME`) values (10,1,'2014-02-13 08:51:07',0,0,'Role ini fungsinya untuk melihat laporan','REPORTING');

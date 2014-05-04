@@ -155,11 +155,16 @@ public class SaleFacade implements TransactionFacade {
 			if (stockAfterSale < 0) {
 				throw new UserException(
 						"Tidak dapat melakukan penjualan barang "
-								+ saleDetail.getItemCode() + " sebanyak "
-								+ saleDetail.getQuantity() + " "
+								+ saleDetail.getItemCode()
+								+ " sebanyak "
+								+ Formatter.formatNumberToString(saleDetail
+										.getQuantity())
+								+ " "
 								+ item.getUnit()
 								+ " karena stock di sistem hanya ada "
-								+ stockBeforeSale + " " + item.getUnit());
+								+ Formatter
+										.formatNumberToString(stockBeforeSale)
+								+ " " + item.getUnit());
 			}
 			itemFacade.reAdjustStock(item, stockAfterSale, session);
 

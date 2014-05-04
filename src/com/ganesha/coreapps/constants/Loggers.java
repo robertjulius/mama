@@ -14,4 +14,6 @@ public class Loggers {
 	public static final String LIST = "application.window.list";
 	public static final String BUTTON = "application.window.button";
 
+	public static final String PREPAID = "application.prepaid";
+
 }

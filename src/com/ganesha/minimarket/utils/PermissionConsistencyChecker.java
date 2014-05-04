@@ -255,6 +255,30 @@ public class PermissionConsistencyChecker {
 		permissions.add(createPermission(
 				PermissionConstants.SETTING_RECEIPTPRINTERSTATUS,
 				"Receipt Printer Status", 651));
+
+		// Prepaid - Sale
+		permissions.add(createPermission(PermissionConstants.MN_PREPAID_SALE,
+				"/Prepaid/Penjualan Voucher Pulsa", 710));
+		permissions.add(createPermission(PermissionConstants.SALE_PREPAID_FORM,
+				"Sale Prepaid Form", 711));
+
+		// Prepaid - Maintenance - Voucher Types
+		permissions.add(createPermission(
+				PermissionConstants.MN_PREPAID_MAINTENANCE_VOUCHERTYPE,
+				"/prepaid/maintenance/vouchertype", 810));
+		permissions.add(createPermission(PermissionConstants.VOUCHER_TYPE_LIST,
+				"Voucher Type List", 811));
+		permissions.add(createPermission(PermissionConstants.VOUCHER_TYPE_FORM,
+				"Voucher Type Form", 812));
+
+		// Prepaid - Maintenance - Voucher
+		permissions.add(createPermission(
+				PermissionConstants.MN_PREPAID_MAINTENANCE_VOUCHER,
+				"/prepaid/maintenance/voucher", 910));
+		permissions.add(createPermission(PermissionConstants.VOUCHER_LIST,
+				"Voucher List", 911));
+		permissions.add(createPermission(PermissionConstants.VOUCHER_FORM,
+				"Voucher Form", 912));
 	}
 
 	public void initDB() {

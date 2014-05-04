@@ -134,4 +134,18 @@ public class PermissionConstants {
 	// Setting - Receipt Printer Status
 	public static final String MN_SETTING_RECEIPTPRINTERSTATUS = "/setting/receiptprinterstatus";
 	public static final String SETTING_RECEIPTPRINTERSTATUS = "ReceiptPrinterStatus";
+
+	// Prepaid - Maintenance - Voucher Type
+	public static final String MN_PREPAID_MAINTENANCE_VOUCHERTYPE = "/prepaid/maintenance/vouchertype";
+	public static final String VOUCHER_TYPE_LIST = "VoucherTypeList";
+	public static final String VOUCHER_TYPE_FORM = "VoucherTypeForm";
+
+	// Prepaid - Maintenance - Voucher
+	public static final String MN_PREPAID_MAINTENANCE_VOUCHER = "/prepaid/maintenance/voucher";
+	public static final String VOUCHER_LIST = "VoucherList";
+	public static final String VOUCHER_FORM = "VoucherForm";
+
+	// Prepaid - Sale
+	public static final String MN_PREPAID_SALE = "/prepaid/sale";
+	public static final String SALE_PREPAID_FORM = "SalePrepaidForm";
 }
