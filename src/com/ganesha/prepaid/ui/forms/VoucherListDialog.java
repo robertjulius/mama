@@ -62,9 +62,9 @@ public class VoucherListDialog extends XJTableDialog {
 				150, false, "Tipe Voucher", false,
 				XTableConstants.CELL_RENDERER_CENTER, String.class));
 
-		tableParameters.put(ColumnEnum.NOMINAL, new XTableParameter(1, 150,
-				false, "Nominal", false, XTableConstants.CELL_RENDERER_RIGHT,
-				Integer.class));
+		tableParameters.put(ColumnEnum.PACKAGE_NAME, new XTableParameter(1,
+				350, false, "Nama Paket", false,
+				XTableConstants.CELL_RENDERER_LEFT, String.class));
 
 		tableParameters.put(ColumnEnum.PRICE, new XTableParameter(2, 150,
 				false, "Harga", false, XTableConstants.CELL_RENDERER_RIGHT,
@@ -77,10 +77,10 @@ public class VoucherListDialog extends XJTableDialog {
 	public VoucherListDialog(Window parent) {
 		super(parent);
 
-		setTitle("Master Tipe Voucher");
+		setTitle("Master Voucher");
 		setPermissionCode(PermissionConstants.VOUCHER_LIST);
 		getContentPane().setLayout(
-				new MigLayout("", "[450,grow]", "[][300,grow][]"));
+				new MigLayout("", "[650,grow]", "[][300,grow][]"));
 
 		table = new XJTable() {
 			private static final long serialVersionUID = 1L;
@@ -226,9 +226,8 @@ public class VoucherListDialog extends XJTableDialog {
 						tableParameters.get(ColumnEnum.VOUCHER_TYPE)
 								.getColumnIndex());
 
-				tableModel.setValueAt(Formatter.formatNumberToString(voucher
-						.getNominal()), i,
-						tableParameters.get(ColumnEnum.NOMINAL)
+				tableModel.setValueAt(voucher.getPackageName(), i,
+						tableParameters.get(ColumnEnum.PACKAGE_NAME)
 								.getColumnIndex());
 
 				tableModel.setValueAt(
@@ -283,13 +282,12 @@ public class VoucherListDialog extends XJTableDialog {
 			int id = (int) table.getModel().getValueAt(selectedRow,
 					tableParameters.get(ColumnEnum.ID).getColumnIndex());
 
-			VoucherTypeFacade facade = VoucherTypeFacade.getInstance();
-			VoucherType voucherType = facade.getDetail(id, session);
+			VoucherFacade facade = VoucherFacade.getInstance();
+			Voucher voucher = facade.getDetail(id, session);
 
-			VoucherTypeForm voucherTypeForm = new VoucherTypeForm(this,
-					ActionType.UPDATE);
-			voucherTypeForm.setFormDetailValue(voucherType);
-			voucherTypeForm.setVisible(true);
+			VoucherForm voucherForm = new VoucherForm(this, ActionType.UPDATE);
+			voucherForm.setFormDetailValue(voucher);
+			voucherForm.setVisible(true);
 
 			btnRefresh.doClick();
 		} finally {
@@ -309,6 +307,6 @@ public class VoucherListDialog extends XJTableDialog {
 	}
 
 	private enum ColumnEnum {
-		VOUCHER_TYPE, NOMINAL, PRICE, ID
+		VOUCHER_TYPE, PACKAGE_NAME, PRICE, ID
 	}
 }

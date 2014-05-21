@@ -29,8 +29,11 @@ public class Voucher extends Inactivable implements LogableEntity, Identifiable 
 	@JoinColumn(name = "VOURCHER_TYPE_ID", nullable = false)
 	private VoucherType voucherType;
 
-	@Column(name = "NOMINAL", nullable = false)
-	private Integer nominal;
+	@Column(name = "PACKAGE_NAME", nullable = false)
+	private String packageName;
+
+	@Column(name = "QUANTITY", nullable = false)
+	private Integer quantity;
 
 	@Column(name = "PRICE", nullable = false)
 	private BigDecimal price;
@@ -40,12 +43,16 @@ public class Voucher extends Inactivable implements LogableEntity, Identifiable 
 		return id;
 	}
 
-	public Integer getNominal() {
-		return nominal;
+	public String getPackageName() {
+		return packageName;
 	}
 
 	public BigDecimal getPrice() {
 		return price;
+	}
+
+	public Integer getQuantity() {
+		return quantity;
 	}
 
 	public VoucherType getVoucherType() {
@@ -56,12 +63,16 @@ public class Voucher extends Inactivable implements LogableEntity, Identifiable 
 		this.id = id;
 	}
 
-	public void setNominal(Integer nominal) {
-		this.nominal = nominal;
+	public void setPackageName(String packageName) {
+		this.packageName = packageName;
 	}
 
 	public void setPrice(BigDecimal price) {
 		this.price = price;
+	}
+
+	public void setQuantity(Integer quantity) {
+		this.quantity = quantity;
 	}
 
 	public void setVoucherType(VoucherType voucherType) {

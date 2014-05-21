@@ -32,7 +32,7 @@ public class PrepaidSaleFacade {
 	public List<SaleDetail> performSale(Customer customer,
 			String transactionNumber, BigDecimal price, BigDecimal pay,
 			BigDecimal moneyChange, Integer itemId, String itemCode,
-			String itemName, Integer nominal, String unit, Session session)
+			String itemName, Integer quantity, String unit, Session session)
 			throws AppException, UserException {
 
 		SaleHeader saleHeader = new SaleHeader();
@@ -57,7 +57,7 @@ public class PrepaidSaleFacade {
 		saleDetail.setItemId(itemId);
 		saleDetail.setItemCode(itemCode);
 		saleDetail.setItemName(itemName);
-		saleDetail.setQuantity(nominal);
+		saleDetail.setQuantity(quantity);
 		saleDetail.setUnit(unit);
 		saleDetail.setPricePerUnit(price.divide(BigDecimal.valueOf(saleDetail
 				.getQuantity())));

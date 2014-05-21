@@ -18,6 +18,7 @@ import com.ganesha.accounting.ui.forms.expense.ExpenseListDialog;
 import com.ganesha.core.utils.CommonUtils;
 import com.ganesha.core.utils.Formatter;
 import com.ganesha.core.utils.GeneralConstants;
+import com.ganesha.coreapps.constants.Enums.ActionType;
 import com.ganesha.desktop.component.XJButton;
 import com.ganesha.desktop.component.XJFrame;
 import com.ganesha.desktop.component.XJLabel;
@@ -54,6 +55,8 @@ import com.ganesha.minimarket.ui.forms.systemsetting.ReceiptPrinterStatusForm;
 import com.ganesha.minimarket.ui.forms.user.ChangePasswordForm;
 import com.ganesha.minimarket.ui.forms.user.UserListDialog;
 import com.ganesha.minimarket.utils.PermissionConstants;
+import com.ganesha.prepaid.ui.forms.MultiMapForm;
+import com.ganesha.prepaid.ui.forms.MultiSaleForm;
 import com.ganesha.prepaid.ui.forms.PrepaidSaleForm;
 import com.ganesha.prepaid.ui.forms.VoucherListDialog;
 import com.ganesha.prepaid.ui.forms.VoucherTypeListDialog;
@@ -382,6 +385,21 @@ public class MainFrame extends XJFrame {
 				}
 			}
 		});
+		mnPrepaid.add(mntmPenjualanPulsaIsiUlang);
+
+		XJMenuItem mntmPulsaMulti = new XJMenuItem("Penjualan Pulsa Multi",
+				PermissionConstants.MN_MULTI_SALE);
+		mntmPulsaMulti.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				try {
+					new MultiSaleForm(MainFrame.this).setVisible(true);
+				} catch (Exception ex) {
+					ExceptionHandler.handleException(MainFrame.this, ex);
+				}
+			}
+		});
+		mnPrepaid.add(mntmPulsaMulti);
 
 		XJMenu mnMaintenance = new XJMenu((String) null);
 		mnMaintenance.setText("Maintenance");
@@ -414,7 +432,21 @@ public class MainFrame extends XJFrame {
 			}
 		});
 		mnMaintenance.add(mntmVoucher);
-		mnPrepaid.add(mntmPenjualanPulsaIsiUlang);
+
+		XJMenuItem mntmMulti = new XJMenuItem("Multi",
+				PermissionConstants.MULTI_FORM);
+		mntmMulti.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				try {
+					new MultiMapForm(MainFrame.this, ActionType.UPDATE)
+							.setVisible(true);
+				} catch (Exception ex) {
+					ExceptionHandler.handleException(MainFrame.this, ex);
+				}
+			}
+		});
+		mnMaintenance.add(mntmMulti);
 
 		XJMenu mnBackOffice = new XJMenu("Back Office");
 		menuBar.add(mnBackOffice);

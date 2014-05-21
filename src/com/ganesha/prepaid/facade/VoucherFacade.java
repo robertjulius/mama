@@ -27,13 +27,14 @@ public class VoucherFacade {
 	private VoucherFacade() {
 	}
 
-	public Voucher addNewVoucher(VoucherType voucherType, Integer nominal,
-			BigDecimal price, boolean disabled, boolean deleted, Session session)
-			throws UserException {
+	public Voucher addNewVoucher(VoucherType voucherType, String packageName,
+			Integer quantity, BigDecimal price, boolean disabled,
+			boolean deleted, Session session) throws UserException {
 
 		Voucher voucher = new Voucher();
 		voucher.setVoucherType(voucherType);
-		voucher.setNominal(nominal);
+		voucher.setPackageName(packageName);
+		voucher.setQuantity(quantity);
 		voucher.setPrice(price);
 		voucher.setDisabled(disabled);
 		voucher.setDeleted(deleted);
@@ -81,8 +82,9 @@ public class VoucherFacade {
 	}
 
 	public Voucher updateExistingVoucher(Integer id, VoucherType voucherType,
-			Integer nominal, BigDecimal price, boolean disabled,
-			boolean deleted, Session session) throws UserException {
+			String packageName, Integer quantity, BigDecimal price,
+			boolean disabled, boolean deleted, Session session)
+			throws UserException {
 
 		Voucher voucher = getDetail(id, session);
 
@@ -94,7 +96,8 @@ public class VoucherFacade {
 		}
 
 		voucher.setVoucherType(voucherType);
-		voucher.setNominal(nominal);
+		voucher.setPackageName(packageName);
+		voucher.setQuantity(quantity);
 		voucher.setPrice(price);
 
 		voucher.setDisabled(disabled);

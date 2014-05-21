@@ -57,5 +57,6 @@
 		<mapping class="com.ganesha.prepaid.model.Provider" />
 		<mapping class="com.ganesha.prepaid.model.Voucher" />
 		<mapping class="com.ganesha.prepaid.model.VoucherType" />
+		<mapping class="com.ganesha.prepaid.model.MultiMap" />
 	</session-factory>
 </hibernate-configuration>

@@ -5,16 +5,12 @@ import java.awt.Font;
 import java.awt.Window;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.ItemEvent;
-import java.awt.event.ItemListener;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.math.BigDecimal;
-import java.util.ArrayList;
 import java.util.List;
 
 import javax.print.PrintException;
-import javax.swing.DefaultComboBoxModel;
 import javax.swing.SwingConstants;
 
 import net.miginfocom.swing.MigLayout;
@@ -30,10 +26,8 @@ import com.ganesha.core.utils.GeneralConstants;
 import com.ganesha.coreapps.constants.Enums.ActionType;
 import com.ganesha.coreapps.constants.Loggers;
 import com.ganesha.coreapps.facade.ActivityLogFacade;
-import com.ganesha.desktop.component.ComboBoxObject;
 import com.ganesha.desktop.component.XEtchedBorder;
 import com.ganesha.desktop.component.XJButton;
-import com.ganesha.desktop.component.XJComboBox;
 import com.ganesha.desktop.component.XJDialog;
 import com.ganesha.desktop.component.XJLabel;
 import com.ganesha.desktop.component.XJPanel;
@@ -50,20 +44,17 @@ import com.ganesha.minimarket.model.SaleDetail;
 import com.ganesha.minimarket.model.SaleHeader;
 import com.ganesha.minimarket.ui.forms.searchentity.SearchEntityDialog;
 import com.ganesha.minimarket.utils.PermissionConstants;
+import com.ganesha.prepaid.facade.MultiFacade;
 import com.ganesha.prepaid.facade.PrepaidSaleFacade;
-import com.ganesha.prepaid.facade.VoucherFacade;
-import com.ganesha.prepaid.facade.VoucherTypeFacade;
-import com.ganesha.prepaid.model.Voucher;
-import com.ganesha.prepaid.model.VoucherType;
+import com.ganesha.prepaid.model.MultiMap;
 
-public class PrepaidSaleForm extends XJDialog {
+public class MultiSaleForm extends XJDialog {
 
 	private static final long serialVersionUID = 1401014426195840845L;
 
 	private XJButton btnSimpan;
 	private XJPanel pnlAuth;
 	private XJButton btnBatal;
-	private XJComboBox cmbVoucherTypes;
 	private XJPanel pnlBackupDB;
 	private XJLabel lblPrice;
 	private XJTextField txtPrice;
@@ -72,8 +63,8 @@ public class PrepaidSaleForm extends XJDialog {
 	private XJLabel lblChange;
 	private XJTextField txtChange;
 	private XJLabel lblCreditStock;
-	private XJLabel lblPackageName;
-	private XJComboBox cmbPackageName;
+	private XJLabel lblQuantity;
+	private XJTextField txtQuantity;
 	private XJLabel lblCustomer;
 	private XJTextField txtCustomer;
 	private XJButton btnSearchCustomer;
@@ -83,20 +74,21 @@ public class PrepaidSaleForm extends XJDialog {
 			+ CommonUtils.getTimestampInString();
 	private XJPanel panel;
 	private XJLabel lblCreditStockValue;
-	private XJLabel lblQuantity;
-	private XJLabel lblQuantityValue;
 
-	public PrepaidSaleForm(Window parent) {
+	private MultiMap multiMap;
+
+	public MultiSaleForm(Window parent) {
 		super(parent);
-		setTitle("Penjualan Voucher Pulsa");
-		setPermissionCode(PermissionConstants.SALE_PREPAID_FORM);
+		setPermissionRequired(false);
+		setTitle("Penjualan Pulsa Multi");
+		setPermissionCode(PermissionConstants.SETTING_DB_FORM);
 		getContentPane().setLayout(new MigLayout("", "[grow]", "[][][]"));
 
 		pnlAuth = new XJPanel();
 		pnlAuth.setBorder(new XEtchedBorder());
 		getContentPane().add(pnlAuth, "cell 0 0,grow");
 		pnlAuth.setLayout(new MigLayout("", "[200][300,grow][grow]",
-				"[][][][grow]"));
+				"[][][grow]"));
 
 		lblCustomer = new XJLabel();
 		lblCustomer.setText("Customer");
@@ -113,63 +105,27 @@ public class PrepaidSaleForm extends XJDialog {
 				try {
 					cariCustomer();
 				} catch (Exception ex) {
-					ExceptionHandler.handleException(PrepaidSaleForm.this, ex);
+					ExceptionHandler.handleException(MultiSaleForm.this, ex);
 				}
 			}
 		});
 		btnSearchCustomer.setText("Cari Customer [F5]");
 		pnlAuth.add(btnSearchCustomer, "cell 2 0");
 
-		XJLabel lblVoucherType = new XJLabel();
-		pnlAuth.add(lblVoucherType, "cell 0 1");
-		lblVoucherType.setText("Tipe Voucher");
+		lblQuantity = new XJLabel("Quantity (Rp)");
+		pnlAuth.add(lblQuantity, "cell 0 1");
 
-		cmbVoucherTypes = new XJComboBox();
-		cmbVoucherTypes.addItemListener(new ItemListener() {
-			@Override
-			public void itemStateChanged(ItemEvent e) {
-				try {
-					cmbVoucherTypesSelected();
-				} catch (Exception ex) {
-					ExceptionHandler.handleException(PrepaidSaleForm.this, ex);
-				}
-			}
-		});
-		pnlAuth.add(cmbVoucherTypes, "cell 1 1,growx");
-
-		lblPackageName = new XJLabel();
-		lblPackageName.setText("Nama Paket");
-		pnlAuth.add(lblPackageName, "cell 0 2");
-
-		cmbPackageName = new XJComboBox();
-		cmbPackageName.addItemListener(new ItemListener() {
-			@Override
-			public void itemStateChanged(ItemEvent e) {
-				try {
-					cmbPackageNameSelected();
-				} catch (Exception ex) {
-					ExceptionHandler.handleException(PrepaidSaleForm.this, ex);
-				}
-			}
-		});
-		pnlAuth.add(cmbPackageName, "cell 1 2,growx");
+		txtQuantity = new XJTextField();
+		txtQuantity
+				.setFormatterFactory(GeneralConstants.FORMATTER_FACTORY_NUMBER);
+		pnlAuth.add(txtQuantity, "cell 1 1,growx");
 
 		panel = new XJPanel();
-		pnlAuth.add(panel, "cell 1 3,alignx right,growy");
-		panel.setLayout(new MigLayout("", "[][]", "[][]"));
-
-		lblQuantity = new XJLabel();
-		lblQuantity.setFont(new Font("Tahoma", Font.BOLD, 12));
-		lblQuantity.setText("Quantity (Modal): Rp");
-		panel.add(lblQuantity, "cell 0 0,alignx trailing");
-
-		lblQuantityValue = new XJLabel("-");
-		lblQuantityValue.setFont(new Font("Tahoma", Font.BOLD,
-				FONT_SIZE_SMALLEST));
-		panel.add(lblQuantityValue, "cell 1 0,alignx trailing");
+		pnlAuth.add(panel, "cell 1 2,alignx right,growy");
+		panel.setLayout(new MigLayout("", "[][]", "[]"));
 
 		lblCreditStock = new XJLabel();
-		panel.add(lblCreditStock, "cell 0 1,alignx trailing");
+		panel.add(lblCreditStock, "cell 0 0,alignx trailing");
 		lblCreditStock
 				.setFont(new Font("Tahoma", Font.BOLD, FONT_SIZE_SMALLEST));
 		lblCreditStock.setText("Sisa Stok Pulsa: Rp");
@@ -177,7 +133,7 @@ public class PrepaidSaleForm extends XJDialog {
 		lblCreditStockValue = new XJLabel("-");
 		lblCreditStockValue.setFont(new Font("Tahoma", Font.BOLD,
 				FONT_SIZE_SMALLEST));
-		panel.add(lblCreditStockValue, "cell 1 1,alignx trailing");
+		panel.add(lblCreditStockValue, "cell 1 0,alignx trailing");
 
 		pnlBackupDB = new XJPanel();
 		pnlBackupDB.setBackground(Color.BLACK);
@@ -211,7 +167,7 @@ public class PrepaidSaleForm extends XJDialog {
 				try {
 					calculate();
 				} catch (Exception ex) {
-					ExceptionHandler.handleException(PrepaidSaleForm.this, ex);
+					ExceptionHandler.handleException(MultiSaleForm.this, ex);
 				}
 			}
 		});
@@ -244,7 +200,7 @@ public class PrepaidSaleForm extends XJDialog {
 				try {
 					selesaiDanSimpan();
 				} catch (Exception ex) {
-					ExceptionHandler.handleException(PrepaidSaleForm.this, ex);
+					ExceptionHandler.handleException(MultiSaleForm.this, ex);
 				}
 			}
 		});
@@ -263,9 +219,7 @@ public class PrepaidSaleForm extends XJDialog {
 				.setText("<html><center>Selesai & Simpan<br/>[F12]</center></html>");
 		pnlButton.add(btnSimpan, "cell 1 0");
 
-		loadComboVoucherTypes();
-		cmbVoucherTypesSelected();
-		cmbPackageNameSelected();
+		initForm();
 
 		pack();
 		setLocationRelativeTo(parent);
@@ -323,96 +277,19 @@ public class PrepaidSaleForm extends XJDialog {
 		}
 	}
 
-	private void cmbPackageNameSelected() {
-		ComboBoxObject comboBoxObject = (ComboBoxObject) cmbPackageName
-				.getSelectedItem();
-		if (comboBoxObject == null) {
-			txtPrice.setText("");
-			txtPay.setText("");
-			lblQuantityValue.setText("0");
-			return;
-		}
-
-		Voucher voucher = (Voucher) comboBoxObject.getObject();
-		if (voucher == null) {
-			txtPrice.setText("");
-			txtPay.setText("");
-			lblQuantityValue.setText("0");
-			return;
-		}
-		lblQuantityValue.setText(Formatter.formatNumberToString(voucher
-				.getQuantity()));
-		txtPrice.setText(Formatter.formatNumberToString(voucher.getPrice()));
-	}
-
-	private void cmbVoucherTypesSelected() {
-		loadComboNominal();
-
-		ComboBoxObject comboBoxObject = (ComboBoxObject) cmbVoucherTypes
-				.getSelectedItem();
-		if (comboBoxObject == null) {
-			return;
-		}
-
-		VoucherType voucher = (VoucherType) comboBoxObject.getObject();
-		if (voucher == null) {
-			lblCreditStock.setVisible(false);
-			lblCreditStockValue.setVisible(false);
-			return;
-		} else {
-			lblCreditStock.setVisible(true);
-			lblCreditStockValue.setVisible(true);
-		}
-
-		Integer itemId = voucher.getItem().getId();
+	private void initForm() {
 		Session session = HibernateUtils.openSession();
 		try {
-			Item item = ItemFacade.getInstance().getDetail(itemId, session);
-			Integer stock = ItemFacade.getInstance().calculateStock(item);
-			lblCreditStockValue.setText(Formatter.formatNumberToString(stock));
-		} finally {
-			session.close();
-		}
-	}
-
-	private void loadComboNominal() {
-		VoucherType selectedVoucherType = (VoucherType) ((ComboBoxObject) cmbVoucherTypes
-				.getSelectedItem()).getObject();
-		if (selectedVoucherType == null) {
-			cmbPackageName.removeAllItems();
-			return;
-		}
-
-		Session session = HibernateUtils.openSession();
-		try {
-			List<ComboBoxObject> comboBoxObjects = new ArrayList<ComboBoxObject>();
-			List<Voucher> vouchers = VoucherFacade.getInstance()
-					.getAllVoucherByType(selectedVoucherType, session);
-			for (Voucher voucher : vouchers) {
-				ComboBoxObject comboBoxObject = new ComboBoxObject(voucher,
-						voucher.getPackageName());
-				comboBoxObjects.add(comboBoxObject);
+			multiMap = MultiFacade.getInstance().getTheOnlyOne(session);
+			Item item = multiMap.getItem();
+			if (item != null) {
+				Integer stock = ItemFacade.getInstance().calculateStock(item);
+				lblCreditStockValue.setText(Formatter
+						.formatNumberToString(stock));
+			} else {
+				throw new RuntimeException(
+						"Mapping pulsa multi ke daftar item belum dilakukan. Lakukan terlebih dahulu proses mapping ini melalui menu Prepaid > Maintenance > Multi");
 			}
-			cmbPackageName.setModel(new DefaultComboBoxModel<ComboBoxObject>(
-					comboBoxObjects.toArray(new ComboBoxObject[] {})));
-		} finally {
-			session.close();
-		}
-	}
-
-	private void loadComboVoucherTypes() {
-		Session session = HibernateUtils.openSession();
-		try {
-			List<ComboBoxObject> comboBoxObjects = new ArrayList<ComboBoxObject>();
-			List<VoucherType> voucherTypes = VoucherTypeFacade.getInstance()
-					.getAll(session);
-			for (VoucherType voucherType : voucherTypes) {
-				ComboBoxObject comboBoxObject = new ComboBoxObject(voucherType,
-						voucherType.getName());
-				comboBoxObjects.add(comboBoxObject);
-			}
-			cmbVoucherTypes.setModel(new DefaultComboBoxModel<ComboBoxObject>(
-					comboBoxObjects.toArray(new ComboBoxObject[] {})));
 		} finally {
 			session.close();
 		}
@@ -431,11 +308,10 @@ public class PrepaidSaleForm extends XJDialog {
 			Customer customer = CustomerFacade.getInstance().getDetail(
 					customerId, session);
 
-			ComboBoxObject comboBoxObject = (ComboBoxObject) cmbPackageName
-					.getSelectedItem();
-			Voucher voucher = (Voucher) comboBoxObject.getObject();
-			Item item = voucher.getVoucherType().getItem();
+			Integer quantity = Formatter.formatStringToNumber(
+					txtQuantity.getText()).intValue();
 
+			Item item = multiMap.getItem();
 			List<SaleDetail> saleDetails = PrepaidSaleFacade.getInstance()
 					.performSale(
 							customer,
@@ -447,7 +323,7 @@ public class PrepaidSaleForm extends XJDialog {
 							BigDecimal.valueOf(Formatter.formatStringToNumber(
 									txtChange.getText()).doubleValue()),
 							item.getId(), item.getCode(), item.getName(),
-							voucher.getQuantity(), item.getUnit(), session);
+							quantity, item.getUnit(), session);
 
 			session.getTransaction().commit();
 
@@ -465,7 +341,7 @@ public class PrepaidSaleForm extends XJDialog {
 
 			dispose();
 			LoggerFactory.getLogger(Loggers.SALE).debug(
-					"Sale Specific Prepaid finished. The window is closed.");
+					"Sale Multi finished. The window is closed.");
 		} finally {
 			session.close();
 		}

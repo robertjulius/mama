@@ -178,6 +178,7 @@ public class VoucherTypeForm extends XJDialog {
 		txtName.setText(voucherType.getName());
 		cmbProvider.setSelectedItem(voucherType.getProvider());
 		txtItemId.setText(voucherType.getItem().getId().toString());
+		txtItemName.setText(voucherType.getItem().getName());
 		chkDisabled.setSelected(voucherType.getDisabled());
 
 		btnSimpan

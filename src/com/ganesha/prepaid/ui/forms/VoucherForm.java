@@ -43,7 +43,7 @@ public class VoucherForm extends XJDialog {
 	private static final long serialVersionUID = 1401014426195840845L;
 
 	private XJButton btnSimpan;
-	private XJTextField txtNominal;
+	private XJTextField txtQuantity;
 	private ActionType actionType;
 	private XJLabel lblVoucherType;
 	private XJComboBox cmbVoucherType;
@@ -56,6 +56,8 @@ public class VoucherForm extends XJDialog {
 	private XJButton btnhapusvoucherType;
 
 	private Integer voucherId;
+	private XJLabel lblNamaPaket;
+	private XJTextField txtPackageName;
 
 	public VoucherForm(Window parent, ActionType actionType) {
 		super(parent);
@@ -65,11 +67,11 @@ public class VoucherForm extends XJDialog {
 		setCloseOnEsc(false);
 
 		getContentPane().setLayout(
-				new MigLayout("", "[]", "[grow][grow][grow]"));
+				new MigLayout("", "[500]", "[grow][grow][grow]"));
 
 		pnlKiri = new XJPanel();
 		getContentPane().add(pnlKiri, "cell 0 0,grow");
-		pnlKiri.setLayout(new MigLayout("", "[][grow]", "[][][]"));
+		pnlKiri.setLayout(new MigLayout("", "[][grow]", "[][][][]"));
 
 		lblVoucherType = new XJLabel();
 		pnlKiri.add(lblVoucherType, "cell 0 0");
@@ -78,23 +80,30 @@ public class VoucherForm extends XJDialog {
 		cmbVoucherType = new XJComboBox();
 		pnlKiri.add(cmbVoucherType, "cell 1 0,growx");
 
-		XJLabel lblNominal = new XJLabel();
-		pnlKiri.add(lblNominal, "cell 0 1");
-		lblNominal.setText("Nominal");
+		lblNamaPaket = new XJLabel();
+		lblNamaPaket.setText("Nama Paket");
+		pnlKiri.add(lblNamaPaket, "cell 0 1");
 
-		txtNominal = new XJTextField();
-		txtNominal
+		txtPackageName = new XJTextField();
+		pnlKiri.add(txtPackageName, "cell 1 1,growx");
+
+		XJLabel lblQuantity = new XJLabel();
+		pnlKiri.add(lblQuantity, "cell 0 2");
+		lblQuantity.setText("Quantity (Modal)");
+
+		txtQuantity = new XJTextField();
+		txtQuantity
 				.setFormatterFactory(GeneralConstants.FORMATTER_FACTORY_NUMBER);
-		pnlKiri.add(txtNominal, "cell 1 1,growx");
-		txtNominal.setUpperCaseOnFocusLost(true);
+		pnlKiri.add(txtQuantity, "cell 1 2,growx");
+		txtQuantity.setUpperCaseOnFocusLost(true);
 
 		lblPrice = new XJLabel();
-		pnlKiri.add(lblPrice, "cell 0 2");
+		pnlKiri.add(lblPrice, "cell 0 3");
 		lblPrice.setText("Harga Jual");
 
 		txtPrice = new XJTextField();
 		txtPrice.setFormatterFactory(GeneralConstants.FORMATTER_FACTORY_NUMBER);
-		pnlKiri.add(txtPrice, "cell 1 2,growx");
+		pnlKiri.add(txtPrice, "cell 1 3,growx");
 
 		pnlDisable = new XJPanel();
 		getContentPane().add(pnlDisable, "cell 0 1,alignx right,growy");
@@ -158,8 +167,9 @@ public class VoucherForm extends XJDialog {
 	public void setFormDetailValue(Voucher voucher) {
 		voucherId = voucher.getId();
 
-		txtNominal
-				.setText(Formatter.formatNumberToString(voucher.getNominal()));
+		txtPackageName.setText(voucher.getPackageName());
+		txtQuantity.setText(Formatter.formatNumberToString(voucher
+				.getQuantity()));
 		cmbVoucherType.setSelectedItem(voucher.getVoucherType());
 		txtPrice.setText(Formatter.formatNumberToString(voucher.getPrice()));
 		chkDisabled.setSelected(voucher.getDisabled());
@@ -212,8 +222,9 @@ public class VoucherForm extends XJDialog {
 
 			VoucherType voucherType = (VoucherType) ((ComboBoxObject) cmbVoucherType
 					.getSelectedItem()).getObject();
-			Integer nominal = Formatter.formatStringToNumber(
-					txtNominal.getText()).intValue();
+			String packageName = txtPackageName.getText();
+			Integer quantity = Formatter.formatStringToNumber(
+					txtQuantity.getText()).intValue();
 			BigDecimal price = BigDecimal.valueOf(Formatter
 					.formatStringToNumber(txtPrice.getText()).doubleValue());
 			boolean disabled = chkDisabled.isSelected();
@@ -221,13 +232,14 @@ public class VoucherForm extends XJDialog {
 			VoucherFacade facade = VoucherFacade.getInstance();
 			Voucher voucher = null;
 			if (actionType == ActionType.CREATE) {
-				voucher = facade.addNewVoucher(voucherType, nominal, price,
-						disabled, deleted, session);
+				voucher = facade.addNewVoucher(voucherType, packageName,
+						quantity, price, disabled, deleted, session);
 				voucherId = voucher.getId();
 				dispose();
 			} else if (actionType == ActionType.UPDATE) {
 				voucher = facade.updateExistingVoucher(voucherId, voucherType,
-						nominal, price, disabled, deleted, session);
+						packageName, quantity, price, disabled, deleted,
+						session);
 				dispose();
 			} else {
 				throw new ActionTypeNotSupported(actionType);
@@ -246,7 +258,7 @@ public class VoucherForm extends XJDialog {
 	}
 
 	private void validateForm() throws UserException {
-		if (txtNominal.getText().trim().equals("")) {
+		if (txtQuantity.getText().trim().equals("")) {
 			throw new UserException("Nama harus diisi");
 		}
 

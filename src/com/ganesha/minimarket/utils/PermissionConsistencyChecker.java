@@ -279,6 +279,19 @@ public class PermissionConsistencyChecker {
 				"Voucher List", 911));
 		permissions.add(createPermission(PermissionConstants.VOUCHER_FORM,
 				"Voucher Form", 912));
+
+		// Prepaid - Maintenance - Multi
+		permissions.add(createPermission(
+				PermissionConstants.MN_PREPAID_MAINTENANCE_MULTI,
+				"/prepaid/maintenance/multi", 1010));
+		permissions.add(createPermission(PermissionConstants.MULTI_FORM,
+				"Multi Form", 1012));
+
+		// Prepaid - Sale Multi
+		permissions.add(createPermission(PermissionConstants.MN_MULTI_SALE,
+				"/Prepaid/Penjualan Pulsa Multi", 1110));
+		permissions.add(createPermission(PermissionConstants.MULTI_SALE_FORM,
+				"Sale Multi Form", 1120));
 	}
 
 	public void initDB() {

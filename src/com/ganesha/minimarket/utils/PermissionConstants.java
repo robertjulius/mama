@@ -148,4 +148,12 @@ public class PermissionConstants {
 	// Prepaid - Sale
 	public static final String MN_PREPAID_SALE = "/prepaid/sale";
 	public static final String SALE_PREPAID_FORM = "SalePrepaidForm";
+
+	// Prepaid - Maintenance - Multi Map
+	public static final String MN_PREPAID_MAINTENANCE_MULTI = "/prepaid/maintenance/multi";
+	public static final String MULTI_FORM = "Multi Form";
+
+	// Prepaid - Multi Map Sale
+	public static final String MN_MULTI_SALE = "/prepaid/multisale";
+	public static final String MULTI_SALE_FORM = "MultiSaleForm";
 }
