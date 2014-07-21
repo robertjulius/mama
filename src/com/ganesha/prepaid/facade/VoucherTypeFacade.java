@@ -74,7 +74,6 @@ public class VoucherTypeFacade {
 
 		Criteria criteria = session.createCriteria(VoucherType.class);
 		criteria.createAlias("provider", "provider");
-		criteria.createAlias("item", "item");
 
 		if (name != null && !name.trim().isEmpty()) {
 			criteria.add(Restrictions.like("name", "%" + name + "%")

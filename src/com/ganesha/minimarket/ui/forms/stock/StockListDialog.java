@@ -14,6 +14,7 @@ import java.util.Map;
 
 import javax.swing.ButtonGroup;
 import javax.swing.JScrollPane;
+import javax.swing.table.TableModel;
 
 import net.miginfocom.swing.MigLayout;
 
@@ -309,8 +310,8 @@ public class StockListDialog extends XJTableDialog {
 						tableParameters.get(ColumnEnum.BUY_PRICE)
 								.getColumnIndex());
 
-				tableModel.setValueAt(Formatter.formatNumberToString(item
-						.getSellPrice()), i,
+				tableModel.setValueAt(Formatter.formatNumberToString(facade
+						.getFirstSellPrice(item)), i,
 						tableParameters.get(ColumnEnum.SELL_PRICE)
 								.getColumnIndex());
 
@@ -375,7 +376,9 @@ public class StockListDialog extends XJTableDialog {
 			if (selectedRow < 0) {
 				return;
 			}
-			int itemId = (int) table.getModel().getValueAt(selectedRow,
+
+			TableModel tableModel = table.getModel();
+			int itemId = (int) tableModel.getValueAt(selectedRow,
 					tableParameters.get(ColumnEnum.ID).getColumnIndex());
 
 			ItemFacade facade = ItemFacade.getInstance();

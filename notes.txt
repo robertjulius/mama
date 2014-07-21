@@ -69,9 +69,13 @@ Font laporan terlalu besar
 
 
 [DONE] Untuk jual pulsa, ada input nama paket untuk pelanggan. Paket 50 modal 40, stok berkurang 40.
-Harga jual bisa diedit, tapi tidak boleh dibawah harga
+[DONE] Harga jual bisa diedit, tapi tidak boleh dibawah harga modal
 XXX
-Harga satu harga dua (untuk grosir)
+[DONE] Harga satu harga dua (untuk grosir)
 
 Laporan keuntungan harian 
-Bikin khusus untuk penjualan Multi
+[DONE] Bikin khusus untuk penjualan Multi
+
+Pilihan print receipt YES/NO  
+Problem edit harga jual
+Butuh ada multi lama dan multi baru

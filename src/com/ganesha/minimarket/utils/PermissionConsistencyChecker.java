@@ -284,6 +284,8 @@ public class PermissionConsistencyChecker {
 		permissions.add(createPermission(
 				PermissionConstants.MN_PREPAID_MAINTENANCE_MULTI,
 				"/prepaid/maintenance/multi", 1010));
+		permissions.add(createPermission(PermissionConstants.MULTI_LIST,
+				"Multi List", 1011));
 		permissions.add(createPermission(PermissionConstants.MULTI_FORM,
 				"Multi Form", 1012));
 

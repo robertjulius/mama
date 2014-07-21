@@ -114,8 +114,8 @@ public class PenjualanForm extends XJDialog {
 				"Satuan", false, XTableConstants.CELL_RENDERER_LEFT,
 				String.class));
 
-		tableParameters.put(ColumnEnum.PRICE, new XTableParameter(5, 75, false,
-				"Harga", false, XTableConstants.CELL_RENDERER_RIGHT,
+		tableParameters.put(ColumnEnum.PRICE, new XTableParameter(5, 75, true,
+				"Harga (Rp)", false, XTableConstants.CELL_RENDERER_RIGHT,
 				Double.class));
 
 		tableParameters.put(ColumnEnum.DISCOUNT, new XTableParameter(6, 5,
@@ -148,6 +148,26 @@ public class PenjualanForm extends XJDialog {
 				if (column == tableParameters.get(ColumnEnum.QUANTITY)
 						.getColumnIndex()) {
 					setTotalPerRow(row);
+				} else if (column == tableParameters.get(ColumnEnum.PRICE)
+						.getColumnIndex()) {
+
+					int itemId = (int) table.getModel()
+							.getValueAt(
+									row,
+									tableParameters.get(ColumnEnum.ID)
+											.getColumnIndex());
+
+					double newPrice = Formatter.formatStringToNumber(
+							(String) newValue).doubleValue();
+
+					try {
+						validateSellPrice(itemId, newPrice);
+						setTotalPerRow(row);
+					} catch (UserException e) {
+						UserExceptionHandler.handleException(
+								PenjualanForm.this, e.getMessage(), null);
+						table.getModel().setValueAt(oldValue, row, column);
+					}
 				}
 			}
 		};
@@ -861,6 +881,11 @@ public class PenjualanForm extends XJDialog {
 			ItemFacade facade = ItemFacade.getInstance();
 			Item item = facade.getDetail(itemId, session);
 
+			BigDecimal sellPrice = SelectSellPriceForm.showDialog(this, item);
+			if (sellPrice == null) {
+				return;
+			}
+
 			XTableModel tableModel = (XTableModel) table.getModel();
 			tableModel.setRowCount(tableModel.getRowCount() + 1);
 			int rowIndex = tableModel.getRowCount() - 1;
@@ -877,9 +902,9 @@ public class PenjualanForm extends XJDialog {
 			tableModel.setValueAt(item.getUnit(), rowIndex, tableParameters
 					.get(ColumnEnum.UNIT).getColumnIndex());
 
-			tableModel.setValueAt(Formatter.formatNumberToString(item
-					.getSellPrice()), rowIndex,
-					tableParameters.get(ColumnEnum.PRICE).getColumnIndex());
+			tableModel.setValueAt(Formatter.formatNumberToString(sellPrice),
+					rowIndex, tableParameters.get(ColumnEnum.PRICE)
+							.getColumnIndex());
 
 			tableModel.setValueAt(0, rowIndex,
 					tableParameters.get(ColumnEnum.DISCOUNT).getColumnIndex());
@@ -905,6 +930,22 @@ public class PenjualanForm extends XJDialog {
 			setTotalPerRow(row);
 			setTotalPenjualan();
 
+		} finally {
+			session.close();
+		}
+	}
+
+	private void validateSellPrice(int itemId, double newPrice)
+			throws UserException {
+		Session session = HibernateUtils.openSession();
+		try {
+			Item item = ItemFacade.getInstance().getDetail(itemId, session);
+			BigDecimal buyPrice = ItemFacade.getInstance().getHigherBuyPrice(
+					item);
+			if (newPrice < buyPrice.doubleValue()) {
+				throw new UserException(
+						"Harga Jual tidak boleh di bawah Harga Beli");
+			}
 		} finally {
 			session.close();
 		}

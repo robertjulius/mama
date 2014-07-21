@@ -33,6 +33,7 @@
 		<mapping class="com.ganesha.minimarket.model.Item" />
 		<mapping class="com.ganesha.minimarket.model.ItemGroup" />
 		<mapping class="com.ganesha.minimarket.model.ItemStock" />
+		<mapping class="com.ganesha.minimarket.model.ItemSellPrice" />
 		<mapping class="com.ganesha.minimarket.model.StockOpnameDetail" />
 		<mapping class="com.ganesha.minimarket.model.StockOpnameHeader" />
 		<mapping class="com.ganesha.minimarket.model.Supplier" />

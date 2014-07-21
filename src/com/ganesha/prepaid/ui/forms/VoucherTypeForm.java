@@ -53,7 +53,7 @@ public class VoucherTypeForm extends XJDialog {
 	private XJButton btnBatal;
 	private XJPanel pnlDisable;
 	private XJCheckBox chkDisabled;
-	private XJButton btnhapusvoucherType;
+	private XJButton btnHapusVoucherType;
 	private XJTextField txtItemName;
 	private XJButton btnCariBarang;
 
@@ -149,8 +149,8 @@ public class VoucherTypeForm extends XJDialog {
 		btnBatal.setText("<html><center>Batal<br/>[Alt+Q]</center></html>");
 		pnlButton.add(btnBatal, "cell 0 0");
 
-		btnhapusvoucherType = new XJButton();
-		btnhapusvoucherType.addActionListener(new ActionListener() {
+		btnHapusVoucherType = new XJButton();
+		btnHapusVoucherType.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				try {
@@ -160,9 +160,9 @@ public class VoucherTypeForm extends XJDialog {
 				}
 			}
 		});
-		btnhapusvoucherType
+		btnHapusVoucherType
 				.setText("<html><center>Hapus<br/>Tipe Voucher</center></html>");
-		pnlButton.add(btnhapusvoucherType, "cell 2 0");
+		pnlButton.add(btnHapusVoucherType, "cell 2 0");
 		btnSimpan.setText("<html><center>Simpan<br/>[F12]</center></html>");
 		pnlButton.add(btnSimpan, "cell 3 0");
 

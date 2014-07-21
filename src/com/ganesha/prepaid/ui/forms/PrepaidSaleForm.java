@@ -90,6 +90,7 @@ public class PrepaidSaleForm extends XJDialog {
 		super(parent);
 		setTitle("Penjualan Voucher Pulsa");
 		setPermissionCode(PermissionConstants.SALE_PREPAID_FORM);
+		setCloseOnEsc(false);
 		getContentPane().setLayout(new MigLayout("", "[grow]", "[][][]"));
 
 		pnlAuth = new XJPanel();
@@ -162,11 +163,13 @@ public class PrepaidSaleForm extends XJDialog {
 		lblQuantity.setFont(new Font("Tahoma", Font.BOLD, 12));
 		lblQuantity.setText("Quantity (Modal): Rp");
 		panel.add(lblQuantity, "cell 0 0,alignx trailing");
+		lblQuantity.setVisible(false);
 
 		lblQuantityValue = new XJLabel("-");
 		lblQuantityValue.setFont(new Font("Tahoma", Font.BOLD,
 				FONT_SIZE_SMALLEST));
 		panel.add(lblQuantityValue, "cell 1 0,alignx trailing");
+		lblQuantityValue.setVisible(false);
 
 		lblCreditStock = new XJLabel();
 		panel.add(lblCreditStock, "cell 0 1,alignx trailing");
@@ -420,6 +423,8 @@ public class PrepaidSaleForm extends XJDialog {
 
 	private void selesaiDanSimpan() throws UserException, AppException {
 
+		validateForm();
+
 		Session session = HibernateUtils.openSession();
 		try {
 			session.beginTransaction();
@@ -479,5 +484,19 @@ public class PrepaidSaleForm extends XJDialog {
 	private void setFocusToFieldHarga() {
 		txtPrice.selectAll();
 		txtPrice.requestFocus();
+	}
+
+	private void validateForm() throws UserException {
+
+		int quantity = Formatter.formatStringToNumber(
+				lblQuantityValue.getText()).intValue();
+
+		double price = Formatter.formatStringToNumber(txtPrice.getText())
+				.doubleValue();
+
+		if (price < quantity) {
+			throw new UserException(
+					"Harga jual tidak boleh di bawah harga modal");
+		}
 	}
 }

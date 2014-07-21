@@ -101,4 +101,8 @@ public class GeneralConstants {
 	public static final String SYSTEM_SETTING_SMTP_ACCOUNT_LOGIN = "system.setting.smtp.account.login";
 	public static final String SYSTEM_SETTING_SMTP_ACCOUNT_PASSWORD = "system.setting.smtp.account.password";
 	public static final String SYSTEM_SETTING_EMAIL_TO = "system.setting.email.to";
+
+	public static final String SYSTEM_PROPERTY_DB_URL = "config.db.url";
+	public static final String SYSTEM_PROPERTY_DB_USERNAME = "config.db.username";
+	public static final String SYSTEM_PROPERTY_DB_PASSWORD = "config.db.password";
 }

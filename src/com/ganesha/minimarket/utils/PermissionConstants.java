@@ -151,6 +151,7 @@ public class PermissionConstants {
 
 	// Prepaid - Maintenance - Multi Map
 	public static final String MN_PREPAID_MAINTENANCE_MULTI = "/prepaid/maintenance/multi";
+	public static final String MULTI_LIST = "Multi List";
 	public static final String MULTI_FORM = "Multi Form";
 
 	// Prepaid - Multi Map Sale

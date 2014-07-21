@@ -36,7 +36,6 @@ import com.ganesha.desktop.exeptions.ExceptionHandler;
 import com.ganesha.hibernate.HibernateUtils;
 import com.ganesha.minimarket.Main;
 import com.ganesha.minimarket.facade.CustomerFacade;
-import com.ganesha.minimarket.facade.ItemFacade;
 import com.ganesha.minimarket.facade.SaleFacade;
 import com.ganesha.minimarket.model.Customer;
 import com.ganesha.minimarket.model.Item;
@@ -44,7 +43,6 @@ import com.ganesha.minimarket.model.SaleDetail;
 import com.ganesha.minimarket.model.SaleHeader;
 import com.ganesha.minimarket.ui.forms.searchentity.SearchEntityDialog;
 import com.ganesha.minimarket.utils.PermissionConstants;
-import com.ganesha.prepaid.facade.MultiFacade;
 import com.ganesha.prepaid.facade.PrepaidSaleFacade;
 import com.ganesha.prepaid.model.MultiMap;
 
@@ -82,6 +80,7 @@ public class MultiSaleForm extends XJDialog {
 		setPermissionRequired(false);
 		setTitle("Penjualan Pulsa Multi");
 		setPermissionCode(PermissionConstants.SETTING_DB_FORM);
+		setCloseOnEsc(false);
 		getContentPane().setLayout(new MigLayout("", "[grow]", "[][][]"));
 
 		pnlAuth = new XJPanel();
@@ -278,24 +277,26 @@ public class MultiSaleForm extends XJDialog {
 	}
 
 	private void initForm() {
-		Session session = HibernateUtils.openSession();
-		try {
-			multiMap = MultiFacade.getInstance().getTheOnlyOne(session);
-			Item item = multiMap.getItem();
-			if (item != null) {
-				Integer stock = ItemFacade.getInstance().calculateStock(item);
-				lblCreditStockValue.setText(Formatter
-						.formatNumberToString(stock));
-			} else {
-				throw new RuntimeException(
-						"Mapping pulsa multi ke daftar item belum dilakukan. Lakukan terlebih dahulu proses mapping ini melalui menu Prepaid > Maintenance > Multi");
-			}
-		} finally {
-			session.close();
-		}
+		// Session session = HibernateUtils.openSession();
+		// try {
+		// multiMap = MultiFacade.getInstance().getTheOnlyOne(session);
+		// Item item = multiMap.getItem();
+		// if (item != null) {
+		// Integer stock = ItemFacade.getInstance().calculateStock(item);
+		// lblCreditStockValue.setText(Formatter
+		// .formatNumberToString(stock));
+		// } else {
+		// throw new RuntimeException(
+		// "Mapping pulsa multi ke daftar item belum dilakukan. Lakukan terlebih dahulu proses mapping ini melalui menu Prepaid > Maintenance > Multi");
+		// }
+		// } finally {
+		// session.close();
+		// }
 	}
 
 	private void selesaiDanSimpan() throws UserException, AppException {
+
+		validateForm();
 
 		Session session = HibernateUtils.openSession();
 		try {
@@ -355,5 +356,19 @@ public class MultiSaleForm extends XJDialog {
 	private void setFocusToFieldHarga() {
 		txtPrice.selectAll();
 		txtPrice.requestFocus();
+	}
+
+	private void validateForm() throws UserException {
+
+		int quantity = Formatter.formatStringToNumber(txtQuantity.getText())
+				.intValue();
+
+		double price = Formatter.formatStringToNumber(txtPrice.getText())
+				.doubleValue();
+
+		if (price < quantity) {
+			throw new UserException(
+					"Harga jual tidak boleh di bawah harga modal");
+		}
 	}
 }

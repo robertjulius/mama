@@ -15,6 +15,7 @@ import javax.swing.InputMap;
 import javax.swing.JComponent;
 import javax.swing.JTable;
 import javax.swing.KeyStroke;
+import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.TableCellEditor;
 import javax.swing.table.TableCellRenderer;
 
@@ -172,8 +173,12 @@ public class XJTable extends JTable implements XComponentConstants {
 				parent = parent.getParent();
 			}
 
+			DefaultTableCellRenderer cellRenderer = (DefaultTableCellRenderer) getCellRenderer(
+					row, column);
+			int horizontalAlignment = cellRenderer.getHorizontalAlignment();
+
 			XCellValueEditor valueEditor = new XCellValueEditor(
-					(Window) parent, title, initialValue);
+					(Window) parent, title, initialValue, horizontalAlignment);
 			valueEditor.setVisible(true);
 
 			int returnValue = valueEditor.getReturnValue();

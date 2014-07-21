@@ -18,7 +18,6 @@ import com.ganesha.accounting.ui.forms.expense.ExpenseListDialog;
 import com.ganesha.core.utils.CommonUtils;
 import com.ganesha.core.utils.Formatter;
 import com.ganesha.core.utils.GeneralConstants;
-import com.ganesha.coreapps.constants.Enums.ActionType;
 import com.ganesha.desktop.component.XJButton;
 import com.ganesha.desktop.component.XJFrame;
 import com.ganesha.desktop.component.XJLabel;
@@ -55,7 +54,7 @@ import com.ganesha.minimarket.ui.forms.systemsetting.ReceiptPrinterStatusForm;
 import com.ganesha.minimarket.ui.forms.user.ChangePasswordForm;
 import com.ganesha.minimarket.ui.forms.user.UserListDialog;
 import com.ganesha.minimarket.utils.PermissionConstants;
-import com.ganesha.prepaid.ui.forms.MultiMapForm;
+import com.ganesha.prepaid.ui.forms.MultiMapListDialog;
 import com.ganesha.prepaid.ui.forms.MultiSaleForm;
 import com.ganesha.prepaid.ui.forms.PrepaidSaleForm;
 import com.ganesha.prepaid.ui.forms.VoucherListDialog;
@@ -434,13 +433,12 @@ public class MainFrame extends XJFrame {
 		mnMaintenance.add(mntmVoucher);
 
 		XJMenuItem mntmMulti = new XJMenuItem("Multi",
-				PermissionConstants.MULTI_FORM);
+				PermissionConstants.MULTI_LIST);
 		mntmMulti.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				try {
-					new MultiMapForm(MainFrame.this, ActionType.UPDATE)
-							.setVisible(true);
+					new MultiMapListDialog(MainFrame.this).setVisible(true);
 				} catch (Exception ex) {
 					ExceptionHandler.handleException(MainFrame.this, ex);
 				}

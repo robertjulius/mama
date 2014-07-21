@@ -1,6 +1,5 @@
 package com.ganesha.minimarket.model;
 
-import java.math.BigDecimal;
 import java.util.List;
 
 import javax.persistence.Column;
@@ -8,6 +7,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
@@ -39,11 +39,12 @@ public class Item extends Inactivable implements LogableEntity {
 	@Column(name = "UNIT", nullable = false)
 	private String unit;
 
-	@Column(name = "SELL_PRICE", nullable = false)
-	private BigDecimal sellPrice;
-
 	@OneToMany(mappedBy = "item")
 	private List<ItemStock> itemStocks;
+
+	@OneToMany(mappedBy = "primaryKey.item")
+	@JoinColumn(name = "ITEM_ID", nullable = false)
+	private List<ItemSellPrice> sellPrices;
 
 	public String getBarcode() {
 		return barcode;
@@ -70,8 +71,8 @@ public class Item extends Inactivable implements LogableEntity {
 		return name;
 	}
 
-	public BigDecimal getSellPrice() {
-		return sellPrice;
+	public List<ItemSellPrice> getSellPrices() {
+		return sellPrices;
 	}
 
 	public String getUnit() {
@@ -102,8 +103,8 @@ public class Item extends Inactivable implements LogableEntity {
 		this.name = name;
 	}
 
-	public void setSellPrice(BigDecimal sellPrice) {
-		this.sellPrice = sellPrice;
+	public void setSellPrices(List<ItemSellPrice> sellPrices) {
+		this.sellPrices = sellPrices;
 	}
 
 	public void setUnit(String unit) {
