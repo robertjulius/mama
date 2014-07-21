@@ -51,6 +51,8 @@ public class VoucherFacade {
 		criteria.createAlias("voucherType", "voucherType");
 
 		criteria.add(Restrictions.eq("voucherType.id", voucherType.getId()));
+		criteria.add(Restrictions.eq("disabled", false));
+		criteria.add(Restrictions.eq("deleted", false));
 
 		@SuppressWarnings("unchecked")
 		List<Voucher> vouchers = criteria.list();

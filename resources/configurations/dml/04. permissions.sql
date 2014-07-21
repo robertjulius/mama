@@ -1,5 +1,3 @@
-USE minimarketkk;
-
 insert into `permissions`(`CODE`,`DESCRIPTION`,`NAME`,`ORDER_NUM`) values ('/administrasi/changepassword',null,'/Administrasi/Ganti Password',230);
 insert into `permissions`(`CODE`,`DESCRIPTION`,`NAME`,`ORDER_NUM`) values ('/administrasi/role',null,'/Administrasi/Role',210);
 insert into `permissions`(`CODE`,`DESCRIPTION`,`NAME`,`ORDER_NUM`) values ('/administrasi/user',null,'/Administrasi/User',220);

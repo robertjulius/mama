@@ -28,8 +28,12 @@ public class HibernateUtils {
 
 			String url = SystemSetting
 					.getProperty(GeneralConstants.SYSTEM_PROPERTY_DB_URL);
-			if (url != null) {
-				config.setProperty("hibernate.connection.url", url);
+			String schema = SystemSetting
+					.getProperty(GeneralConstants.SYSTEM_PROPERTY_DB_SCHEMA);
+			if (url != null && schema != null) {
+				String completeUrl = (url.endsWith("/") ? url : url + "/")
+						+ schema;
+				config.setProperty("hibernate.connection.url", completeUrl);
 			}
 
 			String username = SystemSetting

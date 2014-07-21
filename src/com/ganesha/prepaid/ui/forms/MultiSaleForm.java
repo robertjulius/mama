@@ -5,12 +5,16 @@ import java.awt.Font;
 import java.awt.Window;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.ItemEvent;
+import java.awt.event.ItemListener;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.print.PrintException;
+import javax.swing.DefaultComboBoxModel;
 import javax.swing.SwingConstants;
 
 import net.miginfocom.swing.MigLayout;
@@ -26,8 +30,10 @@ import com.ganesha.core.utils.GeneralConstants;
 import com.ganesha.coreapps.constants.Enums.ActionType;
 import com.ganesha.coreapps.constants.Loggers;
 import com.ganesha.coreapps.facade.ActivityLogFacade;
+import com.ganesha.desktop.component.ComboBoxObject;
 import com.ganesha.desktop.component.XEtchedBorder;
 import com.ganesha.desktop.component.XJButton;
+import com.ganesha.desktop.component.XJComboBox;
 import com.ganesha.desktop.component.XJDialog;
 import com.ganesha.desktop.component.XJLabel;
 import com.ganesha.desktop.component.XJPanel;
@@ -36,6 +42,7 @@ import com.ganesha.desktop.exeptions.ExceptionHandler;
 import com.ganesha.hibernate.HibernateUtils;
 import com.ganesha.minimarket.Main;
 import com.ganesha.minimarket.facade.CustomerFacade;
+import com.ganesha.minimarket.facade.ItemFacade;
 import com.ganesha.minimarket.facade.SaleFacade;
 import com.ganesha.minimarket.model.Customer;
 import com.ganesha.minimarket.model.Item;
@@ -43,6 +50,7 @@ import com.ganesha.minimarket.model.SaleDetail;
 import com.ganesha.minimarket.model.SaleHeader;
 import com.ganesha.minimarket.ui.forms.searchentity.SearchEntityDialog;
 import com.ganesha.minimarket.utils.PermissionConstants;
+import com.ganesha.prepaid.facade.MultiFacade;
 import com.ganesha.prepaid.facade.PrepaidSaleFacade;
 import com.ganesha.prepaid.model.MultiMap;
 
@@ -73,7 +81,8 @@ public class MultiSaleForm extends XJDialog {
 	private XJPanel panel;
 	private XJLabel lblCreditStockValue;
 
-	private MultiMap multiMap;
+	private XJLabel lblMultiName;
+	private XJComboBox cmbMultiMaps;
 
 	public MultiSaleForm(Window parent) {
 		super(parent);
@@ -87,15 +96,32 @@ public class MultiSaleForm extends XJDialog {
 		pnlAuth.setBorder(new XEtchedBorder());
 		getContentPane().add(pnlAuth, "cell 0 0,grow");
 		pnlAuth.setLayout(new MigLayout("", "[200][300,grow][grow]",
-				"[][][grow]"));
+				"[][][][grow]"));
+
+		lblMultiName = new XJLabel();
+		lblMultiName.setText("Nama Multi");
+		pnlAuth.add(lblMultiName, "cell 0 0");
+
+		cmbMultiMaps = new XJComboBox();
+		cmbMultiMaps.addItemListener(new ItemListener() {
+			@Override
+			public void itemStateChanged(ItemEvent e) {
+				try {
+					cmbMultiMapsSelected();
+				} catch (Exception ex) {
+					ExceptionHandler.handleException(MultiSaleForm.this, ex);
+				}
+			}
+		});
+		pnlAuth.add(cmbMultiMaps, "cell 1 0,growx");
 
 		lblCustomer = new XJLabel();
 		lblCustomer.setText("Customer");
-		pnlAuth.add(lblCustomer, "cell 0 0");
+		pnlAuth.add(lblCustomer, "cell 0 1");
 
 		txtCustomer = new XJTextField();
 		txtCustomer.setEditable(false);
-		pnlAuth.add(txtCustomer, "cell 1 0,growx");
+		pnlAuth.add(txtCustomer, "cell 1 1,growx");
 
 		btnSearchCustomer = new XJButton();
 		btnSearchCustomer.addActionListener(new ActionListener() {
@@ -109,18 +135,18 @@ public class MultiSaleForm extends XJDialog {
 			}
 		});
 		btnSearchCustomer.setText("Cari Customer [F5]");
-		pnlAuth.add(btnSearchCustomer, "cell 2 0");
+		pnlAuth.add(btnSearchCustomer, "cell 2 1");
 
 		lblQuantity = new XJLabel("Quantity (Rp)");
-		pnlAuth.add(lblQuantity, "cell 0 1");
+		pnlAuth.add(lblQuantity, "cell 0 2");
 
 		txtQuantity = new XJTextField();
 		txtQuantity
 				.setFormatterFactory(GeneralConstants.FORMATTER_FACTORY_NUMBER);
-		pnlAuth.add(txtQuantity, "cell 1 1,growx");
+		pnlAuth.add(txtQuantity, "cell 1 2,growx");
 
 		panel = new XJPanel();
-		pnlAuth.add(panel, "cell 1 2,alignx right,growy");
+		pnlAuth.add(panel, "cell 1 3,alignx right,growy");
 		panel.setLayout(new MigLayout("", "[][]", "[]"));
 
 		lblCreditStock = new XJLabel();
@@ -218,7 +244,8 @@ public class MultiSaleForm extends XJDialog {
 				.setText("<html><center>Selesai & Simpan<br/>[F12]</center></html>");
 		pnlButton.add(btnSimpan, "cell 1 0");
 
-		initForm();
+		loadComboMultiMaps();
+		cmbMultiMapsSelected();
 
 		pack();
 		setLocationRelativeTo(parent);
@@ -276,22 +303,50 @@ public class MultiSaleForm extends XJDialog {
 		}
 	}
 
-	private void initForm() {
-		// Session session = HibernateUtils.openSession();
-		// try {
-		// multiMap = MultiFacade.getInstance().getTheOnlyOne(session);
-		// Item item = multiMap.getItem();
-		// if (item != null) {
-		// Integer stock = ItemFacade.getInstance().calculateStock(item);
-		// lblCreditStockValue.setText(Formatter
-		// .formatNumberToString(stock));
-		// } else {
-		// throw new RuntimeException(
-		// "Mapping pulsa multi ke daftar item belum dilakukan. Lakukan terlebih dahulu proses mapping ini melalui menu Prepaid > Maintenance > Multi");
-		// }
-		// } finally {
-		// session.close();
-		// }
+	private void cmbMultiMapsSelected() {
+		ComboBoxObject comboBoxObject = (ComboBoxObject) cmbMultiMaps
+				.getSelectedItem();
+		if (comboBoxObject == null) {
+			return;
+		}
+
+		MultiMap voucher = (MultiMap) comboBoxObject.getObject();
+		if (voucher == null) {
+			lblCreditStock.setVisible(false);
+			lblCreditStockValue.setVisible(false);
+			return;
+		} else {
+			lblCreditStock.setVisible(true);
+			lblCreditStockValue.setVisible(true);
+		}
+
+		Integer itemId = voucher.getItem().getId();
+		Session session = HibernateUtils.openSession();
+		try {
+			Item item = ItemFacade.getInstance().getDetail(itemId, session);
+			Integer stock = ItemFacade.getInstance().calculateStock(item);
+			lblCreditStockValue.setText(Formatter.formatNumberToString(stock));
+		} finally {
+			session.close();
+		}
+	}
+
+	private void loadComboMultiMaps() {
+		Session session = HibernateUtils.openSession();
+		try {
+			List<ComboBoxObject> comboBoxObjects = new ArrayList<ComboBoxObject>();
+			List<MultiMap> multiMaps = MultiFacade.getInstance()
+					.getAll(session);
+			for (MultiMap multiMap : multiMaps) {
+				ComboBoxObject comboBoxObject = new ComboBoxObject(multiMap,
+						multiMap.getName());
+				comboBoxObjects.add(comboBoxObject);
+			}
+			cmbMultiMaps.setModel(new DefaultComboBoxModel<ComboBoxObject>(
+					comboBoxObjects.toArray(new ComboBoxObject[] {})));
+		} finally {
+			session.close();
+		}
 	}
 
 	private void selesaiDanSimpan() throws UserException, AppException {
@@ -312,7 +367,11 @@ public class MultiSaleForm extends XJDialog {
 			Integer quantity = Formatter.formatStringToNumber(
 					txtQuantity.getText()).intValue();
 
+			ComboBoxObject comboBoxObject = (ComboBoxObject) cmbMultiMaps
+					.getSelectedItem();
+			MultiMap multiMap = (MultiMap) comboBoxObject.getObject();
 			Item item = multiMap.getItem();
+
 			List<SaleDetail> saleDetails = PrepaidSaleFacade.getInstance()
 					.performSale(
 							customer,

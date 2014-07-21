@@ -57,6 +57,8 @@ public class VoucherTypeFacade {
 
 	public List<VoucherType> getAll(Session session) {
 		Criteria criteria = session.createCriteria(VoucherType.class);
+		criteria.add(Restrictions.eq("disabled", false));
+		criteria.add(Restrictions.eq("deleted", false));
 
 		@SuppressWarnings("unchecked")
 		List<VoucherType> voucherTypes = criteria.list();

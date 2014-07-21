@@ -1,5 +1,5 @@
--injars eclipse-ant\jar\MiniMarketKK-v2.0.0.jar
--outjars 'C:\Users\Asus-020\Desktop\Test Obfuscator\MiniMarketKK-v2.0.0.jar'
+-injars eclipse-ant\jar\miniket-v2.0.0.jar
+-outjars 'C:\Users\Asus-020\Desktop\Test Obfuscator\miniket-v2.0.0.jar'
 
 -libraryjars 'C:\Program Files\Java\jre7\lib\rt.jar'
 -libraryjars eclipse-ant\jar\lib\antlr-2.7.6.jar

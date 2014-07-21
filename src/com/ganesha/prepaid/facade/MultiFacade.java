@@ -53,6 +53,16 @@ public class MultiFacade {
 		return multiMap;
 	}
 
+	public List<MultiMap> getAll(Session session) {
+		Criteria criteria = session.createCriteria(MultiMap.class);
+		criteria.add(Restrictions.eq("disabled", false));
+		criteria.add(Restrictions.eq("deleted", false));
+
+		@SuppressWarnings("unchecked")
+		List<MultiMap> multiMaps = criteria.list();
+		return multiMaps;
+	}
+
 	public MultiMap getDetail(Integer id, Session session) {
 		MultiMap multiMap = (MultiMap) session.get(MultiMap.class, id);
 		return multiMap;

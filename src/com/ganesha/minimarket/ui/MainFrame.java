@@ -74,7 +74,8 @@ public class MainFrame extends XJFrame {
 		getContentPane().setBackground(Color.BLACK);
 
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setTitle(Main.getCompany().getName() + " " + GeneralConstants.VERSION);
+		setTitle(GeneralConstants.APPLICATION_NAME + " "
+				+ GeneralConstants.VERSION);
 
 		JMenuBar menuBar = new JMenuBar();
 		setJMenuBar(menuBar);

@@ -1,4 +1,3 @@
 insert into `providers`(`ID`,`LAST_UPDATED_BY`,`LAST_UPDATED_TIMESTAMP`,`DELETED`,`DISABLED`,`NAME`) values (1,1,'2014-05-04 00:00:00',0,0,'<Unknown>');
-insert into `providers`(`ID`,`LAST_UPDATED_BY`,`LAST_UPDATED_TIMESTAMP`,`DELETED`,`DISABLED`,`NAME`) values (2,1,'2014-05-04 00:00:00',0,0,'Multi');
 insert into `providers`(`ID`,`LAST_UPDATED_BY`,`LAST_UPDATED_TIMESTAMP`,`DELETED`,`DISABLED`,`NAME`) values (3,1,'2014-05-04 00:00:00',0,0,'Indosat');
 insert into `providers`(`ID`,`LAST_UPDATED_BY`,`LAST_UPDATED_TIMESTAMP`,`DELETED`,`DISABLED`,`NAME`) values (4,1,'2014-05-04 00:00:00',0,0,'Telkomsel');
