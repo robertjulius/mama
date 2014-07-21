@@ -1,1 +1,1 @@
-insert into `companies`(`ID`,`LAST_UPDATED_BY`,`LAST_UPDATED_TIMESTAMP`,`DELETED`,`DISABLED`,`ADDRESS`,`FAX`,`NAME`,`PHONE_1`,`PHONE_2`) values (1,0,'2014-01-01 18:43:02',0,0,'Mini Market SPBU 24-307-24 KM. 30','08127849981','Minimarket KK','0711515904',null);
+insert into `companies`(`ID`,`LAST_UPDATED_BY`,`LAST_UPDATED_TIMESTAMP`,`DELETED`,`DISABLED`,`ADDRESS`,`FAX`,`NAME`,`PHONE_1`,`PHONE_2`) values (1,0,'2014-01-01 18:43:02',0,0,'Muda Cell','','Muda Cell','',null);
