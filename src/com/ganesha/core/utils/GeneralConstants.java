@@ -16,7 +16,7 @@ import com.ganesha.minimarket.constants.Enums.TransactionType;
 public class GeneralConstants {
 
 	public static final String APPLICATION_NAME = "Miniket";
-	public static final String VERSION = "v2.0.1";
+	public static final String VERSION = "v2.0.2";
 
 	public static final String USER_SESSION = "userSession";
 
@@ -98,6 +98,7 @@ public class GeneralConstants {
 	public static final String SYSTEM_SETTING_SMTP_ACCOUNT_LOGIN = "system.setting.smtp.account.login";
 	public static final String SYSTEM_SETTING_SMTP_ACCOUNT_PASSWORD = "system.setting.smtp.account.password";
 	public static final String SYSTEM_SETTING_EMAIL_TO = "system.setting.email.to";
+	public static final String SYSTEM_SETTING_PRINTER_SETTING = "system.setting.printer.receipt.setting";
 
 	public static final String SYSTEM_PROPERTY_MYSQL_LOCATION_EXE = "config.mysql.location.exe";
 	public static final String SYSTEM_PROPERTY_DB_URL = "config.db.url";

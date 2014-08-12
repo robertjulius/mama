@@ -1,6 +1,7 @@
 package com.ganesha.prepaid.facade;
 
 import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -59,8 +60,9 @@ public class PrepaidSaleFacade {
 		saleDetail.setItemName(itemName);
 		saleDetail.setQuantity(quantity);
 		saleDetail.setUnit(unit);
-		saleDetail.setPricePerUnit(price.divide(BigDecimal.valueOf(saleDetail
-				.getQuantity())));
+		saleDetail.setPricePerUnit(price.divide(
+				BigDecimal.valueOf(saleDetail.getQuantity()), 10,
+				RoundingMode.HALF_UP));
 		saleDetail.setDiscountPercent(BigDecimal.valueOf(0));
 		saleDetail.setTotalAmount(price);
 

@@ -13,7 +13,6 @@ import java.util.List;
 import java.util.Map;
 
 import javax.swing.ButtonGroup;
-import javax.swing.DefaultComboBoxModel;
 import javax.swing.JScrollPane;
 
 import net.miginfocom.swing.MigLayout;
@@ -24,7 +23,6 @@ import com.ganesha.core.exception.AppException;
 import com.ganesha.coreapps.constants.Enums.ActionType;
 import com.ganesha.desktop.component.ComboBoxObject;
 import com.ganesha.desktop.component.XJButton;
-import com.ganesha.desktop.component.XJComboBox;
 import com.ganesha.desktop.component.XJLabel;
 import com.ganesha.desktop.component.XJPanel;
 import com.ganesha.desktop.component.XJRadioButton;
@@ -45,7 +43,6 @@ import com.ganesha.prepaid.model.Provider;
 
 public class MultiMapListDialog extends XJTableDialog {
 	private static final long serialVersionUID = 1452286313727721700L;
-	private XJComboBox cmbProvider;
 	private XJTextField txtName;
 	private XJTable table;
 
@@ -75,7 +72,7 @@ public class MultiMapListDialog extends XJTableDialog {
 	public MultiMapListDialog(Window parent) {
 		super(parent);
 
-		setTitle("Master Tipe Voucher");
+		setTitle("Master Multi");
 		setPermissionCode(PermissionConstants.VOUCHER_TYPE_LIST);
 		getContentPane().setLayout(
 				new MigLayout("", "[500,grow]", "[][300,grow][]"));
@@ -92,10 +89,10 @@ public class MultiMapListDialog extends XJTableDialog {
 
 		XJPanel pnlFilter = new XJPanel();
 		getContentPane().add(pnlFilter, "cell 0 0,grow");
-		pnlFilter.setLayout(new MigLayout("", "[100][grow][]", "[][][grow]"));
+		pnlFilter.setLayout(new MigLayout("", "[100][grow][]", "[][grow]"));
 
 		XJLabel lblName = new XJLabel();
-		lblName.setText("Nama Voucher");
+		lblName.setText("Nama Multi");
 		pnlFilter.add(lblName, "cell 0 0");
 
 		txtName = new XJTextField();
@@ -113,30 +110,12 @@ public class MultiMapListDialog extends XJTableDialog {
 		pnlFilter.add(txtName, "cell 1 0 2 1,growx");
 		txtName.setColumns(10);
 
-		XJLabel lblProvider = new XJLabel();
-		lblProvider.setText("Provider");
-		pnlFilter.add(lblProvider, "cell 0 1");
-
-		cmbProvider = new XJComboBox();
-		cmbProvider.addItemListener(new ItemListener() {
-			@Override
-			public void itemStateChanged(ItemEvent e) {
-				try {
-					loadDataInThread();
-				} catch (Exception ex) {
-					ExceptionHandler.handleException(MultiMapListDialog.this,
-							ex);
-				}
-			}
-		});
-		pnlFilter.add(cmbProvider, "cell 1 1 2 1,growx");
-
 		XJPanel pnlRadioButton = new XJPanel();
-		pnlFilter.add(pnlRadioButton, "cell 1 2,grow");
+		pnlFilter.add(pnlRadioButton, "cell 1 1,grow");
 		pnlRadioButton.setLayout(new MigLayout("", "[]", "[][]"));
 
 		rdMultiMapAktif = new XJRadioButton();
-		rdMultiMapAktif.setText("Tipe Voucher Aktif");
+		rdMultiMapAktif.setText("Multi Aktif");
 		pnlRadioButton.add(rdMultiMapAktif, "cell 0 0");
 		rdMultiMapAktif.setSelected(true);
 		btnGroup.add(rdMultiMapAktif);
@@ -153,7 +132,7 @@ public class MultiMapListDialog extends XJTableDialog {
 				}
 			}
 		});
-		rdMultiMapTidakAktif.setText("Tipe Voucher Tidak Aktif");
+		rdMultiMapTidakAktif.setText("Multi Tidak Aktif");
 		pnlRadioButton.add(rdMultiMapTidakAktif, "cell 0 1");
 		btnGroup.add(rdMultiMapTidakAktif);
 
@@ -171,7 +150,7 @@ public class MultiMapListDialog extends XJTableDialog {
 		});
 		btnRefresh.setMnemonic('R');
 		btnRefresh.setText("<html><center>Refresh<br/>[Alt+R]</center></html>");
-		pnlFilter.add(btnRefresh, "cell 2 2,grow");
+		pnlFilter.add(btnRefresh, "cell 2 1,grow");
 
 		JScrollPane scrollPane = new JScrollPane(table);
 		getContentPane().add(scrollPane, "cell 0 1,grow");
@@ -199,7 +178,7 @@ public class MultiMapListDialog extends XJTableDialog {
 		panel.add(btnKeluar, "cell 0 0");
 		panel.add(btnTambah, "cell 1 0");
 		btnTambah
-				.setText("<html><center>Tambah Tipe Voucher Baru<br/>[F5]</center><html>");
+				.setText("<html><center>Tambah Multi Baru<br/>[F5]</center><html>");
 
 		btnDetail = new XJButton();
 		btnDetail.addActionListener(new ActionListener() {
@@ -274,8 +253,6 @@ public class MultiMapListDialog extends XJTableDialog {
 				comboBoxObjects.add(comboBoxObject);
 			}
 			comboBoxObjects.add(0, new ComboBoxObject(new Provider(), null));
-			cmbProvider.setModel(new DefaultComboBoxModel<ComboBoxObject>(
-					comboBoxObjects.toArray(new ComboBoxObject[] {})));
 		} finally {
 			session.close();
 		}
