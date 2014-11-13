@@ -103,13 +103,6 @@ public class ReceiptPrinter {
 		builder.append(alignCenter("*** TERIMA KASIH ***", LENGTH_PARAGRAPH))
 				.append(NEW_LINE);
 
-		builder.append(NEW_LINE);
-		builder.append(NEW_LINE);
-		builder.append(NEW_LINE);
-		builder.append(NEW_LINE);
-		builder.append(NEW_LINE);
-		builder.append(NEW_LINE);
-
 		return builder.toString();
 	}
 

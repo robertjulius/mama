@@ -113,7 +113,6 @@ public class PrinterSettingForm extends XJDialog {
 		getContentPane().add(scrollPane, "cell 0 1,grow");
 
 		txtReceipt = new JTextArea();
-		txtReceipt.setEditable(false);
 		txtReceipt.setFont(new Font("Courier New", Font.PLAIN, 11));
 		scrollPane.setViewportView(txtReceipt);
 

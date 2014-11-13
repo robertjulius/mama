@@ -18,7 +18,7 @@
 	<!-- ############ COMPILE ALL ############ -->
 	<target name="compile" depends="clean">
 		<mkdir dir="${compile-path}" />
-		<javac srcdir="${source-path1}" destdir="${compile-path}">
+		<javac srcdir="${source-path1}" destdir="${compile-path}" debug="true" >
 			<classpath>
 				<fileset dir="${lib-path}">
 					<include name="*" />

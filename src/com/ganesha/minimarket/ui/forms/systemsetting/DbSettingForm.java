@@ -175,10 +175,11 @@ public class DbSettingForm extends XJDialog {
 				.getProperty(GeneralConstants.SYSTEM_PROPERTY_DB_USERNAME));
 		txtMySqlPassword.setText(SystemSetting
 				.getProperty(GeneralConstants.SYSTEM_PROPERTY_DB_PASSWORD));
-		txtMySqlPassword.setText(SystemSetting
+		txtDbName.setText(SystemSetting
 				.getProperty(GeneralConstants.SYSTEM_PROPERTY_DB_SCHEMA));
-		txtMySqlPassword.setText(SystemSetting
-				.getProperty(GeneralConstants.SYSTEM_PROPERTY_MYSQL_LOCATION_EXE));
+		txtMySqlLocation
+				.setText(SystemSetting
+						.getProperty(GeneralConstants.SYSTEM_PROPERTY_MYSQL_LOCATION_EXE));
 		txtBackupLocation.setText((String) SystemSetting
 				.get(GeneralConstants.SYSTEM_SETTING_BACKUP_LOCATION));
 		txtBackupFileName.setText((String) SystemSetting

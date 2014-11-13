@@ -1,47 +1,48 @@
 package com.ganesha.minimarket.utils;
 
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.io.IOException;
+import java.awt.Graphics;
+import java.awt.Graphics2D;
+import java.awt.print.PageFormat;
+import java.awt.print.Printable;
+import java.awt.print.PrinterException;
+import java.awt.print.PrinterJob;
 
-import com.ganesha.core.SystemSetting;
 import com.ganesha.core.exception.AppException;
-import com.ganesha.core.utils.GeneralConstants;
 
 public class ReceiptPrinterUtils {
 
 	public static void openDrawer() throws AppException {
-
-		ReceiptPrinterSetting receiptPrinterSetting = (ReceiptPrinterSetting) SystemSetting
-				.get(GeneralConstants.SYSTEM_SETTING_PRINTER_SETTING);
-
-		FileOutputStream os = null;
-		try {
-			String port = receiptPrinterSetting.getPort();
-
-			int[] openDrawerCharaters = receiptPrinterSetting
-					.getOpenDrawerCharaters();
-
-			os = new FileOutputStream(port + ":");
-
-			for (int openDrawerCharater : openDrawerCharaters) {
-				os.write(openDrawerCharater);
+		Printable printable = new OpenDrawerPrintable();
+		PrinterJob job = PrinterJob.getPrinterJob();
+		job.setPrintable(printable);
+		boolean ok = job.printDialog();
+		if (ok) {
+			try {
+				job.print();
+			} catch (PrinterException e) {
+				throw new AppException(e);
 			}
+		}
+	}
 
-			os.flush();
+	private static class OpenDrawerPrintable implements Printable {
 
-		} catch (FileNotFoundException e) {
-			throw new AppException(e);
-		} catch (IOException e) {
-			throw new AppException(e);
-		} finally {
-			if (os != null) {
-				try {
-					os.close();
-				} catch (IOException e) {
-					throw new AppException(e);
-				}
+		@Override
+		public int print(Graphics graphics, PageFormat pageFormat, int pageIndex)
+				throws PrinterException {
+			return openDrawerOnly(graphics, pageFormat, pageIndex);
+		}
+
+		private int openDrawerOnly(Graphics g, PageFormat pf, int pageIndex) {
+			if (pageIndex > 0) {
+				return NO_SUCH_PAGE;
 			}
+			Graphics2D g2d = (Graphics2D) g;
+			double imageableX = pf.getImageableX();
+			double imageableY = pf.getImageableY();
+			g2d.translate(imageableX, imageableY);
+			g.drawString("", 0, 0);
+			return PAGE_EXISTS;
 		}
 	}
 }

@@ -166,7 +166,13 @@ public class XJTable extends JTable implements XComponentConstants {
 			int row = getSelectedRow();
 			int column = getSelectedColumn();
 
-			String initialValue = tableModel.getValueAt(row, column).toString();
+			boolean editable = tableModel.isXCellEditable(row, column);
+			if (!editable) {
+				return;
+			}
+
+			Object object = tableModel.getValueAt(row, column);
+			String initialValue = object == null ? null : object.toString();
 			String title = tableModel.getColumnName(column);
 			Container parent = getParent();
 			while (!(parent instanceof Window)) {
