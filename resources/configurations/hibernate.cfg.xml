@@ -6,7 +6,7 @@
 	<session-factory>
 		<property name="hibernate.bytecode.use_reflection_optimizer">false</property>
 		<property name="hibernate.connection.password">root</property>
-		<property name="hibernate.connection.url">jdbc:mysql://localhost:3306/minimarketkk</property>
+		<property name="hibernate.connection.url">jdbc:mysql://localhost:3306/miniket</property>
 		<property name="hibernate.connection.username">root</property>
 		<property name="hibernate.connection.isolation">2</property>
 		<property name="hibernate.dialect">org.hibernate.dialect.MySQLDialect</property>
@@ -33,6 +33,7 @@
 		<mapping class="com.ganesha.minimarket.model.Item" />
 		<mapping class="com.ganesha.minimarket.model.ItemGroup" />
 		<mapping class="com.ganesha.minimarket.model.ItemStock" />
+		<mapping class="com.ganesha.minimarket.model.ItemSellPrice" />
 		<mapping class="com.ganesha.minimarket.model.StockOpnameDetail" />
 		<mapping class="com.ganesha.minimarket.model.StockOpnameHeader" />
 		<mapping class="com.ganesha.minimarket.model.Supplier" />
@@ -54,5 +55,9 @@
 		<mapping class="com.ganesha.minimarket.model.SaleConstraintHeader" />
 		<mapping class="com.ganesha.minimarket.model.SaleConstraintDetail" />
 		<mapping class="com.ganesha.minimarket.model.SaleConstraintLog" />
+		<mapping class="com.ganesha.prepaid.model.Provider" />
+		<mapping class="com.ganesha.prepaid.model.Voucher" />
+		<mapping class="com.ganesha.prepaid.model.VoucherType" />
+		<mapping class="com.ganesha.prepaid.model.MultiMap" />
 	</session-factory>
 </hibernate-configuration>

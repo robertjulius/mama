@@ -1,0 +1,1 @@
+insert into `companies`(`ID`,`LAST_UPDATED_BY`,`LAST_UPDATED_TIMESTAMP`,`DELETED`,`DISABLED`,`ADDRESS`,`FAX`,`NAME`,`PHONE_1`,`PHONE_2`) values (1,0,'2014-01-01 18:43:02',0,0,'Muda Cell','','Muda Cell','',null);

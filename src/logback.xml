@@ -23,7 +23,9 @@
 	<logger name="application.window.button" level="DEBUG" />
 	 -->
 
+	<!-- <logger name="org.hibernate" level="DEBUG" /> -->
 	<logger name="org.hibernate.transaction" level="DEBUG" />
+	<logger name="org.hibernate.SQL" level="DEBUG" />
 
 	<root level="WARN">
 		<appender-ref ref="FILE" />

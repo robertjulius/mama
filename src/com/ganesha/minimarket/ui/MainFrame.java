@@ -54,6 +54,11 @@ import com.ganesha.minimarket.ui.forms.systemsetting.ReceiptPrinterStatusForm;
 import com.ganesha.minimarket.ui.forms.user.ChangePasswordForm;
 import com.ganesha.minimarket.ui.forms.user.UserListDialog;
 import com.ganesha.minimarket.utils.PermissionConstants;
+import com.ganesha.prepaid.ui.forms.MultiMapListDialog;
+import com.ganesha.prepaid.ui.forms.MultiSaleForm;
+import com.ganesha.prepaid.ui.forms.PrepaidSaleForm;
+import com.ganesha.prepaid.ui.forms.VoucherListDialog;
+import com.ganesha.prepaid.ui.forms.VoucherTypeListDialog;
 
 public class MainFrame extends XJFrame {
 	private static final long serialVersionUID = 5527217675003046133L;
@@ -69,7 +74,8 @@ public class MainFrame extends XJFrame {
 		getContentPane().setBackground(Color.BLACK);
 
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setTitle(Main.getCompany().getName() + " " + GeneralConstants.VERSION);
+		setTitle(GeneralConstants.APPLICATION_NAME + " "
+				+ GeneralConstants.VERSION);
 
 		JMenuBar menuBar = new JMenuBar();
 		setJMenuBar(menuBar);
@@ -363,6 +369,83 @@ public class MainFrame extends XJFrame {
 				}
 			}
 		});
+
+		XJMenu mnPrepaid = new XJMenu("Prepaid");
+		menuBar.add(mnPrepaid);
+
+		XJMenuItem mntmPenjualanPulsaIsiUlang = new XJMenuItem(
+				"Penjualan Voucher Pulsa", PermissionConstants.MN_PREPAID_SALE);
+		mntmPenjualanPulsaIsiUlang.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				try {
+					new PrepaidSaleForm(MainFrame.this).setVisible(true);
+				} catch (Exception ex) {
+					ExceptionHandler.handleException(MainFrame.this, ex);
+				}
+			}
+		});
+		mnPrepaid.add(mntmPenjualanPulsaIsiUlang);
+
+		XJMenuItem mntmPulsaMulti = new XJMenuItem("Penjualan Pulsa Multi",
+				PermissionConstants.MN_MULTI_SALE);
+		mntmPulsaMulti.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				try {
+					new MultiSaleForm(MainFrame.this).setVisible(true);
+				} catch (Exception ex) {
+					ExceptionHandler.handleException(MainFrame.this, ex);
+				}
+			}
+		});
+		mnPrepaid.add(mntmPulsaMulti);
+
+		XJMenu mnMaintenance = new XJMenu((String) null);
+		mnMaintenance.setText("Maintenance");
+		mnPrepaid.add(mnMaintenance);
+
+		XJMenuItem mntmTipeVoucher = new XJMenuItem("Tipe Voucher",
+				PermissionConstants.VOUCHER_TYPE_LIST);
+		mntmTipeVoucher.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				try {
+					new VoucherTypeListDialog(MainFrame.this).setVisible(true);
+				} catch (Exception ex) {
+					ExceptionHandler.handleException(MainFrame.this, ex);
+				}
+			}
+		});
+		mnMaintenance.add(mntmTipeVoucher);
+
+		XJMenuItem mntmVoucher = new XJMenuItem("Voucher",
+				PermissionConstants.VOUCHER_LIST);
+		mntmVoucher.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				try {
+					new VoucherListDialog(MainFrame.this).setVisible(true);
+				} catch (Exception ex) {
+					ExceptionHandler.handleException(MainFrame.this, ex);
+				}
+			}
+		});
+		mnMaintenance.add(mntmVoucher);
+
+		XJMenuItem mntmMulti = new XJMenuItem("Multi",
+				PermissionConstants.MULTI_LIST);
+		mntmMulti.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				try {
+					new MultiMapListDialog(MainFrame.this).setVisible(true);
+				} catch (Exception ex) {
+					ExceptionHandler.handleException(MainFrame.this, ex);
+				}
+			}
+		});
+		mnMaintenance.add(mntmMulti);
 
 		XJMenu mnBackOffice = new XJMenu("Back Office");
 		menuBar.add(mnBackOffice);

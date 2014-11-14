@@ -23,7 +23,6 @@ import javax.print.attribute.PrintRequestAttributeSet;
 import javax.print.attribute.standard.Copies;
 import javax.print.event.PrintJobAdapter;
 import javax.print.event.PrintJobEvent;
-import javax.swing.JButton;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 
@@ -42,11 +41,14 @@ import com.ganesha.desktop.component.XJComboBox;
 import com.ganesha.desktop.component.XJDialog;
 import com.ganesha.desktop.component.XJLabel;
 import com.ganesha.desktop.component.XJPanel;
+import com.ganesha.desktop.component.XJTextField;
 import com.ganesha.desktop.exeptions.ExceptionHandler;
 import com.ganesha.minimarket.Main;
 import com.ganesha.minimarket.utils.PermissionConstants;
 import com.ganesha.minimarket.utils.ReceiptPrinter;
 import com.ganesha.minimarket.utils.ReceiptPrinter.ItemBelanja;
+import com.ganesha.minimarket.utils.ReceiptPrinterSetting;
+import com.ganesha.minimarket.utils.ReceiptPrinterUtils;
 
 public class PrinterSettingForm extends XJDialog {
 
@@ -57,18 +59,26 @@ public class PrinterSettingForm extends XJDialog {
 	private JTextArea txtReceipt;
 	private XJButton btnBatal;
 	private XJComboBox cmbReceiptPrinter;
-	private JButton Print;
+	private XJButton btnTestPrint;
+	private XJLabel lblOpenDrawerChar;
+	private XJTextField txtOpenDrawerChar;
+	private XJLabel lblDelimiter;
+	private XJTextField txtDelimiter;
+	private XJLabel lblPort;
+	private XJTextField txtPort;
+	private XJButton btnTestOpenDrawer;
 
 	public PrinterSettingForm(Window parent) {
 		super(parent);
 		setTitle("Printer Setting");
 		setPermissionCode(PermissionConstants.SETTING_PRINTER_FORM);
-		getContentPane().setLayout(new MigLayout("", "[grow]", "[][450][][]"));
+		getContentPane().setLayout(
+				new MigLayout("", "[grow]", "[][350,baseline][][][]"));
 
 		pnlPrinter = new XJPanel();
 		pnlPrinter.setBorder(new XEtchedBorder());
 		getContentPane().add(pnlPrinter, "cell 0 0,grow");
-		pnlPrinter.setLayout(new MigLayout("", "[grow][300]", "[]"));
+		pnlPrinter.setLayout(new MigLayout("", "[grow][300,grow]", "[][][][]"));
 
 		XJLabel lblReceiptPrinter = new XJLabel();
 		pnlPrinter.add(lblReceiptPrinter, "cell 0 0,alignx left");
@@ -77,16 +87,38 @@ public class PrinterSettingForm extends XJDialog {
 		cmbReceiptPrinter = new XJComboBox(getReceiptPrinterComboBoxList());
 		pnlPrinter.add(cmbReceiptPrinter, "cell 1 0,growx");
 
+		lblOpenDrawerChar = new XJLabel();
+		lblOpenDrawerChar.setText("Open Drawer Char");
+		pnlPrinter.add(lblOpenDrawerChar, "cell 0 1");
+
+		txtOpenDrawerChar = new XJTextField();
+		pnlPrinter.add(txtOpenDrawerChar, "cell 1 1,growx");
+
+		lblDelimiter = new XJLabel();
+		lblDelimiter.setText("Delimiter");
+		pnlPrinter.add(lblDelimiter, "cell 0 2");
+
+		txtDelimiter = new XJTextField();
+		txtDelimiter.setColumns(2);
+		pnlPrinter.add(txtDelimiter, "cell 1 2");
+
+		lblPort = new XJLabel();
+		lblPort.setText("Port");
+		pnlPrinter.add(lblPort, "cell 0 3");
+
+		txtPort = new XJTextField();
+		pnlPrinter.add(txtPort, "cell 1 3,growx");
+
 		JScrollPane scrollPane = new JScrollPane();
 		getContentPane().add(scrollPane, "cell 0 1,grow");
 
 		txtReceipt = new JTextArea();
-		txtReceipt.setEditable(false);
 		txtReceipt.setFont(new Font("Courier New", Font.PLAIN, 11));
 		scrollPane.setViewportView(txtReceipt);
 
-		Print = new JButton("Test Print");
-		Print.addActionListener(new ActionListener() {
+		btnTestPrint = new XJButton("Test btnPrint");
+		btnTestPrint.setText("Test Print");
+		btnTestPrint.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				try {
@@ -97,11 +129,27 @@ public class PrinterSettingForm extends XJDialog {
 				}
 			}
 		});
-		Print.setMnemonic('P');
-		getContentPane().add(Print, "cell 0 2,alignx right");
+		btnTestPrint.setMnemonic('P');
+		getContentPane().add(btnTestPrint, "cell 0 2,alignx right");
+
+		btnTestOpenDrawer = new XJButton();
+		btnTestOpenDrawer.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				try {
+					save();
+					ReceiptPrinterUtils.openDrawer();
+				} catch (Exception ex) {
+					ExceptionHandler.handleException(PrinterSettingForm.this,
+							ex);
+				}
+			}
+		});
+		btnTestOpenDrawer.setText("Test Open Drawer");
+		getContentPane().add(btnTestOpenDrawer, "cell 0 3,alignx right");
 
 		XJPanel pnlButton = new XJPanel();
-		getContentPane().add(pnlButton, "cell 0 3,alignx center,growy");
+		getContentPane().add(pnlButton, "cell 0 4,alignx center,growy");
 		pnlButton.setLayout(new MigLayout("", "[][]", "[]"));
 
 		btnSimpan = new XJButton();
@@ -143,7 +191,62 @@ public class PrinterSettingForm extends XJDialog {
 	public void initForm() throws AppException {
 		String selectedItem = (String) SystemSetting
 				.get(GeneralConstants.SYSTEM_SETTING_PRINTER_RECEIPT);
-		cmbReceiptPrinter.setSelectedItem(selectedItem);
+		if (selectedItem != null) {
+			cmbReceiptPrinter.setSelectedItem(selectedItem);
+		}
+
+		ReceiptPrinterSetting receiptPrinterSetting = (ReceiptPrinterSetting) SystemSetting
+				.get(GeneralConstants.SYSTEM_SETTING_PRINTER_SETTING);
+
+		if (receiptPrinterSetting == null) {
+			receiptPrinterSetting = new ReceiptPrinterSetting();
+		}
+
+		if (receiptPrinterSetting.getAutoCutCharacters() == null) {
+			receiptPrinterSetting.setAutoCutCharacters(new int[] { 27, 112, 48,
+					25, 250 });
+		}
+
+		if (receiptPrinterSetting.getOpenDrawerCharaters() == null) {
+			receiptPrinterSetting.setOpenDrawerCharaters(new int[] { 27, 112,
+					48, 25, 250 });
+		}
+
+		if (receiptPrinterSetting.getDelimiter() == 0) {
+			receiptPrinterSetting.setDelimiter(',');
+		}
+
+		if (receiptPrinterSetting.getPort() == null) {
+			receiptPrinterSetting.setPort("LPT1");
+		}
+
+		String openDrawerChars = "";
+		for (int openDrawerCharater : receiptPrinterSetting
+				.getOpenDrawerCharaters()) {
+			openDrawerChars += receiptPrinterSetting.getDelimiter() + ""
+					+ +openDrawerCharater;
+		}
+		openDrawerChars = openDrawerChars.replaceFirst(""
+				+ receiptPrinterSetting.getDelimiter(), "");
+		txtOpenDrawerChar.setText(openDrawerChars);
+
+		String autoCutChars = "";
+		for (int autoCutCharacter : receiptPrinterSetting
+				.getAutoCutCharacters()) {
+			autoCutChars += receiptPrinterSetting.getDelimiter() + ""
+					+ autoCutCharacter;
+		}
+		autoCutChars = autoCutChars.replaceFirst(
+				"" + receiptPrinterSetting.getDelimiter(), "");
+		/*
+		 * txtAutoCutChar.setText(openAutoCutChars);
+		 */
+
+		txtDelimiter.setText("" + receiptPrinterSetting.getDelimiter());
+		txtPort.setText(receiptPrinterSetting.getPort());
+
+		SystemSetting.save(GeneralConstants.SYSTEM_SETTING_PRINTER_SETTING,
+				receiptPrinterSetting);
 
 		initReceiptText();
 	}

@@ -39,7 +39,6 @@ public class DbSettingForm extends XJDialog {
 	private XJTextField txtMySqlLocation;
 	private XJLabel lblBackupLocation;
 	private XJTextField txtBackupLocation;
-	private XJButton btnBrowseMySqlLocation;
 	private XJButton btnBrowseBackupLocation;
 	private XJLabel lblBackupFileName;
 	private XJTextField txtBackupFileName;
@@ -83,7 +82,7 @@ public class DbSettingForm extends XJDialog {
 		pnlBackupDB = new XJPanel();
 		pnlBackupDB.setBorder(new XEtchedBorder());
 		getContentPane().add(pnlBackupDB, "cell 0 1,grow");
-		pnlBackupDB.setLayout(new MigLayout("", "[grow][300]", "[][][][][][]"));
+		pnlBackupDB.setLayout(new MigLayout("", "[grow][300]", "[][][][][]"));
 
 		lblMysqlLocation = new XJLabel();
 		lblMysqlLocation.setText("MySQL Location");
@@ -105,23 +104,13 @@ public class DbSettingForm extends XJDialog {
 			}
 		});
 
-		btnBrowseMySqlLocation = new XJButton();
-		btnBrowseMySqlLocation.addActionListener(new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				browseMySqlLocation();
-			}
-		});
-		btnBrowseMySqlLocation.setText("Browse");
-		pnlBackupDB.add(btnBrowseMySqlLocation, "cell 1 1,alignx right");
-
 		lblBackupLocation = new XJLabel();
 		lblBackupLocation.setText("Backup To Location");
-		pnlBackupDB.add(lblBackupLocation, "cell 0 2,alignx trailing");
+		pnlBackupDB.add(lblBackupLocation, "cell 0 1,alignx trailing");
 
 		txtBackupLocation = new XJTextField();
 		txtBackupLocation.setEditable(false);
-		pnlBackupDB.add(txtBackupLocation, "cell 1 2,growx");
+		pnlBackupDB.add(txtBackupLocation, "cell 1 1,growx");
 
 		btnBrowseBackupLocation = new XJButton();
 		btnBrowseBackupLocation.addActionListener(new ActionListener() {
@@ -131,16 +120,16 @@ public class DbSettingForm extends XJDialog {
 			}
 		});
 		btnBrowseBackupLocation.setText("Browse");
-		pnlBackupDB.add(btnBrowseBackupLocation, "cell 1 3,alignx right");
+		pnlBackupDB.add(btnBrowseBackupLocation, "cell 1 2,alignx right");
 
 		lblBackupFileName = new XJLabel();
 		lblBackupFileName.setText("Backup File Name");
-		pnlBackupDB.add(lblBackupFileName, "cell 0 4");
+		pnlBackupDB.add(lblBackupFileName, "cell 0 3");
 
 		txtBackupFileName = new XJTextField();
-		pnlBackupDB.add(txtBackupFileName, "cell 1 4,growx");
+		pnlBackupDB.add(txtBackupFileName, "cell 1 3,growx");
 		btnBackupDatabase.setText("Backup Database");
-		pnlBackupDB.add(btnBackupDatabase, "cell 1 5,alignx trailing");
+		pnlBackupDB.add(btnBackupDatabase, "cell 1 4,alignx trailing");
 
 		XJPanel pnlButton = new XJPanel();
 		getContentPane().add(pnlButton, "cell 0 2,alignx center,growy");
@@ -182,14 +171,15 @@ public class DbSettingForm extends XJDialog {
 	}
 
 	public void initForm() throws AppException {
-		txtMySqlUsername.setText((String) SystemSetting
-				.get(GeneralConstants.SYSTEM_SETTING_MYSQL_USERNAME));
-		txtMySqlPassword.setText((String) SystemSetting
-				.get(GeneralConstants.SYSTEM_SETTING_MYSQL_PASSWORD));
-		txtDbName.setText((String) SystemSetting
-				.get(GeneralConstants.SYSTEM_SETTING_DBNAME));
-		txtMySqlLocation.setText((String) SystemSetting
-				.get(GeneralConstants.SYSTEM_SETTING_MYSQL_LOCATION));
+		txtMySqlUsername.setText(SystemSetting
+				.getProperty(GeneralConstants.SYSTEM_PROPERTY_DB_USERNAME));
+		txtMySqlPassword.setText(SystemSetting
+				.getProperty(GeneralConstants.SYSTEM_PROPERTY_DB_PASSWORD));
+		txtDbName.setText(SystemSetting
+				.getProperty(GeneralConstants.SYSTEM_PROPERTY_DB_SCHEMA));
+		txtMySqlLocation
+				.setText(SystemSetting
+						.getProperty(GeneralConstants.SYSTEM_PROPERTY_MYSQL_LOCATION_EXE));
 		txtBackupLocation.setText((String) SystemSetting
 				.get(GeneralConstants.SYSTEM_SETTING_BACKUP_LOCATION));
 		txtBackupFileName.setText((String) SystemSetting
@@ -233,29 +223,7 @@ public class DbSettingForm extends XJDialog {
 		}
 	}
 
-	private void browseMySqlLocation() {
-		JFileChooser fileChooser = new JFileChooser();
-		if (!txtMySqlLocation.getText().trim().equals("")) {
-			fileChooser
-					.setCurrentDirectory(new File(txtMySqlLocation.getText()));
-		}
-		fileChooser.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
-		int returnVal = fileChooser.showOpenDialog(this);
-		if (returnVal == JFileChooser.APPROVE_OPTION) {
-			File file = fileChooser.getSelectedFile();
-			txtMySqlLocation.setText(file.getAbsolutePath());
-		}
-	}
-
 	private void save() throws UserException, AppException {
-		SystemSetting.save(GeneralConstants.SYSTEM_SETTING_MYSQL_USERNAME,
-				txtMySqlUsername.getText());
-		SystemSetting.save(GeneralConstants.SYSTEM_SETTING_MYSQL_PASSWORD,
-				new String(txtMySqlPassword.getPassword()));
-		SystemSetting.save(GeneralConstants.SYSTEM_SETTING_DBNAME,
-				txtDbName.getText());
-		SystemSetting.save(GeneralConstants.SYSTEM_SETTING_MYSQL_LOCATION,
-				txtMySqlLocation.getText());
 		SystemSetting.save(GeneralConstants.SYSTEM_SETTING_BACKUP_LOCATION,
 				txtBackupLocation.getText());
 		SystemSetting.save(GeneralConstants.SYSTEM_SETTING_BACKUP_FILENAME,

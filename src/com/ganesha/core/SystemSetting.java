@@ -11,19 +11,23 @@ import java.io.ObjectOutputStream;
 import java.io.OutputStream;
 import java.util.HashMap;
 import java.util.Iterator;
+import java.util.Properties;
 
-import com.ganesha.desktop.exeptions.ExceptionHandler;
 import com.ganesha.core.exception.AppException;
 import com.ganesha.core.utils.ResourceUtils;
+import com.ganesha.desktop.exeptions.ExceptionHandler;
 
 public class SystemSetting {
 
 	private static HashMap<String, Object> settings = new HashMap<String, Object>();
+	private static final Properties properties = new Properties();
 	private static final String FILE_PATH = "config";
+	private static final String FILE_PROPERTIES_PATH = "config.properties";
 
 	static {
 		try {
 			readSettingFromFile();
+			loadFromPropertiesFile();
 		} catch (AppException e) {
 			ExceptionHandler.handleException(null, e);
 		}
@@ -36,9 +40,37 @@ public class SystemSetting {
 		return settings.get(key);
 	}
 
+	public static String getProperty(String key) {
+		return (String) properties.get(key);
+	}
+
 	public static void save(String key, Object value) throws AppException {
 		settings.put(key, value);
 		saveSettingToFile();
+	}
+
+	private static void loadFromPropertiesFile() throws AppException {
+		InputStream inputStream = null;
+		try {
+			File configBase = ResourceUtils.getConfigBase();
+			File file = new File(configBase, FILE_PROPERTIES_PATH);
+
+			inputStream = new FileInputStream(file);
+			properties.load(inputStream);
+
+		} catch (FileNotFoundException e) {
+			throw new AppException(e);
+		} catch (IOException e) {
+			throw new AppException(e);
+		} finally {
+			if (inputStream != null) {
+				try {
+					inputStream.close();
+				} catch (IOException e) {
+					throw new AppException(e);
+				}
+			}
+		}
 	}
 
 	private static void readSettingFromFile() throws AppException {

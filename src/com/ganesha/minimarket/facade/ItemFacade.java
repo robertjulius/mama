@@ -4,14 +4,17 @@ import java.math.BigDecimal;
 import java.util.List;
 
 import org.hibernate.Criteria;
+import org.hibernate.SQLQuery;
 import org.hibernate.Session;
 import org.hibernate.criterion.Restrictions;
 
 import com.ganesha.core.exception.UserException;
 import com.ganesha.core.utils.CommonUtils;
 import com.ganesha.core.utils.DBUtils;
+import com.ganesha.hibernate.HqlParameter;
 import com.ganesha.minimarket.Main;
 import com.ganesha.minimarket.model.Item;
+import com.ganesha.minimarket.model.ItemSellPrice;
 import com.ganesha.minimarket.model.ItemStock;
 import com.ganesha.minimarket.model.PurchaseDetail;
 
@@ -30,7 +33,7 @@ public class ItemFacade {
 	}
 
 	public Item addNewItem(String code, String name, String barcode,
-			String unit, BigDecimal buyPrice, BigDecimal sellPrice,
+			String unit, BigDecimal buyPrice, List<ItemSellPrice> sellPrices,
 			int minimumStock, boolean disabled, boolean deleted, Session session)
 			throws UserException {
 
@@ -51,7 +54,7 @@ public class ItemFacade {
 					+ item.getCode() + "] " + item.getName());
 		}
 
-		return insertIntoItem(code, name, barcode, unit, buyPrice, sellPrice,
+		return insertIntoItem(code, name, barcode, unit, buyPrice, sellPrices,
 				minimumStock, disabled, deleted, session);
 	}
 
@@ -103,6 +106,28 @@ public class ItemFacade {
 	public Item getDetail(int id, Session session) {
 		Item item = (Item) session.get(Item.class, id);
 		return item;
+	}
+
+	public BigDecimal getFirstSellPrice(Item item) {
+		BigDecimal sellPrice = null;
+		if (item.getSellPrices().size() > 0) {
+			sellPrice = item.getSellPrices().get(0).getPrimaryKey()
+					.getSellPrice();
+		}
+		return sellPrice;
+	}
+
+	public BigDecimal getHigherBuyPrice(Item item) {
+		BigDecimal higherBuyPrice = BigDecimal.valueOf(0);
+		List<ItemStock> itemStocks = item.getItemStocks();
+		for (ItemStock itemStock : itemStocks) {
+			if (itemStock.getPurchaseDetail().getPricePerUnit()
+					.compareTo(higherBuyPrice) > 0) {
+				higherBuyPrice = itemStock.getPurchaseDetail()
+						.getPricePerUnit();
+			}
+		}
+		return higherBuyPrice;
 	}
 
 	public BigDecimal getLastBuyPrice(Item item) {
@@ -160,13 +185,12 @@ public class ItemFacade {
 	}
 
 	public Item updateExistingItem(int id, String name, String barcode,
-			String unit, BigDecimal buyPrice, BigDecimal sellPrice,
+			String unit, BigDecimal buyPrice, List<ItemSellPrice> sellPrices,
 			int minimumStock, boolean disabled, boolean deleted, Session session)
 			throws UserException {
 
 		Item item = getDetail(id, session);
 		item.setUnit(unit);
-		item.setSellPrice(sellPrice);
 		item.setMinimumStock(minimumStock);
 		item.setDisabled(disabled);
 		item.setDeleted(deleted);
@@ -197,11 +221,30 @@ public class ItemFacade {
 		item.setLastUpdatedTimestamp(CommonUtils.getCurrentTimestamp());
 
 		session.saveOrUpdate(item);
+		deleteInsertSalePrices(sellPrices, item.getId(), session);
+
 		return item;
 	}
 
+	private void deleteInsertSalePrices(List<ItemSellPrice> sellPrices,
+			Integer itemId, Session session) {
+		deleteItemSalePricesByItemId(itemId, session);
+		insertIntoItemSalePrices(itemId, sellPrices, session);
+	}
+
+	private void deleteItemSalePricesByItemId(Integer itemId, Session session) {
+		String sql = "DELETE FROM item_sell_prices WHERE item_id = :itemId";
+		SQLQuery query = session.createSQLQuery(sql);
+
+		HqlParameter parameter = new HqlParameter(query);
+		parameter.put("itemId", itemId);
+		parameter.validate();
+
+		query.executeUpdate();
+	}
+
 	private Item insertIntoItem(String code, String name, String barcode,
-			String unit, BigDecimal buyPrice, BigDecimal sellPrice,
+			String unit, BigDecimal buyPrice, List<ItemSellPrice> sellPrices,
 			int minimumStock, boolean disabled, boolean deleted, Session session) {
 
 		Item item = new Item();
@@ -210,7 +253,6 @@ public class ItemFacade {
 		item.setName(name);
 		item.setBarcode(barcode);
 		item.setUnit(unit);
-		item.setSellPrice(sellPrice);
 		item.setMinimumStock(minimumStock);
 		item.setDisabled(disabled);
 		item.setDeleted(deleted);
@@ -218,7 +260,27 @@ public class ItemFacade {
 		item.setLastUpdatedTimestamp(CommonUtils.getCurrentTimestamp());
 
 		session.saveOrUpdate(item);
+		deleteInsertSalePrices(sellPrices, item.getId(), session);
+
 		return item;
+	}
+
+	private void insertIntoItemSalePrices(Integer itemId,
+			List<ItemSellPrice> sellPrices, Session session) {
+
+		for (ItemSellPrice sellPrice : sellPrices) {
+			String sql = "INSERT INTO item_sell_prices (item_id, sell_price, sequence) VALUES (:itemId, :sellPrice, :sequence)";
+			SQLQuery query = session.createSQLQuery(sql);
+
+			HqlParameter parameter = new HqlParameter(query);
+			parameter.put("itemId", itemId);
+			parameter
+					.put("sellPrice", sellPrice.getPrimaryKey().getSellPrice());
+			parameter.put("sequence", sellPrice.getSequence());
+			parameter.validate();
+
+			query.executeUpdate();
+		}
 	}
 
 	private void reAdjustStockIncrease(Item item, int greaterStock,

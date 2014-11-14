@@ -15,7 +15,8 @@ import com.ganesha.minimarket.constants.Enums.TransactionType;
 
 public class GeneralConstants {
 
-	public static final String VERSION = "v1.4.6";
+	public static final String APPLICATION_NAME = "Miniket";
+	public static final String VERSION = "v2.0.4";
 
 	public static final String USER_SESSION = "userSession";
 
@@ -88,10 +89,6 @@ public class GeneralConstants {
 
 	public static final String SYSTEM_SETTING_PRINTER_RECEIPT = "system.setting.printer.receipt";
 	public static final String SYSTEM_SETTING_PRINTER_RECEIPT_STATUS = "system.setting.printer.receipt.status";
-	public static final String SYSTEM_SETTING_MYSQL_USERNAME = "system.setting.mysql.username";
-	public static final String SYSTEM_SETTING_MYSQL_PASSWORD = "system.setting.mysql.password";
-	public static final String SYSTEM_SETTING_DBNAME = "system.setting.dbname";
-	public static final String SYSTEM_SETTING_MYSQL_LOCATION = "system.setting.mysql.location";
 	public static final String SYSTEM_SETTING_BACKUP_LOCATION = "system.setting.backup.location";
 	public static final String SYSTEM_SETTING_BACKUP_FILENAME = "system.setting.backup.filename";
 	public static final String SYSTEM_SETTING_SMTP_HOST = "system.setting.smtp.host";
@@ -101,4 +98,11 @@ public class GeneralConstants {
 	public static final String SYSTEM_SETTING_SMTP_ACCOUNT_LOGIN = "system.setting.smtp.account.login";
 	public static final String SYSTEM_SETTING_SMTP_ACCOUNT_PASSWORD = "system.setting.smtp.account.password";
 	public static final String SYSTEM_SETTING_EMAIL_TO = "system.setting.email.to";
+	public static final String SYSTEM_SETTING_PRINTER_SETTING = "system.setting.printer.receipt.setting";
+
+	public static final String SYSTEM_PROPERTY_MYSQL_LOCATION_EXE = "config.mysql.location.exe";
+	public static final String SYSTEM_PROPERTY_DB_URL = "config.db.url";
+	public static final String SYSTEM_PROPERTY_DB_SCHEMA = "config.db.schema";
+	public static final String SYSTEM_PROPERTY_DB_USERNAME = "config.db.username";
+	public static final String SYSTEM_PROPERTY_DB_PASSWORD = "config.db.password";
 }

@@ -15,6 +15,7 @@ import javax.swing.InputMap;
 import javax.swing.JComponent;
 import javax.swing.JTable;
 import javax.swing.KeyStroke;
+import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.TableCellEditor;
 import javax.swing.table.TableCellRenderer;
 
@@ -165,15 +166,25 @@ public class XJTable extends JTable implements XComponentConstants {
 			int row = getSelectedRow();
 			int column = getSelectedColumn();
 
-			String initialValue = tableModel.getValueAt(row, column).toString();
+			boolean editable = tableModel.isXCellEditable(row, column);
+			if (!editable) {
+				return;
+			}
+
+			Object object = tableModel.getValueAt(row, column);
+			String initialValue = object == null ? null : object.toString();
 			String title = tableModel.getColumnName(column);
 			Container parent = getParent();
 			while (!(parent instanceof Window)) {
 				parent = parent.getParent();
 			}
 
+			DefaultTableCellRenderer cellRenderer = (DefaultTableCellRenderer) getCellRenderer(
+					row, column);
+			int horizontalAlignment = cellRenderer.getHorizontalAlignment();
+
 			XCellValueEditor valueEditor = new XCellValueEditor(
-					(Window) parent, title, initialValue);
+					(Window) parent, title, initialValue, horizontalAlignment);
 			valueEditor.setVisible(true);
 
 			int returnValue = valueEditor.getReturnValue();

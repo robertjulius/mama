@@ -19,7 +19,8 @@ public class XCellValueEditor extends XJDialog {
 	private XJLabel lblCellName;
 	private XJTextField txtCellValue;
 
-	public XCellValueEditor(Window parent, String title, String initialValue) {
+	public XCellValueEditor(Window parent, String title, String initialValue,
+			int horizontalAlignment) {
 		super(parent);
 		setTitle(title);
 		setPermissionRequired(false);
@@ -30,6 +31,7 @@ public class XCellValueEditor extends XJDialog {
 		lblCellName.setText(title);
 
 		txtCellValue = new XJTextField();
+		txtCellValue.setHorizontalAlignment(horizontalAlignment);
 		getContentPane().add(txtCellValue, "cell 0 1,growx");
 		txtCellValue.setText(initialValue);
 

@@ -31,7 +31,6 @@ import com.ganesha.desktop.component.XJPasswordField;
 import com.ganesha.desktop.component.XJTextField;
 import com.ganesha.desktop.exeptions.ExceptionHandler;
 import com.ganesha.hibernate.HibernateUtils;
-import com.ganesha.minimarket.Main;
 import com.ganesha.minimarket.facade.LoginFacade;
 import com.ganesha.minimarket.ui.MainFrame;
 
@@ -45,7 +44,8 @@ public class LoginForm extends XJFrame {
 
 	public LoginForm() {
 
-		setTitle(Main.getCompany().getName() + " " + GeneralConstants.VERSION);
+		setTitle(GeneralConstants.APPLICATION_NAME + " "
+				+ GeneralConstants.VERSION);
 
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		getContentPane().setLayout(

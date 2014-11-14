@@ -56,7 +56,13 @@ public class RoleFacade {
 	}
 
 	public List<Role> getAll(Session session) {
-		Query query = session.createQuery("from Role");
+		Query query = session
+				.createQuery("from Role where disabled = :disabled AND deleted = :deleted");
+
+		HqlParameter parameter = new HqlParameter(query);
+		parameter.put("disabled", false);
+		parameter.put("deleted", false);
+		parameter.validate();
 
 		@SuppressWarnings("unchecked")
 		List<Role> roles = query.list();

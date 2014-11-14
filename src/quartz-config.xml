@@ -17,7 +17,7 @@
 				<name>dummyTrigger</name>
 				<job-name>PostingSaleConstraint</job-name>
 				<job-group>PostingGroup</job-group>
-				<cron-expression>0 0/1 * * * ?</cron-expression>
+				<cron-expression>0 0/30 * * * ?</cron-expression>
 			</cron>
 		</trigger>
 	</schedule>
