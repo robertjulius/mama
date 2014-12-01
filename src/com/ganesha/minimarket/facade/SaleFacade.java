@@ -41,6 +41,7 @@ import com.ganesha.minimarket.model.SaleDetail;
 import com.ganesha.minimarket.model.SaleHeader;
 import com.ganesha.minimarket.utils.ReceiptPrinter;
 import com.ganesha.minimarket.utils.ReceiptPrinter.ItemBelanja;
+import com.ganesha.minimarket.utils.ReceiptPrinterUtils;
 
 public class SaleFacade implements TransactionFacade {
 
@@ -117,6 +118,7 @@ public class SaleFacade implements TransactionFacade {
 					printJob.print(doc, pras);
 
 					pjw.waitForDone();
+					ReceiptPrinterUtils.openDrawer();
 				}
 			}
 		} catch (AppException e) {
