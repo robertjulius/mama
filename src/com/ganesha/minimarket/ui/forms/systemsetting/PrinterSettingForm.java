@@ -332,6 +332,7 @@ public class PrinterSettingForm extends XJDialog {
 
 					pjw.waitForDone();
 					ReceiptPrinterUtils.openDrawer();
+					break;
 				}
 			}
 		} catch (PrintException e) {

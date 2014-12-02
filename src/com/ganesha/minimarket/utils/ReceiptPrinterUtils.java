@@ -7,21 +7,31 @@ import java.awt.print.Printable;
 import java.awt.print.PrinterException;
 import java.awt.print.PrinterJob;
 
+import javax.print.PrintService;
+
+import com.ganesha.core.SystemSetting;
 import com.ganesha.core.exception.AppException;
+import com.ganesha.core.utils.GeneralConstants;
 
 public class ReceiptPrinterUtils {
 
 	public static void openDrawer() throws AppException {
-		Printable printable = new OpenDrawerPrintable();
-		PrinterJob job = PrinterJob.getPrinterJob();
-		job.setPrintable(printable);
-		boolean ok = job.printDialog();
-		if (ok) {
-			try {
-				job.print();
-			} catch (PrinterException e) {
-				throw new AppException(e);
+		String printerName = (String) SystemSetting
+				.get(GeneralConstants.SYSTEM_SETTING_PRINTER_RECEIPT);
+		PrintService[] services = PrinterJob.lookupPrintServices();
+		try {
+			for (PrintService printService : services) {
+				if (printService.getName().equals(printerName)) {
+					Printable printable = new OpenDrawerPrintable();
+					PrinterJob job = PrinterJob.getPrinterJob();
+					job.setPrintable(printable);
+					job.setPrintService(printService);
+					job.print();
+					break;
+				}
 			}
+		} catch (PrinterException e) {
+			throw new AppException(e);
 		}
 	}
 

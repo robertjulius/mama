@@ -119,6 +119,7 @@ public class SaleFacade implements TransactionFacade {
 
 					pjw.waitForDone();
 					ReceiptPrinterUtils.openDrawer();
+					break;
 				}
 			}
 		} catch (AppException e) {
