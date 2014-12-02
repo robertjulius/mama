@@ -135,6 +135,9 @@ public class PermissionConstants {
 	public static final String MN_SETTING_RECEIPTPRINTERSTATUS = "/setting/receiptprinterstatus";
 	public static final String SETTING_RECEIPTPRINTERSTATUS = "ReceiptPrinterStatus";
 
+	// Setting - Open Drawer
+	public static final String MN_SETTING_OPENDRAWER = "/setting/opendrawer";
+
 	// Prepaid - Maintenance - Voucher Type
 	public static final String MN_PREPAID_MAINTENANCE_VOUCHERTYPE = "/prepaid/maintenance/vouchertype";
 	public static final String VOUCHER_TYPE_LIST = "VoucherTypeList";

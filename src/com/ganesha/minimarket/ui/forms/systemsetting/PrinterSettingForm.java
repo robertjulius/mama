@@ -321,6 +321,8 @@ public class PrinterSettingForm extends XJDialog {
 			is = new ByteArrayInputStream(txtReceipt.getText().getBytes());
 			for (PrintService printService : services) {
 				if (printService.getName().equals(printerName)) {
+					ReceiptPrinterUtils.openDrawer();
+
 					DocFlavor flavor = DocFlavor.STRING.INPUT_STREAM.AUTOSENSE;
 					Doc doc = new SimpleDoc(is, flavor, null);
 					DocPrintJob printJob = printService.createPrintJob();
@@ -331,7 +333,6 @@ public class PrinterSettingForm extends XJDialog {
 					printJob.print(doc, pras);
 
 					pjw.waitForDone();
-					ReceiptPrinterUtils.openDrawer();
 					break;
 				}
 			}

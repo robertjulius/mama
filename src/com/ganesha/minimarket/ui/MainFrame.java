@@ -54,6 +54,7 @@ import com.ganesha.minimarket.ui.forms.systemsetting.ReceiptPrinterStatusForm;
 import com.ganesha.minimarket.ui.forms.user.ChangePasswordForm;
 import com.ganesha.minimarket.ui.forms.user.UserListDialog;
 import com.ganesha.minimarket.utils.PermissionConstants;
+import com.ganesha.minimarket.utils.ReceiptPrinterUtils;
 import com.ganesha.prepaid.ui.forms.MultiMapListDialog;
 import com.ganesha.prepaid.ui.forms.MultiSaleForm;
 import com.ganesha.prepaid.ui.forms.PrepaidSaleForm;
@@ -69,6 +70,12 @@ public class MainFrame extends XJFrame {
 	private XJPanel pnlCompanyInfo;
 	private XJLabel lblTanggal;
 	private XJLabel lblJam;
+	private XJMenuItem mntmPenjualanPulsaIsiUlang;
+	private XJMenuItem mntmPulsaMulti;
+	private XJMenuItem mntmOpenDrawer;
+	private XJButton btnPrepaidRegular;
+	private XJButton btnPrepaidMulti;
+	private XJButton btnOpenDrawer;
 
 	public MainFrame() {
 		getContentPane().setBackground(Color.BLACK);
@@ -373,8 +380,8 @@ public class MainFrame extends XJFrame {
 		XJMenu mnPrepaid = new XJMenu("Prepaid");
 		menuBar.add(mnPrepaid);
 
-		XJMenuItem mntmPenjualanPulsaIsiUlang = new XJMenuItem(
-				"Penjualan Voucher Pulsa", PermissionConstants.MN_PREPAID_SALE);
+		mntmPenjualanPulsaIsiUlang = new XJMenuItem("Penjualan Voucher Pulsa",
+				PermissionConstants.MN_PREPAID_SALE);
 		mntmPenjualanPulsaIsiUlang.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
@@ -387,7 +394,7 @@ public class MainFrame extends XJFrame {
 		});
 		mnPrepaid.add(mntmPenjualanPulsaIsiUlang);
 
-		XJMenuItem mntmPulsaMulti = new XJMenuItem("Penjualan Pulsa Multi",
+		mntmPulsaMulti = new XJMenuItem("Penjualan Pulsa Multi",
 				PermissionConstants.MN_MULTI_SALE);
 		mntmPulsaMulti.addActionListener(new ActionListener() {
 			@Override
@@ -627,10 +634,25 @@ public class MainFrame extends XJFrame {
 		});
 		mnSetting.add(mntmReceiptPrinterStatus);
 
+		mntmOpenDrawer = new XJMenuItem("Open Drawer",
+				PermissionConstants.MN_SETTING_OPENDRAWER);
+		mntmOpenDrawer.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				try {
+					ReceiptPrinterUtils.openDrawer();
+				} catch (Exception ex) {
+					ExceptionHandler.handleException(MainFrame.this, ex);
+				}
+			}
+		});
+		mnSetting.add(mntmOpenDrawer);
+
 		setExtendedState(JFrame.MAXIMIZED_BOTH);
 		pack();
 		setLocationRelativeTo(null);
-		getContentPane().setLayout(new MigLayout("", "[grow]", "[][][][]"));
+		getContentPane().setLayout(
+				new MigLayout("", "[grow]", "[][][][grow][]"));
 
 		XJPanel pnlRunningClock = new XJPanel();
 		pnlRunningClock.setOpaque(false);
@@ -721,18 +743,54 @@ public class MainFrame extends XJFrame {
 
 		pnlButton = new XJPanel();
 		pnlButton.setOpaque(false);
-		getContentPane().add(pnlButton, "cell 0 3,growx");
-		pnlButton.setLayout(new MigLayout("", "[grow][][grow]", "[]"));
+		getContentPane().add(pnlButton, "cell 0 4,growx");
+		pnlButton.setLayout(new MigLayout("",
+				"[grow][150px][150px][150px][150px][150px][grow]", "[]"));
 
 		btnSaleTransaction = new XJButton(
 				"<html><center>Transaksi Penjualan<br/>[F5]</center></html>");
+		btnSaleTransaction
+				.setText("<html><center>Penjualan<br/><br/>[F5]</center></html>");
 		btnSaleTransaction.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				mntmPenjualan.doClick();
 			}
 		});
-		pnlButton.add(btnSaleTransaction, "cell 1 0");
+		pnlButton.add(btnSaleTransaction, "cell 1 0,growx");
+
+		btnPrepaidRegular = new XJButton();
+		btnPrepaidRegular.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				mntmPenjualanPulsaIsiUlang.doClick();
+			}
+		});
+		btnPrepaidRegular
+				.setText("<html><center>Voucher Pulsa<br/>(Reguler)<br/>[F6]</center></html>");
+		pnlButton.add(btnPrepaidRegular, "cell 2 0,growx");
+
+		btnPrepaidMulti = new XJButton();
+		btnPrepaidMulti.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				mntmPulsaMulti.doClick();
+			}
+		});
+		btnPrepaidMulti
+				.setText("<html><center>Voucher Pulsa<br/>(Multi)<br/>[F7]</center></html>");
+		pnlButton.add(btnPrepaidMulti, "cell 3 0,growx");
+
+		btnOpenDrawer = new XJButton();
+		btnOpenDrawer.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				mntmOpenDrawer.doClick();
+			}
+		});
+		btnOpenDrawer
+				.setText("<html><center>Open Drawer<br/><br/>[F10]</center></html>");
+		pnlButton.add(btnOpenDrawer, "cell 5 0");
 
 		runClock();
 	}
@@ -742,6 +800,15 @@ public class MainFrame extends XJFrame {
 		switch (keyCode) {
 		case KeyEvent.VK_F5:
 			btnSaleTransaction.doClick();
+			break;
+		case KeyEvent.VK_F6:
+			btnPrepaidRegular.doClick();
+			break;
+		case KeyEvent.VK_F7:
+			btnPrepaidMulti.doClick();
+			break;
+		case KeyEvent.VK_F10:
+			btnOpenDrawer.doClick();
 			break;
 		default:
 			break;

@@ -256,6 +256,11 @@ public class PermissionConsistencyChecker {
 				PermissionConstants.SETTING_RECEIPTPRINTERSTATUS,
 				"Receipt Printer Status", 651));
 
+		// Setting - Open Drawer
+		permissions.add(createPermission(
+				PermissionConstants.MN_SETTING_OPENDRAWER,
+				"/Setting/Open Drawer", 660));
+
 		// Prepaid - Sale
 		permissions.add(createPermission(PermissionConstants.MN_PREPAID_SALE,
 				"/Prepaid/Penjualan Voucher Pulsa", 710));

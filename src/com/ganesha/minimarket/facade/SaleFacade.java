@@ -108,6 +108,8 @@ public class SaleFacade implements TransactionFacade {
 			is = new ByteArrayInputStream(receipt.getBytes());
 			for (PrintService printService : services) {
 				if (printService.getName().equals(printerName)) {
+					ReceiptPrinterUtils.openDrawer();
+
 					DocFlavor flavor = DocFlavor.STRING.INPUT_STREAM.AUTOSENSE;
 					Doc doc = new SimpleDoc(is, flavor, null);
 					DocPrintJob printJob = printService.createPrintJob();
@@ -118,7 +120,6 @@ public class SaleFacade implements TransactionFacade {
 					printJob.print(doc, pras);
 
 					pjw.waitForDone();
-					ReceiptPrinterUtils.openDrawer();
 					break;
 				}
 			}
