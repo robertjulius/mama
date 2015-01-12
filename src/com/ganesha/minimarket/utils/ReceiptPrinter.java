@@ -47,6 +47,26 @@ public class ReceiptPrinter {
 		this.moneyChange = moneyChange;
 	}
 
+	public String buildFooter() {
+		String footer = alignCenter("*** TERIMA KASIH ***", LENGTH_PARAGRAPH);
+		return footer;
+	}
+
+	public String buildHeader() {
+		StringBuilder builder = new StringBuilder();
+		builder.append(alignLeft(companyName, LENGTH_COMPANY_NAME)).append(
+				NEW_LINE);
+		builder.append(alignLeft(companyAddress, LENGTH_COMPANY_ADDRESS))
+				.append(NEW_LINE);
+		builder.append(alignLeft(transactionNumber, LENGTH_TRANSACTION_NUMBER))
+				.append(NEW_LINE);
+		builder.append(
+				alignLeft(transactionTimestamp, LENGTH_TRANSACTION_TIMESTAMP))
+				.append(NEW_LINE);
+		builder.append(alignLeft(cashier, LENGTH_CASHIER)).append(NEW_LINE);
+		return builder.toString();
+	}
+
 	public String buildItemList() {
 		StringBuilder builder = new StringBuilder();
 		for (ItemBelanja itemBelanja : itemBelanjaList) {
@@ -69,25 +89,27 @@ public class ReceiptPrinter {
 	public String buildReceipt() {
 		StringBuilder builder = new StringBuilder();
 
-		builder.append(alignLeft(companyName, LENGTH_COMPANY_NAME)).append(
-				NEW_LINE);
-		builder.append(alignLeft(companyAddress, LENGTH_COMPANY_ADDRESS))
-				.append(NEW_LINE);
-		builder.append(alignLeft(transactionNumber, LENGTH_TRANSACTION_NUMBER))
-				.append(NEW_LINE);
-		builder.append(
-				alignLeft(transactionTimestamp, LENGTH_TRANSACTION_TIMESTAMP))
-				.append(NEW_LINE);
-		builder.append(alignLeft(cashier, LENGTH_CASHIER)).append(NEW_LINE);
+		builder.append(buildHeader());
+		builder.append(buildSeparator());
+		builder.append(buildItemList());
+		builder.append(buildSeparator());
+		builder.append(buildSummary());
+		builder.append(NEW_LINE);
+		builder.append(buildFooter());
 
+		return builder.toString();
+	}
+
+	public String buildSeparator() {
 		String separator = "";
 		for (int i = 0; i < LENGTH_PARAGRAPH; ++i) {
 			separator += "-";
 		}
-		builder.append(separator).append(NEW_LINE);
-		builder.append(buildItemList());
-		builder.append(separator).append(NEW_LINE);
+		return separator + NEW_LINE;
+	}
 
+	public String buildSummary() {
+		StringBuilder builder = new StringBuilder();
 		builder.append(alignLeft("Total Belanja", LENGTH_PARAGRAPH
 				- LENGTH_TOTAL_BELANJA));
 		builder.append(alignRight(totalBelanja, LENGTH_TOTAL_BELANJA)).append(
@@ -98,11 +120,6 @@ public class ReceiptPrinter {
 				- LENGTH_MONEY_CHANGE));
 		builder.append(alignRight(moneyChange, LENGTH_MONEY_CHANGE)).append(
 				NEW_LINE);
-
-		builder.append(NEW_LINE);
-		builder.append(alignCenter("*** TERIMA KASIH ***", LENGTH_PARAGRAPH))
-				.append(NEW_LINE);
-
 		return builder.toString();
 	}
 

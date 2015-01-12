@@ -640,7 +640,7 @@ public class MainFrame extends XJFrame {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				try {
-					ReceiptPrinterUtils.openDrawer();
+					ReceiptPrinterUtils.openDrawer("");
 				} catch (Exception ex) {
 					ExceptionHandler.handleException(MainFrame.this, ex);
 				}

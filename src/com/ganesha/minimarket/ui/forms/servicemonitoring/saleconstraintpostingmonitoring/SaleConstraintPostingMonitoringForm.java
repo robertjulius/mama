@@ -14,7 +14,6 @@ import com.ganesha.desktop.component.XJButton;
 import com.ganesha.desktop.component.XJDialog;
 import com.ganesha.desktop.component.XJLabel;
 import com.ganesha.desktop.component.XJPanel;
-import com.ganesha.desktop.component.XJPasswordField;
 import com.ganesha.desktop.component.XJTextArea;
 import com.ganesha.desktop.component.XJTextField;
 import com.ganesha.minimarket.model.SaleConstraintHeader;
@@ -27,7 +26,7 @@ public class SaleConstraintPostingMonitoringForm extends XJDialog {
 	private XJButton btnBack;
 	private XJTextField txtTransactionNumber;
 	private XJLabel lblTransactionTimestamp;
-	private XJPasswordField txtTransactionTimestamp;
+	private XJTextField txtTransactionTimestamp;
 	private XJLabel lblCustomer;
 	private XJTextField txtCustomerName;
 	private XJLabel lblSubTotal;
@@ -74,7 +73,7 @@ public class SaleConstraintPostingMonitoringForm extends XJDialog {
 		lblTransactionTimestamp.setText("Tanggal Transaksi");
 		pnlDetail.add(lblTransactionTimestamp, "cell 0 1");
 
-		txtTransactionTimestamp = new XJPasswordField();
+		txtTransactionTimestamp = new XJTextField();
 		txtTransactionTimestamp.setEditable(false);
 		pnlDetail.add(txtTransactionTimestamp, "cell 1 1,growx");
 

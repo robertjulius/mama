@@ -1,9 +1,5 @@
 package com.ganesha.minimarket.facade;
 
-import java.awt.print.PrinterJob;
-import java.io.ByteArrayInputStream;
-import java.io.IOException;
-import java.io.InputStream;
 import java.math.BigDecimal;
 import java.sql.Timestamp;
 import java.util.ArrayList;
@@ -11,28 +7,16 @@ import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
-import javax.print.Doc;
-import javax.print.DocFlavor;
-import javax.print.DocPrintJob;
 import javax.print.PrintException;
-import javax.print.PrintService;
-import javax.print.SimpleDoc;
-import javax.print.attribute.HashPrintRequestAttributeSet;
-import javax.print.attribute.PrintRequestAttributeSet;
-import javax.print.attribute.standard.Copies;
-import javax.print.event.PrintJobAdapter;
-import javax.print.event.PrintJobEvent;
 
 import org.hibernate.Query;
 import org.hibernate.Session;
 
 import com.ganesha.accounting.facade.AccountFacade;
-import com.ganesha.core.SystemSetting;
 import com.ganesha.core.exception.AppException;
 import com.ganesha.core.exception.UserException;
 import com.ganesha.core.utils.CommonUtils;
 import com.ganesha.core.utils.Formatter;
-import com.ganesha.core.utils.GeneralConstants;
 import com.ganesha.hibernate.HqlParameter;
 import com.ganesha.minimarket.Main;
 import com.ganesha.minimarket.model.Customer;
@@ -98,42 +82,7 @@ public class SaleFacade implements TransactionFacade {
 				companyAddress, transactionNumber, transactionTimestamp,
 				cashier, itemBelanjaList, totalBelanja, pay, moneyChange);
 
-		String receipt = receiptPrinter.buildReceipt();
-
-		PrintService[] services = PrinterJob.lookupPrintServices();
-		InputStream is = null;
-		try {
-			String printerName = (String) SystemSetting
-					.get(GeneralConstants.SYSTEM_SETTING_PRINTER_RECEIPT);
-			is = new ByteArrayInputStream(receipt.getBytes());
-			for (PrintService printService : services) {
-				if (printService.getName().equals(printerName)) {
-					ReceiptPrinterUtils.openDrawer();
-
-					DocFlavor flavor = DocFlavor.STRING.INPUT_STREAM.AUTOSENSE;
-					Doc doc = new SimpleDoc(is, flavor, null);
-					DocPrintJob printJob = printService.createPrintJob();
-					PrintRequestAttributeSet pras = new HashPrintRequestAttributeSet();
-					pras.add(new Copies(1));
-
-					PrintJobWatcher pjw = new PrintJobWatcher(printJob);
-					printJob.print(doc, pras);
-
-					pjw.waitForDone();
-					break;
-				}
-			}
-		} catch (AppException e) {
-			throw new PrintException(e);
-		} finally {
-			if (is != null) {
-				try {
-					is.close();
-				} catch (IOException e) {
-					throw new PrintException(e);
-				}
-			}
-		}
+		ReceiptPrinterUtils.print(receiptPrinter);
 	}
 
 	public SaleDetail getDetail(Integer id, Session session) {
@@ -251,49 +200,5 @@ public class SaleFacade implements TransactionFacade {
 		header.setLastUpdatedTimestamp(CommonUtils.getCurrentTimestamp());
 
 		return header;
-	}
-
-	private class PrintJobWatcher {
-		boolean done = false;
-
-		PrintJobWatcher(DocPrintJob job) {
-			job.addPrintJobListener(new PrintJobAdapter() {
-				@Override
-				public void printJobCanceled(PrintJobEvent pje) {
-					allDone();
-				}
-
-				@Override
-				public void printJobCompleted(PrintJobEvent pje) {
-					allDone();
-				}
-
-				@Override
-				public void printJobFailed(PrintJobEvent pje) {
-					allDone();
-				}
-
-				@Override
-				public void printJobNoMoreEvents(PrintJobEvent pje) {
-					allDone();
-				}
-
-				void allDone() {
-					synchronized (PrintJobWatcher.this) {
-						done = true;
-						PrintJobWatcher.this.notify();
-					}
-				}
-			});
-		}
-
-		public synchronized void waitForDone() {
-			try {
-				while (!done) {
-					wait();
-				}
-			} catch (InterruptedException e) {
-			}
-		}
 	}
 }

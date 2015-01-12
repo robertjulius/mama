@@ -6,23 +6,10 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.print.PrinterJob;
-import java.io.ByteArrayInputStream;
-import java.io.IOException;
-import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.print.Doc;
-import javax.print.DocFlavor;
-import javax.print.DocPrintJob;
-import javax.print.PrintException;
 import javax.print.PrintService;
-import javax.print.SimpleDoc;
-import javax.print.attribute.HashPrintRequestAttributeSet;
-import javax.print.attribute.PrintRequestAttributeSet;
-import javax.print.attribute.standard.Copies;
-import javax.print.event.PrintJobAdapter;
-import javax.print.event.PrintJobEvent;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 
@@ -67,6 +54,7 @@ public class PrinterSettingForm extends XJDialog {
 	private XJLabel lblPort;
 	private XJTextField txtPort;
 	private XJButton btnTestOpenDrawer;
+	private ReceiptPrinter receiptPrinter;
 
 	public PrinterSettingForm(Window parent) {
 		super(parent);
@@ -122,7 +110,7 @@ public class PrinterSettingForm extends XJDialog {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				try {
-					print();
+					ReceiptPrinterUtils.print(receiptPrinter);
 				} catch (Exception ex) {
 					ExceptionHandler.handleException(PrinterSettingForm.this,
 							ex);
@@ -138,7 +126,7 @@ public class PrinterSettingForm extends XJDialog {
 			public void actionPerformed(ActionEvent e) {
 				try {
 					save();
-					ReceiptPrinterUtils.openDrawer();
+					ReceiptPrinterUtils.openDrawer("");
 				} catch (Exception ex) {
 					ExceptionHandler.handleException(PrinterSettingForm.this,
 							ex);
@@ -304,49 +292,13 @@ public class PrinterSettingForm extends XJDialog {
 			itemBelanjaList.add(itemBelanja);
 		}
 
-		ReceiptPrinter receiptPrinter = new ReceiptPrinter(companyName,
-				companyAddress, transactionNumber, transactionTimestamp,
-				cashier, itemBelanjaList, totalBelanja, pay, moneyChange);
+		receiptPrinter = new ReceiptPrinter(companyName, companyAddress,
+				transactionNumber, transactionTimestamp, cashier,
+				itemBelanjaList, totalBelanja, pay, moneyChange);
 
 		String receipt = receiptPrinter.buildReceipt();
+
 		txtReceipt.setText(receipt);
-	}
-
-	private void print() throws AppException {
-		String printerName = (String) SystemSetting
-				.get(GeneralConstants.SYSTEM_SETTING_PRINTER_RECEIPT);
-		PrintService[] services = PrinterJob.lookupPrintServices();
-		InputStream is = null;
-		try {
-			is = new ByteArrayInputStream(txtReceipt.getText().getBytes());
-			for (PrintService printService : services) {
-				if (printService.getName().equals(printerName)) {
-					ReceiptPrinterUtils.openDrawer();
-
-					DocFlavor flavor = DocFlavor.STRING.INPUT_STREAM.AUTOSENSE;
-					Doc doc = new SimpleDoc(is, flavor, null);
-					DocPrintJob printJob = printService.createPrintJob();
-					PrintRequestAttributeSet pras = new HashPrintRequestAttributeSet();
-					pras.add(new Copies(1));
-
-					PrintJobWatcher pjw = new PrintJobWatcher(printJob);
-					printJob.print(doc, pras);
-
-					pjw.waitForDone();
-					break;
-				}
-			}
-		} catch (PrintException e) {
-			throw new AppException(e);
-		} finally {
-			if (is != null) {
-				try {
-					is.close();
-				} catch (IOException e) {
-					throw new AppException(e);
-				}
-			}
-		}
 	}
 
 	private void save() throws UserException, AppException {
@@ -366,50 +318,6 @@ public class PrinterSettingForm extends XJDialog {
 		String printServiceName = (String) comboBoxObject.getObject();
 		if (printServiceName == null) {
 			throw new UserException("Printer Receipt harus diisi");
-		}
-	}
-
-	class PrintJobWatcher {
-		boolean done = false;
-
-		PrintJobWatcher(DocPrintJob job) {
-			job.addPrintJobListener(new PrintJobAdapter() {
-				@Override
-				public void printJobCanceled(PrintJobEvent pje) {
-					allDone();
-				}
-
-				@Override
-				public void printJobCompleted(PrintJobEvent pje) {
-					allDone();
-				}
-
-				@Override
-				public void printJobFailed(PrintJobEvent pje) {
-					allDone();
-				}
-
-				@Override
-				public void printJobNoMoreEvents(PrintJobEvent pje) {
-					allDone();
-				}
-
-				void allDone() {
-					synchronized (PrintJobWatcher.this) {
-						done = true;
-						PrintJobWatcher.this.notify();
-					}
-				}
-			});
-		}
-
-		public synchronized void waitForDone() {
-			try {
-				while (!done) {
-					wait();
-				}
-			} catch (InterruptedException e) {
-			}
 		}
 	}
 }
