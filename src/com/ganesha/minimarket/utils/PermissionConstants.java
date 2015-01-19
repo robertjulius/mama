@@ -79,10 +79,6 @@ public class PermissionConstants {
 	public static final String MN_TRX_REVENUE = "/transaction/revenue";
 	public static final String REVENUE_TRANSACTION_FORM = "RevenueTransactionForm";
 
-	// Transaction - Constraint - Penjualan
-	public static final String MN_TRX_CONSTRAINT_SAL = "/transaction/constraint/sale";
-	public static final String CONSTRAINT_SAL_FORM = "SaleConstraintForm";
-
 	// Back Office - Laporan - Laporan Transaksi
 	public static final String MN_REPORT_TRX = "/backoffice/report/transaction";
 	public static final String REPORT_TRX_LIST = "TransactionReportList";

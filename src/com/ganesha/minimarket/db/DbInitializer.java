@@ -72,12 +72,17 @@ public class DbInitializer {
 	}
 
 	private static void createDb(Connection conn) throws SQLException {
-
-		String dbName = SystemSetting
-				.getProperty(GeneralConstants.SYSTEM_PROPERTY_DB_SCHEMA);
-
-		Statement statement = conn.createStatement();
-		statement.execute("CREATE DATABASE " + dbName);
+		Statement statement = null;
+		try {
+			String dbName = SystemSetting
+					.getProperty(GeneralConstants.SYSTEM_PROPERTY_DB_SCHEMA);
+			statement = conn.createStatement();
+			statement.execute("CREATE DATABASE " + dbName);
+		} finally {
+			if (statement != null) {
+				statement.close();
+			}
+		}
 	}
 
 	private static void initialTablesUsingHibernate() throws AppException {
@@ -89,17 +94,23 @@ public class DbInitializer {
 	}
 
 	private static boolean isDbExist(Connection conn) throws SQLException {
-		ResultSet resultSet = conn.getMetaData().getCatalogs();
-		while (resultSet.next()) {
-			String dbName = resultSet.getString(1);
-			if (dbName.equalsIgnoreCase(SystemSetting
-					.getProperty(GeneralConstants.SYSTEM_PROPERTY_DB_SCHEMA))) {
-				return true;
+		ResultSet resultSet = null;
+		try {
+			resultSet = conn.getMetaData().getCatalogs();
+			while (resultSet.next()) {
+				String dbName = resultSet.getString(1);
+				if (dbName
+						.equalsIgnoreCase(SystemSetting
+								.getProperty(GeneralConstants.SYSTEM_PROPERTY_DB_SCHEMA))) {
+					return true;
+				}
+			}
+			return false;
+		} finally {
+			if (resultSet != null) {
+				resultSet.close();
 			}
 		}
-
-		return false;
-
 	}
 
 	private static boolean isMySQLInstalled() {
@@ -139,8 +150,9 @@ public class DbInitializer {
 
 	private static void runDMLScripts(Connection conn) throws SQLException,
 			AppException {
+		Statement statement = null;
 		try {
-			Statement statement = conn.createStatement();
+			statement = conn.createStatement();
 			statement
 					.execute("USE "
 							+ SystemSetting
@@ -161,6 +173,10 @@ public class DbInitializer {
 			}
 		} catch (IOException e) {
 			throw new AppException(e);
+		} finally {
+			if (statement != null) {
+				statement.close();
+			}
 		}
 	}
 }

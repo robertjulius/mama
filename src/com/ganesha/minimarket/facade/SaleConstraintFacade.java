@@ -147,7 +147,7 @@ public class SaleConstraintFacade {
 
 	public void performSale(SaleConstraintHeader saleConstraintHeader,
 			List<SaleConstraintDetail> saleConstraintDetails, Session session)
-			throws AppException, UserException {
+			throws AppException {
 
 		session.saveOrUpdate(saleConstraintHeader);
 		for (SaleConstraintDetail saleConstraintDetail : saleConstraintDetails) {

@@ -143,22 +143,6 @@ public class PermissionConsistencyChecker {
 				PermissionConstants.REVENUE_TRANSACTION_FORM,
 				"Revenue Transaction Form", 481));
 
-		// Transaction - Constraint - Penjualan
-		permissions.add(createPermission(
-				PermissionConstants.MN_TRX_CONSTRAINT_SAL,
-				"/Transaksi/Constraint/Transaksi Penjualan Constraint", 490));
-		permissions.add(createPermission(
-				PermissionConstants.CONSTRAINT_SAL_FORM,
-				"Sale Constraint Form", 491));
-
-		// Transaction - Constraint - Penjualan
-		permissions.add(createPermission(
-				PermissionConstants.MN_TRX_CONSTRAINT_SAL,
-				"/Transaksi/Constraint/Transaksi Penjualan Constraint", 490));
-		permissions.add(createPermission(
-				PermissionConstants.CONSTRAINT_SAL_FORM,
-				"Sale Constraint Form", 491));
-
 		// Back Office - Laporan - Laporan Transaksi
 		permissions.add(createPermission(PermissionConstants.MN_REPORT_TRX,
 				"/Back Office/Laporan/Laporan Transaksi", 510));

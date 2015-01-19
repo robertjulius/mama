@@ -51,13 +51,17 @@ import com.ganesha.desktop.exeptions.ExceptionHandler;
 import com.ganesha.desktop.exeptions.UserExceptionHandler;
 import com.ganesha.hibernate.HibernateUtils;
 import com.ganesha.minimarket.Main;
+import com.ganesha.minimarket.constants.Enums.SaleConstraintPostingStatus;
 import com.ganesha.minimarket.facade.CustomerFacade;
 import com.ganesha.minimarket.facade.DiscountFacade;
 import com.ganesha.minimarket.facade.GlobalFacade;
 import com.ganesha.minimarket.facade.ItemFacade;
+import com.ganesha.minimarket.facade.SaleConstraintFacade;
 import com.ganesha.minimarket.facade.SaleFacade;
 import com.ganesha.minimarket.model.Customer;
 import com.ganesha.minimarket.model.Item;
+import com.ganesha.minimarket.model.SaleConstraintDetail;
+import com.ganesha.minimarket.model.SaleConstraintHeader;
 import com.ganesha.minimarket.model.SaleDetail;
 import com.ganesha.minimarket.model.SaleHeader;
 import com.ganesha.minimarket.ui.forms.searchentity.SearchEntityDialog;
@@ -446,20 +450,18 @@ public class PenjualanForm extends XJDialog {
 			List<SaleDetail> saleDetails, Session session) throws AppException,
 			UserException {
 
-		LoggerFactory.getLogger(Loggers.SALE).debug(
-				"Starting to insert SaleHeader {"
-						+ saleHeader.getTransactionNumber() + "|"
-						+ saleHeader.getSubTotalAmount() + "|"
-						+ saleHeader.getTaxAmount() + "|"
-						+ saleHeader.getTotalAmount() + "|"
-						+ saleHeader.getPay() + "|"
-						+ saleHeader.getMoneyChange() + "} into database");
-
-		SaleFacade.getInstance().performSale(saleHeader, saleDetails, session);
-
-		LoggerFactory.getLogger(Loggers.SALE).debug(
-				"Finished inserting SaleHeader into database, the generated id is "
-						+ saleHeader.getId());
+		try {
+			performSaleNormal(saleHeader, saleDetails, session);
+		} catch (UserException e) {
+			if (e.getMessage().contains(
+					"Tidak dapat melakukan penjualan barang")
+					&& e.getMessage().contains(
+							"karena stock di sistem hanya ada")) {
+				performSaleConstraint(saleHeader, saleDetails, session);
+			} else {
+				throw e;
+			}
+		}
 
 		ActivityLogFacade.doLog(getPermissionCode(), ActionType.TRANSACTION,
 				Main.getUserLogin(), saleHeader, session);
@@ -541,6 +543,60 @@ public class PenjualanForm extends XJDialog {
 		table.changeSelection(row, column, false, false);
 		setTotalPenjualan();
 		reorderRowNumber();
+	}
+
+	private void performSaleConstraint(SaleHeader saleHeader,
+			List<SaleDetail> saleDetails, Session session) throws AppException {
+
+		SaleConstraintHeader saleConstraintHeader = SaleConstraintHeader
+				.fromSaleHeader(saleHeader);
+		saleConstraintHeader
+				.setPostingStatus(SaleConstraintPostingStatus.WAITING);
+		saleConstraintHeader.setPostingTriedCount(0);
+
+		List<SaleConstraintDetail> saleConstraintDetails = new ArrayList<>();
+		for (SaleDetail saleDetail : saleDetails) {
+			SaleConstraintDetail saleConstraintDetail = SaleConstraintDetail
+					.fromSaleDetail(saleDetail);
+			saleConstraintDetails.add(saleConstraintDetail);
+		}
+
+		LoggerFactory.getLogger(Loggers.SALE).debug(
+				"Starting to insert SaleConstraintHeader {"
+						+ saleConstraintHeader.getTransactionNumber() + "|"
+						+ saleConstraintHeader.getSubTotalAmount() + "|"
+						+ saleConstraintHeader.getTaxAmount() + "|"
+						+ saleConstraintHeader.getTotalAmount() + "|"
+						+ saleConstraintHeader.getPay() + "|"
+						+ saleConstraintHeader.getMoneyChange()
+						+ "} into database");
+
+		SaleConstraintFacade.getInstance().performSale(saleConstraintHeader,
+				saleConstraintDetails, session);
+
+		LoggerFactory.getLogger(Loggers.SALE).debug(
+				"Finished inserting SaleConstraintHeader into database, the generated id is "
+						+ saleHeader.getId());
+	}
+
+	private void performSaleNormal(SaleHeader saleHeader,
+			List<SaleDetail> saleDetails, Session session) throws AppException,
+			UserException {
+
+		LoggerFactory.getLogger(Loggers.SALE).debug(
+				"Starting to insert SaleHeader {"
+						+ saleHeader.getTransactionNumber() + "|"
+						+ saleHeader.getSubTotalAmount() + "|"
+						+ saleHeader.getTaxAmount() + "|"
+						+ saleHeader.getTotalAmount() + "|"
+						+ saleHeader.getPay() + "|"
+						+ saleHeader.getMoneyChange() + "} into database");
+
+		SaleFacade.getInstance().performSale(saleHeader, saleDetails, session);
+
+		LoggerFactory.getLogger(Loggers.SALE).debug(
+				"Finished inserting SaleHeader into database, the generated id is "
+						+ saleHeader.getId());
 	}
 
 	private void printReceipt(SaleFacade facade, SaleHeader saleHeader,

@@ -6,6 +6,7 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.OutputStream;
 
 import javax.print.PrintService;
 
@@ -44,12 +45,15 @@ public class BarcodeUtils {
 
 	public static File generatePdfFile(String barcode) throws AppException {
 		Document document = null;
+		OutputStream outputStream = null;
 		try {
 			File tempFile = File.createTempFile(
 					GeneralConstants.FILE_BARCODE_NAME, null);
+
+			outputStream = new FileOutputStream(tempFile);
+
 			document = new Document(PageSize.A4, 0, 0, 0, 0);
-			PdfWriter writer = PdfWriter.getInstance(document,
-					new FileOutputStream(tempFile));
+			PdfWriter writer = PdfWriter.getInstance(document, outputStream);
 
 			document.open();
 			PdfContentByte cb = writer.getDirectContent();
@@ -92,6 +96,13 @@ public class BarcodeUtils {
 		} finally {
 			if (document != null && document.isOpen()) {
 				document.close();
+			}
+			if (outputStream != null) {
+				try {
+					outputStream.close();
+				} catch (IOException e) {
+					throw new AppException(e);
+				}
 			}
 		}
 	}

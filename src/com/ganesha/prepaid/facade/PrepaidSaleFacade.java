@@ -7,11 +7,8 @@ import java.util.List;
 
 import org.hibernate.Session;
 
-import com.ganesha.core.exception.AppException;
-import com.ganesha.core.exception.UserException;
 import com.ganesha.core.utils.CommonUtils;
 import com.ganesha.minimarket.Main;
-import com.ganesha.minimarket.facade.SaleFacade;
 import com.ganesha.minimarket.model.Customer;
 import com.ganesha.minimarket.model.SaleDetail;
 import com.ganesha.minimarket.model.SaleHeader;
@@ -30,11 +27,10 @@ public class PrepaidSaleFacade {
 	private PrepaidSaleFacade() {
 	}
 
-	public List<SaleDetail> performSale(Customer customer,
+	public List<SaleDetail> prepareSaleDetails(Customer customer,
 			String transactionNumber, BigDecimal price, BigDecimal pay,
 			BigDecimal moneyChange, Integer itemId, String itemCode,
-			String itemName, Integer quantity, String unit, Session session)
-			throws AppException, UserException {
+			String itemName, Integer quantity, String unit, Session session) {
 
 		SaleHeader saleHeader = new SaleHeader();
 		saleHeader.setTransactionNumber(transactionNumber);
@@ -68,8 +64,6 @@ public class PrepaidSaleFacade {
 
 		List<SaleDetail> saleDetails = new ArrayList<>();
 		saleDetails.add(saleDetail);
-
-		SaleFacade.getInstance().performSale(saleHeader, saleDetails, session);
 
 		return saleDetails;
 	}

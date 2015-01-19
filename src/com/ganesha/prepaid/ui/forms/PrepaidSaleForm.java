@@ -41,11 +41,15 @@ import com.ganesha.desktop.component.XJTextField;
 import com.ganesha.desktop.exeptions.ExceptionHandler;
 import com.ganesha.hibernate.HibernateUtils;
 import com.ganesha.minimarket.Main;
+import com.ganesha.minimarket.constants.Enums.SaleConstraintPostingStatus;
 import com.ganesha.minimarket.facade.CustomerFacade;
 import com.ganesha.minimarket.facade.ItemFacade;
+import com.ganesha.minimarket.facade.SaleConstraintFacade;
 import com.ganesha.minimarket.facade.SaleFacade;
 import com.ganesha.minimarket.model.Customer;
 import com.ganesha.minimarket.model.Item;
+import com.ganesha.minimarket.model.SaleConstraintDetail;
+import com.ganesha.minimarket.model.SaleConstraintHeader;
 import com.ganesha.minimarket.model.SaleDetail;
 import com.ganesha.minimarket.model.SaleHeader;
 import com.ganesha.minimarket.ui.forms.searchentity.SearchEntityDialog;
@@ -442,7 +446,7 @@ public class PrepaidSaleForm extends XJDialog {
 			Item item = voucher.getVoucherType().getItem();
 
 			List<SaleDetail> saleDetails = PrepaidSaleFacade.getInstance()
-					.performSale(
+					.prepareSaleDetails(
 							customer,
 							transactionNumber,
 							BigDecimal.valueOf(Formatter.formatStringToNumber(
@@ -454,13 +458,10 @@ public class PrepaidSaleForm extends XJDialog {
 							item.getId(), item.getCode(), item.getName(),
 							voucher.getQuantity(), item.getUnit(), session);
 
-			session.getTransaction().commit();
-
 			SaleHeader saleHeader = saleDetails.get(0).getSaleHeader();
 
-			ActivityLogFacade.doLog(getPermissionCode(),
-					ActionType.TRANSACTION, Main.getUserLogin(), saleHeader,
-					session);
+			performSale(saleHeader, saleDetails, session);
+			session.getTransaction().commit();
 
 			try {
 				SaleFacade.getInstance().cetakReceipt(saleHeader, saleDetails);
@@ -498,5 +499,83 @@ public class PrepaidSaleForm extends XJDialog {
 			throw new UserException(
 					"Harga jual tidak boleh di bawah harga modal");
 		}
+	}
+
+	protected void performSale(SaleHeader saleHeader,
+			List<SaleDetail> saleDetails, Session session) throws AppException,
+			UserException {
+
+		try {
+			performSaleNormal(saleHeader, saleDetails, session);
+		} catch (UserException e) {
+			if (e.getMessage().contains(
+					"Tidak dapat melakukan penjualan barang")
+					&& e.getMessage().contains(
+							"karena stock di sistem hanya ada")) {
+				performSaleConstraint(saleHeader, saleDetails, session);
+			} else {
+				throw e;
+			}
+		}
+
+		ActivityLogFacade.doLog(getPermissionCode(), ActionType.TRANSACTION,
+				Main.getUserLogin(), saleHeader, session);
+
+		LoggerFactory.getLogger(Loggers.SALE).debug(
+				"Logging to ActivityLog is done");
+	}
+
+	private void performSaleConstraint(SaleHeader saleHeader,
+			List<SaleDetail> saleDetails, Session session) throws AppException {
+
+		SaleConstraintHeader saleConstraintHeader = SaleConstraintHeader
+				.fromSaleHeader(saleHeader);
+		saleConstraintHeader
+				.setPostingStatus(SaleConstraintPostingStatus.WAITING);
+		saleConstraintHeader.setPostingTriedCount(0);
+
+		List<SaleConstraintDetail> saleConstraintDetails = new ArrayList<>();
+		for (SaleDetail saleDetail : saleDetails) {
+			SaleConstraintDetail saleConstraintDetail = SaleConstraintDetail
+					.fromSaleDetail(saleDetail);
+			saleConstraintDetails.add(saleConstraintDetail);
+		}
+
+		LoggerFactory.getLogger(Loggers.SALE).debug(
+				"Starting to insert SaleConstraintHeader {"
+						+ saleConstraintHeader.getTransactionNumber() + "|"
+						+ saleConstraintHeader.getSubTotalAmount() + "|"
+						+ saleConstraintHeader.getTaxAmount() + "|"
+						+ saleConstraintHeader.getTotalAmount() + "|"
+						+ saleConstraintHeader.getPay() + "|"
+						+ saleConstraintHeader.getMoneyChange()
+						+ "} into database");
+
+		SaleConstraintFacade.getInstance().performSale(saleConstraintHeader,
+				saleConstraintDetails, session);
+
+		LoggerFactory.getLogger(Loggers.SALE).debug(
+				"Finished inserting SaleConstraintHeader into database, the generated id is "
+						+ saleHeader.getId());
+	}
+
+	private void performSaleNormal(SaleHeader saleHeader,
+			List<SaleDetail> saleDetails, Session session) throws AppException,
+			UserException {
+
+		LoggerFactory.getLogger(Loggers.SALE).debug(
+				"Starting to insert SaleHeader {"
+						+ saleHeader.getTransactionNumber() + "|"
+						+ saleHeader.getSubTotalAmount() + "|"
+						+ saleHeader.getTaxAmount() + "|"
+						+ saleHeader.getTotalAmount() + "|"
+						+ saleHeader.getPay() + "|"
+						+ saleHeader.getMoneyChange() + "} into database");
+
+		SaleFacade.getInstance().performSale(saleHeader, saleDetails, session);
+
+		LoggerFactory.getLogger(Loggers.SALE).debug(
+				"Finished inserting SaleHeader into database, the generated id is "
+						+ saleHeader.getId());
 	}
 }

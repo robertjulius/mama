@@ -42,7 +42,6 @@ import com.ganesha.minimarket.ui.forms.returns.ReturPenjualanForm;
 import com.ganesha.minimarket.ui.forms.revenue.RevenueTransactionForm;
 import com.ganesha.minimarket.ui.forms.role.RoleListDialog;
 import com.ganesha.minimarket.ui.forms.sale.PenjualanForm;
-import com.ganesha.minimarket.ui.forms.sale.SaleConstraintForm;
 import com.ganesha.minimarket.ui.forms.servicemonitoring.saleconstraintpostingmonitoring.SaleConstraintPostingMonitoringListDialog;
 import com.ganesha.minimarket.ui.forms.stock.StockListDialog;
 import com.ganesha.minimarket.ui.forms.stockopname.StockOpnameListDialog;
@@ -361,21 +360,6 @@ public class MainFrame extends XJFrame {
 		XJMenu mnConstraint = new XJMenu((String) null);
 		mnConstraint.setText("Constraint");
 		mnTransaksi.add(mnConstraint);
-
-		XJMenuItem mntmTrxConstraintSale = new XJMenuItem(
-				"Transaksi Penjualan Constraint",
-				PermissionConstants.MN_TRX_CONSTRAINT_SAL);
-		mnConstraint.add(mntmTrxConstraintSale);
-		mntmTrxConstraintSale.addActionListener(new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				try {
-					new SaleConstraintForm(MainFrame.this).setVisible(true);
-				} catch (Exception ex) {
-					ExceptionHandler.handleException(MainFrame.this, ex);
-				}
-			}
-		});
 
 		XJMenu mnPrepaid = new XJMenu("Prepaid");
 		menuBar.add(mnPrepaid);
