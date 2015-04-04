@@ -6,6 +6,7 @@ public class Loggers {
 	public static final String GLOBAL = "global";
 
 	public static final String APPLICATION = "application";
+	public static final String UTILS = "application.utils";
 	public static final String SCHEDULER = "application.scheduler";
 	public static final String SALE = "application.sale";
 

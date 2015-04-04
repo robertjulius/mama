@@ -383,6 +383,10 @@ public class PrepaidSaleForm extends XJDialog {
 	}
 
 	private void loadComboNominal() {
+
+		Object object = cmbVoucherTypes.getSelectedItem();
+		System.out.println(object);
+
 		VoucherType selectedVoucherType = (VoucherType) ((ComboBoxObject) cmbVoucherTypes
 				.getSelectedItem()).getObject();
 		if (selectedVoucherType == null) {
@@ -512,6 +516,8 @@ public class PrepaidSaleForm extends XJDialog {
 					"Tidak dapat melakukan penjualan barang")
 					&& e.getMessage().contains(
 							"karena stock di sistem hanya ada")) {
+				session.getTransaction().rollback();
+				session.beginTransaction();
 				performSaleConstraint(saleHeader, saleDetails, session);
 			} else {
 				throw e;

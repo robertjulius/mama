@@ -3,7 +3,6 @@ package com.ganesha.minimarket.ui.forms.servicemonitoring.saleconstraintpostingm
 import java.awt.Window;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.KeyEvent;
 import java.math.BigDecimal;
 import java.sql.Timestamp;
 import java.util.Date;
@@ -80,7 +79,14 @@ public class SaleConstraintPostingMonitoringListDialog extends XJTableDialog {
 		getContentPane().setLayout(
 				new MigLayout("", "[800,grow]", "[][300,grow][]"));
 
-		table = new XJTable();
+		table = new XJTable() {
+			private static final long serialVersionUID = 1L;
+
+			@Override
+			public void rowSelected() {
+				btnDetail.doClick();
+			}
+		};
 		XTableUtils.initTable(table, tableParameters);
 
 		XJPanel pnlFilter = new XJPanel();
@@ -132,7 +138,7 @@ public class SaleConstraintPostingMonitoringListDialog extends XJTableDialog {
 				}
 			}
 		});
-		btnDetail.setText("<html><center>Detail<br/>[F12]</center></html>");
+		btnDetail.setText("<html><center>Lihat Detail<br/>[Enter]</center></html>");
 		panel.add(btnDetail, "cell 1 0,growx");
 
 		btnRefresh.doClick();
@@ -213,9 +219,6 @@ public class SaleConstraintPostingMonitoringListDialog extends XJTableDialog {
 	@Override
 	protected void keyEventListener(int keyCode) {
 		switch (keyCode) {
-		case KeyEvent.VK_F12:
-			btnDetail.doClick();
-			break;
 		default:
 			break;
 		}

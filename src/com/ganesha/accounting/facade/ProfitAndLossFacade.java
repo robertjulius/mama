@@ -59,8 +59,6 @@ public class ProfitAndLossFacade {
 	public ProfitAndLossStatement getProfitAndSaveProfitAndLossStatement(
 			Calendar period, Session session) throws AppException {
 
-		CommonUtils.setCalendarMonthAndYearOnly(period);
-
 		ProfitAndLossStatement lastProfitAndLossStatement = getLastProfitAndLossStatement(session);
 
 		Calendar lastStatementPeriod = Calendar.getInstance();

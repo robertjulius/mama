@@ -123,7 +123,7 @@ public class PurchaseReturnReportFacade implements TransactionReportFacade {
 		criteria.createAlias("purchaseReturnHeader", "purchaseReturnHeader");
 
 		if (!transactionNumber.trim().equals("")) {
-			criteria.add(Restrictions.like("transactionNumer",
+			criteria.add(Restrictions.like("transactionNumber",
 					transactionNumber).ignoreCase());
 		}
 

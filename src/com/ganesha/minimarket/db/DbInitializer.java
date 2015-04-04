@@ -12,11 +12,13 @@ import java.sql.Statement;
 import java.util.List;
 
 import org.quartz.SchedulerException;
+import org.slf4j.LoggerFactory;
 
 import com.ganesha.core.SystemSetting;
 import com.ganesha.core.exception.AppException;
 import com.ganesha.core.utils.GeneralConstants;
 import com.ganesha.core.utils.ResourceUtils;
+import com.ganesha.coreapps.constants.Loggers;
 import com.ganesha.desktop.component.permissionutils.PermissionChecker;
 import com.ganesha.minimarket.Main;
 import com.ganesha.minimarket.utils.CompanyConsistencyChecker;
@@ -135,6 +137,11 @@ public class DbInitializer {
 					.getProperty(GeneralConstants.SYSTEM_PROPERTY_DB_USERNAME);
 			String password = SystemSetting
 					.getProperty(GeneralConstants.SYSTEM_PROPERTY_DB_PASSWORD);
+
+			LoggerFactory.getLogger(Loggers.UTILS).debug(
+					"Trying to get connection with values [url=" + url
+							+ "][username=" + username + "][password="
+							+ password + "]");
 
 			conn = DriverManager.getConnection(url, username, password);
 

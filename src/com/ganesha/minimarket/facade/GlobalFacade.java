@@ -1,13 +1,18 @@
 package com.ganesha.minimarket.facade;
 
+import java.util.Map;
+
 import org.hibernate.Criteria;
+import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.criterion.Restrictions;
 
+import com.ganesha.core.exception.AppException;
 import com.ganesha.core.utils.GeneralConstants;
 import com.ganesha.desktop.component.ComboBoxObject;
 import com.ganesha.desktop.component.XJComboBox;
 import com.ganesha.hibernate.HibernateUtils;
+import com.ganesha.hibernate.HqlParameter;
 import com.ganesha.minimarket.model.Tax;
 
 public class GlobalFacade {
@@ -48,5 +53,41 @@ public class GlobalFacade {
 			session.close();
 		}
 		return taxPercent;
+	}
+
+	public Integer getIdByCode(String codeFieldName, String codeValue,
+			String idFieldName, String tableName, Session session) {
+
+		String sqlString = "SELECT " + idFieldName + " FROM " + tableName
+				+ " WHERE " + codeFieldName + " =: codeValue";
+
+		Query query = session.createQuery(sqlString);
+		HqlParameter param = new HqlParameter(query);
+		param.put("codeValue", codeValue);
+		param.validate();
+
+		@SuppressWarnings("unchecked")
+		Map<String, Integer> list = (Map<String, Integer>) query.uniqueResult();
+		Integer idValue = list.get(idFieldName);
+
+		return idValue;
+	}
+
+	public String getCodeById(String idFieldName, int idValue,
+			String codeFieldName, String tableName, Session session) {
+
+		String sqlString = "SELECT " + codeFieldName + " FROM " + tableName
+				+ " WHERE " + idFieldName + " =: idValue";
+
+		Query query = session.createQuery(sqlString);
+		HqlParameter param = new HqlParameter(query);
+		param.put("idValue", idValue);
+		param.validate();
+
+		@SuppressWarnings("unchecked")
+		Map<String, String> list = (Map<String, String>) query.uniqueResult();
+		String codeFieldValue = list.get(codeFieldName);
+
+		return codeFieldValue;
 	}
 }

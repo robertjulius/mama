@@ -121,7 +121,7 @@ public class SaleReportFacade implements TransactionReportFacade {
 		criteria.createAlias("saleHeader", "saleHeader");
 
 		if (!transactionNumber.trim().equals("")) {
-			criteria.add(Restrictions.like("transactionNumer",
+			criteria.add(Restrictions.like("transactionNumber",
 					transactionNumber).ignoreCase());
 		}
 

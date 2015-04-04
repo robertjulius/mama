@@ -65,9 +65,6 @@
 		</jar>
 	</target>
 
-	<!-- ############ RUN JAR ############ -->
-	<target name="run" depends="jar">
-		<java jar="${jar-path}/${app-name}" fork="true" />
-	</target>
+
 
 </project>

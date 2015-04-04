@@ -175,7 +175,7 @@ public class SaleConstraintFacade {
 		return saleConstraintLogs;
 	}
 
-	private List<SaleConstraintDetail> getSaleConstraintDetails(
+	public List<SaleConstraintDetail> getSaleConstraintDetails(
 			Integer saleConstraintHeaderId, Session session) {
 		Criteria criteria = session.createCriteria(SaleConstraintDetail.class);
 		criteria.createAlias("saleConstraintHeader", "saleConstraintHeader");
@@ -188,7 +188,7 @@ public class SaleConstraintFacade {
 		return saleConstraintDetails;
 	}
 
-	private List<SaleConstraintHeader> getSaleConstraintHeaders(Session session) {
+	public List<SaleConstraintHeader> getSaleConstraintHeaders(Session session) {
 		Criteria criteria = session.createCriteria(SaleConstraintHeader.class);
 		@SuppressWarnings("unchecked")
 		List<SaleConstraintHeader> saleConstraintHeaders = criteria.list();

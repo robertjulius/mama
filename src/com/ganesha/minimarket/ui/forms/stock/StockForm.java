@@ -44,9 +44,13 @@ import com.ganesha.desktop.exeptions.ExceptionHandler;
 import com.ganesha.hibernate.HibernateUtils;
 import com.ganesha.minimarket.Main;
 import com.ganesha.minimarket.facade.ItemFacade;
+import com.ganesha.minimarket.facade.SaleConstraintFacade;
 import com.ganesha.minimarket.model.Item;
 import com.ganesha.minimarket.model.ItemSellPrice;
 import com.ganesha.minimarket.model.ItemSellPricePK;
+import com.ganesha.minimarket.model.SaleConstraintDetail;
+import com.ganesha.minimarket.model.SaleConstraintHeader;
+import com.ganesha.minimarket.ui.forms.commons.alerts.XCaptchaAlert;
 import com.ganesha.minimarket.utils.BarcodeUtils;
 import com.ganesha.minimarket.utils.PermissionConstants;
 
@@ -450,8 +454,17 @@ public class StockForm extends XJDialog {
 	private void save(boolean deleted) throws ActionTypeNotSupported,
 			UserException {
 
+		if (deleted) {
+			String message = "Apakah Anda yakin ingin menghapus barang ini?";
+			int selectedOption = XCaptchaAlert.showDialog(this, message,
+					"Menghapus Barang");
+			if (selectedOption != XCaptchaAlert.YES_OPTION) {
+				return;
+			}
+		}
+
 		tambah();
-		validateForm();
+		validateForm(deleted);
 
 		Session session = HibernateUtils.openSession();
 		try {
@@ -546,31 +559,50 @@ public class StockForm extends XJDialog {
 		reorderRowNumber();
 	}
 
-	private void validateForm() throws UserException {
-		if (txtKode.getText().trim().equals("")) {
-			throw new UserException("Kode Barang harus diisi");
-		}
+	private void validateForm(boolean deleted) throws UserException {
+		if (deleted) {
+			Session session = HibernateUtils.openSession();
+			try {
+				SaleConstraintFacade facade = SaleConstraintFacade
+						.getInstance();
 
-		if (txtNama.getText().trim().equals("")) {
-			throw new UserException("Nama Barang harus diisi");
-		}
-
-		if (txtSatuan.getText().trim().equals("")) {
-			throw new UserException("Satuan harus diisi");
-		}
-
-		if (chkDisabled.isSelected()) {
-			int jumlahSaatIni = Formatter.formatStringToNumber(
-					txtJumlahSaatIni.getText()).intValue();
-			if (jumlahSaatIni > 0) {
-				throw new UserException(
-						"Tidak bisa menonaktifkan barang kareng jumlah stok untuk barang ini masih ada sebanyak "
-								+ jumlahSaatIni);
+				List<SaleConstraintHeader> headers = facade
+						.getAllHeaders(session);
+				for (SaleConstraintHeader header : headers) {
+					List<SaleConstraintDetail> details = facade
+							.getSaleConstraintDetails(header.getId(), session);
+					for (SaleConstraintDetail detail : details) {
+						if (itemId.equals(detail.getItemId())) {
+							throw new UserException(
+									"Tidak bisa menghapus barang karena masih dalam antrian di dalam Monitoring Constrain");
+						}
+					}
+				}
+			} finally {
+				session.close();
 			}
-		}
-
-		if (!(table.getRowCount() > 0)) {
-			throw new UserException("Harga Jual harus diisi");
+		} else {
+			if (txtKode.getText().trim().equals("")) {
+				throw new UserException("Kode Barang harus diisi");
+			}
+			if (txtNama.getText().trim().equals("")) {
+				throw new UserException("Nama Barang harus diisi");
+			}
+			if (txtSatuan.getText().trim().equals("")) {
+				throw new UserException("Satuan harus diisi");
+			}
+			if (chkDisabled.isSelected()) {
+				int jumlahSaatIni = Formatter.formatStringToNumber(
+						txtJumlahSaatIni.getText()).intValue();
+				if (jumlahSaatIni > 0) {
+					throw new UserException(
+							"Tidak bisa menonaktifkan barang karena jumlah stok untuk barang ini masih ada sebanyak "
+									+ jumlahSaatIni);
+				}
+			}
+			if (!(table.getRowCount() > 0)) {
+				throw new UserException("Harga Jual harus diisi");
+			}
 		}
 	}
 

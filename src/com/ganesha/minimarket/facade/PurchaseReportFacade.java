@@ -122,7 +122,7 @@ public class PurchaseReportFacade implements TransactionReportFacade {
 		criteria.createAlias("purchaseHeader", "purchaseHeader");
 
 		if (!transactionNumber.trim().equals("")) {
-			criteria.add(Restrictions.like("transactionNumer",
+			criteria.add(Restrictions.like("transactionNumber",
 					transactionNumber).ignoreCase());
 		}
 

@@ -4,6 +4,7 @@ import java.awt.Window;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
+import java.text.DateFormatSymbols;
 import java.util.Calendar;
 
 import net.miginfocom.swing.MigLayout;
@@ -14,6 +15,7 @@ import com.ganesha.accounting.facade.ProfitAndLossFacade;
 import com.ganesha.accounting.model.ProfitAndLossStatement;
 import com.ganesha.core.exception.AppException;
 import com.ganesha.core.exception.UserException;
+import com.ganesha.core.utils.CommonUtils;
 import com.ganesha.desktop.component.XJButton;
 import com.ganesha.desktop.component.XJDialog;
 import com.ganesha.desktop.component.XJLabel;
@@ -124,6 +126,9 @@ public class ProfitAndLossReportListDialog extends XJDialog {
 			Calendar period = Calendar.getInstance();
 			period.set(Calendar.YEAR, year);
 			period.set(Calendar.MONTH, month);
+			CommonUtils.setCalendarMonthAndYearOnly(period);
+
+			validatePeriodInput(period);
 
 			ProfitAndLossStatement profitAndLossStatement = ProfitAndLossFacade
 					.getInstance().getProfitAndSaveProfitAndLossStatement(
@@ -134,6 +139,27 @@ public class ProfitAndLossReportListDialog extends XJDialog {
 
 		} finally {
 			session.close();
+		}
+	}
+
+	private void validatePeriodInput(Calendar period) throws UserException {
+		Calendar now = Calendar.getInstance();
+		CommonUtils.setCalendarMonthAndYearOnly(now);
+
+		if (period.before(now)) {
+			/*
+			 * Mean that the request is for previous month
+			 */
+			return;
+		} else {
+			/*
+			 * Mean that the request is for this month of for next month, we
+			 * can't create such reports
+			 */
+			int month = period.get(Calendar.MONTH);
+			DateFormatSymbols symbols = new DateFormatSymbols();
+			throw new UserException("Laporan untuk bulan "
+					+ symbols.getMonths()[month] + " belum terbentuk");
 		}
 	}
 }

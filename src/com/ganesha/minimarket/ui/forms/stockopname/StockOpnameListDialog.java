@@ -4,6 +4,7 @@ import java.awt.Component;
 import java.awt.Window;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.sql.Timestamp;
 import java.util.ArrayList;
@@ -70,6 +71,8 @@ public class StockOpnameListDialog extends XJTableDialog {
 	private XJLabel lblBarcode;
 	private XJButton btnTambah;
 	private XJButton btnHapus;
+	private XJLabel lblNamaBarang;
+	private XJTextField txtNamaBarang;
 
 	{
 		tableParametersForAvailableItem.put(ColumnEnum.NUM,
@@ -206,7 +209,7 @@ public class StockOpnameListDialog extends XJTableDialog {
 
 		pnlBarcode = new XJPanel();
 		getContentPane().add(pnlBarcode, "cell 1 1,grow");
-		pnlBarcode.setLayout(new MigLayout("", "[grow]", "[][]"));
+		pnlBarcode.setLayout(new MigLayout("", "[grow]", "[][][][]"));
 
 		lblBarcode = new XJLabel();
 		lblBarcode.setText("Barcode [F8]");
@@ -225,6 +228,24 @@ public class StockOpnameListDialog extends XJTableDialog {
 			}
 		});
 		pnlBarcode.add(txtBarcode, "cell 0 1,growx");
+
+		lblNamaBarang = new XJLabel();
+		lblNamaBarang.setText("Nama Barang [F9]");
+		pnlBarcode.add(lblNamaBarang, "cell 0 2");
+
+		txtNamaBarang = new XJTextField();
+		txtNamaBarang.addKeyListener(new KeyAdapter() {
+			@Override
+			public void keyReleased(KeyEvent e) {
+				try {
+					cariNamaBarang();
+				} catch (Exception ex) {
+					ExceptionHandler.handleException(
+							StockOpnameListDialog.this, ex);
+				}
+			}
+		});
+		pnlBarcode.add(txtNamaBarang, "cell 0 3,growx");
 
 		btnTambah = new XJButton();
 		btnTambah.addActionListener(new ActionListener() {
@@ -357,6 +378,10 @@ public class StockOpnameListDialog extends XJTableDialog {
 			txtBarcode.setText("");
 			txtBarcode.requestFocus();
 			break;
+		case KeyEvent.VK_F9:
+			txtNamaBarang.setText("");
+			txtNamaBarang.requestFocus();
+			break;
 		case KeyEvent.VK_F12:
 			btnLanjut.doClick();
 			break;
@@ -410,6 +435,28 @@ public class StockOpnameListDialog extends XJTableDialog {
 
 		tambah();
 		txtBarcode.setText("");
+	}
+
+	private void cariNamaBarang() {
+		String namaBarang = txtNamaBarang.getText();
+		if (namaBarang == null || namaBarang.trim().equals("")) {
+			return;
+		}
+
+		String namaBarangOnTable = null;
+		XTableModel tableModel = (XTableModel) tblAvailableItem.getModel();
+		for (int rowIndex = 0; rowIndex < tableModel.getRowCount(); ++rowIndex) {
+			namaBarangOnTable = (String) tableModel.getValueAt(rowIndex,
+					tableParametersForAvailableItem.get(ColumnEnum.NAME)
+							.getColumnIndex());
+			if (namaBarangOnTable.toUpperCase().contains(
+					namaBarang.toUpperCase())) {
+				tblAvailableItem.changeSelection(rowIndex,
+						tableParametersForAvailableItem.get(ColumnEnum.NAME)
+								.getColumnIndex(), false, false);
+				break;
+			}
+		}
 	}
 
 	private List<StockOpnameDetail> createStockOpnameList()
