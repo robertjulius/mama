@@ -18,6 +18,7 @@ import com.ganesha.desktop.component.XJLabel;
 import com.ganesha.desktop.component.XJPanel;
 import com.ganesha.desktop.component.XJTextField;
 import com.ganesha.desktop.exeptions.ExceptionHandler;
+import java.awt.Color;
 
 public class XCaptchaAlert extends XJDialog {
 
@@ -80,6 +81,7 @@ public class XCaptchaAlert extends XJDialog {
 				"[grow]"));
 
 		lblInputCaptcha = new XJLabel();
+		lblInputCaptcha.setFont(new Font("Tahoma", Font.PLAIN, 18));
 		lblInputCaptcha.setText("Input Captcha");
 		pnlInput.add(lblInputCaptcha, "cell 1 0,alignx trailing");
 
@@ -87,6 +89,7 @@ public class XCaptchaAlert extends XJDialog {
 		pnlInput.add(txtCaptcha, "cell 2 0,growx");
 
 		lblCaptcha = new XJLabel();
+		lblCaptcha.setForeground(Color.BLUE);
 		lblCaptcha.setText("Captcha");
 		pnlInput.add(lblCaptcha, "cell 3 0");
 

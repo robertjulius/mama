@@ -48,8 +48,20 @@ public class ReceiptPrinter {
 	}
 
 	public String buildFooter() {
-		String footer = alignCenter("*** TERIMA KASIH ***", LENGTH_PARAGRAPH);
-		return footer;
+		StringBuilder builder = new StringBuilder();
+
+		builder.append(
+				alignCenter("KAMI TIDAK MELAYANI PENUKARAN BARANG",
+						LENGTH_PARAGRAPH)).append(NEW_LINE);
+
+		builder.append(
+				alignCenter("TANPA DISERTAI NOTA ASLI", LENGTH_PARAGRAPH))
+				.append(NEW_LINE);
+
+		builder.append(alignCenter("*** TERIMA KASIH ***", LENGTH_PARAGRAPH))
+				.append(NEW_LINE);
+
+		return builder.toString();
 	}
 
 	public String buildHeader() {

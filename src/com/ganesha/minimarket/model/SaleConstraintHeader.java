@@ -63,7 +63,7 @@ public class SaleConstraintHeader extends Trackable implements LogableEntity {
 	@Column(name = "POSTING_TRIED_COUNT", nullable = false)
 	private Integer postingTriedCount;
 
-	@Column(name = "POSTING_MESSAGE", nullable = true)
+	@Column(name = "POSTING_MESSAGE", nullable = true, length=4096)
 	private String postingMessage;
 
 	public static SaleConstraintHeader fromSaleHeader(SaleHeader saleHeader) {

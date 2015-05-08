@@ -10,6 +10,7 @@ import org.hibernate.criterion.Restrictions;
 
 import com.ganesha.core.exception.AppException;
 import com.ganesha.core.exception.UserException;
+import com.ganesha.core.utils.ThrowableUtils;
 import com.ganesha.hibernate.HibernateUtils;
 import com.ganesha.minimarket.constants.Enums.SaleConstraintPostingStatus;
 import com.ganesha.minimarket.model.SaleConstraintDetail;
@@ -121,14 +122,10 @@ public class SaleConstraintFacade {
 							} else {
 								saleConstraintHeader
 										.setPostingStatus(SaleConstraintPostingStatus.APP_EXCEPTION);
-								if (e instanceof AppException) {
-									saleConstraintHeader.setPostingMessage(e
-											.getCause().getMessage());
-								} else {
-									e.printStackTrace();
-									saleConstraintHeader.setPostingMessage(e
-											.getMessage());
-								}
+								saleConstraintHeader
+										.setPostingMessage(ThrowableUtils
+												.getStackTraceString(ThrowableUtils
+														.getRootCause(e)));
 							}
 							saleConstraintHeader
 									.setPostingTriedCount(saleConstraintHeader

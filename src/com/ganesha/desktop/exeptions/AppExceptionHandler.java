@@ -4,8 +4,6 @@ import java.awt.Font;
 import java.awt.Window;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.io.PrintWriter;
-import java.io.StringWriter;
 
 import javax.swing.JButton;
 import javax.swing.JDialog;
@@ -17,6 +15,7 @@ import net.miginfocom.swing.MigLayout;
 
 import org.slf4j.LoggerFactory;
 
+import com.ganesha.core.utils.ThrowableUtils;
 import com.ganesha.coreapps.constants.Loggers;
 import com.ganesha.desktop.component.XJDialog;
 import com.ganesha.desktop.component.XJPanel;
@@ -103,11 +102,7 @@ public class AppExceptionHandler extends XJDialog {
 	}
 
 	private void setStackTrace(Throwable throwable) {
-		StringWriter stringWriter = new StringWriter();
-		PrintWriter printWriter = new PrintWriter(stringWriter);
-		throwable.printStackTrace(printWriter);
-		printWriter.flush();
-		txtStackTrace.setText(stringWriter.toString());
+		txtStackTrace.setText(ThrowableUtils.getStackTraceString(throwable));
 
 		LoggerFactory.getLogger(Loggers.APPLICATION).error(
 				throwable.getMessage(), throwable);
