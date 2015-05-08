@@ -447,6 +447,8 @@ public class MultiSaleForm extends XJDialog {
 					"Tidak dapat melakukan penjualan barang")
 					&& e.getMessage().contains(
 							"karena stock di sistem hanya ada")) {
+				session.getTransaction().rollback();
+				session.beginTransaction();
 				performSaleConstraint(saleHeader, saleDetails, session);
 			} else {
 				throw e;
