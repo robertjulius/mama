@@ -80,4 +80,10 @@ public class XTableUtils {
 			}
 		}
 	}
+
+	public static void selectLastRow(XJTable table) {
+		int lastRowIndex = table.getRowCount() - 1;
+
+		table.changeSelection(lastRowIndex, 0, false, false);
+	}
 }
