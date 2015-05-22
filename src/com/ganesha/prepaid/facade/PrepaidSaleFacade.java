@@ -2,6 +2,7 @@ package com.ganesha.prepaid.facade;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;
+import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -34,7 +35,8 @@ public class PrepaidSaleFacade {
 
 		SaleHeader saleHeader = new SaleHeader();
 		saleHeader.setTransactionNumber(transactionNumber);
-		saleHeader.setTransactionTimestamp(DateUtils.getCurrentTimestamp());
+		saleHeader.setTransactionTimestamp(DateUtils
+				.getCurrent(Timestamp.class));
 		saleHeader.setCustomer(customer);
 		saleHeader.setSubTotalAmount(price);
 		saleHeader.setTaxPercent(BigDecimal.valueOf(0));
@@ -46,7 +48,8 @@ public class PrepaidSaleFacade {
 		saleHeader.setMoneyChange(moneyChange);
 
 		saleHeader.setLastUpdatedBy(Main.getUserLogin().getId());
-		saleHeader.setLastUpdatedTimestamp(DateUtils.getCurrentTimestamp());
+		saleHeader.setLastUpdatedTimestamp(DateUtils
+				.getCurrent(Timestamp.class));
 
 		SaleDetail saleDetail = new SaleDetail();
 		saleDetail.setSaleHeader(saleHeader);

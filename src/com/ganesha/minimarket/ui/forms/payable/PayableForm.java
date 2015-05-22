@@ -212,7 +212,7 @@ public class PayableForm extends XJDialog {
 			PayableFacade facade = PayableFacade.getInstance();
 
 			Date maturityDate = DateUtils.getNextDate(1, Calendar.YEAR,
-					DateUtils.getCurrentDate());
+					DateUtils.getCurrent(Date.class));
 
 			PayableSummary payableSummary = facade.payDebtFromCash(
 					supplier.getId(),

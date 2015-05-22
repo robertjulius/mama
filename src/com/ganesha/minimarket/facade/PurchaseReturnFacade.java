@@ -174,7 +174,7 @@ public class PurchaseReturnFacade implements TransactionFacade {
 		header.setReturnedInFullFlag(returnedInFullFlag);
 
 		header.setLastUpdatedBy(Main.getUserLogin().getId());
-		header.setLastUpdatedTimestamp(DateUtils.getCurrentTimestamp());
+		header.setLastUpdatedTimestamp(DateUtils.getCurrent(Timestamp.class));
 
 		return header;
 	}
@@ -183,7 +183,7 @@ public class PurchaseReturnFacade implements TransactionFacade {
 			Session session) throws AppException {
 		int clientId = purchaseReturnHeader.getSupplier().getId();
 		Date maturityDate = DateUtils.getNextDate(1, Calendar.YEAR,
-				DateUtils.getCurrentDate());
+				DateUtils.getCurrent(Date.class));
 		BigDecimal amount = purchaseReturnHeader.getDebtCut();
 		String description = GeneralConstants.DECRIPTION_PAYABLE_PURCHASE_RETURN
 				+ ": " + purchaseReturnHeader.getTransactionNumber();
@@ -197,7 +197,7 @@ public class PurchaseReturnFacade implements TransactionFacade {
 			Session session) throws AppException {
 		int clientId = purchaseReturnHeader.getSupplier().getId();
 		Date maturityDate = DateUtils.getNextDate(1, Calendar.YEAR,
-				DateUtils.getCurrentDate());
+				DateUtils.getCurrent(Date.class));
 		BigDecimal amount = purchaseReturnHeader.getRemainingReturnAmount();
 		String description = GeneralConstants.DECRIPTION_RECEIVABLE_PURCHASE_RETURN
 				+ ": " + purchaseReturnHeader.getTransactionNumber();

@@ -10,6 +10,7 @@ import java.awt.event.KeyEvent;
 import java.math.BigDecimal;
 import java.sql.Timestamp;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -58,10 +59,10 @@ import com.ganesha.minimarket.facade.GlobalFacade;
 import com.ganesha.minimarket.facade.ItemFacade;
 import com.ganesha.minimarket.facade.SaleConstraintFacade;
 import com.ganesha.minimarket.facade.SaleFacade;
-import com.ganesha.minimarket.model.SaleConstraintHeader;
 import com.ganesha.minimarket.model.Customer;
 import com.ganesha.minimarket.model.Item;
 import com.ganesha.minimarket.model.SaleConstraintDetail;
+import com.ganesha.minimarket.model.SaleConstraintHeader;
 import com.ganesha.minimarket.model.SaleDetail;
 import com.ganesha.minimarket.model.SaleHeader;
 import com.ganesha.minimarket.ui.forms.searchentity.SearchEntityDialog;
@@ -231,7 +232,7 @@ public class PenjualanForm extends XJDialog {
 		pnlHeader.add(btnCariCustomer, "cell 3 1");
 
 		dateChooser = new XJDateChooser();
-		dateChooser.setDate(DateUtils.getCurrentDate());
+		dateChooser.setDate(DateUtils.getCurrent(Date.class));
 		dateChooser.getCalendarButton().setMnemonic('T');
 		pnlHeader.add(dateChooser, "cell 4 1,grow");
 
@@ -550,7 +551,8 @@ public class PenjualanForm extends XJDialog {
 	private void performSaleConstraint(SaleHeader saleHeader,
 			List<SaleDetail> saleDetails, Session session) throws AppException {
 
-		SaleConstraintHeader saleConstraintHeader = SaleConstraintHeader.fromSaleHeader(saleHeader);
+		SaleConstraintHeader saleConstraintHeader = SaleConstraintHeader
+				.fromSaleHeader(saleHeader);
 		saleConstraintHeader
 				.setPostingStatus(SaleConstraintPostingStatus.WAITING);
 		saleConstraintHeader.setPostingTriedCount(0);

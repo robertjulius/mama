@@ -197,7 +197,7 @@ public class SaleFacade implements TransactionFacade {
 		header.setMoneyChange(BigDecimal.valueOf(moneyChange));
 
 		header.setLastUpdatedBy(Main.getUserLogin().getId());
-		header.setLastUpdatedTimestamp(DateUtils.getCurrentTimestamp());
+		header.setLastUpdatedTimestamp(DateUtils.getCurrent(Timestamp.class));
 
 		return header;
 	}

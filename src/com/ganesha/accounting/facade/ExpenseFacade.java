@@ -55,7 +55,7 @@ public class ExpenseFacade implements TransactionReportFacade {
 		expense.setDisabled(disabled);
 		expense.setDeleted(deleted);
 		expense.setLastUpdatedBy(Main.getUserLogin().getId());
-		expense.setLastUpdatedTimestamp(DateUtils.getCurrentTimestamp());
+		expense.setLastUpdatedTimestamp(DateUtils.getCurrent(Timestamp.class));
 
 		session.saveOrUpdate(expense);
 		return expense;
@@ -95,7 +95,7 @@ public class ExpenseFacade implements TransactionReportFacade {
 		expenseTransaction.setNotes(notes);
 		expenseTransaction.setLastUpdatedBy(Main.getUserLogin().getId());
 		expenseTransaction.setLastUpdatedTimestamp(DateUtils
-				.getCurrentTimestamp());
+				.getCurrent(Timestamp.class));
 
 		session.saveOrUpdate(expenseTransaction);
 
@@ -188,7 +188,7 @@ public class ExpenseFacade implements TransactionReportFacade {
 		expense.setDisabled(disabled);
 		expense.setDeleted(deleted);
 		expense.setLastUpdatedBy(Main.getUserLogin().getId());
-		expense.setLastUpdatedTimestamp(DateUtils.getCurrentTimestamp());
+		expense.setLastUpdatedTimestamp(DateUtils.getCurrent(Timestamp.class));
 
 		session.saveOrUpdate(expense);
 		return expense;

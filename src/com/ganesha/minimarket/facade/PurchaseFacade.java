@@ -143,7 +143,7 @@ public class PurchaseFacade implements TransactionFacade {
 		header.setPaidInFullFlag(paidInFullFlag);
 
 		header.setLastUpdatedBy(Main.getUserLogin().getId());
-		header.setLastUpdatedTimestamp(DateUtils.getCurrentTimestamp());
+		header.setLastUpdatedTimestamp(DateUtils.getCurrent(Timestamp.class));
 
 		return header;
 	}
@@ -152,7 +152,7 @@ public class PurchaseFacade implements TransactionFacade {
 			throws AppException {
 		int clientId = purchaseHeader.getSupplier().getId();
 		Date maturityDate = DateUtils.getNextDate(1, Calendar.YEAR,
-				DateUtils.getCurrentDate());
+				DateUtils.getCurrent(Date.class));
 		BigDecimal amount = purchaseHeader.getRemainingPayment();
 		String description = GeneralConstants.DECRIPTION_PAYABLE_PURCHASE
 				+ ": " + purchaseHeader.getTransactionNumber();

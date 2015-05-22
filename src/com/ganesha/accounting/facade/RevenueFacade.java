@@ -2,6 +2,7 @@ package com.ganesha.accounting.facade;
 
 import java.awt.Window;
 import java.math.BigDecimal;
+import java.sql.Timestamp;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
@@ -39,7 +40,7 @@ public class RevenueFacade implements TransactionReportFacade {
 		revenueTransaction.setNotes(notes);
 		revenueTransaction.setLastUpdatedBy(Main.getUserLogin().getId());
 		revenueTransaction.setLastUpdatedTimestamp(DateUtils
-				.getCurrentTimestamp());
+				.getCurrent(Timestamp.class));
 
 		session.saveOrUpdate(revenueTransaction);
 

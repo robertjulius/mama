@@ -1,5 +1,6 @@
 package com.ganesha.prepaid.facade;
 
+import java.sql.Timestamp;
 import java.util.List;
 
 import org.hibernate.Criteria;
@@ -47,7 +48,7 @@ public class MultiFacade {
 		multiMap.setDisabled(disabled);
 		multiMap.setDeleted(deleted);
 		multiMap.setLastUpdatedBy(Main.getUserLogin().getId());
-		multiMap.setLastUpdatedTimestamp(DateUtils.getCurrentTimestamp());
+		multiMap.setLastUpdatedTimestamp(DateUtils.getCurrent(Timestamp.class));
 
 		session.saveOrUpdate(multiMap);
 		return multiMap;
@@ -115,7 +116,7 @@ public class MultiFacade {
 		multiMap.setDisabled(disabled);
 		multiMap.setDeleted(deleted);
 		multiMap.setLastUpdatedBy(Main.getUserLogin().getId());
-		multiMap.setLastUpdatedTimestamp(DateUtils.getCurrentTimestamp());
+		multiMap.setLastUpdatedTimestamp(DateUtils.getCurrent(Timestamp.class));
 
 		session.saveOrUpdate(multiMap);
 		return multiMap;

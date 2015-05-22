@@ -63,13 +63,13 @@ public class ProfitAndLossCutoffFacade {
 		ProfitAndLossCutoff previousProfitAndLossCutoff = getLastProfitAndLossCutoff(session);
 
 		ProfitAndLossCutoff profitAndLossCutoff = create(
-				DateUtils.getCurrentTimestamp(), previousProfitAndLossCutoff,
+				DateUtils.getCurrent(Timestamp.class), previousProfitAndLossCutoff,
 				session);
 
 		profitAndLossCutoff.setLastUpdatedBy(Main.getUserLogin().getId());
 
 		profitAndLossCutoff.setLastUpdatedTimestamp(DateUtils
-				.getCurrentTimestamp());
+				.getCurrent(Timestamp.class));
 
 		session.saveOrUpdate(profitAndLossCutoff);
 

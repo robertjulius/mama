@@ -1,6 +1,7 @@
 package com.ganesha.minimarket.facade;
 
 import java.math.BigDecimal;
+import java.sql.Timestamp;
 import java.util.List;
 
 import org.hibernate.Criteria;
@@ -195,7 +196,7 @@ public class ItemFacade {
 		item.setDisabled(disabled);
 		item.setDeleted(deleted);
 		item.setLastUpdatedBy(Main.getUserLogin().getId());
-		item.setLastUpdatedTimestamp(DateUtils.getCurrentTimestamp());
+		item.setLastUpdatedTimestamp(DateUtils.getCurrent(Timestamp.class));
 
 		if (!item.getName().equals(name)) {
 			if (DBUtils.getInstance().isExists("name", name, Item.class,
@@ -218,7 +219,7 @@ public class ItemFacade {
 		item.setDisabled(disabled);
 		item.setDeleted(deleted);
 		item.setLastUpdatedBy(Main.getUserLogin().getId());
-		item.setLastUpdatedTimestamp(DateUtils.getCurrentTimestamp());
+		item.setLastUpdatedTimestamp(DateUtils.getCurrent(Timestamp.class));
 
 		session.saveOrUpdate(item);
 		deleteInsertSalePrices(sellPrices, item.getId(), session);
@@ -257,7 +258,7 @@ public class ItemFacade {
 		item.setDisabled(disabled);
 		item.setDeleted(deleted);
 		item.setLastUpdatedBy(Main.getUserLogin().getId());
-		item.setLastUpdatedTimestamp(DateUtils.getCurrentTimestamp());
+		item.setLastUpdatedTimestamp(DateUtils.getCurrent(Timestamp.class));
 
 		session.saveOrUpdate(item);
 		deleteInsertSalePrices(sellPrices, item.getId(), session);

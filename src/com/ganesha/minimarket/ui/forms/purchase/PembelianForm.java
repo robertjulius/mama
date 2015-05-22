@@ -10,6 +10,7 @@ import java.awt.event.KeyEvent;
 import java.math.BigDecimal;
 import java.sql.Timestamp;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -236,7 +237,7 @@ public class PembelianForm extends XJDialog {
 		pnlHeader.add(lblTanggal, "cell 0 1");
 
 		dateChooser = new XJDateChooser();
-		dateChooser.setDate(DateUtils.getCurrentDate());
+		dateChooser.setDate(DateUtils.getCurrent(Date.class));
 		dateChooser.getCalendarButton().setMnemonic('T');
 		pnlHeader.add(dateChooser, "cell 1 1 2 1,grow");
 

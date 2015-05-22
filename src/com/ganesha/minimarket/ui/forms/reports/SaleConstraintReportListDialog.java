@@ -102,7 +102,7 @@ public class SaleConstraintReportListDialog extends XJTableDialog {
 		pnlRangeTanggal.add(lblDari, "cell 0 1");
 
 		dtChBegin = new XJDateChooser();
-		dtChBegin.setDate(DateUtils.getCurrentDate());
+		dtChBegin.setDate(DateUtils.getCurrent(Date.class));
 		dtChBegin.getCalendarButton().setMnemonic('D');
 		pnlRangeTanggal.add(dtChBegin, "cell 1 1,grow");
 
@@ -111,7 +111,7 @@ public class SaleConstraintReportListDialog extends XJTableDialog {
 		pnlRangeTanggal.add(lblSampai, "cell 2 1");
 
 		dtChEnd = new XJDateChooser();
-		dtChEnd.setDate(DateUtils.getCurrentDate());
+		dtChEnd.setDate(DateUtils.getCurrent(Date.class));
 		dtChEnd.getCalendarButton().setMnemonic('S');
 		pnlRangeTanggal.add(dtChEnd, "cell 3 1,grow");
 

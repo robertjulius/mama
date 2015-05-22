@@ -70,7 +70,7 @@ public class SaleReturnReportFacade implements TransactionReportFacade {
 		paramReport.put("reportPeriodBegin", beginDate);
 		paramReport.put("reportPeriodEnd", endDate);
 		paramReport.put("reportBy", Main.getUserLogin().getName());
-		paramReport.put("reportDate", DateUtils.getCurrentDate());
+		paramReport.put("reportDate", DateUtils.getCurrent(Date.class));
 
 		List<SaleReturnDetail> saleReturnDetails = search(transactionNumber,
 				beginDate, endDate, session);

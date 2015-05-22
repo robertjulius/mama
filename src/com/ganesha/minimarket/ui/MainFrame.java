@@ -13,6 +13,8 @@ import javax.swing.JSeparator;
 
 import net.miginfocom.swing.MigLayout;
 
+import org.hibernate.Session;
+
 import com.ganesha.accounting.ui.forms.circle.CircleListDialog;
 import com.ganesha.accounting.ui.forms.expense.ExpenseListDialog;
 import com.ganesha.core.utils.DateUtils;
@@ -25,7 +27,9 @@ import com.ganesha.desktop.component.XJMenu;
 import com.ganesha.desktop.component.XJMenuItem;
 import com.ganesha.desktop.component.XJPanel;
 import com.ganesha.desktop.exeptions.ExceptionHandler;
+import com.ganesha.hibernate.HibernateUtils;
 import com.ganesha.minimarket.Main;
+import com.ganesha.minimarket.facade.DailyCashReportFacade;
 import com.ganesha.minimarket.ui.forms.customer.CustomerListDialog;
 import com.ganesha.minimarket.ui.forms.discount.DiscountListDialog;
 import com.ganesha.minimarket.ui.forms.expense.ExpenseTransactionForm;
@@ -528,11 +532,15 @@ public class MainFrame extends XJFrame {
 		mntmDailyCashReport.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
+				Session session = HibernateUtils.openSession();
 				try {
-					new SaleConstraintReportListDialog(MainFrame.this)
-							.setVisible(true);
+					DailyCashReportFacade.getInstance().search(
+							DateUtils.getCurrent(Date.class),
+							DateUtils.getCurrent(Date.class), session);
 				} catch (Exception ex) {
 					ExceptionHandler.handleException(MainFrame.this, ex);
+				} finally {
+					session.close();
 				}
 			}
 		});
@@ -664,13 +672,14 @@ public class MainFrame extends XJFrame {
 		lblTanggal.setForeground(Color.WHITE);
 		lblTanggal.setFont(new Font("Tahoma", Font.BOLD, 30));
 		lblTanggal.setText(Formatter.formatDateToString(DateUtils
-				.getCurrentDate()));
+				.getCurrent(Date.class)));
 		pnlRunningClock.add(lblTanggal, "cell 0 0,alignx center");
 
 		lblJam = new XJLabel();
 		lblJam.setForeground(Color.WHITE);
 		lblJam.setFont(new Font("Tahoma", Font.BOLD, 30));
-		lblJam.setText(Formatter.formatClockToString(DateUtils.getCurrentDate()));
+		lblJam.setText(Formatter.formatClockToString(DateUtils
+				.getCurrent(Date.class)));
 		pnlRunningClock.add(lblJam, "cell 0 1,alignx center");
 
 		pnlUserInfo = new XJPanel();
@@ -820,7 +829,7 @@ public class MainFrame extends XJFrame {
 			@Override
 			public void run() {
 				while (true) {
-					Date date = DateUtils.getCurrentDate();
+					Date date = DateUtils.getCurrent(Date.class);
 					String tanggal = Formatter.formatDateToString(date);
 					String jam = Formatter.formatClockToString(date);
 					lblTanggal.setText(tanggal);

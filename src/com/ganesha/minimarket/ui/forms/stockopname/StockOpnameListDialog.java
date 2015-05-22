@@ -8,6 +8,7 @@ import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.sql.Timestamp;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -184,7 +185,7 @@ public class StockOpnameListDialog extends XJTableDialog {
 
 		txtStartTimestamp = new XJTextField();
 		txtStartTimestamp.setText(Formatter.formatTimestampToString(DateUtils
-				.getCurrentDate()));
+				.getCurrent(Date.class)));
 		txtStartTimestamp.setEditable(false);
 		pnlInformation.add(txtStartTimestamp, "cell 1 1,growx");
 
@@ -317,7 +318,7 @@ public class StockOpnameListDialog extends XJTableDialog {
 			ExceptionHandler.handleException(this, ex);
 		}
 
-		startTimestamp = DateUtils.getCurrentTimestamp();
+		startTimestamp = DateUtils.getCurrent(Timestamp.class);
 
 		pack();
 		setLocationRelativeTo(parent);
@@ -591,7 +592,7 @@ public class StockOpnameListDialog extends XJTableDialog {
 
 		validateForm();
 
-		stopTimestamp = DateUtils.getCurrentTimestamp();
+		stopTimestamp = DateUtils.getCurrent(Timestamp.class);
 
 		StockOpnameFacade facade = StockOpnameFacade.getInstance();
 		List<StockOpnameDetail> stockOpnames = createStockOpnameList();

@@ -1,5 +1,6 @@
 package com.ganesha.minimarket.facade;
 
+import java.sql.Timestamp;
 import java.util.List;
 
 import org.hibernate.Criteria;
@@ -46,7 +47,7 @@ public class RoleFacade {
 		role.setDisabled(false);
 		role.setDeleted(false);
 		role.setLastUpdatedBy(Main.getUserLogin().getId());
-		role.setLastUpdatedTimestamp(DateUtils.getCurrentTimestamp());
+		role.setLastUpdatedTimestamp(DateUtils.getCurrent(Timestamp.class));
 
 		session.saveOrUpdate(role);
 
@@ -127,7 +128,7 @@ public class RoleFacade {
 		}
 
 		role.setLastUpdatedBy(Main.getUserLogin().getId());
-		role.setLastUpdatedTimestamp(DateUtils.getCurrentTimestamp());
+		role.setLastUpdatedTimestamp(DateUtils.getCurrent(Timestamp.class));
 
 		session.saveOrUpdate(role);
 

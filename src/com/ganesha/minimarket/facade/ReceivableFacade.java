@@ -1,6 +1,7 @@
 package com.ganesha.minimarket.facade;
 
 import java.math.BigDecimal;
+import java.sql.Timestamp;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
@@ -55,13 +56,13 @@ public class ReceivableFacade {
 						+ DateUtils.getTimestampInString());
 		receivableTransaction.setAccountAction(AccountAction.INCREASE);
 		receivableTransaction.setActionTimestamp(DateUtils
-				.getCurrentTimestamp());
+				.getCurrent(Timestamp.class));
 		receivableTransaction.setMaturityDate(maturityDate);
 		receivableTransaction.setAmount(amount);
 		receivableTransaction.setDescription(description);
 		receivableTransaction.setLastUpdatedBy(Main.getUserLogin().getId());
 		receivableTransaction.setLastUpdatedTimestamp(DateUtils
-				.getCurrentTimestamp());
+				.getCurrent(Timestamp.class));
 
 		session.saveOrUpdate(receivableTransaction);
 
@@ -74,7 +75,7 @@ public class ReceivableFacade {
 				.getId());
 		receivableSummary.setLastUpdatedBy(Main.getUserLogin().getId());
 		receivableSummary.setLastUpdatedTimestamp(DateUtils
-				.getCurrentTimestamp());
+				.getCurrent(Timestamp.class));
 		session.saveOrUpdate(receivableTransaction);
 
 		return receivableSummary;
@@ -108,13 +109,13 @@ public class ReceivableFacade {
 						+ DateUtils.getTimestampInString());
 		receivableTransaction.setAccountAction(AccountAction.DECREASE);
 		receivableTransaction.setActionTimestamp(DateUtils
-				.getCurrentTimestamp());
+				.getCurrent(Timestamp.class));
 		receivableTransaction.setMaturityDate(maturityDate);
 		receivableTransaction.setAmount(amount);
 		receivableTransaction.setDescription(description);
 		receivableTransaction.setLastUpdatedBy(Main.getUserLogin().getId());
 		receivableTransaction.setLastUpdatedTimestamp(DateUtils
-				.getCurrentTimestamp());
+				.getCurrent(Timestamp.class));
 
 		session.saveOrUpdate(receivableTransaction);
 
@@ -127,7 +128,7 @@ public class ReceivableFacade {
 				.getId());
 		receivableSummary.setLastUpdatedBy(Main.getUserLogin().getId());
 		receivableSummary.setLastUpdatedTimestamp(DateUtils
-				.getCurrentTimestamp());
+				.getCurrent(Timestamp.class));
 		session.saveOrUpdate(receivableTransaction);
 
 		AccountFacade.getInstance().handleReceivableTransaction(
@@ -174,7 +175,7 @@ public class ReceivableFacade {
 		receivableSummary.setLastReceivableTransactionId(-1);
 		receivableSummary.setLastUpdatedBy(Main.getUserLogin().getId());
 		receivableSummary.setLastUpdatedTimestamp(DateUtils
-				.getCurrentTimestamp());
+				.getCurrent(Timestamp.class));
 
 		session.saveOrUpdate(receivableSummary);
 		return receivableSummary;

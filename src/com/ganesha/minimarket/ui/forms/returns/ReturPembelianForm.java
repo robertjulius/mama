@@ -173,7 +173,7 @@ public class ReturPembelianForm extends XJDialog {
 		pnlHeader.add(lblTanggal, "cell 0 1");
 
 		dateChooser = new XJDateChooser();
-		dateChooser.setDate(DateUtils.getCurrentDate());
+		dateChooser.setDate(DateUtils.getCurrent(Date.class));
 		dateChooser.getCalendarButton().setMnemonic('T');
 		pnlHeader.add(dateChooser, "cell 1 1 2 1,grow");
 

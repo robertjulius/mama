@@ -1,5 +1,6 @@
 package com.ganesha.prepaid.facade;
 
+import java.sql.Timestamp;
 import java.util.List;
 
 import org.hibernate.Criteria;
@@ -49,7 +50,8 @@ public class VoucherTypeFacade {
 		voucherType.setDisabled(disabled);
 		voucherType.setDeleted(deleted);
 		voucherType.setLastUpdatedBy(Main.getUserLogin().getId());
-		voucherType.setLastUpdatedTimestamp(DateUtils.getCurrentTimestamp());
+		voucherType.setLastUpdatedTimestamp(DateUtils
+				.getCurrent(Timestamp.class));
 
 		session.saveOrUpdate(voucherType);
 		return voucherType;
@@ -126,7 +128,8 @@ public class VoucherTypeFacade {
 		voucherType.setDisabled(disabled);
 		voucherType.setDeleted(deleted);
 		voucherType.setLastUpdatedBy(Main.getUserLogin().getId());
-		voucherType.setLastUpdatedTimestamp(DateUtils.getCurrentTimestamp());
+		voucherType.setLastUpdatedTimestamp(DateUtils
+				.getCurrent(Timestamp.class));
 
 		session.saveOrUpdate(voucherType);
 		return voucherType;

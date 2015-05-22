@@ -59,7 +59,7 @@ public class StockOpnameFacade {
 		BigDecimal lossAmount = calculateLossAmount(item, lossCount);
 
 		item.setLastUpdatedBy(Main.getUserLogin().getId());
-		item.setLastUpdatedTimestamp(DateUtils.getCurrentTimestamp());
+		item.setLastUpdatedTimestamp(DateUtils.getCurrent(Timestamp.class));
 
 		StockOpnameDetail stockOpname = new StockOpnameDetail();
 		stockOpname.setItem(item);
@@ -123,7 +123,7 @@ public class StockOpnameFacade {
 		stockOpnameHeader.setPerformedEndTimestamp(performedEndTimestamp);
 		stockOpnameHeader.setLastUpdatedBy(Main.getUserLogin().getId());
 		stockOpnameHeader.setLastUpdatedTimestamp(DateUtils
-				.getCurrentTimestamp());
+				.getCurrent(Timestamp.class));
 
 		session.saveOrUpdate(stockOpnameHeader);
 

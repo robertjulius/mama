@@ -1,5 +1,6 @@
 package com.ganesha.minimarket.facade;
 
+import java.sql.Timestamp;
 import java.util.List;
 
 import org.hibernate.Criteria;
@@ -47,7 +48,7 @@ public class CustomerFacade {
 		customer.setDisabled(disabled);
 		customer.setDeleted(deleted);
 		customer.setLastUpdatedBy(Main.getUserLogin().getId());
-		customer.setLastUpdatedTimestamp(DateUtils.getCurrentTimestamp());
+		customer.setLastUpdatedTimestamp(DateUtils.getCurrent(Timestamp.class));
 
 		session.saveOrUpdate(customer);
 		return customer;
@@ -114,7 +115,7 @@ public class CustomerFacade {
 		customer.setDisabled(disabled);
 		customer.setDeleted(deleted);
 		customer.setLastUpdatedBy(Main.getUserLogin().getId());
-		customer.setLastUpdatedTimestamp(DateUtils.getCurrentTimestamp());
+		customer.setLastUpdatedTimestamp(DateUtils.getCurrent(Timestamp.class));
 
 		session.saveOrUpdate(customer);
 		return customer;

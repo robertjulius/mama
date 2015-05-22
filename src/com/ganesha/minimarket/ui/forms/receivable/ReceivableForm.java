@@ -212,7 +212,7 @@ public class ReceivableForm extends XJDialog {
 			ReceivableFacade facade = ReceivableFacade.getInstance();
 
 			Date maturityDate = DateUtils.getNextDate(1, Calendar.YEAR,
-					DateUtils.getCurrentDate());
+					DateUtils.getCurrent(Date.class));
 
 			ReceivableSummary receivableSummary = facade.receiveAndStoreToCash(
 					supplier.getId(),

@@ -3,6 +3,7 @@ package com.ganesha.minimarket.facade;
 import java.awt.Window;
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -87,7 +88,7 @@ public class ItemStockReportFacade {
 		paramReport.put("reportName", REPORT_NAME);
 		paramReport.put("orderBy", orderByText);
 		paramReport.put("reportBy", Main.getUserLogin().getName());
-		paramReport.put("reportDate", DateUtils.getCurrentDate());
+		paramReport.put("reportDate", DateUtils.getCurrent(Date.class));
 
 		List<Map<String, Object>> items = search(orderById, session);
 

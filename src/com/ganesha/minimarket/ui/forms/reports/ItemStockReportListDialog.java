@@ -8,6 +8,7 @@ import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
 import java.awt.event.KeyEvent;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -115,7 +116,7 @@ public class ItemStockReportListDialog extends XJTableDialog {
 		lblTanggal = new XJLabel();
 		lblTanggal.setFont(new Font("Tahoma", Font.PLAIN, 18));
 		lblTanggal.setText(Formatter.formatTimestampToString(DateUtils
-				.getCurrentDate()));
+				.getCurrent(Date.class)));
 		pnlInformation.add(lblTanggal, "cell 1 1 2 1");
 
 		lblUrutBerdasarkan = new XJLabel();

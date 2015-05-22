@@ -2,7 +2,6 @@ package com.ganesha.accounting.facade;
 
 import java.math.BigDecimal;
 import java.sql.Timestamp;
-import java.util.List;
 import java.util.Map;
 
 import org.hibernate.Criteria;
@@ -19,7 +18,6 @@ import com.ganesha.core.exception.AppException;
 import com.ganesha.core.utils.DateUtils;
 import com.ganesha.hibernate.HqlParameter;
 import com.ganesha.minimarket.Main;
-import com.ganesha.minimarket.model.SaleConstraintHeader;
 
 public class AccountFacade {
 
@@ -34,20 +32,6 @@ public class AccountFacade {
 
 	private AccountFacade() {
 	}
-
-	public List<SaleConstraintHeader> search(Integer entityId, Integer coaId,
-			Timestamp timestampBegin, Timestamp timestampEnd, Session session) {
-		Criteria criteria = session.createCriteria(SaleConstraintHeader.class);
-		@SuppressWarnings("unchecked")
-		List<SaleConstraintHeader> saleConstraintHeaders = criteria.list();
-		return saleConstraintHeaders;
-	}
-
-	/*
-	 * public List<Accounts> search(Integer coaId, Date date, Session session) {
-	 * 
-	 * }
-	 */
 
 	public BigDecimal getAccountSum(int coaId, Integer entityId,
 			Timestamp afterThisTimestamp, DebitCreditFlag increaseOn,
@@ -154,7 +138,7 @@ public class AccountFacade {
 			String notes, BigDecimal amount, Session session)
 			throws AppException {
 
-		Timestamp currentTimestamp = DateUtils.getCurrentTimestamp();
+		Timestamp currentTimestamp = DateUtils.getCurrent(Timestamp.class);
 
 		AccountFacade.getInstance().insertIntoAccount(coaId, entityId,
 				currentTimestamp, notes, "", DebitCreditFlag.DEBIT, amount,
@@ -168,7 +152,7 @@ public class AccountFacade {
 	public void handlePayableTransaction(Integer entityId, BigDecimal amount,
 			Session session) throws AppException {
 
-		Timestamp currentTimestamp = DateUtils.getCurrentTimestamp();
+		Timestamp currentTimestamp = DateUtils.getCurrent(Timestamp.class);
 		String notes = "Pembayaran Hutang";
 
 		AccountFacade.getInstance().insertIntoAccount(
@@ -184,7 +168,7 @@ public class AccountFacade {
 			BigDecimal advancePayment, BigDecimal remainingPayment,
 			Session session) throws AppException {
 
-		Timestamp currentTimestamp = DateUtils.getCurrentTimestamp();
+		Timestamp currentTimestamp = DateUtils.getCurrent(Timestamp.class);
 		String notes = "Pembelian";
 
 		AccountFacade.getInstance().insertIntoAccount(
@@ -205,7 +189,7 @@ public class AccountFacade {
 			BigDecimal remainingReturnAmount, BigDecimal debtCut,
 			Session session) throws AppException {
 
-		Timestamp currentTimestamp = DateUtils.getCurrentTimestamp();
+		Timestamp currentTimestamp = DateUtils.getCurrent(Timestamp.class);
 		String notes = "Retur Pembelian";
 
 		AccountFacade.getInstance().insertIntoAccount(
@@ -229,7 +213,7 @@ public class AccountFacade {
 	public void handleReceivableTransaction(Integer entityId,
 			BigDecimal amount, Session session) throws AppException {
 
-		Timestamp currentTimestamp = DateUtils.getCurrentTimestamp();
+		Timestamp currentTimestamp = DateUtils.getCurrent(Timestamp.class);
 		String notes = "Penerimaan Piutang";
 
 		AccountFacade.getInstance().insertIntoAccount(
@@ -245,7 +229,7 @@ public class AccountFacade {
 			String notes, BigDecimal amount, Session session)
 			throws AppException {
 
-		Timestamp currentTimestamp = DateUtils.getCurrentTimestamp();
+		Timestamp currentTimestamp = DateUtils.getCurrent(Timestamp.class);
 
 		AccountFacade.getInstance().insertIntoAccount(
 				CoaCodeConstants.KAS_KECIL, entityId, currentTimestamp, notes,
@@ -260,7 +244,7 @@ public class AccountFacade {
 	public void handleSale(Integer entityId, BigDecimal totalAmount,
 			Session session) throws AppException {
 
-		Timestamp currentTimestamp = DateUtils.getCurrentTimestamp();
+		Timestamp currentTimestamp = DateUtils.getCurrent(Timestamp.class);
 		String notes = "Penjualan";
 
 		AccountFacade.getInstance().insertIntoAccount(
@@ -275,7 +259,7 @@ public class AccountFacade {
 	public void handleSaleReturn(Integer entityId,
 			BigDecimal totalReturnAmount, Session session) throws AppException {
 
-		Timestamp currentTimestamp = DateUtils.getCurrentTimestamp();
+		Timestamp currentTimestamp = DateUtils.getCurrent(Timestamp.class);
 		String notes = "Retur Penjualan";
 
 		AccountFacade.getInstance().insertIntoAccount(

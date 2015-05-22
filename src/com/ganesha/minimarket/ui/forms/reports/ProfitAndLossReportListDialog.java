@@ -63,7 +63,7 @@ public class ProfitAndLossReportListDialog extends XJDialog {
 
 		yearChooser = new XJYearChooser();
 		pnlFilter.add(yearChooser, "cell 4 1,growx");
-		// dtChEnd.setDate(CommonUtils.getCurrentDate());
+		// dtChEnd.setDate(CommonUtils.getCurrent(Date.class));
 		// dtChEnd.getCalendarButton().setMnemonic('S');
 
 		XJPanel panel = new XJPanel();

@@ -1,6 +1,7 @@
 package com.ganesha.minimarket.facade;
 
 import java.math.BigDecimal;
+import java.sql.Timestamp;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
@@ -54,13 +55,14 @@ public class PayableFacade {
 				.setReffNumber(GeneralConstants.PREFIX_TRX_NUMBER_PAYABLE
 						+ DateUtils.getTimestampInString());
 		payableTransaction.setAccountAction(AccountAction.INCREASE);
-		payableTransaction.setActionTimestamp(DateUtils.getCurrentTimestamp());
+		payableTransaction.setActionTimestamp(DateUtils
+				.getCurrent(Timestamp.class));
 		payableTransaction.setMaturityDate(maturityDate);
 		payableTransaction.setAmount(amount);
 		payableTransaction.setDescription(description);
 		payableTransaction.setLastUpdatedBy(Main.getUserLogin().getId());
 		payableTransaction.setLastUpdatedTimestamp(DateUtils
-				.getCurrentTimestamp());
+				.getCurrent(Timestamp.class));
 
 		session.saveOrUpdate(payableTransaction);
 
@@ -71,7 +73,8 @@ public class PayableFacade {
 
 		payableSummary.setLastPayableTransactionId(payableTransaction.getId());
 		payableSummary.setLastUpdatedBy(Main.getUserLogin().getId());
-		payableSummary.setLastUpdatedTimestamp(DateUtils.getCurrentTimestamp());
+		payableSummary.setLastUpdatedTimestamp(DateUtils
+				.getCurrent(Timestamp.class));
 
 		session.saveOrUpdate(payableSummary);
 		return payableSummary;
@@ -96,13 +99,14 @@ public class PayableFacade {
 				.setReffNumber(GeneralConstants.PREFIX_TRX_NUMBER_PAYABLE
 						+ DateUtils.getTimestampInString());
 		payableTransaction.setAccountAction(AccountAction.DECREASE);
-		payableTransaction.setActionTimestamp(DateUtils.getCurrentTimestamp());
+		payableTransaction.setActionTimestamp(DateUtils
+				.getCurrent(Timestamp.class));
 		payableTransaction.setMaturityDate(maturityDate);
 		payableTransaction.setAmount(amount);
 		payableTransaction.setDescription(description);
 		payableTransaction.setLastUpdatedBy(Main.getUserLogin().getId());
 		payableTransaction.setLastUpdatedTimestamp(DateUtils
-				.getCurrentTimestamp());
+				.getCurrent(Timestamp.class));
 
 		session.saveOrUpdate(payableTransaction);
 
@@ -113,7 +117,8 @@ public class PayableFacade {
 
 		payableSummary.setLastPayableTransactionId(payableTransaction.getId());
 		payableSummary.setLastUpdatedBy(Main.getUserLogin().getId());
-		payableSummary.setLastUpdatedTimestamp(DateUtils.getCurrentTimestamp());
+		payableSummary.setLastUpdatedTimestamp(DateUtils
+				.getCurrent(Timestamp.class));
 
 		session.saveOrUpdate(payableSummary);
 		return payableSummary;
@@ -146,13 +151,14 @@ public class PayableFacade {
 				.setReffNumber(GeneralConstants.PREFIX_TRX_NUMBER_PAYABLE
 						+ DateUtils.getTimestampInString());
 		payableTransaction.setAccountAction(AccountAction.DECREASE);
-		payableTransaction.setActionTimestamp(DateUtils.getCurrentTimestamp());
+		payableTransaction.setActionTimestamp(DateUtils
+				.getCurrent(Timestamp.class));
 		payableTransaction.setMaturityDate(maturityDate);
 		payableTransaction.setAmount(amount);
 		payableTransaction.setDescription(description);
 		payableTransaction.setLastUpdatedBy(Main.getUserLogin().getId());
 		payableTransaction.setLastUpdatedTimestamp(DateUtils
-				.getCurrentTimestamp());
+				.getCurrent(Timestamp.class));
 
 		session.saveOrUpdate(payableTransaction);
 
@@ -163,7 +169,8 @@ public class PayableFacade {
 
 		payableSummary.setLastPayableTransactionId(payableTransaction.getId());
 		payableSummary.setLastUpdatedBy(Main.getUserLogin().getId());
-		payableSummary.setLastUpdatedTimestamp(DateUtils.getCurrentTimestamp());
+		payableSummary.setLastUpdatedTimestamp(DateUtils
+				.getCurrent(Timestamp.class));
 
 		session.saveOrUpdate(payableSummary);
 
@@ -210,7 +217,8 @@ public class PayableFacade {
 		payableSummary.setRemainingAmount(BigDecimal.valueOf(0));
 		payableSummary.setLastPayableTransactionId(-1);
 		payableSummary.setLastUpdatedBy(Main.getUserLogin().getId());
-		payableSummary.setLastUpdatedTimestamp(DateUtils.getCurrentTimestamp());
+		payableSummary.setLastUpdatedTimestamp(DateUtils
+				.getCurrent(Timestamp.class));
 
 		session.saveOrUpdate(payableSummary);
 		return payableSummary;

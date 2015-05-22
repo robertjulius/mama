@@ -1,5 +1,6 @@
 package com.ganesha.minimarket.facade;
 
+import java.sql.Timestamp;
 import java.util.List;
 
 import org.hibernate.Criteria;
@@ -9,8 +10,8 @@ import org.hibernate.criterion.Disjunction;
 import org.hibernate.criterion.Restrictions;
 
 import com.ganesha.core.exception.UserException;
-import com.ganesha.core.utils.DateUtils;
 import com.ganesha.core.utils.DBUtils;
+import com.ganesha.core.utils.DateUtils;
 import com.ganesha.minimarket.Main;
 import com.ganesha.minimarket.model.Supplier;
 
@@ -67,7 +68,7 @@ public class SupplierFacade {
 		supplier.setDisabled(disabled);
 		supplier.setDeleted(deleted);
 		supplier.setLastUpdatedBy(Main.getUserLogin().getId());
-		supplier.setLastUpdatedTimestamp(DateUtils.getCurrentTimestamp());
+		supplier.setLastUpdatedTimestamp(DateUtils.getCurrent(Timestamp.class));
 
 		session.saveOrUpdate(supplier);
 		return supplier;
@@ -156,7 +157,7 @@ public class SupplierFacade {
 		supplier.setDisabled(disabled);
 		supplier.setDeleted(deleted);
 		supplier.setLastUpdatedBy(Main.getUserLogin().getId());
-		supplier.setLastUpdatedTimestamp(DateUtils.getCurrentTimestamp());
+		supplier.setLastUpdatedTimestamp(DateUtils.getCurrent(Timestamp.class));
 
 		session.saveOrUpdate(supplier);
 		return supplier;

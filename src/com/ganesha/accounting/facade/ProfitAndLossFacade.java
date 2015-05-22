@@ -7,6 +7,7 @@ import java.math.BigDecimal;
 import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
@@ -79,7 +80,7 @@ public class ProfitAndLossFacade {
 						.getId());
 
 				newProfitAndLossStatement.setLastUpdatedTimestamp(DateUtils
-						.getCurrentTimestamp());
+						.getCurrent(Timestamp.class));
 
 				session.saveOrUpdate(newProfitAndLossStatement);
 			}
@@ -241,7 +242,7 @@ public class ProfitAndLossFacade {
 				Calendar.LONG, Locale.getDefault()));
 		paramReport.put("year", profitAndLossStatement.getPeriodYear());
 		paramReport.put("reportBy", Main.getUserLogin().getName());
-		paramReport.put("reportDate", DateUtils.getCurrentDate());
+		paramReport.put("reportDate", DateUtils.getCurrent(Date.class));
 
 		paramReport.put("penjualan", profitAndLossStatement.getPenjualan());
 		paramReport.put("potonganPenjualan",

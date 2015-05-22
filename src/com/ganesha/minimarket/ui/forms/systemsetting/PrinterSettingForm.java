@@ -6,6 +6,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.print.PrinterJob;
+import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -272,7 +273,7 @@ public class PrinterSettingForm extends XJDialog {
 		String transactionNumber = "No      : " + "PUR0123456789";
 		String transactionTimestamp = "Tanggal : "
 				+ Formatter.formatTimestampToString(DateUtils
-						.getCurrentTimestamp());
+						.getCurrent(Timestamp.class));
 		String cashier = "Kasir   : " + Main.getUserLogin().getName();
 		String totalBelanja = Formatter.formatNumberToString(312500);
 		String pay = Formatter.formatNumberToString(500000);

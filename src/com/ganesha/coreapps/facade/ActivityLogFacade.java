@@ -1,5 +1,7 @@
 package com.ganesha.coreapps.facade;
 
+import java.sql.Timestamp;
+
 import org.hibernate.Session;
 
 import com.ganesha.core.utils.DateUtils;
@@ -45,7 +47,7 @@ public class ActivityLogFacade {
 		activityLog.setActionType(actionType);
 		activityLog.setEntityClass(logableEntity.getClass().getName());
 		activityLog.setEntityId(logableEntity.getId());
-		activityLog.setActionTimestamp(DateUtils.getCurrentTimestamp());
+		activityLog.setActionTimestamp(DateUtils.getCurrent(Timestamp.class));
 
 		session.saveOrUpdate(activityLog);
 		return activityLog;

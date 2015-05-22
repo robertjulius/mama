@@ -1,6 +1,7 @@
 package com.ganesha.minimarket.facade;
 
 import java.math.BigDecimal;
+import java.sql.Timestamp;
 import java.util.List;
 
 import org.hibernate.Criteria;
@@ -60,7 +61,7 @@ public class DiscountFacade {
 		discount.setDiscountPercent(discountPercent);
 		discount.setDisabled(disabled);
 		discount.setLastUpdatedBy(Main.getUserLogin().getId());
-		discount.setLastUpdatedTimestamp(DateUtils.getCurrentTimestamp());
+		discount.setLastUpdatedTimestamp(DateUtils.getCurrent(Timestamp.class));
 
 		session.saveOrUpdate(discount);
 		return discount;

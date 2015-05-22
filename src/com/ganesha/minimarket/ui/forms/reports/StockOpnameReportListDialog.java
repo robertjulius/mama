@@ -97,7 +97,7 @@ public class StockOpnameReportListDialog extends XJTableDialog {
 
 		dtChBegin = new XJDateChooser();
 		pnlFilter.add(dtChBegin, "cell 1 1,growx");
-		dtChBegin.setDate(DateUtils.getCurrentDate());
+		dtChBegin.setDate(DateUtils.getCurrent(Date.class));
 		dtChBegin.getCalendarButton().setMnemonic('D');
 
 		XJButton btnRefresh = new XJButton();
@@ -122,7 +122,7 @@ public class StockOpnameReportListDialog extends XJTableDialog {
 
 		dtChEnd = new XJDateChooser();
 		pnlFilter.add(dtChEnd, "cell 1 2,growx");
-		dtChEnd.setDate(DateUtils.getCurrentDate());
+		dtChEnd.setDate(DateUtils.getCurrent(Date.class));
 		dtChEnd.getCalendarButton().setMnemonic('S');
 
 		JScrollPane scrollPane = new JScrollPane(table);

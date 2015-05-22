@@ -1,5 +1,6 @@
 package com.ganesha.prepaid.facade;
 
+import java.sql.Timestamp;
 import java.util.List;
 
 import org.hibernate.Criteria;
@@ -42,7 +43,7 @@ public class ProviderFacade {
 		provider.setDisabled(disabled);
 		provider.setDeleted(deleted);
 		provider.setLastUpdatedBy(Main.getUserLogin().getId());
-		provider.setLastUpdatedTimestamp(DateUtils.getCurrentTimestamp());
+		provider.setLastUpdatedTimestamp(DateUtils.getCurrent(Timestamp.class));
 
 		session.saveOrUpdate(provider);
 		return provider;
@@ -112,7 +113,7 @@ public class ProviderFacade {
 		provider.setDisabled(disabled);
 		provider.setDeleted(deleted);
 		provider.setLastUpdatedBy(Main.getUserLogin().getId());
-		provider.setLastUpdatedTimestamp(DateUtils.getCurrentTimestamp());
+		provider.setLastUpdatedTimestamp(DateUtils.getCurrent(Timestamp.class));
 
 		session.saveOrUpdate(provider);
 		return provider;

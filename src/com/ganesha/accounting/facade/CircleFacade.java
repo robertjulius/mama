@@ -1,5 +1,6 @@
 package com.ganesha.accounting.facade;
 
+import java.sql.Timestamp;
 import java.util.List;
 
 import org.hibernate.Criteria;
@@ -43,7 +44,7 @@ public class CircleFacade {
 		circle.setDisabled(disabled);
 		circle.setDeleted(deleted);
 		circle.setLastUpdatedBy(Main.getUserLogin().getId());
-		circle.setLastUpdatedTimestamp(DateUtils.getCurrentTimestamp());
+		circle.setLastUpdatedTimestamp(DateUtils.getCurrent(Timestamp.class));
 
 		session.saveOrUpdate(circle);
 		return circle;
@@ -102,7 +103,7 @@ public class CircleFacade {
 		circle.setDisabled(disabled);
 		circle.setDeleted(deleted);
 		circle.setLastUpdatedBy(Main.getUserLogin().getId());
-		circle.setLastUpdatedTimestamp(DateUtils.getCurrentTimestamp());
+		circle.setLastUpdatedTimestamp(DateUtils.getCurrent(Timestamp.class));
 
 		session.saveOrUpdate(circle);
 		return circle;
