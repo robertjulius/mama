@@ -7,7 +7,6 @@ import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.criterion.Restrictions;
 
-import com.ganesha.core.exception.AppException;
 import com.ganesha.core.utils.GeneralConstants;
 import com.ganesha.desktop.component.ComboBoxObject;
 import com.ganesha.desktop.component.XJComboBox;

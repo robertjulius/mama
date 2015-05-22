@@ -31,7 +31,7 @@ import com.ganesha.accounting.constants.Enums.DebitCreditFlag;
 import com.ganesha.accounting.model.ExpenseTransaction;
 import com.ganesha.accounting.model.ProfitAndLossStatement;
 import com.ganesha.core.exception.AppException;
-import com.ganesha.core.utils.CommonUtils;
+import com.ganesha.core.utils.DateUtils;
 import com.ganesha.minimarket.Main;
 import com.ganesha.minimarket.facade.ItemFacade;
 import com.ganesha.minimarket.ui.forms.reports.ReportViewerDialog;
@@ -62,7 +62,7 @@ public class ProfitAndLossFacade {
 		ProfitAndLossStatement lastProfitAndLossStatement = getLastProfitAndLossStatement(session);
 
 		Calendar lastStatementPeriod = Calendar.getInstance();
-		CommonUtils.setCalendarMonthAndYearOnly(lastStatementPeriod,
+		DateUtils.setCalendarMonthAndYearOnly(lastStatementPeriod,
 				lastProfitAndLossStatement.getPeriodMonth(),
 				lastProfitAndLossStatement.getPeriodYear());
 
@@ -78,7 +78,7 @@ public class ProfitAndLossFacade {
 				newProfitAndLossStatement.setLastUpdatedBy(Main.getUserLogin()
 						.getId());
 
-				newProfitAndLossStatement.setLastUpdatedTimestamp(CommonUtils
+				newProfitAndLossStatement.setLastUpdatedTimestamp(DateUtils
 						.getCurrentTimestamp());
 
 				session.saveOrUpdate(newProfitAndLossStatement);
@@ -241,7 +241,7 @@ public class ProfitAndLossFacade {
 				Calendar.LONG, Locale.getDefault()));
 		paramReport.put("year", profitAndLossStatement.getPeriodYear());
 		paramReport.put("reportBy", Main.getUserLogin().getName());
-		paramReport.put("reportDate", CommonUtils.getCurrentDate());
+		paramReport.put("reportDate", DateUtils.getCurrentDate());
 
 		paramReport.put("penjualan", profitAndLossStatement.getPenjualan());
 		paramReport.put("potonganPenjualan",

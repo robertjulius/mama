@@ -7,8 +7,8 @@ import org.hibernate.Session;
 import org.hibernate.criterion.Restrictions;
 
 import com.ganesha.core.exception.UserException;
-import com.ganesha.core.utils.CommonUtils;
 import com.ganesha.core.utils.DBUtils;
+import com.ganesha.core.utils.DateUtils;
 import com.ganesha.minimarket.Main;
 import com.ganesha.minimarket.model.Customer;
 
@@ -47,7 +47,7 @@ public class CustomerFacade {
 		customer.setDisabled(disabled);
 		customer.setDeleted(deleted);
 		customer.setLastUpdatedBy(Main.getUserLogin().getId());
-		customer.setLastUpdatedTimestamp(CommonUtils.getCurrentTimestamp());
+		customer.setLastUpdatedTimestamp(DateUtils.getCurrentTimestamp());
 
 		session.saveOrUpdate(customer);
 		return customer;
@@ -114,7 +114,7 @@ public class CustomerFacade {
 		customer.setDisabled(disabled);
 		customer.setDeleted(deleted);
 		customer.setLastUpdatedBy(Main.getUserLogin().getId());
-		customer.setLastUpdatedTimestamp(CommonUtils.getCurrentTimestamp());
+		customer.setLastUpdatedTimestamp(DateUtils.getCurrentTimestamp());
 
 		session.saveOrUpdate(customer);
 		return customer;

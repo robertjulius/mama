@@ -13,7 +13,7 @@ import org.hibernate.Session;
 import com.ganesha.accounting.facade.AccountFacade;
 import com.ganesha.core.exception.AppException;
 import com.ganesha.core.exception.UserException;
-import com.ganesha.core.utils.CommonUtils;
+import com.ganesha.core.utils.DateUtils;
 import com.ganesha.core.utils.GeneralConstants;
 import com.ganesha.hibernate.HqlParameter;
 import com.ganesha.minimarket.Main;
@@ -143,7 +143,7 @@ public class PurchaseFacade implements TransactionFacade {
 		header.setPaidInFullFlag(paidInFullFlag);
 
 		header.setLastUpdatedBy(Main.getUserLogin().getId());
-		header.setLastUpdatedTimestamp(CommonUtils.getCurrentTimestamp());
+		header.setLastUpdatedTimestamp(DateUtils.getCurrentTimestamp());
 
 		return header;
 	}
@@ -151,8 +151,8 @@ public class PurchaseFacade implements TransactionFacade {
 	private void addToPayable(PurchaseHeader purchaseHeader, Session session)
 			throws AppException {
 		int clientId = purchaseHeader.getSupplier().getId();
-		Date maturityDate = CommonUtils.getNextDate(1, Calendar.YEAR,
-				CommonUtils.getCurrentDate());
+		Date maturityDate = DateUtils.getNextDate(1, Calendar.YEAR,
+				DateUtils.getCurrentDate());
 		BigDecimal amount = purchaseHeader.getRemainingPayment();
 		String description = GeneralConstants.DECRIPTION_PAYABLE_PURCHASE
 				+ ": " + purchaseHeader.getTransactionNumber();

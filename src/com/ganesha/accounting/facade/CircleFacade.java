@@ -9,8 +9,8 @@ import org.hibernate.criterion.Restrictions;
 import com.ganesha.accounting.constants.Enums.CircleUnit;
 import com.ganesha.accounting.model.Circle;
 import com.ganesha.core.exception.UserException;
-import com.ganesha.core.utils.CommonUtils;
 import com.ganesha.core.utils.DBUtils;
+import com.ganesha.core.utils.DateUtils;
 import com.ganesha.minimarket.Main;
 
 public class CircleFacade {
@@ -43,7 +43,7 @@ public class CircleFacade {
 		circle.setDisabled(disabled);
 		circle.setDeleted(deleted);
 		circle.setLastUpdatedBy(Main.getUserLogin().getId());
-		circle.setLastUpdatedTimestamp(CommonUtils.getCurrentTimestamp());
+		circle.setLastUpdatedTimestamp(DateUtils.getCurrentTimestamp());
 
 		session.saveOrUpdate(circle);
 		return circle;
@@ -102,7 +102,7 @@ public class CircleFacade {
 		circle.setDisabled(disabled);
 		circle.setDeleted(deleted);
 		circle.setLastUpdatedBy(Main.getUserLogin().getId());
-		circle.setLastUpdatedTimestamp(CommonUtils.getCurrentTimestamp());
+		circle.setLastUpdatedTimestamp(DateUtils.getCurrentTimestamp());
 
 		session.saveOrUpdate(circle);
 		return circle;

@@ -23,7 +23,7 @@ import org.hibernate.transform.AliasToEntityMapResultTransformer;
 
 import com.ganesha.core.exception.AppException;
 import com.ganesha.core.exception.UserException;
-import com.ganesha.core.utils.CommonUtils;
+import com.ganesha.core.utils.DateUtils;
 import com.ganesha.minimarket.Main;
 import com.ganesha.minimarket.ui.forms.reports.ReportViewerDialog;
 
@@ -87,7 +87,7 @@ public class ItemStockReportFacade {
 		paramReport.put("reportName", REPORT_NAME);
 		paramReport.put("orderBy", orderByText);
 		paramReport.put("reportBy", Main.getUserLogin().getName());
-		paramReport.put("reportDate", CommonUtils.getCurrentDate());
+		paramReport.put("reportDate", DateUtils.getCurrentDate());
 
 		List<Map<String, Object>> items = search(orderById, session);
 

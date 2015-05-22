@@ -18,7 +18,7 @@ import org.hibernate.Session;
 
 import com.ganesha.core.exception.AppException;
 import com.ganesha.core.exception.UserException;
-import com.ganesha.core.utils.CommonUtils;
+import com.ganesha.core.utils.DateUtils;
 import com.ganesha.core.utils.Formatter;
 import com.ganesha.desktop.component.XJButton;
 import com.ganesha.desktop.component.XJDateChooser;
@@ -102,7 +102,7 @@ public class SaleConstraintReportListDialog extends XJTableDialog {
 		pnlRangeTanggal.add(lblDari, "cell 0 1");
 
 		dtChBegin = new XJDateChooser();
-		dtChBegin.setDate(CommonUtils.getCurrentDate());
+		dtChBegin.setDate(DateUtils.getCurrentDate());
 		dtChBegin.getCalendarButton().setMnemonic('D');
 		pnlRangeTanggal.add(dtChBegin, "cell 1 1,grow");
 
@@ -111,7 +111,7 @@ public class SaleConstraintReportListDialog extends XJTableDialog {
 		pnlRangeTanggal.add(lblSampai, "cell 2 1");
 
 		dtChEnd = new XJDateChooser();
-		dtChEnd.setDate(CommonUtils.getCurrentDate());
+		dtChEnd.setDate(DateUtils.getCurrentDate());
 		dtChEnd.getCalendarButton().setMnemonic('S');
 		pnlRangeTanggal.add(dtChEnd, "cell 3 1,grow");
 
@@ -156,8 +156,8 @@ public class SaleConstraintReportListDialog extends XJTableDialog {
 	public void loadData() throws AppException, UserException {
 		Session session = HibernateUtils.openSession();
 		try {
-			Date beginDate = CommonUtils.validateDateBegin(dtChBegin.getDate());
-			Date endDate = CommonUtils.validateDateEnd(dtChEnd.getDate());
+			Date beginDate = DateUtils.validateDateBegin(dtChBegin.getDate());
+			Date endDate = DateUtils.validateDateEnd(dtChEnd.getDate());
 
 			SaleConstraintFacade facade = SaleConstraintFacade.getInstance();
 			List<SaleConstraintLog> saleConstraintLogs = facade

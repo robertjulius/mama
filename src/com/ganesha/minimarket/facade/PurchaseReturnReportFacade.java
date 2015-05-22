@@ -25,7 +25,7 @@ import org.hibernate.criterion.Restrictions;
 
 import com.ganesha.core.exception.AppException;
 import com.ganesha.core.exception.UserException;
-import com.ganesha.core.utils.CommonUtils;
+import com.ganesha.core.utils.DateUtils;
 import com.ganesha.hibernate.HqlParameter;
 import com.ganesha.minimarket.Main;
 import com.ganesha.minimarket.model.PurchaseDetail;
@@ -71,7 +71,7 @@ public class PurchaseReturnReportFacade implements TransactionReportFacade {
 		paramReport.put("reportPeriodBegin", beginDate);
 		paramReport.put("reportPeriodEnd", endDate);
 		paramReport.put("reportBy", Main.getUserLogin().getName());
-		paramReport.put("reportDate", CommonUtils.getCurrentDate());
+		paramReport.put("reportDate", DateUtils.getCurrentDate());
 
 		List<PurchaseReturnDetail> purchaseReturnDetails = search(
 				transactionNumber, beginDate, endDate, session);

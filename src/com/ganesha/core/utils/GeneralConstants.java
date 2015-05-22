@@ -35,7 +35,7 @@ public class GeneralConstants {
 
 	public static final String TAX_CODE_PPN = "PPN";
 	public static final String FILE_BARCODE_NAME = "barcodes"
-			+ CommonUtils.getTimestampInString() + ".pdf";
+			+ DateUtils.getTimestampInString() + ".pdf";
 
 	// public static final String PRINTER_NAME = "HP Deskjet Ink Adv 2010 K010";
 	// public static final String PRINTER_NAME = "CutePDF Writer";

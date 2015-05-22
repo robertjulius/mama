@@ -15,7 +15,7 @@ import org.hibernate.criterion.Restrictions;
 import com.ganesha.accounting.facade.AccountFacade;
 import com.ganesha.core.exception.AppException;
 import com.ganesha.core.exception.UserException;
-import com.ganesha.core.utils.CommonUtils;
+import com.ganesha.core.utils.DateUtils;
 import com.ganesha.core.utils.GeneralConstants;
 import com.ganesha.hibernate.HqlParameter;
 import com.ganesha.minimarket.Main;
@@ -174,7 +174,7 @@ public class PurchaseReturnFacade implements TransactionFacade {
 		header.setReturnedInFullFlag(returnedInFullFlag);
 
 		header.setLastUpdatedBy(Main.getUserLogin().getId());
-		header.setLastUpdatedTimestamp(CommonUtils.getCurrentTimestamp());
+		header.setLastUpdatedTimestamp(DateUtils.getCurrentTimestamp());
 
 		return header;
 	}
@@ -182,8 +182,8 @@ public class PurchaseReturnFacade implements TransactionFacade {
 	private void addToPayable(PurchaseReturnHeader purchaseReturnHeader,
 			Session session) throws AppException {
 		int clientId = purchaseReturnHeader.getSupplier().getId();
-		Date maturityDate = CommonUtils.getNextDate(1, Calendar.YEAR,
-				CommonUtils.getCurrentDate());
+		Date maturityDate = DateUtils.getNextDate(1, Calendar.YEAR,
+				DateUtils.getCurrentDate());
 		BigDecimal amount = purchaseReturnHeader.getDebtCut();
 		String description = GeneralConstants.DECRIPTION_PAYABLE_PURCHASE_RETURN
 				+ ": " + purchaseReturnHeader.getTransactionNumber();
@@ -196,8 +196,8 @@ public class PurchaseReturnFacade implements TransactionFacade {
 	private void addToReceivable(PurchaseReturnHeader purchaseReturnHeader,
 			Session session) throws AppException {
 		int clientId = purchaseReturnHeader.getSupplier().getId();
-		Date maturityDate = CommonUtils.getNextDate(1, Calendar.YEAR,
-				CommonUtils.getCurrentDate());
+		Date maturityDate = DateUtils.getNextDate(1, Calendar.YEAR,
+				DateUtils.getCurrentDate());
 		BigDecimal amount = purchaseReturnHeader.getRemainingReturnAmount();
 		String description = GeneralConstants.DECRIPTION_RECEIVABLE_PURCHASE_RETURN
 				+ ": " + purchaseReturnHeader.getTransactionNumber();

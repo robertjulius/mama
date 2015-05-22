@@ -7,8 +7,8 @@ import org.hibernate.Session;
 import org.hibernate.criterion.Restrictions;
 
 import com.ganesha.core.exception.UserException;
-import com.ganesha.core.utils.CommonUtils;
 import com.ganesha.core.utils.DBUtils;
+import com.ganesha.core.utils.DateUtils;
 import com.ganesha.minimarket.Main;
 import com.ganesha.minimarket.facade.ItemFacade;
 import com.ganesha.minimarket.model.Item;
@@ -49,7 +49,7 @@ public class VoucherTypeFacade {
 		voucherType.setDisabled(disabled);
 		voucherType.setDeleted(deleted);
 		voucherType.setLastUpdatedBy(Main.getUserLogin().getId());
-		voucherType.setLastUpdatedTimestamp(CommonUtils.getCurrentTimestamp());
+		voucherType.setLastUpdatedTimestamp(DateUtils.getCurrentTimestamp());
 
 		session.saveOrUpdate(voucherType);
 		return voucherType;
@@ -126,7 +126,7 @@ public class VoucherTypeFacade {
 		voucherType.setDisabled(disabled);
 		voucherType.setDeleted(deleted);
 		voucherType.setLastUpdatedBy(Main.getUserLogin().getId());
-		voucherType.setLastUpdatedTimestamp(CommonUtils.getCurrentTimestamp());
+		voucherType.setLastUpdatedTimestamp(DateUtils.getCurrentTimestamp());
 
 		session.saveOrUpdate(voucherType);
 		return voucherType;

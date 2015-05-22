@@ -12,7 +12,7 @@ import com.ganesha.accounting.model.Coa;
 import com.ganesha.accounting.model.RevenueTransaction;
 import com.ganesha.core.exception.AppException;
 import com.ganesha.core.exception.UserException;
-import com.ganesha.core.utils.CommonUtils;
+import com.ganesha.core.utils.DateUtils;
 import com.ganesha.core.utils.StringUtils;
 import com.ganesha.minimarket.Main;
 import com.ganesha.minimarket.facade.TransactionReportFacade;
@@ -38,7 +38,7 @@ public class RevenueFacade implements TransactionReportFacade {
 		revenueTransaction.setAmount(amount);
 		revenueTransaction.setNotes(notes);
 		revenueTransaction.setLastUpdatedBy(Main.getUserLogin().getId());
-		revenueTransaction.setLastUpdatedTimestamp(CommonUtils
+		revenueTransaction.setLastUpdatedTimestamp(DateUtils
 				.getCurrentTimestamp());
 
 		session.saveOrUpdate(revenueTransaction);

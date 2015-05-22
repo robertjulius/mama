@@ -30,7 +30,7 @@ import com.ganesha.accounting.constants.Enums.DebitCreditFlag;
 import com.ganesha.accounting.model.ExpenseTransaction;
 import com.ganesha.accounting.model.ProfitAndLossCutoff;
 import com.ganesha.core.exception.AppException;
-import com.ganesha.core.utils.CommonUtils;
+import com.ganesha.core.utils.DateUtils;
 import com.ganesha.minimarket.Main;
 import com.ganesha.minimarket.facade.ItemFacade;
 import com.ganesha.minimarket.facade.UserFacade;
@@ -63,12 +63,12 @@ public class ProfitAndLossCutoffFacade {
 		ProfitAndLossCutoff previousProfitAndLossCutoff = getLastProfitAndLossCutoff(session);
 
 		ProfitAndLossCutoff profitAndLossCutoff = create(
-				CommonUtils.getCurrentTimestamp(), previousProfitAndLossCutoff,
+				DateUtils.getCurrentTimestamp(), previousProfitAndLossCutoff,
 				session);
 
 		profitAndLossCutoff.setLastUpdatedBy(Main.getUserLogin().getId());
 
-		profitAndLossCutoff.setLastUpdatedTimestamp(CommonUtils
+		profitAndLossCutoff.setLastUpdatedTimestamp(DateUtils
 				.getCurrentTimestamp());
 
 		session.saveOrUpdate(profitAndLossCutoff);
@@ -90,8 +90,8 @@ public class ProfitAndLossCutoffFacade {
 		Criteria criteria = session.createCriteria(ProfitAndLossCutoff.class);
 		criteria.add(Restrictions.isNotNull("previousProfitAndLossCutoff"));
 
-		CommonUtils.validateDateBegin(beginDate);
-		CommonUtils.validateDateEnd(endDate);
+		DateUtils.validateDateBegin(beginDate);
+		DateUtils.validateDateEnd(endDate);
 
 		if (beginDate != null) {
 			criteria.add(Restrictions.ge("cutoffTimestamp", beginDate));

@@ -45,11 +45,11 @@ import com.ganesha.hibernate.HibernateUtils;
 import com.ganesha.minimarket.Main;
 import com.ganesha.minimarket.facade.ItemFacade;
 import com.ganesha.minimarket.facade.SaleConstraintFacade;
+import com.ganesha.minimarket.model.SaleConstraintHeader;
 import com.ganesha.minimarket.model.Item;
 import com.ganesha.minimarket.model.ItemSellPrice;
 import com.ganesha.minimarket.model.ItemSellPricePK;
 import com.ganesha.minimarket.model.SaleConstraintDetail;
-import com.ganesha.minimarket.model.SaleConstraintHeader;
 import com.ganesha.minimarket.ui.forms.commons.alerts.XCaptchaAlert;
 import com.ganesha.minimarket.utils.BarcodeUtils;
 import com.ganesha.minimarket.utils.PermissionConstants;
@@ -566,8 +566,7 @@ public class StockForm extends XJDialog {
 				SaleConstraintFacade facade = SaleConstraintFacade
 						.getInstance();
 
-				List<SaleConstraintHeader> headers = facade
-						.getAllHeaders(session);
+				List<SaleConstraintHeader> headers = facade.getAllHeaders(session);
 				for (SaleConstraintHeader header : headers) {
 					List<SaleConstraintDetail> details = facade
 							.getSaleConstraintDetails(header.getId(), session);

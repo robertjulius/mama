@@ -13,8 +13,8 @@ import org.hibernate.criterion.Restrictions;
 import com.ganesha.accounting.constants.Enums.AccountAction;
 import com.ganesha.accounting.facade.AccountFacade;
 import com.ganesha.core.exception.AppException;
-import com.ganesha.core.utils.CommonUtils;
 import com.ganesha.core.utils.DBUtils;
+import com.ganesha.core.utils.DateUtils;
 import com.ganesha.core.utils.GeneralConstants;
 import com.ganesha.hibernate.HqlParameter;
 import com.ganesha.minimarket.Main;
@@ -52,15 +52,15 @@ public class ReceivableFacade {
 		receivableTransaction.setReceivableSummary(receivableSummary);
 		receivableTransaction
 				.setReffNumber(GeneralConstants.PREFIX_TRX_NUMBER_RECEIVABLE
-						+ CommonUtils.getTimestampInString());
+						+ DateUtils.getTimestampInString());
 		receivableTransaction.setAccountAction(AccountAction.INCREASE);
-		receivableTransaction.setActionTimestamp(CommonUtils
+		receivableTransaction.setActionTimestamp(DateUtils
 				.getCurrentTimestamp());
 		receivableTransaction.setMaturityDate(maturityDate);
 		receivableTransaction.setAmount(amount);
 		receivableTransaction.setDescription(description);
 		receivableTransaction.setLastUpdatedBy(Main.getUserLogin().getId());
-		receivableTransaction.setLastUpdatedTimestamp(CommonUtils
+		receivableTransaction.setLastUpdatedTimestamp(DateUtils
 				.getCurrentTimestamp());
 
 		session.saveOrUpdate(receivableTransaction);
@@ -73,7 +73,7 @@ public class ReceivableFacade {
 		receivableSummary.setLastReceivableTransactionId(receivableTransaction
 				.getId());
 		receivableSummary.setLastUpdatedBy(Main.getUserLogin().getId());
-		receivableSummary.setLastUpdatedTimestamp(CommonUtils
+		receivableSummary.setLastUpdatedTimestamp(DateUtils
 				.getCurrentTimestamp());
 		session.saveOrUpdate(receivableTransaction);
 
@@ -105,15 +105,15 @@ public class ReceivableFacade {
 		receivableTransaction.setReceivableSummary(receivableSummary);
 		receivableTransaction
 				.setReffNumber(GeneralConstants.PREFIX_TRX_NUMBER_RECEIVABLE
-						+ CommonUtils.getTimestampInString());
+						+ DateUtils.getTimestampInString());
 		receivableTransaction.setAccountAction(AccountAction.DECREASE);
-		receivableTransaction.setActionTimestamp(CommonUtils
+		receivableTransaction.setActionTimestamp(DateUtils
 				.getCurrentTimestamp());
 		receivableTransaction.setMaturityDate(maturityDate);
 		receivableTransaction.setAmount(amount);
 		receivableTransaction.setDescription(description);
 		receivableTransaction.setLastUpdatedBy(Main.getUserLogin().getId());
-		receivableTransaction.setLastUpdatedTimestamp(CommonUtils
+		receivableTransaction.setLastUpdatedTimestamp(DateUtils
 				.getCurrentTimestamp());
 
 		session.saveOrUpdate(receivableTransaction);
@@ -126,7 +126,7 @@ public class ReceivableFacade {
 		receivableSummary.setLastReceivableTransactionId(receivableTransaction
 				.getId());
 		receivableSummary.setLastUpdatedBy(Main.getUserLogin().getId());
-		receivableSummary.setLastUpdatedTimestamp(CommonUtils
+		receivableSummary.setLastUpdatedTimestamp(DateUtils
 				.getCurrentTimestamp());
 		session.saveOrUpdate(receivableTransaction);
 
@@ -173,7 +173,7 @@ public class ReceivableFacade {
 		receivableSummary.setRemainingAmount(BigDecimal.valueOf(0));
 		receivableSummary.setLastReceivableTransactionId(-1);
 		receivableSummary.setLastUpdatedBy(Main.getUserLogin().getId());
-		receivableSummary.setLastUpdatedTimestamp(CommonUtils
+		receivableSummary.setLastUpdatedTimestamp(DateUtils
 				.getCurrentTimestamp());
 
 		session.saveOrUpdate(receivableSummary);

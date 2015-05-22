@@ -15,7 +15,7 @@ import org.hibernate.Session;
 import com.ganesha.accounting.facade.AccountFacade;
 import com.ganesha.core.exception.AppException;
 import com.ganesha.core.exception.UserException;
-import com.ganesha.core.utils.CommonUtils;
+import com.ganesha.core.utils.DateUtils;
 import com.ganesha.core.utils.Formatter;
 import com.ganesha.hibernate.HqlParameter;
 import com.ganesha.minimarket.Main;
@@ -197,7 +197,7 @@ public class SaleFacade implements TransactionFacade {
 		header.setMoneyChange(BigDecimal.valueOf(moneyChange));
 
 		header.setLastUpdatedBy(Main.getUserLogin().getId());
-		header.setLastUpdatedTimestamp(CommonUtils.getCurrentTimestamp());
+		header.setLastUpdatedTimestamp(DateUtils.getCurrentTimestamp());
 
 		return header;
 	}

@@ -17,7 +17,7 @@ import net.miginfocom.swing.MigLayout;
 import org.hibernate.Session;
 
 import com.ganesha.core.exception.UserException;
-import com.ganesha.core.utils.CommonUtils;
+import com.ganesha.core.utils.DateUtils;
 import com.ganesha.core.utils.Formatter;
 import com.ganesha.coreapps.constants.Enums.ActionType;
 import com.ganesha.coreapps.facade.ActivityLogFacade;
@@ -211,8 +211,8 @@ public class PayableForm extends XJDialog {
 			session.beginTransaction();
 			PayableFacade facade = PayableFacade.getInstance();
 
-			Date maturityDate = CommonUtils.getNextDate(1, Calendar.YEAR,
-					CommonUtils.getCurrentDate());
+			Date maturityDate = DateUtils.getNextDate(1, Calendar.YEAR,
+					DateUtils.getCurrentDate());
 
 			PayableSummary payableSummary = facade.payDebtFromCash(
 					supplier.getId(),

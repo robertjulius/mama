@@ -2,7 +2,7 @@ package com.ganesha.coreapps.facade;
 
 import org.hibernate.Session;
 
-import com.ganesha.core.utils.CommonUtils;
+import com.ganesha.core.utils.DateUtils;
 import com.ganesha.coreapps.constants.Enums.ActionType;
 import com.ganesha.minimarket.facade.PermissionFacade;
 import com.ganesha.model.ActivityLog;
@@ -45,7 +45,7 @@ public class ActivityLogFacade {
 		activityLog.setActionType(actionType);
 		activityLog.setEntityClass(logableEntity.getClass().getName());
 		activityLog.setEntityId(logableEntity.getId());
-		activityLog.setActionTimestamp(CommonUtils.getCurrentTimestamp());
+		activityLog.setActionTimestamp(DateUtils.getCurrentTimestamp());
 
 		session.saveOrUpdate(activityLog);
 		return activityLog;

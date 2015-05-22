@@ -22,7 +22,7 @@ import org.hibernate.criterion.Restrictions;
 
 import com.ganesha.core.exception.AppException;
 import com.ganesha.core.exception.UserException;
-import com.ganesha.core.utils.CommonUtils;
+import com.ganesha.core.utils.DateUtils;
 import com.ganesha.core.utils.Formatter;
 import com.ganesha.desktop.component.XJButton;
 import com.ganesha.desktop.component.XJDateChooser;
@@ -97,7 +97,7 @@ public class StockOpnameReportListDialog extends XJTableDialog {
 
 		dtChBegin = new XJDateChooser();
 		pnlFilter.add(dtChBegin, "cell 1 1,growx");
-		dtChBegin.setDate(CommonUtils.getCurrentDate());
+		dtChBegin.setDate(DateUtils.getCurrentDate());
 		dtChBegin.getCalendarButton().setMnemonic('D');
 
 		XJButton btnRefresh = new XJButton();
@@ -122,7 +122,7 @@ public class StockOpnameReportListDialog extends XJTableDialog {
 
 		dtChEnd = new XJDateChooser();
 		pnlFilter.add(dtChEnd, "cell 1 2,growx");
-		dtChEnd.setDate(CommonUtils.getCurrentDate());
+		dtChEnd.setDate(DateUtils.getCurrentDate());
 		dtChEnd.getCalendarButton().setMnemonic('S');
 
 		JScrollPane scrollPane = new JScrollPane(table);
@@ -166,8 +166,8 @@ public class StockOpnameReportListDialog extends XJTableDialog {
 	public void loadData() throws AppException, UserException {
 		Session session = HibernateUtils.openSession();
 		try {
-			Date beginDate = CommonUtils.validateDateBegin(dtChBegin.getDate());
-			Date endDate = CommonUtils.validateDateEnd(dtChEnd.getDate());
+			Date beginDate = DateUtils.validateDateBegin(dtChBegin.getDate());
+			Date endDate = DateUtils.validateDateEnd(dtChEnd.getDate());
 
 			List<StockOpnameHeader> searchResults = StockOpnameFacade
 					.getInstance().search(beginDate, endDate, session);

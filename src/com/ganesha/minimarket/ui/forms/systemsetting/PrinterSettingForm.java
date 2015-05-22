@@ -18,7 +18,7 @@ import net.miginfocom.swing.MigLayout;
 import com.ganesha.core.SystemSetting;
 import com.ganesha.core.exception.AppException;
 import com.ganesha.core.exception.UserException;
-import com.ganesha.core.utils.CommonUtils;
+import com.ganesha.core.utils.DateUtils;
 import com.ganesha.core.utils.Formatter;
 import com.ganesha.core.utils.GeneralConstants;
 import com.ganesha.desktop.component.ComboBoxObject;
@@ -271,7 +271,7 @@ public class PrinterSettingForm extends XJDialog {
 		String companyAddress = Main.getCompany().getAddress();
 		String transactionNumber = "No      : " + "PUR0123456789";
 		String transactionTimestamp = "Tanggal : "
-				+ Formatter.formatTimestampToString(CommonUtils
+				+ Formatter.formatTimestampToString(DateUtils
 						.getCurrentTimestamp());
 		String cashier = "Kasir   : " + Main.getUserLogin().getName();
 		String totalBelanja = Formatter.formatNumberToString(312500);

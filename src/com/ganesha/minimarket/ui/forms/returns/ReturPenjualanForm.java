@@ -23,7 +23,7 @@ import net.miginfocom.swing.MigLayout;
 import org.hibernate.Session;
 
 import com.ganesha.core.exception.UserException;
-import com.ganesha.core.utils.CommonUtils;
+import com.ganesha.core.utils.DateUtils;
 import com.ganesha.core.utils.Formatter;
 import com.ganesha.core.utils.GeneralConstants;
 import com.ganesha.coreapps.constants.Enums.ActionType;
@@ -153,7 +153,7 @@ public class ReturPenjualanForm extends XJDialog {
 
 		txtNoTransaksi = new XJTextField();
 		txtNoTransaksi.setText(GeneralConstants.PREFIX_TRX_NUMBER_SALES_RETURN
-				+ CommonUtils.getTimestampInString());
+				+ DateUtils.getTimestampInString());
 		txtNoTransaksi.setEditable(false);
 		pnlHeader.add(txtNoTransaksi, "cell 1 0 2 1,growx");
 
@@ -162,7 +162,7 @@ public class ReturPenjualanForm extends XJDialog {
 		pnlHeader.add(lblTanggal, "cell 0 1");
 
 		dateChooser = new XJDateChooser();
-		dateChooser.setDate(CommonUtils.getCurrentDate());
+		dateChooser.setDate(DateUtils.getCurrentDate());
 		dateChooser.getCalendarButton().setMnemonic('T');
 		pnlHeader.add(dateChooser, "cell 1 1 2 1,grow");
 
@@ -378,7 +378,7 @@ public class ReturPenjualanForm extends XJDialog {
 
 			String transactionNumber = txtNoTransaksi.getText();
 
-			Timestamp transactionTimestamp = CommonUtils
+			Timestamp transactionTimestamp = DateUtils
 					.castDateToTimestamp(dateChooser.getDate());
 
 			double subTotalAmount = Formatter.formatStringToNumber(

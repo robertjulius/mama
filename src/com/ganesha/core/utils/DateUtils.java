@@ -6,7 +6,7 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 
-public class CommonUtils {
+public class DateUtils {
 
 	private static Calendar calendar = Calendar.getInstance();
 

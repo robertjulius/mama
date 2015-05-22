@@ -7,7 +7,7 @@ import java.util.List;
 
 import org.hibernate.Session;
 
-import com.ganesha.core.utils.CommonUtils;
+import com.ganesha.core.utils.DateUtils;
 import com.ganesha.minimarket.Main;
 import com.ganesha.minimarket.model.Customer;
 import com.ganesha.minimarket.model.SaleDetail;
@@ -34,7 +34,7 @@ public class PrepaidSaleFacade {
 
 		SaleHeader saleHeader = new SaleHeader();
 		saleHeader.setTransactionNumber(transactionNumber);
-		saleHeader.setTransactionTimestamp(CommonUtils.getCurrentTimestamp());
+		saleHeader.setTransactionTimestamp(DateUtils.getCurrentTimestamp());
 		saleHeader.setCustomer(customer);
 		saleHeader.setSubTotalAmount(price);
 		saleHeader.setTaxPercent(BigDecimal.valueOf(0));
@@ -46,7 +46,7 @@ public class PrepaidSaleFacade {
 		saleHeader.setMoneyChange(moneyChange);
 
 		saleHeader.setLastUpdatedBy(Main.getUserLogin().getId());
-		saleHeader.setLastUpdatedTimestamp(CommonUtils.getCurrentTimestamp());
+		saleHeader.setLastUpdatedTimestamp(DateUtils.getCurrentTimestamp());
 
 		SaleDetail saleDetail = new SaleDetail();
 		saleDetail.setSaleHeader(saleHeader);

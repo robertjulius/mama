@@ -24,7 +24,7 @@ import com.ganesha.accounting.facade.ExpenseFacade;
 import com.ganesha.accounting.facade.RevenueFacade;
 import com.ganesha.core.exception.AppException;
 import com.ganesha.core.exception.UserException;
-import com.ganesha.core.utils.CommonUtils;
+import com.ganesha.core.utils.DateUtils;
 import com.ganesha.core.utils.Formatter;
 import com.ganesha.core.utils.GeneralConstants;
 import com.ganesha.desktop.component.ComboBoxObject;
@@ -183,7 +183,7 @@ public class TransactionReportListDialog extends XJTableDialog {
 		pnlRangeTanggal.add(lblDari, "cell 0 1");
 
 		dtChBegin = new XJDateChooser();
-		dtChBegin.setDate(CommonUtils.getCurrentDate());
+		dtChBegin.setDate(DateUtils.getCurrentDate());
 		dtChBegin.getCalendarButton().setMnemonic('D');
 		pnlRangeTanggal.add(dtChBegin, "cell 1 1,grow");
 
@@ -192,7 +192,7 @@ public class TransactionReportListDialog extends XJTableDialog {
 		pnlRangeTanggal.add(lblSampai, "cell 2 1");
 
 		dtChEnd = new XJDateChooser();
-		dtChEnd.setDate(CommonUtils.getCurrentDate());
+		dtChEnd.setDate(DateUtils.getCurrentDate());
 		dtChEnd.getCalendarButton().setMnemonic('S');
 		pnlRangeTanggal.add(dtChEnd, "cell 3 1,grow");
 
@@ -256,8 +256,8 @@ public class TransactionReportListDialog extends XJTableDialog {
 		Session session = HibernateUtils.openSession();
 		try {
 			String transactionNumber = txtNoTransaksi.getText();
-			Date beginDate = CommonUtils.validateDateBegin(dtChBegin.getDate());
-			Date endDate = CommonUtils.validateDateEnd(dtChEnd.getDate());
+			Date beginDate = DateUtils.validateDateBegin(dtChBegin.getDate());
+			Date endDate = DateUtils.validateDateEnd(dtChEnd.getDate());
 
 			List<Map<String, Object>> searchResults = facade.searchTransaction(
 					transactionNumber, beginDate, endDate, session);
@@ -337,8 +337,8 @@ public class TransactionReportListDialog extends XJTableDialog {
 		Session session = HibernateUtils.openSession();
 		try {
 			String transactionNumber = txtNoTransaksi.getText();
-			Date beginDate = CommonUtils.validateDateBegin(dtChBegin.getDate());
-			Date endDate = CommonUtils.validateDateEnd(dtChEnd.getDate());
+			Date beginDate = DateUtils.validateDateBegin(dtChBegin.getDate());
+			Date endDate = DateUtils.validateDateEnd(dtChEnd.getDate());
 			facade.previewReport(this, transactionNumber, beginDate, endDate,
 					session);
 		} finally {

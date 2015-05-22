@@ -23,7 +23,7 @@ import org.hibernate.Session;
 
 import com.ganesha.core.exception.AppException;
 import com.ganesha.core.exception.UserException;
-import com.ganesha.core.utils.CommonUtils;
+import com.ganesha.core.utils.DateUtils;
 import com.ganesha.core.utils.Formatter;
 import com.ganesha.coreapps.constants.Enums.ActionType;
 import com.ganesha.coreapps.facade.ActivityLogFacade;
@@ -183,7 +183,7 @@ public class StockOpnameListDialog extends XJTableDialog {
 		pnlInformation.add(lblPerformedDate, "cell 0 1");
 
 		txtStartTimestamp = new XJTextField();
-		txtStartTimestamp.setText(Formatter.formatTimestampToString(CommonUtils
+		txtStartTimestamp.setText(Formatter.formatTimestampToString(DateUtils
 				.getCurrentDate()));
 		txtStartTimestamp.setEditable(false);
 		pnlInformation.add(txtStartTimestamp, "cell 1 1,growx");
@@ -317,7 +317,7 @@ public class StockOpnameListDialog extends XJTableDialog {
 			ExceptionHandler.handleException(this, ex);
 		}
 
-		startTimestamp = CommonUtils.getCurrentTimestamp();
+		startTimestamp = DateUtils.getCurrentTimestamp();
 
 		pack();
 		setLocationRelativeTo(parent);
@@ -591,7 +591,7 @@ public class StockOpnameListDialog extends XJTableDialog {
 
 		validateForm();
 
-		stopTimestamp = CommonUtils.getCurrentTimestamp();
+		stopTimestamp = DateUtils.getCurrentTimestamp();
 
 		StockOpnameFacade facade = StockOpnameFacade.getInstance();
 		List<StockOpnameDetail> stockOpnames = createStockOpnameList();

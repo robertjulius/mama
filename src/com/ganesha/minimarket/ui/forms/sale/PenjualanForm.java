@@ -29,7 +29,7 @@ import org.slf4j.LoggerFactory;
 import com.ganesha.core.SystemSetting;
 import com.ganesha.core.exception.AppException;
 import com.ganesha.core.exception.UserException;
-import com.ganesha.core.utils.CommonUtils;
+import com.ganesha.core.utils.DateUtils;
 import com.ganesha.core.utils.Formatter;
 import com.ganesha.core.utils.GeneralConstants;
 import com.ganesha.coreapps.constants.Enums.ActionType;
@@ -58,10 +58,10 @@ import com.ganesha.minimarket.facade.GlobalFacade;
 import com.ganesha.minimarket.facade.ItemFacade;
 import com.ganesha.minimarket.facade.SaleConstraintFacade;
 import com.ganesha.minimarket.facade.SaleFacade;
+import com.ganesha.minimarket.model.SaleConstraintHeader;
 import com.ganesha.minimarket.model.Customer;
 import com.ganesha.minimarket.model.Item;
 import com.ganesha.minimarket.model.SaleConstraintDetail;
-import com.ganesha.minimarket.model.SaleConstraintHeader;
 import com.ganesha.minimarket.model.SaleDetail;
 import com.ganesha.minimarket.model.SaleHeader;
 import com.ganesha.minimarket.ui.forms.searchentity.SearchEntityDialog;
@@ -189,7 +189,7 @@ public class PenjualanForm extends XJDialog {
 
 		txtNoTransaksi = new XJTextField();
 		txtNoTransaksi.setText(GeneralConstants.PREFIX_TRX_NUMBER_SALES
-				+ CommonUtils.getTimestampInString());
+				+ DateUtils.getTimestampInString());
 		txtNoTransaksi.setEditable(false);
 		pnlHeader.add(txtNoTransaksi, "cell 1 0 2 1,growx");
 
@@ -231,7 +231,7 @@ public class PenjualanForm extends XJDialog {
 		pnlHeader.add(btnCariCustomer, "cell 3 1");
 
 		dateChooser = new XJDateChooser();
-		dateChooser.setDate(CommonUtils.getCurrentDate());
+		dateChooser.setDate(DateUtils.getCurrentDate());
 		dateChooser.getCalendarButton().setMnemonic('T');
 		pnlHeader.add(dateChooser, "cell 4 1,grow");
 
@@ -550,8 +550,7 @@ public class PenjualanForm extends XJDialog {
 	private void performSaleConstraint(SaleHeader saleHeader,
 			List<SaleDetail> saleDetails, Session session) throws AppException {
 
-		SaleConstraintHeader saleConstraintHeader = SaleConstraintHeader
-				.fromSaleHeader(saleHeader);
+		SaleConstraintHeader saleConstraintHeader = SaleConstraintHeader.fromSaleHeader(saleHeader);
 		saleConstraintHeader
 				.setPostingStatus(SaleConstraintPostingStatus.WAITING);
 		saleConstraintHeader.setPostingTriedCount(0);
@@ -658,7 +657,7 @@ public class PenjualanForm extends XJDialog {
 
 			String transactionNumber = txtNoTransaksi.getText();
 
-			Timestamp transactionTimestamp = CommonUtils
+			Timestamp transactionTimestamp = DateUtils
 					.castDateToTimestamp(dateChooser.getDate());
 
 			double subTotalAmount = Formatter.formatStringToNumber(

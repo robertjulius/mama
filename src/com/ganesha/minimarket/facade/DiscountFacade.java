@@ -8,7 +8,7 @@ import org.hibernate.Session;
 import org.hibernate.criterion.Restrictions;
 
 import com.ganesha.core.exception.UserException;
-import com.ganesha.core.utils.CommonUtils;
+import com.ganesha.core.utils.DateUtils;
 import com.ganesha.minimarket.Main;
 import com.ganesha.minimarket.model.Discount;
 import com.ganesha.minimarket.model.Item;
@@ -60,7 +60,7 @@ public class DiscountFacade {
 		discount.setDiscountPercent(discountPercent);
 		discount.setDisabled(disabled);
 		discount.setLastUpdatedBy(Main.getUserLogin().getId());
-		discount.setLastUpdatedTimestamp(CommonUtils.getCurrentTimestamp());
+		discount.setLastUpdatedTimestamp(DateUtils.getCurrentTimestamp());
 
 		session.saveOrUpdate(discount);
 		return discount;

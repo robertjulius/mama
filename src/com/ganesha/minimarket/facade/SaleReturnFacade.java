@@ -14,7 +14,7 @@ import org.hibernate.criterion.Restrictions;
 import com.ganesha.accounting.facade.AccountFacade;
 import com.ganesha.core.exception.AppException;
 import com.ganesha.core.exception.UserException;
-import com.ganesha.core.utils.CommonUtils;
+import com.ganesha.core.utils.DateUtils;
 import com.ganesha.hibernate.HqlParameter;
 import com.ganesha.minimarket.Main;
 import com.ganesha.minimarket.model.Customer;
@@ -149,7 +149,7 @@ public class SaleReturnFacade implements TransactionFacade {
 		header.setTaxAmount(BigDecimal.valueOf(taxAmount));
 		header.setTotalReturnAmount(BigDecimal.valueOf(totalReturnAmount));
 		header.setLastUpdatedBy(Main.getUserLogin().getId());
-		header.setLastUpdatedTimestamp(CommonUtils.getCurrentTimestamp());
+		header.setLastUpdatedTimestamp(DateUtils.getCurrentTimestamp());
 
 		return header;
 	}

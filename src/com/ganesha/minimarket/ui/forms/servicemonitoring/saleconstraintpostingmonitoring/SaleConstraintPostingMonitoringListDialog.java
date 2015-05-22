@@ -138,7 +138,8 @@ public class SaleConstraintPostingMonitoringListDialog extends XJTableDialog {
 				}
 			}
 		});
-		btnDetail.setText("<html><center>Lihat Detail<br/>[Enter]</center></html>");
+		btnDetail
+				.setText("<html><center>Lihat Detail<br/>[Enter]</center></html>");
 		panel.add(btnDetail, "cell 1 0,growx");
 
 		btnRefresh.doClick();
@@ -159,8 +160,7 @@ public class SaleConstraintPostingMonitoringListDialog extends XJTableDialog {
 			tableModel.setRowCount(saleConstraintHeaders.size());
 
 			for (int i = 0; i < saleConstraintHeaders.size(); ++i) {
-				SaleConstraintHeader saleConstraintHeader = saleConstraintHeaders
-						.get(i);
+				SaleConstraintHeader saleConstraintHeader = saleConstraintHeaders.get(i);
 
 				int numValue = i + 1;
 

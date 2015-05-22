@@ -9,8 +9,8 @@ import org.hibernate.Session;
 import org.hibernate.criterion.Restrictions;
 
 import com.ganesha.core.exception.UserException;
-import com.ganesha.core.utils.CommonUtils;
 import com.ganesha.core.utils.DBUtils;
+import com.ganesha.core.utils.DateUtils;
 import com.ganesha.hibernate.HqlParameter;
 import com.ganesha.minimarket.Main;
 import com.ganesha.minimarket.model.Item;
@@ -195,7 +195,7 @@ public class ItemFacade {
 		item.setDisabled(disabled);
 		item.setDeleted(deleted);
 		item.setLastUpdatedBy(Main.getUserLogin().getId());
-		item.setLastUpdatedTimestamp(CommonUtils.getCurrentTimestamp());
+		item.setLastUpdatedTimestamp(DateUtils.getCurrentTimestamp());
 
 		if (!item.getName().equals(name)) {
 			if (DBUtils.getInstance().isExists("name", name, Item.class,
@@ -218,7 +218,7 @@ public class ItemFacade {
 		item.setDisabled(disabled);
 		item.setDeleted(deleted);
 		item.setLastUpdatedBy(Main.getUserLogin().getId());
-		item.setLastUpdatedTimestamp(CommonUtils.getCurrentTimestamp());
+		item.setLastUpdatedTimestamp(DateUtils.getCurrentTimestamp());
 
 		session.saveOrUpdate(item);
 		deleteInsertSalePrices(sellPrices, item.getId(), session);
@@ -257,7 +257,7 @@ public class ItemFacade {
 		item.setDisabled(disabled);
 		item.setDeleted(deleted);
 		item.setLastUpdatedBy(Main.getUserLogin().getId());
-		item.setLastUpdatedTimestamp(CommonUtils.getCurrentTimestamp());
+		item.setLastUpdatedTimestamp(DateUtils.getCurrentTimestamp());
 
 		session.saveOrUpdate(item);
 		deleteInsertSalePrices(sellPrices, item.getId(), session);

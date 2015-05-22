@@ -7,8 +7,8 @@ import org.hibernate.Session;
 import org.hibernate.criterion.Restrictions;
 
 import com.ganesha.core.exception.UserException;
-import com.ganesha.core.utils.CommonUtils;
 import com.ganesha.core.utils.DBUtils;
+import com.ganesha.core.utils.DateUtils;
 import com.ganesha.minimarket.Main;
 import com.ganesha.minimarket.facade.ItemFacade;
 import com.ganesha.minimarket.model.Item;
@@ -47,7 +47,7 @@ public class MultiFacade {
 		multiMap.setDisabled(disabled);
 		multiMap.setDeleted(deleted);
 		multiMap.setLastUpdatedBy(Main.getUserLogin().getId());
-		multiMap.setLastUpdatedTimestamp(CommonUtils.getCurrentTimestamp());
+		multiMap.setLastUpdatedTimestamp(DateUtils.getCurrentTimestamp());
 
 		session.saveOrUpdate(multiMap);
 		return multiMap;
@@ -115,7 +115,7 @@ public class MultiFacade {
 		multiMap.setDisabled(disabled);
 		multiMap.setDeleted(deleted);
 		multiMap.setLastUpdatedBy(Main.getUserLogin().getId());
-		multiMap.setLastUpdatedTimestamp(CommonUtils.getCurrentTimestamp());
+		multiMap.setLastUpdatedTimestamp(DateUtils.getCurrentTimestamp());
 
 		session.saveOrUpdate(multiMap);
 		return multiMap;

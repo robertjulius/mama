@@ -20,7 +20,7 @@ import org.hibernate.Session;
 
 import com.ganesha.core.exception.AppException;
 import com.ganesha.core.exception.UserException;
-import com.ganesha.core.utils.CommonUtils;
+import com.ganesha.core.utils.DateUtils;
 import com.ganesha.core.utils.Formatter;
 import com.ganesha.desktop.component.ComboBoxObject;
 import com.ganesha.desktop.component.XJButton;
@@ -114,7 +114,7 @@ public class ItemStockReportListDialog extends XJTableDialog {
 
 		lblTanggal = new XJLabel();
 		lblTanggal.setFont(new Font("Tahoma", Font.PLAIN, 18));
-		lblTanggal.setText(Formatter.formatTimestampToString(CommonUtils
+		lblTanggal.setText(Formatter.formatTimestampToString(DateUtils
 				.getCurrentDate()));
 		pnlInformation.add(lblTanggal, "cell 1 1 2 1");
 

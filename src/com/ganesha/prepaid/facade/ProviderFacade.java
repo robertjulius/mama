@@ -8,8 +8,8 @@ import org.hibernate.Session;
 import org.hibernate.criterion.Restrictions;
 
 import com.ganesha.core.exception.UserException;
-import com.ganesha.core.utils.CommonUtils;
 import com.ganesha.core.utils.DBUtils;
+import com.ganesha.core.utils.DateUtils;
 import com.ganesha.hibernate.HqlParameter;
 import com.ganesha.minimarket.Main;
 import com.ganesha.prepaid.model.Provider;
@@ -42,7 +42,7 @@ public class ProviderFacade {
 		provider.setDisabled(disabled);
 		provider.setDeleted(deleted);
 		provider.setLastUpdatedBy(Main.getUserLogin().getId());
-		provider.setLastUpdatedTimestamp(CommonUtils.getCurrentTimestamp());
+		provider.setLastUpdatedTimestamp(DateUtils.getCurrentTimestamp());
 
 		session.saveOrUpdate(provider);
 		return provider;
@@ -112,7 +112,7 @@ public class ProviderFacade {
 		provider.setDisabled(disabled);
 		provider.setDeleted(deleted);
 		provider.setLastUpdatedBy(Main.getUserLogin().getId());
-		provider.setLastUpdatedTimestamp(CommonUtils.getCurrentTimestamp());
+		provider.setLastUpdatedTimestamp(DateUtils.getCurrentTimestamp());
 
 		session.saveOrUpdate(provider);
 		return provider;

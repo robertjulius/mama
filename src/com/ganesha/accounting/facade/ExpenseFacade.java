@@ -18,8 +18,8 @@ import com.ganesha.accounting.model.Expense;
 import com.ganesha.accounting.model.ExpenseTransaction;
 import com.ganesha.core.exception.AppException;
 import com.ganesha.core.exception.UserException;
-import com.ganesha.core.utils.CommonUtils;
 import com.ganesha.core.utils.DBUtils;
+import com.ganesha.core.utils.DateUtils;
 import com.ganesha.core.utils.StringUtils;
 import com.ganesha.minimarket.Main;
 import com.ganesha.minimarket.facade.TransactionReportFacade;
@@ -55,7 +55,7 @@ public class ExpenseFacade implements TransactionReportFacade {
 		expense.setDisabled(disabled);
 		expense.setDeleted(deleted);
 		expense.setLastUpdatedBy(Main.getUserLogin().getId());
-		expense.setLastUpdatedTimestamp(CommonUtils.getCurrentTimestamp());
+		expense.setLastUpdatedTimestamp(DateUtils.getCurrentTimestamp());
 
 		session.saveOrUpdate(expense);
 		return expense;
@@ -94,7 +94,7 @@ public class ExpenseFacade implements TransactionReportFacade {
 		expenseTransaction.setAmount(amount);
 		expenseTransaction.setNotes(notes);
 		expenseTransaction.setLastUpdatedBy(Main.getUserLogin().getId());
-		expenseTransaction.setLastUpdatedTimestamp(CommonUtils
+		expenseTransaction.setLastUpdatedTimestamp(DateUtils
 				.getCurrentTimestamp());
 
 		session.saveOrUpdate(expenseTransaction);
@@ -188,7 +188,7 @@ public class ExpenseFacade implements TransactionReportFacade {
 		expense.setDisabled(disabled);
 		expense.setDeleted(deleted);
 		expense.setLastUpdatedBy(Main.getUserLogin().getId());
-		expense.setLastUpdatedTimestamp(CommonUtils.getCurrentTimestamp());
+		expense.setLastUpdatedTimestamp(DateUtils.getCurrentTimestamp());
 
 		session.saveOrUpdate(expense);
 		return expense;

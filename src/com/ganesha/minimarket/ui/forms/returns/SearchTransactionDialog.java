@@ -18,10 +18,9 @@ import net.miginfocom.swing.MigLayout;
 
 import org.hibernate.Session;
 
-import com.ganesha.desktop.exeptions.ExceptionHandler;
 import com.ganesha.core.exception.AppException;
 import com.ganesha.core.exception.UserException;
-import com.ganesha.core.utils.CommonUtils;
+import com.ganesha.core.utils.DateUtils;
 import com.ganesha.core.utils.Formatter;
 import com.ganesha.desktop.component.XEtchedBorder;
 import com.ganesha.desktop.component.XJButton;
@@ -35,6 +34,7 @@ import com.ganesha.desktop.component.xtableutils.XTableConstants;
 import com.ganesha.desktop.component.xtableutils.XTableModel;
 import com.ganesha.desktop.component.xtableutils.XTableParameter;
 import com.ganesha.desktop.component.xtableutils.XTableUtils;
+import com.ganesha.desktop.exeptions.ExceptionHandler;
 import com.ganesha.hibernate.HibernateUtils;
 import com.ganesha.minimarket.facade.TransactionFacade;
 
@@ -225,8 +225,8 @@ public class SearchTransactionDialog extends XJTableDialog {
 		Session session = HibernateUtils.openSession();
 		try {
 			String transactionNumber = txtNoTransaksi.getText();
-			Date beginDate = CommonUtils.validateDateBegin(dtChBegin.getDate());
-			Date endDate = CommonUtils.validateDateEnd(dtChEnd.getDate());
+			Date beginDate = DateUtils.validateDateBegin(dtChBegin.getDate());
+			Date endDate = DateUtils.validateDateEnd(dtChEnd.getDate());
 
 			List<Map<String, Object>> searchResults = facade.searchTransaction(
 					transactionNumber, beginDate, endDate, session);

@@ -15,7 +15,7 @@ import com.ganesha.accounting.facade.ProfitAndLossFacade;
 import com.ganesha.accounting.model.ProfitAndLossStatement;
 import com.ganesha.core.exception.AppException;
 import com.ganesha.core.exception.UserException;
-import com.ganesha.core.utils.CommonUtils;
+import com.ganesha.core.utils.DateUtils;
 import com.ganesha.desktop.component.XJButton;
 import com.ganesha.desktop.component.XJDialog;
 import com.ganesha.desktop.component.XJLabel;
@@ -126,7 +126,7 @@ public class ProfitAndLossReportListDialog extends XJDialog {
 			Calendar period = Calendar.getInstance();
 			period.set(Calendar.YEAR, year);
 			period.set(Calendar.MONTH, month);
-			CommonUtils.setCalendarMonthAndYearOnly(period);
+			DateUtils.setCalendarMonthAndYearOnly(period);
 
 			validatePeriodInput(period);
 
@@ -144,7 +144,7 @@ public class ProfitAndLossReportListDialog extends XJDialog {
 
 	private void validatePeriodInput(Calendar period) throws UserException {
 		Calendar now = Calendar.getInstance();
-		CommonUtils.setCalendarMonthAndYearOnly(now);
+		DateUtils.setCalendarMonthAndYearOnly(now);
 
 		if (period.before(now)) {
 			/*

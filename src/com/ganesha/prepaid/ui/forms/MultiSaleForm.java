@@ -24,7 +24,7 @@ import org.slf4j.LoggerFactory;
 
 import com.ganesha.core.exception.AppException;
 import com.ganesha.core.exception.UserException;
-import com.ganesha.core.utils.CommonUtils;
+import com.ganesha.core.utils.DateUtils;
 import com.ganesha.core.utils.Formatter;
 import com.ganesha.core.utils.GeneralConstants;
 import com.ganesha.coreapps.constants.Enums.ActionType;
@@ -46,10 +46,10 @@ import com.ganesha.minimarket.facade.CustomerFacade;
 import com.ganesha.minimarket.facade.ItemFacade;
 import com.ganesha.minimarket.facade.SaleConstraintFacade;
 import com.ganesha.minimarket.facade.SaleFacade;
+import com.ganesha.minimarket.model.SaleConstraintHeader;
 import com.ganesha.minimarket.model.Customer;
 import com.ganesha.minimarket.model.Item;
 import com.ganesha.minimarket.model.SaleConstraintDetail;
-import com.ganesha.minimarket.model.SaleConstraintHeader;
 import com.ganesha.minimarket.model.SaleDetail;
 import com.ganesha.minimarket.model.SaleHeader;
 import com.ganesha.minimarket.ui.forms.searchentity.SearchEntityDialog;
@@ -81,7 +81,7 @@ public class MultiSaleForm extends XJDialog {
 
 	private Integer customerId;
 	private String transactionNumber = GeneralConstants.PREFIX_TRX_NUMBER_SALES
-			+ CommonUtils.getTimestampInString();
+			+ DateUtils.getTimestampInString();
 	private XJPanel panel;
 	private XJLabel lblCreditStockValue;
 
@@ -465,8 +465,7 @@ public class MultiSaleForm extends XJDialog {
 	private void performSaleConstraint(SaleHeader saleHeader,
 			List<SaleDetail> saleDetails, Session session) throws AppException {
 
-		SaleConstraintHeader saleConstraintHeader = SaleConstraintHeader
-				.fromSaleHeader(saleHeader);
+		SaleConstraintHeader saleConstraintHeader = SaleConstraintHeader.fromSaleHeader(saleHeader);
 		saleConstraintHeader
 				.setPostingStatus(SaleConstraintPostingStatus.WAITING);
 		saleConstraintHeader.setPostingTriedCount(0);

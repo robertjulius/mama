@@ -24,7 +24,7 @@ import org.hibernate.criterion.Restrictions;
 
 import com.ganesha.core.exception.AppException;
 import com.ganesha.core.exception.UserException;
-import com.ganesha.core.utils.CommonUtils;
+import com.ganesha.core.utils.DateUtils;
 import com.ganesha.minimarket.Main;
 import com.ganesha.minimarket.model.Item;
 import com.ganesha.minimarket.model.ItemStock;
@@ -59,7 +59,7 @@ public class StockOpnameFacade {
 		BigDecimal lossAmount = calculateLossAmount(item, lossCount);
 
 		item.setLastUpdatedBy(Main.getUserLogin().getId());
-		item.setLastUpdatedTimestamp(CommonUtils.getCurrentTimestamp());
+		item.setLastUpdatedTimestamp(DateUtils.getCurrentTimestamp());
 
 		StockOpnameDetail stockOpname = new StockOpnameDetail();
 		stockOpname.setItem(item);
@@ -122,7 +122,7 @@ public class StockOpnameFacade {
 		stockOpnameHeader.setPerformedBeginTimestamp(performedBeginTimestamp);
 		stockOpnameHeader.setPerformedEndTimestamp(performedEndTimestamp);
 		stockOpnameHeader.setLastUpdatedBy(Main.getUserLogin().getId());
-		stockOpnameHeader.setLastUpdatedTimestamp(CommonUtils
+		stockOpnameHeader.setLastUpdatedTimestamp(DateUtils
 				.getCurrentTimestamp());
 
 		session.saveOrUpdate(stockOpnameHeader);

@@ -15,7 +15,7 @@ import net.miginfocom.swing.MigLayout;
 
 import com.ganesha.accounting.ui.forms.circle.CircleListDialog;
 import com.ganesha.accounting.ui.forms.expense.ExpenseListDialog;
-import com.ganesha.core.utils.CommonUtils;
+import com.ganesha.core.utils.DateUtils;
 import com.ganesha.core.utils.Formatter;
 import com.ganesha.core.utils.GeneralConstants;
 import com.ganesha.desktop.component.XJButton;
@@ -523,6 +523,21 @@ public class MainFrame extends XJFrame {
 		});
 		mnReport.add(mntmSaleConstraintReport);
 
+		XJMenuItem mntmDailyCashReport = new XJMenuItem("Laporan Kas Harian",
+				PermissionConstants.MN_REPORT_CONSTRAINT_SALE);
+		mntmDailyCashReport.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				try {
+					new SaleConstraintReportListDialog(MainFrame.this)
+							.setVisible(true);
+				} catch (Exception ex) {
+					ExceptionHandler.handleException(MainFrame.this, ex);
+				}
+			}
+		});
+		mnReport.add(mntmDailyCashReport);
+
 		XJMenuItem mntmStockOpname = new XJMenuItem("Stock Opname",
 				PermissionConstants.MN_BO_STOCKOPNAME);
 		mntmStockOpname.addActionListener(new ActionListener() {
@@ -648,15 +663,14 @@ public class MainFrame extends XJFrame {
 		lblTanggal = new XJLabel();
 		lblTanggal.setForeground(Color.WHITE);
 		lblTanggal.setFont(new Font("Tahoma", Font.BOLD, 30));
-		lblTanggal.setText(Formatter.formatDateToString(CommonUtils
+		lblTanggal.setText(Formatter.formatDateToString(DateUtils
 				.getCurrentDate()));
 		pnlRunningClock.add(lblTanggal, "cell 0 0,alignx center");
 
 		lblJam = new XJLabel();
 		lblJam.setForeground(Color.WHITE);
 		lblJam.setFont(new Font("Tahoma", Font.BOLD, 30));
-		lblJam.setText(Formatter.formatClockToString(CommonUtils
-				.getCurrentDate()));
+		lblJam.setText(Formatter.formatClockToString(DateUtils.getCurrentDate()));
 		pnlRunningClock.add(lblJam, "cell 0 1,alignx center");
 
 		pnlUserInfo = new XJPanel();
@@ -806,7 +820,7 @@ public class MainFrame extends XJFrame {
 			@Override
 			public void run() {
 				while (true) {
-					Date date = CommonUtils.getCurrentDate();
+					Date date = DateUtils.getCurrentDate();
 					String tanggal = Formatter.formatDateToString(date);
 					String jam = Formatter.formatClockToString(date);
 					lblTanggal.setText(tanggal);

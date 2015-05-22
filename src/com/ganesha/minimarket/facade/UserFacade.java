@@ -10,7 +10,7 @@ import org.hibernate.criterion.Restrictions;
 
 import com.ganesha.core.exception.AppException;
 import com.ganesha.core.exception.UserException;
-import com.ganesha.core.utils.CommonUtils;
+import com.ganesha.core.utils.DateUtils;
 import com.ganesha.core.utils.DBUtils;
 import com.ganesha.core.utils.SecurityUtils;
 import com.ganesha.hibernate.HqlParameter;
@@ -49,7 +49,7 @@ public class UserFacade {
 		user.setDisabled(disabled);
 		user.setDeleted(deleted);
 		user.setLastUpdatedBy(Main.getUserLogin().getId());
-		user.setLastUpdatedTimestamp(CommonUtils.getCurrentTimestamp());
+		user.setLastUpdatedTimestamp(DateUtils.getCurrentTimestamp());
 
 		session.saveOrUpdate(user);
 
@@ -73,7 +73,7 @@ public class UserFacade {
 		String hashedPassword = SecurityUtils.hash(newPassword);
 		user.setPassword(hashedPassword);
 		user.setLastUpdatedBy(Main.getUserLogin().getId());
-		user.setLastUpdatedTimestamp(CommonUtils.getCurrentTimestamp());
+		user.setLastUpdatedTimestamp(DateUtils.getCurrentTimestamp());
 
 		session.saveOrUpdate(user);
 		return user;
@@ -147,7 +147,7 @@ public class UserFacade {
 		user.setDisabled(disabled);
 		user.setDeleted(deleted);
 		user.setLastUpdatedBy(Main.getUserLogin().getId());
-		user.setLastUpdatedTimestamp(CommonUtils.getCurrentTimestamp());
+		user.setLastUpdatedTimestamp(DateUtils.getCurrentTimestamp());
 
 		session.saveOrUpdate(user);
 
