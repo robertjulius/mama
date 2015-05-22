@@ -191,6 +191,14 @@ public class PermissionConsistencyChecker {
 				PermissionConstants.REPORT_CONSTRAINTSALE_LIST,
 				"Sale Constraint Report List", 551));
 
+		// Back Office - Laporan - Laporan Penjualan Constraint
+		permissions.add(createPermission(
+				PermissionConstants.MN_REPORT_DAILYCASH,
+				"/Back Office/Laporan/Laporan Kas Harian", 560));
+		permissions.add(createPermission(
+				PermissionConstants.REPORT_DAILYCASH_LIST,
+				"Daily Cash Report List", 561));
+
 		// Service Monitoring - Sale Constraint Posting Scheduler
 		permissions.add(createPermission(
 				PermissionConstants.MN_MON_SALCONSTRAINT_POSTING,

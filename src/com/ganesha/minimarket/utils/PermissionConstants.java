@@ -106,6 +106,10 @@ public class PermissionConstants {
 	public static final String MN_REPORT_CONSTRAINT_SALE = "/backoffice/report/saleconstraint";
 	public static final String REPORT_CONSTRAINTSALE_LIST = "SaleConstraintReportList";
 
+	// Back Office - Laporan - Laporan Kas Harian
+	public static final String MN_REPORT_DAILYCASH = "/backoffice/report/dailycash";
+	public static final String REPORT_DAILYCASH_LIST = "DailyCashReportList";
+
 	// Service Monitoring - Sale Constraint Posting Scheduler
 	public static final String MN_MON_SALCONSTRAINT_POSTING = "/servicemonitoring/saleconstraintposting";
 	public static final String SALECONSTRAINT_POSTINGMONITORING_LIST = "SaleConstraintPostingMonitoringList";
