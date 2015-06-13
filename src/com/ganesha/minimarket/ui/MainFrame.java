@@ -13,8 +13,6 @@ import javax.swing.JSeparator;
 
 import net.miginfocom.swing.MigLayout;
 
-import org.hibernate.Session;
-
 import com.ganesha.accounting.ui.forms.circle.CircleListDialog;
 import com.ganesha.accounting.ui.forms.expense.ExpenseListDialog;
 import com.ganesha.core.utils.DateUtils;
@@ -27,15 +25,14 @@ import com.ganesha.desktop.component.XJMenu;
 import com.ganesha.desktop.component.XJMenuItem;
 import com.ganesha.desktop.component.XJPanel;
 import com.ganesha.desktop.exeptions.ExceptionHandler;
-import com.ganesha.hibernate.HibernateUtils;
 import com.ganesha.minimarket.Main;
-import com.ganesha.minimarket.facade.DailyCashReportFacade;
 import com.ganesha.minimarket.ui.forms.customer.CustomerListDialog;
 import com.ganesha.minimarket.ui.forms.discount.DiscountListDialog;
 import com.ganesha.minimarket.ui.forms.expense.ExpenseTransactionForm;
 import com.ganesha.minimarket.ui.forms.payable.PayableListDialog;
 import com.ganesha.minimarket.ui.forms.purchase.PembelianForm;
 import com.ganesha.minimarket.ui.forms.receivable.ReceivableListDialog;
+import com.ganesha.minimarket.ui.forms.reports.DailyCashReportListDialog;
 import com.ganesha.minimarket.ui.forms.reports.ItemStockReportListDialog;
 import com.ganesha.minimarket.ui.forms.reports.ProfitAndLossCutoffListDialog;
 import com.ganesha.minimarket.ui.forms.reports.SaleConstraintReportListDialog;
@@ -532,15 +529,11 @@ public class MainFrame extends XJFrame {
 		mntmDailyCashReport.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				Session session = HibernateUtils.openSession();
 				try {
-					DailyCashReportFacade.getInstance().search(
-							DateUtils.getCurrent(Date.class),
-							DateUtils.getCurrent(Date.class), session);
+					new DailyCashReportListDialog(MainFrame.this)
+							.setVisible(true);
 				} catch (Exception ex) {
 					ExceptionHandler.handleException(MainFrame.this, ex);
-				} finally {
-					session.close();
 				}
 			}
 		});
