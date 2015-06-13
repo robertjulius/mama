@@ -6,19 +6,41 @@
 	version="1.8">
 
 	<schedule>
+
 		<job>
-			<name>PostingSaleConstraint</name>
-			<group>PostingGroup</group>
+			<name>PostingSaleConstraintJob</name>
+			<group>PostingSaleConstraintJobGroup</group>
 			<description>Posting Sale Constraint Job</description>
 			<job-class>com.ganesha.quartz.PostingConstraintJob</job-class>
 		</job>
 		<trigger>
-			<cron>
-				<name>dummyTrigger</name>
-				<job-name>PostingSaleConstraint</job-name>
-				<job-group>PostingGroup</job-group>
-				<cron-expression>0 0/30 * * * ?</cron-expression>
-			</cron>
+			<simple>
+				<name>PostingSaleConstraintJobTrigger</name>
+				<group>PostingSaleConstraintJobTriggerGroup</group>
+				<job-name>PostingSaleConstraintJob</job-name>
+				<job-group>PostingSaleConstraintJobGroup</job-group>
+				<repeat-count>-1</repeat-count>
+				<repeat-interval>1800000</repeat-interval>
+			</simple>
 		</trigger>
+
+		<job>
+			<name>ProfitAndLossCutoffDailyJob</name>
+			<group>ProfitAndLossCutoffDailyJobGroup</group>
+			<description>Profit and Loss Cut Off Daily Job</description>
+			<job-class>com.ganesha.quartz.ProfitAndLossCutoffDailyJob</job-class>
+		</job>
+		<trigger>
+			<simple>
+				<name>ProfitAndLossCutoffDailyJobTrigger</name>
+				<group>ProfitAndLossCutoffDailyJobTriggerGroup</group>
+				<job-name>ProfitAndLossCutoffDailyJob</job-name>
+				<job-group>ProfitAndLossCutoffDailyJobGroup</job-group>
+				<repeat-count>-1</repeat-count>
+				<repeat-interval>3600000</repeat-interval>
+			</simple>
+		</trigger>
+
 	</schedule>
+
 </job-scheduling-data>

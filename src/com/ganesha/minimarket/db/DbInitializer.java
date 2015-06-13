@@ -70,7 +70,6 @@ public class DbInitializer {
 		Main.setCompany(companyChecker.getCompany());
 
 		PermissionChecker.register(new SimplePermissionChecker());
-		Main.runQuartz();
 	}
 
 	private static void createDb(Connection conn) throws SQLException {

@@ -20,6 +20,7 @@ import org.hibernate.Session;
 import com.ganesha.accounting.facade.ProfitAndLossCutoffFacade;
 import com.ganesha.accounting.model.ProfitAndLossCutoff;
 import com.ganesha.core.exception.AppException;
+import com.ganesha.core.exception.UserException;
 import com.ganesha.core.utils.Formatter;
 import com.ganesha.desktop.component.XJButton;
 import com.ganesha.desktop.component.XJDateChooser;
@@ -33,6 +34,7 @@ import com.ganesha.desktop.component.xtableutils.XTableParameter;
 import com.ganesha.desktop.component.xtableutils.XTableUtils;
 import com.ganesha.desktop.exeptions.ExceptionHandler;
 import com.ganesha.hibernate.HibernateUtils;
+import com.ganesha.minimarket.Main;
 import com.ganesha.minimarket.utils.PermissionConstants;
 
 public class ProfitAndLossCutoffListDialog extends XJTableDialog {
@@ -50,6 +52,7 @@ public class ProfitAndLossCutoffListDialog extends XJTableDialog {
 
 	private final Map<ColumnEnum, XTableParameter> tableParameters = new HashMap<>();
 	private XJLabel lblDateEnd;
+	private XJButton btnSummary;
 	{
 		tableParameters.put(ColumnEnum.PERIOD_BEGIN, new XTableParameter(0,
 				200, false, "Periode Dari", false,
@@ -74,7 +77,7 @@ public class ProfitAndLossCutoffListDialog extends XJTableDialog {
 		setTitle("Profit & Loss Cut Off");
 		setPermissionCode(PermissionConstants.CUST_LIST);
 		getContentPane().setLayout(
-				new MigLayout("", "[700,grow]", "[][300,grow][]"));
+				new MigLayout("", "[900,grow]", "[][300,grow][]"));
 
 		table = new XJTable() {
 			private static final long serialVersionUID = 1L;
@@ -154,7 +157,7 @@ public class ProfitAndLossCutoffListDialog extends XJTableDialog {
 
 		XJPanel panel = new XJPanel();
 		getContentPane().add(panel, "cell 0 2,alignx center,growy");
-		panel.setLayout(new MigLayout("", "[][][]", "[]"));
+		panel.setLayout(new MigLayout("", "[][][][100px][]", "[]"));
 
 		btnCutoff = new XJButton();
 		btnCutoff.addActionListener(new ActionListener() {
@@ -197,6 +200,21 @@ public class ProfitAndLossCutoffListDialog extends XJTableDialog {
 				.setText("<html><center>Lihat Detail<br/>[Enter]</center></html>");
 		panel.add(btnDetail, "cell 2 0");
 
+		btnSummary = new XJButton();
+		btnSummary.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				try {
+					showReportSummary();
+				} catch (Exception ex) {
+					ExceptionHandler.handleException(
+							ProfitAndLossCutoffListDialog.this, ex);
+				}
+
+			}
+		});
+		btnSummary.setText("<html><center>Summary<br/>[F11]</center></html>");
+		panel.add(btnSummary, "cell 4 0");
+
 		pack();
 		setLocationRelativeTo(parent);
 	}
@@ -206,7 +224,7 @@ public class ProfitAndLossCutoffListDialog extends XJTableDialog {
 		try {
 			session.beginTransaction();
 			ProfitAndLossCutoffFacade.getInstance().performProfitAndLossCutoff(
-					session);
+					Main.getUserLogin().getId(), session);
 			session.getTransaction().commit();
 		} catch (Exception e) {
 			session.getTransaction().rollback();
@@ -279,6 +297,9 @@ public class ProfitAndLossCutoffListDialog extends XJTableDialog {
 		case KeyEvent.VK_F5:
 			btnCutoff.doClick();
 			break;
+		case KeyEvent.VK_F11:
+			btnSummary.doClick();
+			break;
 		default:
 			break;
 		}
@@ -305,6 +326,26 @@ public class ProfitAndLossCutoffListDialog extends XJTableDialog {
 					session);
 
 			btnRefresh.doClick();
+		} finally {
+			session.close();
+		}
+	}
+
+	private void showReportSummary() throws AppException, UserException {
+		Session session = HibernateUtils.openSession();
+		try {
+			Date beginDate = dtChBeginDate.getDate();
+			Date endDate = dtChEndDate.getDate();
+
+			ProfitAndLossCutoffFacade facade = ProfitAndLossCutoffFacade
+					.getInstance();
+
+			List<ProfitAndLossCutoff> profitAndLossCutoffs = facade.search(
+					beginDate, endDate, session);
+
+			ProfitAndLossCutoffFacade.getInstance().previewReport(
+					ProfitAndLossCutoffListDialog.this, profitAndLossCutoffs);
+
 		} finally {
 			session.close();
 		}

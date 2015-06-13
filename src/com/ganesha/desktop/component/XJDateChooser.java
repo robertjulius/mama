@@ -14,6 +14,7 @@ public class XJDateChooser extends JDateChooser implements XComponentConstants {
 		JTextFieldDateEditor dateEditor = (JTextFieldDateEditor) getDateEditor();
 		dateEditor.setEditable(false);
 		dateEditor.setBackground(TXT_BG_NOTEDITABLE);
+		setDateFormatString("dd MMM yyyy");
 	}
 
 	@Override

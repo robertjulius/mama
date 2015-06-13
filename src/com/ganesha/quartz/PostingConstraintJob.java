@@ -11,6 +11,7 @@ public class PostingConstraintJob implements Job {
 
 	@Override
 	public void execute(JobExecutionContext context) {
+		
 		LoggerFactory.getLogger(Loggers.SCHEDULER).debug(
 				"Scheduler " + PostingConstraintJob.class.getName()
 						+ " is started");
