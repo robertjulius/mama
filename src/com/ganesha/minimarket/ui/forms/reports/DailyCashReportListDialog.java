@@ -59,7 +59,7 @@ public class DailyCashReportListDialog extends XJTableDialog {
 				new MigLayout("", "[grow]", "[][300,grow][]"));
 
 		setTitle("Laporan Kas Harian");
-		setPermissionCode(PermissionConstants.REPORT_STOCKOPNAME_LIST);
+		setPermissionCode(PermissionConstants.REPORT_DAILYCASH_LIST);
 
 		table = new XJTable() {
 			private static final long serialVersionUID = 1L;

@@ -69,7 +69,7 @@ public class ExpenseFacade implements TransactionReportFacade {
 	public List<ExpenseTransaction> getTransactionListByTimestamp(
 			Timestamp beginTimestamp, Timestamp endTimestamp, Session session) {
 
-		Criteria criteria = session.createCriteria(Expense.class);
+		Criteria criteria = session.createCriteria(ExpenseFacade.class);
 
 		if (beginTimestamp != null) {
 			criteria.add(Restrictions

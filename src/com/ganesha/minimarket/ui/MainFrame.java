@@ -525,7 +525,7 @@ public class MainFrame extends XJFrame {
 		mnReport.add(mntmSaleConstraintReport);
 
 		XJMenuItem mntmDailyCashReport = new XJMenuItem("Laporan Kas Harian",
-				PermissionConstants.MN_REPORT_CONSTRAINT_SALE);
+				PermissionConstants.MN_REPORT_DAILYCASH);
 		mntmDailyCashReport.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
