@@ -53,6 +53,9 @@ public class SaleHeader extends Trackable implements LogableEntity {
 	@Column(name = "MONEY_CHANGE", nullable = false)
 	private BigDecimal moneyChange;
 
+	@Column(name = "CONSTRAINT_FLAG", nullable = false)
+	private Boolean constraintFlag = false;
+
 	public Customer getCustomer() {
 		return customer;
 	}
@@ -132,5 +135,13 @@ public class SaleHeader extends Trackable implements LogableEntity {
 
 	public void setTransactionTimestamp(Timestamp transactionTimestamp) {
 		this.transactionTimestamp = transactionTimestamp;
+	}
+
+	public Boolean getConstraintFlag() {
+		return constraintFlag;
+	}
+
+	public void setConstraintFlag(Boolean constraintFlag) {
+		this.constraintFlag = constraintFlag;
 	}
 }

@@ -209,6 +209,7 @@ public class SaleConstraintHeader extends Trackable implements LogableEntity {
 		saleHeader.setMoneyChange(moneyChange);
 		saleHeader.setLastUpdatedBy(getLastUpdatedBy());
 		saleHeader.setLastUpdatedTimestamp(getLastUpdatedTimestamp());
+		saleHeader.setConstraintFlag(true);
 		return saleHeader;
 	}
 }
