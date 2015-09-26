@@ -119,7 +119,7 @@ public class PembelianForm extends XJDialog {
 				Double.class));
 
 		tableParameters.put(ColumnEnum.LAST_PRICE, new XTableParameter(6, 75,
-				false, "Harga Terakhir", false,
+				false, "Harga Terakhir", true,
 				XTableConstants.CELL_RENDERER_RIGHT, Double.class));
 
 		tableParameters.put(ColumnEnum.TOTAL, new XTableParameter(7, 75, false,
@@ -631,7 +631,7 @@ public class PembelianForm extends XJDialog {
 	private void reorderRowNumber() {
 		int rowCount = table.getRowCount();
 		for (int i = 0; i < rowCount; i++) {
-			table.setValueAt(i + 1, i, tableParameters.get(ColumnEnum.NUM)
+			table.getModel().setValueAt(i + 1, i, tableParameters.get(ColumnEnum.NUM)
 					.getColumnIndex());
 		}
 	}
@@ -877,7 +877,7 @@ public class PembelianForm extends XJDialog {
 								tableParameters.get(ColumnEnum.QUANTITY)
 										.getColumnIndex()).toString())
 				.intValue();
-		table.setValueAt(Formatter.formatNumberToString(jumlah), row,
+		table.getModel().setValueAt(Formatter.formatNumberToString(jumlah), row,
 				tableParameters.get(ColumnEnum.QUANTITY).getColumnIndex());
 
 		double hargaSatuan = Formatter.formatStringToNumber(
@@ -887,11 +887,11 @@ public class PembelianForm extends XJDialog {
 								tableParameters.get(ColumnEnum.PRICE)
 										.getColumnIndex()).toString())
 				.doubleValue();
-		table.setValueAt(Formatter.formatNumberToString(hargaSatuan), row,
+		table.getModel().setValueAt(Formatter.formatNumberToString(hargaSatuan), row,
 				tableParameters.get(ColumnEnum.PRICE).getColumnIndex());
 
 		double total = jumlah * hargaSatuan;
-		table.setValueAt(Formatter.formatNumberToString(total), row,
+		table.getModel().setValueAt(Formatter.formatNumberToString(total), row,
 				tableParameters.get(ColumnEnum.TOTAL).getColumnIndex());
 
 		setTotalPembelian();
