@@ -115,7 +115,7 @@ public class ProfitAndLossCutoffFacade {
 			criteria.createAlias("previousProfitAndLossCutoff",
 					"previousProfitAndLossCutoff");
 			criteria.add(Restrictions.le(
-					"previousProfitAndLossCutoff.cutoffTimestamp", beginDate));
+					"previousProfitAndLossCutoff.cutoffTimestamp", endDate));
 		}
 
 		@SuppressWarnings("unchecked")
