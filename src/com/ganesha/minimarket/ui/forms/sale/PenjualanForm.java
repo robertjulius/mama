@@ -999,11 +999,10 @@ public class PenjualanForm extends XJDialog {
 		Session session = HibernateUtils.openSession();
 		try {
 			Item item = ItemFacade.getInstance().getDetail(itemId, session);
-			BigDecimal buyPrice = ItemFacade.getInstance().getHigherBuyPrice(
-					item);
-			if (newPrice < buyPrice.doubleValue()) {
+			BigDecimal lastBuyPrice = ItemFacade.getInstance().getLastBuyPrice(item);
+			if (newPrice < lastBuyPrice.doubleValue()) {
 				throw new UserException(
-						"Harga Jual tidak boleh di bawah Harga Beli");
+						"Harga Jual tidak boleh di bawah Harga Beli terakhir");
 			}
 		} finally {
 			session.close();
