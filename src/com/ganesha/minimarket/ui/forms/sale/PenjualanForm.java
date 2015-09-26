@@ -22,8 +22,6 @@ import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 import javax.swing.table.TableCellEditor;
 
-import net.miginfocom.swing.MigLayout;
-
 import org.hibernate.Session;
 import org.slf4j.LoggerFactory;
 
@@ -67,6 +65,8 @@ import com.ganesha.minimarket.model.SaleDetail;
 import com.ganesha.minimarket.model.SaleHeader;
 import com.ganesha.minimarket.ui.forms.searchentity.SearchEntityDialog;
 import com.ganesha.minimarket.utils.PermissionConstants;
+
+import net.miginfocom.swing.MigLayout;
 
 public class PenjualanForm extends XJDialog {
 
@@ -458,6 +458,7 @@ public class PenjualanForm extends XJDialog {
 					"Tidak dapat melakukan penjualan barang")
 					&& e.getMessage().contains(
 							"karena stock di sistem hanya ada")) {
+				session.flush();
 				session.getTransaction().rollback();
 				session.beginTransaction();
 				performSaleConstraint(saleHeader, saleDetails, session);
