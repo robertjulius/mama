@@ -174,6 +174,7 @@ public class DbInitializer {
 						StandardCharsets.UTF_8);
 
 				for (String string : strings) {
+					LoggerFactory.getLogger(Loggers.APPLICATION).debug(string);
 					statement.execute(string);
 				}
 			}
