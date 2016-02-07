@@ -23,7 +23,20 @@ public abstract class XJTableDialog extends XJDialog {
 				try {
 					loadData();
 				} catch (Exception ex) {
-					ExceptionHandler.handleException(XJTableDialog.this, ex);
+					/*
+					 * This thread is not safe because the same table model is
+					 * shared between thread. For now the only known bugs is
+					 * java.lang.ArrayIndexOutOfBoundsException will raised.
+					 */
+					if (ex instanceof ArrayIndexOutOfBoundsException
+							&& ex.getStackTrace()[0].getClassName().equals("java.util.Vector")
+							&& ex.getStackTrace()[0].getMethodName().equals("elementAt")) {
+						/*
+						 * do nothing for this exception
+						 */
+					} else {
+						ExceptionHandler.handleException(XJTableDialog.this, ex);
+					}
 				}
 			}
 		};
