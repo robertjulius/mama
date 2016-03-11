@@ -1,7 +1,9 @@
 package com.ganesha.minimarket.ui.forms.sale;
 
+import java.awt.AWTException;
 import java.awt.Color;
 import java.awt.Font;
+import java.awt.Robot;
 import java.awt.Window;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -415,8 +417,19 @@ public class PenjualanForm extends XJDialog {
 	}
 
 	@Override
+	public void setVisible(boolean visible) {
+		if (visible) {
+			setFocusToBarcodeField();
+		}
+		super.setVisible(visible);
+	}
+
+	@Override
 	protected void keyEventListener(int keyCode) {
 		switch (keyCode) {
+		case KeyEvent.VK_F3:
+			quickEditQuantity();
+			break;
 		case KeyEvent.VK_F5:
 			btnCariCustomer.doClick();
 			break;
@@ -432,7 +445,7 @@ public class PenjualanForm extends XJDialog {
 		case KeyEvent.VK_F12:
 			btnSelesai.doClick();
 			break;
-		case KeyEvent.VK_DELETE:
+		case KeyEvent.VK_DELETE: {
 			boolean isFocus = table.isFocusOwner();
 			if (!isFocus) {
 				return;
@@ -442,6 +455,18 @@ public class PenjualanForm extends XJDialog {
 			}
 			btnHapus.doClick();
 			break;
+		}
+		case KeyEvent.VK_ENTER: {
+			boolean isFocus = table.isFocusOwner();
+			if (!isFocus) {
+				return;
+			}
+			if (table.isEditing()) {
+				return;
+			}
+			setFocusToBarcodeField();
+			break;
+		}
 		default:
 			break;
 		}
@@ -978,7 +1003,6 @@ public class PenjualanForm extends XJDialog {
 			reorderRowNumber();
 
 			int row = table.getRowCount() - 1;
-			table.requestFocus();
 			table.changeSelection(row, tableParameters.get(ColumnEnum.QUANTITY)
 					.getColumnIndex(), false, false);
 
@@ -989,6 +1013,8 @@ public class PenjualanForm extends XJDialog {
 
 			setTotalPerRow(row);
 			setTotalPenjualan();
+
+			setFocusToBarcodeField();
 
 		} finally {
 			session.close();
@@ -1012,5 +1038,15 @@ public class PenjualanForm extends XJDialog {
 
 	private enum ColumnEnum {
 		NUM, CODE, NAME, QUANTITY, UNIT, PRICE, DISCOUNT, TOTAL, ID
+	}
+
+	private void quickEditQuantity() {
+		table.requestFocus();
+		try {
+			Robot robot = new Robot();
+			robot.keyPress(KeyEvent.VK_F2);
+		} catch (AWTException e) {
+			throw new RuntimeException(e);
+		}
 	}
 }

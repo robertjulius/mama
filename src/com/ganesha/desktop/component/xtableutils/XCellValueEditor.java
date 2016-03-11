@@ -34,6 +34,7 @@ public class XCellValueEditor extends XJDialog {
 		txtCellValue.setHorizontalAlignment(horizontalAlignment);
 		getContentPane().add(txtCellValue, "cell 0 1,growx");
 		txtCellValue.setText(initialValue);
+		txtCellValue.selectAll();
 
 		pack();
 		setLocationRelativeTo(parent);

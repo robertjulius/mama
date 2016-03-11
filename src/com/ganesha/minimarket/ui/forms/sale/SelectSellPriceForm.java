@@ -86,8 +86,21 @@ public class SelectSellPriceForm extends XJDialog {
 		XTableModel tableModel = (XTableModel) table.getModel();
 		tableModel.setRowCount(sellPrices.size());
 
+		int highestPriceIndex = -1;
+
 		for (int i = 0; i < sellPrices.size(); ++i) {
 			ItemSellPrice sellPrice = sellPrices.get(i);
+
+			BigDecimal price = sellPrice.getPrimaryKey().getSellPrice();
+			if (i == 0) {
+				highestPriceIndex = 0;
+			} else {
+				double highestPrice = Formatter.formatStringToNumber((String) tableModel.getValueAt(highestPriceIndex,
+						tableParameters.get(ColumnEnum.PRICE).getColumnIndex())).doubleValue();
+				if (price.doubleValue() > highestPrice) {
+					highestPriceIndex = i;
+				}
+			}
 			tableModel.setValueAt(
 					"Harga " + Words.getSequenceWord(sellPrice.getSequence()),
 					i, tableParameters.get(ColumnEnum.NUM).getColumnIndex());
@@ -95,6 +108,9 @@ public class SelectSellPriceForm extends XJDialog {
 					.getPrimaryKey().getSellPrice()), i,
 					tableParameters.get(ColumnEnum.PRICE).getColumnIndex());
 		}
+
+		table.requestFocus();
+		table.changeSelection(highestPriceIndex, 0, false, false);
 	}
 
 	private void pilih() {
