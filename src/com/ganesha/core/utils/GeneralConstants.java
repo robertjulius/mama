@@ -16,7 +16,7 @@ import com.ganesha.minimarket.constants.Enums.TransactionType;
 public class GeneralConstants {
 
 	public static final String APPLICATION_NAME = "Miniket";
-	public static final String VERSION = "v2.1.6";
+	public static final String VERSION = "v2.2.1";
 
 	public static final String USER_SESSION = "userSession";
 
