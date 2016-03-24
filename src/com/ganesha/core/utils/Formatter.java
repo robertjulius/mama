@@ -1,7 +1,10 @@
 package com.ganesha.core.utils;
 
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
 import java.text.DateFormat;
 import java.text.DecimalFormat;
+import java.text.Format;
 import java.text.NumberFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -33,7 +36,7 @@ public class Formatter {
 	public static Number formatCodeToInt(String code) {
 		Integer number = null;
 		try {
-			number = codeFormat.parse(code).intValue();
+			number = retryParse(codeFormat, code, Integer.class);
 		} catch (ParseException e) {
 			number = 0;
 		}
@@ -73,7 +76,7 @@ public class Formatter {
 	public static Date formatStringToDate(String string) {
 		Date date = null;
 		try {
-			date = dateFormat.parse(string);
+			date = retryParse(dateFormat, string, Date.class);
 		} catch (ParseException e) {
 			date = null;
 		}
@@ -83,7 +86,7 @@ public class Formatter {
 	public static Number formatStringToNumber(String string) {
 		Number number = null;
 		try {
-			number = numberFormat.parse(string);
+			number = retryParse(numberFormat, string, Number.class);
 		} catch (ParseException e) {
 			number = 0;
 		}
@@ -93,7 +96,7 @@ public class Formatter {
 	public static Date formatStringToTimestamp(String string) {
 		Date date = null;
 		try {
-			date = timestampFormat.parse(string);
+			date = retryParse(timestampFormat, string, Date.class);
 		} catch (ParseException e) {
 			date = null;
 		}
@@ -110,4 +113,34 @@ public class Formatter {
 		return string;
 	}
 
+	/*
+	 * This method is needed because there is unknown bugs that happen
+	 * intermitance if we call formatter.format() in multi thread mode
+	 */
+	public static <E> E retryParse(Format formatter, String string, Class<E> clazz) throws ParseException {
+		int maxTry = 1000;
+		for (int i = 0; i < maxTry; ++i) {
+			try {
+				Method method = formatter.getClass().getMethod("parse", String.class);
+				@SuppressWarnings("unchecked")
+				E value = (E) method.invoke(formatter, string);
+				return value;
+			} catch (NoSuchMethodException | SecurityException | IllegalAccessException e) {
+				throw new RuntimeException(e);
+			} catch (InvocationTargetException e) {
+				if (e.getCause() instanceof ParseException) {
+					throw (ParseException) e.getCause();
+				} else if (e.getCause() instanceof IllegalArgumentException) {
+					if (i < maxTry) {
+						// Do nothing, lets retry parse this string
+					} else {
+						throw (IllegalArgumentException) e.getCause();
+					}
+				} else {
+					throw new RuntimeException(e.getCause());
+				}
+			}
+		}
+		throw new RuntimeException("Failed parsing string '" + string + "' to " + clazz.getName());
+	}
 }
