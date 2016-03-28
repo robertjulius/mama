@@ -96,7 +96,7 @@ public class PembelianForm extends XJDialog {
 	private XJPanel pnlHutang;
 
 	{
-		tableParameters.put(ColumnEnum.NUM, new XTableParameter(0, 5, false,
+		tableParameters.put(ColumnEnum.NUM, new XTableParameter(0, 2, false,
 				"No", false, XTableConstants.CELL_RENDERER_CENTER,
 				Integer.class));
 
@@ -116,19 +116,23 @@ public class PembelianForm extends XJDialog {
 				"Satuan", false, XTableConstants.CELL_RENDERER_LEFT,
 				String.class));
 
-		tableParameters.put(ColumnEnum.PRICE, new XTableParameter(5, 75, true,
+		tableParameters.put(ColumnEnum.LAST_STOCK, new XTableParameter(5, 10,
+				false, "Last Stock", false, XTableConstants.CELL_RENDERER_RIGHT,
+				Integer.class));
+
+		tableParameters.put(ColumnEnum.PRICE, new XTableParameter(6, 75, true,
 				"Harga Satuan", false, XTableConstants.CELL_RENDERER_RIGHT,
 				Double.class));
 
-		tableParameters.put(ColumnEnum.LAST_PRICE, new XTableParameter(6, 75,
+		tableParameters.put(ColumnEnum.LAST_PRICE, new XTableParameter(7, 75,
 				false, "Harga Terakhir", true,
 				XTableConstants.CELL_RENDERER_RIGHT, Double.class));
 
-		tableParameters.put(ColumnEnum.TOTAL, new XTableParameter(7, 75, false,
+		tableParameters.put(ColumnEnum.TOTAL, new XTableParameter(8, 75, false,
 				"Total", false, XTableConstants.CELL_RENDERER_RIGHT,
 				Double.class));
 
-		tableParameters.put(ColumnEnum.ID, new XTableParameter(8, 0, false,
+		tableParameters.put(ColumnEnum.ID, new XTableParameter(9, 0, false,
 				"ID", true, XTableConstants.CELL_RENDERER_LEFT, Integer.class));
 	}
 
@@ -1007,6 +1011,9 @@ public class PembelianForm extends XJDialog {
 			tableModel.setValueAt(item.getUnit(), rowIndex, tableParameters
 					.get(ColumnEnum.UNIT).getColumnIndex());
 
+			tableModel.setValueAt(facade.calculateStock(item), rowIndex,
+					tableParameters.get(ColumnEnum.LAST_STOCK).getColumnIndex());
+
 			tableModel.setValueAt(0, rowIndex,
 					tableParameters.get(ColumnEnum.PRICE).getColumnIndex());
 
@@ -1054,7 +1061,7 @@ public class PembelianForm extends XJDialog {
 	}
 
 	private enum ColumnEnum {
-		NUM, CODE, NAME, QUANTITY, UNIT, PRICE, LAST_PRICE, TOTAL, ID
+		NUM, CODE, NAME, QUANTITY, UNIT, LAST_STOCK, PRICE, LAST_PRICE, TOTAL, ID
 	}
 
 	private void quickEditQuantity() {
