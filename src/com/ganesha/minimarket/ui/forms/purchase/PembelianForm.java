@@ -1,7 +1,9 @@
 package com.ganesha.minimarket.ui.forms.purchase;
 
+import java.awt.AWTException;
 import java.awt.Color;
 import java.awt.Font;
+import java.awt.Robot;
 import java.awt.Window;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -22,8 +24,6 @@ import javax.swing.SwingConstants;
 import javax.swing.event.PopupMenuEvent;
 import javax.swing.event.PopupMenuListener;
 import javax.swing.table.TableCellEditor;
-
-import net.miginfocom.swing.MigLayout;
 
 import org.hibernate.Session;
 
@@ -58,6 +58,8 @@ import com.ganesha.minimarket.model.Supplier;
 import com.ganesha.minimarket.ui.forms.searchentity.SearchEntityDialog;
 import com.ganesha.minimarket.ui.forms.stock.StockForm;
 import com.ganesha.minimarket.utils.PermissionConstants;
+
+import net.miginfocom.swing.MigLayout;
 
 public class PembelianForm extends XJDialog {
 
@@ -479,8 +481,19 @@ public class PembelianForm extends XJDialog {
 	}
 
 	@Override
+	public void setVisible(boolean visible) {
+		if (visible) {
+			setFocusToBarcodeField();
+		}
+		super.setVisible(visible);
+	}
+
+	@Override
 	protected void keyEventListener(int keyCode) {
 		switch (keyCode) {
+		case KeyEvent.VK_F3:
+			quickEditQuantity();
+			break;
 		case KeyEvent.VK_F5:
 			btnCariSupplier.doClick();
 			break;
@@ -499,7 +512,7 @@ public class PembelianForm extends XJDialog {
 		case KeyEvent.VK_F12:
 			btnSelesai.doClick();
 			break;
-		case KeyEvent.VK_DELETE:
+		case KeyEvent.VK_DELETE: {
 			boolean isFocus = table.isFocusOwner();
 			if (!isFocus) {
 				return;
@@ -509,6 +522,7 @@ public class PembelianForm extends XJDialog {
 			}
 			btnHapus.doClick();
 			break;
+		}
 		default:
 			break;
 		}
@@ -652,6 +666,17 @@ public class PembelianForm extends XJDialog {
 			}
 		}
 
+		try {
+			List<PurchaseDetail> purchaseDetails = performPurchase();
+			updateSalePrices(purchaseDetails);
+			dispose();
+		} catch (Exception e) {
+			throw e;
+		}
+	}
+
+	private List<PurchaseDetail> performPurchase() throws Exception {
+
 		Session session = HibernateUtils.openSession();
 		try {
 			session.beginTransaction();
@@ -772,13 +797,51 @@ public class PembelianForm extends XJDialog {
 					purchaseHeader, session);
 			session.getTransaction().commit();
 
-			dispose();
+			return purchaseDetails;
 
 		} catch (Exception e) {
 			session.getTransaction().rollback();
 			throw e;
 		} finally {
 			session.close();
+		}
+	}
+	
+	private void updateSalePrices(List<PurchaseDetail> purchaseDetails) {
+		Session session = HibernateUtils.openSession();
+		try {
+			session.beginTransaction();
+
+			PurchaseFacade purchaseFacade = PurchaseFacade.getInstance();
+			ItemFacade itemFacade = ItemFacade.getInstance();
+			List<Item> incrementBuyPriceItems = purchaseFacade.getIncrementBuyPriceItems(purchaseDetails, session);
+
+			for (Item item : incrementBuyPriceItems) {
+				if (confirmChangeSalePrice(item.getCode(), item.getName(), itemFacade.getSecondToLastBuyPrice(item),
+						itemFacade.getLastBuyPrice(item))) {
+					StockForm stockForm = new StockForm(this, ActionType.UPDATE);
+					stockForm.setFormDetailValue(item);
+					stockForm.setVisible(true);
+				}
+			}
+		} catch (Exception e) {
+			session.getTransaction().rollback();
+			throw e;
+		} finally {
+			session.close();
+		}
+	}
+	
+	private boolean confirmChangeSalePrice(String itemCode, String itemName, BigDecimal oldBuyPrice,
+			BigDecimal newBuyPrice) {
+		String message = "<html>Harga beli Rp" + Formatter.formatNumberToString(newBuyPrice) + " untuk item ["
+				+ itemCode + "] " + itemName + " lebih mahal dari pada yang terakhir Rp"
+				+ Formatter.formatNumberToString(oldBuyPrice) + ".<br/>Apakah Anda ingin mengupdate harga jual?<html>";
+		int selectedOption = JOptionPane.showConfirmDialog(this, message, "Ubah harga jual", JOptionPane.YES_NO_OPTION);
+		if (selectedOption == JOptionPane.YES_OPTION) {
+			return true;
+		} else {
+			return false;
 		}
 	}
 
@@ -961,11 +1024,12 @@ public class PembelianForm extends XJDialog {
 			reorderRowNumber();
 
 			int row = table.getRowCount() - 1;
-			table.requestFocus();
 			table.changeSelection(row, tableParameters.get(ColumnEnum.QUANTITY)
 					.getColumnIndex(), false, false);
 
 			setTotalPembelian();
+			
+			setFocusToBarcodeField();
 
 		} finally {
 			session.close();
@@ -991,5 +1055,15 @@ public class PembelianForm extends XJDialog {
 
 	private enum ColumnEnum {
 		NUM, CODE, NAME, QUANTITY, UNIT, PRICE, LAST_PRICE, TOTAL, ID
+	}
+
+	private void quickEditQuantity() {
+		table.requestFocus();
+		try {
+			Robot robot = new Robot();
+			robot.keyPress(KeyEvent.VK_F2);
+		} catch (AWTException e) {
+			throw new RuntimeException(e);
+		}
 	}
 }

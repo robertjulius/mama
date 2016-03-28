@@ -2,6 +2,7 @@ package com.ganesha.minimarket.facade;
 
 import java.math.BigDecimal;
 import java.sql.Timestamp;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
@@ -41,6 +42,19 @@ public class PurchaseFacade implements TransactionFacade {
 		PurchaseDetail purchaseDetail = (PurchaseDetail) session.get(
 				PurchaseDetail.class, id);
 		return purchaseDetail;
+	}
+
+	public List<Item> getIncrementBuyPriceItems(List<PurchaseDetail> purchaseDetails, Session session) {
+		ItemFacade itemFacade = ItemFacade.getInstance();
+		List<Item> incrementBuyPriceItems = new ArrayList<>();
+		for (PurchaseDetail purchaseDetail : purchaseDetails) {
+			Item item = itemFacade.getDetail(purchaseDetail.getItemId(), session);
+			BigDecimal secondToLastBuyPrice = itemFacade.getSecondToLastBuyPrice(item);
+			if (purchaseDetail.getPricePerUnit().compareTo(secondToLastBuyPrice) > 0) {
+				incrementBuyPriceItems.add(item);
+			}
+		}
+		return incrementBuyPriceItems;
 	}
 
 	public void performPurchase(PurchaseHeader purchaseHeader,

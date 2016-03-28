@@ -409,14 +409,15 @@ public class StockForm extends XJDialog {
 	}
 
 	private void initForm() throws ActionTypeNotSupported {
-		String kodeTerakhir = DBUtils.getInstance().getLastValue("items",
-				"code", String.class);
-		int newCode = kodeTerakhir == null ? 1 : Formatter.formatCodeToInt(
-				kodeTerakhir).intValue() + 1;
-		String newCodeInString = Formatter.formatIntToCode(newCode);
-		txtKode.setText(newCodeInString);
-
 		if (actionType == ActionType.CREATE) {
+			
+			String kodeTerakhir = DBUtils.getInstance().getLastValue("items",
+					"code", String.class);
+			long newCode = kodeTerakhir == null ? 1 : Formatter.formatCodeToLong(
+					kodeTerakhir).intValue() + 1;
+			String newCodeInString = Formatter.formatLongToCode(newCode);
+			txtKode.setText(newCodeInString);
+			
 			txtJumlahSaatIni.setText("0");
 			txtHargaBeli.setText("0");
 			txtHargaJual.setText("0");

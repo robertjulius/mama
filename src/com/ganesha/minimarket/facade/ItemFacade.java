@@ -144,6 +144,19 @@ public class ItemFacade {
 		return lastBuyPrice;
 	}
 
+	public BigDecimal getSecondToLastBuyPrice(Item item) {
+		BigDecimal lastBuyPrice = null;
+		List<ItemStock> itemStocks = item.getItemStocks();
+		if (itemStocks.isEmpty()) {
+			lastBuyPrice = BigDecimal.valueOf(0);
+		} else {
+			int secondToLastIndex = itemStocks.size() - 2;
+			lastBuyPrice = itemStocks.get(secondToLastIndex).getPurchaseDetail()
+					.getPricePerUnit();
+		}
+		return lastBuyPrice;
+	}
+
 	public void reAdjustStock(Item item, int newStock, Session session) {
 		int totalStock = calculateStock(item);
 		if (newStock < totalStock) {

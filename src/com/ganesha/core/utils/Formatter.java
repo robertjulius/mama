@@ -33,12 +33,12 @@ public class Formatter {
 		return string;
 	}
 
-	public static Number formatCodeToInt(String code) {
-		Integer number = null;
+	public static Number formatCodeToLong(String code) {
+		Long number = null;
 		try {
-			number = retryParse(codeFormat, code, Integer.class);
+			number = retryParse(codeFormat, code, Long.class);
 		} catch (ParseException e) {
-			number = 0;
+			number = 0l;
 		}
 		return number;
 	}
@@ -53,7 +53,7 @@ public class Formatter {
 		return string;
 	}
 
-	public static String formatIntToCode(Integer number) {
+	public static String formatLongToCode(Long number) {
 		String string = null;
 		try {
 			string = codeFormat.format(number);

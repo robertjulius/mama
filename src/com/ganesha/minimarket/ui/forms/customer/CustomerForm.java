@@ -58,7 +58,7 @@ public class CustomerForm extends XJDialog {
 	private XJCheckBox chkDisabled;
 	private XJPanel pnlDisabled;
 	private JSeparator separator;
-	private XJButton btnhapuscustomer;
+	private XJButton btnHapusCustomer;
 
 	private Integer customerId;
 
@@ -180,8 +180,8 @@ public class CustomerForm extends XJDialog {
 		btnBatal.setText("<html><center>Batal<br/>[Alt+Q]</center></html>");
 		pnlButton.add(btnBatal, "cell 0 0");
 
-		btnhapuscustomer = new XJButton();
-		btnhapuscustomer.addActionListener(new ActionListener() {
+		btnHapusCustomer = new XJButton();
+		btnHapusCustomer.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				try {
@@ -191,9 +191,9 @@ public class CustomerForm extends XJDialog {
 				}
 			}
 		});
-		btnhapuscustomer
+		btnHapusCustomer
 				.setText("<html><center>Hapus<br/>Customer</center></html>");
-		pnlButton.add(btnhapuscustomer, "cell 2 0");
+		pnlButton.add(btnHapusCustomer, "cell 2 0");
 		btnSimpan.setText("<html><center>Simpan<br/>[F12]</center></html>");
 		pnlButton.add(btnSimpan, "cell 3 0");
 
@@ -232,13 +232,26 @@ public class CustomerForm extends XJDialog {
 		dispose();
 	}
 
-	private void initForm() {
-		String kodeTerakhir = DBUtils.getInstance().getLastValue("customers",
-				"code", String.class);
-		int newCode = kodeTerakhir == null ? 1 : Formatter.formatCodeToInt(
-				kodeTerakhir).intValue() + 1;
-		String newCodeInString = Formatter.formatIntToCode(newCode);
-		txtKode.setText(newCodeInString);
+	private void initForm() throws ActionTypeNotSupported {
+		if (actionType == ActionType.CREATE) {
+			String kodeTerakhir = DBUtils.getInstance().getLastValue("customers",
+					"code", String.class);
+			long newCode = kodeTerakhir == null ? 1 : Formatter.formatCodeToLong(
+					kodeTerakhir).intValue() + 1;
+			String newCodeInString = Formatter.formatLongToCode(newCode);
+			txtKode.setText(newCodeInString);
+			
+			btnHapusCustomer.setEnabled(true);
+			btnSimpan.setEnabled(true);
+		} else if (actionType == ActionType.UPDATE) {
+			btnHapusCustomer.setEnabled(true);
+			btnSimpan.setEnabled(true);
+		} else if (actionType == ActionType.READ) {
+			btnHapusCustomer.setEnabled(false);
+			btnSimpan.setEnabled(false);
+		} else {
+			throw new ActionTypeNotSupported(actionType);
+		}
 	}
 
 	private void save(boolean deleted) throws ActionTypeNotSupported,
