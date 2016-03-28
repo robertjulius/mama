@@ -9,8 +9,10 @@ import java.util.Map;
 
 import javax.print.PrintException;
 
+import org.hibernate.Criteria;
 import org.hibernate.Query;
 import org.hibernate.Session;
+import org.hibernate.criterion.Restrictions;
 
 import com.ganesha.accounting.facade.AccountFacade;
 import com.ganesha.core.exception.AppException;
@@ -88,6 +90,21 @@ public class SaleFacade implements TransactionFacade {
 	public SaleDetail getDetail(Integer id, Session session) {
 		SaleDetail saleDetail = (SaleDetail) session.get(SaleDetail.class, id);
 		return saleDetail;
+	}
+	
+	public List<SaleDetail> getDetails(Integer saleHeaderId, Session session) {
+		Criteria criteria = session.createCriteria(SaleDetail.class);
+		criteria.createAlias("saleHeader", "saleHeader");
+		criteria.add(Restrictions.eq("saleHeader.id", saleHeaderId));
+
+		@SuppressWarnings("unchecked")
+		List<SaleDetail> saleDetails = criteria.list();
+		return saleDetails;
+	}
+	
+	public SaleHeader getHeader(Integer id, Session session) {
+		SaleHeader saleHeader = (SaleHeader) session.get(SaleHeader.class, id);
+		return saleHeader;
 	}
 
 	public void performSale(SaleHeader saleHeader,

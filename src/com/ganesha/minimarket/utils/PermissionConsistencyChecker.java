@@ -112,6 +112,12 @@ public class PermissionConsistencyChecker {
 				"/Transaksi/Retur Penjualan", 440));
 		permissions.add(createPermission(PermissionConstants.SALRTN_FORM,
 				"Retur Penjualan Form", 441));
+		
+		// Transaction - Cetak Ulang Struk Penjualan
+		permissions.add(createPermission(PermissionConstants.MN_REPRINT_SALERECEIPT,
+				"/Transaksi/Cetak Ulang Struk Penjualan", 445));
+		permissions.add(createPermission(PermissionConstants.REPRINT_SALERECEIPT_LIST,
+						"Cetak Ulang Struk Penjualan", 446));
 
 		// Transaction - Payable
 		permissions.add(createPermission(PermissionConstants.MN_TRX_PAYABLE,

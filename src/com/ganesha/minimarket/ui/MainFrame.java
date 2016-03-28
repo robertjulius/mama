@@ -44,6 +44,7 @@ import com.ganesha.minimarket.ui.forms.returns.ReturPenjualanForm;
 import com.ganesha.minimarket.ui.forms.revenue.RevenueTransactionForm;
 import com.ganesha.minimarket.ui.forms.role.RoleListDialog;
 import com.ganesha.minimarket.ui.forms.sale.PenjualanForm;
+import com.ganesha.minimarket.ui.forms.sale.ReprintSaleReceiptListDialog;
 import com.ganesha.minimarket.ui.forms.servicemonitoring.saleconstraintpostingmonitoring.SaleConstraintPostingMonitoringListDialog;
 import com.ganesha.minimarket.ui.forms.stock.StockListDialog;
 import com.ganesha.minimarket.ui.forms.stockopname.StockOpnameListDialog;
@@ -291,6 +292,20 @@ public class MainFrame extends XJFrame {
 			}
 		});
 		mnTransaksi.add(mntmReturPenjualan);
+
+		XJMenuItem mntmCetakUlangStrukPenjualan = new XJMenuItem("Cetak Ulang Struk Penjualan",
+				PermissionConstants.MN_REPRINT_SALERECEIPT);
+		mntmCetakUlangStrukPenjualan.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				try {
+					new ReprintSaleReceiptListDialog(MainFrame.this).setVisible(true);
+				} catch (Exception ex) {
+					ExceptionHandler.handleException(MainFrame.this, ex);
+				}
+			}
+		});
+		mnTransaksi.add(mntmCetakUlangStrukPenjualan);
 
 		JSeparator separator_1 = new JSeparator();
 		mnTransaksi.add(separator_1);

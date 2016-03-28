@@ -60,6 +60,10 @@ public class PermissionConstants {
 	// Transaction - Retur Penjualan
 	public static final String MN_TRX_SALRTN = "/transaction/salereturn";
 	public static final String SALRTN_FORM = "ReturPenjualanForm";
+	
+	// Transaction - Cetak Ulang Struk Penjualan
+	public static final String MN_REPRINT_SALERECEIPT = "/transaction/reprintsalereceipt";
+	public static final String REPRINT_SALERECEIPT_LIST = "TransactionReportList";
 
 	// Transaction - Payable
 	public static final String MN_TRX_PAYABLE = "/transaction/payable";
