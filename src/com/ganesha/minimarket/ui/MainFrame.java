@@ -2,23 +2,27 @@ package com.ganesha.minimarket.ui;
 
 import java.awt.Color;
 import java.awt.Font;
+import java.awt.Window;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
+import java.lang.reflect.Constructor;
+import java.lang.reflect.InvocationTargetException;
 import java.util.Date;
 
 import javax.swing.JFrame;
 import javax.swing.JMenuBar;
 import javax.swing.JSeparator;
 
-import net.miginfocom.swing.MigLayout;
-
 import com.ganesha.accounting.ui.forms.circle.CircleListDialog;
 import com.ganesha.accounting.ui.forms.expense.ExpenseListDialog;
+import com.ganesha.core.exception.AppException;
+import com.ganesha.core.exception.UserException;
 import com.ganesha.core.utils.DateUtils;
 import com.ganesha.core.utils.Formatter;
 import com.ganesha.core.utils.GeneralConstants;
 import com.ganesha.desktop.component.XJButton;
+import com.ganesha.desktop.component.XJDialog;
 import com.ganesha.desktop.component.XJFrame;
 import com.ganesha.desktop.component.XJLabel;
 import com.ganesha.desktop.component.XJMenu;
@@ -26,6 +30,8 @@ import com.ganesha.desktop.component.XJMenuItem;
 import com.ganesha.desktop.component.XJPanel;
 import com.ganesha.desktop.exeptions.ExceptionHandler;
 import com.ganesha.minimarket.Main;
+import com.ganesha.minimarket.ui.forms.checkstock.CheckStockForm;
+import com.ganesha.minimarket.ui.forms.company.CompanyForm;
 import com.ganesha.minimarket.ui.forms.customer.CustomerListDialog;
 import com.ganesha.minimarket.ui.forms.discount.DiscountListDialog;
 import com.ganesha.minimarket.ui.forms.expense.ExpenseTransactionForm;
@@ -63,6 +69,8 @@ import com.ganesha.prepaid.ui.forms.PrepaidSaleForm;
 import com.ganesha.prepaid.ui.forms.VoucherListDialog;
 import com.ganesha.prepaid.ui.forms.VoucherTypeListDialog;
 
+import net.miginfocom.swing.MigLayout;
+
 public class MainFrame extends XJFrame {
 	private static final long serialVersionUID = 5527217675003046133L;
 	private XJMenuItem mntmPenjualan;
@@ -78,615 +86,141 @@ public class MainFrame extends XJFrame {
 	private XJButton btnPrepaidRegular;
 	private XJButton btnPrepaidMulti;
 	private XJButton btnOpenDrawer;
+	private JMenuBar menuBar;
+	
+	public static MainFrame INSTANCE;
+	
+	public static MainFrame reCreateInstance() {
+		INSTANCE = new MainFrame();
+		return INSTANCE;
+	}
 
-	public MainFrame() {
+	private MainFrame() {
 		getContentPane().setBackground(Color.BLACK);
 
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setTitle(GeneralConstants.APPLICATION_NAME + " "
-				+ GeneralConstants.VERSION);
+		setTitle(GeneralConstants.APPLICATION_NAME + " " + GeneralConstants.VERSION);
 
-		JMenuBar menuBar = new JMenuBar();
+		menuBar = new JMenuBar();
 		setJMenuBar(menuBar);
 
-		XJMenu mnFile = new XJMenu("File");
-		menuBar.add(mnFile);
+		XJMenu mnFile = createMenu("File", null);
 
-		XJMenu mnAdministrasi = new XJMenu("Administrasi");
-		menuBar.add(mnAdministrasi);
-
-		XJMenuItem mntmRole = new XJMenuItem("Role",
-				PermissionConstants.MN_ADMIN_ROLE);
-		mntmRole.addActionListener(new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				try {
-					new RoleListDialog(MainFrame.this).setVisible(true);
-				} catch (Exception ex) {
-					ExceptionHandler.handleException(MainFrame.this, ex);
-				}
-			}
-		});
-		mnAdministrasi.add(mntmRole);
-
-		XJMenuItem mntmUser = new XJMenuItem("User",
-				PermissionConstants.MN_ADMIN_USER);
-		mnAdministrasi.add(mntmUser);
-		mntmUser.addActionListener(new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				try {
-					new UserListDialog(MainFrame.this).setVisible(true);
-				} catch (Exception ex) {
-					ExceptionHandler.handleException(MainFrame.this, ex);
-				}
-			}
-		});
-
-		XJMenuItem mntmGantiPassword = new XJMenuItem("Ganti Password",
+		XJMenu mnAdministrasi = createMenu("Administrasi", null);
+		createMenuItem(mnAdministrasi, CompanyForm.class, "Company", true, PermissionConstants.MN_ADMIN_COMPANY);
+		createMenuItem(mnAdministrasi, RoleListDialog.class, "Role", true, PermissionConstants.MN_ADMIN_ROLE);
+		createMenuItem(mnAdministrasi, UserListDialog.class, "User", true, PermissionConstants.MN_ADMIN_USER);
+		createMenuItem(mnAdministrasi, ChangePasswordForm.class, "Ganti Password", false,
 				PermissionConstants.MN_ADMIN_CHGPWD);
-		mntmGantiPassword.setPermissionRequired(false);
-		mnAdministrasi.add(mntmGantiPassword);
-		mntmGantiPassword.addActionListener(new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				try {
-					new ChangePasswordForm(MainFrame.this).setVisible(true);
-				} catch (Exception ex) {
-					ExceptionHandler.handleException(MainFrame.this, ex);
-				}
-			}
-		});
 
-		XJMenu mnMasterData = new XJMenu("Master Data");
-		menuBar.add(mnMasterData);
+		XJMenu mnMasterData = createMenu("Master Data", null);
 
-		XJMenuItem mntmSupplier = new XJMenuItem("Supplier",
+		createMenuItem(mnMasterData, SupplierListDialog.class, "Supplier", true,
 				PermissionConstants.MN_MASTER_SUPPLIER);
-		mntmSupplier.addActionListener(new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				try {
-					new SupplierListDialog(MainFrame.this).setVisible(true);
-				} catch (Exception ex) {
-					ExceptionHandler.handleException(MainFrame.this, ex);
-				}
-			}
-		});
-		mnMasterData.add(mntmSupplier);
-
-		XJMenuItem mntmCustomer = new XJMenuItem("Customer",
+		createMenuItem(mnMasterData, CustomerListDialog.class, "Customer", true,
 				PermissionConstants.MN_MASTER_CUSTOMER);
-		mntmCustomer.addActionListener(new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				try {
-					new CustomerListDialog(MainFrame.this).setVisible(true);
-				} catch (Exception ex) {
-					ExceptionHandler.handleException(MainFrame.this, ex);
-				}
-			}
-		});
-		mnMasterData.add(mntmCustomer);
-
-		XJMenuItem mntmPersediaan = new XJMenuItem("Persediaan Barang",
+		createMenuItem(mnMasterData, StockListDialog.class, "Persediaan Barang", true,
 				PermissionConstants.MN_MASTER_STOCK);
-		mntmPersediaan.addActionListener(new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				try {
-					new StockListDialog(MainFrame.this).setVisible(true);
-				} catch (Exception ex) {
-					ExceptionHandler.handleException(MainFrame.this, ex);
-				}
-			}
-		});
 
-		JSeparator separator_2 = new JSeparator();
-		mnMasterData.add(separator_2);
-		mnMasterData.add(mntmPersediaan);
+		addSeparator(mnMasterData);
+		createMenuItem(mnMasterData, DiscountListDialog.class, "Diskon", true, PermissionConstants.MN_MASTER_DISCOUNT);
 
-		XJMenuItem mntmDiskon = new XJMenuItem("Diskon",
-				PermissionConstants.MN_MASTER_DISCOUNT);
-		mntmDiskon.addActionListener(new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				try {
-					new DiscountListDialog(MainFrame.this).setVisible(true);
-				} catch (Exception ex) {
-					ExceptionHandler.handleException(MainFrame.this, ex);
-				}
-			}
-		});
-		mnMasterData.add(mntmDiskon);
+		addSeparator(mnMasterData);
+		createMenuItem(mnMasterData, CircleListDialog.class, "Siklus", true, PermissionConstants.MN_MASTER_CIRCLE);
+		createMenuItem(mnMasterData, ExpenseListDialog.class, "Beban", true, PermissionConstants.MN_MASTER_EXPENSE);
+		createMenuItem(mnMasterData, ExpenseListDialog.class, "Beban", true, PermissionConstants.MN_MASTER_EXPENSE);
 
-		XJMenuItem mntmSiklus = new XJMenuItem("Siklus",
-				PermissionConstants.MN_MASTER_CIRCLE);
-		mntmSiklus.addActionListener(new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				try {
-					new CircleListDialog(MainFrame.this).setVisible(true);
-				} catch (Exception ex) {
-					ExceptionHandler.handleException(MainFrame.this, ex);
-				}
-			}
-		});
+		XJMenu mnTransaksi = createMenu("Transaksi", null);
 
-		JSeparator separator_3 = new JSeparator();
-		mnMasterData.add(separator_3);
-		mnMasterData.add(mntmSiklus);
-
-		XJMenuItem mntmBeban = new XJMenuItem("Beban",
-				PermissionConstants.MN_MASTER_EXPENSE);
-		mntmBeban.addActionListener(new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				try {
-					new ExpenseListDialog(MainFrame.this).setVisible(true);
-				} catch (Exception ex) {
-					ExceptionHandler.handleException(MainFrame.this, ex);
-				}
-			}
-		});
-		mnMasterData.add(mntmBeban);
-
-		XJMenu mnTransaksi = new XJMenu("Transaksi");
-		menuBar.add(mnTransaksi);
-
-		XJMenuItem mntmPembelian = new XJMenuItem("Pembelian",
-				PermissionConstants.MN_TRX_PUR);
-		mntmPembelian.addActionListener(new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				try {
-					new PembelianForm(MainFrame.this).setVisible(true);
-				} catch (Exception ex) {
-					ExceptionHandler.handleException(MainFrame.this, ex);
-				}
-			}
-		});
-		mnTransaksi.add(mntmPembelian);
-
-		XJMenuItem mntmReturPembelian = new XJMenuItem("Retur Pembelian",
+		createMenuItem(mnTransaksi, PembelianForm.class, "Pembelian", true, PermissionConstants.MN_TRX_PUR);
+		createMenuItem(mnTransaksi, ReturPembelianForm.class, "Retur Pembelian", true,
 				PermissionConstants.MN_TRX_PURRTN);
-		mntmReturPembelian.addActionListener(new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				try {
-					new ReturPembelianForm(MainFrame.this).setVisible(true);
-				} catch (Exception ex) {
-					ExceptionHandler.handleException(MainFrame.this, ex);
-				}
-			}
-		});
-		mnTransaksi.add(mntmReturPembelian);
 
-		JSeparator separator = new JSeparator();
-		mnTransaksi.add(separator);
-
-		mntmPenjualan = new XJMenuItem("Penjualan",
+		addSeparator(mnTransaksi);
+		mntmPenjualan = createMenuItem(mnTransaksi, PenjualanForm.class, "Penjualan", true,
 				PermissionConstants.MN_TRX_SAL);
-		mntmPenjualan.addActionListener(new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				try {
-					new PenjualanForm(MainFrame.this).setVisible(true);
-				} catch (Exception ex) {
-					ExceptionHandler.handleException(MainFrame.this, ex);
-				}
-			}
-		});
-		mnTransaksi.add(mntmPenjualan);
-
-		XJMenuItem mntmReturPenjualan = new XJMenuItem("Retur Penjualan",
+		createMenuItem(mnTransaksi, ReturPenjualanForm.class, "Retur Penjualan", true,
 				PermissionConstants.MN_TRX_SALRTN);
-		mntmReturPenjualan.addActionListener(new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				try {
-					new ReturPenjualanForm(MainFrame.this).setVisible(true);
-				} catch (Exception ex) {
-					ExceptionHandler.handleException(MainFrame.this, ex);
-				}
-			}
-		});
-		mnTransaksi.add(mntmReturPenjualan);
-
-		XJMenuItem mntmCetakUlangStrukPenjualan = new XJMenuItem("Cetak Ulang Struk Penjualan",
+		createMenuItem(mnTransaksi, ReprintSaleReceiptListDialog.class, "Cetak Ulang Struk Penjualan", true,
 				PermissionConstants.MN_REPRINT_SALERECEIPT);
-		mntmCetakUlangStrukPenjualan.addActionListener(new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				try {
-					new ReprintSaleReceiptListDialog(MainFrame.this).setVisible(true);
-				} catch (Exception ex) {
-					ExceptionHandler.handleException(MainFrame.this, ex);
-				}
-			}
-		});
-		mnTransaksi.add(mntmCetakUlangStrukPenjualan);
+		createMenuItem(mnTransaksi, CheckStockForm.class, "Cek Stock & Harga", true,
+				PermissionConstants.MN_CHECK_STOCK);
 
-		JSeparator separator_1 = new JSeparator();
-		mnTransaksi.add(separator_1);
+		addSeparator(mnTransaksi);
+		createMenuItem(mnTransaksi, PayableListDialog.class, "Hutang", true, PermissionConstants.MN_TRX_PAYABLE);
+		createMenuItem(mnTransaksi, ReceivableListDialog.class, "Piutang", true, PermissionConstants.MN_TRX_RECEIVABLE);
 
-		XJMenuItem mntmHutang = new XJMenuItem("Hutang",
-				PermissionConstants.MN_TRX_PAYABLE);
-		mntmHutang.addActionListener(new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				try {
-					new PayableListDialog(MainFrame.this).setVisible(true);
-				} catch (Exception ex) {
-					ExceptionHandler.handleException(MainFrame.this, ex);
-				}
-			}
-		});
-		mnTransaksi.add(mntmHutang);
-
-		XJMenuItem mntmPiutang = new XJMenuItem("Piutang",
-				PermissionConstants.MN_TRX_RECEIVABLE);
-		mntmPiutang.addActionListener(new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				try {
-					new ReceivableListDialog(MainFrame.this).setVisible(true);
-				} catch (Exception ex) {
-					ExceptionHandler.handleException(MainFrame.this, ex);
-				}
-			}
-		});
-		mnTransaksi.add(mntmPiutang);
-
-		JSeparator separator_4 = new JSeparator();
-		mnTransaksi.add(separator_4);
-
-		XJMenuItem mntmTrxExpense = new XJMenuItem(
-				"Pembayaran Beban Lain-Lain",
+		addSeparator(mnTransaksi);
+		createMenuItem(mnTransaksi, ExpenseTransactionForm.class, "Pembayaran Beban Lain-Lain", true,
 				PermissionConstants.MN_TRX_EXPENSE);
-		mntmTrxExpense.addActionListener(new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				try {
-					new ExpenseTransactionForm(MainFrame.this).setVisible(true);
-				} catch (Exception ex) {
-					ExceptionHandler.handleException(MainFrame.this, ex);
-				}
-			}
-		});
-		mnTransaksi.add(mntmTrxExpense);
-
-		XJMenuItem mntmTrxRevenue = new XJMenuItem(
-				"Input Pendapatan Lain-Lain",
+		createMenuItem(mnTransaksi, RevenueTransactionForm.class, "Input Pendapatan Lain-Lain", true,
 				PermissionConstants.MN_TRX_REVENUE);
-		mntmTrxRevenue.addActionListener(new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				try {
-					new RevenueTransactionForm(MainFrame.this).setVisible(true);
-				} catch (Exception ex) {
-					ExceptionHandler.handleException(MainFrame.this, ex);
-				}
-			}
-		});
-		mnTransaksi.add(mntmTrxRevenue);
 
-		JSeparator separator_5 = new JSeparator();
-		mnTransaksi.add(separator_5);
+		addSeparator(mnTransaksi);
+		// XJMenu mnConstraint = createMenu("Constraint", mnTransaksi);
 
-		XJMenu mnConstraint = new XJMenu((String) null);
-		mnConstraint.setText("Constraint");
-		mnTransaksi.add(mnConstraint);
+		XJMenu mnPrepaid = createMenu("Prepaid", null);
 
-		XJMenu mnPrepaid = new XJMenu("Prepaid");
-		menuBar.add(mnPrepaid);
-
-		mntmPenjualanPulsaIsiUlang = new XJMenuItem("Penjualan Voucher Pulsa",
+		mntmPenjualanPulsaIsiUlang = createMenuItem(mnPrepaid, PrepaidSaleForm.class, "Penjualan Voucher Pulsa", true,
 				PermissionConstants.MN_PREPAID_SALE);
-		mntmPenjualanPulsaIsiUlang.addActionListener(new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				try {
-					new PrepaidSaleForm(MainFrame.this).setVisible(true);
-				} catch (Exception ex) {
-					ExceptionHandler.handleException(MainFrame.this, ex);
-				}
-			}
-		});
-		mnPrepaid.add(mntmPenjualanPulsaIsiUlang);
-
-		mntmPulsaMulti = new XJMenuItem("Penjualan Pulsa Multi",
+		mntmPulsaMulti = createMenuItem(mnPrepaid, MultiSaleForm.class, "Penjualan Pulsa Multi", true,
 				PermissionConstants.MN_MULTI_SALE);
-		mntmPulsaMulti.addActionListener(new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				try {
-					new MultiSaleForm(MainFrame.this).setVisible(true);
-				} catch (Exception ex) {
-					ExceptionHandler.handleException(MainFrame.this, ex);
-				}
-			}
-		});
-		mnPrepaid.add(mntmPulsaMulti);
 
-		XJMenu mnMaintenance = new XJMenu((String) null);
-		mnMaintenance.setText("Maintenance");
-		mnPrepaid.add(mnMaintenance);
+		XJMenu mnMaintenance = createMenu("Maintenance", mnPrepaid);
 
-		XJMenuItem mntmTipeVoucher = new XJMenuItem("Tipe Voucher",
+		createMenuItem(mnMaintenance, VoucherTypeListDialog.class, "Tipe Voucher", true,
 				PermissionConstants.VOUCHER_TYPE_LIST);
-		mntmTipeVoucher.addActionListener(new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				try {
-					new VoucherTypeListDialog(MainFrame.this).setVisible(true);
-				} catch (Exception ex) {
-					ExceptionHandler.handleException(MainFrame.this, ex);
-				}
-			}
-		});
-		mnMaintenance.add(mntmTipeVoucher);
+		createMenuItem(mnMaintenance, VoucherListDialog.class, "Voucher", true, PermissionConstants.VOUCHER_LIST);
+		createMenuItem(mnMaintenance, MultiMapListDialog.class, "Multi", true, PermissionConstants.MULTI_LIST);
 
-		XJMenuItem mntmVoucher = new XJMenuItem("Voucher",
-				PermissionConstants.VOUCHER_LIST);
-		mntmVoucher.addActionListener(new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				try {
-					new VoucherListDialog(MainFrame.this).setVisible(true);
-				} catch (Exception ex) {
-					ExceptionHandler.handleException(MainFrame.this, ex);
-				}
-			}
-		});
-		mnMaintenance.add(mntmVoucher);
+		XJMenu mnReport = createMenu("Laporan", null);
 
-		XJMenuItem mntmMulti = new XJMenuItem("Multi",
-				PermissionConstants.MULTI_LIST);
-		mntmMulti.addActionListener(new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				try {
-					new MultiMapListDialog(MainFrame.this).setVisible(true);
-				} catch (Exception ex) {
-					ExceptionHandler.handleException(MainFrame.this, ex);
-				}
-			}
-		});
-		mnMaintenance.add(mntmMulti);
-
-		XJMenu mnBackOffice = new XJMenu("Back Office");
-		menuBar.add(mnBackOffice);
-
-		XJMenu mnReport = new XJMenu("Laporan");
-		mnBackOffice.add(mnReport);
-
-		XJMenuItem mntmReportTransaksi = new XJMenuItem("Laporan Transaksi",
+		createMenuItem(mnReport, TransactionReportListDialog.class, "Laporan Transaksi", true,
 				PermissionConstants.MN_REPORT_TRX);
-		mntmReportTransaksi.addActionListener(new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				try {
-					new TransactionReportListDialog(MainFrame.this)
-							.setVisible(true);
-				} catch (Exception ex) {
-					ExceptionHandler.handleException(MainFrame.this, ex);
-				}
-			}
-		});
-		mnReport.add(mntmReportTransaksi);
-
-		XJMenuItem mntmLaporanStokBarang = new XJMenuItem(
-				"Laporan Stok Barang", PermissionConstants.MN_REPORT_STOCK);
-		mntmLaporanStokBarang.addActionListener(new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				try {
-					new ItemStockReportListDialog(MainFrame.this)
-							.setVisible(true);
-				} catch (Exception ex) {
-					ExceptionHandler.handleException(MainFrame.this, ex);
-				}
-			}
-		});
-		mnReport.add(mntmLaporanStokBarang);
-
-		XJMenuItem mntmLaporanStockOpname = new XJMenuItem(
-				"Laporan Stock Opname",
+		createMenuItem(mnReport, ItemStockReportListDialog.class, "Laporan Stok Barang", true,
+				PermissionConstants.MN_REPORT_STOCK);
+		createMenuItem(mnReport, StockOpnameReportListDialog.class, "Laporan Stok Opname", true,
 				PermissionConstants.MN_REPORT_STOCKOPNAME);
-		mntmLaporanStockOpname.addActionListener(new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				try {
-					new StockOpnameReportListDialog(MainFrame.this)
-							.setVisible(true);
-				} catch (Exception ex) {
-					ExceptionHandler.handleException(MainFrame.this, ex);
-				}
-			}
-		});
-		mnReport.add(mntmLaporanStockOpname);
-
-		XJMenuItem mntmLaporanLabaRugi = new XJMenuItem("Laporan Laba Rugi",
+		createMenuItem(mnReport, ProfitAndLossCutoffListDialog.class, "Laporan Laba Rugi", true,
 				PermissionConstants.MN_REPORT_PROFITANDLOSS);
-		mntmLaporanLabaRugi.addActionListener(new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				try {
-					// new ProfitAndLossReportListDialog(MainFrame.this)
-					// .setVisible(true);
-					new ProfitAndLossCutoffListDialog(MainFrame.this)
-							.setVisible(true);
-				} catch (Exception ex) {
-					ExceptionHandler.handleException(MainFrame.this, ex);
-				}
-			}
-		});
-		mnReport.add(mntmLaporanLabaRugi);
-
-		XJMenuItem mntmSaleConstraintReport = new XJMenuItem(
-				"Laporan Penjualan Constraint",
+		createMenuItem(mnReport, SaleConstraintReportListDialog.class, "Laporan Penjualan Constraint", true,
 				PermissionConstants.MN_REPORT_CONSTRAINT_SALE);
-		mntmSaleConstraintReport.addActionListener(new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				try {
-					new SaleConstraintReportListDialog(MainFrame.this)
-							.setVisible(true);
-				} catch (Exception ex) {
-					ExceptionHandler.handleException(MainFrame.this, ex);
-				}
-			}
-		});
-		mnReport.add(mntmSaleConstraintReport);
-
-		XJMenuItem mntmDailyCashReport = new XJMenuItem("Laporan Kas Harian",
+		createMenuItem(mnReport, DailyCashReportListDialog.class, "Laporan Kas Harian", true,
 				PermissionConstants.MN_REPORT_DAILYCASH);
-		mntmDailyCashReport.addActionListener(new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				try {
-					new DailyCashReportListDialog(MainFrame.this)
-							.setVisible(true);
-				} catch (Exception ex) {
-					ExceptionHandler.handleException(MainFrame.this, ex);
-				}
-			}
-		});
-		mnReport.add(mntmDailyCashReport);
-
-		XJMenuItem mntmSaleSummaryReport = new XJMenuItem(
-				"Laporan Ringkasan Penjualan",
+		createMenuItem(mnReport, SaleSummaryReportListDialog.class, "Laporan Ringkasan Penjualan", true,
 				PermissionConstants.MN_REPORT_SALESUMMARY);
-		mntmSaleSummaryReport.addActionListener(new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				try {
-					new SaleSummaryReportListDialog(MainFrame.this)
-							.setVisible(true);
-				} catch (Exception ex) {
-					ExceptionHandler.handleException(MainFrame.this, ex);
-				}
-			}
-		});
-		mnReport.add(mntmSaleSummaryReport);
 
-		XJMenuItem mntmStockOpname = new XJMenuItem("Stock Opname",
+		XJMenu mnBackOffice = createMenu("Back Office", null);
+		createMenuItem(mnBackOffice, StockOpnameListDialog.class, "Stock Opname", true,
 				PermissionConstants.MN_BO_STOCKOPNAME);
-		mntmStockOpname.addActionListener(new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				try {
-					new StockOpnameListDialog(MainFrame.this).setVisible(true);
-				} catch (Exception ex) {
-					ExceptionHandler.handleException(MainFrame.this, ex);
-				}
-			}
-		});
-		mnBackOffice.add(mntmStockOpname);
 
-		XJMenu mnMonitoring = new XJMenu((String) null);
-		mnMonitoring.setText("Monitoring");
-		menuBar.add(mnMonitoring);
+		XJMenu mnMonitoring = createMenu("Monitoring", null);
+		createMenuItem(mnMonitoring, SaleConstraintPostingMonitoringListDialog.class, "Posting Penjualan Constraint",
+				true, PermissionConstants.MN_MON_SALCONSTRAINT_POSTING);
 
-		XJMenuItem mntmMonitoringPostingSaleConstraint = new XJMenuItem(
-				"Posting Penjualan Constraint",
-				PermissionConstants.MN_MON_SALCONSTRAINT_POSTING);
-		mnMonitoring.add(mntmMonitoringPostingSaleConstraint);
-		mntmMonitoringPostingSaleConstraint
-				.addActionListener(new ActionListener() {
-					@Override
-					public void actionPerformed(ActionEvent e) {
-						try {
-							new SaleConstraintPostingMonitoringListDialog(
-									MainFrame.this).setVisible(true);
-						} catch (Exception ex) {
-							ExceptionHandler
-									.handleException(MainFrame.this, ex);
-						}
-					}
-				});
-
-		XJMenu mnSetting = new XJMenu("Setting");
-		menuBar.add(mnSetting);
-
-		XJMenuItem mntmDbSetting = new XJMenuItem("Database",
-				PermissionConstants.MN_SETTING_DB);
-		mntmDbSetting.addActionListener(new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				try {
-					new DbSettingForm(MainFrame.this).setVisible(true);
-				} catch (Exception ex) {
-					ExceptionHandler.handleException(MainFrame.this, ex);
-				}
-			}
-		});
-		mnSetting.add(mntmDbSetting);
-
-		XJMenuItem mntmPrinterSetting = new XJMenuItem("Printer",
-				PermissionConstants.MN_SETTING_PRINTER);
-		mntmPrinterSetting.addActionListener(new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				try {
-					new PrinterSettingForm(MainFrame.this).setVisible(true);
-				} catch (Exception ex) {
-					ExceptionHandler.handleException(MainFrame.this, ex);
-				}
-			}
-		});
-		mnSetting.add(mntmPrinterSetting);
-
-		XJMenuItem mntmDbConsistencyCheckerSetting = new XJMenuItem(
-				"DB Consistency", PermissionConstants.MN_SETTING_DBCONSISTENCY);
-		mntmDbConsistencyCheckerSetting.addActionListener(new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				try {
-					new DbConsistencyChecker(MainFrame.this).setVisible(true);
-				} catch (Exception ex) {
-					ExceptionHandler.handleException(MainFrame.this, ex);
-				}
-			}
-		});
-		mnSetting.add(mntmDbConsistencyCheckerSetting);
-
-		XJMenuItem mntmReceiptPrinterStatus = new XJMenuItem(
-				"Receipt Printer Status",
+		XJMenu mnSetting = createMenu("Setting", null);
+		createMenuItem(mnSetting, DbSettingForm.class, "Database", true, PermissionConstants.MN_SETTING_DB);
+		createMenuItem(mnSetting, PrinterSettingForm.class, "Printer", true, PermissionConstants.MN_SETTING_PRINTER);
+		createMenuItem(mnSetting, DbConsistencyChecker.class, "DB Consistency", true,
+				PermissionConstants.MN_SETTING_DBCONSISTENCY);
+		createMenuItem(mnSetting, ReceiptPrinterStatusForm.class, "Receipt Printer Status", true,
 				PermissionConstants.MN_SETTING_RECEIPTPRINTERSTATUS);
-		mntmReceiptPrinterStatus.addActionListener(new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				try {
-					new ReceiptPrinterStatusForm(MainFrame.this)
-							.setVisible(true);
-				} catch (Exception ex) {
-					ExceptionHandler.handleException(MainFrame.this, ex);
-				}
-			}
-		});
-		mnSetting.add(mntmReceiptPrinterStatus);
 
-		mntmOpenDrawer = new XJMenuItem("Open Drawer",
-				PermissionConstants.MN_SETTING_OPENDRAWER);
-		mntmOpenDrawer.addActionListener(new ActionListener() {
+		mntmOpenDrawer = createMenuItem(mnSetting, new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				try {
-					ReceiptPrinterUtils.openDrawer("");
+					ReceiptPrinterUtils.openDrawer();
 				} catch (Exception ex) {
 					ExceptionHandler.handleException(MainFrame.this, ex);
 				}
 			}
-		});
-		mnSetting.add(mntmOpenDrawer);
+		}, "Open Drawer", true, PermissionConstants.MN_SETTING_OPENDRAWER);
 
 		setExtendedState(JFrame.MAXIMIZED_BOTH);
 		pack();
 		setLocationRelativeTo(null);
-		getContentPane().setLayout(
-				new MigLayout("", "[grow]", "[][][][grow][]"));
+		getContentPane().setLayout(new MigLayout("", "[grow]", "[][][][grow][]"));
 
 		XJPanel pnlRunningClock = new XJPanel();
 		pnlRunningClock.setOpaque(false);
@@ -696,15 +230,13 @@ public class MainFrame extends XJFrame {
 		lblTanggal = new XJLabel();
 		lblTanggal.setForeground(Color.WHITE);
 		lblTanggal.setFont(new Font("Tahoma", Font.BOLD, 30));
-		lblTanggal.setText(Formatter.formatDateToString(DateUtils
-				.getCurrent(Date.class)));
+		lblTanggal.setText(Formatter.formatDateToString(DateUtils.getCurrent(Date.class)));
 		pnlRunningClock.add(lblTanggal, "cell 0 0,alignx center");
 
 		lblJam = new XJLabel();
 		lblJam.setForeground(Color.WHITE);
 		lblJam.setFont(new Font("Tahoma", Font.BOLD, 30));
-		lblJam.setText(Formatter.formatClockToString(DateUtils
-				.getCurrent(Date.class)));
+		lblJam.setText(Formatter.formatClockToString(DateUtils.getCurrent(Date.class)));
 		pnlRunningClock.add(lblJam, "cell 0 1,alignx center");
 
 		pnlUserInfo = new XJPanel();
@@ -758,8 +290,7 @@ public class MainFrame extends XJFrame {
 		if (Main.getUserLogin().getUserRoleLinks().isEmpty()) {
 			lblRoleValue.setText("-");
 		} else {
-			lblRoleValue.setText(Main.getUserLogin().getUserRoleLinks().get(0)
-					.getPrimaryKey().getRole().getName());
+			lblRoleValue.setText(Main.getUserLogin().getUserRoleLinks().get(0).getPrimaryKey().getRole().getName());
 		}
 
 		pnlUserInfo.add(lblRoleValue, "cell 2 2");
@@ -778,13 +309,10 @@ public class MainFrame extends XJFrame {
 		pnlButton = new XJPanel();
 		pnlButton.setOpaque(false);
 		getContentPane().add(pnlButton, "cell 0 4,growx");
-		pnlButton.setLayout(new MigLayout("",
-				"[grow][150px][150px][150px][150px][150px][grow]", "[]"));
+		pnlButton.setLayout(new MigLayout("", "[grow][150px][150px][150px][150px][150px][grow]", "[]"));
 
-		btnSaleTransaction = new XJButton(
-				"<html><center>Transaksi Penjualan<br/>[F5]</center></html>");
-		btnSaleTransaction
-				.setText("<html><center>Penjualan<br/><br/>[F5]</center></html>");
+		btnSaleTransaction = new XJButton("<html><center>Transaksi Penjualan<br/>[F5]</center></html>");
+		btnSaleTransaction.setText("<html><center>Penjualan<br/><br/>[F5]</center></html>");
 		btnSaleTransaction.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
@@ -800,8 +328,7 @@ public class MainFrame extends XJFrame {
 				mntmPenjualanPulsaIsiUlang.doClick();
 			}
 		});
-		btnPrepaidRegular
-				.setText("<html><center>Voucher Pulsa<br/>(Reguler)<br/>[F6]</center></html>");
+		btnPrepaidRegular.setText("<html><center>Voucher Pulsa<br/>(Reguler)<br/>[F6]</center></html>");
 		pnlButton.add(btnPrepaidRegular, "cell 2 0,growx");
 
 		btnPrepaidMulti = new XJButton();
@@ -811,19 +338,17 @@ public class MainFrame extends XJFrame {
 				mntmPulsaMulti.doClick();
 			}
 		});
-		btnPrepaidMulti
-				.setText("<html><center>Voucher Pulsa<br/>(Multi)<br/>[F7]</center></html>");
+		btnPrepaidMulti.setText("<html><center>Voucher Pulsa<br/>(Multi)<br/>[F7]</center></html>");
 		pnlButton.add(btnPrepaidMulti, "cell 3 0,growx");
 
 		btnOpenDrawer = new XJButton();
 		btnOpenDrawer.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				mntmOpenDrawer.doClick();
+				openDrawer();
 			}
 		});
-		btnOpenDrawer
-				.setText("<html><center>Open Drawer<br/><br/>[F10]</center></html>");
+		btnOpenDrawer.setText("<html><center>Open Drawer<br/><br/>[F10]</center></html>");
 		pnlButton.add(btnOpenDrawer, "cell 5 0");
 
 		runClock();
@@ -848,6 +373,10 @@ public class MainFrame extends XJFrame {
 			break;
 		}
 	}
+	
+	public void openDrawer() {
+		mntmOpenDrawer.doClick();
+	}
 
 	private void runClock() {
 		Thread thread = new Thread() {
@@ -870,5 +399,68 @@ public class MainFrame extends XJFrame {
 			};
 		};
 		thread.start();
+	}
+
+	private XJMenu createMenu(String label, XJMenu parent) {
+		XJMenu menu = new XJMenu(label);
+		if (parent == null) {
+			menuBar.add(menu);
+		} else {
+			parent.add(menu);
+		}
+		return menu;
+	}
+
+	private XJMenuItem createMenuItem(XJMenu parent, final Class<? extends XJDialog> clazz, String label,
+			final boolean permissionRequired, String permissionCode) {
+
+		ActionListener actionListener = new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				try {
+					XJDialog dialog = newDialog(clazz);
+					dialog.setPermissionRequired(permissionRequired);
+					dialog.setVisible(true);
+				} catch (Exception ex) {
+					ExceptionHandler.handleException(MainFrame.this, ex);
+				}
+			}
+		};
+
+		return createMenuItem(parent, actionListener, label, permissionRequired, permissionCode);
+	}
+
+	private XJMenuItem createMenuItem(XJMenu parent, ActionListener actionListener, String label,
+			final boolean permissionRequired, String permissionCode) {
+
+		XJMenuItem menuItem = new XJMenuItem(label, permissionCode);
+		menuItem.addActionListener(actionListener);
+		parent.add(menuItem);
+
+		return menuItem;
+	}
+
+	private XJDialog newDialog(Class<? extends XJDialog> clazz) throws AppException, UserException {
+		try {
+			Constructor<? extends XJDialog> constructor = clazz.getConstructor(Window.class);
+			XJDialog dialog = constructor.newInstance(this);
+			return dialog;
+		} catch (NoSuchMethodException | SecurityException | InstantiationException | IllegalAccessException
+				| IllegalArgumentException e) {
+			throw new AppException(e);
+		} catch (InvocationTargetException e) {
+			if (e.getTargetException() instanceof AppException) {
+				throw (AppException) e.getTargetException();
+			} else if (e.getTargetException() instanceof UserException) {
+				throw (UserException) e.getTargetException();
+			} else {
+				throw new AppException(e.getTargetException());
+			}
+		}
+	}
+
+	private void addSeparator(XJMenu menu) {
+		JSeparator separator = new JSeparator();
+		menu.add(separator);
 	}
 }

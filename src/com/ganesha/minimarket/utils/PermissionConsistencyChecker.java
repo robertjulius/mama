@@ -45,6 +45,10 @@ public class PermissionConsistencyChecker {
 				"Stock List", 311));
 		permissions.add(createPermission(PermissionConstants.STOCK_FORM,
 				"Stock Form", 312));
+		
+		// Master Date - Company
+		permissions.add(createPermission(PermissionConstants.MN_ADMIN_COMPANY, "/Master Data/Company", 200));
+		permissions.add(createPermission(PermissionConstants.COMPANY_FORM, "Company Form", 205));
 
 		// Master Date - Supplier
 		permissions.add(createPermission(
@@ -112,6 +116,12 @@ public class PermissionConsistencyChecker {
 				"/Transaksi/Retur Penjualan", 440));
 		permissions.add(createPermission(PermissionConstants.SALRTN_FORM,
 				"Retur Penjualan Form", 441));
+
+		// Transaction - Check Stock
+		permissions.add(createPermission(PermissionConstants.MN_CHECK_STOCK,
+				"/Transaksi/Cek Stock & Harga", 442));
+		permissions.add(createPermission(PermissionConstants.CHECK_STOCK_FORM,
+				"Check Stock & Harga", 443));
 		
 		// Transaction - Cetak Ulang Struk Penjualan
 		permissions.add(createPermission(PermissionConstants.MN_REPRINT_SALERECEIPT,

@@ -65,6 +65,8 @@ import com.ganesha.minimarket.model.SaleConstraintDetail;
 import com.ganesha.minimarket.model.SaleConstraintHeader;
 import com.ganesha.minimarket.model.SaleDetail;
 import com.ganesha.minimarket.model.SaleHeader;
+import com.ganesha.minimarket.ui.MainFrame;
+import com.ganesha.minimarket.ui.forms.checkstock.CheckStockForm;
 import com.ganesha.minimarket.ui.forms.searchentity.SearchEntityDialog;
 import com.ganesha.minimarket.utils.PermissionConstants;
 
@@ -99,6 +101,8 @@ public class PenjualanForm extends XJDialog {
 	private XJPanel pnlSearch;
 
 	private Integer customerId;
+	private XJButton btnCekHarga;
+	private XJButton btnOpenDrawer;
 
 	{
 		tableParameters.put(ColumnEnum.NUM,
@@ -244,8 +248,8 @@ public class PenjualanForm extends XJDialog {
 		});
 
 		pnlSearch = new XJPanel();
-		pnlPenjualan.add(pnlSearch, "cell 0 1,growx,aligny center");
-		pnlSearch.setLayout(new MigLayout("", "[]", "[][]"));
+		pnlPenjualan.add(pnlSearch, "cell 0 1,grow");
+		pnlSearch.setLayout(new MigLayout("", "[]", "[][][][]"));
 
 		btnCari = new XJButton();
 		pnlSearch.add(btnCari, "cell 0 0,growx");
@@ -266,6 +270,28 @@ public class PenjualanForm extends XJDialog {
 			}
 		});
 		btnHapus.setText("<html><center>Hapus<br/>[Delete]</center></html>");
+		
+		btnCekHarga = new XJButton();
+		btnCekHarga.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				try {
+					new CheckStockForm(PenjualanForm.this).setVisible(true);
+				} catch(Exception ex) {
+					ExceptionHandler.handleException(PenjualanForm.this, ex);
+				}
+			}
+		});
+		btnCekHarga.setText("<html><center>Cek Harga<br/>[F4]</center></html>");
+		pnlSearch.add(btnCekHarga, "cell 0 2,growx");
+		
+		btnOpenDrawer = new XJButton();
+		btnOpenDrawer.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				MainFrame.INSTANCE.openDrawer();
+			}
+		});
+		btnOpenDrawer.setText("<html><center>Open Drawer<br/>[F10]</center></html>");
+		pnlSearch.add(btnOpenDrawer, "cell 0 3,aligny bottom");
 
 		JScrollPane scrollPane = new JScrollPane(table);
 		pnlPenjualan.add(scrollPane, "cell 1 1,growx");
@@ -407,6 +433,9 @@ public class PenjualanForm extends XJDialog {
 		case KeyEvent.VK_F3:
 			quickEditQuantity();
 			break;
+		case KeyEvent.VK_F4:
+			btnCekHarga.doClick();
+			break;
 		case KeyEvent.VK_F5:
 			btnCariCustomer.doClick();
 			break;
@@ -419,6 +448,8 @@ public class PenjualanForm extends XJDialog {
 		case KeyEvent.VK_F11:
 			setFocusToFieldBayar();
 			break;
+		case KeyEvent.VK_F10:
+			btnOpenDrawer.doClick();
 		case KeyEvent.VK_F12:
 			btnSelesai.doClick();
 			break;
@@ -745,6 +776,8 @@ public class PenjualanForm extends XJDialog {
 
 			dispose();
 			LoggerFactory.getLogger(Loggers.SALE).debug("Transaction finished. The window is closed.");
+			
+			new PenjualanForm(MainFrame.INSTANCE).setVisible(true);
 
 		} catch (Exception e) {
 			session.getTransaction().rollback();

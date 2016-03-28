@@ -151,8 +151,11 @@ public class ItemFacade {
 			lastBuyPrice = BigDecimal.valueOf(0);
 		} else {
 			int secondToLastIndex = itemStocks.size() - 2;
-			lastBuyPrice = itemStocks.get(secondToLastIndex).getPurchaseDetail()
-					.getPricePerUnit();
+			if (secondToLastIndex < 0) {
+				lastBuyPrice = BigDecimal.valueOf(0);
+			} else {
+				lastBuyPrice = itemStocks.get(secondToLastIndex).getPurchaseDetail().getPricePerUnit();
+			}
 		}
 		return lastBuyPrice;
 	}

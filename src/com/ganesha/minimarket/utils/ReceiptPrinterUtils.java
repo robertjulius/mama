@@ -1,11 +1,5 @@
 package com.ganesha.minimarket.utils;
 
-import java.awt.Graphics;
-import java.awt.Graphics2D;
-import java.awt.print.PageFormat;
-import java.awt.print.Paper;
-import java.awt.print.Printable;
-import java.awt.print.PrinterException;
 import java.awt.print.PrinterJob;
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
@@ -25,51 +19,85 @@ import javax.print.event.PrintJobEvent;
 
 import com.ganesha.core.SystemSetting;
 import com.ganesha.core.exception.AppException;
+import com.ganesha.core.utils.Formatter;
 import com.ganesha.core.utils.GeneralConstants;
 
 public class ReceiptPrinterUtils {
 
-	public static void openDrawer(String printedString) throws AppException {
-		String printerName = (String) SystemSetting
-				.get(GeneralConstants.SYSTEM_SETTING_PRINTER_RECEIPT);
-		PrintService[] services = PrinterJob.lookupPrintServices();
+	public static ReceiptPrinterSetting PRINTER_SETTING;
+	
+	static {
+		reloadReceiptPrinterSetting();
+	}
+
+	public static void reloadReceiptPrinterSetting() {
 		try {
-			for (PrintService printService : services) {
-				if (printService.getName().equals(printerName)) {
-
-					PrinterJob job = PrinterJob.getPrinterJob();
-					job.setPrintService(printService);
-
-					PageFormat pageFormat = job.defaultPage();
-					Paper paper = pageFormat.getPaper();
-					paper.setImageableArea(0, 0, paper.getWidth(),
-							paper.getHeight());
-					pageFormat.setPaper(paper);
-
-					Printable printable = new OpenDrawerPrintable(printedString);
-					job.setPrintable(printable);
-
-					job.print();
-					break;
-				}
+			if ((ReceiptPrinterSetting) SystemSetting.get(GeneralConstants.SYSTEM_SETTING_PRINTER_SETTING) == null) {
+				PRINTER_SETTING = new ReceiptPrinterSetting();
+			} else {
+				PRINTER_SETTING = (ReceiptPrinterSetting) SystemSetting
+						.get(GeneralConstants.SYSTEM_SETTING_PRINTER_SETTING);
 			}
-		} catch (PrinterException e) {
-			throw new AppException(e);
+		} catch (Exception e) {
+			throw new RuntimeException(e);
 		}
 	}
 
-	public static void print(ReceiptPrinter receiptPrinter)
-			throws PrintException {
+	public static void openDrawer() {
+		try {
+			ReceiptPrinterUtils.print(PRINTER_SETTING.getOpenDrawerCommand());
+		} catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
 
+	public static void cutPaper() {
+		try {
+			ReceiptPrinterUtils.print(PRINTER_SETTING.getCutCommand());
+		} catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	public static byte[] convertToCommandInBytes(String commandInString, char delimiter) {
+		String[] strings = commandInString.split(new String(new char[] { delimiter }));
+		byte[] bytes = new byte[strings.length];
+		for (int i = 0; i < bytes.length; i++) {
+			bytes[i] = Formatter.formatStringToNumber(strings[i].trim()).byteValue();
+		}
+		return bytes;
+	}
+
+	public static String convertToCommandInString(byte[] commandInBytes, char delimiter) {
+		StringBuilder builder = new StringBuilder();
+		for (byte b : commandInBytes) {
+			builder.append(b).append(delimiter);
+		}
+		return builder.substring(0, builder.length() - 1);
+	}
+
+	public static void print(ReceiptPrinter receiptPrinter) throws PrintException {
+
+		if (PRINTER_SETTING.isOpenDrawerEnabled()) {
+			openDrawer();
+		}
+
+		String receipt = receiptPrinter.buildReceipt();
+		print(receipt.getBytes());
+
+		if (PRINTER_SETTING.isCutEnabled()) {
+			cutPaper();
+		}
+
+	}
+
+	public static void print(byte[] bytes) throws PrintException {
 		PrintService[] services = PrinterJob.lookupPrintServices();
 		InputStream is = null;
 		try {
-			String receipt = receiptPrinter.buildReceipt();
+			String printerName = (String) SystemSetting.get(GeneralConstants.SYSTEM_SETTING_PRINTER_RECEIPT);
 
-			String printerName = (String) SystemSetting
-					.get(GeneralConstants.SYSTEM_SETTING_PRINTER_RECEIPT);
-
-			is = new ByteArrayInputStream(receipt.getBytes());
+			is = new ByteArrayInputStream(bytes);
 			for (PrintService printService : services) {
 				if (printService.getName().equals(printerName)) {
 
@@ -83,7 +111,6 @@ public class ReceiptPrinterUtils {
 					printJob.print(doc, pras);
 
 					pjw.waitForDone();
-					ReceiptPrinterUtils.openDrawer("");
 					break;
 				}
 			}
@@ -97,33 +124,6 @@ public class ReceiptPrinterUtils {
 					throw new PrintException(e);
 				}
 			}
-		}
-	}
-
-	private static class OpenDrawerPrintable implements Printable {
-
-		private String printedString;
-
-		public OpenDrawerPrintable(String printedString) {
-			this.printedString = printedString;
-		}
-
-		@Override
-		public int print(Graphics graphics, PageFormat pageFormat, int pageIndex)
-				throws PrinterException {
-			return openDrawerOnly(graphics, pageFormat, pageIndex);
-		}
-
-		private int openDrawerOnly(Graphics g, PageFormat pf, int pageIndex) {
-			if (pageIndex > 0) {
-				return NO_SUCH_PAGE;
-			}
-			Graphics2D g2d = (Graphics2D) g;
-			double imageableX = pf.getImageableX();
-			double imageableY = pf.getImageableY();
-			g2d.translate(imageableX, imageableY);
-			g.drawString(printedString, 0, 0);
-			return PAGE_EXISTS;
 		}
 	}
 

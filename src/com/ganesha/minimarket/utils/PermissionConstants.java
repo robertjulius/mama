@@ -6,6 +6,10 @@ public class PermissionConstants {
 	public static final String ROLE_LIST = "RoleList";
 	public static final String ROLE_FORM = "RoleForm";
 
+	// Master Date - Company
+	public static final String MN_ADMIN_COMPANY = "/master/company";
+	public static final String COMPANY_FORM = "CompanyForm";
+	
 	// Administrasi - User
 	public static final String MN_ADMIN_USER = "/administrasi/user";
 	public static final String USER_LIST = "UserList";
@@ -60,6 +64,10 @@ public class PermissionConstants {
 	// Transaction - Retur Penjualan
 	public static final String MN_TRX_SALRTN = "/transaction/salereturn";
 	public static final String SALRTN_FORM = "ReturPenjualanForm";
+	
+	// Transaction - Cek Stok
+	public static final String MN_CHECK_STOCK = "/transaction/checkstock";
+	public static final String CHECK_STOCK_FORM = "CheckStockForm";
 	
 	// Transaction - Cetak Ulang Struk Penjualan
 	public static final String MN_REPRINT_SALERECEIPT = "/transaction/reprintsalereceipt";

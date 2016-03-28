@@ -80,6 +80,7 @@ public class SaleFacade implements TransactionFacade {
 			itemBelanjaList.add(itemBelanja);
 		}
 
+		
 		ReceiptPrinter receiptPrinter = new ReceiptPrinter(companyName,
 				companyAddress, transactionNumber, transactionTimestamp,
 				cashier, itemBelanjaList, totalBelanja, pay, moneyChange);

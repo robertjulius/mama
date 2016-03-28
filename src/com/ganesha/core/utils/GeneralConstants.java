@@ -16,7 +16,7 @@ import com.ganesha.minimarket.constants.Enums.TransactionType;
 public class GeneralConstants {
 
 	public static final String APPLICATION_NAME = "Miniket";
-	public static final String VERSION = "v2.2.1";
+	public static final String VERSION = "v2.2.5";
 
 	public static final String USER_SESSION = "userSession";
 
@@ -34,34 +34,30 @@ public class GeneralConstants {
 	public static final String PREFIX_TRX_NUMBER_PAYABLE = "PAY";
 
 	public static final String TAX_CODE_PPN = "PPN";
-	public static final String FILE_BARCODE_NAME = "barcodes"
-			+ DateUtils.getTimestampInString() + ".pdf";
+	public static final String FILE_BARCODE_NAME = "barcodes" + DateUtils.getTimestampInString() + ".pdf";
 
 	// public static final String PRINTER_NAME = "HP Deskjet Ink Adv 2010 K010";
 	// public static final String PRINTER_NAME = "CutePDF Writer";
 	public static final String PRINTER_NAME = "Canon iP2700 series";
 
 	public static final ComboBoxObject[] CMB_BOX_TRX_TYPES;
+
 	static {
 		List<ComboBoxObject> cmbBoxes = new ArrayList<>();
 		cmbBoxes.add(new ComboBoxObject(TransactionType.PURCHASE, "Pembelian"));
-		cmbBoxes.add(new ComboBoxObject(TransactionType.PURCHASE_RETURN,
-				"Retur Pembelian"));
+		cmbBoxes.add(new ComboBoxObject(TransactionType.PURCHASE_RETURN, "Retur Pembelian"));
 		cmbBoxes.add(new ComboBoxObject(TransactionType.SALES, "Penjualan"));
-		cmbBoxes.add(new ComboBoxObject(TransactionType.SALES_RETURN,
-				"Retur Penjualan"));
-		cmbBoxes.add(new ComboBoxObject(TransactionType.SALES_RETURN,
-				"Retur Penjualan"));
-		cmbBoxes.add(new ComboBoxObject(TransactionType.EXPENSES,
-				"Transaksi Beban Lain-Lain"));
-		cmbBoxes.add(new ComboBoxObject(TransactionType.REVENUES,
-				"Transaksi Pendapatan Lain-Lain"));
+		cmbBoxes.add(new ComboBoxObject(TransactionType.SALES_RETURN, "Retur Penjualan"));
+		cmbBoxes.add(new ComboBoxObject(TransactionType.SALES_RETURN, "Retur Penjualan"));
+		cmbBoxes.add(new ComboBoxObject(TransactionType.EXPENSES, "Transaksi Beban Lain-Lain"));
+		cmbBoxes.add(new ComboBoxObject(TransactionType.REVENUES, "Transaksi Pendapatan Lain-Lain"));
 
 		CMB_BOX_TRX_TYPES = new ComboBoxObject[cmbBoxes.size()];
 		cmbBoxes.toArray(CMB_BOX_TRX_TYPES);
 	}
 
 	public static final ComboBoxObject[] CMB_BOX_CIRCLE_UNITS;
+
 	static {
 		List<ComboBoxObject> cmbBoxes = new ArrayList<>();
 		cmbBoxes.add(new ComboBoxObject(null, null));
@@ -77,6 +73,7 @@ public class GeneralConstants {
 	}
 
 	public static final AbstractFormatterFactory FORMATTER_FACTORY_NUMBER;
+
 	static {
 		NumberFormat format = new DecimalFormat("#,##0.##");
 		NumberFormatter formatter = new NumberFormatter(format);
@@ -105,4 +102,16 @@ public class GeneralConstants {
 	public static final String SYSTEM_PROPERTY_DB_SCHEMA = "config.db.schema";
 	public static final String SYSTEM_PROPERTY_DB_USERNAME = "config.db.username";
 	public static final String SYSTEM_PROPERTY_DB_PASSWORD = "config.db.password";
+
+	public static final int RECEIPT_PAPER_WIDTH = 40;
+	public static final int RECEIPT_QUANTITY_LENGTH = 7;
+	public static final int RECEIPT_PRICE_LENGTH = 14;
+	public static final int RECEIPT_DISCOUNT_LENGTH = 5;
+	public static final int RECEIPT_AMOUNT_LENGTH = 14;
+	public static final int RECEIPT_SUMMARY_LEFT_LEGTH = 22;
+	public static final int RECEIPT_SUMMARY_RIGHT_LEGTH = 18;
+
+	public static final char RECEIPT_DELIMITER = ',';
+	public static final byte[] RECEIPT_OPEN_DRAWER_COMMANDS = new byte[] { 27, 112, 0, 25, (byte) 250 };
+	public static final byte[] RECEIPT_CUT_COMMANDS = new byte[] { 27, '@', 29, 'V', 1 };
 }

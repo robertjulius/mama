@@ -161,7 +161,7 @@ public class LoginForm extends XJFrame {
 			boolean success = facade.login(loginId, password, session);
 			if (success) {
 				setVisible(false);
-				new MainFrame().setVisible(true);
+				MainFrame.reCreateInstance().setVisible(true);
 			} else {
 				/*
 				 * TODO

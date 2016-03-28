@@ -6,22 +6,6 @@ public class ReceiptPrinter {
 
 	private static final String NEW_LINE = "\r\n";
 
-	private static final int LENGTH_PARAGRAPH = 40;
-	private static final int LENGTH_COMPANY_NAME = LENGTH_PARAGRAPH;
-	private static final int LENGTH_COMPANY_ADDRESS = LENGTH_PARAGRAPH;
-	private static final int LENGTH_TRANSACTION_NUMBER = LENGTH_PARAGRAPH;
-	private static final int LENGTH_TRANSACTION_TIMESTAMP = LENGTH_PARAGRAPH;
-	private static final int LENGTH_CASHIER = LENGTH_PARAGRAPH;
-	private static final int LENGTH_ITEM_NAME = LENGTH_PARAGRAPH;
-	private static final int LENGTH_EMPTY_FIELD = 4;
-	private static final int LENGTH_QUANTITY = 3;
-	private static final int LENGTH_PRICE_PER_UNIT = 14;
-	private static final int LENGTH_DISCOUNT_PERCENT = 5;
-	private static final int LENGTH_TOTAL_AMOUNT = 14;
-	private static final int LENGTH_TOTAL_BELANJA = 25;
-	private static final int LENGTH_PAY = 25;
-	private static final int LENGTH_MONEY_CHANGE = 25;
-
 	private String companyName;
 	private String companyAddress;
 	private String transactionNumber;
@@ -32,10 +16,12 @@ public class ReceiptPrinter {
 	private String pay;
 	private String moneyChange;
 
-	public ReceiptPrinter(String companyName, String companyAddress,
-			String transactionNumber, String transactionTimestamp,
-			String cashier, List<ItemBelanja> itemBelanjaList,
-			String totalBelanja, String pay, String moneyChange) {
+	private ReceiptPrinterSetting receiptPrinterSetting = ReceiptPrinterUtils.PRINTER_SETTING;
+
+	public ReceiptPrinter(String companyName, String companyAddress, String transactionNumber,
+			String transactionTimestamp, String cashier, List<ItemBelanja> itemBelanjaList, String totalBelanja,
+			String pay, String moneyChange) {
+
 		this.companyName = companyName;
 		this.companyAddress = companyAddress;
 		this.transactionNumber = transactionNumber;
@@ -50,50 +36,36 @@ public class ReceiptPrinter {
 	public String buildFooter() {
 		StringBuilder builder = new StringBuilder();
 
-		builder.append(
-				alignCenter("KAMI TIDAK MELAYANI PENUKARAN BARANG",
-						LENGTH_PARAGRAPH)).append(NEW_LINE);
-
-		builder.append(
-				alignCenter("TANPA DISERTAI NOTA ASLI", LENGTH_PARAGRAPH))
+		builder.append(alignCenter("KAMI TIDAK MELAYANI PENUKARAN BARANG", receiptPrinterSetting.getPaperWidth()))
 				.append(NEW_LINE);
 
-		builder.append(alignCenter("*** TERIMA KASIH ***", LENGTH_PARAGRAPH))
-				.append(NEW_LINE);
+		builder.append(alignCenter("TANPA DISERTAI NOTA ASLI", receiptPrinterSetting.getPaperWidth())).append(NEW_LINE);
+
+		builder.append(alignCenter("*** TERIMA KASIH ***", receiptPrinterSetting.getPaperWidth())).append(NEW_LINE);
 
 		return builder.toString();
 	}
 
 	public String buildHeader() {
 		StringBuilder builder = new StringBuilder();
-		builder.append(alignLeft(companyName, LENGTH_COMPANY_NAME)).append(
-				NEW_LINE);
-		builder.append(alignLeft(companyAddress, LENGTH_COMPANY_ADDRESS))
-				.append(NEW_LINE);
-		builder.append(alignLeft(transactionNumber, LENGTH_TRANSACTION_NUMBER))
-				.append(NEW_LINE);
-		builder.append(
-				alignLeft(transactionTimestamp, LENGTH_TRANSACTION_TIMESTAMP))
-				.append(NEW_LINE);
-		builder.append(alignLeft(cashier, LENGTH_CASHIER)).append(NEW_LINE);
+		builder.append(alignLeft(companyName, receiptPrinterSetting.getPaperWidth())).append(NEW_LINE);
+		builder.append(alignLeft(companyAddress, receiptPrinterSetting.getPaperWidth())).append(NEW_LINE);
+		builder.append(alignLeft(transactionNumber, receiptPrinterSetting.getPaperWidth())).append(NEW_LINE);
+		builder.append(alignLeft(transactionTimestamp, receiptPrinterSetting.getPaperWidth())).append(NEW_LINE);
+		builder.append(alignLeft(cashier, receiptPrinterSetting.getPaperWidth())).append(NEW_LINE);
 		return builder.toString();
 	}
 
 	public String buildItemList() {
 		StringBuilder builder = new StringBuilder();
 		for (ItemBelanja itemBelanja : itemBelanjaList) {
-			builder.append(
-					alignLeft(itemBelanja.getItemName(), LENGTH_ITEM_NAME))
+			builder.append(alignLeft(itemBelanja.getItemName(), receiptPrinterSetting.getPaperWidth()))
 					.append(NEW_LINE);
-			builder.append(alignRight("", LENGTH_EMPTY_FIELD));
-			builder.append(alignRight(itemBelanja.getQuantiy(), LENGTH_QUANTITY));
-			builder.append(alignRight(itemBelanja.getPricePerUnit(),
-					LENGTH_PRICE_PER_UNIT));
-			builder.append(alignRight(itemBelanja.getDiscountPercent(),
-					LENGTH_DISCOUNT_PERCENT));
-			builder.append(
-					alignRight(itemBelanja.getTotalAmount(),
-							LENGTH_TOTAL_AMOUNT)).append(NEW_LINE);
+			builder.append(alignRight(itemBelanja.getQuantiy(), receiptPrinterSetting.getQuantityLength()));
+			builder.append(alignRight(itemBelanja.getPricePerUnit(), receiptPrinterSetting.getPriceLength()));
+			builder.append(alignRight(itemBelanja.getDiscountPercent(), receiptPrinterSetting.getDiscountLength()));
+			builder.append(alignRight(itemBelanja.getTotalAmount(), receiptPrinterSetting.getAmountLength()))
+					.append(NEW_LINE);
 		}
 		return builder.toString();
 	}
@@ -101,6 +73,10 @@ public class ReceiptPrinter {
 	public String buildReceipt() {
 		StringBuilder builder = new StringBuilder();
 
+		for (int i=0; i<receiptPrinterSetting.getRowCountBeforeHeader(); ++i) {
+			builder.append(NEW_LINE);	
+		}
+		
 		builder.append(buildHeader());
 		builder.append(buildSeparator());
 		builder.append(buildItemList());
@@ -108,13 +84,17 @@ public class ReceiptPrinter {
 		builder.append(buildSummary());
 		builder.append(NEW_LINE);
 		builder.append(buildFooter());
+		
+		for (int i=0; i<receiptPrinterSetting.getRowCountAfterFooter(); ++i) {
+			builder.append(NEW_LINE);	
+		}
 
 		return builder.toString();
 	}
 
 	public String buildSeparator() {
 		String separator = "";
-		for (int i = 0; i < LENGTH_PARAGRAPH; ++i) {
+		for (int i = 0; i < receiptPrinterSetting.getPaperWidth(); ++i) {
 			separator += "-";
 		}
 		return separator + NEW_LINE;
@@ -122,16 +102,12 @@ public class ReceiptPrinter {
 
 	public String buildSummary() {
 		StringBuilder builder = new StringBuilder();
-		builder.append(alignLeft("Total Belanja", LENGTH_PARAGRAPH
-				- LENGTH_TOTAL_BELANJA));
-		builder.append(alignRight(totalBelanja, LENGTH_TOTAL_BELANJA)).append(
-				NEW_LINE);
-		builder.append(alignLeft("Bayar", LENGTH_PARAGRAPH - LENGTH_PAY));
-		builder.append(alignRight(pay, LENGTH_PAY)).append(NEW_LINE);
-		builder.append(alignLeft("Kembali", LENGTH_PARAGRAPH
-				- LENGTH_MONEY_CHANGE));
-		builder.append(alignRight(moneyChange, LENGTH_MONEY_CHANGE)).append(
-				NEW_LINE);
+		builder.append(alignLeft("Total Belanja", receiptPrinterSetting.getSummaryLeftLength()));
+		builder.append(alignRight(totalBelanja, receiptPrinterSetting.getSummaryRightLength())).append(NEW_LINE);
+		builder.append(alignLeft("Bayar", receiptPrinterSetting.getSummaryLeftLength()));
+		builder.append(alignRight(pay, receiptPrinterSetting.getSummaryRightLength())).append(NEW_LINE);
+		builder.append(alignLeft("Kembali", receiptPrinterSetting.getSummaryLeftLength()));
+		builder.append(alignRight(moneyChange, receiptPrinterSetting.getSummaryRightLength())).append(NEW_LINE);
 		return builder.toString();
 	}
 
@@ -174,8 +150,7 @@ public class ReceiptPrinter {
 	private String alignCenter(String string, int width) {
 		int length = string.length();
 		if (length > width) {
-			return string.substring(0, width) + NEW_LINE
-					+ alignCenter(string.substring(width), width);
+			return string.substring(0, width) + NEW_LINE + alignCenter(string.substring(width), width);
 		} else {
 			int emptyCount = width - length;
 			int leftEmptyCount = emptyCount / 2;
@@ -190,8 +165,7 @@ public class ReceiptPrinter {
 	private String alignLeft(String string, int width) {
 		int length = string.length();
 		if (length > width) {
-			return string.substring(0, width) + NEW_LINE
-					+ alignLeft(string.substring(width), width);
+			return string.substring(0, width) + NEW_LINE + alignLeft(string.substring(width), width);
 		} else {
 			int emptyCount = width - length;
 			String emptyString = "";
@@ -223,8 +197,8 @@ public class ReceiptPrinter {
 		private String discountPercent;
 		private String totalAmount;
 
-		public ItemBelanja(String itemName, String quantiy,
-				String pricePerUnit, String discountPercent, String totalAmount) {
+		public ItemBelanja(String itemName, String quantiy, String pricePerUnit, String discountPercent,
+				String totalAmount) {
 			this.itemName = itemName;
 			this.quantiy = quantiy;
 			this.pricePerUnit = pricePerUnit;
