@@ -11,7 +11,6 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.List;
 
-import org.quartz.SchedulerException;
 import org.slf4j.LoggerFactory;
 
 import com.ganesha.core.SystemSetting;
@@ -26,7 +25,7 @@ import com.ganesha.minimarket.utils.SimplePermissionChecker;
 
 public class DbInitializer {
 
-	public static void initial() throws AppException, SchedulerException {
+	public static void initial() throws AppException {
 		Connection conn = null;
 		try {
 			conn = openConnection();
@@ -62,8 +61,7 @@ public class DbInitializer {
 		}
 	}
 
-	private static void checkDbConsistency() throws SchedulerException,
-			AppException {
+	private static void checkDbConsistency() throws AppException {
 
 		CompanyConsistencyChecker companyChecker = new CompanyConsistencyChecker();
 		companyChecker.check();
@@ -75,8 +73,7 @@ public class DbInitializer {
 	private static void createDb(Connection conn) throws SQLException {
 		Statement statement = null;
 		try {
-			String dbName = SystemSetting
-					.getProperty(GeneralConstants.SYSTEM_PROPERTY_DB_SCHEMA);
+			String dbName = SystemSetting.getProperty(GeneralConstants.SYSTEM_PROPERTY_DB_SCHEMA);
 			statement = conn.createStatement();
 			statement.execute("CREATE DATABASE " + dbName);
 		} finally {
@@ -100,9 +97,7 @@ public class DbInitializer {
 			resultSet = conn.getMetaData().getCatalogs();
 			while (resultSet.next()) {
 				String dbName = resultSet.getString(1);
-				if (dbName
-						.equalsIgnoreCase(SystemSetting
-								.getProperty(GeneralConstants.SYSTEM_PROPERTY_DB_SCHEMA))) {
+				if (dbName.equalsIgnoreCase(SystemSetting.getProperty(GeneralConstants.SYSTEM_PROPERTY_DB_SCHEMA))) {
 					return true;
 				}
 			}
@@ -115,9 +110,7 @@ public class DbInitializer {
 	}
 
 	private static boolean isMySQLInstalled() {
-		File binDir = new File(
-				SystemSetting
-						.getProperty(GeneralConstants.SYSTEM_PROPERTY_MYSQL_LOCATION_EXE));
+		File binDir = new File(SystemSetting.getProperty(GeneralConstants.SYSTEM_PROPERTY_MYSQL_LOCATION_EXE));
 
 		File mySqlExe = new File(binDir, "mysql.exe");
 		return mySqlExe.exists();
@@ -130,17 +123,12 @@ public class DbInitializer {
 		try {
 			Class.forName("com.mysql.jdbc.Driver");
 
-			String url = SystemSetting
-					.getProperty(GeneralConstants.SYSTEM_PROPERTY_DB_URL);
-			String username = SystemSetting
-					.getProperty(GeneralConstants.SYSTEM_PROPERTY_DB_USERNAME);
-			String password = SystemSetting
-					.getProperty(GeneralConstants.SYSTEM_PROPERTY_DB_PASSWORD);
+			String url = SystemSetting.getProperty(GeneralConstants.SYSTEM_PROPERTY_DB_URL);
+			String username = SystemSetting.getProperty(GeneralConstants.SYSTEM_PROPERTY_DB_USERNAME);
+			String password = SystemSetting.getProperty(GeneralConstants.SYSTEM_PROPERTY_DB_PASSWORD);
 
-			LoggerFactory.getLogger(Loggers.UTILS).debug(
-					"Trying to get connection with values [url=" + url
-							+ "][username=" + username + "][password="
-							+ password + "]");
+			LoggerFactory.getLogger(Loggers.UTILS).debug("Trying to get connection with values [url=" + url
+					+ "][username=" + username + "][password=" + password + "]");
 
 			conn = DriverManager.getConnection(url, username, password);
 
@@ -154,15 +142,11 @@ public class DbInitializer {
 
 	}
 
-	private static void runDMLScripts(Connection conn) throws SQLException,
-			AppException {
+	private static void runDMLScripts(Connection conn) throws SQLException, AppException {
 		Statement statement = null;
 		try {
 			statement = conn.createStatement();
-			statement
-					.execute("USE "
-							+ SystemSetting
-									.getProperty(GeneralConstants.SYSTEM_PROPERTY_DB_SCHEMA));
+			statement.execute("USE " + SystemSetting.getProperty(GeneralConstants.SYSTEM_PROPERTY_DB_SCHEMA));
 
 			File configBase = ResourceUtils.getConfigBase();
 			File dmlDir = new File(configBase, "DML");
@@ -170,8 +154,7 @@ public class DbInitializer {
 			File[] dmlFiles = dmlDir.listFiles();
 			for (File dmlFile : dmlFiles) {
 
-				List<String> strings = Files.readAllLines(dmlFile.toPath(),
-						StandardCharsets.UTF_8);
+				List<String> strings = Files.readAllLines(dmlFile.toPath(), StandardCharsets.UTF_8);
 
 				for (String string : strings) {
 					LoggerFactory.getLogger(Loggers.APPLICATION).debug(string);
