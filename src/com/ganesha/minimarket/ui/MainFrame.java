@@ -1,6 +1,7 @@
 package com.ganesha.minimarket.ui;
 
 import java.awt.Color;
+import java.awt.Component;
 import java.awt.Font;
 import java.awt.Window;
 import java.awt.event.ActionEvent;
@@ -11,7 +12,9 @@ import java.lang.reflect.InvocationTargetException;
 import java.util.Date;
 
 import javax.swing.JFrame;
+import javax.swing.JMenu;
 import javax.swing.JMenuBar;
+import javax.swing.JMenuItem;
 import javax.swing.JSeparator;
 
 import com.ganesha.accounting.ui.forms.circle.CircleListDialog;
@@ -87,9 +90,9 @@ public class MainFrame extends XJFrame {
 	private XJButton btnPrepaidMulti;
 	private XJButton btnOpenDrawer;
 	private JMenuBar menuBar;
-	
+
 	public static MainFrame INSTANCE;
-	
+
 	public static MainFrame reCreateInstance() {
 		INSTANCE = new MainFrame();
 		return INSTANCE;
@@ -170,8 +173,10 @@ public class MainFrame extends XJFrame {
 
 		createMenuItem(mnMaintenance, VoucherTypeListDialog.class, "Tipe Voucher", true,
 				PermissionConstants.VOUCHER_TYPE_LIST);
-		createMenuItem(mnMaintenance, VoucherListDialog.class, "Voucher", true, PermissionConstants.VOUCHER_LIST);
-		createMenuItem(mnMaintenance, MultiMapListDialog.class, "Multi", true, PermissionConstants.MULTI_LIST);
+		createMenuItem(mnMaintenance, VoucherListDialog.class, "Voucher", true,
+				PermissionConstants.MN_PREPAID_MAINTENANCE_VOUCHER);
+		createMenuItem(mnMaintenance, MultiMapListDialog.class, "Multi", true,
+				PermissionConstants.MN_PREPAID_MAINTENANCE_MULTI);
 
 		XJMenu mnReport = createMenu("Laporan", null);
 
@@ -322,6 +327,8 @@ public class MainFrame extends XJFrame {
 		pnlButton.add(btnSaleTransaction, "cell 1 0,growx");
 
 		btnPrepaidRegular = new XJButton();
+		btnPrepaidRegular.setPermissionRequired(true);
+		btnPrepaidRegular.setPermissionCode(PermissionConstants.SALE_PREPAID_FORM);
 		btnPrepaidRegular.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
@@ -329,9 +336,12 @@ public class MainFrame extends XJFrame {
 			}
 		});
 		btnPrepaidRegular.setText("<html><center>Voucher Pulsa<br/>(Reguler)<br/>[F6]</center></html>");
+		btnPrepaidRegular.setVisible(true);
 		pnlButton.add(btnPrepaidRegular, "cell 2 0,growx");
 
 		btnPrepaidMulti = new XJButton();
+		btnPrepaidMulti.setPermissionRequired(true);
+		btnPrepaidMulti.setPermissionCode(PermissionConstants.MULTI_SALE_FORM);
 		btnPrepaidMulti.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
@@ -339,6 +349,7 @@ public class MainFrame extends XJFrame {
 			}
 		});
 		btnPrepaidMulti.setText("<html><center>Voucher Pulsa<br/>(Multi)<br/>[F7]</center></html>");
+		btnPrepaidMulti.setVisible(true);
 		pnlButton.add(btnPrepaidMulti, "cell 3 0,growx");
 
 		btnOpenDrawer = new XJButton();
@@ -350,6 +361,8 @@ public class MainFrame extends XJFrame {
 		});
 		btnOpenDrawer.setText("<html><center>Open Drawer<br/><br/>[F10]</center></html>");
 		pnlButton.add(btnOpenDrawer, "cell 5 0");
+
+		removeUnusedMenus();
 
 		runClock();
 	}
@@ -373,7 +386,7 @@ public class MainFrame extends XJFrame {
 			break;
 		}
 	}
-	
+
 	public void openDrawer() {
 		mntmOpenDrawer.doClick();
 	}
@@ -462,5 +475,39 @@ public class MainFrame extends XJFrame {
 	private void addSeparator(XJMenu menu) {
 		JSeparator separator = new JSeparator();
 		menu.add(separator);
+	}
+
+	private void removeUnusedMenus() {
+		JMenuBar menuBar = this.getJMenuBar();
+		int menuCount = menuBar.getMenuCount();
+		for (int i = 0; i < menuCount; ++i) {
+			JMenu menu = menuBar.getMenu(i);
+			boolean menuContainsItem = containsItem(menu);
+			if (!menuContainsItem) {
+				menuBar.remove(menu);
+				--i;
+				--menuCount;
+			}
+		}
+	}
+
+	private boolean containsItem(JMenu menu) {
+		boolean containsItem = false;
+		int childCount = menu.getMenuComponentCount();
+		for (int i = 0; i < childCount; ++i) {
+			Component child = menu.getMenuComponent(i);
+			if (child instanceof JMenu) {
+				boolean subMenuContainsItem = containsItem((JMenu) child);
+				if (!subMenuContainsItem) {
+					menu.remove(child);
+					--i;
+					--childCount;
+				}
+				return subMenuContainsItem;
+			} else if (child instanceof JMenuItem) {
+				containsItem = true;
+			}
+		}
+		return containsItem;
 	}
 }

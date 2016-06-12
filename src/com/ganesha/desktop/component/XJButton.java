@@ -10,15 +10,40 @@ import javax.swing.JButton;
 import org.slf4j.LoggerFactory;
 
 import com.ganesha.coreapps.constants.Loggers;
+import com.ganesha.desktop.component.permissionutils.PermissionChecker;
+import com.ganesha.desktop.component.permissionutils.PermissionControl;
 import com.ganesha.desktop.component.xcomponentutils.XComponentUtils;
+import com.ganesha.desktop.exeptions.ExceptionHandler;
 
-public class XJButton extends JButton implements XComponentConstants {
+public class XJButton extends JButton implements XComponentConstants, PermissionControl {
 	private static final long serialVersionUID = 8731044804764016513L;
 
+	private boolean permissionRequired = false;
+	private String permissionCode;
+	
 	public XJButton() {
 		this(null);
 	}
 
+	@Override
+	public String getPermissionCode() {
+		return permissionCode;
+	}
+	
+	public void setPermissionCode(String permissionCode) {
+		this.permissionCode = permissionCode;
+	}
+
+	@Override
+	public boolean isPermissionRequired() {
+		return permissionRequired;
+	}
+
+	@Override
+	public void setPermissionRequired(boolean permissionRequired) {
+		this.permissionRequired = permissionRequired;	
+	}
+	
 	public XJButton(String text) {
 		super(text);
 		setFont(new Font("Tahoma", Font.PLAIN, FONT_SIZE_NORMAL));
@@ -34,6 +59,25 @@ public class XJButton extends JButton implements XComponentConstants {
 								+ " is clicked");
 			}
 		});
+	}
+	
+	@Override
+	public void setVisible(boolean visible) {
+		if (!visible || !permissionRequired) {
+			super.setVisible(visible);
+			return;
+		}
+		try {
+			boolean permitted = PermissionChecker.checkPermission(this);
+			if (!permitted) {
+				super.setVisible(false);
+			} else {
+				super.setVisible(visible);
+			}
+		} catch (Exception ex) {
+			ExceptionHandler.handleException((Window) getParent(), ex);
+			return;
+		}
 	}
 
 	@Override

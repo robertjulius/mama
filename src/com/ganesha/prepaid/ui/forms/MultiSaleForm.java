@@ -92,7 +92,7 @@ public class MultiSaleForm extends XJDialog {
 		super(parent);
 		setPermissionRequired(false);
 		setTitle("Penjualan Pulsa Multi");
-		setPermissionCode(PermissionConstants.SETTING_DB_FORM);
+		setPermissionCode(PermissionConstants.MULTI_SALE_FORM);
 		setCloseOnEsc(false);
 		getContentPane().setLayout(new MigLayout("", "[grow]", "[][][]"));
 

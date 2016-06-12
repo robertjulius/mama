@@ -54,7 +54,7 @@ public class MultiMapForm extends XJDialog {
 		super(parent);
 		this.actionType = actionType;
 		setTitle("Mapping Voucher Multi");
-		setPermissionCode(PermissionConstants.VOUCHER_TYPE_FORM);
+		setPermissionCode(PermissionConstants.MULTI_FORM);
 		setCloseOnEsc(false);
 
 		getContentPane().setLayout(

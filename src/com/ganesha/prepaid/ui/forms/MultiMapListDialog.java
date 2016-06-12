@@ -73,7 +73,7 @@ public class MultiMapListDialog extends XJTableDialog {
 		super(parent);
 
 		setTitle("Master Multi");
-		setPermissionCode(PermissionConstants.VOUCHER_TYPE_LIST);
+		setPermissionCode(PermissionConstants.MULTI_LIST);
 		getContentPane().setLayout(
 				new MigLayout("", "[500,grow]", "[][300,grow][]"));
 

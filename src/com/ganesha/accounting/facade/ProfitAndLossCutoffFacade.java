@@ -14,16 +14,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import net.sf.jasperreports.engine.JRException;
-import net.sf.jasperreports.engine.JasperCompileManager;
-import net.sf.jasperreports.engine.JasperFillManager;
-import net.sf.jasperreports.engine.JasperPrint;
-import net.sf.jasperreports.engine.JasperReport;
-import net.sf.jasperreports.engine.data.JRBeanCollectionDataSource;
-import net.sf.jasperreports.engine.design.JasperDesign;
-import net.sf.jasperreports.engine.xml.JRXmlLoader;
-import net.sf.jasperreports.swing.JRViewer;
-
 import org.hibernate.Criteria;
 import org.hibernate.SQLQuery;
 import org.hibernate.Session;
@@ -43,6 +33,16 @@ import com.ganesha.minimarket.facade.UserFacade;
 import com.ganesha.minimarket.ui.forms.reports.ReportViewerDialog;
 import com.ganesha.model.User;
 
+import net.sf.jasperreports.engine.JRException;
+import net.sf.jasperreports.engine.JasperCompileManager;
+import net.sf.jasperreports.engine.JasperFillManager;
+import net.sf.jasperreports.engine.JasperPrint;
+import net.sf.jasperreports.engine.JasperReport;
+import net.sf.jasperreports.engine.data.JRBeanCollectionDataSource;
+import net.sf.jasperreports.engine.design.JasperDesign;
+import net.sf.jasperreports.engine.xml.JRXmlLoader;
+import net.sf.jasperreports.swing.JRViewer;
+
 public class ProfitAndLossCutoffFacade {
 
 	private static final String REPORT_NAME = "Laporan Laba Rugi";
@@ -58,74 +58,100 @@ public class ProfitAndLossCutoffFacade {
 	}
 
 	public ProfitAndLossCutoff getDetail(int id, Session session) {
-		ProfitAndLossCutoff profitAndLossCutoff = (ProfitAndLossCutoff) session
-				.get(ProfitAndLossCutoff.class, id);
+		ProfitAndLossCutoff profitAndLossCutoff = (ProfitAndLossCutoff) session.get(ProfitAndLossCutoff.class, id);
 		return profitAndLossCutoff;
 	}
 
-	public ProfitAndLossCutoff performProfitAndLossCutoff(int performedBy,
-			Session session) throws AppException {
+	public ProfitAndLossCutoff performProfitAndLossCutoff(int performedBy, Session session) throws AppException {
 
 		ProfitAndLossCutoff previousProfitAndLossCutoff = getLastProfitAndLossCutoff(session);
 
-		ProfitAndLossCutoff profitAndLossCutoff = create(
-				DateUtils.getCurrent(Timestamp.class),
+		ProfitAndLossCutoff profitAndLossCutoff = create(DateUtils.getCurrent(Timestamp.class),
 				previousProfitAndLossCutoff, session);
 
 		profitAndLossCutoff.setLastUpdatedBy(performedBy);
 
-		profitAndLossCutoff.setLastUpdatedTimestamp(DateUtils
-				.getCurrent(Timestamp.class));
+		profitAndLossCutoff.setLastUpdatedTimestamp(DateUtils.getCurrent(Timestamp.class));
 
 		session.saveOrUpdate(profitAndLossCutoff);
 
 		return profitAndLossCutoff;
 	}
 
-	public void previewReport(Window parent,
-			ProfitAndLossCutoff profitAndLossCutoff, Session session)
+	public void previewReport(Window parent, ProfitAndLossCutoff profitAndLossCutoff, Session session)
 			throws AppException {
 		JasperPrint jasperPrint = prepareJasper(profitAndLossCutoff, session);
 		JRViewer viewer = new JRViewer(jasperPrint);
 		ReportViewerDialog.viewReport(parent, REPORT_NAME, viewer);
 	}
 
-	public void previewReport(Window parent,
-			List<ProfitAndLossCutoff> profitAndLossCutoffs)
+	public void previewReport(Window parent, List<ProfitAndLossCutoff> profitAndLossCutoffs)
 			throws AppException, UserException {
 		JasperPrint jasperPrint = prepareJasper(profitAndLossCutoffs);
 		JRViewer viewer = new JRViewer(jasperPrint);
 		ReportViewerDialog.viewReport(parent, REPORT_NAME, viewer);
 	}
 
-	public List<ProfitAndLossCutoff> search(Date beginDate, Date endDate,
-			Session session) {
+	public List<ProfitAndLossCutoff> search(Date beginDate, Date endDate, Session session) {
 
-		Criteria criteria = session.createCriteria(ProfitAndLossCutoff.class);
-		criteria.add(Restrictions.isNotNull("previousProfitAndLossCutoff"));
-
-		DateUtils.validateDateBegin(beginDate);
-		DateUtils.validateDateEnd(endDate);
+		StringBuilder builder = new StringBuilder();
+		builder.append(
+				"SELECT curr.ID, curr.LAST_UPDATED_BY, curr.LAST_UPDATED_TIMESTAMP, curr.BEBAN_OPERASI, curr.CUTOFF_TIMESTAMP, curr.HPP, curr.LABA_BERSIH, curr.LABA_KOTOR, curr.PEMBELIAN, curr.PENJUALAN, curr.PENJUALAN_BERSIH, curr.PERSEDIAAN_AKHIR, curr.PERSEDIAAN_AWAL, curr.PERSEDIAAN_TOTAL, curr.POTONGAN_PEMBELIAN, curr.POTONGAN_PENJUALAN, curr.RETUR_PEMBELIAN, curr.RETUR_PENJUALAN, curr.PREVIOUS_CUTOFF_ID, prev.ID as PREVIOUS_ID, prev.CUTOFF_TIMESTAMP PREVIOUS_CUTOFF_TIMESTAMP");
+		builder.append(
+				" FROM profit_and_loss_cutoff prev INNER JOIN profit_and_loss_cutoff curr ON curr.previous_cutoff_id = prev.id WHERE 1=1");
 
 		if (beginDate != null) {
-			criteria.add(Restrictions.ge("cutoffTimestamp", beginDate));
+			builder.append(" AND curr.cutoff_timestamp >= :beginDate");
 		}
 
 		if (endDate != null) {
-			criteria.createAlias("previousProfitAndLossCutoff",
-					"previousProfitAndLossCutoff");
-			criteria.add(Restrictions.le(
-					"previousProfitAndLossCutoff.cutoffTimestamp", endDate));
+			builder.append(" AND prev.cutoff_timestamp <= :endDate");
 		}
 
-		@SuppressWarnings("unchecked")
-		List<ProfitAndLossCutoff> profitAndLossCutoffs = criteria.list();
+		SQLQuery query = session.createSQLQuery(builder.toString());
 
-		return profitAndLossCutoffs;
+		HqlParameter parameter = new HqlParameter(query);
+		parameter.put("beginDate", beginDate);
+		parameter.put("endDate", endDate);
+		parameter.validate();
+
+		List<ProfitAndLossCutoff> cutoffs = new ArrayList<>();
+
+		@SuppressWarnings("unchecked")
+		List<Object[]> list = query.list();
+		for (Object[] object : list) {
+			ProfitAndLossCutoff cutoff = new ProfitAndLossCutoff();
+			cutoff.setLastUpdatedBy((Integer) object[1]);
+			cutoff.setLastUpdatedTimestamp((Timestamp) object[2]);
+			cutoff.setBebanOperasi((BigDecimal) object[3]);
+			cutoff.setCutoffTimestamp((Timestamp) object[4]);
+			cutoff.setHpp((BigDecimal) object[5]);
+			cutoff.setLabaBersih((BigDecimal) object[6]);
+			cutoff.setLabaKotor((BigDecimal) object[7]);
+			cutoff.setPembelian((BigDecimal) object[8]);
+			cutoff.setPenjualan((BigDecimal) object[9]);
+			cutoff.setPenjualanBersih((BigDecimal) object[10]);
+			cutoff.setPersediaanAkhir((BigDecimal) object[11]);
+			cutoff.setPersediaanAwal((BigDecimal) object[12]);
+			cutoff.setPersediaanTotal((BigDecimal) object[13]);
+			cutoff.setPotonganPembelian((BigDecimal) object[14]);
+			cutoff.setPotonganPenjualan((BigDecimal) object[15]);
+			cutoff.setReturPembelian((BigDecimal) object[16]);
+			cutoff.setReturPenjualan((BigDecimal) object[17]);
+
+			ProfitAndLossCutoff prevCutoff = new ProfitAndLossCutoff();
+			prevCutoff.setId((Integer) object[19]);
+			prevCutoff.setCutoffTimestamp((Timestamp) object[20]);
+
+			cutoff.setPreviousProfitAndLossCutoff(prevCutoff);
+
+			cutoffs.add(cutoff);
+		}
+
+		return cutoffs;
 	}
 
-	public List<ProfitAndLossCutoff> getListById(List<Integer> ids,
-			Session session) {
+	public List<ProfitAndLossCutoff> getListById(List<Integer> ids, Session session) {
 
 		Criteria criteria = session.createCriteria(ProfitAndLossCutoff.class);
 		criteria.add(Restrictions.isNotNull("previousProfitAndLossCutoff"));
@@ -140,8 +166,7 @@ public class ProfitAndLossCutoffFacade {
 	public boolean isExists(Date beginDate, Date endDate, Session session) {
 
 		StringBuilder sqlString = new StringBuilder();
-		sqlString
-				.append("SELECT COUNT(1) AS count FROM profit_and_loss_cutoff WHERE 1=1");
+		sqlString.append("SELECT COUNT(1) AS count FROM profit_and_loss_cutoff WHERE 1=1");
 
 		if (beginDate != null) {
 			sqlString.append(" AND cutoff_timestamp >= :beginDate");
@@ -162,67 +187,52 @@ public class ProfitAndLossCutoffFacade {
 		return count > 0;
 	}
 
-	private ProfitAndLossCutoff create(Timestamp cutoffTImestamp,
-			ProfitAndLossCutoff previousProfitAndLossCutoff, Session session)
-			throws AppException {
+	private ProfitAndLossCutoff create(Timestamp cutoffTImestamp, ProfitAndLossCutoff previousProfitAndLossCutoff,
+			Session session) throws AppException {
 
 		ProfitAndLossCutoff profitAndLossCutoff = new ProfitAndLossCutoff();
-		profitAndLossCutoff
-				.setPreviousProfitAndLossCutoff(previousProfitAndLossCutoff);
+		profitAndLossCutoff.setPreviousProfitAndLossCutoff(previousProfitAndLossCutoff);
 
 		profitAndLossCutoff.setCutoffTimestamp(cutoffTImestamp);
 
-		Timestamp beginTimestamp = previousProfitAndLossCutoff
-				.getCutoffTimestamp();
+		Timestamp beginTimestamp = previousProfitAndLossCutoff.getCutoffTimestamp();
 
 		Timestamp endTimestamp = profitAndLossCutoff.getCutoffTimestamp();
 
-		BigDecimal penjualan = AccountFacade.getInstance().getAccountSum(
-				CoaCodeConstants.PENJUALAN, null, beginTimestamp, endTimestamp,
-				DebitCreditFlag.CREDIT, session);
+		BigDecimal penjualan = AccountFacade.getInstance().getAccountSum(CoaCodeConstants.PENJUALAN, null,
+				beginTimestamp, endTimestamp, DebitCreditFlag.CREDIT, session);
 		profitAndLossCutoff.setPenjualan(penjualan);
 
-		BigDecimal potonganPenjualan = AccountFacade.getInstance()
-				.getAccountSum(CoaCodeConstants.DISKON_PENJUALAN, null,
-						beginTimestamp, endTimestamp, DebitCreditFlag.DEBIT,
-						session);
+		BigDecimal potonganPenjualan = AccountFacade.getInstance().getAccountSum(CoaCodeConstants.DISKON_PENJUALAN,
+				null, beginTimestamp, endTimestamp, DebitCreditFlag.DEBIT, session);
 		profitAndLossCutoff.setPotonganPenjualan(potonganPenjualan);
 
-		BigDecimal returPenjualan = AccountFacade.getInstance().getAccountSum(
-				CoaCodeConstants.RETUR_PENJUALAN, null, beginTimestamp,
-				endTimestamp, DebitCreditFlag.DEBIT, session);
+		BigDecimal returPenjualan = AccountFacade.getInstance().getAccountSum(CoaCodeConstants.RETUR_PENJUALAN, null,
+				beginTimestamp, endTimestamp, DebitCreditFlag.DEBIT, session);
 		profitAndLossCutoff.setReturPenjualan(returPenjualan);
 
-		BigDecimal penjualanBersih = penjualan.subtract(potonganPenjualan)
-				.subtract(returPenjualan);
+		BigDecimal penjualanBersih = penjualan.subtract(potonganPenjualan).subtract(returPenjualan);
 		profitAndLossCutoff.setPenjualanBersih(penjualanBersih);
 
-		BigDecimal persediaanAwal = previousProfitAndLossCutoff
-				.getPersediaanAkhir();
+		BigDecimal persediaanAwal = previousProfitAndLossCutoff.getPersediaanAkhir();
 		profitAndLossCutoff.setPersediaanAwal(persediaanAwal);
 
-		BigDecimal pembelian = AccountFacade.getInstance().getAccountSum(
-				CoaCodeConstants.PEMBELIAN, null, beginTimestamp, endTimestamp,
-				DebitCreditFlag.DEBIT, session);
+		BigDecimal pembelian = AccountFacade.getInstance().getAccountSum(CoaCodeConstants.PEMBELIAN, null,
+				beginTimestamp, endTimestamp, DebitCreditFlag.DEBIT, session);
 		profitAndLossCutoff.setPembelian(pembelian);
 
-		BigDecimal potonganPembelian = AccountFacade.getInstance()
-				.getAccountSum(CoaCodeConstants.DISKON_PEMBELIAN, null,
-						beginTimestamp, endTimestamp, DebitCreditFlag.CREDIT,
-						session);
+		BigDecimal potonganPembelian = AccountFacade.getInstance().getAccountSum(CoaCodeConstants.DISKON_PEMBELIAN,
+				null, beginTimestamp, endTimestamp, DebitCreditFlag.CREDIT, session);
 		profitAndLossCutoff.setPotonganPembelian(potonganPembelian);
 
-		BigDecimal returPembelian = AccountFacade.getInstance().getAccountSum(
-				CoaCodeConstants.RETUR_PEMBELIAN, null, beginTimestamp,
-				endTimestamp, DebitCreditFlag.CREDIT, session);
+		BigDecimal returPembelian = AccountFacade.getInstance().getAccountSum(CoaCodeConstants.RETUR_PEMBELIAN, null,
+				beginTimestamp, endTimestamp, DebitCreditFlag.CREDIT, session);
 		profitAndLossCutoff.setReturPembelian(returPembelian);
 
-		BigDecimal persediaanTotal = persediaanAwal.add(pembelian)
-				.subtract(potonganPembelian).subtract(returPembelian);
+		BigDecimal persediaanTotal = persediaanAwal.add(pembelian).subtract(potonganPembelian).subtract(returPembelian);
 		profitAndLossCutoff.setPersediaanTotal(persediaanTotal);
 
-		BigDecimal persediaanAkhir = ItemFacade.getInstance()
-				.calculateAmountOfAllItem(session);
+		BigDecimal persediaanAkhir = ItemFacade.getInstance().calculateAmountOfAllItem(session);
 		profitAndLossCutoff.setPersediaanAkhir(persediaanAkhir);
 
 		BigDecimal hpp = persediaanTotal.subtract(persediaanAkhir);
@@ -231,9 +241,8 @@ public class ProfitAndLossCutoffFacade {
 		BigDecimal labaKotor = penjualanBersih.subtract(hpp);
 		profitAndLossCutoff.setLabaKotor(labaKotor);
 
-		List<ExpenseTransaction> expenseTransactions = ExpenseFacade
-				.getInstance().getTransactionListByTimestamp(beginTimestamp,
-						endTimestamp, session);
+		List<ExpenseTransaction> expenseTransactions = ExpenseFacade.getInstance()
+				.getTransactionListByTimestamp(beginTimestamp, endTimestamp, session);
 		BigDecimal bebanOperasi = BigDecimal.valueOf(0);
 		for (ExpenseTransaction expenseTransaction : expenseTransactions) {
 			bebanOperasi = bebanOperasi.add(expenseTransaction.getAmount());
@@ -253,47 +262,34 @@ public class ProfitAndLossCutoffFacade {
 		@SuppressWarnings("unchecked")
 		List<ProfitAndLossCutoff> profitAndLossCutoffs = criteria.list();
 
-		ProfitAndLossCutoff profitAndLossCutoff = profitAndLossCutoffs
-				.get(profitAndLossCutoffs.size() - 1);
+		ProfitAndLossCutoff profitAndLossCutoff = profitAndLossCutoffs.get(profitAndLossCutoffs.size() - 1);
 
 		return profitAndLossCutoff;
 	}
 
-	private JasperPrint prepareJasper(ProfitAndLossCutoff profitAndLossCutoff,
-			Session session) throws AppException {
+	private JasperPrint prepareJasper(ProfitAndLossCutoff profitAndLossCutoff, Session session) throws AppException {
 
 		Map<String, Object> paramReport = new HashMap<String, Object>();
 		paramReport.put("companyName", Main.getCompany().getName());
 		paramReport.put("reportName", REPORT_NAME);
-		paramReport.put("periodBegin", profitAndLossCutoff
-				.getPreviousProfitAndLossCutoff().getCutoffTimestamp());
+		paramReport.put("periodBegin", profitAndLossCutoff.getPreviousProfitAndLossCutoff().getCutoffTimestamp());
 		paramReport.put("periodEnd", profitAndLossCutoff.getCutoffTimestamp());
 
-		User cutoffBy = UserFacade.getInstance().getDetail(
-				profitAndLossCutoff.getLastUpdatedBy(), session);
+		User cutoffBy = UserFacade.getInstance().getDetail(profitAndLossCutoff.getLastUpdatedBy(), session);
 
-		paramReport.put("cutoffBy",
-				cutoffBy.getLogin() + " [" + cutoffBy.getName() + "]");
+		paramReport.put("cutoffBy", cutoffBy.getLogin() + " [" + cutoffBy.getName() + "]");
 
 		paramReport.put("penjualan", profitAndLossCutoff.getPenjualan());
-		paramReport.put("potonganPenjualan",
-				profitAndLossCutoff.getPotonganPenjualan());
-		paramReport.put("returPenjualan",
-				profitAndLossCutoff.getReturPenjualan());
-		paramReport.put("penjualanBersih",
-				profitAndLossCutoff.getPenjualanBersih());
+		paramReport.put("potonganPenjualan", profitAndLossCutoff.getPotonganPenjualan());
+		paramReport.put("returPenjualan", profitAndLossCutoff.getReturPenjualan());
+		paramReport.put("penjualanBersih", profitAndLossCutoff.getPenjualanBersih());
 
-		paramReport.put("persediaanAwal",
-				profitAndLossCutoff.getPersediaanAwal());
+		paramReport.put("persediaanAwal", profitAndLossCutoff.getPersediaanAwal());
 		paramReport.put("pembelian", profitAndLossCutoff.getPembelian());
-		paramReport.put("potonganPembelian",
-				profitAndLossCutoff.getPotonganPembelian());
-		paramReport.put("returPembelian",
-				profitAndLossCutoff.getReturPembelian());
-		paramReport.put("persediaanTotal",
-				profitAndLossCutoff.getPersediaanTotal());
-		paramReport.put("persediaanAkhir",
-				profitAndLossCutoff.getPersediaanAkhir());
+		paramReport.put("potonganPembelian", profitAndLossCutoff.getPotonganPembelian());
+		paramReport.put("returPembelian", profitAndLossCutoff.getReturPembelian());
+		paramReport.put("persediaanTotal", profitAndLossCutoff.getPersediaanTotal());
+		paramReport.put("persediaanAkhir", profitAndLossCutoff.getPersediaanAkhir());
 		paramReport.put("hpp", profitAndLossCutoff.getHpp());
 
 		paramReport.put("labaKotor", profitAndLossCutoff.getLabaKotor());
@@ -302,17 +298,14 @@ public class ProfitAndLossCutoffFacade {
 
 		InputStream inputStream = null;
 		try {
-			inputStream = this.getClass().getClassLoader()
-					.getResourceAsStream(REPORT_FILE);
+			inputStream = this.getClass().getClassLoader().getResourceAsStream(REPORT_FILE);
 
 			JasperDesign jasperDesign = JRXmlLoader.load(inputStream);
 
-			JasperReport jasperReport = JasperCompileManager
-					.compileReport(jasperDesign);
+			JasperReport jasperReport = JasperCompileManager.compileReport(jasperDesign);
 
-			JasperPrint jasperPrint = JasperFillManager.fillReport(
-					jasperReport, paramReport, new JRBeanCollectionDataSource(
-							new ArrayList<Object>()));
+			JasperPrint jasperPrint = JasperFillManager.fillReport(jasperReport, paramReport,
+					new JRBeanCollectionDataSource(new ArrayList<Object>()));
 
 			return jasperPrint;
 		} catch (JRException e) {
@@ -328,8 +321,7 @@ public class ProfitAndLossCutoffFacade {
 		}
 	}
 
-	private JasperPrint prepareJasper(
-			List<ProfitAndLossCutoff> profitAndLossCutoffs)
+	private JasperPrint prepareJasper(List<ProfitAndLossCutoff> profitAndLossCutoffs)
 			throws AppException, UserException {
 
 		if (profitAndLossCutoffs.isEmpty()) {
@@ -337,51 +329,41 @@ public class ProfitAndLossCutoffFacade {
 		}
 
 		ProfitAndLossCutoff firstCutoff = profitAndLossCutoffs.get(0);
-		ProfitAndLossCutoff lastCutoff = profitAndLossCutoffs
-				.get(profitAndLossCutoffs.size() - 1);
+		ProfitAndLossCutoff lastCutoff = profitAndLossCutoffs.get(profitAndLossCutoffs.size() - 1);
 
 		Map<String, Object> paramReport = new HashMap<String, Object>();
 		paramReport.put("companyName", Main.getCompany().getName());
 		paramReport.put("reportName", REPORT_NAME);
-		paramReport.put("periodBegin", firstCutoff
-				.getPreviousProfitAndLossCutoff().getCutoffTimestamp());
+		paramReport.put("periodBegin", firstCutoff.getPreviousProfitAndLossCutoff().getCutoffTimestamp());
 		paramReport.put("periodEnd", lastCutoff.getCutoffTimestamp());
 
 		paramReport.put("cutoffBy", "[COMBINED]");
 
-		BigDecimal penjualan = getTotalOfMethod("getPenjualan",
-				profitAndLossCutoffs);
+		BigDecimal penjualan = getTotalOfMethod("getPenjualan", profitAndLossCutoffs);
 		paramReport.put("penjualan", penjualan);
 
-		BigDecimal potonganPenjualan = getTotalOfMethod("getPotonganPenjualan",
-				profitAndLossCutoffs);
+		BigDecimal potonganPenjualan = getTotalOfMethod("getPotonganPenjualan", profitAndLossCutoffs);
 		paramReport.put("potonganPenjualan", potonganPenjualan);
 
-		BigDecimal returPenjualan = getTotalOfMethod("getReturPenjualan",
-				profitAndLossCutoffs);
+		BigDecimal returPenjualan = getTotalOfMethod("getReturPenjualan", profitAndLossCutoffs);
 		paramReport.put("returPenjualan", returPenjualan);
 
-		BigDecimal penjualanBersih = penjualan.subtract(potonganPenjualan)
-				.subtract(returPenjualan);
+		BigDecimal penjualanBersih = penjualan.subtract(potonganPenjualan).subtract(returPenjualan);
 		paramReport.put("penjualanBersih", penjualanBersih);
 
 		BigDecimal persediaanAwal = firstCutoff.getPersediaanAwal();
 		paramReport.put("persediaanAwal", persediaanAwal);
 
-		BigDecimal pembelian = getTotalOfMethod("getPembelian",
-				profitAndLossCutoffs);
+		BigDecimal pembelian = getTotalOfMethod("getPembelian", profitAndLossCutoffs);
 		paramReport.put("pembelian", pembelian);
 
-		BigDecimal potonganPembelian = getTotalOfMethod("getPotonganPembelian",
-				profitAndLossCutoffs);
+		BigDecimal potonganPembelian = getTotalOfMethod("getPotonganPembelian", profitAndLossCutoffs);
 		paramReport.put("potonganPembelian", potonganPembelian);
 
-		BigDecimal returPembelian = getTotalOfMethod("getReturPembelian",
-				profitAndLossCutoffs);
+		BigDecimal returPembelian = getTotalOfMethod("getReturPembelian", profitAndLossCutoffs);
 		paramReport.put("returPembelian", returPembelian);
 
-		BigDecimal persediaanTotal = persediaanAwal.add(pembelian)
-				.subtract(potonganPembelian).subtract(returPembelian);
+		BigDecimal persediaanTotal = persediaanAwal.add(pembelian).subtract(potonganPembelian).subtract(returPembelian);
 		paramReport.put("persediaanTotal", persediaanTotal);
 
 		BigDecimal persediaanAkhir = lastCutoff.getPersediaanAkhir();
@@ -393,8 +375,7 @@ public class ProfitAndLossCutoffFacade {
 		BigDecimal labaKotor = penjualanBersih.subtract(hpp);
 		paramReport.put("labaKotor", labaKotor);
 
-		BigDecimal bebanOperasi = getTotalOfMethod("getBebanOperasi",
-				profitAndLossCutoffs);
+		BigDecimal bebanOperasi = getTotalOfMethod("getBebanOperasi", profitAndLossCutoffs);
 		paramReport.put("bebanOperasi", bebanOperasi);
 
 		BigDecimal labaBersih = labaKotor.subtract(bebanOperasi);
@@ -402,17 +383,14 @@ public class ProfitAndLossCutoffFacade {
 
 		InputStream inputStream = null;
 		try {
-			inputStream = this.getClass().getClassLoader()
-					.getResourceAsStream(REPORT_FILE);
+			inputStream = this.getClass().getClassLoader().getResourceAsStream(REPORT_FILE);
 
 			JasperDesign jasperDesign = JRXmlLoader.load(inputStream);
 
-			JasperReport jasperReport = JasperCompileManager
-					.compileReport(jasperDesign);
+			JasperReport jasperReport = JasperCompileManager.compileReport(jasperDesign);
 
-			JasperPrint jasperPrint = JasperFillManager.fillReport(
-					jasperReport, paramReport, new JRBeanCollectionDataSource(
-							new ArrayList<Object>()));
+			JasperPrint jasperPrint = JasperFillManager.fillReport(jasperReport, paramReport,
+					new JRBeanCollectionDataSource(new ArrayList<Object>()));
 
 			return jasperPrint;
 		} catch (JRException e) {
@@ -428,19 +406,17 @@ public class ProfitAndLossCutoffFacade {
 		}
 	}
 
-	private BigDecimal getTotalOfMethod(String methodName,
-			List<ProfitAndLossCutoff> profitAndLossCutoffs) throws AppException {
+	private BigDecimal getTotalOfMethod(String methodName, List<ProfitAndLossCutoff> profitAndLossCutoffs)
+			throws AppException {
 		try {
 			Method method = ProfitAndLossCutoff.class.getMethod(methodName);
 			BigDecimal total = BigDecimal.valueOf(0);
 			for (ProfitAndLossCutoff profitAndLossCutoff : profitAndLossCutoffs) {
-				BigDecimal value = (BigDecimal) method
-						.invoke(profitAndLossCutoff);
+				BigDecimal value = (BigDecimal) method.invoke(profitAndLossCutoff);
 				total = total.add(value);
 			}
 			return total;
-		} catch (IllegalAccessException | IllegalArgumentException
-				| InvocationTargetException | NoSuchMethodException
+		} catch (IllegalAccessException | IllegalArgumentException | InvocationTargetException | NoSuchMethodException
 				| SecurityException e) {
 			throw new AppException(e);
 		}

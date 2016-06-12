@@ -63,7 +63,7 @@ public class CheckStockForm extends XJDialog {
 	public CheckStockForm(Window parent) {
 		super(parent);
 		setTitle("Form Barang");
-		setPermissionCode(PermissionConstants.STOCK_FORM);
+		setPermissionCode(PermissionConstants.CHECK_STOCK_FORM);
 		setCloseOnEsc(true);
 		getContentPane().setLayout(new MigLayout("", "[500][]", "[grow][grow]"));
 
