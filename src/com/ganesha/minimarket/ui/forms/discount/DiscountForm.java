@@ -152,7 +152,9 @@ public class DiscountForm extends XJDialog {
 	}
 
 	public void setFormDetailValue(Discount discount) {
+		
 		Item item = discount.getItem();
+		itemId = item.getId();
 
 		txtKode.setText(item.getCode());
 		txtNama.setText(item.getName());
@@ -186,7 +188,7 @@ public class DiscountForm extends XJDialog {
 				"Cari Barang", this, Item.class);
 		searchEntityDialog.setVisible(true);
 
-		itemId = searchEntityDialog.getSelectedId();
+		Integer itemId = searchEntityDialog.getSelectedId();
 		if (itemId != null) {
 			String kode = searchEntityDialog.getSelectedCode();
 			String nama = searchEntityDialog.getSelectedName();

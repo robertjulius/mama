@@ -11,6 +11,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.swing.ButtonGroup;
 import javax.swing.JScrollPane;
 
 import net.miginfocom.swing.MigLayout;
@@ -49,6 +50,8 @@ public class DiscountListDialog extends XJTableDialog {
 	private XJTextField txtNamaBarang;
 	private XJRadioButton rdPromoTidakAktif;
 	private XJRadioButton rdPromoAktif;
+	
+	private final ButtonGroup btnGroup = new ButtonGroup();
 	private XJButton btnDetail;
 	private XJButton btnTambah;
 	{
@@ -137,6 +140,7 @@ public class DiscountListDialog extends XJTableDialog {
 		rdPromoAktif.setSelected(true);
 		rdPromoAktif.setText("Promo Aktif");
 		pnlRadioButton.add(rdPromoAktif, "cell 0 0");
+		btnGroup.add(rdPromoAktif);
 
 		rdPromoTidakAktif = new XJRadioButton();
 		rdPromoTidakAktif.addItemListener(new ItemListener() {
@@ -152,6 +156,7 @@ public class DiscountListDialog extends XJTableDialog {
 		});
 		rdPromoTidakAktif.setText("Promo Tidak Aktif");
 		pnlRadioButton.add(rdPromoTidakAktif, "cell 0 1");
+		btnGroup.add(rdPromoTidakAktif);
 
 		JScrollPane scrollPane = new JScrollPane(table);
 		getContentPane().add(scrollPane, "cell 0 1,grow");
