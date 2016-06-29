@@ -7,6 +7,10 @@ import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.math.BigDecimal;
 import java.math.BigInteger;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.Date;
@@ -18,6 +22,7 @@ import org.hibernate.Criteria;
 import org.hibernate.SQLQuery;
 import org.hibernate.Session;
 import org.hibernate.criterion.Restrictions;
+import org.hibernate.jdbc.Work;
 
 import com.ganesha.accounting.constants.CoaCodeConstants;
 import com.ganesha.accounting.constants.Enums.DebitCreditFlag;
@@ -94,59 +99,64 @@ public class ProfitAndLossCutoffFacade {
 
 	public List<ProfitAndLossCutoff> search(Date beginDate, Date endDate, Session session) {
 
-		StringBuilder builder = new StringBuilder();
+		final StringBuilder builder = new StringBuilder();
 		builder.append(
 				"SELECT curr.ID, curr.LAST_UPDATED_BY, curr.LAST_UPDATED_TIMESTAMP, curr.BEBAN_OPERASI, curr.CUTOFF_TIMESTAMP, curr.HPP, curr.LABA_BERSIH, curr.LABA_KOTOR, curr.PEMBELIAN, curr.PENJUALAN, curr.PENJUALAN_BERSIH, curr.PERSEDIAAN_AKHIR, curr.PERSEDIAAN_AWAL, curr.PERSEDIAAN_TOTAL, curr.POTONGAN_PEMBELIAN, curr.POTONGAN_PENJUALAN, curr.RETUR_PEMBELIAN, curr.RETUR_PENJUALAN, curr.PREVIOUS_CUTOFF_ID, prev.ID as PREVIOUS_ID, prev.CUTOFF_TIMESTAMP PREVIOUS_CUTOFF_TIMESTAMP");
 		builder.append(
 				" FROM profit_and_loss_cutoff prev INNER JOIN profit_and_loss_cutoff curr ON curr.previous_cutoff_id = prev.id WHERE 1=1");
 
+		final List<Object> parameters = new ArrayList<>();
 		if (beginDate != null) {
-			builder.append(" AND curr.cutoff_timestamp >= :beginDate");
+			builder.append(" AND curr.cutoff_timestamp >= ?");
+			parameters.add(beginDate);
 		}
 
 		if (endDate != null) {
-			builder.append(" AND prev.cutoff_timestamp <= :endDate");
+			builder.append(" AND prev.cutoff_timestamp <= ?");
+			parameters.add(endDate);
 		}
 
-		SQLQuery query = session.createSQLQuery(builder.toString());
+		final List<ProfitAndLossCutoff> cutoffs = new ArrayList<>();
 
-		HqlParameter parameter = new HqlParameter(query);
-		parameter.put("beginDate", beginDate);
-		parameter.put("endDate", endDate);
-		parameter.validate();
+		session.doWork(new Work() {
+			@Override
+			public void execute(Connection connection) throws SQLException {
+				PreparedStatement stmt = connection.prepareStatement(builder.toString());
+				for (int i = 0; i < parameters.size(); ++i) {
+					stmt.setObject(i + 1, parameters.get(i));
+				}
+				ResultSet rs = stmt.executeQuery();
+				while (rs.next()) {
+					ProfitAndLossCutoff cutoff = new ProfitAndLossCutoff();
+					cutoff.setId((Integer) rs.getObject(1));
+					cutoff.setLastUpdatedBy((Integer) rs.getObject(2));
+					cutoff.setLastUpdatedTimestamp((Timestamp) rs.getObject(3));
+					cutoff.setBebanOperasi((BigDecimal) rs.getObject(4));
+					cutoff.setCutoffTimestamp((Timestamp) rs.getObject(5));
+					cutoff.setHpp((BigDecimal) rs.getObject(6));
+					cutoff.setLabaBersih((BigDecimal) rs.getObject(7));
+					cutoff.setLabaKotor((BigDecimal) rs.getObject(8));
+					cutoff.setPembelian((BigDecimal) rs.getObject(9));
+					cutoff.setPenjualan((BigDecimal) rs.getObject(10));
+					cutoff.setPenjualanBersih((BigDecimal) rs.getObject(11));
+					cutoff.setPersediaanAkhir((BigDecimal) rs.getObject(12));
+					cutoff.setPersediaanAwal((BigDecimal) rs.getObject(13));
+					cutoff.setPersediaanTotal((BigDecimal) rs.getObject(14));
+					cutoff.setPotonganPembelian((BigDecimal) rs.getObject(15));
+					cutoff.setPotonganPenjualan((BigDecimal) rs.getObject(16));
+					cutoff.setReturPembelian((BigDecimal) rs.getObject(17));
+					cutoff.setReturPenjualan((BigDecimal) rs.getObject(18));
 
-		List<ProfitAndLossCutoff> cutoffs = new ArrayList<>();
+					ProfitAndLossCutoff prevCutoff = new ProfitAndLossCutoff();
+					prevCutoff.setId((Integer) rs.getObject(20));
+					prevCutoff.setCutoffTimestamp((Timestamp) rs.getObject(21));
 
-		@SuppressWarnings("unchecked")
-		List<Object[]> list = query.list();
-		for (Object[] object : list) {
-			ProfitAndLossCutoff cutoff = new ProfitAndLossCutoff();
-			cutoff.setLastUpdatedBy((Integer) object[1]);
-			cutoff.setLastUpdatedTimestamp((Timestamp) object[2]);
-			cutoff.setBebanOperasi((BigDecimal) object[3]);
-			cutoff.setCutoffTimestamp((Timestamp) object[4]);
-			cutoff.setHpp((BigDecimal) object[5]);
-			cutoff.setLabaBersih((BigDecimal) object[6]);
-			cutoff.setLabaKotor((BigDecimal) object[7]);
-			cutoff.setPembelian((BigDecimal) object[8]);
-			cutoff.setPenjualan((BigDecimal) object[9]);
-			cutoff.setPenjualanBersih((BigDecimal) object[10]);
-			cutoff.setPersediaanAkhir((BigDecimal) object[11]);
-			cutoff.setPersediaanAwal((BigDecimal) object[12]);
-			cutoff.setPersediaanTotal((BigDecimal) object[13]);
-			cutoff.setPotonganPembelian((BigDecimal) object[14]);
-			cutoff.setPotonganPenjualan((BigDecimal) object[15]);
-			cutoff.setReturPembelian((BigDecimal) object[16]);
-			cutoff.setReturPenjualan((BigDecimal) object[17]);
+					cutoff.setPreviousProfitAndLossCutoff(prevCutoff);
 
-			ProfitAndLossCutoff prevCutoff = new ProfitAndLossCutoff();
-			prevCutoff.setId((Integer) object[19]);
-			prevCutoff.setCutoffTimestamp((Timestamp) object[20]);
-
-			cutoff.setPreviousProfitAndLossCutoff(prevCutoff);
-
-			cutoffs.add(cutoff);
-		}
+					cutoffs.add(cutoff);
+				}
+			}
+		});
 
 		return cutoffs;
 	}

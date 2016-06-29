@@ -17,10 +17,12 @@ import javax.print.attribute.standard.Copies;
 import javax.print.event.PrintJobAdapter;
 import javax.print.event.PrintJobEvent;
 
+import org.slf4j.LoggerFactory;
+
 import com.ganesha.core.SystemSetting;
-import com.ganesha.core.exception.AppException;
 import com.ganesha.core.utils.Formatter;
 import com.ganesha.core.utils.GeneralConstants;
+import com.ganesha.coreapps.constants.Loggers;
 
 public class ReceiptPrinterUtils {
 
@@ -95,11 +97,20 @@ public class ReceiptPrinterUtils {
 		PrintService[] services = PrinterJob.lookupPrintServices();
 		InputStream is = null;
 		try {
-			String printerName = (String) SystemSetting.get(GeneralConstants.SYSTEM_SETTING_PRINTER_RECEIPT);
+
+			String printerName = ReceiptPrinterUtils.PRINTER_SETTING.getPrinterName();
+			LoggerFactory.getLogger(Loggers.UTILS).debug("Finding printer '" + printerName + "' ...");
 
 			is = new ByteArrayInputStream(bytes);
+
+			boolean printerFound = false;
 			for (PrintService printService : services) {
+
+				LoggerFactory.getLogger(Loggers.UTILS).debug("Found... " + printService.getName());
+
 				if (printService.getName().equals(printerName)) {
+
+					printerFound = true;
 
 					DocFlavor flavor = DocFlavor.STRING.INPUT_STREAM.AUTOSENSE;
 					Doc doc = new SimpleDoc(is, flavor, null);
@@ -114,8 +125,11 @@ public class ReceiptPrinterUtils {
 					break;
 				}
 			}
-		} catch (AppException e) {
-			throw new PrintException(e);
+
+			if (!printerFound) {
+				LoggerFactory.getLogger(Loggers.UTILS).debug("Finding printer '" + printerName + "' is not found!");
+			}
+
 		} finally {
 			if (is != null) {
 				try {
