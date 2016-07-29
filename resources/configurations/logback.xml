@@ -2,14 +2,25 @@
 
 	<appender name="FILE" class="ch.qos.logback.core.FileAppender">
 		<file>log.txt</file>
-		<layout class="ch.qos.logback.classic.PatternLayout">
+		<encoder>
 			<pattern>%d{yyyy-MM-dd HH:mm:ss.SSS} [%thread] %-5level %logger{36} - %msg%n</pattern>
-		</layout>
+			<immediateFlush>true</immediateFlush>
+		</encoder>
+		<rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+			<fileNamePattern>log.%d{yyyy-MM-dd}.%i.txt
+			</fileNamePattern>
+			<timeBasedFileNamingAndTriggeringPolicy
+				class="ch.qos.logback.core.rolling.SizeAndTimeBasedFNATP">
+				<maxFileSize>100KB</maxFileSize>
+			</timeBasedFileNamingAndTriggeringPolicy>
+			<maxHistory>30</maxHistory>
+		</rollingPolicy>
 	</appender>
 
 	<appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
 		<encoder>
-			<pattern>%d{yyyy-MM-dd HH:mm:ss.SSS} %-5level %C{0}:%L - %msg%n</pattern>
+			<pattern>%d{yyyy-MM-dd HH:mm:ss.SSS} %-5level %C{0}:%L - %msg%n
+			</pattern>
 		</encoder>
 	</appender>
 
@@ -17,11 +28,8 @@
 	<logger name="application.sale" level="DEBUG" />
 	<logger name="application.scheduler" level="DEBUG" />
 	<logger name="application.window" level="TRACE" />
-	<!-- 
-	<logger name="application.window.form" level="DEBUG" />
-	<logger name="application.window.list" level="DEBUG" />
-	<logger name="application.window.button" level="DEBUG" />
-	 -->
+	<!-- <logger name="application.window.form" level="DEBUG" /> <logger name="application.window.list" 
+		level="DEBUG" /> <logger name="application.window.button" level="DEBUG" /> -->
 
 	<!-- <logger name="org.hibernate" level="DEBUG" /> -->
 	<logger name="org.hibernate.transaction" level="DEBUG" />

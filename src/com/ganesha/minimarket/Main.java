@@ -1,5 +1,7 @@
 package com.ganesha.minimarket;
 
+import java.io.File;
+
 import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
 
@@ -7,8 +9,13 @@ import org.quartz.Scheduler;
 import org.quartz.SchedulerException;
 import org.quartz.SchedulerFactory;
 import org.quartz.impl.StdSchedulerFactory;
+import org.slf4j.LoggerFactory;
 
+import com.ganesha.core.SystemSetting;
 import com.ganesha.core.exception.AppException;
+import com.ganesha.core.utils.GeneralConstants;
+import com.ganesha.core.utils.ResourceUtils;
+import com.ganesha.coreapps.constants.Loggers;
 import com.ganesha.desktop.exeptions.ExceptionHandler;
 import com.ganesha.minimarket.db.DbInitializer;
 import com.ganesha.minimarket.model.Company;
@@ -38,6 +45,7 @@ public class Main {
 
 	public static void runApp() throws AppException, SchedulerException {
 		setDefaultUncaughtExceptionHandler();
+		loadLoggingCofiguration();
 		setLookAndFeel();
 
 		DbInitializer.initial();
@@ -61,8 +69,8 @@ public class Main {
 	public static void setLookAndFeel() {
 		try {
 			UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
-		} catch (ClassNotFoundException | InstantiationException
-				| IllegalAccessException | UnsupportedLookAndFeelException e) {
+		} catch (ClassNotFoundException | InstantiationException | IllegalAccessException
+				| UnsupportedLookAndFeelException e) {
 			ExceptionHandler.handleException(null, e);
 		}
 	}
@@ -78,5 +86,12 @@ public class Main {
 				ExceptionHandler.handleException(null, e, "Uncaught Exception");
 			}
 		});
+	}
+
+	private static void loadLoggingCofiguration() {
+		String loggingConfigFileName = SystemSetting.getProperty(GeneralConstants.SYSTEM_PROPERTY_LOGGIN_FILE);
+		File loggingConfigFile = new File(ResourceUtils.getConfigBase(), loggingConfigFileName);
+		System.setProperty("logback.configurationFile", loggingConfigFile.getAbsolutePath());
+		LoggerFactory.getLogger(Loggers.BUTTON).trace("====== Starting logging capability =====");
 	}
 }
