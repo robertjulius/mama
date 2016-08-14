@@ -9,6 +9,12 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import java.math.BigDecimal;
 import java.sql.Timestamp;
 import java.util.ArrayList;
@@ -25,12 +31,16 @@ import javax.swing.event.PopupMenuEvent;
 import javax.swing.event.PopupMenuListener;
 import javax.swing.table.TableCellEditor;
 
+import org.apache.commons.io.FileUtils;
+import org.apache.commons.io.IOUtils;
 import org.hibernate.Session;
 
+import com.ganesha.core.exception.AppException;
 import com.ganesha.core.exception.UserException;
 import com.ganesha.core.utils.DateUtils;
 import com.ganesha.core.utils.Formatter;
 import com.ganesha.core.utils.GeneralConstants;
+import com.ganesha.core.utils.ResourceUtils;
 import com.ganesha.coreapps.constants.Enums.ActionType;
 import com.ganesha.coreapps.facade.ActivityLogFacade;
 import com.ganesha.desktop.component.XEtchedBorder;
@@ -56,6 +66,7 @@ import com.ganesha.minimarket.model.PurchaseDetail;
 import com.ganesha.minimarket.model.PurchaseHeader;
 import com.ganesha.minimarket.model.Supplier;
 import com.ganesha.minimarket.ui.forms.searchentity.SearchEntityDialog;
+import com.ganesha.minimarket.ui.forms.searchentity.SearchItemDialog;
 import com.ganesha.minimarket.ui.forms.stock.StockForm;
 import com.ganesha.minimarket.utils.PermissionConstants;
 
@@ -94,6 +105,10 @@ public class PembelianForm extends XJDialog {
 
 	private Integer supplierId;
 	private XJPanel pnlHutang;
+	
+	private File pendingItemsFile = new File(ResourceUtils.getResourceBase(), "Pembelian_PendingItemsFile");
+	private XJPanel panel;
+	private XJButton btnPending;
 
 	{
 		tableParameters.put(ColumnEnum.NUM, new XTableParameter(0, 2, false,
@@ -345,17 +360,34 @@ public class PembelianForm extends XJDialog {
 		XJPanel pnlSubTotal = new XJPanel();
 		getContentPane().add(pnlSubTotal, "cell 0 2,grow");
 		pnlSubTotal.setLayout(new MigLayout("", "[][grow][]", "[]"));
-
-		btnDetail = new XJButton();
-		btnDetail.addActionListener(new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				showDetail();
-			}
-		});
+		
+		panel = new XJPanel();
+		pnlSubTotal.add(panel, "flowx,cell 0 0,grow");
+		panel.setLayout(new MigLayout("", "[][]", "[]"));
+		
+				btnDetail = new XJButton();
+				panel.add(btnDetail, "cell 0 0,grow");
+				btnDetail.addActionListener(new ActionListener() {
+					@Override
+					public void actionPerformed(ActionEvent e) {
+						showDetail();
+					}
+				});
 		btnDetail
 				.setText("<html><center>Lihat Detail<br/>[Enter]</center></html>");
-		pnlSubTotal.add(btnDetail, "cell 0 0,aligny top");
+		
+		btnPending = new XJButton();
+		btnPending.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				try {
+					pending();
+				} catch (Exception ex) {
+					ExceptionHandler.handleException(PembelianForm.this, ex);
+				}
+			}
+		});
+		btnPending.setText("<html><center>PENDING<br/>[F9]</center></html>");
+		panel.add(btnPending, "cell 1 0,grow");
 
 		XJPanel pnlBeban = new XJPanel();
 		pnlSubTotal.add(pnlBeban, "cell 2 0");
@@ -480,6 +512,12 @@ public class PembelianForm extends XJDialog {
 				.setText("<html><center>Selesai & Simpan Data<br/>[F12]</center></html>");
 		pnlButton.add(btnSelesai, "cell 1 0,growy");
 
+		try {
+			setPendingItems(table);
+		} catch (Exception e) {
+			ExceptionHandler.handleException(this, e);
+		}
+
 		pack();
 		setLocationRelativeTo(parent);
 	}
@@ -510,6 +548,9 @@ public class PembelianForm extends XJDialog {
 		case KeyEvent.VK_F8:
 			setFocusToBarcodeField();
 			break;
+		case KeyEvent.VK_F9:
+			btnPending.doClick();
+			break;
 		case KeyEvent.VK_F11:
 			setFocusToFieldBayar();
 			break;
@@ -532,6 +573,30 @@ public class PembelianForm extends XJDialog {
 		}
 	}
 
+	private void pending() throws AppException {
+
+		XTableModel tableModel = (XTableModel) table.getModel();
+		Object[][] values = new Object[tableModel.getRowCount()][tableModel.getColumnCount()];
+
+		for (int row = 0; row < tableModel.getRowCount(); ++row) {
+			for (int column = 0; column < tableModel.getColumnCount(); ++column) {
+				values[row][column] = tableModel.getValueAt(row, column);
+			}
+		}
+
+		ObjectOutputStream outputStream = null;
+		try {
+			outputStream = new ObjectOutputStream(new FileOutputStream(pendingItemsFile));
+			outputStream.writeObject(values);
+		} catch (IOException e) {
+			throw new AppException(e);
+		} finally {
+			IOUtils.closeQuietly(outputStream);
+		}
+
+		dispose();
+	}
+
 	private void batal() {
 		String message = "Apakah Anda yakin ingin membatalkan transaksi pembelian ini?";
 		int selectedOption = JOptionPane.showConfirmDialog(this, message,
@@ -542,11 +607,11 @@ public class PembelianForm extends XJDialog {
 	}
 
 	private void cariBarang() {
-		SearchEntityDialog searchEntityDialog = new SearchEntityDialog(
-				"Cari Barang", this, Item.class);
-		searchEntityDialog.setVisible(true);
+		SearchItemDialog searchItemDialog = new SearchItemDialog(
+				"Cari Barang", this);
+		searchItemDialog.setVisible(true);
 
-		Integer itemId = searchEntityDialog.getSelectedId();
+		Integer itemId = searchItemDialog.getSelectedId();
 		if (itemId != null) {
 			tambah(itemId);
 		}
@@ -1071,6 +1136,40 @@ public class PembelianForm extends XJDialog {
 			robot.keyPress(KeyEvent.VK_F2);
 		} catch (AWTException e) {
 			throw new RuntimeException(e);
+		}
+	}
+
+	private void setPendingItems(XJTable table) throws AppException {
+		
+		if (!pendingItemsFile.exists()) {
+			return;
+		}
+
+		Object[][] values = null;
+		ObjectInputStream inputStream = null;
+		try {
+			inputStream = new ObjectInputStream(new FileInputStream(pendingItemsFile));
+			values = (Object[][]) inputStream.readObject();
+		} catch (IOException | ClassNotFoundException e) {
+			throw new AppException(e);
+		} finally {
+			IOUtils.closeQuietly(inputStream);
+		}
+
+		if (values != null) {
+			XTableModel tableModel = (XTableModel) table.getModel();
+			for (int row = 0; row < values.length; ++row) {
+				for (int column = 0; column < values[row].length; ++column) {
+					tableModel.setRowCount(row + 1);
+					tableModel.setValueAt(values[row][column], row, column);
+				}
+			}
+		}
+		
+		try {
+			FileUtils.forceDelete(pendingItemsFile);
+		} catch (IOException e) {
+			throw new AppException(e);
 		}
 	}
 }

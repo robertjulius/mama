@@ -13,13 +13,10 @@ import java.util.Map;
 
 import javax.swing.JScrollPane;
 
-import net.miginfocom.swing.MigLayout;
-
 import org.hibernate.Criteria;
 import org.hibernate.Session;
 import org.hibernate.criterion.Restrictions;
 
-import com.ganesha.desktop.exeptions.ExceptionHandler;
 import com.ganesha.core.exception.AppException;
 import com.ganesha.desktop.component.XJButton;
 import com.ganesha.desktop.component.XJLabel;
@@ -31,33 +28,41 @@ import com.ganesha.desktop.component.xtableutils.XTableConstants;
 import com.ganesha.desktop.component.xtableutils.XTableModel;
 import com.ganesha.desktop.component.xtableutils.XTableParameter;
 import com.ganesha.desktop.component.xtableutils.XTableUtils;
+import com.ganesha.desktop.exeptions.ExceptionHandler;
 import com.ganesha.hibernate.HibernateUtils;
 import com.ganesha.model.TableEntity;
 
+import net.miginfocom.swing.MigLayout;
+
 public class SearchEntityDialog extends XJTableDialog {
 	private static final long serialVersionUID = 1452286313727721700L;
-	private XJTextField txtKode;
-	private XJTextField txtNama;
-	private XJTable table;
+	
+	protected static final String COLUMN_ID = "_ID_";
+	protected static final String COLUMN_CODE = "_CODE_";
+	protected static final String COLUMN_NAME = "_NAME_";
+	
+	protected XJTextField txtKode;
+	protected XJTextField txtNama;
+	protected XJTable table;
 
-	private Class<?> entityClass;
+	protected Class<?> entityClass;
 	private Integer selectedId;
 	private String selectedCode;
 	private String selectedName;
 
 	private XJButton btnPilih;
 
-	private final Map<ColumnEnum, XTableParameter> tableParameters = new HashMap<>();
+	private final Map<String, XTableParameter> tableParameters = new HashMap<>();
 	{
-		tableParameters.put(ColumnEnum.ID,
+		getTableParameters().put(COLUMN_ID,
 				new XTableParameter(0, 0, false, "ID", true,
 						XTableConstants.CELL_RENDERER_CENTER, Integer.class));
 
-		tableParameters.put(ColumnEnum.CODE, new XTableParameter(1, 50, false,
+		getTableParameters().put(COLUMN_CODE, new XTableParameter(1, 50, false,
 				"Kode", false, XTableConstants.CELL_RENDERER_CENTER,
 				String.class));
 
-		tableParameters.put(ColumnEnum.NAME,
+		getTableParameters().put(COLUMN_NAME,
 				new XTableParameter(2, 300, false, "Nama", false,
 						XTableConstants.CELL_RENDERER_LEFT, String.class));
 	}
@@ -79,7 +84,7 @@ public class SearchEntityDialog extends XJTableDialog {
 				btnPilih.doClick();
 			}
 		};
-		XTableUtils.initTable(table, tableParameters);
+		XTableUtils.initTable(table, getTableParameters());
 
 		XJPanel pnlFilter = new XJPanel();
 		getContentPane().add(pnlFilter, "cell 0 0,grow");
@@ -200,13 +205,13 @@ public class SearchEntityDialog extends XJTableDialog {
 				String nameValue = (String) getNameMethod.invoke(searchResult);
 
 				tableModel.setValueAt(idValue, i,
-						tableParameters.get(ColumnEnum.ID).getColumnIndex());
+						getTableParameters().get(COLUMN_ID).getColumnIndex());
 
 				tableModel.setValueAt(codeValue, i,
-						tableParameters.get(ColumnEnum.CODE).getColumnIndex());
+						getTableParameters().get(COLUMN_CODE).getColumnIndex());
 
 				tableModel.setValueAt(nameValue, i,
-						tableParameters.get(ColumnEnum.NAME).getColumnIndex());
+						getTableParameters().get(COLUMN_NAME).getColumnIndex());
 			}
 		} catch (NoSuchMethodException | SecurityException e) {
 			throw new AppException(e);
@@ -235,15 +240,15 @@ public class SearchEntityDialog extends XJTableDialog {
 			return;
 		}
 		selectedId = (Integer) table.getModel().getValueAt(selectedRow,
-				tableParameters.get(ColumnEnum.ID).getColumnIndex());
+				getTableParameters().get(COLUMN_ID).getColumnIndex());
 		selectedCode = (String) table.getModel().getValueAt(selectedRow,
-				tableParameters.get(ColumnEnum.CODE).getColumnIndex());
+				getTableParameters().get(COLUMN_CODE).getColumnIndex());
 		selectedName = (String) table.getModel().getValueAt(selectedRow,
-				tableParameters.get(ColumnEnum.NAME).getColumnIndex());
+				getTableParameters().get(COLUMN_NAME).getColumnIndex());
 		dispose();
 	}
-
-	private enum ColumnEnum {
-		ID, CODE, NAME
+	
+	public Map<String, XTableParameter> getTableParameters() {
+		return tableParameters;
 	}
 }

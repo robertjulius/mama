@@ -8,6 +8,7 @@ import java.awt.event.WindowEvent;
 import java.awt.event.WindowFocusListener;
 
 import javax.swing.JDialog;
+import javax.swing.JOptionPane;
 
 import org.slf4j.LoggerFactory;
 
@@ -28,6 +29,8 @@ public abstract class XJDialog extends JDialog implements XComponentConstants,
 	private String permissionCode;
 	private boolean permissionRequired = true;
 	private boolean closeOnEsc = true;
+	private boolean showConfirmationOnClose = false;
+	private String confirmationSentenceOnClose = "Exiting this window will discards all changes you made. Are you sure to exit this window?";
 
 	public XJDialog(Window parent) {
 		super(parent, ModalityType.APPLICATION_MODAL);
@@ -60,6 +63,10 @@ public abstract class XJDialog extends JDialog implements XComponentConstants,
 	public void setCloseOnEsc(boolean closeOnEsc) {
 		this.closeOnEsc = closeOnEsc;
 	}
+	
+	public void showConfirmationOnClose(boolean b) {
+		this.showConfirmationOnClose = b;
+	}
 
 	public void setPermissionCode(String permissionCode) {
 		this.permissionCode = permissionCode;
@@ -68,6 +75,10 @@ public abstract class XJDialog extends JDialog implements XComponentConstants,
 	@Override
 	public void setPermissionRequired(boolean permissionRequired) {
 		this.permissionRequired = permissionRequired;
+	}
+	
+	public void setConfirmationSentenceOnClose(String confirmationSentenceOnClose) {
+		this.confirmationSentenceOnClose = confirmationSentenceOnClose;
 	}
 
 	@Override
@@ -108,7 +119,14 @@ public abstract class XJDialog extends JDialog implements XComponentConstants,
 				switch (keyCode) {
 				case KeyEvent.VK_ESCAPE:
 					if (closeOnEsc) {
-						dispose();
+						if (showConfirmationOnClose) {
+							int selectedOption = JOptionPane.showConfirmDialog(getParent(), confirmationSentenceOnClose, "Confirmation", JOptionPane.YES_NO_OPTION);
+							if (selectedOption == JOptionPane.YES_OPTION) {
+								dispose();
+							}
+						} else {
+							dispose();
+						}
 					} else {
 						keyEventListener(keyCode);
 					}

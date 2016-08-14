@@ -9,6 +9,12 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import java.math.BigDecimal;
 import java.sql.Timestamp;
 import java.util.ArrayList;
@@ -24,6 +30,8 @@ import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 import javax.swing.table.TableCellEditor;
 
+import org.apache.commons.io.FileUtils;
+import org.apache.commons.io.IOUtils;
 import org.hibernate.Session;
 import org.slf4j.LoggerFactory;
 
@@ -33,6 +41,7 @@ import com.ganesha.core.exception.UserException;
 import com.ganesha.core.utils.DateUtils;
 import com.ganesha.core.utils.Formatter;
 import com.ganesha.core.utils.GeneralConstants;
+import com.ganesha.core.utils.ResourceUtils;
 import com.ganesha.coreapps.constants.Enums.ActionType;
 import com.ganesha.coreapps.constants.Loggers;
 import com.ganesha.coreapps.facade.ActivityLogFacade;
@@ -68,6 +77,7 @@ import com.ganesha.minimarket.model.SaleHeader;
 import com.ganesha.minimarket.ui.MainFrame;
 import com.ganesha.minimarket.ui.forms.checkstock.CheckStockForm;
 import com.ganesha.minimarket.ui.forms.searchentity.SearchEntityDialog;
+import com.ganesha.minimarket.ui.forms.searchentity.SearchItemDialog;
 import com.ganesha.minimarket.utils.PermissionConstants;
 
 import net.miginfocom.swing.MigLayout;
@@ -77,6 +87,7 @@ public class PenjualanForm extends XJDialog {
 	private XJTable table;
 
 	private static final long serialVersionUID = 1401014426195840845L;
+
 	private XJTextField txtNoTransaksi;
 	private XJDateChooser dateChooser;
 	private XJTextField txtKodeCustomer;
@@ -103,6 +114,9 @@ public class PenjualanForm extends XJDialog {
 	private Integer customerId;
 	private XJButton btnCekHarga;
 	private XJButton btnOpenDrawer;
+	private XJButton btnPending;
+
+	private File pendingItemsFile = new File(ResourceUtils.getResourceBase(), "Penjualan_PendingItemsFile");
 
 	{
 		tableParameters.put(ColumnEnum.NUM,
@@ -249,7 +263,7 @@ public class PenjualanForm extends XJDialog {
 
 		pnlSearch = new XJPanel();
 		pnlPenjualan.add(pnlSearch, "cell 0 1,grow");
-		pnlSearch.setLayout(new MigLayout("", "[]", "[][][][]"));
+		pnlSearch.setLayout(new MigLayout("", "[]", "[][][][][]"));
 
 		btnCari = new XJButton();
 		pnlSearch.add(btnCari, "cell 0 0,growx");
@@ -270,20 +284,20 @@ public class PenjualanForm extends XJDialog {
 			}
 		});
 		btnHapus.setText("<html><center>Hapus<br/>[Delete]</center></html>");
-		
+
 		btnCekHarga = new XJButton();
 		btnCekHarga.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				try {
 					new CheckStockForm(PenjualanForm.this).setVisible(true);
-				} catch(Exception ex) {
+				} catch (Exception ex) {
 					ExceptionHandler.handleException(PenjualanForm.this, ex);
 				}
 			}
 		});
 		btnCekHarga.setText("<html><center>Cek Harga<br/>[F4]</center></html>");
 		pnlSearch.add(btnCekHarga, "cell 0 2,growx");
-		
+
 		btnOpenDrawer = new XJButton();
 		btnOpenDrawer.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -291,7 +305,20 @@ public class PenjualanForm extends XJDialog {
 			}
 		});
 		btnOpenDrawer.setText("<html><center>Open Drawer<br/>[F10]</center></html>");
-		pnlSearch.add(btnOpenDrawer, "cell 0 3,aligny bottom");
+		pnlSearch.add(btnOpenDrawer, "cell 0 3,growx,aligny bottom");
+
+		btnPending = new XJButton();
+		btnPending.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				try {
+					pending();
+				} catch (Exception ex) {
+					ExceptionHandler.handleException(PenjualanForm.this, ex);
+				}
+			}
+		});
+		btnPending.setText("<html><center>PENDING<br/>[F9]</center></html>");
+		pnlSearch.add(btnPending, "cell 0 4,growx");
 
 		JScrollPane scrollPane = new JScrollPane(table);
 		pnlPenjualan.add(scrollPane, "cell 1 1,growx");
@@ -415,6 +442,12 @@ public class PenjualanForm extends XJDialog {
 		btnSelesai.setText("<html><center>Selesai & Simpan Data<br/>[F12]</center></html>");
 		pnlButton.add(btnSelesai, "cell 2 0");
 
+		try {
+			setPendingItems(table);
+		} catch (Exception e) {
+			ExceptionHandler.handleException(this, e);
+		}
+
 		pack();
 		setLocationRelativeTo(parent);
 	}
@@ -444,6 +477,9 @@ public class PenjualanForm extends XJDialog {
 			break;
 		case KeyEvent.VK_F8:
 			setFocusToBarcodeField();
+			break;
+		case KeyEvent.VK_F9:
+			btnPending.doClick();
 			break;
 		case KeyEvent.VK_F11:
 			setFocusToFieldBayar();
@@ -502,6 +538,30 @@ public class PenjualanForm extends XJDialog {
 		LoggerFactory.getLogger(Loggers.SALE).debug("Logging to ActivityLog is done");
 	}
 
+	private void pending() throws AppException {
+
+		XTableModel tableModel = (XTableModel) table.getModel();
+		Object[][] values = new Object[tableModel.getRowCount()][tableModel.getColumnCount()];
+
+		for (int row = 0; row < tableModel.getRowCount(); ++row) {
+			for (int column = 0; column < tableModel.getColumnCount(); ++column) {
+				values[row][column] = tableModel.getValueAt(row, column);
+			}
+		}
+
+		ObjectOutputStream outputStream = null;
+		try {
+			outputStream = new ObjectOutputStream(new FileOutputStream(pendingItemsFile));
+			outputStream.writeObject(values);
+		} catch (IOException e) {
+			throw new AppException(e);
+		} finally {
+			IOUtils.closeQuietly(outputStream);
+		}
+
+		dispose();
+	}
+
 	private void batal() {
 		String message = "Apakah Anda yakin ingin membatalkan transaksi penjualan ini?";
 		int selectedOption = JOptionPane.showConfirmDialog(this, message, "Membatalkan Transaksi Penjualan",
@@ -512,10 +572,10 @@ public class PenjualanForm extends XJDialog {
 	}
 
 	private void cariBarang() {
-		SearchEntityDialog searchEntityDialog = new SearchEntityDialog("Cari Barang", this, Item.class);
-		searchEntityDialog.setVisible(true);
+		SearchItemDialog searchItemDialog = new SearchItemDialog("Cari Barang", this);
+		searchItemDialog.setVisible(true);
 
-		Integer idBarang = searchEntityDialog.getSelectedId();
+		Integer idBarang = searchItemDialog.getSelectedId();
 		if (idBarang != null) {
 			tambah(idBarang);
 		}
@@ -776,7 +836,7 @@ public class PenjualanForm extends XJDialog {
 
 			dispose();
 			LoggerFactory.getLogger(Loggers.SALE).debug("Transaction finished. The window is closed.");
-			
+
 			new PenjualanForm(MainFrame.INSTANCE).setVisible(true);
 
 		} catch (Exception e) {
@@ -896,7 +956,7 @@ public class PenjualanForm extends XJDialog {
 		try {
 			ItemFacade facade = ItemFacade.getInstance();
 			Item item = facade.getDetail(itemId, session);
-			
+
 			BigDecimal sellPrice = null;
 			if (item.getSellPrices().isEmpty()) {
 				// Do nothing
@@ -914,36 +974,27 @@ public class PenjualanForm extends XJDialog {
 			tableModel.setRowCount(tableModel.getRowCount() + 1);
 			int rowIndex = tableModel.getRowCount() - 1;
 
-			tableModel.setValueAt(item.getCode(), rowIndex, tableParameters
-					.get(ColumnEnum.CODE).getColumnIndex());
+			tableModel.setValueAt(item.getCode(), rowIndex, tableParameters.get(ColumnEnum.CODE).getColumnIndex());
 
-			tableModel.setValueAt(item.getName(), rowIndex, tableParameters
-					.get(ColumnEnum.NAME).getColumnIndex());
+			tableModel.setValueAt(item.getName(), rowIndex, tableParameters.get(ColumnEnum.NAME).getColumnIndex());
 
-			tableModel.setValueAt(1, rowIndex,
-					tableParameters.get(ColumnEnum.QUANTITY).getColumnIndex());
+			tableModel.setValueAt(1, rowIndex, tableParameters.get(ColumnEnum.QUANTITY).getColumnIndex());
 
-			tableModel.setValueAt(item.getUnit(), rowIndex, tableParameters
-					.get(ColumnEnum.UNIT).getColumnIndex());
+			tableModel.setValueAt(item.getUnit(), rowIndex, tableParameters.get(ColumnEnum.UNIT).getColumnIndex());
 
-			tableModel.setValueAt(Formatter.formatNumberToString(sellPrice),
-					rowIndex, tableParameters.get(ColumnEnum.PRICE)
-							.getColumnIndex());
+			tableModel.setValueAt(Formatter.formatNumberToString(sellPrice), rowIndex,
+					tableParameters.get(ColumnEnum.PRICE).getColumnIndex());
 
-			tableModel.setValueAt(0, rowIndex,
-					tableParameters.get(ColumnEnum.DISCOUNT).getColumnIndex());
+			tableModel.setValueAt(0, rowIndex, tableParameters.get(ColumnEnum.DISCOUNT).getColumnIndex());
 
-			tableModel.setValueAt(0, rowIndex,
-					tableParameters.get(ColumnEnum.TOTAL).getColumnIndex());
+			tableModel.setValueAt(0, rowIndex, tableParameters.get(ColumnEnum.TOTAL).getColumnIndex());
 
-			tableModel.setValueAt(item.getId(), rowIndex,
-					tableParameters.get(ColumnEnum.ID).getColumnIndex());
+			tableModel.setValueAt(item.getId(), rowIndex, tableParameters.get(ColumnEnum.ID).getColumnIndex());
 
 			reorderRowNumber();
 
 			int row = table.getRowCount() - 1;
-			table.changeSelection(row, tableParameters.get(ColumnEnum.QUANTITY)
-					.getColumnIndex(), false, false);
+			table.changeSelection(row, tableParameters.get(ColumnEnum.QUANTITY).getColumnIndex(), false, false);
 
 			TableCellEditor cellEditor = table.getCellEditor();
 			if (cellEditor != null) {
@@ -984,6 +1035,40 @@ public class PenjualanForm extends XJDialog {
 			robot.keyPress(KeyEvent.VK_F2);
 		} catch (AWTException e) {
 			throw new RuntimeException(e);
+		}
+	}
+
+	private void setPendingItems(XJTable table) throws AppException {
+		
+		if (!pendingItemsFile.exists()) {
+			return;
+		}
+
+		Object[][] values = null;
+		ObjectInputStream inputStream = null;
+		try {
+			inputStream = new ObjectInputStream(new FileInputStream(pendingItemsFile));
+			values = (Object[][]) inputStream.readObject();
+		} catch (IOException | ClassNotFoundException e) {
+			throw new AppException(e);
+		} finally {
+			IOUtils.closeQuietly(inputStream);
+		}
+
+		if (values != null) {
+			XTableModel tableModel = (XTableModel) table.getModel();
+			for (int row = 0; row < values.length; ++row) {
+				for (int column = 0; column < values[row].length; ++column) {
+					tableModel.setRowCount(row + 1);
+					tableModel.setValueAt(values[row][column], row, column);
+				}
+			}
+		}
+		
+		try {
+			FileUtils.forceDelete(pendingItemsFile);
+		} catch (IOException e) {
+			throw new AppException(e);
 		}
 	}
 }
